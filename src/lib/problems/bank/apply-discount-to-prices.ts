@@ -40,13 +40,29 @@ A single space separates words. No leading or trailing spaces.`,
   params: ['sentence', 'discount'],
   starterCode: {
     javascript: `function discountPrices(sentence, discount) {
-
+  return sentence.split(' ').map(word => {
+    if (word[0] === '$' && /^[1-9]\d*$/.test(word.slice(1))) {
+      return '$' + (Number(word.slice(1)) * (1 - discount / 100)).toFixed(2);
+    }
+    return word;
+  }).join(' ');
 }`,
     typescript: `function discountPrices(sentence: string, discount: number): string {
-
+  return sentence.split(' ').map(word => {
+    if (word[0] === '$' && /^[1-9]\d*$/.test(word.slice(1))) {
+      return '$' + (Number(word.slice(1)) * (1 - discount / 100)).toFixed(2);
+    }
+    return word;
+  }).join(' ');
 }`,
     python: `def discountPrices(sentence: str, discount: int) -> str:
-    pass`,
+    import re
+    def transform(word):
+        if word.startswith('$') and re.match(r'^[1-9]\\d*$', word[1:]):
+            price = int(word[1:]) * (1 - discount / 100)
+            return '$' + '{:.2f}'.format(price)
+        return word
+    return ' '.join(transform(w) for w in sentence.split(' '))`,
   },
   visibleTests: [
     {

@@ -45,12 +45,37 @@ Return the number of alternating groups.
   params: ['colors', 'k'],
   starterCode: {
     javascript: `function numberOfAlternatingGroups(colors, k) {
-
+  const n = colors.length;
+  let count = 0, len = 1;
+  for (let i = 0; i < n + k - 1; i++) {
+    if (colors[(i + 1) % n] !== colors[i % n]) len++;
+    else len = 1;
+    if (i >= k - 1 && len >= k) count++;
+  }
+  return count;
 }`,
-    typescript: "function numberOfAlternatingGroups(colors: number[], k: number): number {\n\n}",
-
+    typescript: `function numberOfAlternatingGroups(colors: number[], k: number): number {
+  const n = colors.length;
+  let count = 0, len = 1;
+  for (let i = 0; i < n + k - 1; i++) {
+    if (colors[(i + 1) % n] !== colors[i % n]) len++;
+    else len = 1;
+    if (i >= k - 1 && len >= k) count++;
+  }
+  return count;
+}`,
     python: `def numberOfAlternatingGroups(colors, k):
-    pass`,
+    colors = list(colors.to_py()) if hasattr(colors, 'to_py') else list(colors)
+    n = len(colors)
+    count, length = 0, 1
+    for i in range(n + k - 1):
+        if colors[(i + 1) % n] != colors[i % n]:
+            length += 1
+        else:
+            length = 1
+        if i >= k - 1 and length >= k:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[0, 1, 0, 1, 0], 3], expected: 3 },

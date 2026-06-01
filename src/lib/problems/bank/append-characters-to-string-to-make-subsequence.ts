@@ -43,12 +43,21 @@ return t.length - j;\`\`\``
   params: ['s', 't'],
   starterCode: {
     javascript: `function appendCharacters(s, t) {
-
+  let i = 0;
+  for (const c of s) if (i < t.length && c === t[i]) i++;
+  return t.length - i;
 }`,
-    typescript: "function appendCharacters(s: string, t: string): number {\n\n}",
-
+    typescript: `function appendCharacters(s: string, t: string): number {
+  let i = 0;
+  for (const c of s) if (i < t.length && c === t[i]) i++;
+  return t.length - i;
+}`,
     python: `def appendCharacters(s, t):
-    pass`,
+    i = 0
+    for c in s:
+        if i < len(t) and c == t[i]:
+            i += 1
+    return len(t) - i`,
   },
   visibleTests: [
     { args: ['coaching', 'coding'], expected: 4 },

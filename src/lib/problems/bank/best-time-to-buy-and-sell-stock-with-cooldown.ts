@@ -35,12 +35,34 @@ Find the maximum profit you can achieve. You may complete as many transactions a
   params: ['prices'],
   starterCode: {
     javascript: `function maxProfitCooldown(prices) {
-
+  let held = -Infinity, sold = -Infinity, rest = 0;
+  for (const price of prices) {
+    const ph = held, ps = sold;
+    held = Math.max(ph, rest - price);
+    sold = ph + price;
+    rest = Math.max(rest, ps);
+  }
+  return Math.max(sold, rest);
 }`,
-    typescript: "function maxProfitCooldown(prices: number[]): number {\n\n}",
-
+    typescript: `function maxProfitCooldown(prices: number[]): number {
+  let held = -Infinity, sold = -Infinity, rest = 0;
+  for (const price of prices) {
+    const ph = held, ps = sold;
+    held = Math.max(ph, rest - price);
+    sold = ph + price;
+    rest = Math.max(rest, ps);
+  }
+  return Math.max(sold, rest);
+}`,
     python: `def maxProfitCooldown(prices: list[int]) -> int:
-    pass`,
+    prices = list(prices.to_py()) if hasattr(prices, 'to_py') else list(prices)
+    held, sold, rest = float('-inf'), float('-inf'), 0
+    for price in prices:
+        ph, ps = held, sold
+        held = max(ph, rest - price)
+        sold = ph + price
+        rest = max(rest, ps)
+    return max(sold, rest)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 0, 2]], expected: 3 },

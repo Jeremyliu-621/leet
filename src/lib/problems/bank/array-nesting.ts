@@ -39,12 +39,43 @@ Return the longest length of a set \`s[k]\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function arrayNesting(nums) {
-
+  const n = nums.length;
+  const visited = new Uint8Array(n);
+  let max = 0;
+  for (let i = 0; i < n; i++) {
+    if (visited[i]) continue;
+    let len = 0, j = i;
+    while (!visited[j]) { visited[j] = 1; j = nums[j]; len++; }
+    if (len > max) max = len;
+  }
+  return max;
 }`,
-    typescript: "function arrayNesting(nums: number[]): number {\n\n}",
-
+    typescript: `function arrayNesting(nums: number[]): number {
+  const n = nums.length;
+  const visited = new Uint8Array(n);
+  let max = 0;
+  for (let i = 0; i < n; i++) {
+    if (visited[i]) continue;
+    let len = 0, j = i;
+    while (!visited[j]) { visited[j] = 1; j = nums[j]!; len++; }
+    if (len > max) max = len;
+  }
+  return max;
+}`,
     python: `def arrayNesting(nums):
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    visited = [False] * n
+    best = 0
+    for i in range(n):
+        if visited[i]: continue
+        length, j = 0, i
+        while not visited[j]:
+            visited[j] = True
+            j = nums[j]
+            length += 1
+        best = max(best, length)
+    return best`,
   },
   visibleTests: [
     { args: [[5, 4, 0, 3, 1, 6, 2]], expected: 4 },
