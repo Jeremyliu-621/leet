@@ -45792,6 +45792,63 @@ def maximizeTotalCost(nums):
         pos, neg = max(pos, neg) + nums[i], pos - nums[i]
     return max(pos, neg)
 `,
+  // batch 265
+  'check-if-two-chessboard-squares-have-the-same-color': `
+def checkTwoChessboards(coordinate1, coordinate2):
+    def val(c):
+        return ord(c[0]) + int(c[1])
+    return val(coordinate1) % 2 == val(coordinate2) % 2
+`,
+  'count-equal-divisible-pairs': `
+def countPairs(nums, k):
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] == nums[j] and (i * j) % k == 0:
+                count += 1
+    return count
+`,
+  'minimum-number-of-work-sessions-to-finish-the-tasks': `
+def minSessions(tasks, sessionTime):
+    n = len(tasks)
+    full = (1 << n) - 1
+    total = [0] * (full + 1)
+    for mask in range(1, full + 1):
+        lsb = mask & (-mask)
+        bit = lsb.bit_length() - 1
+        total[mask] = total[mask ^ lsb] + tasks[bit]
+    dp = [float('inf')] * (full + 1)
+    dp[0] = 0
+    for mask in range(1, full + 1):
+        sub = mask
+        while sub > 0:
+            if total[sub] <= sessionTime and dp[mask ^ sub] < float('inf'):
+                dp[mask] = min(dp[mask], dp[mask ^ sub] + 1)
+            sub = (sub - 1) & mask
+    return dp[full]
+`,
+  'maximum-of-absolute-value-expression': `
+def maxAbsValExpr(arr1, arr2):
+    ans = 0
+    for s1 in (1, -1):
+        for s2 in (1, -1):
+            mx, mn = float('-inf'), float('inf')
+            for i in range(len(arr1)):
+                v = s1 * arr1[i] + s2 * arr2[i] + i
+                mx = max(mx, v)
+                mn = min(mn, v)
+            ans = max(ans, mx - mn)
+    return ans
+`,
+  'minimum-operations-to-make-a-uni-value-grid': `
+def minOperations(grid, x):
+    flat = sorted(v for row in grid for v in row)
+    rem = flat[0] % x
+    if any(v % x != rem for v in flat):
+        return -1
+    median = flat[len(flat) // 2]
+    return sum(abs(v - median) // x for v in flat)
+`,
   // batch 264
   'find-mirror-score-of-a-string': `
 def calculateScore(s):

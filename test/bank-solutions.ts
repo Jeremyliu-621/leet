@@ -46688,6 +46688,71 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(pos, neg);
   },
+  // batch 265
+  'check-if-two-chessboard-squares-have-the-same-color': (...args: unknown[]) => {
+    const coordinate1 = args[0] as string;
+    const coordinate2 = args[1] as string;
+    const val = (c: string) => c.charCodeAt(0) + parseInt(c[1]!);
+    return val(coordinate1) % 2 === val(coordinate2) % 2;
+  },
+  'count-equal-divisible-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let count = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        if (nums[i] === nums[j] && (i * j) % k === 0) count++;
+      }
+    }
+    return count;
+  },
+  'minimum-number-of-work-sessions-to-finish-the-tasks': (...args: unknown[]) => {
+    const tasks = args[0] as number[];
+    const sessionTime = args[1] as number;
+    const n = tasks.length;
+    const full = (1 << n) - 1;
+    const sum = new Array(full + 1).fill(0);
+    for (let mask = 1; mask <= full; mask++) {
+      const bit = (mask & -mask).toString(2).length - 1;
+      sum[mask] = sum[mask ^ (1 << bit)] + tasks[bit]!;
+    }
+    const dp = new Array(full + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let mask = 1; mask <= full; mask++) {
+      for (let sub = mask; sub > 0; sub = (sub - 1) & mask) {
+        if (sum[sub]! <= sessionTime && dp[mask ^ sub]! < Infinity) {
+          dp[mask] = Math.min(dp[mask]!, dp[mask ^ sub]! + 1);
+        }
+      }
+    }
+    return dp[full];
+  },
+  'maximum-of-absolute-value-expression': (...args: unknown[]) => {
+    const arr1 = args[0] as number[];
+    const arr2 = args[1] as number[];
+    let ans = 0;
+    for (const s1 of [1, -1] as const) {
+      for (const s2 of [1, -1] as const) {
+        let mx = -Infinity, mn = Infinity;
+        for (let i = 0; i < arr1.length; i++) {
+          const v = s1 * arr1[i]! + s2 * arr2[i]! + i;
+          mx = Math.max(mx, v);
+          mn = Math.min(mn, v);
+        }
+        ans = Math.max(ans, mx - mn);
+      }
+    }
+    return ans;
+  },
+  'minimum-operations-to-make-a-uni-value-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const x = args[1] as number;
+    const flat = grid.flat().sort((a, b) => a - b);
+    const rem = flat[0]! % x;
+    if (flat.some(v => v % x !== rem)) return -1;
+    const median = flat[Math.floor(flat.length / 2)]!;
+    return flat.reduce((acc, v) => acc + Math.abs(v - median) / x, 0);
+  },
   // batch 264
   'find-mirror-score-of-a-string': (...args: unknown[]) => {
     const s = args[0] as string;

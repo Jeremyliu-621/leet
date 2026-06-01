@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 265
+import { problem as checkTwoChessboardSameColor } from './check-if-two-chessboard-squares-have-the-same-color';
+import { problem as countEqualDivisiblePairs } from './count-equal-divisible-pairs';
+import { problem as minWorkSessions } from './minimum-number-of-work-sessions-to-finish-the-tasks';
+import { problem as maxAbsoluteValueExpression } from './maximum-of-absolute-value-expression';
+import { problem as minOpsUniValueGrid } from './minimum-operations-to-make-a-uni-value-grid';
 // batch 264
 import { problem as findMirrorScoreString } from './find-mirror-score-of-a-string';
 import { problem as maxManhattanDistanceKChanges } from './maximum-manhattan-distance-after-k-changes';
@@ -6406,6 +6412,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 265
+  checkTwoChessboardSameColor,
+  countEqualDivisiblePairs,
+  minWorkSessions,
+  maxAbsoluteValueExpression,
+  minOpsUniValueGrid,
   // batch 264
   findMirrorScoreString,
   maxManhattanDistanceKChanges,
