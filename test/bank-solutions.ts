@@ -42704,4 +42704,71 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const [words, sep] = args as [string[], string];
     return words.flatMap(w => w.split(sep).filter(s => s.length > 0));
   },
+  // batch 233
+  'visit-array-positions-to-maximize-score': (...args: unknown[]) => {
+    const [nums, x] = args as [number[], number];
+    const NEG_INF = -Infinity;
+    const dp: [number, number] = [NEG_INF, NEG_INF];
+    dp[nums[0]! % 2] = nums[0]!;
+    for (let i = 1; i < nums.length; i++) {
+      const p = nums[i]! % 2 as 0 | 1;
+      const q = (1 - p) as 0 | 1;
+      const candidate = Math.max(dp[p], dp[q] - x) + nums[i]!;
+      dp[p] = Math.max(dp[p], candidate);
+    }
+    return Math.max(dp[0], dp[1]);
+  },
+  'largest-element-in-array-after-merge-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let cur = 0, ans = 0;
+    for (let i = nums.length - 1; i >= 0; i--) {
+      cur = nums[i]! <= cur ? cur + nums[i]! : nums[i]!;
+      ans = Math.max(ans, cur);
+    }
+    return ans;
+  },
+  'shortest-distance-after-road-addition-queries-i': (...args: unknown[]) => {
+    const [n, queries] = args as [number, number[][]];
+    const adj: number[][] = Array.from({ length: n }, (_, i) => i + 1 < n ? [i + 1] : []);
+    const result: number[] = [];
+    for (const [u, v] of queries) {
+      adj[u!]!.push(v!);
+      const dist = new Array<number>(n).fill(-1);
+      dist[0] = 0;
+      const queue = [0];
+      outer: for (let qi = 0; qi < queue.length; qi++) {
+        const node = queue[qi]!;
+        for (const nb of adj[node]!) {
+          if (dist[nb] === -1) {
+            dist[nb] = dist[node]! + 1;
+            if (nb === n - 1) break outer;
+            queue.push(nb);
+          }
+        }
+      }
+      result.push(dist[n - 1]!);
+    }
+    return result;
+  },
+  'shortest-distance-after-road-addition-queries-ii': (...args: unknown[]) => {
+    const [n, queries] = args as [number, number[][]];
+    const link = Array.from({ length: n + 1 }, (_, i) => i);
+    function findNext(i: number): number {
+      if (link[i] === i) return i;
+      link[i] = findNext(link[i]!);
+      return link[i]!;
+    }
+    let dist = n - 1;
+    const results: number[] = [];
+    for (const [u, v] of queries) {
+      let i = findNext(u! + 1);
+      while (i < v!) {
+        link[i] = v!;
+        dist--;
+        i = findNext(i + 1);
+      }
+      results.push(dist);
+    }
+    return results;
+  },
 };

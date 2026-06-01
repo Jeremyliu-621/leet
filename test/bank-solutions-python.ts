@@ -41869,4 +41869,69 @@ def splitWordsBySeparator(words, separator):
         result.extend(p for p in w.split(separator) if p)
     return result
 `,
+  // batch 233
+  'visit-array-positions-to-maximize-score': `
+def visitArrayPositionsToMaximizeScore(nums, x):
+    dp = [float('-inf'), float('-inf')]
+    dp[nums[0] % 2] = nums[0]
+    for i in range(1, len(nums)):
+        p = nums[i] % 2
+        candidate = max(dp[p], dp[1 - p] - x) + nums[i]
+        dp[p] = max(dp[p], candidate)
+    return max(dp)
+`,
+  'largest-element-in-array-after-merge-operations': `
+def largestElementAfterMergeOperations(nums):
+    cur, ans = 0, 0
+    for i in range(len(nums) - 1, -1, -1):
+        cur = cur + nums[i] if nums[i] <= cur else nums[i]
+        ans = max(ans, cur)
+    return ans
+`,
+  'shortest-distance-after-road-addition-queries-i': `
+def shortestDistanceAfterQueriesI(n, queries):
+    from collections import deque
+    adj = [[] for _ in range(n)]
+    for i in range(n - 1):
+        adj[i].append(i + 1)
+    result = []
+    for u, v in queries:
+        adj[u].append(v)
+        dist = [-1] * n
+        dist[0] = 0
+        q = deque([0])
+        found = False
+        while q and not found:
+            node = q.popleft()
+            for nb in adj[node]:
+                if dist[nb] == -1:
+                    dist[nb] = dist[node] + 1
+                    if nb == n - 1:
+                        found = True
+                        break
+                    q.append(nb)
+        result.append(dist[n - 1])
+    return result
+`,
+  'shortest-distance-after-road-addition-queries-ii': `
+def shortestDistanceAfterQueriesII(n, queries):
+    import sys
+    sys.setrecursionlimit(200000)
+    link = list(range(n + 1))
+    def find_next(i):
+        if link[i] == i:
+            return i
+        link[i] = find_next(link[i])
+        return link[i]
+    dist = n - 1
+    results = []
+    for u, v in queries:
+        i = find_next(u + 1)
+        while i < v:
+            link[i] = v
+            dist -= 1
+            i = find_next(i + 1)
+        results.append(dist)
+    return results
+`,
 };

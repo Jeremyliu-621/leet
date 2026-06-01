@@ -3001,6 +3001,11 @@ import { problem as maxDiffAscending } from './maximum-difference-between-ascend
 import { problem as minSwapsBalancedStr } from './minimum-number-of-swaps-to-make-the-string-balanced';
 import { problem as countSubarraysEqualEnds } from './count-subarrays-with-equal-ends';
 import { problem as splitStringsBySep } from './split-strings-by-separator';
+// batch 233
+import { problem as visitArrayPosMaxScore } from './visit-array-positions-to-maximize-score';
+import { problem as largestElemAfterMerge } from './largest-element-in-array-after-merge-operations';
+import { problem as shortestDistRoadQueriesI } from './shortest-distance-after-road-addition-queries-i';
+import { problem as shortestDistRoadQueriesII } from './shortest-distance-after-road-addition-queries-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6037,4 +6042,9 @@ export const problems: readonly Problem[] = [
   minSwapsBalancedStr,
   countSubarraysEqualEnds,
   splitStringsBySep,
+  // batch 233
+  visitArrayPosMaxScore,
+  largestElemAfterMerge,
+  shortestDistRoadQueriesI,
+  shortestDistRoadQueriesII,
 ];
