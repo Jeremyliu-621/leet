@@ -43727,4 +43727,93 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return res;
   },
+  'smallest-divisible-digit-product-i': (...args: unknown[]) => {
+    const [n, t] = args as [number, number];
+    for (let x = n; ; x++) {
+      let product = 1;
+      for (const ch of String(x)) product *= Number(ch);
+      if (product % t === 0) return x;
+    }
+  },
+  'maximum-frequency-after-operations-ii': (...args: unknown[]) => {
+    const [nums, k, numOperations] = args as [number[], number, number];
+    const sorted = [...nums].sort((a, b) => a - b);
+    const bs = (arr: number[], target: number, lo: boolean) => {
+      let l = 0, r = arr.length;
+      while (l < r) {
+        const m = (l + r) >> 1;
+        if (lo ? arr[m]! < target : arr[m]! <= target) l = m + 1;
+        else r = m;
+      }
+      return lo ? l : r;
+    };
+    let ans = 0;
+    const candidates = new Set<number>();
+    for (const v of sorted) { candidates.add(v); candidates.add(v + k); candidates.add(v - k); }
+    for (const t of candidates) {
+      const exact = bs(sorted, t, false) - bs(sorted, t, true);
+      const inRange = bs(sorted, t + k, false) - bs(sorted, t - k, true);
+      const reachable = inRange - exact;
+      const freq = exact + Math.min(reachable, numOperations);
+      if (freq > ans) ans = freq;
+    }
+    return ans;
+  },
+  'maximize-the-number-of-target-nodes-after-connecting-trees-i': (...args: unknown[]) => {
+    const [edges1, edges2, k] = args as [number[][], number[][], number];
+    const buildAdj = (edges: number[][], n: number) => {
+      const adj: number[][] = Array.from({ length: n }, () => []);
+      for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+      return adj;
+    };
+    const countWithin = (adj: number[][], src: number, maxDist: number) => {
+      if (maxDist < 0) return 0;
+      const dist = new Array(adj.length).fill(-1);
+      dist[src] = 0;
+      const q = [src];
+      let count = 0;
+      for (let h = 0; h < q.length; h++) {
+        const u = q[h]!;
+        if (dist[u] <= maxDist) count++;
+        if (dist[u] < maxDist) {
+          for (const v of adj[u]!) {
+            if (dist[v] === -1) { dist[v] = dist[u] + 1; q.push(v); }
+          }
+        }
+      }
+      return count;
+    };
+    const n = edges1.length + 1;
+    const m = edges2.length + 1;
+    const adj1 = buildAdj(edges1, n);
+    const adj2 = buildAdj(edges2, m);
+    const cnt1 = Array.from({ length: n }, (_, i) => countWithin(adj1, i, k));
+    const cnt2 = Array.from({ length: m }, (_, j) => countWithin(adj2, j, k - 1));
+    const best2 = cnt2.length > 0 ? Math.max(...cnt2) : 0;
+    return cnt1.map((c) => c + best2);
+  },
+  'minimum-number-of-operations-to-make-elements-in-array-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const seen = new Set<number>();
+    for (let i = nums.length - 1; i >= 0; i--) {
+      if (seen.has(nums[i]!)) return Math.ceil((i + 1) / 3);
+      seen.add(nums[i]!);
+    }
+    return 0;
+  },
+  'find-all-three-digit-even-numbers': (...args: unknown[]) => {
+    const digits = args[0] as number[];
+    const freq = new Array(10).fill(0);
+    for (const d of digits) freq[d]++;
+    const result: number[] = [];
+    for (let num = 100; num <= 998; num += 2) {
+      const d0 = Math.floor(num / 100);
+      const d1 = Math.floor(num / 10) % 10;
+      const d2 = num % 10;
+      const used = new Array(10).fill(0);
+      used[d0]++; used[d1]++; used[d2]++;
+      if (used[d0] <= freq[d0] && used[d1] <= freq[d1] && used[d2] <= freq[d2]) result.push(num);
+    }
+    return result;
+  },
 };

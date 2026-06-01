@@ -42909,4 +42909,99 @@ def dynamicComponents(n, operations):
             res.append(find(op[1]) == find(op[2]))
     return res
 `,
+  'smallest-divisible-digit-product-i': `
+def smallestDivisibleDigitProductI(n, t):
+    x = n
+    while True:
+        product = 1
+        for ch in str(x):
+            product *= int(ch)
+        if product % t == 0:
+            return x
+        x += 1
+`,
+  'maximum-frequency-after-operations-ii': `
+import bisect
+def maxFrequencyII(nums, k, numOperations):
+    sorted_nums = sorted(nums)
+    candidates = set()
+    for v in sorted_nums:
+        candidates.add(v)
+        candidates.add(v + k)
+        candidates.add(v - k)
+    ans = 0
+    for t in candidates:
+        lo = bisect.bisect_left(sorted_nums, t)
+        hi = bisect.bisect_right(sorted_nums, t)
+        exact = hi - lo
+        in_range = bisect.bisect_right(sorted_nums, t + k) - bisect.bisect_left(sorted_nums, t - k)
+        reachable = in_range - exact
+        freq = exact + min(reachable, numOperations)
+        ans = max(ans, freq)
+    return ans
+`,
+  'maximize-the-number-of-target-nodes-after-connecting-trees-i': `
+from collections import deque
+def maxTargetNodes(edges1, edges2, k):
+    def build_adj(edges, n):
+        adj = [[] for _ in range(n)]
+        for e in edges:
+            adj[e[0]].append(e[1])
+            adj[e[1]].append(e[0])
+        return adj
+    def count_within(adj, src, max_dist):
+        if max_dist < 0:
+            return 0
+        n = len(adj)
+        dist = [-1] * n
+        dist[src] = 0
+        q = deque([src])
+        count = 0
+        while q:
+            u = q.popleft()
+            if dist[u] <= max_dist:
+                count += 1
+            if dist[u] < max_dist:
+                for v in adj[u]:
+                    if dist[v] == -1:
+                        dist[v] = dist[u] + 1
+                        q.append(v)
+        return count
+    n = len(edges1) + 1
+    m = len(edges2) + 1
+    adj1 = build_adj(edges1, n)
+    adj2 = build_adj(edges2, m)
+    cnt1 = [count_within(adj1, i, k) for i in range(n)]
+    cnt2 = [count_within(adj2, j, k - 1) for j in range(m)]
+    best2 = max(cnt2) if cnt2 else 0
+    return [c + best2 for c in cnt1]
+`,
+  'minimum-number-of-operations-to-make-elements-in-array-distinct': `
+import math
+def minimumOperations(nums):
+    seen = set()
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] in seen:
+            return math.ceil((i + 1) / 3)
+        seen.add(nums[i])
+    return 0
+`,
+  'find-all-three-digit-even-numbers': `
+def findEvenNumbers(digits):
+    freq = [0] * 10
+    for d in digits:
+        freq[d] += 1
+    result = []
+    for num in range(100, 999, 2):
+        d0 = num // 100
+        d1 = (num // 10) % 10
+        d2 = num % 10
+        used = [0] * 10
+        used[d0] += 1
+        used[d1] += 1
+        used[d2] += 1
+        if used[d0] <= freq[d0] and used[d1] <= freq[d1] and used[d2] <= freq[d2]:
+            result.append(num)
+    return result
+`,
 };

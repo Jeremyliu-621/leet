@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2673** problems; 8313 tests green. Batches 102–241 complete.
+**Current focus:** Bank at **2678** problems; 8328 tests green. Batches 102–242 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 242+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 243+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 242 — 5 new problems + TerminalPanel copy buttons (2026-06-01)
+Five new problems: `smallest-divisible-digit-product-i` (easy/math — find smallest x ≥ n with digit product divisible by t; linear scan), `maximum-frequency-after-operations-ii` (hard/arrays+binary-search — same sweep as I but k up to 10⁹; binary search on O(n) candidate targets), `maximize-the-number-of-target-nodes-after-connecting-trees-i` (medium/tree+graph — BFS per node; ans[i]=cnt1[i]+max(cnt2) where cnt2 uses k-1 budget), `minimum-number-of-operations-to-make-elements-in-array-distinct` (easy/arrays+hash-map — scan from right, find rightmost dup at i, return ⌈(i+1)/3⌉), `find-all-three-digit-even-numbers` (easy/arrays+math — iterate 100-998 step 2, freq-map check). Also added CopyButton to expected/actual values in output log fail entries (TerminalPanel), consistent with testcases tab. Bank at **2678**; 8328 tests.
 
 ### feat(bank): batch 241 (local) — fenwick-tree, trie-autocomplete, reverse-k-groups, longest-increasing-path-matrix, union-find-components (2026-06-01)
 Five new problems targeting underrepresented data structures: `fenwick-tree-prefix-sum` (medium/binary-indexed-tree — Fenwick/BIT for O(log n) point updates and range sum queries via lowest-set-bit trick), `trie-autocomplete` (medium/trie+design — prefix tree with insert + autocomplete returning sorted matching words via DFS), `reverse-linked-list-groups` (hard/linked-list — reverse every k consecutive nodes in-place, tail < k unchanged), `longest-increasing-path-matrix` (hard/graph+dynamic-programming — DFS + memoization for longest strictly-increasing 4-directional path in a matrix), `union-find-components` (medium/union-find — DSU with path compression + union by rank supporting union/count/connected). Bank at **2673**; 8313 tests.

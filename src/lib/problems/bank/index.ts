@@ -3035,6 +3035,12 @@ import { problem as trieAutocomplete } from './trie-autocomplete';
 import { problem as reverseLinkedListGroups } from './reverse-linked-list-groups';
 import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
 import { problem as unionFindComponents } from './union-find-components';
+// batch 242
+import { problem as smallestDivisibleDigitProductI } from './smallest-divisible-digit-product-i';
+import { problem as maxFrequencyAfterOpsII } from './maximum-frequency-after-operations-ii';
+import { problem as maxTargetNodesI } from './maximize-the-number-of-target-nodes-after-connecting-trees-i';
+import { problem as minOpsDistinctElements } from './minimum-number-of-operations-to-make-elements-in-array-distinct';
+import { problem as findAllThreeDigitEvenNumbers } from './find-all-three-digit-even-numbers';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6165,4 +6171,10 @@ export const problems: readonly Problem[] = [
   reverseLinkedListGroups,
   longestIncreasingPathMatrix,
   unionFindComponents,
+  // batch 242
+  smallestDivisibleDigitProductI,
+  maxFrequencyAfterOpsII,
+  maxTargetNodesI,
+  minOpsDistinctElements,
+  findAllThreeDigitEvenNumbers,
 ];

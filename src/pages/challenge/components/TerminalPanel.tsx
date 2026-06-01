@@ -414,10 +414,12 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
           <div className="pl-4 flex items-start gap-1">
             <span className="text-faint shrink-0">Expected:</span>
             <ValueDisplay value={entry.expected} />
+            <CopyButton value={entry.expected} />
           </div>
           <div className="pl-4 flex items-start gap-1">
             <span className="text-faint shrink-0">Actual:</span>
             <ValueDisplay value={entry.actual} />
+            <CopyButton value={entry.actual} />
           </div>
           <NumberDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
           <ArrayDiffHint expected={entry.rawExpected} actual={entry.rawActual} />
