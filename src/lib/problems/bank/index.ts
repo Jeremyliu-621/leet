@@ -3029,6 +3029,12 @@ import { problem as xorParityOfSum } from './xor-parity-of-sum';
 import { problem as greedyIntervalCover } from './greedy-interval-cover';
 import { problem as rollingHashSearch } from './rolling-hash-search';
 import { problem as bitmaskDpTaskCover } from './bitmask-dp-task-cover';
+// batch 241
+import { problem as fenwickTreePrefixSum } from './fenwick-tree-prefix-sum';
+import { problem as trieAutocomplete } from './trie-autocomplete';
+import { problem as reverseLinkedListGroups } from './reverse-linked-list-groups';
+import { problem as longestIncreasingPathMatrix } from './longest-increasing-path-matrix';
+import { problem as unionFindComponents } from './union-find-components';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6154,4 +6160,9 @@ export const problems: readonly Problem[] = [
   parseBoolExpr,
   numOfWaysSameBST,
   countPairsOfNodes,
+  fenwickTreePrefixSum,
+  trieAutocomplete,
+  reverseLinkedListGroups,
+  longestIncreasingPathMatrix,
+  unionFindComponents,
 ];

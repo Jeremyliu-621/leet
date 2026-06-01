@@ -43538,7 +43538,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return dp[full] === Infinity ? -1 : dp[full]!;
   },
-  // batch 241
+  // batch 241 (remote)
   'count-number-of-rectangles-containing-each-point': (...args: unknown[]) => {
     const [rectangles, points] = args as [number[][], number[][]];
     const maxH = 100;
@@ -43625,5 +43625,106 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
       return cnt;
     });
+  },
+
+  // batch 241 (local)
+  'fenwick-tree-prefix-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const operations = args[1] as [string, number, number][];
+    const n = nums.length;
+    const bit = new Array<number>(n + 1).fill(0);
+    const add = (i: number, v: number) => { for (; i <= n; i += i & -i) bit[i]! += v; };
+    const sum = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    for (let i = 0; i < n; i++) add(i + 1, nums[i]!);
+    const res: number[] = [];
+    for (const [op, a, b] of operations) {
+      if (op === 'update') add(a, b);
+      else res.push(sum(b) - sum(a - 1));
+    }
+    return res;
+  },
+
+  'trie-autocomplete': (...args: unknown[]) => {
+    const operations = args[0] as [string, string][];
+    interface TrieNode { children: Record<string, TrieNode>; isEnd: boolean }
+    const root: TrieNode = { children: {}, isEnd: false };
+    const insert = (word: string) => {
+      let node = root;
+      for (const c of word) {
+        if (!node.children[c]) node.children[c] = { children: {}, isEnd: false };
+        node = node.children[c]!;
+      }
+      node.isEnd = true;
+    };
+    const collect = (node: TrieNode, prefix: string, result: string[]) => {
+      if (node.isEnd) result.push(prefix);
+      for (const c of Object.keys(node.children).sort())
+        collect(node.children[c]!, prefix + c, result);
+    };
+    const autocomplete = (prefix: string): string[] => {
+      let node = root;
+      for (const c of prefix) { if (!node.children[c]) return []; node = node.children[c]!; }
+      const result: string[] = [];
+      collect(node, prefix, result);
+      return result;
+    };
+    return operations.map(([op, s]) => op === 'insert' ? (insert(s), null) : autocomplete(s));
+  },
+
+  'reverse-linked-list-groups': (...args: unknown[]) => {
+    const head = args[0] as number[];
+    const k = args[1] as number;
+    const arr = [...head];
+    const n = arr.length;
+    for (let i = 0; i + k <= n; i += k) {
+      let lo = i, hi = i + k - 1;
+      while (lo < hi) { [arr[lo], arr[hi]] = [arr[hi]!, arr[lo]!]; lo++; hi--; }
+    }
+    return arr;
+  },
+
+  'longest-increasing-path-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    const memo = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    function dfs(i: number, j: number): number {
+      if (memo[i]![j]!) return memo[i]![j]!;
+      let best = 1;
+      for (const [di, dj] of dirs) {
+        const ni = i + di!, nj = j + dj!;
+        if (ni >= 0 && ni < m && nj >= 0 && nj < n && matrix[ni]![nj]! > matrix[i]![j]!)
+          best = Math.max(best, 1 + dfs(ni, nj));
+      }
+      memo[i]![j] = best;
+      return best;
+    }
+    let ans = 0;
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) ans = Math.max(ans, dfs(i, j));
+    return ans;
+  },
+
+  'union-find-components': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const operations = args[1] as [string, number?, number?][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    let comps = n;
+    const find = (x: number): number => parent[x] === x ? x : (parent[x] = find(parent[x]!));
+    const union = (u: number, v: number) => {
+      const pu = find(u), pv = find(v);
+      if (pu === pv) return;
+      if (rank[pu]! < rank[pv]!) parent[pu] = pv;
+      else if (rank[pu]! > rank[pv]!) parent[pv] = pu;
+      else { parent[pv] = pu; rank[pu]!++; }
+      comps--;
+    };
+    const res: (number | boolean)[] = [];
+    for (const [op, a, b] of operations) {
+      if (op === 'union') union(a!, b!);
+      else if (op === 'count') res.push(comps);
+      else res.push(find(a!) === find(b!));
+    }
+    return res;
   },
 };

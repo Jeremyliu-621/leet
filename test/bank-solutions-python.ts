@@ -42716,7 +42716,7 @@ def minCostCoverTasks(n, groups, costs):
             dp[nxt] = min(dp[nxt], dp[mask] + costs[i])
     return -1 if dp[full] == float('inf') else dp[full]
 `,
-  // batch 241
+  // batch 241 (remote)
   'count-number-of-rectangles-containing-each-point': `
 def countRectangles(rectangles, points):
     import bisect
@@ -42789,5 +42789,124 @@ def countPairs(n, edges, queries):
                 cnt -= 1
         result.append(cnt)
     return result
+`,
+  // batch 241 (local)
+  'fenwick-tree-prefix-sum': `
+def fenwickRangeSum(nums, operations):
+    n = len(nums)
+    bit = [0] * (n + 1)
+    def add(i, v):
+        while i <= n:
+            bit[i] += v
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    for i, v in enumerate(nums):
+        add(i + 1, v)
+    res = []
+    for op in operations:
+        if op[0] == 'update':
+            add(op[1], op[2])
+        else:
+            res.append(query(op[2]) - query(op[1] - 1))
+    return res
+`,
+  'trie-autocomplete': `
+def trieAutocomplete(operations):
+    root = {'children': {}, 'is_end': False}
+    def insert(word):
+        node = root
+        for c in word:
+            if c not in node['children']:
+                node['children'][c] = {'children': {}, 'is_end': False}
+            node = node['children'][c]
+        node['is_end'] = True
+    def collect(node, prefix, result):
+        if node['is_end']:
+            result.append(prefix)
+        for c in sorted(node['children']):
+            collect(node['children'][c], prefix + c, result)
+    def autocomplete(prefix):
+        node = root
+        for c in prefix:
+            if c not in node['children']:
+                return []
+            node = node['children'][c]
+        result = []
+        collect(node, prefix, result)
+        return result
+    out = []
+    for op in operations:
+        if op[0] == 'insert':
+            insert(op[1])
+            out.append(None)
+        else:
+            out.append(autocomplete(op[1]))
+    return out
+`,
+  'reverse-linked-list-groups': `
+def reverseKGroup(head, k):
+    arr = list(head)
+    n = len(arr)
+    i = 0
+    while i + k <= n:
+        lo, hi = i, i + k - 1
+        while lo < hi:
+            arr[lo], arr[hi] = arr[hi], arr[lo]
+            lo += 1
+            hi -= 1
+        i += k
+    return arr
+`,
+  'longest-increasing-path-matrix': `
+def longestIncreasingPath(matrix):
+    from functools import lru_cache
+    m, n = len(matrix), len(matrix[0])
+    dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+    @lru_cache(maxsize=None)
+    def dfs(i, j):
+        best = 1
+        for di, dj in dirs:
+            ni, nj = i + di, j + dj
+            if 0 <= ni < m and 0 <= nj < n and matrix[ni][nj] > matrix[i][j]:
+                best = max(best, 1 + dfs(ni, nj))
+        return best
+    return max(dfs(i, j) for i in range(m) for j in range(n))
+`,
+  'union-find-components': `
+def dynamicComponents(n, operations):
+    parent = list(range(n))
+    rank = [0] * n
+    comps = [n]
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(u, v):
+        pu, pv = find(u), find(v)
+        if pu == pv:
+            return
+        if rank[pu] < rank[pv]:
+            parent[pu] = pv
+        elif rank[pu] > rank[pv]:
+            parent[pv] = pu
+        else:
+            parent[pv] = pu
+            rank[pu] += 1
+        comps[0] -= 1
+    res = []
+    for op in operations:
+        if op[0] == 'union':
+            union(op[1], op[2])
+        elif op[0] == 'count':
+            res.append(comps[0])
+        else:
+            res.append(find(op[1]) == find(op[2]))
+    return res
 `,
 };
