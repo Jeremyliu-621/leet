@@ -45129,6 +45129,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'maximum-xor-of-two-numbers-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const trie: Record<number, unknown> = {};
+    for (const num of nums) {
+      let node: Record<number, unknown> = trie;
+      for (let bit = 31; bit >= 0; bit--) {
+        const b = (num >> bit) & 1;
+        if (!node[b]) node[b] = {};
+        node = node[b] as Record<number, unknown>;
+      }
+    }
+    let max = 0;
+    for (const num of nums) {
+      let node: Record<number, unknown> = trie;
+      let xor = 0;
+      for (let bit = 31; bit >= 0; bit--) {
+        const b = (num >> bit) & 1;
+        const want = 1 - b;
+        if (node[want]) { xor |= (1 << bit); node = node[want] as Record<number, unknown>; }
+        else node = node[b] as Record<number, unknown>;
+      }
+      max = Math.max(max, xor);
+    }
+    return max;
+  },
+
   'optimal-account-balancing': (...args: unknown[]) => {
     const transactions = args[0] as number[][];
     const balance = new Map<number, number>();

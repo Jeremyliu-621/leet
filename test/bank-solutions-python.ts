@@ -44392,6 +44392,32 @@ def kEmptySlots(bulbs, k):
     return -1
 `,
 
+  'maximum-xor-of-two-numbers-in-array': `
+def findMaximumXOR(nums):
+    trie = {}
+    for num in nums:
+        node = trie
+        for bit in range(31, -1, -1):
+            b = (num >> bit) & 1
+            if b not in node:
+                node[b] = {}
+            node = node[b]
+    max_xor = 0
+    for num in nums:
+        node = trie
+        xor = 0
+        for bit in range(31, -1, -1):
+            b = (num >> bit) & 1
+            want = 1 - b
+            if want in node:
+                xor |= (1 << bit)
+                node = node[want]
+            else:
+                node = node[b]
+        max_xor = max(max_xor, xor)
+    return max_xor
+`,
+
   'optimal-account-balancing': `
 def minTransfers(transactions):
     from collections import defaultdict
