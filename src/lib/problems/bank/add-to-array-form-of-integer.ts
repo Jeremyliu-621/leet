@@ -51,10 +51,37 @@ Explanation: 99999 + 1 = 100000
   functionName: 'addToArrayForm',
   params: ['num', 'k'],
   starterCode: {
-    javascript: 'function addToArrayForm(num, k) {\n  \n}\n',
-    typescript: "function addToArrayForm(num: number[], k: number): number[] {\n  \n}",
-
-    python: 'def addToArrayForm(num, k):\n    ',
+    javascript: `function addToArrayForm(num, k) {
+  const res = [];
+  let carry = k;
+  for (let i = num.length - 1; i >= 0 || carry > 0; i--) {
+    carry += i >= 0 ? num[i] : 0;
+    res.push(carry % 10);
+    carry = Math.floor(carry / 10);
+  }
+  return res.reverse();
+}`,
+    typescript: `function addToArrayForm(num: number[], k: number): number[] {
+  const res: number[] = [];
+  let carry = k;
+  for (let i = num.length - 1; i >= 0 || carry > 0; i--) {
+    carry += i >= 0 ? num[i]! : 0;
+    res.push(carry % 10);
+    carry = Math.floor(carry / 10);
+  }
+  return res.reverse();
+}`,
+    python: `def addToArrayForm(num, k):
+    res = []
+    carry = k
+    for i in range(len(num) - 1, -1, -1):
+        carry += num[i]
+        res.append(carry % 10)
+        carry //= 10
+    while carry:
+        res.append(carry % 10)
+        carry //= 10
+    return res[::-1]`,
   },
   visibleTests: [
     { args: [[1, 2, 0, 0], 34], expected: [1, 2, 3, 4] },

@@ -39,10 +39,40 @@ Each day you load packages onto the ship in order; you cannot split a package ac
   functionName: 'shipWithinDays',
   params: ['weights', 'days'],
   starterCode: {
-    javascript: 'function shipWithinDays(weights, days) {\n  // Binary search on the ship capacity.\n}\n',
-    typescript: "function shipWithinDays(weights: number[], days: number): number {\n  // Binary search on the ship capacity.\n}",
-
-    python: 'def shipWithinDays(weights, days):\n    # Binary search on the ship capacity.\n    pass\n',
+    javascript: `function shipWithinDays(weights, days) {
+  let lo = Math.max(...weights), hi = weights.reduce((a, b) => a + b, 0);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    let d = 1, cur = 0;
+    for (const w of weights) { if (cur + w > mid) { d++; cur = 0; } cur += w; }
+    if (d <= days) hi = mid; else lo = mid + 1;
+  }
+  return lo;
+}`,
+    typescript: `function shipWithinDays(weights: number[], days: number): number {
+  let lo = Math.max(...weights), hi = weights.reduce((a, b) => a + b, 0);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    let d = 1, cur = 0;
+    for (const w of weights) { if (cur + w > mid) { d++; cur = 0; } cur += w; }
+    if (d <= days) hi = mid; else lo = mid + 1;
+  }
+  return lo;
+}`,
+    python: `def shipWithinDays(weights, days):
+    lo, hi = max(weights), sum(weights)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        d, cur = 1, 0
+        for w in weights:
+            if cur + w > mid:
+                d += 1; cur = 0
+            cur += w
+        if d <= days:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5], expected: 15 },

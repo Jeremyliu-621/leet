@@ -32,10 +32,50 @@ You may assume that the given expression is always valid. All intermediate resul
   functionName: 'calculateII',
   params: ['s'],
   starterCode: {
-    javascript: 'function calculateII(s) {\n\n}\n',
-    typescript: "function calculateII(s: string): number {\n\n}",
-
-    python: 'def calculateII(s):\n    pass\n',
+    javascript: `function calculateII(s) {
+  const stack = [];
+  let num = 0, op = '+';
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (c >= '0' && c <= '9') num = num * 10 + Number(c);
+    if ((c === '+' || c === '-' || c === '*' || c === '/') || i === s.length - 1) {
+      if (op === '+') stack.push(num);
+      else if (op === '-') stack.push(-num);
+      else if (op === '*') stack.push(stack.pop() * num);
+      else stack.push(Math.trunc(stack.pop() / num));
+      op = c; num = 0;
+    }
+  }
+  return stack.reduce((a, b) => a + b, 0);
+}`,
+    typescript: `function calculateII(s: string): number {
+  const stack: number[] = [];
+  let num = 0, op = '+';
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]!;
+    if (c >= '0' && c <= '9') num = num * 10 + Number(c);
+    if ((c === '+' || c === '-' || c === '*' || c === '/') || i === s.length - 1) {
+      if (op === '+') stack.push(num);
+      else if (op === '-') stack.push(-num);
+      else if (op === '*') stack.push(stack.pop()! * num);
+      else stack.push(Math.trunc(stack.pop()! / num));
+      op = c; num = 0;
+    }
+  }
+  return stack.reduce((a, b) => a + b, 0);
+}`,
+    python: `def calculateII(s):
+    stack, num, op = [], 0, '+'
+    for i, c in enumerate(s):
+        if c.isdigit():
+            num = num * 10 + int(c)
+        if c in '+-*/' or i == len(s) - 1:
+            if op == '+': stack.append(num)
+            elif op == '-': stack.append(-num)
+            elif op == '*': stack.append(stack.pop() * num)
+            else: stack.append(int(stack.pop() / num))
+            op, num = c, 0
+    return sum(stack)`,
   },
   visibleTests: [
     { args: ['3+2*2'], expected: 7 },
