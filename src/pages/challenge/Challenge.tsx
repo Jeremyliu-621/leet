@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { LANGUAGE_SHORT } from '../../lib/types';
 import type { SupportedLanguage, SubmissionRecord, UserPreferences } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
@@ -328,13 +329,7 @@ function SolvedStandaloneScreen({
         <div className="text-center">
           <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Language</p>
           <p className="font-mono text-sm font-semibold text-text mt-0.5 uppercase">
-            {language === 'javascript'
-              ? 'JS'
-              : language === 'typescript'
-                ? 'TS'
-                : language === 'python'
-                  ? 'Py'
-                  : language}
+            {LANGUAGE_SHORT[language]}
           </p>
         </div>
         {streak > 0 && (

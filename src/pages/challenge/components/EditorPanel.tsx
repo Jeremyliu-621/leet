@@ -48,6 +48,7 @@ import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
+import { LANGUAGE_LABEL, LANGUAGE_SHORT } from '../../../lib/types';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { TerminalPanel } from './TerminalPanel';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
@@ -120,33 +121,6 @@ function fontSizeTheme(px: number) {
   return EditorView.theme({ '&': { fontSize: `${px}px` } });
 }
 
-const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
-  javascript: 'JavaScript',
-  typescript: 'TypeScript',
-  python: 'Python',
-  java: 'Java',
-  cpp: 'C++',
-  csharp: 'C#',
-  go: 'Go',
-  rust: 'Rust',
-  kotlin: 'Kotlin',
-  swift: 'Swift',
-  sql: 'SQL',
-};
-
-const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
-  javascript: 'JS',
-  typescript: 'TS',
-  python: 'Py',
-  java: 'Java',
-  cpp: 'C++',
-  csharp: 'C#',
-  go: 'Go',
-  rust: 'Rust',
-  kotlin: 'Kt',
-  swift: 'Swift',
-  sql: 'SQL',
-};
 
 // ---------------------------------------------------------------------------
 // Code snippets — triggered by keyword abbreviations (Tab to expand).

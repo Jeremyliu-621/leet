@@ -83,6 +83,34 @@ export function isSupportedLanguage(value: unknown): value is SupportedLanguage 
   return typeof value === 'string' && SUPPORTED_LANGUAGE_SET.has(value);
 }
 
+export const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
+  javascript: 'JavaScript',
+  typescript: 'TypeScript',
+  python: 'Python',
+  java: 'Java',
+  cpp: 'C++',
+  csharp: 'C#',
+  go: 'Go',
+  rust: 'Rust',
+  kotlin: 'Kotlin',
+  swift: 'Swift',
+  sql: 'SQL',
+};
+
+export const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
+  javascript: 'JS',
+  typescript: 'TS',
+  python: 'Py',
+  java: 'Java',
+  cpp: 'C++',
+  csharp: 'C#',
+  go: 'Go',
+  rust: 'Rust',
+  kotlin: 'Kt',
+  swift: 'Swift',
+  sql: 'SQL',
+};
+
 // --- Block rules ----------------------------------------------------------
 
 export type BlockRuleKind = 'domain' | 'url';
