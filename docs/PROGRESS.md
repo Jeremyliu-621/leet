@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2778** problems; 8638 tests green. Batches 102–256 (remote) + 255 (local) complete.
+**Current focus:** Bank at **2783** problems; 8665 tests green. Batches 102–257 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 257+; continued UX polish.
+**Next up:** Batch 258+; continued UX polish.
+
+### feat(bank): batch 257 — right-triangles (starter), lex-smallest-swap, vowels-game, reach-end-max-score, final-array-state-k-mult-ii (2026-06-01)
+Five new problems: `right-triangles` (medium/arrays+math, LC 3128 — full starter code backfill; for each 1-cell as right-angle vertex, contribution = (rowOnes-1)*(colOnes-1)), `lexicographically-smallest-string-after-swap` (easy/strings, LC 3216 — greedy: first adjacent same-parity pair where s[i]>s[i+1], swap and return), `vowels-game-in-a-string` (medium/math+strings, LC 3227 — Alice wins iff vowelCount>0: odd→take all; even→take one, Bob stuck with odd remaining), `reach-end-of-array-with-max-score` (medium/arrays+math, LC 3282 — O(n) running max sum: each unit step earns max(nums[0..i])), `final-array-state-after-k-multiplication-operations-ii` (hard/arrays+heap+math, LC 3266 — BigInt min-heap simulation until balanced (min*mul>max), then batch remaining ops as full_rounds+modpow). Bank at **2783**; 8665 tests.
 
 ### feat(bank): batch 255 (local) — right-triangles, stable-binary-arrays-i/ii, max-points-square, subarrays-distinct-squares-ii (2026-06-01)
 Five new problems: `right-triangles` (medium/arrays+math, LC 3128 — for each 1-cell as right-angle vertex, contribution = (row_sum-1)*(col_sum-1)), `find-all-possible-stable-binary-arrays-i` (medium/dp, LC 3129 — dp[i][j][v] for i zeros j ones ending in v with no run > limit; O(n²·limit)), `find-all-possible-stable-binary-arrays-ii` (hard/dp, LC 3130 — same DP with prefix-sum optimization for O(n²)), `maximum-points-inside-the-square` (medium/arrays+binary-search, LC 3143 — sort by Chebyshev distance; first tag conflict at distance d returns d−1), `subarrays-distinct-element-sum-of-squares-ii` (hard/arrays+binary-indexed-tree, LC 2914 — sum of distinct_count² for all subarrays; BIT-based O(n log n) in hints, O(n²) reference). Bank at **2778**; 8638 tests.
