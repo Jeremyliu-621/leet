@@ -36,10 +36,53 @@ Return the **minimum cost** to move from any cell in the first row to any cell i
   functionName: 'minPathCost',
   params: ['grid', 'moveCost'],
   starterCode: {
-    javascript: 'function minPathCost(grid, moveCost) {\n\n}\n',
-    typescript: "function minPathCost(grid: number[][], moveCost: number[][]): number {\n\n}",
-
-    python: 'def minPathCost(grid, moveCost):\n    pass\n',
+    javascript: `function minPathCost(grid, moveCost) {
+  const m = grid.length, n = grid[0].length;
+  let dp = [...grid[0]];
+  for (let r = 0; r < m - 1; r++) {
+    const ndp = new Array(n).fill(Infinity);
+    for (let c = 0; c < n; c++) {
+      const val = grid[r][c];
+      for (let c2 = 0; c2 < n; c2++) {
+        const cost = dp[c] + moveCost[val][c2] + grid[r + 1][c2];
+        if (cost < ndp[c2]) ndp[c2] = cost;
+      }
+    }
+    dp = ndp;
+  }
+  return Math.min(...dp);
+}`,
+    typescript: `function minPathCost(grid: number[][], moveCost: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  let dp = [...grid[0]!];
+  for (let r = 0; r < m - 1; r++) {
+    const ndp = new Array<number>(n).fill(Infinity);
+    for (let c = 0; c < n; c++) {
+      const val = grid[r]![c]!;
+      for (let c2 = 0; c2 < n; c2++) {
+        const cost = dp[c]! + moveCost[val]![c2]! + grid[r + 1]![c2]!;
+        if (cost < ndp[c2]!) ndp[c2] = cost;
+      }
+    }
+    dp = ndp;
+  }
+  return Math.min(...dp);
+}`,
+    python: `def minPathCost(grid, moveCost):
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    moveCost = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (moveCost.to_py() if hasattr(moveCost, 'to_py') else moveCost)]
+    m, n = len(grid), len(grid[0])
+    dp = list(grid[0])
+    for r in range(m - 1):
+        ndp = [float('inf')] * n
+        for c in range(n):
+            val = grid[r][c]
+            for c2 in range(n):
+                cost = dp[c] + moveCost[val][c2] + grid[r + 1][c2]
+                if cost < ndp[c2]:
+                    ndp[c2] = cost
+        dp = ndp
+    return min(dp)`,
   },
   visibleTests: [
     {

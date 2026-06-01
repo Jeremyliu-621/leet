@@ -43,14 +43,34 @@ Swapping letters is defined as taking two indices \`i\` and \`j\` (0-indexed) su
   params: ['s', 'goal'],
   starterCode: {
     javascript: `function buddyStrings(s, goal) {
-  // return true if swapping two letters in s can make s equal goal
-
+  if (s.length !== goal.length) return false;
+  if (s === goal) return new Set(s).size < s.length;
+  const diffs = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== goal[i]) { diffs.push(i); if (diffs.length > 2) return false; }
+  }
+  return diffs.length === 2
+    && s[diffs[0]] === goal[diffs[1]]
+    && s[diffs[1]] === goal[diffs[0]];
 }`,
-    typescript: "function buddyStrings(s: string, goal: string): boolean {\n  // return true if swapping two letters in s can make s equal goal\n\n}",
-
-    python: `def buddyStrings(s: str, goal: str) -> bool:
-    # return true if swapping two letters in s can make s equal goal
-    pass
+    typescript: `function buddyStrings(s: string, goal: string): boolean {
+  if (s.length !== goal.length) return false;
+  if (s === goal) return new Set(s).size < s.length;
+  const diffs: number[] = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== goal[i]) { diffs.push(i); if (diffs.length > 2) return false; }
+  }
+  return diffs.length === 2
+    && s[diffs[0]!] === goal[diffs[1]!]
+    && s[diffs[1]!] === goal[diffs[0]!];
+}`,
+    python: `def buddyStrings(s, goal):
+    if len(s) != len(goal):
+        return False
+    if s == goal:
+        return len(set(s)) < len(s)
+    diffs = [(a, b) for a, b in zip(s, goal) if a != b]
+    return len(diffs) == 2 and diffs[0] == diffs[1][::-1]
 `,
   },
   visibleTests: [

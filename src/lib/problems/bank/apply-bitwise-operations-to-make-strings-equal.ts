@@ -37,19 +37,14 @@ Return \`true\` if you can make the string \`s\` equal to \`target\`, or \`false
   functionName: 'makeStringsEqual',
   params: ['s', 'target'],
   starterCode: {
-    javascript: `/**
- * @param {string} s
- * @param {string} target
- * @return {boolean}
- */
-function makeStringsEqual(s, target) {
-
+    javascript: `function makeStringsEqual(s, target) {
+  return s.includes('1') === target.includes('1');
 }`,
     typescript: `function makeStringsEqual(s: string, target: string): boolean {
-
+  return s.includes('1') === target.includes('1');
 }`,
-    python: `def makeStringsEqual(s: str, target: str) -> bool:
-    pass
+    python: `def makeStringsEqual(s, target):
+    return ('1' in s) == ('1' in target)
 `,
   },
   visibleTests: [

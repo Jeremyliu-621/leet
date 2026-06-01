@@ -39,14 +39,51 @@ export const problem: Problem = {
   params: ['changed'],
   starterCode: {
     javascript: `function canReorderDoubled(changed) {
-  // return true if changed can be rearranged into doubled pairs
-
+  const cnt = new Map();
+  for (const x of changed) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+  const keys = [...cnt.keys()].sort((a, b) => Math.abs(a) - Math.abs(b));
+  for (const x of keys) {
+    if (!cnt.get(x)) continue;
+    const doubled = 2 * x;
+    if (doubled === x) { if (cnt.get(x) % 2 !== 0) return false; cnt.set(x, 0); continue; }
+    if ((cnt.get(doubled) ?? 0) < cnt.get(x)) return false;
+    cnt.set(doubled, cnt.get(doubled) - cnt.get(x));
+    cnt.set(x, 0);
+  }
+  return true;
 }`,
-    typescript: "function canReorderDoubled(changed: number[]): boolean {\n  // return true if changed can be rearranged into doubled pairs\n\n}",
-
-    python: `def canReorderDoubled(changed: list) -> bool:
-    # return True if changed can be rearranged into doubled pairs
-    pass
+    typescript: `function canReorderDoubled(changed: number[]): boolean {
+  const cnt = new Map<number, number>();
+  for (const x of changed) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+  const keys = [...cnt.keys()].sort((a, b) => Math.abs(a) - Math.abs(b));
+  for (const x of keys) {
+    if (!cnt.get(x)) continue;
+    const doubled = 2 * x;
+    if (doubled === x) { if (cnt.get(x)! % 2 !== 0) return false; cnt.set(x, 0); continue; }
+    if ((cnt.get(doubled) ?? 0) < cnt.get(x)!) return false;
+    cnt.set(doubled, cnt.get(doubled)! - cnt.get(x)!);
+    cnt.set(x, 0);
+  }
+  return true;
+}`,
+    python: `def canReorderDoubled(changed):
+    changed = list(changed.to_py()) if hasattr(changed, 'to_py') else list(changed)
+    from collections import Counter
+    cnt = Counter(changed)
+    for x in sorted(cnt, key=abs):
+        if not cnt[x]:
+            continue
+        doubled = 2 * x
+        if doubled == x:
+            if cnt[x] % 2 != 0:
+                return False
+            cnt[x] = 0
+            continue
+        if cnt[doubled] < cnt[x]:
+            return False
+        cnt[doubled] -= cnt[x]
+        cnt[x] = 0
+    return True
 `,
   },
   visibleTests: [

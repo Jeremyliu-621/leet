@@ -45,13 +45,43 @@ Return the **maximum** sum of the elements of an hourglass.
   params: ['grid'],
   starterCode: {
     javascript: `function maxSum(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  let best = 0;
+  for (let i = 0; i + 2 < m; i++) {
+    for (let j = 0; j + 2 < n; j++) {
+      const s = grid[i][j] + grid[i][j+1] + grid[i][j+2]
+              + grid[i+1][j+1]
+              + grid[i+2][j] + grid[i+2][j+1] + grid[i+2][j+2];
+      if (s > best) best = s;
+    }
+  }
+  return best;
 }`,
     typescript: `function maxSum(grid: number[][]): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  let best = 0;
+  for (let i = 0; i + 2 < m; i++) {
+    for (let j = 0; j + 2 < n; j++) {
+      const s = grid[i]![j]! + grid[i]![j+1]! + grid[i]![j+2]!
+              + grid[i+1]![j+1]!
+              + grid[i+2]![j]! + grid[i+2]![j+1]! + grid[i+2]![j+2]!;
+      if (s > best) best = s;
+    }
+  }
+  return best;
 }`,
     python: `def maxSum(grid):
-    pass`,
+    grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    best = 0
+    for i in range(m - 2):
+        for j in range(n - 2):
+            s = (grid[i][j] + grid[i][j+1] + grid[i][j+2]
+                 + grid[i+1][j+1]
+                 + grid[i+2][j] + grid[i+2][j+1] + grid[i+2][j+2])
+            if s > best:
+                best = s
+    return best`,
   },
   visibleTests: [
     { args: [[[6,2,1,3],[4,2,1,5],[9,2,8,7],[4,1,2,9]]], expected: 30 },

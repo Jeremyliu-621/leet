@@ -53,13 +53,40 @@ Output: \`4\`
   params: ['differences', 'lower', 'upper'],
   starterCode: {
     javascript: `function numberOfArrays(differences, lower, upper) {
-  // your code here
+  let cur = 0, minVal = 0, maxVal = 0;
+  for (const d of differences) {
+    cur += d;
+    if (cur < minVal) minVal = cur;
+    if (cur > maxVal) maxVal = cur;
+  }
+  const spread = maxVal - minVal;
+  const range = upper - lower;
+  return Math.max(0, range - spread + 1);
 }`,
-    typescript: "function numberOfArrays(differences: number[], lower: number, upper: number): number {\n  // your code here\n}",
-
-    python: `def numberOfArrays(differences: list, lower: int, upper: int) -> int:
-    # your code here
-    pass`,
+    typescript: `function numberOfArrays(differences: number[], lower: number, upper: number): number {
+  let cur = 0, minVal = 0, maxVal = 0;
+  for (const d of differences) {
+    cur += d;
+    if (cur < minVal) minVal = cur;
+    if (cur > maxVal) maxVal = cur;
+  }
+  const spread = maxVal - minVal;
+  const range = upper - lower;
+  return Math.max(0, range - spread + 1);
+}`,
+    python: `def numberOfArrays(differences, lower, upper):
+    differences = list(differences.to_py()) if hasattr(differences, 'to_py') else list(differences)
+    cur = 0
+    min_val = 0
+    max_val = 0
+    for d in differences:
+        cur += d
+        if cur < min_val:
+            min_val = cur
+        if cur > max_val:
+            max_val = cur
+    spread = max_val - min_val
+    return max(0, (upper - lower) - spread + 1)`,
   },
   visibleTests: [
     { args: [[1, -3, 4], 1, 6], expected: 2 },

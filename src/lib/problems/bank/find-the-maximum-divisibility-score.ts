@@ -40,13 +40,38 @@ Return the integer \`divisors[i]\` with the **maximum** divisibility score. If m
   params: ['nums', 'divisors'],
   starterCode: {
     javascript: `function maxDivScore(nums, divisors) {
-
+  let bestScore = -1, bestDiv = Infinity;
+  for (const d of divisors) {
+    const score = nums.filter(n => n % d === 0).length;
+    if (score > bestScore || (score === bestScore && d < bestDiv)) {
+      bestScore = score;
+      bestDiv = d;
+    }
+  }
+  return bestDiv;
 }`,
     typescript: `function maxDivScore(nums: number[], divisors: number[]): number {
-
+  let bestScore = -1, bestDiv = Infinity;
+  for (const d of divisors) {
+    const score = nums.filter(n => n % d === 0).length;
+    if (score > bestScore || (score === bestScore && d < bestDiv)) {
+      bestScore = score;
+      bestDiv = d;
+    }
+  }
+  return bestDiv;
 }`,
     python: `def maxDivScore(nums, divisors):
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    divisors = list(divisors.to_py()) if hasattr(divisors, 'to_py') else list(divisors)
+    best_score = -1
+    best_div = float('inf')
+    for d in divisors:
+        score = sum(1 for n in nums if n % d == 0)
+        if score > best_score or (score == best_score and d < best_div):
+            best_score = score
+            best_div = d
+    return best_div`,
   },
   visibleTests: [
     { args: [[4, 7, 9, 3, 9], [5, 2, 3]], expected: 3 },

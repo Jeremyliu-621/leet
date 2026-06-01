@@ -42,12 +42,36 @@ Subarrays: [1],[3],[5],[4],[4],[6] (6 of length 1), [1,3],[3,5],[4,6] (3 of leng
   params: ['nums'],
   starterCode: {
     javascript: `function countSubarrays(nums) {
-
+  if (nums.length === 0) return 0;
+  let total = 1, run = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > nums[i - 1]) run++; else run = 1;
+    total += run;
+  }
+  return total;
 }`,
-    typescript: "function countSubarrays(nums: number[]): number {\n\n}",
-
+    typescript: `function countSubarrays(nums: number[]): number {
+  if (nums.length === 0) return 0;
+  let total = 1, run = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i]! > nums[i - 1]!) run++; else run = 1;
+    total += run;
+  }
+  return total;
+}`,
     python: `def countSubarrays(nums):
-    pass
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    if not nums:
+        return 0
+    total = 1
+    run = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            run += 1
+        else:
+            run = 1
+        total += run
+    return total
 `,
   },
   visibleTests: [

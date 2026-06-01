@@ -42,14 +42,27 @@ function countEven(num) {
   params: ['num'],
   starterCode: {
     javascript: `function countEven(num) {
-  // return count of integers with even digit sum
-
+  let count = 0;
+  for (let i = 1; i <= num; i++) {
+    const s = String(i).split('').reduce((a, c) => a + Number(c), 0);
+    if (s % 2 === 0) count++;
+  }
+  return count;
 }`,
-    typescript: "function countEven(num: number): number {\n  // return count of integers with even digit sum\n\n}",
-
-    python: `def countEven(num: int) -> int:
-    # return count of integers with even digit sum
-    pass
+    typescript: `function countEven(num: number): number {
+  let count = 0;
+  for (let i = 1; i <= num; i++) {
+    const s = String(i).split('').reduce((a, c) => a + Number(c), 0);
+    if (s % 2 === 0) count++;
+  }
+  return count;
+}`,
+    python: `def countEven(num):
+    count = 0
+    for i in range(1, num + 1):
+        if sum(int(d) for d in str(i)) % 2 == 0:
+            count += 1
+    return count
 `,
   },
   visibleTests: [

@@ -48,12 +48,44 @@ Seats are at positions 0, 1, 4, 6. Valid pairs: (0,1) and (4,6). The divider mus
   params: ['corridor'],
   starterCode: {
     javascript: `function numberOfWays(corridor) {
-
+  const MOD = 1_000_000_007n;
+  const seats = [];
+  for (let i = 0; i < corridor.length; i++) {
+    if (corridor[i] === 'S') seats.push(i);
+  }
+  if (seats.length === 0 || seats.length % 2 !== 0) return 0;
+  let ways = 1n;
+  for (let i = 2; i < seats.length; i += 2) {
+    ways = ways * BigInt(seats[i] - seats[i - 1]) % MOD;
+  }
+  return Number(ways);
 }`,
-    typescript: "function numberOfWays(corridor: string): number {\n\n}",
-
+    typescript: `function numberOfWays(corridor: string): number {
+  const MOD = 1_000_000_007n;
+  const seats: number[] = [];
+  for (let i = 0; i < corridor.length; i++) {
+    if (corridor[i] === 'S') seats.push(i);
+  }
+  if (seats.length === 0 || seats.length % 2 !== 0) return 0;
+  let ways = 1n;
+  for (let i = 2; i < seats.length; i += 2) {
+    ways = ways * BigInt(seats[i]! - seats[i - 1]!) % MOD;
+  }
+  return Number(ways);
+}`,
     python: `def numberOfWays(corridor):
-    pass`,
+    if hasattr(corridor, 'to_py'):
+        corridor = str(corridor)
+    MOD = 10**9 + 7
+    seats = [i for i, c in enumerate(corridor) if c == 'S']
+    if not seats or len(seats) % 2 != 0:
+        return 0
+    ways = 1
+    i = 2
+    while i < len(seats):
+        ways = ways * (seats[i] - seats[i - 1]) % MOD
+        i += 2
+    return ways`,
   },
   visibleTests: [
     { args: ['SSPPSPS'], expected: 3 },

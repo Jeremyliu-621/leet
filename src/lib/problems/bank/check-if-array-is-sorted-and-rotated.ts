@@ -49,14 +49,29 @@ function check(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function check(nums) {
-  // return true if array is sorted and rotated
-
+  const n = nums.length;
+  let drops = 0;
+  for (let i = 0; i < n; i++) {
+    if (nums[i] > nums[(i + 1) % n]) drops++;
+  }
+  return drops <= 1;
 }`,
-    typescript: "function check(nums: number[]): boolean {\n  // return true if array is sorted and rotated\n\n}",
-
-    python: `def check(nums: list) -> bool:
-    # return true if array is sorted and rotated
-    pass
+    typescript: `function check(nums: number[]): boolean {
+  const n = nums.length;
+  let drops = 0;
+  for (let i = 0; i < n; i++) {
+    if (nums[i]! > nums[(i + 1) % n]!) drops++;
+  }
+  return drops <= 1;
+}`,
+    python: `def check(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    drops = 0
+    for i in range(n):
+        if nums[i] > nums[(i + 1) % n]:
+            drops += 1
+    return drops <= 1
 `,
   },
   visibleTests: [

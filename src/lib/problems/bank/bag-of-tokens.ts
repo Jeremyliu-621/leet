@@ -42,14 +42,51 @@ Each token can be played at most once, in any order. Return the **maximum** scor
   params: ['tokens', 'power'],
   starterCode: {
     javascript: `function bagOfTokensScore(tokens, power) {
-  // return maximum score achievable
-
+  const arr = tokens.slice().sort((a, b) => a - b);
+  let lo = 0, hi = arr.length - 1, points = 0, max = 0;
+  while (lo <= hi) {
+    if (power >= arr[lo]) {
+      power -= arr[lo++];
+      max = Math.max(max, ++points);
+    } else if (points > 0) {
+      power += arr[hi--];
+      points--;
+    } else break;
+  }
+  return max;
 }`,
-    typescript: "function bagOfTokensScore(tokens: number[], power: number): number {\n  // return maximum score achievable\n\n}",
-
-    python: `def bagOfTokensScore(tokens: list, power: int) -> int:
-    # return maximum score achievable
-    pass
+    typescript: `function bagOfTokensScore(tokens: number[], power: number): number {
+  const arr = tokens.slice().sort((a, b) => a - b);
+  let lo = 0, hi = arr.length - 1, points = 0, max = 0;
+  while (lo <= hi) {
+    if (power >= arr[lo]!) {
+      power -= arr[lo++]!;
+      max = Math.max(max, ++points);
+    } else if (points > 0) {
+      power += arr[hi--]!;
+      points--;
+    } else break;
+  }
+  return max;
+}`,
+    python: `def bagOfTokensScore(tokens, power):
+    tokens = sorted(tokens.to_py() if hasattr(tokens, 'to_py') else tokens)
+    lo, hi = 0, len(tokens) - 1
+    points = 0
+    max_pts = 0
+    while lo <= hi:
+        if power >= tokens[lo]:
+            power -= tokens[lo]
+            lo += 1
+            points += 1
+            max_pts = max(max_pts, points)
+        elif points > 0:
+            power += tokens[hi]
+            hi -= 1
+            points -= 1
+        else:
+            break
+    return max_pts
 `,
   },
   visibleTests: [
