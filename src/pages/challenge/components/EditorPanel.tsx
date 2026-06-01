@@ -39,6 +39,9 @@ import {
   closeBrackets,
   closeBracketsKeymap,
   completionKeymap,
+  snippetCompletion,
+  type CompletionContext,
+  type CompletionSource,
 } from '@codemirror/autocomplete';
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { vim, getCM } from '@replit/codemirror-vim';
@@ -145,6 +148,124 @@ const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   sql: 'SQL',
 };
 
+// ---------------------------------------------------------------------------
+// Code snippets — triggered by keyword abbreviations (Tab to expand).
+// Kept focused on patterns used in competitive programming.
+// ---------------------------------------------------------------------------
+
+const JS_SNIPPETS = [
+  snippetCompletion('for (let ${i} = 0; ${i} < ${n}; ${i}++) {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (let ${i} = ${arr}.length - 1; ${i} >= 0; ${i}--) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (const ${item} of ${iterable}) {\n\t${}\n}', {
+    label: 'forof',
+    detail: 'for...of loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while (${condition}) {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('const ${name} = new Map();\n${}', {
+    label: 'newmap',
+    detail: 'new Map()',
+    type: 'keyword',
+  }),
+  snippetCompletion('const ${name} = new Set();\n${}', {
+    label: 'newset',
+    detail: 'new Set()',
+    type: 'keyword',
+  }),
+  snippetCompletion('const ${n} = ${arr}.length;\n${}', {
+    label: 'len',
+    detail: 'array length',
+    type: 'keyword',
+  }),
+  snippetCompletion('${arr}.sort((a, b) => a - b);\n${}', {
+    label: 'sort',
+    detail: 'sort ascending',
+    type: 'keyword',
+  }),
+];
+
+const PYTHON_SNIPPETS = [
+  snippetCompletion('for ${i} in range(${n}):\n\t${}', {
+    label: 'for',
+    detail: 'for range loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${i} in range(${n} - 1, -1, -1):\n\t${}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${i}, ${v} in enumerate(${arr}):\n\t${}', {
+    label: 'fore',
+    detail: 'for enumerate loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while ${condition}:\n\t${}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition}:\n\t${}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition}:\n\t${}\nelse:\n\t${}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('from collections import defaultdict\n${name} = defaultdict(${int})\n${}', {
+    label: 'ddict',
+    detail: 'defaultdict',
+    type: 'keyword',
+  }),
+  snippetCompletion('from heapq import heappush, heappop\n${heap} = []\n${}', {
+    label: 'heap',
+    detail: 'heap setup',
+    type: 'keyword',
+  }),
+];
+
+/**
+ * Returns an EditorState.languageData extension that adds snippet completions
+ * for the given language ALONGSIDE the native language completions (i.e. does
+ * not replace keyword / variable completions from the language plugin).
+ */
+function snippetLanguageData(language: SupportedLanguage) {
+  const snippets = language === 'python' ? PYTHON_SNIPPETS : JS_SNIPPETS;
+  const source: CompletionSource = (context: CompletionContext) => {
+    const word = context.matchBefore(/\w+/);
+    if (!word || (word.from === word.to && !context.explicit)) return null;
+    const options = snippets.filter((c) => c.label.startsWith(word.text));
+    if (options.length === 0) return null;
+    return { from: word.from, options };
+  };
+  return EditorState.languageData.of(() => [{ autocomplete: source }]);
+}
+
 function languageExtension(language: SupportedLanguage) {
   switch (language) {
     case 'python':
@@ -232,6 +353,7 @@ export function EditorPanel({
   const themeCompartmentRef = useRef(new Compartment());
   // Word-wrap goes through its own Compartment for live toggling.
   const wrapCompartmentRef = useRef(new Compartment());
+  const snippetCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -304,6 +426,9 @@ export function EditorPanel({
         search(),
         // Indent unit — respects user preference
         indentUnit.of(indentSpaces(indentSize)),
+        // Snippet completions — additive, via languageData so native keyword
+        // and variable completions from the language plugin are still active.
+        snippetCompartmentRef.current.of(snippetLanguageData(language)),
         // Placeholder text when the editor is empty
         EditorView.contentAttributes.of({ 'aria-label': 'Code editor' }),
         // Language goes through a Compartment so it can be swapped without
@@ -446,12 +571,15 @@ export function EditorPanel({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetCode?.version]);
 
-  // Swap the language extension when `language` changes.
+  // Swap the language extension and snippet completions when `language` changes.
   useEffect(() => {
     const view = viewRef.current;
     if (!view) return;
     view.dispatch({
-      effects: languageCompartmentRef.current.reconfigure(languageExtension(language)),
+      effects: [
+        languageCompartmentRef.current.reconfigure(languageExtension(language)),
+        snippetCompartmentRef.current.reconfigure(snippetLanguageData(language)),
+      ],
     });
   }, [language]);
 
