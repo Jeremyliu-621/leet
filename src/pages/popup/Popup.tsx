@@ -549,24 +549,20 @@ export function Popup() {
         />
       </section>
 
-      <section className="mt-4" role="radiogroup" aria-label="Default language">
+      <section className="mt-4" aria-label="Default language">
         <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
           Default language
         </p>
-        <RadioGroup
-          options={LANGUAGE_OPTIONS.map((o) => ({
-            ...o,
-            ariaLabel: `Set default language to ${o.label}`,
-          }))}
+        <select
           value={data.preferredLanguage}
-          onChange={(v) => void handleLanguageChange(v)}
-          wrapClass="flex flex-wrap items-center gap-1"
-          buttonClass={(s) =>
-            s
-              ? 'border border-border-strong bg-surface-2 px-2 py-1 font-mono text-[10px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'border border-border bg-bg px-2 py-1 font-mono text-[10px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-          }
-        />
+          onChange={(e) => void handleLanguageChange(e.target.value as SupportedLanguage)}
+          aria-label="Default language"
+          className="w-full border border-border bg-surface px-3 py-1.5 font-mono text-[11px] text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        >
+          {LANGUAGE_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
       </section>
 
       <section className="mt-4" role="radiogroup" aria-label="Editor keymap">

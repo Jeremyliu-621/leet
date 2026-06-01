@@ -97,7 +97,7 @@ interface EditorPanelProps {
   /** Called when the user clicks the fullscreen toggle button. */
   onToggleFullscreen?: () => void;
   /** Current resolved theme — controls the CodeMirror colour scheme. */
-  resolvedTheme?: 'dark' | 'light';
+  resolvedTheme?: string;
   /**
    * When set, replaces the entire editor content with `content` once. The
    * `version` counter must change for each new restore request so the effect
@@ -824,7 +824,7 @@ export function EditorPanel({
           },
         ]),
         themeCompartmentRef.current.of(
-          resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+          resolvedTheme.includes('light') ? leetlockEditorThemeLight : leetlockEditorThemeDark,
         ),
         // Font size goes through its own Compartment so it can be reconfigured
         // live when the user adjusts it in Settings without rebuilding the editor.
@@ -925,7 +925,7 @@ export function EditorPanel({
     if (!view) return;
     view.dispatch({
       effects: themeCompartmentRef.current.reconfigure(
-        resolvedTheme === 'light' ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+        resolvedTheme.includes('light') ? leetlockEditorThemeLight : leetlockEditorThemeDark,
       ),
     });
   }, [resolvedTheme]);

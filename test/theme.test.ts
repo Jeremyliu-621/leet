@@ -18,19 +18,19 @@ describe('resolveTheme', () => {
     (globalThis as unknown as { window: Window }).window = {
       matchMedia: vi.fn(() => ({ matches: true })),
     } as unknown as Window;
-    expect(resolveTheme('system')).toBe('dark');
+    expect(resolveTheme('system')).toBe('system-dark');
   });
 
   it('follows the OS for system when the OS prefers light', () => {
     (globalThis as unknown as { window: Window }).window = {
       matchMedia: vi.fn(() => ({ matches: false })),
     } as unknown as Window;
-    expect(resolveTheme('system')).toBe('light');
+    expect(resolveTheme('system')).toBe('system-light');
   });
 
-  it('falls back to dark when matchMedia is unavailable', () => {
+  it('falls back to system-dark when matchMedia is unavailable', () => {
     (globalThis as unknown as { window: Window }).window = {} as unknown as Window;
-    expect(resolveTheme('system')).toBe('dark');
+    expect(resolveTheme('system')).toBe('system-dark');
   });
 });
 

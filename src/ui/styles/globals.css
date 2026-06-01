@@ -35,6 +35,36 @@
   --ll-on-accent: #ffffff;
 }
 
+/* System themes — same base as dark/light but with a subtle blue accent
+   so the user can visually distinguish "system" from the manual options. */
+:root[data-theme='system-dark'] {
+  color-scheme: dark;
+  --ll-bg: #0a0a0c;
+  --ll-surface: #141418;
+  --ll-surface-2: #1c1c22;
+  --ll-border: #24243a;
+  --ll-border-strong: #36365a;
+  --ll-text: #e8e8f0;
+  --ll-muted: #8888a0;
+  --ll-faint: #7878a0;
+  --ll-accent: #8888ff;
+  --ll-on-accent: #0a0a0c;
+}
+
+:root[data-theme='system-light'] {
+  color-scheme: light;
+  --ll-bg: #fafaff;
+  --ll-surface: #f0f0f8;
+  --ll-surface-2: #e8e8f2;
+  --ll-border: #d8d8e8;
+  --ll-border-strong: #b8b8d0;
+  --ll-text: #0a0a12;
+  --ll-muted: #505068;
+  --ll-faint: #5858a0;
+  --ll-accent: #4444cc;
+  --ll-on-accent: #ffffff;
+}
+
 html,
 body,
 #root {

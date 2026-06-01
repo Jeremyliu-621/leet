@@ -9,7 +9,8 @@ import { pickChallengeProblem, getProblemById, filterProblems } from '../../lib/
 import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
 import type { CustomTestStatus } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
-import { resolveTheme } from '../../lib/theme';
+import { applyTheme } from '../../lib/theme';
+import type { ResolvedTheme } from '../../lib/theme';
 import { generateStarter } from '../../lib/problems/starter-gen';
 import { parseTargetParam, extractDomain, parseProblemIdParam } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
@@ -449,8 +450,8 @@ export function Challenge() {
   // Page-level state machine.
   const [pageState, setPageState] = useState<PageState>({ status: 'loading' });
 
-  // Resolved theme — 'dark' or 'light'. Derived from prefs.theme and OS setting.
-  const [resolvedTheme, setResolvedTheme] = useState<'dark' | 'light'>('dark');
+  // Resolved theme — derived from prefs.theme and OS setting.
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>('dark');
 
   // Editor code — mirrors the CodeMirror document.
   const [code, setCode] = useState('');
@@ -582,7 +583,7 @@ export function Challenge() {
       setSecondsLeft(prefs.challengeTimeLimitSec);
       setPanelPct(prefs.problemPanelWidthPct);
       setPageState({ status: 'ready', problem, prefs });
-      setResolvedTheme(resolveTheme(prefs.theme));
+      setResolvedTheme(applyTheme(prefs.theme));
       const diffAbbr = problem.difficulty === 'easy' ? 'E' : problem.difficulty === 'medium' ? 'M' : 'H';
       document.title = `[${diffAbbr}] ${problem.title} — LeetLock`;
 
@@ -705,7 +706,10 @@ export function Challenge() {
     const { prefs } = pageState;
     if (prefs.theme !== 'system') return;
     const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const listener = () => setResolvedTheme(media.matches ? 'dark' : 'light');
+    const listener = () => {
+      const resolved = applyTheme('system');
+      setResolvedTheme(resolved);
+    };
     media.addEventListener('change', listener);
     return () => media.removeEventListener('change', listener);
   }, [pageState]);
