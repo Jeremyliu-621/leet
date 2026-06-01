@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2655** problems; 8259 tests green. Batches 102–239b complete.
+**Current focus:** Bank at **2659** problems; 8271 tests green. Batches 102–240 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 240+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 241+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 240 — check-strings-equal-ops-ii, count-good-integers, min-cost-special-roads, sum-subsequence-powers (2026-06-01)
+Four new problems: `check-if-strings-can-be-made-equal-with-operations-ii` (medium/strings+hash-map, LC 2840 — since i↔i+2 swaps preserve parity, sort even/odd-indexed chars of each string and compare), `find-the-count-of-good-integers` (medium/math, LC 3272 — enumerate n-digit palindromes divisible by k; deduplicate by sorted digit signature; count valid permutations n!/∏freq[d]! minus leading-zero variants), `minimum-cost-of-a-path-with-special-roads` (medium/graph+shortest-path, LC 2977 — Dijkstra over {start, target, all road endpoints}; edges = Manhattan distance or special road cost), `find-the-sum-of-subsequence-powers` (hard/arrays+dp, LC 3098 — sort; dp[i] maps min-diff→count over length-j subsequences ending at i; BigInt mod 10^9+7). Bank at **2659**; 8271 tests.
 
 ### feat(bank): batch 239b — find-longest-valid-subsequence-i/ii, count-incremovable-subarrays-ii, min-adjacent-swaps-valid-array (2026-06-01)
 Four new problems: `find-the-longest-valid-subsequence-i` (medium/arrays+dp, LC 3105 — case-split all-same-parity vs alternating; dp[0/1] for longest alternating subsequence), `find-the-longest-valid-subsequence-ii` (medium/arrays+dp, LC 3176 — generalization mod k; dp[r][v]=length ending with remainder v for target sum-remainder r), `count-the-number-of-incremovable-subarrays-ii` (hard/arrays+binary-search, LC 2972 — find strictly-increasing prefix/suffix; binary search per left boundary for valid r, O(n log n)), `minimum-adjacent-swaps-to-make-a-valid-array` (medium/arrays, LC 2340 — move first-min to front + last-max to back; deduct 1 when minIdx>maxIdx). Bank at **2655**; 8259 tests.
