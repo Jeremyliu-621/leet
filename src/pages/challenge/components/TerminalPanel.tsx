@@ -455,6 +455,42 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
 }
 
 /**
+ * Compact strip showing pass count for each run in this session.
+ * Only rendered when there are 2+ completed runs.
+ * Example: "Run 1  2/5 · Run 2  4/5 · Run 3  5/5"
+ */
+function RunHistoryBar({ history }: { history: TerminalEntry[][] }) {
+  // Extract the summary entry from each run (last 'summary' in the run's entries).
+  const summaries = history
+    .map((run) => run.slice().reverse().find((e) => e.type === 'summary'))
+    .filter((e): e is Extract<TerminalEntry, { type: 'summary' }> => e !== undefined && e.type === 'summary');
+
+  if (summaries.length < 2) return null;
+
+  return (
+    <div
+      className="flex items-center gap-2 pb-2 mb-1 border-b border-border overflow-x-auto flex-nowrap"
+      aria-label={`Run history: ${summaries.length} runs`}
+    >
+      <span className="shrink-0 font-mono text-[9px] uppercase tracking-wider text-faint">history</span>
+      {summaries.map((s, i) => (
+        <span key={i} className="shrink-0 flex items-center gap-1">
+          {i > 0 && <span className="text-border-strong" aria-hidden="true">→</span>}
+          <span
+            className={`font-mono text-[10px] tabular-nums ${
+              s.outcome === 'accepted' ? 'text-accent' : 'text-muted'
+            }`}
+            aria-label={`Run ${i + 1}: ${s.passed} of ${s.total} passed`}
+          >
+            {s.passed}/{s.total}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/**
  * Terminal-style output panel that replaces the old VerdictPanel.
  * Shows console output, test results, and execution info in a scrollable
  * terminal with a monospace font, resembling a real terminal/console.
@@ -723,6 +759,9 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
           )}
           {result && result.verdicts.length > 0 && (
             <>
+              {/* Run history — compact pass-count progression across all runs */}
+              <RunHistoryBar history={history} />
+
               {/* Dot matrix — quick visual overview of pass/fail pattern */}
               <TestDotMatrix verdicts={result.verdicts} scrollContainerRef={scrollRef} />
 

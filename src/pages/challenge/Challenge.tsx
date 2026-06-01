@@ -159,6 +159,8 @@ interface RelatedProblem {
   title: string;
   difficulty: string;
   solved: boolean;
+  /** Shared tags with the current problem, for context display. */
+  sharedTags: readonly string[];
 }
 
 type PageState =
@@ -366,17 +368,24 @@ function SolvedStandaloneScreen({
               <li key={p.id}>
                 <a
                   href={`${challengeBase}?problem=${encodeURIComponent(p.id)}`}
-                  className="flex items-center gap-2 border border-border bg-surface px-3 py-2 text-xs transition-colors hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                  className="flex items-start gap-2 border border-border bg-surface px-3 py-2.5 text-xs transition-colors hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                 >
                   <span
                     role="img"
-                    className={`shrink-0 font-mono text-[10px] ${p.solved ? 'text-accent' : 'text-border-strong'}`}
+                    className={`mt-px shrink-0 font-mono text-[10px] ${p.solved ? 'text-accent' : 'text-border-strong'}`}
                     aria-label={p.solved ? 'Solved' : 'Not solved'}
                   >
                     {p.solved ? '✓' : '·'}
                   </span>
-                  <span className="flex-1 truncate text-text">{p.title}</span>
-                  <span className="shrink-0 font-mono text-faint capitalize">{p.difficulty}</span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block truncate text-text">{p.title}</span>
+                    {p.sharedTags.length > 0 && (
+                      <span className="block font-mono text-[9px] text-faint mt-0.5 truncate">
+                        {p.sharedTags.slice(0, 2).join(' · ')}
+                      </span>
+                    )}
+                  </span>
+                  <span className="mt-px shrink-0 font-mono text-[10px] text-faint capitalize">{p.difficulty}</span>
                 </a>
               </li>
             ))}
@@ -877,14 +886,38 @@ export function Challenge() {
             /* storage unavailable */
           }
 
-          // Pick up to 3 related problems — unsolved problems from the same tags first.
+          // Pick up to 3 related problems with difficulty-progressive ordering.
+          // Strategy: if user solved easy → prioritise same-tag mediums; if medium → hard;
+          // if hard → other unsolved hards. Unsolved always beats solved within a tier.
+          const difficultyOrder = { easy: 0, medium: 1, hard: 2 };
+          const nextDifficulty =
+            problem.difficulty === 'easy'
+              ? 'medium'
+              : problem.difficulty === 'medium'
+                ? 'hard'
+                : 'hard';
           const relatedCandidates = filterProblems({ tags: problem.tags, excludeIds: [problem.id] });
           const shuffled = [...relatedCandidates].sort(() => Math.random() - 0.5);
-          // Sort so unsolved come before already-solved, preserving random order within each group.
-          shuffled.sort((a, b) => (solvedIds.has(a.id) ? 1 : 0) - (solvedIds.has(b.id) ? 1 : 0));
+          shuffled.sort((a, b) => {
+            const aScore =
+              (solvedIds.has(a.id) ? 100 : 0) +
+              (a.difficulty === nextDifficulty ? 0 : a.difficulty === problem.difficulty ? 10 : 20) +
+              (difficultyOrder[a.difficulty as keyof typeof difficultyOrder] ?? 1);
+            const bScore =
+              (solvedIds.has(b.id) ? 100 : 0) +
+              (b.difficulty === nextDifficulty ? 0 : b.difficulty === problem.difficulty ? 10 : 20) +
+              (difficultyOrder[b.difficulty as keyof typeof difficultyOrder] ?? 1);
+            return aScore - bScore;
+          });
           const related: RelatedProblem[] = shuffled
             .slice(0, 3)
-            .map((p) => ({ id: p.id, title: p.title, difficulty: p.difficulty, solved: solvedIds.has(p.id) }));
+            .map((p) => ({
+              id: p.id,
+              title: p.title,
+              difficulty: p.difficulty,
+              solved: solvedIds.has(p.id),
+              sharedTags: p.tags.filter((t) => problem.tags.includes(t)),
+            }));
 
           // Load streak and today's solve count for the solved screen.
           let solvedScreenStreak = 0;
@@ -1146,7 +1179,7 @@ export function Challenge() {
       >
         Skip to editor
       </a>
-      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} targetDomain={domain.current} />
+      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} targetDomain={domain.current} attempts={attempts} />
 
       {/* No-target banner — informational only, does not block usage */}
       {!targetUrl.current && <NoTargetBanner />}

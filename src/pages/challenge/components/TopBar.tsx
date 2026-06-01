@@ -12,6 +12,8 @@ interface TopBarProps {
   settingsHref?: string;
   /** The domain being unlocked in gate mode (e.g. 'youtube.com'). */
   targetDomain?: string | null;
+  /** Number of submit attempts made so far this session (0 = none yet). */
+  attempts?: number;
 }
 
 /** Formats seconds into MM:SS. */
@@ -30,7 +32,7 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain }: TopBarProps) {
+export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain, attempts = 0 }: TopBarProps) {
   const isWarning = secondsLeft <= 120 && secondsLeft > 60;
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
@@ -102,6 +104,19 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
               streak
             </span>
             <span className="font-mono text-sm font-semibold text-text tabular-nums">{streak}</span>
+          </div>
+        )}
+
+        {/* Attempt counter — shown after the first submit */}
+        {attempts > 0 && (
+          <div
+            className="hidden sm:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            aria-label={`Attempt ${attempts}`}
+          >
+            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
+              attempt
+            </span>
+            <span className="font-mono text-sm font-semibold text-text tabular-nums">{attempts}</span>
           </div>
         )}
 
