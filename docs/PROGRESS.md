@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2841** problems; 8852 tests green. Batch 266 complete.
+**Current focus:** Bank at **2845** problems; 8864 tests green. Batch 267 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 267+; continued UX polish.
+**Next up:** Batch 268+; continued UX polish.
+
+### feat(bank): batch 267 — cells-in-spreadsheet-range, diff-ones-zeros-row-col, make-array-zero, sum-numbers-units-digit-k (2026-06-01)
+Four new problems: `cells-in-a-range-on-a-spreadsheet` (easy/strings, LC 2194 — nested column×row loops; column-first ordering), `difference-between-ones-and-zeros-in-row-and-column` (medium/arrays, LC 2482 — precompute row/col ones; apply formula per cell; O(m*n)), `make-the-array-zero-by-subtracting-equal-amounts` (easy/arrays+hash-map, LC 2357 — distinct non-zero values = number of ops; O(n)), `sum-of-numbers-with-units-digit-k` (medium/math, LC 2190 — try cnt=1..10 checking units digit match and feasibility; O(1)). Also improves `kth-missing-positive-number` with Level 1/2/3 hints and binary-search starter code. Bank at **2845**; 8864 tests.
 
 ### feat(bank): batch 266 (part b) — distinct-integers, sell-colored-balls, nodes-subtree-same-label, valid-arrangement-pairs, ordered-triplet-i (2026-06-01)
 Five new problems: `count-distinct-integers-added-to-array` (easy/arrays+hash-map, LC 2423 — union of two arrays via Set; O(n)), `sell-diminishing-valued-colored-balls` (medium/arrays+math+binary-search, LC 1648 — greedy level-drain: sort desc, sweep gap between consecutive top values using arithmetic sum formula; BigInt for overflow; O(n log n)), `number-of-nodes-in-sub-tree-with-same-label` (medium/tree+hash-map, LC 1519 — post-order DFS returns 26-length frequency array; ans[node] = freq[label]; O(n)), `valid-arrangement-of-pairs` (hard/graph+simulation, LC 2097 — Hierholzer's Euler path on directed graph; start at outDeg-inDeg=1 node; iterative stack+path construction; O(n)), `maximum-value-of-ordered-triplet-i` (easy/arrays, LC 2873 — O(n³) brute force over all triplets (i,j,k); max (nums[i]-nums[j])*nums[k]; returns 0 if all negative). Bank at **2841**; 8852 tests.
