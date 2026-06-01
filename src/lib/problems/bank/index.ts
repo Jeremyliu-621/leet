@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 262
+import { problem as rearrangingFruits } from './rearranging-fruits';
+import { problem as timeToCrossABridge } from './time-to-cross-a-bridge';
+import { problem as findCoinsInTreeNodes } from './find-number-of-coins-to-place-in-tree-nodes';
 // batch 261
 import { problem as hashDividedString } from './hash-divided-string';
 import { problem as minArrayChangeDiffsEqual } from './minimum-array-changes-to-make-differences-equal';
@@ -6388,6 +6392,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 262
+  rearrangingFruits,
+  timeToCrossABridge,
+  findCoinsInTreeNodes,
   // batch 261
   hashDividedString,
   minArrayChangeDiffsEqual,

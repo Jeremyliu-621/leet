@@ -18,6 +18,9 @@ Four new problems: `hash-divided-string` (easy/strings+math, LC 3271 — split i
 ### feat(bank): batch 260 — xor-queries-subarray, average-salary-excl-min-max, prefix-aligned (2026-06-01)
 Three new problems: `xor-queries-of-a-subarray` (medium/arrays+bit-manipulation, LC 1310 — prefix XOR array; O(n+q)), `average-salary-excluding-the-minimum-and-maximum-salary` (easy/arrays, LC 1491 — (sum−min−max)/(n−2)), `number-of-times-binary-string-is-prefix-aligned` (medium/arrays, LC 1375 — running max equals step index). Bank at **2800**; 8720 tests.
 
+### feat(editor): expand snippet library + terminal verdict breakdown (2026-06-01)
+Expanded CodeMirror snippet completions: Python adds `pq` (heapq min-heap), `pqmax` (heapq max via negation), `deque` (collections.deque), `counter` (Counter), `bisect` (bisect_left/right), `cache` (@functools.cache), `inf` (float('inf')), `mod` (10**9+7), `sortkey` (sorted with lambda). Java adds `pqmax` (reverseOrder), `queue` (LinkedList), `dq` (ArrayDeque), `stk` (ArrayDeque stack), `tmap` (TreeMap), `tset` (TreeSet), `mod`. C++ adds `pqmax` (no comparator), `stk`, `queue`, `dq` (deque), `tmap` (std::map), `mod`, `inf`. JS/TS adds `mod` (BigInt 1_000_000_007n), `inf` (Infinity). `KeyboardShortcutsModal` updated to document all new snippets. Terminal `Test Results` tab now shows a failure-type breakdown ("N wrong · M errors") alongside the pass/fail ratio when both error types are present.
+
 ### feat(bank): batch 259 — subarray-varying-threshold, maximize-total-cost-alternating (2026-06-01)
 Two new problems: `subarray-with-elements-greater-than-varying-threshold` (hard/arrays+stack, LC 2334 — monotonic stack left/right bounds; for each element as min, check min*len > threshold), `maximize-total-cost-of-alternating-subarrays` (medium/arrays+dp, LC 3196 — O(n) DP with pos/neg states; pos=max(pos,neg)+num, neg=prev_pos−num). Bank at **2797**; 8711 tests.
 

@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimum-time-to-complete-all-tasks',
   title: 'Minimum Time to Complete All Tasks',
   difficulty: 'hard',
-  tags: ['arrays'],
+  tags: ['arrays', 'dynamic-programming', 'binary-search'],
   description: `There is a computer that can run an unlimited number of tasks **at the same time**. You are given a 2D integer array \`tasks\` where \`tasks[i] = [start_i, end_i, duration_i]\` indicates that the \`i\`-th task should run for a total of \`duration_i\` seconds (not necessarily continuous) within the **inclusive** time range \`[start_i, end_i]\`.
 
 For each second \`t\` where \`start_i <= t <= end_i\`, the computer can choose to run or not run task \`i\`. The computer runs each task for the required duration if possible.
@@ -31,9 +31,9 @@ Return the **minimum** time the computer should be turned on to complete all tas
     },
   ],
   hints: [
-    'Sort tasks by their end time. Process them in that order.',
-    'Use a boolean array `run[1..2000]` tracking which seconds are already scheduled. For each task, count how many seconds in `[start, end]` are already on.',
-    'If already-on seconds < duration, greedily mark the remaining needed seconds from **right to left** within `[start, end]`. This is optimal because later seconds benefit more future tasks.',
+    'Level 1: Sort tasks by end time. Process tasks in that order so that when you schedule a task, all earlier-ending tasks are already scheduled.',
+    'Level 2: Use a boolean array `on[1..maxEnd]` tracking which seconds the computer is already running. For each task, count how many seconds in `[start, end]` are already on.',
+    'Level 3: If already-on seconds in `[start, end]` is less than `duration`, greedily mark the remaining needed seconds from **right to left** within `[start, end]`. Marking from the right is optimal because later seconds are shared by more future tasks.',
   ],
   functionName: 'findMinimumTime',
   params: ['tasks'],
@@ -41,7 +41,9 @@ Return the **minimum** time the computer should be turned on to complete all tas
     javascript: `function findMinimumTime(tasks) {
 
 }`,
-    typescript: "function findMinimumTime(tasks: number[][]): number {\n\n}",
+    typescript: `function findMinimumTime(tasks: number[][]): number {
+
+}`,
 
     python: `def findMinimumTime(tasks):
     pass`,

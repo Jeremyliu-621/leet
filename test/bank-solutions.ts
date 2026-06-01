@@ -46702,4 +46702,118 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return 0;
   },
+  // batch 260
+  'rearranging-fruits': (...args: unknown[]) => {
+    const fruits1 = args[0] as number[];
+    const fruits2 = args[1] as number[];
+    const diff = new Map<number, number>();
+    const total = fruits1.length;
+    let globalMin = Infinity;
+    for (let i = 0; i < total; i++) {
+      diff.set(fruits1[i]!, (diff.get(fruits1[i]!) ?? 0) + 1);
+      diff.set(fruits2[i]!, (diff.get(fruits2[i]!) ?? 0) - 1);
+      globalMin = Math.min(globalMin, fruits1[i]!, fruits2[i]!);
+    }
+    const pos: number[] = [];
+    const neg: number[] = [];
+    for (const [v, cnt] of diff) {
+      if (cnt % 2 !== 0) return -1;
+      for (let i = 0; i < cnt / 2; i++) pos.push(v);
+      for (let i = 0; i < -cnt / 2; i++) neg.push(v);
+    }
+    pos.sort((a, b) => a - b);
+    neg.sort((a, b) => a - b);
+    let cost = 0;
+    for (let i = 0; i < pos.length; i++) {
+      cost += Math.min(pos[i]!, neg[i]!, 2 * globalMin);
+    }
+    return cost;
+  },
+  'time-to-cross-a-bridge': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const k = args[1] as number;
+    const time = args[2] as number[][];
+    // Min-heap helper
+    function makeHeap<T>(cmp: (a: T, b: T) => number) {
+      const h: T[] = [];
+      function siftUp(i: number) {
+        while (i > 0) {
+          const p = (i - 1) >> 1;
+          if (cmp(h[i]!, h[p]!) < 0) { [h[i], h[p]] = [h[p]!, h[i]!]; i = p; } else break;
+        }
+      }
+      function siftDown(i: number) {
+        const len = h.length;
+        while (true) {
+          let m = i, l = 2 * i + 1, r = 2 * i + 2;
+          if (l < len && cmp(h[l]!, h[m]!) < 0) m = l;
+          if (r < len && cmp(h[r]!, h[m]!) < 0) m = r;
+          if (m === i) break;
+          [h[i], h[m]] = [h[m]!, h[i]!]; i = m;
+        }
+      }
+      return {
+        push: (v: T) => { h.push(v); siftUp(h.length - 1); },
+        pop: () => { const t = h[0]!; h[0] = h[h.length - 1]!; h.pop(); if (h.length) siftDown(0); return t; },
+        peek: () => h[0],
+        size: () => h.length,
+      };
+    }
+    const eff = (i: number) => time[i]![0]! + time[i]![3]!;
+    const wcmp = (a: number, b: number) => { const ea = eff(a), eb = eff(b); return ea !== eb ? eb - ea : b - a; };
+    const wR = makeHeap<number>(wcmp);
+    const wL = makeHeap<number>(wcmp);
+    const dL = makeHeap<[number, number]>((a, b) => a[0] - b[0]);
+    const dR = makeHeap<[number, number]>((a, b) => a[0] - b[0]);
+    for (let i = 0; i < n; i++) wR.push(i);
+    let t = 0, placed = 0, ans = 0;
+    while (placed < k) {
+      while (dL.size() && dL.peek()![0] <= t) { const [, i] = dL.pop(); wL.push(i); }
+      while (dR.size() && dR.peek()![0] <= t) { const [, i] = dR.pop(); wR.push(i); }
+      if (wL.size() === 0 && wR.size() === 0) {
+        let nt = Infinity;
+        if (dL.size()) nt = Math.min(nt, dL.peek()![0]);
+        if (dR.size()) nt = Math.min(nt, dR.peek()![0]);
+        t = nt;
+        continue;
+      }
+      if (wL.size() > 0) {
+        const i = wL.pop();
+        t += time[i]![0]!;
+        placed++;
+        ans = t;
+        if (placed < k) dR.push([t + time[i]![2]!, i]);
+      } else {
+        const i = wR.pop();
+        t += time[i]![3]!;
+        dL.push([t + time[i]![1]!, i]);
+      }
+    }
+    return ans;
+  },
+  'find-number-of-coins-to-place-in-tree-nodes': (...args: unknown[]) => {
+    const edges = args[0] as number[][];
+    const cost = args[1] as number[];
+    const n = cost.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+    const ans = new Array<number>(n).fill(0);
+    function dfs(node: number, par: number): number[] {
+      const vals: number[] = [cost[node]!];
+      for (const nb of adj[node]!) {
+        if (nb === par) continue;
+        for (const v of dfs(nb, node)) vals.push(v);
+      }
+      if (vals.length >= 3) {
+        vals.sort((a, b) => a - b);
+        const top = vals.slice(-3).reduce((p, v) => p * v, 1);
+        const bot = vals[0]! * vals[1]! * vals[vals.length - 1]!;
+        ans[node] = Math.max(0, top, bot);
+      }
+      vals.sort((a, b) => a - b);
+      return vals.length <= 5 ? vals : [...vals.slice(0, 2), ...vals.slice(-3)];
+    }
+    dfs(0, -1);
+    return ans;
+  },
 };

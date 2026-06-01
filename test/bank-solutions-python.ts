@@ -45822,4 +45822,100 @@ def componentValue(nums, edges):
             return k
     return 0
 `,
+  // batch 260
+  'rearranging-fruits': `
+def minCost(fruits1, fruits2):
+    from collections import defaultdict
+    diff = defaultdict(int)
+    global_min = float('inf')
+    for a, b in zip(fruits1, fruits2):
+        diff[a] += 1
+        diff[b] -= 1
+        global_min = min(global_min, a, b)
+    pos, neg = [], []
+    for v, cnt in diff.items():
+        if cnt % 2 != 0:
+            return -1
+        for _ in range(cnt // 2):
+            pos.append(v)
+        for _ in range(-cnt // 2):
+            neg.append(v)
+    pos.sort()
+    neg.sort()
+    cost = 0
+    for a, b in zip(pos, neg):
+        cost += min(a, b, 2 * global_min)
+    return cost
+`,
+  'time-to-cross-a-bridge': `
+import heapq
+def findCrossingTime(n, k, time):
+    # wR, wL: max-heaps for waiting workers (negate eff and idx for max semantics)
+    # dL, dR: min-heaps of (finish_time, worker_idx) for working workers
+    wR, wL = [], []
+    dL, dR = [], []
+    def eff(i):
+        return time[i][0] + time[i][3]
+    for i in range(n):
+        heapq.heappush(wR, (-eff(i), -i))
+    t, placed, ans = 0, 0, 0
+    while placed < k:
+        while dL and dL[0][0] <= t:
+            ft, i = heapq.heappop(dL)
+            heapq.heappush(wL, (-eff(i), -i))
+        while dR and dR[0][0] <= t:
+            ft, i = heapq.heappop(dR)
+            heapq.heappush(wR, (-eff(i), -i))
+        if not wL and not wR:
+            nt = float('inf')
+            if dL:
+                nt = min(nt, dL[0][0])
+            if dR:
+                nt = min(nt, dR[0][0])
+            t = nt
+            continue
+        if wL:
+            _, neg_i = heapq.heappop(wL)
+            i = -neg_i
+            t += time[i][0]
+            placed += 1
+            ans = t
+            if placed < k:
+                heapq.heappush(dR, (t + time[i][2], i))
+        else:
+            _, neg_i = heapq.heappop(wR)
+            i = -neg_i
+            t += time[i][3]
+            heapq.heappush(dL, (t + time[i][1], i))
+    return ans
+`,
+  'find-number-of-coins-to-place-in-tree-nodes': `
+import sys
+sys.setrecursionlimit(200000)
+def placedCoins(edges, cost):
+    n = len(cost)
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = [0] * n
+    def dfs(node, par):
+        vals = [cost[node]]
+        for nb in adj[node]:
+            if nb == par:
+                continue
+            for v in dfs(nb, node):
+                vals.append(v)
+        if len(vals) >= 3:
+            vals.sort()
+            top = vals[-1] * vals[-2] * vals[-3]
+            bot = vals[0] * vals[1] * vals[-1]
+            ans[node] = max(0, top, bot)
+        vals.sort()
+        if len(vals) <= 5:
+            return vals
+        return vals[:2] + vals[-3:]
+    dfs(0, -1)
+    return ans
+`,
 };
