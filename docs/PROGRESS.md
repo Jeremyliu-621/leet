@@ -12,6 +12,9 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 239+; UX polish per LEETCODE_PARITY.md.
 
+### feat(editor): CM6 snippet completions for JS and Python (2026-06-01)
+Added tab-expandable code snippets to CodeMirror 6 via `EditorState.languageData.of()` (additive — does NOT replace native keyword/variable completions from the language plugin). JS snippets: `for`, `forr`, `forof`, `while`, `if`, `ife`, `newmap`, `newset`, `len`, `sort`. Python snippets: `for`, `forr`, `fore` (enumerate), `while`, `if`, `ife`, `ddict`, `heap`. Snippets reconfigure via Compartment when language switches. Addresses snippet expansion gap from LEETCODE_PARITY.md.
+
 ### feat(bank): batch 238b — count-beautiful-numbers, apply-operations-to-maximize-score, find-the-sum-of-good-subsequences, count-substrings-k-constraint-ii, count-balanced-permutations (2026-06-01)
 Five new hard problems: `count-beautiful-numbers` (hard/math+digit-dp, LC-style — digit DP with (pos, digit_sum, num_mod_2520, tight, started) state; count integers with no-zero digits where digit_sum divides the number), `apply-operations-to-maximize-score` (hard/arrays+math+stack, LC 2818 — monotonic stack finds per-element subarray count; greedy top-k by value), `find-the-sum-of-good-subsequences` (hard/arrays+hash-map+dp, LC 3351 — hash-map DP: cnt[v]/dp[v] tracks count+sum of subsequences ending at v; update from v-1,v,v+1 neighbors), `count-substrings-that-satisfy-k-constraint-ii` (hard/strings+sliding-window+binary-search, LC 3261 — sliding window computes minLeft[i]; prefix sums + binary search answer each query in O(log n)), `count-number-of-balanced-permutations` (hard/math+dp, LC 3343 — combinatorial DP: pick digits for even positions summing to target/2; multiply by nEven! * nOdd!). Bank at **2647**; 8235 tests.
 
