@@ -3052,6 +3052,12 @@ import { problem as tarjanSCC } from './tarjan-strongly-connected';
 import { problem as kmpSearch } from './kmp-string-search';
 import { problem as findBridges } from './bridge-finding-undirected';
 import { problem as countTotalSetBits } from './count-total-set-bits';
+// batch 244
+import { problem as eulerPathCircuit } from './euler-path-circuit';
+import { problem as convexHullGraham } from './convex-hull-graham';
+import { problem as ahoCorasick } from './aho-corasick-multi-pattern';
+import { problem as maxFlowEdmondsKarp } from './max-flow-edmonds-karp';
+import { problem as lcaBinaryLifting } from './lca-binary-lifting';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6229,4 +6235,9 @@ export const problems: readonly Problem[] = [
   maximumInvitations,
   idealArraysCount,
   shortestPathGridObstacles,
+  eulerPathCircuit,
+  convexHullGraham,
+  ahoCorasick,
+  maxFlowEdmondsKarp,
+  lcaBinaryLifting,
 ];

@@ -43545,4 +43545,205 @@ def shortestPath(grid, k):
                 q.append((nr, nc, nk, steps + 1))
     return -1
 `,
+
+  'euler-path-circuit': `
+def eulerPathCircuit(n: int, edges: list) -> list:
+    import sys
+    sys.setrecursionlimit(10000)
+    out_deg = [0] * n
+    in_deg = [0] * n
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        adj[u].append(v)
+        out_deg[u] += 1
+        in_deg[v] += 1
+    start = -1
+    start_surplus = end_surplus = 0
+    for i in range(n):
+        diff = out_deg[i] - in_deg[i]
+        if diff == 1:
+            start_surplus += 1
+            start = i
+        elif diff == -1:
+            end_surplus += 1
+        elif diff != 0:
+            return []
+    if not ((start_surplus == 0 and end_surplus == 0) or (start_surplus == 1 and end_surplus == 1)):
+        return []
+    if start == -1:
+        for i in range(n):
+            if adj[i]:
+                start = i
+                break
+    if start == -1:
+        return []
+    ptr = [0] * n
+    stack = [start]
+    path = []
+    while stack:
+        u = stack[-1]
+        if ptr[u] < len(adj[u]):
+            stack.append(adj[u][ptr[u]])
+            ptr[u] += 1
+        else:
+            path.append(stack.pop())
+    path.reverse()
+    return path if len(path) == len(edges) + 1 else []
+`,
+  'convex-hull-graham': `
+def convexHullGraham(points: list) -> list:
+    pts = [list(p) for p in points]
+    def cross(o, a, b):
+        return (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0])
+    pivot = min(pts, key=lambda p: (p[1], p[0]))
+    rest = [p for p in pts if p != pivot]
+    rest.sort(key=lambda p: (
+        -(cross(pivot, p, [pivot[0]+1, pivot[1]])) / ((p[0]-pivot[0])**2+(p[1]-pivot[1])**2)**0.5
+        if (p[0]-pivot[0])**2+(p[1]-pivot[1])**2 > 0 else 0,
+        (p[0]-pivot[0])**2+(p[1]-pivot[1])**2
+    ))
+    # simpler: sort by polar angle using cross product comparator
+    import functools
+    def cmp(a, b):
+        c = cross(pivot, a, b)
+        if c != 0:
+            return -1 if c > 0 else 1
+        da = (a[0]-pivot[0])**2+(a[1]-pivot[1])**2
+        db = (b[0]-pivot[0])**2+(b[1]-pivot[1])**2
+        return -1 if da < db else (1 if da > db else 0)
+    rest.sort(key=functools.cmp_to_key(cmp))
+    hull = [pivot]
+    for p in rest:
+        while len(hull) >= 2 and cross(hull[-2], hull[-1], p) <= 0:
+            hull.pop()
+        hull.append(p)
+    return hull
+`,
+  'aho-corasick-multi-pattern': `
+def ahoCorasick(text: str, patterns: list) -> list:
+    from collections import deque
+    children = [{}]
+    fail = [0]
+    output = [[]]
+    for pat in patterns:
+        cur = 0
+        for c in pat:
+            if c not in children[cur]:
+                children[cur][c] = len(children)
+                children.append({})
+                fail.append(0)
+                output.append([])
+            cur = children[cur][c]
+        output[cur].append(pat)
+    q = deque()
+    for c, child in children[0].items():
+        fail[child] = 0
+        q.append(child)
+    while q:
+        u = q.popleft()
+        for c, v in children[u].items():
+            f = fail[u]
+            while f != 0 and c not in children[f]:
+                f = fail[f]
+            fail[v] = children[f].get(c, 0)
+            if fail[v] == v:
+                fail[v] = 0
+            output[v] = output[v] + output[fail[v]]
+            q.append(v)
+    result = []
+    cur = 0
+    for i, ch in enumerate(text):
+        while cur != 0 and ch not in children[cur]:
+            cur = fail[cur]
+        cur = children[cur].get(ch, 0)
+        for pat in output[cur]:
+            result.append([pat, i - len(pat) + 1])
+    result.sort(key=lambda x: (x[1], x[0]))
+    return result
+`,
+  'max-flow-edmonds-karp': `
+def maxFlowEdmondsKarp(n: int, edges: list, source: int, sink: int) -> int:
+    from collections import deque
+    cap = [[0]*n for _ in range(n)]
+    for e in edges:
+        u, v, c = int(e[0]), int(e[1]), int(e[2])
+        cap[u][v] += c
+    flow = 0
+    while True:
+        prev = [-1]*n
+        prev[source] = source
+        q = deque([source])
+        while q and prev[sink] == -1:
+            u = q.popleft()
+            for v in range(n):
+                if prev[v] == -1 and cap[u][v] > 0:
+                    prev[v] = u
+                    q.append(v)
+        if prev[sink] == -1:
+            break
+        aug = float('inf')
+        v = sink
+        while v != source:
+            u = prev[v]
+            aug = min(aug, cap[u][v])
+            v = u
+        v = sink
+        while v != source:
+            u = prev[v]
+            cap[u][v] -= aug
+            cap[v][u] += aug
+            v = u
+        flow += aug
+    return flow
+`,
+  'lca-binary-lifting': `
+def lcaBinaryLifting(parent: list, queries: list) -> list:
+    import math
+    n = len(parent)
+    LOG = max(1, math.ceil(math.log2(n + 1)) + 1)
+    depth = [0] * n
+    children = [[] for _ in range(n)]
+    root = 0
+    up = [[0]*n for _ in range(LOG)]
+    for i in range(n):
+        p = int(parent[i])
+        if p == -1:
+            root = i
+            up[0][i] = i
+        else:
+            children[p].append(i)
+            up[0][i] = p
+    # BFS to compute depth
+    from collections import deque
+    q = deque([root])
+    order = []
+    while q:
+        u = q.popleft()
+        order.append(u)
+        for c in children[u]:
+            depth[c] = depth[u] + 1
+            q.append(c)
+    for k in range(1, LOG):
+        for u in order:
+            up[k][u] = up[k-1][up[k-1][u]]
+    result = []
+    for qr in queries:
+        a, b = int(qr[0]), int(qr[1])
+        if depth[a] < depth[b]:
+            a, b = b, a
+        diff = depth[a] - depth[b]
+        for k in range(LOG):
+            if (diff >> k) & 1:
+                a = up[k][a]
+        if a == b:
+            result.append(a)
+            continue
+        for k in range(LOG-1, -1, -1):
+            if up[k][a] != up[k][b]:
+                a = up[k][a]
+                b = up[k][b]
+        result.append(up[0][a])
+    return result
+`,
 };

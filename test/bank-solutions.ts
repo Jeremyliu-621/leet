@@ -44324,4 +44324,148 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return -1;
   },
+
+  'euler-path-circuit': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const out = new Array<number>(n).fill(0);
+    const inc = new Array<number>(n).fill(0);
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const e of edges) { const eu = e[0] as number, ev = e[1] as number; adj[eu]!.push(ev); out[eu]!++; inc[ev]!++; }
+    let start = -1, startSurplus = 0, endSurplus = 0;
+    for (let i = 0; i < n; i++) {
+      const diff = out[i]! - inc[i]!;
+      if (diff === 1) { startSurplus++; start = i; }
+      else if (diff === -1) endSurplus++;
+      else if (diff !== 0) return [];
+    }
+    if (!((startSurplus === 0 && endSurplus === 0) || (startSurplus === 1 && endSurplus === 1))) return [];
+    if (start === -1) { for (let i = 0; i < n; i++) { if (adj[i]!.length > 0) { start = i; break; } } }
+    if (start === -1) return [];
+    const ptr = new Array<number>(n).fill(0);
+    const stack = [start];
+    const path: number[] = [];
+    while (stack.length > 0) {
+      const u = stack[stack.length - 1]!;
+      if (ptr[u]! < adj[u]!.length) { stack.push(adj[u]![ptr[u]!]!); ptr[u]!++; }
+      else { path.push(stack.pop()!); }
+    }
+    path.reverse();
+    return path.length === edges.length + 1 ? path : [];
+  },
+
+  'convex-hull-graham': (...args: unknown[]) => {
+    const pts = args[0] as number[][];
+    const cross = (o: number[], a: number[], b: number[]) =>
+      (a[0]! - o[0]!) * (b[1]! - o[1]!) - (a[1]! - o[1]!) * (b[0]! - o[0]!);
+    const pivot = pts.reduce((best, p) => p[1]! < best[1]! || (p[1]! === best[1]! && p[0]! < best[0]!) ? p : best);
+    const rest = pts.filter(p => p !== pivot).sort((a, b) => {
+      const c = cross(pivot, a, b);
+      if (c !== 0) return c > 0 ? -1 : 1;
+      const da = (a[0]! - pivot[0]!) ** 2 + (a[1]! - pivot[1]!) ** 2;
+      const db = (b[0]! - pivot[0]!) ** 2 + (b[1]! - pivot[1]!) ** 2;
+      return da - db;
+    });
+    const hull: number[][] = [pivot];
+    for (const p of rest) {
+      while (hull.length >= 2 && cross(hull[hull.length - 2]!, hull[hull.length - 1]!, p) <= 0) hull.pop();
+      hull.push(p);
+    }
+    return hull;
+  },
+
+  'aho-corasick-multi-pattern': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const patterns = args[1] as string[];
+    interface Node { ch: Map<string, number>; fail: number; out: string[] }
+    const nodes: Node[] = [{ ch: new Map(), fail: 0, out: [] }];
+    for (const pat of patterns) {
+      let cur = 0;
+      for (const c of pat) {
+        if (!nodes[cur]!.ch.has(c)) { nodes[cur]!.ch.set(c, nodes.length); nodes.push({ ch: new Map(), fail: 0, out: [] }); }
+        cur = nodes[cur]!.ch.get(c)!;
+      }
+      nodes[cur]!.out.push(pat);
+    }
+    const q: number[] = [];
+    for (const [, child] of nodes[0]!.ch) { nodes[child]!.fail = 0; q.push(child); }
+    for (let qi = 0; qi < q.length; qi++) {
+      const u = q[qi]!;
+      for (const [c, v] of nodes[u]!.ch) {
+        let f = nodes[u]!.fail;
+        while (f !== 0 && !nodes[f]!.ch.has(c)) f = nodes[f]!.fail;
+        nodes[v]!.fail = nodes[f]!.ch.get(c) ?? (f === 0 && !nodes[0]!.ch.has(c) ? 0 : nodes[f]!.ch.get(c) ?? 0);
+        if (nodes[v]!.fail === v) nodes[v]!.fail = 0;
+        nodes[v]!.out = [...nodes[v]!.out, ...nodes[nodes[v]!.fail]!.out];
+        q.push(v);
+      }
+    }
+    const result: [string, number][] = [];
+    let cur = 0;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i]!;
+      while (cur !== 0 && !nodes[cur]!.ch.has(c)) cur = nodes[cur]!.fail;
+      cur = nodes[cur]!.ch.get(c) ?? 0;
+      for (const pat of nodes[cur]!.out) result.push([pat, i - pat.length + 1]);
+    }
+    return result.sort((a, b) => a[1]! - b[1]! || a[0]!.localeCompare(b[0]!));
+  },
+
+  'max-flow-edmonds-karp': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const src = args[2] as number;
+    const snk = args[3] as number;
+    const cap: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (const [u, v, c] of edges) cap[u as number]![v as number]! += c as number;
+    let flow = 0;
+    while (true) {
+      const prev = new Array<number>(n).fill(-1);
+      prev[src] = src;
+      const q = [src];
+      for (let qi = 0; qi < q.length && prev[snk] === -1; qi++) {
+        const u = q[qi]!;
+        for (let v = 0; v < n; v++) {
+          if (prev[v] === -1 && cap[u]![v]! > 0) { prev[v] = u; q.push(v); }
+        }
+      }
+      if (prev[snk] === -1) break;
+      let aug = Infinity;
+      for (let v = snk; v !== src; v = prev[v]!) aug = Math.min(aug, cap[prev[v]!]![v]!);
+      for (let v = snk; v !== src; v = prev[v]!) { cap[prev[v]!]![v]! -= aug; cap[v]![prev[v]!]! += aug; }
+      flow += aug;
+    }
+    return flow;
+  },
+
+  'lca-binary-lifting': (...args: unknown[]) => {
+    const parent = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = parent.length;
+    const LOG = Math.ceil(Math.log2(n + 1)) + 1;
+    const depth = new Array<number>(n).fill(0);
+    const up: number[][] = Array.from({ length: LOG }, () => new Array(n).fill(0));
+    up[0]! = parent.map((p, i) => p === -1 ? i : p);
+    const order: number[] = [];
+    const children: number[][] = Array.from({ length: n }, () => []);
+    let root = 0;
+    for (let i = 0; i < n; i++) { if (parent[i] === -1) root = i; else children[parent[i]!]!.push(i); }
+    const stack = [root];
+    while (stack.length) {
+      const u = stack.pop()!; order.push(u);
+      for (const c of children[u]!) { depth[c] = depth[u]! + 1; stack.push(c); }
+    }
+    for (let k = 1; k < LOG; k++) {
+      for (const u of order) up[k]![u] = up[k - 1]![up[k - 1]![u]!]!;
+    }
+    return queries.map(([u, v]) => {
+      let a = u!, b = v!;
+      if (depth[a]! < depth[b]!) [a, b] = [b, a];
+      let diff = depth[a]! - depth[b]!;
+      for (let k = 0; k < LOG; k++) if ((diff >> k) & 1) a = up[k]![a]!;
+      if (a === b) return a;
+      for (let k = LOG - 1; k >= 0; k--) if (up[k]![a] !== up[k]![b]) { a = up[k]![a]!; b = up[k]![b]!; }
+      return up[0]![a]!;
+    });
+  },
 };
