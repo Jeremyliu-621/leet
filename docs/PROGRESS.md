@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2815** problems; 8771 tests green. Batches 102–263 complete.
+**Current focus:** Bank at **2819** problems; 8783 tests green. Batches 102–263 + batch 262 additions complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 264+; continued UX polish.
+
+### feat(bank): batch 262 additions — min-seconds-mountain-height-zero, max-multiplication-score, max-divisibility-score, k-items-max-sum (2026-06-01)
+Four more batch 262 problems: `minimum-number-of-seconds-to-make-mountain-height-zero` (medium/arrays+binary-search, LC 3296 — binary search on time; inner binary search for each worker's max reductions; O(n log(max_t) log(h))), `maximum-multiplication-score` (medium/arrays+dp, LC 3290 — pick 4 indices from a in order; 1D DP from right j=4..1; O(n)), `find-maximum-divisibility-score` (easy/arrays+math, LC 2644 — brute force count divisible elements per divisor; return max-count divisor, ties broken by smallest; O(n*m)), `k-items-with-maximum-sum` (easy/arrays+math, LC 2600 — greedy: min(k,ones) - max(0,k-ones-zeros); O(1)). Bank at **2819**; 8783 tests.
 
 ### refactor(ui): replace ▲/▼ chevrons with animated SVG + fix all inline styles (2026-06-01)
 All expand/collapse UI controls now use a consistent rotating SVG chevron (12×12 viewBox, 1.5px round path, `transition-transform duration-150`) instead of Unicode ▲/▼/▸/▾. Affected components: TestResultCard (TerminalPanel), terminal collapse toggle (TerminalPanel), SubmissionsPanel, CustomTestPanel, ProblemBrowserSection. Also removes all remaining inline `style={{ fontSize: '9px', letterSpacing: '0.05em' }}` from CopyButton in TerminalPanel and ProblemPanel, replaced with Tailwind `text-[9px] tracking-[0.05em]`/`text-[9px]`.
