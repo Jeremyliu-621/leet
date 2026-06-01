@@ -42639,7 +42639,7 @@ def sumOfPowers(nums, k):
     return ans
 `,
 
-  // batch 240
+  // batch 240 (remote)
   'modular-exponentiation': `
 def modPow(base, exp, m):
     if m == 1:
@@ -42715,5 +42715,79 @@ def minCostCoverTasks(n, groups, costs):
             nxt = mask | gm
             dp[nxt] = min(dp[nxt], dp[mask] + costs[i])
     return -1 if dp[full] == float('inf') else dp[full]
+`,
+  // batch 241
+  'count-number-of-rectangles-containing-each-point': `
+def countRectangles(rectangles, points):
+    import bisect
+    max_h = 100
+    groups = [[] for _ in range(max_h + 1)]
+    for l, h in rectangles:
+        groups[h].append(l)
+    for h in range(1, max_h + 1):
+        groups[h].sort()
+    result = []
+    for x, y in points:
+        count = 0
+        for h in range(y, max_h + 1):
+            idx = bisect.bisect_left(groups[h], x)
+            count += len(groups[h]) - idx
+        result.append(count)
+    return result
+`,
+  'parsing-a-boolean-expression': `
+def parseBoolExpr(expression):
+    idx = [0]
+    def parse():
+        ch = expression[idx[0]]; idx[0] += 1
+        if ch == 't': return True
+        if ch == 'f': return False
+        idx[0] += 1  # skip '('
+        if ch == '!':
+            val = parse(); idx[0] += 1  # skip ')'
+            return not val
+        vals = []
+        while expression[idx[0]] != ')':
+            if expression[idx[0]] == ',': idx[0] += 1
+            vals.append(parse())
+        idx[0] += 1  # skip ')'
+        return all(vals) if ch == '&' else any(vals)
+    return parse()
+`,
+  'number-of-ways-to-reorder-array-to-get-same-bst': `
+def numOfWays(nums):
+    from math import comb
+    MOD = 10**9 + 7
+    def count(arr):
+        if len(arr) <= 1: return 1
+        root = arr[0]
+        left = [x for x in arr if x < root]
+        right = [x for x in arr if x > root]
+        return comb(len(left) + len(right), len(left)) * count(left) % MOD * count(right) % MOD
+    return (count(nums) - 1) % MOD
+`,
+  'count-pairs-of-nodes': `
+def countPairs(n, edges, queries):
+    deg = [0] * (n + 1)
+    shared = {}
+    for u, v in edges:
+        deg[u] += 1; deg[v] += 1
+        key = (min(u,v), max(u,v))
+        shared[key] = shared.get(key, 0) + 1
+    sorted_deg = sorted(deg[1:])
+    result = []
+    for q in queries:
+        cnt = 0
+        lo, hi = 0, n - 1
+        while lo < hi:
+            if sorted_deg[lo] + sorted_deg[hi] > q:
+                cnt += hi - lo; hi -= 1
+            else:
+                lo += 1
+        for (u, v), c in shared.items():
+            if deg[u] + deg[v] > q and deg[u] + deg[v] - c <= q:
+                cnt -= 1
+        result.append(cnt)
+    return result
 `,
 };

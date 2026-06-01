@@ -3044,6 +3044,11 @@ import { problem as canBeEqualWithOpsII } from './check-if-strings-can-be-made-e
 import { problem as countGoodIntegers } from './find-the-count-of-good-integers';
 import { problem as minimumCostSpecialRoads } from './minimum-cost-of-a-path-with-special-roads';
 import { problem as sumOfSubsequencePowers } from './find-the-sum-of-subsequence-powers';
+// batch 241
+import { problem as countRectanglesContainingEachPoint } from './count-number-of-rectangles-containing-each-point';
+import { problem as parseBoolExpr } from './parsing-a-boolean-expression';
+import { problem as numOfWaysSameBST } from './number-of-ways-to-reorder-array-to-get-same-bst';
+import { problem as countPairsOfNodes } from './count-pairs-of-nodes';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6144,4 +6149,9 @@ export const problems: readonly Problem[] = [
   greedyIntervalCover,
   rollingHashSearch,
   bitmaskDpTaskCover,
+  // batch 241
+  countRectanglesContainingEachPoint,
+  parseBoolExpr,
+  numOfWaysSameBST,
+  countPairsOfNodes,
 ];

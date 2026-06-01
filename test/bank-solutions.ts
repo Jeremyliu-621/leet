@@ -43460,7 +43460,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
-  // batch 240
+  // batch 240 (remote)
   'modular-exponentiation': (...args: unknown[]) => {
     let [base, exp, m] = args as [number, number, number];
     if (m === 1) return 0;
@@ -43537,5 +43537,93 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     }
     return dp[full] === Infinity ? -1 : dp[full]!;
+  },
+  // batch 241
+  'count-number-of-rectangles-containing-each-point': (...args: unknown[]) => {
+    const [rectangles, points] = args as [number[][], number[][]];
+    const maxH = 100;
+    const groups: number[][] = Array.from({ length: maxH + 1 }, () => []);
+    for (const r of rectangles) groups[r[1]!]!.push(r[0]!);
+    for (let h = 1; h <= maxH; h++) groups[h]!.sort((a, b) => a - b);
+    const bisectLeft = (arr: number[], x: number) => {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < x) lo = mid + 1; else hi = mid; }
+      return lo;
+    };
+    return points.map(p => {
+      let count = 0;
+      for (let h = p[1]!; h <= maxH; h++) count += groups[h]!.length - bisectLeft(groups[h]!, p[0]!);
+      return count;
+    });
+  },
+  'parsing-a-boolean-expression': (...args: unknown[]) => {
+    const expression = args[0] as string;
+    let idx = 0;
+    function parse(): boolean {
+      const ch = expression[idx++];
+      if (ch === 't') return true;
+      if (ch === 'f') return false;
+      idx++; // skip '('
+      if (ch === '!') {
+        const val = parse();
+        idx++; // skip ')'
+        return !val;
+      }
+      const vals: boolean[] = [];
+      while (expression[idx] !== ')') {
+        if (expression[idx] === ',') idx++;
+        vals.push(parse());
+      }
+      idx++; // skip ')'
+      if (ch === '&') return vals.every(Boolean);
+      return vals.some(Boolean);
+    }
+    return parse();
+  },
+  'number-of-ways-to-reorder-array-to-get-same-bst': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const C: bigint[][] = [[1n]];
+    for (let i = 1; i <= n; i++) {
+      const row: bigint[] = [1n];
+      for (let j = 1; j <= i; j++) row.push(((C[i - 1]![j - 1] ?? 0n) + (C[i - 1]![j] ?? 0n)) % MOD);
+      C.push(row);
+    }
+    function count(arr: number[]): bigint {
+      if (arr.length <= 1) return 1n;
+      const root = arr[0]!;
+      const left = arr.filter(x => x < root);
+      const right = arr.filter(x => x > root);
+      return C[left.length + right.length]![left.length]! * count(left) % MOD * count(right) % MOD;
+    }
+    return Number(count(nums) - 1n);
+  },
+  'count-pairs-of-nodes': (...args: unknown[]) => {
+    const [n, edges, queries] = args as [number, number[][], number[]];
+    const deg = new Array<number>(n + 1).fill(0);
+    const shared = new Map<string, number>();
+    for (const e of edges) {
+      deg[e[0]!]!++;
+      deg[e[1]!]!++;
+      const key = e[0]! < e[1]! ? `${e[0]},${e[1]}` : `${e[1]},${e[0]}`;
+      shared.set(key, (shared.get(key) ?? 0) + 1);
+    }
+    const sorted = deg.slice(1).sort((a, b) => a - b);
+    return queries.map(q => {
+      let cnt = 0;
+      let lo = 0, hi = n - 1;
+      while (lo < hi) {
+        if (sorted[lo]! + sorted[hi]! > q) { cnt += hi - lo; hi--; }
+        else lo++;
+      }
+      for (const [key, c] of shared) {
+        const comma = key.indexOf(',');
+        const u = parseInt(key.slice(0, comma));
+        const v = parseInt(key.slice(comma + 1));
+        if (deg[u]! + deg[v]! > q && deg[u]! + deg[v]! - c <= q) cnt--;
+      }
+      return cnt;
+    });
   },
 };
