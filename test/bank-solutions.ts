@@ -42799,4 +42799,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ops;
   },
+  // batch 235
+  'apple-redistribution-into-boxes': (...args: unknown[]) => {
+    const [packages, capacity] = args as [number[], number[]];
+    const total = packages.reduce((a, b) => a + b, 0);
+    const sorted = capacity.slice().sort((a, b) => b - a);
+    let sum = 0;
+    for (let i = 0; i < sorted.length; i++) {
+      sum += sorted[i]!;
+      if (sum >= total) return i + 1;
+    }
+    return sorted.length;
+  },
+  'check-if-the-array-is-good': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = nums.slice().sort((a, b) => a - b);
+    const n = sorted[sorted.length - 1]!;
+    if (sorted.length !== n + 1) return false;
+    for (let i = 0; i < n - 1; i++) {
+      if (sorted[i] !== i + 1) return false;
+    }
+    return sorted[n - 1] === n && sorted[n] === n;
+  },
+  'maximum-value-of-a-string-in-array': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    return Math.max(...strs.map(s => /^\d+$/.test(s) ? parseInt(s, 10) : s.length));
+  },
+  'check-if-string-is-prefix-of-array': (...args: unknown[]) => {
+    const [s, words] = args as [string, string[]];
+    let concat = '';
+    for (const w of words) {
+      concat += w;
+      if (concat === s) return true;
+      if (concat.length >= s.length) return false;
+    }
+    return false;
+  },
+  'reformat-phone-number': (...args: unknown[]) => {
+    const number = args[0] as string;
+    const digits = number.replace(/[- ]/g, '');
+    const blocks: string[] = [];
+    let i = 0;
+    while (i < digits.length - 4) {
+      blocks.push(digits.slice(i, i + 3));
+      i += 3;
+    }
+    const remaining = digits.slice(i);
+    if (remaining.length === 4) {
+      blocks.push(remaining.slice(0, 2), remaining.slice(2));
+    } else {
+      blocks.push(remaining);
+    }
+    return blocks.join('-');
+  },
 };

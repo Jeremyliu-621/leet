@@ -41962,4 +41962,59 @@ def removeAlmostEqualCharacters(word):
             i += 1
     return ops
 `,
+  'apple-redistribution-into-boxes': `
+def minimumBoxes(packages, capacity):
+    total = sum(packages)
+    caps = sorted(list(capacity), reverse=True)
+    s = 0
+    for i, c in enumerate(caps):
+        s += c
+        if s >= total:
+            return i + 1
+    return len(caps)
+`,
+  'check-if-the-array-is-good': `
+def isGood(nums):
+    sorted_nums = sorted(nums)
+    n = sorted_nums[-1]
+    if len(sorted_nums) != n + 1:
+        return False
+    for i in range(n - 1):
+        if sorted_nums[i] != i + 1:
+            return False
+    return sorted_nums[n - 1] == n and sorted_nums[n] == n
+`,
+  'maximum-value-of-a-string-in-array': `
+def maximumValue(strs):
+    def val(s):
+        return int(s) if s.isdigit() else len(s)
+    return max(val(s) for s in strs)
+`,
+  'check-if-string-is-prefix-of-array': `
+def isPrefixString(s, words):
+    concat = ''
+    for w in words:
+        concat += w
+        if concat == s:
+            return True
+        if len(concat) >= len(s):
+            return False
+    return False
+`,
+  'reformat-phone-number': `
+def reformatNumber(number):
+    digits = number.replace('-', '').replace(' ', '')
+    blocks = []
+    i = 0
+    while i < len(digits) - 4:
+        blocks.append(digits[i:i+3])
+        i += 3
+    remaining = digits[i:]
+    if len(remaining) == 4:
+        blocks.append(remaining[:2])
+        blocks.append(remaining[2:])
+    else:
+        blocks.append(remaining)
+    return '-'.join(blocks)
+`,
 };

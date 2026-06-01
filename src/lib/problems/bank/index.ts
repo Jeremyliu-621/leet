@@ -3009,6 +3009,11 @@ import { problem as shortestDistRoadQueriesII } from './shortest-distance-after-
 // batch 234
 import { problem as matrixSimilarityCyclicShifts } from './matrix-similarity-after-cyclic-shifts';
 import { problem as removeAdjacentAlmostEqual } from './remove-adjacent-almost-equal-characters';
+// batch 235
+import { problem as appleRedistributionIntoBoxes } from './apple-redistribution-into-boxes';
+import { problem as maximumValueStringArray } from './maximum-value-of-a-string-in-array';
+import { problem as checkIfStringIsPrefixOfArray } from './check-if-string-is-prefix-of-array';
+import { problem as reformatPhoneNumber } from './reformat-phone-number';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6053,4 +6058,9 @@ export const problems: readonly Problem[] = [
   // batch 234
   matrixSimilarityCyclicShifts,
   removeAdjacentAlmostEqual,
+  // batch 235
+  appleRedistributionIntoBoxes,
+  maximumValueStringArray,
+  checkIfStringIsPrefixOfArray,
+  reformatPhoneNumber,
 ];
