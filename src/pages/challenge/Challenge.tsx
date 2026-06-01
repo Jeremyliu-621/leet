@@ -10,6 +10,7 @@ import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
 import type { CustomTestStatus } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { resolveTheme } from '../../lib/theme';
+import { generateStarter } from '../../lib/problems/starter-gen';
 import { parseTargetParam, extractDomain, parseProblemIdParam } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
@@ -133,27 +134,22 @@ const ALL_EXTRA_LANGUAGES: SupportedLanguage[] = [
 ];
 
 /** Languages available for a given problem, in display order. */
-function availableLanguagesFor(problem: Problem): SupportedLanguage[] {
-  // TypeScript uses the JS starter code (TS is a superset of JS), so it is
-  // always available regardless of whether the problem ships a separate TS
-  // starter. Other languages require an explicit starter in the problem.
-  const langs: SupportedLanguage[] = ['javascript', 'typescript'];
-  for (const lang of ALL_EXTRA_LANGUAGES) {
-    if (problem.starterCode[lang]) {
-      langs.push(lang);
-    }
-  }
-  return langs;
+function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
+  // All languages are always available. Languages without explicit starter
+  // code get an auto-generated skeleton via generateStarter(). Execution for
+  // non-JS/Python languages falls back to JavaScript in the sandbox.
+  return ['javascript', 'typescript', ...ALL_EXTRA_LANGUAGES];
 }
 
-/** Returns the starter code for a given language, falling back to JS. */
+/** Returns the starter code for a given language, falling back to auto-generated. */
 function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
-  // Use a language-specific starter if one exists; otherwise fall back to JS.
-  // TypeScript falls back to JS (valid TS is a superset), unless a typed
-  // TypeScript starter was explicitly provided for the problem.
+  // Use a language-specific starter if one exists.
   const starter = problem.starterCode[language];
   if (starter) return starter;
-  return problem.starterCode.javascript;
+  // TypeScript falls back to JS (valid TS is a superset).
+  if (language === 'typescript') return problem.starterCode.javascript;
+  // Other languages get an auto-generated skeleton from the problem metadata.
+  return generateStarter(language, problem.functionName, problem.params);
 }
 
 interface RelatedProblem {

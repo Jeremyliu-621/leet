@@ -34,6 +34,46 @@ const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: 
     label: 'Python',
     description: 'Runs via Pyodide (WebAssembly CPython, bundled). ~1–2 s first-boot.',
   },
+  {
+    value: 'java',
+    label: 'Java',
+    description: 'Practice Java syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'cpp',
+    label: 'C++',
+    description: 'Practice C++ syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'csharp',
+    label: 'C#',
+    description: 'Practice C# syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'go',
+    label: 'Go',
+    description: 'Practice Go syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'rust',
+    label: 'Rust',
+    description: 'Practice Rust syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'kotlin',
+    label: 'Kotlin',
+    description: 'Practice Kotlin syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'swift',
+    label: 'Swift',
+    description: 'Practice Swift syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  },
+  {
+    value: 'sql',
+    label: 'SQL',
+    description: 'Practice SQL syntax. Executed as JavaScript under the hood.',
+  },
 ];
 
 const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string }[] = [
