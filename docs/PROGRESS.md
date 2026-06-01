@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2859** problems; 8894 tests green. Batch 269 complete. Starter backfill ongoing.
+**Current focus:** Bank at **2863** problems; 8906 tests green. Batch 270 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 270+; more starter backfill; continued UX polish.
+**Next up:** Batch 271+; continued UX polish.
+
+### feat(bank): batch 270 — find-first-last-position, punishment-number, cycle-length-tree, min-hours-training (2026-06-01)
+Four new problems: `find-first-and-last-position-of-element-in-sorted-array` (medium/binary-search, LC 34 — two separate binary searches: leftmost (keep hi=mid-1 on match) and rightmost (keep lo=mid+1 on match); O(log n)), `find-the-punishment-number-of-an-integer` (medium/math+backtracking, LC 2698 — for each i, backtracking canPartition(str(i²), pos, rem): try all prefix substrings; O(n·10^d)), `cycle-length-queries-in-a-tree` (medium/tree+math, LC 2509 — LCA via halving: move larger of (a,b) up (divide by 2) until a==b; count steps=distance; cycle length=steps+1; O(n) per query), `minimum-hours-of-training-to-win-a-competition` (easy/simulation, LC 2383 — greedy per-fight check: if curEnergy≤enemy or curExp≤enemy, train minimum needed; after fight: E-=enemy, X+=enemy; O(n)). Bank at **2863**; 8906 tests.
 
 ### feat(bank): batch 269 — take-gifts-from-richest-pile, minimum-number-of-coins-for-fruits-i (2026-06-01)
 Two new problems: `take-gifts-from-richest-pile` (easy/arrays+heap, LC 2558 — k-step max-heap simulation; each step extract max pile, replace with floor(sqrt(max)); sum remaining; O(k log n)), `minimum-number-of-coins-for-fruits-i` (medium/arrays+dp, LC 2944 — buying fruit i (1-indexed) gives next i fruits free; right-to-left DP: dp[i]=prices[i-1]+min(dp[j] for j in [i+1..2i+1]); dp[n+1]=0; O(n²)). Bank at **2859**; 8894 tests.
