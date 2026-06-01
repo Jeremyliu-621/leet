@@ -46688,6 +46688,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(pos, neg);
   },
+  // batch 266
+  'count-distinct-integers-added-to-array': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    return new Set([...nums1, ...nums2]).size;
+  },
+  'sell-diminishing-valued-colored-balls': (...args: unknown[]) => {
+    const inventory = [...(args[0] as number[])];
+    let orders = args[1] as number;
+    const MOD = 1000000007n;
+    inventory.sort((a, b) => b - a);
+    inventory.push(0);
+    let ans = 0n;
+    let cnt = 1n;
+    let i = 0;
+    while (orders > 0) {
+      const gap = inventory[i]! - inventory[i + 1]!;
+      const available = cnt * BigInt(gap);
+      if (available <= BigInt(orders)) {
+        const lo = BigInt(inventory[i + 1]! + 1);
+        const hi = BigInt(inventory[i]!);
+        ans = (ans + cnt * (lo + hi) * BigInt(gap) / 2n) % MOD;
+        orders -= Number(available);
+      } else {
+        const full = BigInt(Math.floor(orders / Number(cnt)));
+        const rem = BigInt(orders % Number(cnt));
+        const base = BigInt(inventory[i]!) - full;
+        ans = (ans + cnt * (base + 1n + BigInt(inventory[i]!)) * full / 2n) % MOD;
+        ans = (ans + rem * base) % MOD;
+        orders = 0;
+      }
+      cnt++;
+      i++;
+    }
+    return Number(ans);
+  },
+  'number-of-nodes-in-sub-tree-with-same-label': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const labels = args[2] as string;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) {
+      adj[u!]!.push(v!);
+      adj[v!]!.push(u!);
+    }
+    const ans = new Array<number>(n).fill(0);
+    function dfs(node: number, parent: number): number[] {
+      const freq = new Array<number>(26).fill(0);
+      freq[labels.charCodeAt(node) - 97]!++;
+      for (const next of adj[node]!) {
+        if (next === parent) continue;
+        const child = dfs(next, node);
+        for (let i = 0; i < 26; i++) freq[i]! += child[i]!;
+      }
+      ans[node] = freq[labels.charCodeAt(node) - 97]!;
+      return freq;
+    }
+    dfs(0, -1);
+    return ans;
+  },
+  'valid-arrangement-of-pairs': (...args: unknown[]) => {
+    const pairs = args[0] as number[][];
+    const adj = new Map<number, number[]>();
+    const inDeg = new Map<number, number>();
+    const outDeg = new Map<number, number>();
+    for (const [u, v] of pairs) {
+      if (!adj.has(u!)) adj.set(u!, []);
+      adj.get(u!)!.push(v!);
+      outDeg.set(u!, (outDeg.get(u!) ?? 0) + 1);
+      inDeg.set(v!, (inDeg.get(v!) ?? 0) + 1);
+    }
+    let start = pairs[0]![0]!;
+    for (const [node] of adj) {
+      if ((outDeg.get(node) ?? 0) - (inDeg.get(node) ?? 0) === 1) {
+        start = node;
+        break;
+      }
+    }
+    const stack = [start];
+    const path: number[] = [];
+    while (stack.length) {
+      const node = stack[stack.length - 1]!;
+      const neighbors = adj.get(node);
+      if (neighbors && neighbors.length > 0) {
+        stack.push(neighbors.pop()!);
+      } else {
+        path.push(stack.pop()!);
+      }
+    }
+    path.reverse();
+    return path.slice(0, -1).map((v, i) => [v, path[i + 1]!]);
+  },
+  'maximum-value-of-ordered-triplet-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let ans = 0;
+    for (let i = 0; i < n - 2; i++)
+      for (let j = i + 1; j < n - 1; j++)
+        for (let k = j + 1; k < n; k++)
+          ans = Math.max(ans, (nums[i]! - nums[j]!) * nums[k]!);
+    return ans;
+  },
   // batch 265
   'check-if-two-chessboard-squares-have-the-same-color': (...args: unknown[]) => {
     const coordinate1 = args[0] as string;

@@ -3097,6 +3097,11 @@ import { problem as findMaximumMarkedElements } from './find-maximum-number-of-m
 import { problem as longestPathDifferentAdjacentChars } from './longest-path-different-adjacent-characters';
 import { problem as maximizeScoreRemovingSubstrings } from './maximize-score-removing-substrings';
 import { problem as maximumPointsArcheryCompetition } from './maximum-points-in-an-archery-competition';
+import { problem as countDistinctIntegersAdded } from './count-distinct-integers-added-to-array';
+import { problem as sellDiminishingColoredBalls } from './sell-diminishing-valued-colored-balls';
+import { problem as nodesSubtreeSameLabel } from './number-of-nodes-in-sub-tree-with-same-label';
+import { problem as validArrangementPairs } from './valid-arrangement-of-pairs';
+import { problem as maxOrderedTripletI } from './maximum-value-of-ordered-triplet-i';
 // batch 265
 import { problem as checkTwoChessboardSameColor } from './check-if-two-chessboard-squares-have-the-same-color';
 import { problem as countEqualDivisiblePairs } from './count-equal-divisible-pairs';
@@ -6422,17 +6427,22 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 266
+  findMaximumMarkedElements,
+  longestPathDifferentAdjacentChars,
+  maximizeScoreRemovingSubstrings,
+  maximumPointsArcheryCompetition,
+  countDistinctIntegersAdded,
+  sellDiminishingColoredBalls,
+  nodesSubtreeSameLabel,
+  validArrangementPairs,
+  maxOrderedTripletI,
   // batch 265
   checkTwoChessboardSameColor,
   countEqualDivisiblePairs,
   minWorkSessions,
   maxAbsoluteValueExpression,
   minOpsUniValueGrid,
-  // batch 266
-  findMaximumMarkedElements,
-  longestPathDifferentAdjacentChars,
-  maximizeScoreRemovingSubstrings,
-  maximumPointsArcheryCompetition,
   // batch 264
   findMirrorScoreString,
   maxManhattanDistanceKChanges,

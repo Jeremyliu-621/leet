@@ -45792,6 +45792,94 @@ def maximizeTotalCost(nums):
         pos, neg = max(pos, neg) + nums[i], pos - nums[i]
     return max(pos, neg)
 `,
+  // batch 266
+  'count-distinct-integers-added-to-array': `
+def distinctIntegers(nums1, nums2):
+    return len(set(nums1) | set(nums2))
+`,
+  'sell-diminishing-valued-colored-balls': `
+def maxProfit(inventory, orders):
+    MOD = 10**9 + 7
+    inventory = sorted(inventory, reverse=True)
+    inventory.append(0)
+    ans = 0
+    cnt = 1
+    i = 0
+    while orders > 0:
+        gap = inventory[i] - inventory[i + 1]
+        available = cnt * gap
+        if available <= orders:
+            lo, hi = inventory[i + 1] + 1, inventory[i]
+            ans = (ans + cnt * (lo + hi) * gap // 2) % MOD
+            orders -= available
+        else:
+            full, rem = divmod(orders, cnt)
+            base = inventory[i] - full
+            ans = (ans + cnt * (base + 1 + inventory[i]) * full // 2) % MOD
+            ans = (ans + rem * base) % MOD
+            orders = 0
+        cnt += 1
+        i += 1
+    return ans
+`,
+  'number-of-nodes-in-sub-tree-with-same-label': `
+def countSubTrees(n, edges, labels):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    ans = [0] * n
+    def dfs(node, parent):
+        freq = [0] * 26
+        freq[ord(labels[node]) - ord('a')] += 1
+        for nxt in adj[node]:
+            if nxt == parent:
+                continue
+            child = dfs(nxt, node)
+            for i in range(26):
+                freq[i] += child[i]
+        ans[node] = freq[ord(labels[node]) - ord('a')]
+        return freq
+    dfs(0, -1)
+    return ans
+`,
+  'valid-arrangement-of-pairs': `
+def validArrangement(pairs):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    in_deg = defaultdict(int)
+    out_deg = defaultdict(int)
+    for u, v in pairs:
+        adj[u].append(v)
+        out_deg[u] += 1
+        in_deg[v] += 1
+    start = pairs[0][0]
+    for node in adj:
+        if out_deg[node] - in_deg[node] == 1:
+            start = node
+            break
+    stack = [start]
+    path = []
+    while stack:
+        node = stack[-1]
+        if adj[node]:
+            stack.append(adj[node].pop())
+        else:
+            path.append(stack.pop())
+    path.reverse()
+    return [[path[i], path[i+1]] for i in range(len(path)-1)]
+`,
+  'maximum-value-of-ordered-triplet-i': `
+def maximumTripletValue(nums):
+    n = len(nums)
+    ans = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                ans = max(ans, (nums[i] - nums[j]) * nums[k])
+    return ans
+`,
   // batch 265
   'check-if-two-chessboard-squares-have-the-same-color': `
 def checkTwoChessboards(coordinate1, coordinate2):
