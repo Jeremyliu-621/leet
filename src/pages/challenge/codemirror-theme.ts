@@ -209,80 +209,79 @@ const leetlockThemeLight = EditorView.theme(
 );
 
 /**
- * Syntax highlighting in pure grayscale.
- * Bright tokens (#EDEDED) for high-value syntax; dim (#8A8A8A) for punctuation/structure.
+ * Syntax highlighting with colour — VS Code / LeetCode inspired.
+ * Dark bg remains from the design system; syntax tokens get real hues.
  */
 const leetlockHighlightDark = HighlightStyle.define([
-  // Keywords: bold white
-  { tag: tags.keyword, color: '#FFFFFF', fontWeight: '600' },
-  // Control-flow keywords: slightly dimmer bold
-  { tag: tags.controlKeyword, color: '#EDEDED', fontWeight: '600' },
-  // Built-ins and standard names
-  { tag: tags.standard(tags.name), color: '#EDEDED' },
-  // Function names: white, not bold
-  { tag: tags.function(tags.variableName), color: '#FFFFFF' },
-  { tag: tags.function(tags.name), color: '#FFFFFF' },
-  // Variable names
-  { tag: tags.variableName, color: '#EDEDED' },
-  // Property names
-  { tag: tags.propertyName, color: '#EDEDED' },
-  // Strings: slightly dim
-  { tag: tags.string, color: '#C8C8C8' },
-  // Template literals
-  { tag: tags.special(tags.string), color: '#C8C8C8' },
-  // Numbers: bright
-  { tag: tags.number, color: '#FFFFFF', fontWeight: '500' },
-  // Booleans / null / undefined: medium
-  { tag: tags.bool, color: '#EDEDED' },
-  { tag: tags.null, color: '#8A8A8A' },
-  // Comments: faint, italic
-  { tag: tags.comment, color: '#5A5A5A', fontStyle: 'italic' },
-  // Line comments same
-  { tag: tags.lineComment, color: '#5A5A5A', fontStyle: 'italic' },
-  // Block comments
-  { tag: tags.blockComment, color: '#5A5A5A', fontStyle: 'italic' },
-  // Operators: muted
-  { tag: tags.operator, color: '#8A8A8A' },
-  // Punctuation: faint — keeps noise low
-  { tag: tags.punctuation, color: '#5A5A5A' },
-  { tag: tags.bracket, color: '#8A8A8A' },
-  { tag: tags.paren, color: '#8A8A8A' },
-  // Type names (in JSDoc / TS)
-  { tag: tags.typeName, color: '#EDEDED', fontStyle: 'italic' },
-  { tag: tags.typeOperator, color: '#8A8A8A' },
-  // Definitions: white bold
-  { tag: tags.definition(tags.name), color: '#FFFFFF', fontWeight: '600' },
-  // Class names
-  { tag: tags.className, color: '#FFFFFF' },
-  // Escape sequences
-  { tag: tags.escape, color: '#EDEDED' },
+  // Keywords: purple (if, return, const, let, class, function …)
+  { tag: tags.keyword, color: '#C586C0' },
+  { tag: tags.controlKeyword, color: '#C586C0' },
+  // Built-in names (console, Math, Array …)
+  { tag: tags.standard(tags.name), color: '#4EC9B0' },
+  // Function names: yellow
+  { tag: tags.function(tags.variableName), color: '#DCDCAA' },
+  { tag: tags.function(tags.name), color: '#DCDCAA' },
+  // Variables: light blue
+  { tag: tags.variableName, color: '#9CDCFE' },
+  // Property access: light blue
+  { tag: tags.propertyName, color: '#9CDCFE' },
+  // Strings: orange
+  { tag: tags.string, color: '#CE9178' },
+  { tag: tags.special(tags.string), color: '#CE9178' },
+  // Numbers: light green
+  { tag: tags.number, color: '#B5CEA8' },
+  // Booleans: blue
+  { tag: tags.bool, color: '#569CD6' },
+  { tag: tags.null, color: '#569CD6' },
+  // Comments: green, italic
+  { tag: tags.comment, color: '#6A9955', fontStyle: 'italic' },
+  { tag: tags.lineComment, color: '#6A9955', fontStyle: 'italic' },
+  { tag: tags.blockComment, color: '#6A9955', fontStyle: 'italic' },
+  // Operators
+  { tag: tags.operator, color: '#D4D4D4' },
+  // Punctuation / brackets
+  { tag: tags.punctuation, color: '#D4D4D4' },
+  { tag: tags.bracket, color: '#D4D4D4' },
+  { tag: tags.paren, color: '#D4D4D4' },
+  // Type names: teal
+  { tag: tags.typeName, color: '#4EC9B0' },
+  { tag: tags.typeOperator, color: '#D4D4D4' },
+  // Definitions: light blue, bold
+  { tag: tags.definition(tags.name), color: '#9CDCFE', fontWeight: '600' },
+  // Class names: teal
+  { tag: tags.className, color: '#4EC9B0' },
+  // Escape sequences: yellow-orange
+  { tag: tags.escape, color: '#D7BA7D' },
 ]);
 
+/**
+ * Light-mode syntax highlighting with colour.
+ */
 const leetlockHighlightLight = HighlightStyle.define([
-  { tag: tags.keyword, color: '#000000', fontWeight: '600' },
-  { tag: tags.controlKeyword, color: '#0A0A0A', fontWeight: '600' },
-  { tag: tags.standard(tags.name), color: '#0A0A0A' },
-  { tag: tags.function(tags.variableName), color: '#000000' },
-  { tag: tags.function(tags.name), color: '#000000' },
-  { tag: tags.variableName, color: '#0A0A0A' },
-  { tag: tags.propertyName, color: '#0A0A0A' },
-  { tag: tags.string, color: '#3A3A3A' },
-  { tag: tags.special(tags.string), color: '#3A3A3A' },
-  { tag: tags.number, color: '#000000', fontWeight: '500' },
-  { tag: tags.bool, color: '#0A0A0A' },
-  { tag: tags.null, color: '#555555' },
-  { tag: tags.comment, color: '#888888', fontStyle: 'italic' },
-  { tag: tags.lineComment, color: '#888888', fontStyle: 'italic' },
-  { tag: tags.blockComment, color: '#888888', fontStyle: 'italic' },
-  { tag: tags.operator, color: '#555555' },
-  { tag: tags.punctuation, color: '#888888' },
-  { tag: tags.bracket, color: '#555555' },
-  { tag: tags.paren, color: '#555555' },
-  { tag: tags.typeName, color: '#0A0A0A', fontStyle: 'italic' },
-  { tag: tags.typeOperator, color: '#555555' },
-  { tag: tags.definition(tags.name), color: '#000000', fontWeight: '600' },
-  { tag: tags.className, color: '#000000' },
-  { tag: tags.escape, color: '#0A0A0A' },
+  { tag: tags.keyword, color: '#AF00DB' },
+  { tag: tags.controlKeyword, color: '#AF00DB' },
+  { tag: tags.standard(tags.name), color: '#267F99' },
+  { tag: tags.function(tags.variableName), color: '#795E26' },
+  { tag: tags.function(tags.name), color: '#795E26' },
+  { tag: tags.variableName, color: '#001080' },
+  { tag: tags.propertyName, color: '#001080' },
+  { tag: tags.string, color: '#A31515' },
+  { tag: tags.special(tags.string), color: '#A31515' },
+  { tag: tags.number, color: '#098658' },
+  { tag: tags.bool, color: '#0000FF' },
+  { tag: tags.null, color: '#0000FF' },
+  { tag: tags.comment, color: '#008000', fontStyle: 'italic' },
+  { tag: tags.lineComment, color: '#008000', fontStyle: 'italic' },
+  { tag: tags.blockComment, color: '#008000', fontStyle: 'italic' },
+  { tag: tags.operator, color: '#0A0A0A' },
+  { tag: tags.punctuation, color: '#0A0A0A' },
+  { tag: tags.bracket, color: '#0A0A0A' },
+  { tag: tags.paren, color: '#0A0A0A' },
+  { tag: tags.typeName, color: '#267F99' },
+  { tag: tags.typeOperator, color: '#0A0A0A' },
+  { tag: tags.definition(tags.name), color: '#001080', fontWeight: '600' },
+  { tag: tags.className, color: '#267F99' },
+  { tag: tags.escape, color: '#EE0000' },
 ]);
 
 export const leetlockEditorThemeDark: Extension = [leetlockThemeDark, syntaxHighlighting(leetlockHighlightDark)];

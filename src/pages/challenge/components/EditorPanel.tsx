@@ -109,6 +109,8 @@ interface EditorPanelProps {
   wordWrap?: boolean;
   /** Called when the user toggles word-wrap so the caller can persist it. */
   onWordWrapChange?: (wrap: boolean) => void;
+  /** Whether to show autocomplete suggestions while typing. Defaults to false. */
+  autocomplete?: boolean;
   /** Timestamp (Date.now()) set each time a draft save completes; triggers a brief "saved" indicator. */
   draftSavedAt?: number | null;
 }
@@ -613,6 +615,7 @@ export function EditorPanel({
   resetCode,
   wordWrap: wordWrapProp,
   onWordWrapChange,
+  autocomplete: autocompleteProp = false,
   draftSavedAt,
 }: EditorPanelProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
@@ -631,6 +634,7 @@ export function EditorPanel({
   // Word-wrap goes through its own Compartment for live toggling.
   const wrapCompartmentRef = useRef(new Compartment());
   const snippetCompartmentRef = useRef(new Compartment());
+  const autocompleteCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -699,7 +703,8 @@ export function EditorPanel({
         indentOnInput(),
         bracketMatching(),
         closeBrackets(),
-        autocompletion(),
+        // Autocomplete in a Compartment so it can be toggled live.
+        autocompleteCompartmentRef.current.of(autocompleteProp ? autocompletion() : []),
         search(),
         // Indent unit — respects user preference
         indentUnit.of(indentSpaces(indentSize)),
@@ -1108,6 +1113,18 @@ export function EditorPanel({
       return next;
     });
   }, []);
+
+  // Reconfigure autocomplete when the setting changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (view) {
+      view.dispatch({
+        effects: autocompleteCompartmentRef.current.reconfigure(
+          autocompleteProp ? autocompletion() : [],
+        ),
+      });
+    }
+  }, [autocompleteProp]);
 
   const showLanguageSelector = availableLanguages.length > 1;
 

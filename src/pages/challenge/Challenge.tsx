@@ -1249,6 +1249,7 @@ export function Challenge() {
             resetCode={resetCode}
             wordWrap={prefs.editorWordWrap}
             onWordWrapChange={handleWordWrapChange}
+            autocomplete={prefs.editorAutocomplete}
             draftSavedAt={draftSavedAt}
           />
           {/* Custom test drawer — collapses below the verdict/action bar */}

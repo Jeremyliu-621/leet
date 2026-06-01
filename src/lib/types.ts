@@ -268,6 +268,8 @@ export interface UserPreferences {
   editorIndentSize: 2 | 4;
   /** Whether the code editor wraps long lines. Defaults to true. */
   editorWordWrap: boolean;
+  /** Whether the code editor shows autocomplete suggestions while typing. Defaults to false (like LeetCode). */
+  editorAutocomplete: boolean;
 }
 
 /** Theme options exposed in the UI. */

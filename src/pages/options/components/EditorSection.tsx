@@ -280,6 +280,29 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
           </label>
         </FormField>
 
+        {/* Autocomplete */}
+        <FormField
+          label="Autocomplete"
+          htmlFor={`${uid}-autocomplete`}
+          help="Show code suggestions while typing. Off by default (like LeetCode). Snippets (e.g. 'for' → Tab) work regardless."
+        >
+          <label
+            htmlFor={`${uid}-autocomplete`}
+            className="inline-flex cursor-pointer items-center gap-2"
+          >
+            <input
+              id={`${uid}-autocomplete`}
+              type="checkbox"
+              checked={prefs.editorAutocomplete ?? false}
+              onChange={(e) => onChange({ editorAutocomplete: e.target.checked })}
+              className="accent-accent"
+            />
+            <span className="font-mono text-xs text-text">
+              {(prefs.editorAutocomplete ?? false) ? 'On' : 'Off'}
+            </span>
+          </label>
+        </FormField>
+
         {/* Keymap */}
         <FormField
           label="Key bindings"

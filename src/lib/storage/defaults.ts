@@ -23,6 +23,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   problemPanelWidthPct: 41.67,
   editorIndentSize: 2,
   editorWordWrap: true,
+  editorAutocomplete: false,
 };
 
 /**
