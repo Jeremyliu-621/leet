@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2638** problems; 8208 tests green. Batches 102–237 complete.
+**Current focus:** Bank at **2642** problems; 8220 tests green. Batches 102–238 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 238+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 239+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 238 — count-submatrices-top-left-k, most-frequent-prime, find-ways-to-place-people, happy-students (2026-06-01)
+Four new problems: `count-submatrices-with-top-left-element-and-sum-less-than-k` (medium/arrays+sliding-window, LC 3070 — 2D prefix sum; count (i,j) where prefix[i][j] ≤ k), `most-frequent-prime` (medium/arrays+math, LC 3044 — traverse 8 directions from each cell accumulating multi-digit numbers; find most frequent prime), `find-the-number-of-ways-to-place-people` (medium/arrays+two-pointers, LC 3027 — sort by x asc/y desc; O(n^3) check no point lies inside each pair's rectangle), `happy-students` (medium/arrays+binary-search, LC 2860 — sort; for each m check sorted[m-1]≤m AND sorted[m]>m). Bank at **2642**; 8220 tests.
 
 ### feat(bank): batch 237 — longest-uncommon-subsequence-ii, maximum-strong-pairs-i, find-max-elements-in-subset, missing-integer (2026-06-01)
 Four new problems: `longest-uncommon-subsequence-ii` (medium/arrays+strings+two-pointers, LC 522 — for each string check if it's NOT a subsequence of any other; return max length or -1), `maximum-strong-pairs-in-an-array-i` (easy/arrays+hash-map+sliding-window, LC 2899 — sort + greedy adjacent pairing: pair if nums[i+1]≤2*nums[i]), `find-the-maximum-number-of-elements-in-subset` (medium/arrays+hash-map, LC 3020 — build chain x,x²,x⁴,... with freq≥2; double chain length + optional middle), `missing-integer` (easy/arrays+hash-map, LC 2996 — compute prefix sums set, return smallest positive int not in set). Bank at **2638**; 8208 tests.

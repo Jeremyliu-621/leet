@@ -42942,4 +42942,82 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     while (prefixSums.has(x)) x++;
     return x;
   },
+  'count-submatrices-with-top-left-element-and-sum-less-than-k': (...args: unknown[]) => {
+    const [grid, k] = args as [number[][], number];
+    const m = grid.length, n = grid[0]!.length;
+    const prefix = Array.from({length: m}, () => new Array(n).fill(0)) as number[][];
+    let count = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        prefix[i]![j] = grid[i]![j]!
+          + (i > 0 ? prefix[i - 1]![j]! : 0)
+          + (j > 0 ? prefix[i]![j - 1]! : 0)
+          - (i > 0 && j > 0 ? prefix[i - 1]![j - 1]! : 0);
+        if (prefix[i]![j]! <= k) count++;
+      }
+    }
+    return count;
+  },
+  'most-frequent-prime': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length, n = mat[0]!.length;
+    const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]] as number[][];
+    const isPrime = (x: number): boolean => {
+      if (x < 2) return false;
+      for (let i = 2; i * i <= x; i++) if (x % i === 0) return false;
+      return true;
+    };
+    const freq = new Map<number, number>();
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        for (const d of dirs) {
+          let num = mat[i]![j]!;
+          let ni = i + d[0]!, nj = j + d[1]!;
+          while (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+            num = num * 10 + mat[ni]![nj]!;
+            if (isPrime(num)) freq.set(num, (freq.get(num) ?? 0) + 1);
+            ni += d[0]!; nj += d[1]!;
+          }
+        }
+      }
+    }
+    if (freq.size === 0) return -1;
+    let maxFreq = 0, ans = -1;
+    for (const [prime, cnt] of freq) {
+      if (cnt > maxFreq || (cnt === maxFreq && prime > ans)) { maxFreq = cnt; ans = prime; }
+    }
+    return ans;
+  },
+  'find-the-number-of-ways-to-place-people': (...args: unknown[]) => {
+    const points = (args[0] as number[][]).slice().sort((a, b) => a[0] !== b[0] ? a[0]! - b[0]! : b[1]! - a[1]!);
+    const n = points.length;
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const [xi, yi] = points[i]!;
+        const [xj, yj] = points[j]!;
+        if (yj! > yi!) continue;
+        let valid = true;
+        for (let k = 0; k < n; k++) {
+          if (k === i || k === j) continue;
+          const [xk, yk] = points[k]!;
+          if (xi! <= xk! && xk! <= xj! && yj! <= yk! && yk! <= yi!) { valid = false; break; }
+        }
+        if (valid) count++;
+      }
+    }
+    return count;
+  },
+  'happy-students': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = nums.slice().sort((a, b) => a - b);
+    const n = sorted.length;
+    let count = 0;
+    for (let m = 0; m <= n; m++) {
+      const leftOk = m === 0 || sorted[m - 1]! <= m;
+      const rightOk = m === n || sorted[m]! > m;
+      if (leftOk && rightOk) count++;
+    }
+    return count;
+  },
 };

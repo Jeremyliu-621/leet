@@ -3023,6 +3023,11 @@ import { problem as longestUncommonSubsequenceII } from './longest-uncommon-subs
 import { problem as maximumStrongPairsI } from './maximum-strong-pairs-in-an-array-i';
 import { problem as findMaxElementsInSubset } from './find-the-maximum-number-of-elements-in-subset';
 import { problem as missingInteger } from './missing-integer';
+// batch 238
+import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
+import { problem as mostFrequentPrime } from './most-frequent-prime';
+import { problem as findNumberWaysToPlacePeople } from './find-the-number-of-ways-to-place-people';
+import { problem as happyStudents } from './happy-students';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6081,4 +6086,9 @@ export const problems: readonly Problem[] = [
   maximumStrongPairsI,
   findMaxElementsInSubset,
   missingInteger,
+  // batch 238
+  countSubmatricesTopLeft,
+  mostFrequentPrime,
+  findNumberWaysToPlacePeople,
+  happyStudents,
 ];

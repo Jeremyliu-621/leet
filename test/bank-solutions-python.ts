@@ -42118,4 +42118,87 @@ def missingInteger(nums):
         x += 1
     return x
 `,
+  'count-submatrices-with-top-left-element-and-sum-less-than-k': `
+def countSubmatrices(grid, k):
+    m, n = len(grid), len(grid[0])
+    prefix = [[0] * n for _ in range(m)]
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            prefix[i][j] = grid[i][j]
+            if i > 0:
+                prefix[i][j] += prefix[i-1][j]
+            if j > 0:
+                prefix[i][j] += prefix[i][j-1]
+            if i > 0 and j > 0:
+                prefix[i][j] -= prefix[i-1][j-1]
+            if prefix[i][j] <= k:
+                count += 1
+    return count
+`,
+  'most-frequent-prime': `
+def mostFrequentPrime(mat):
+    m, n = len(mat), len(mat[0])
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    def is_prime(x):
+        if x < 2:
+            return False
+        i = 2
+        while i * i <= x:
+            if x % i == 0:
+                return False
+            i += 1
+        return True
+    freq = {}
+    for i in range(m):
+        for j in range(n):
+            for di, dj in dirs:
+                num = mat[i][j]
+                ni, nj = i + di, j + dj
+                while 0 <= ni < m and 0 <= nj < n:
+                    num = num * 10 + mat[ni][nj]
+                    if is_prime(num):
+                        freq[num] = freq.get(num, 0) + 1
+                    ni += di
+                    nj += dj
+    if not freq:
+        return -1
+    max_freq = max(freq.values())
+    return max(p for p, c in freq.items() if c == max_freq)
+`,
+  'find-the-number-of-ways-to-place-people': `
+def numberOfPairs(points):
+    points = sorted(points, key=lambda p: (p[0], -p[1]))
+    n = len(points)
+    count = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            xi, yi = points[i]
+            xj, yj = points[j]
+            if yj > yi:
+                continue
+            valid = True
+            for k in range(n):
+                if k == i or k == j:
+                    continue
+                xk, yk = points[k]
+                if xi <= xk <= xj and yj <= yk <= yi:
+                    valid = False
+                    break
+            if valid:
+                count += 1
+    return count
+`,
+  'happy-students': `
+def countHappyStudents(nums):
+    sorted_nums = sorted(nums)
+    n = len(sorted_nums)
+    count = 0
+    for m in range(n + 1):
+        left_ok = m == 0 or sorted_nums[m - 1] <= m
+        right_ok = m == n or sorted_nums[m] > m
+        if left_ok and right_ok:
+            count += 1
+    return count
+`,
 };
