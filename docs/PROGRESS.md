@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2664** problems; 8286 tests green. Batches 102–240 complete.
+**Current focus:** Bank at **2668** problems; 8298 tests green. Batches 102–241 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 241+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 242+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 241 — count-rectangles-each-point, parse-bool-expr, reorder-array-same-bst, count-pairs-nodes (2026-06-01)
+Four new problems: `count-number-of-rectangles-containing-each-point` (medium/arrays+binary-search, LC 2250 — bucket rects by height (1..100); binary-search sorted l-values per height bucket), `parsing-a-boolean-expression` (hard/strings+stack, LC 1106 — recursive descent: 't'/'f' base cases; '!', '&', '|' consume sub-exprs in parens), `number-of-ways-to-reorder-array-to-get-same-bst` (hard/tree+dp+math, LC 1569 — count=C(L+R,L)*count(left)*count(right); answer=count-1 mod 10^9+7), `count-pairs-of-nodes` (hard/arrays+binary-search, LC 1782 — sort degrees, two-pointer for deg[a]+deg[b]>q, then adjust for multi-edges). Bank at **2668**; 8298 tests.
 
 ### feat(bank): batch 240 — modular-exponentiation, xor-parity-of-sum, greedy-interval-cover, rolling-hash-search, bitmask-dp-task-cover (2026-06-01)
 Five new problems spanning number theory, bit manipulation, greedy intervals, string hashing, and bitmask DP: `modular-exponentiation` (medium/math+bit-manipulation — iterative binary exponentiation, O(log exp)), `xor-parity-of-sum` (easy/bit-manipulation — XOR of LSBs determines sum parity in O(n)), `greedy-interval-cover` (medium/arrays+binary-search — greedy jump-game style interval cover, sort by start then greedily extend reach), `rolling-hash-search` (medium/strings+math — Rabin-Karp with base=31 mod 10^9+7 for O(n+m) substring search), `bitmask-dp-task-cover` (hard/dynamic-programming+bit-manipulation — 2^n subset DP over task bitmasks for minimum cost set cover). Bank at **2664**; 8286 tests.
