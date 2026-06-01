@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LANGUAGE_SHORT } from '../../../lib/types';
 import type { SubmissionRecord } from '../../../lib/types';
 
 export type { SubmissionRecord };
@@ -85,6 +86,9 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
                   Result
                 </th>
                 <th scope="col" className="pb-1.5 pr-3 font-normal">
+                  Lang
+                </th>
+                <th scope="col" className="pb-1.5 pr-3 font-normal">
                   Tests
                 </th>
                 <th scope="col" className="pb-1.5 pr-3 font-normal">
@@ -105,6 +109,9 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
                   <td className="py-1.5 pr-3 text-faint tabular-nums">{s.attempt}</td>
                   <td className={`py-1.5 pr-3 ${OUTCOME_CLASS[s.outcome]}`}>
                     {OUTCOME_LABEL[s.outcome]}
+                  </td>
+                  <td className="py-1.5 pr-3 text-faint">
+                    {s.language ? LANGUAGE_SHORT[s.language] : '—'}
                   </td>
                   <td className="py-1.5 pr-3 text-faint tabular-nums">
                     {s.passCount}/{s.totalTests}

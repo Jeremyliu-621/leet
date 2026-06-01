@@ -171,6 +171,8 @@ export interface SubmissionRecord {
   durationMs?: number;
   /** Snapshot of the code that was submitted. Enables "restore" in SubmissionsPanel. */
   code?: string;
+  /** Language used for this submission. Absent on records created before this field was added. */
+  language?: SupportedLanguage;
 }
 
 // --- Streaks --------------------------------------------------------------

@@ -815,6 +815,7 @@ export function Challenge() {
         totalTests: result.total,
         durationMs: result.totalDurationMs,
         code,
+        language,
       };
       const updatedSubmissions = [...submissionsRef.current, newRecord];
       setSubmissions(updatedSubmissions);
@@ -978,6 +979,7 @@ export function Challenge() {
         passCount: 0,
         totalTests,
         code,
+        language,
       };
       const updatedOnError = [...submissionsRef.current, errorRecord];
       setSubmissions(updatedOnError);
