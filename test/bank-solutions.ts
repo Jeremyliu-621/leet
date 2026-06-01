@@ -47628,4 +47628,68 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return queries.map(q => mx[q[1]!]![q[0]!]!);
   },
+
+  // batch 269
+  'find-the-xor-of-all-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    if (n % 2 === 0) return 0;
+    let r = 0;
+    for (let i = 0; i < n; i += 2) r ^= nums[i]!;
+    return r;
+  },
+
+  'sort-the-matrix-diagonally': (...args: unknown[]) => {
+    const mat = (args[0] as number[][]).map(row => [...row]);
+    const m = mat.length, n = mat[0]!.length;
+    const groups = new Map<number, number[]>();
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++) {
+        const key = r - c;
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push(mat[r]![c]!);
+      }
+    for (const arr of groups.values()) arr.sort((a, b) => a - b);
+    const ptr = new Map<number, number>();
+    for (const k of groups.keys()) ptr.set(k, 0);
+    const res = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    for (let r = 0; r < m; r++)
+      for (let c = 0; c < n; c++) {
+        const key = r - c;
+        const i = ptr.get(key)!;
+        res[r]![c] = groups.get(key)![i]!;
+        ptr.set(key, i + 1);
+      }
+    return res;
+  },
+
+  'maximum-and-minimum-sums-of-at-most-k-size-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const MOD = 1000000007n;
+    const n = nums.length;
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      let mn = nums[i]!, mx = nums[i]!;
+      for (let j = i; j < n && j - i < k; j++) {
+        mn = Math.min(mn, nums[j]!);
+        mx = Math.max(mx, nums[j]!);
+        ans = (ans + BigInt(mn) + BigInt(mx)) % MOD;
+      }
+    }
+    return Number(ans);
+  },
+
+  'maximum-sum-with-at-most-k-elements': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const limits = args[1] as number[];
+    const k = args[2] as number;
+    const candidates: number[] = [];
+    for (let i = 0; i < grid.length; i++) {
+      const sorted = [...grid[i]!].sort((a, b) => b - a).slice(0, limits[i]!);
+      candidates.push(...sorted);
+    }
+    candidates.sort((a, b) => b - a);
+    return candidates.slice(0, k).reduce((s, v) => s + v, 0);
+  },
 };

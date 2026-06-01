@@ -46623,4 +46623,56 @@ def placedCoins(edges, cost):
             mx[j][i] = max(prev, suf[j][i])
     return [mx[r][l] for l, r in queries]
 `,
+
+  // batch 269
+  'find-the-xor-of-all-subarrays': `def xorAllSubarrays(nums):
+    n = len(nums)
+    if n % 2 == 0:
+        return 0
+    result = 0
+    for i in range(0, n, 2):
+        result ^= nums[i]
+    return result
+`,
+
+  'sort-the-matrix-diagonally': `def diagonalSort(mat):
+    from collections import defaultdict
+    m, n = len(mat), len(mat[0])
+    groups = defaultdict(list)
+    for r in range(m):
+        for c in range(n):
+            groups[r - c].append(mat[r][c])
+    for key in groups:
+        groups[key].sort()
+    ptr = defaultdict(int)
+    res = [[0]*n for _ in range(m)]
+    for r in range(m):
+        for c in range(n):
+            key = r - c
+            res[r][c] = groups[key][ptr[key]]
+            ptr[key] += 1
+    return res
+`,
+
+  'maximum-and-minimum-sums-of-at-most-k-size-subarrays': `def minMaxSums(nums, k):
+    MOD = 10**9 + 7
+    n = len(nums)
+    ans = 0
+    for i in range(n):
+        mn = mx = nums[i]
+        for j in range(i, min(n, i + k)):
+            mn = min(mn, nums[j])
+            mx = max(mx, nums[j])
+            ans = (ans + mn + mx) % MOD
+    return ans
+`,
+
+  'maximum-sum-with-at-most-k-elements': `def maxSum(grid, limits, k):
+    candidates = []
+    for i, row in enumerate(grid):
+        top = sorted(row, reverse=True)[:limits[i]]
+        candidates.extend(top)
+    candidates.sort(reverse=True)
+    return sum(candidates[:k])
+`,
 };

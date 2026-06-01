@@ -3259,6 +3259,10 @@ import { problem as rowsWithMostOnes } from './rows-with-most-ones';
 import { problem as addingSpacesToAString } from './adding-spaces-to-a-string';
 import { problem as checkIfMoveIsLegal } from './check-if-move-is-legal';
 import { problem as stampingTheGrid } from './stamping-the-grid';
+import { problem as findTheXorOfAllSubarrays } from './find-the-xor-of-all-subarrays';
+import { problem as sortTheMatrixDiagonally } from './sort-the-matrix-diagonally';
+import { problem as maximumAndMinimumSumsOfAtMostKSizeSubarrays } from './maximum-and-minimum-sums-of-at-most-k-size-subarrays';
+import { problem as maximumSumWithAtMostKElements } from './maximum-sum-with-at-most-k-elements';
 // batch 248
 import { problem as validPalindromeIii } from './valid-palindrome-iii';
 import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
@@ -6622,4 +6626,9 @@ export const problems: readonly Problem[] = [
   addingSpacesToAString,
   checkIfMoveIsLegal,
   stampingTheGrid,
+  // batch 269
+  findTheXorOfAllSubarrays,
+  sortTheMatrixDiagonally,
+  maximumAndMinimumSumsOfAtMostKSizeSubarrays,
+  maximumSumWithAtMostKElements,
 ];
