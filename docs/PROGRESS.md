@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2773** problems; 8623 tests green. Batches 102–256 complete.
+**Current focus:** Bank at **2778** problems; 8638 tests green. Batches 102–256 (remote) + 255 (local) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 257+; continued UX polish.
+
+### feat(bank): batch 255 (local) — right-triangles, stable-binary-arrays-i/ii, max-points-square, subarrays-distinct-squares-ii (2026-06-01)
+Five new problems: `right-triangles` (medium/arrays+math, LC 3128 — for each 1-cell as right-angle vertex, contribution = (row_sum-1)*(col_sum-1)), `find-all-possible-stable-binary-arrays-i` (medium/dp, LC 3129 — dp[i][j][v] for i zeros j ones ending in v with no run > limit; O(n²·limit)), `find-all-possible-stable-binary-arrays-ii` (hard/dp, LC 3130 — same DP with prefix-sum optimization for O(n²)), `maximum-points-inside-the-square` (medium/arrays+binary-search, LC 3143 — sort by Chebyshev distance; first tag conflict at distance d returns d−1), `subarrays-distinct-element-sum-of-squares-ii` (hard/arrays+binary-indexed-tree, LC 2914 — sum of distinct_count² for all subarrays; BIT-based O(n log n) in hints, O(n²) reference). Bank at **2778**; 8638 tests.
 
 ### feat(bank): batch 256 — minimum-levels, mark-elements, max-strength-k-disjoint, shortest-uncommon-substr, longest-common-suffix-queries (2026-06-01)
 Five new problems: `minimum-levels-to-gain-more-points` (medium/arrays+math, LC 3096 — prefix delta sums; return first j where 2*prefix[j] > total), `mark-elements-on-array-by-performing-queries` (medium/arrays+heap, LC 3080 — pre-sorted array as lazy heap; pointer advances past marked elements; O(n+m)), `maximum-strength-of-k-disjoint-subarrays` (hard/arrays+dp, LC 3077 — DP dp[j][0/1] with alternating-sign contribution; O(n*k)), `shortest-uncommon-substring-in-an-array` (medium/strings+trie, LC 3076 — per-string substring sets; iterate lengths until unique substring found), `longest-common-suffix-queries` (hard/strings+trie, LC 3093 — reversed-string trie with per-node best-index tracking; O(Σlen) build, O(query len) lookup). Bank at **2773**; 8616 tests.
