@@ -26,10 +26,38 @@ You must solve the problem without using any built-in library for handling large
   functionName: 'addStrings',
   params: ['num1', 'num2'],
   starterCode: {
-    javascript: 'function addStrings(num1, num2) {\n\n}\n',
-    typescript: "function addStrings(num1: string, num2: string): string {\n\n}",
-
-    python: 'def addStrings(num1, num2):\n    pass\n',
+    javascript: `function addStrings(num1, num2) {
+  let i = num1.length - 1, j = num2.length - 1, carry = 0, res = '';
+  while (i >= 0 || j >= 0 || carry) {
+    const a = i >= 0 ? num1.charCodeAt(i--) - 48 : 0;
+    const b = j >= 0 ? num2.charCodeAt(j--) - 48 : 0;
+    const sum = a + b + carry;
+    res = (sum % 10) + res;
+    carry = Math.floor(sum / 10);
+  }
+  return res || '0';
+}`,
+    typescript: `function addStrings(num1: string, num2: string): string {
+  let i = num1.length - 1, j = num2.length - 1, carry = 0, res = '';
+  while (i >= 0 || j >= 0 || carry) {
+    const a = i >= 0 ? num1.charCodeAt(i--) - 48 : 0;
+    const b = j >= 0 ? num2.charCodeAt(j--) - 48 : 0;
+    const sum = a + b + carry;
+    res = (sum % 10) + res;
+    carry = Math.floor(sum / 10);
+  }
+  return res || '0';
+}`,
+    python: `def addStrings(num1, num2):
+    i, j, carry, res = len(num1) - 1, len(num2) - 1, 0, []
+    while i >= 0 or j >= 0 or carry:
+        a = int(num1[i]) if i >= 0 else 0
+        b = int(num2[j]) if j >= 0 else 0
+        s = a + b + carry
+        res.append(str(s % 10))
+        carry = s // 10
+        i -= 1; j -= 1
+    return ''.join(reversed(res)) or '0'`,
   },
   visibleTests: [
     { args: ['11', '123'], expected: '134' },

@@ -39,10 +39,22 @@ Find and return *the maximum profit you can achieve*.`,
   functionName: 'maxProfit',
   params: ['prices'],
   starterCode: {
-    javascript: 'function maxProfit(prices) {\n\n}',
-    typescript: "function maxProfit(prices: number[]): number {\n\n}",
-
-    python: 'def maxProfit(prices):\n    pass',
+    javascript: `function maxProfit(prices) {
+  let profit = 0;
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i] > prices[i - 1]) profit += prices[i] - prices[i - 1];
+  }
+  return profit;
+}`,
+    typescript: `function maxProfit(prices: number[]): number {
+  let profit = 0;
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i]! > prices[i - 1]!) profit += prices[i]! - prices[i - 1]!;
+  }
+  return profit;
+}`,
+    python: `def maxProfit(prices):
+    return sum(max(prices[i] - prices[i-1], 0) for i in range(1, len(prices)))`,
   },
   visibleTests: [
     { args: [[7, 1, 5, 3, 6, 4]], expected: 7 },

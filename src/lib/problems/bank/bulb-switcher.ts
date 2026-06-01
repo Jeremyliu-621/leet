@@ -28,10 +28,15 @@ After \`n\` rounds, return the number of bulbs that are on.`,
   functionName: 'bulbSwitch',
   params: ['n'],
   starterCode: {
-    javascript: 'function bulbSwitch(n) {\n  \n}\n',
-    typescript: "function bulbSwitch(n: number): number {\n  \n}",
-
-    python: 'def bulbSwitch(n):\n    pass\n',
+    javascript: `function bulbSwitch(n) {
+  return Math.floor(Math.sqrt(n));
+}`,
+    typescript: `function bulbSwitch(n: number): number {
+  return Math.floor(Math.sqrt(n));
+}`,
+    python: `def bulbSwitch(n):
+    import math
+    return int(math.isqrt(n))`,
   },
   visibleTests: [
     { args: [3], expected: 1 },

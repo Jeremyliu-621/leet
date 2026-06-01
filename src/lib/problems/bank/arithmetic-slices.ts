@@ -35,10 +35,31 @@ A **subarray** is a contiguous subsequence of the array.`,
   functionName: 'numberOfArithmeticSlices',
   params: ['nums'],
   starterCode: {
-    javascript: 'function numberOfArithmeticSlices(nums) {\n  \n}\n',
-    typescript: "function numberOfArithmeticSlices(nums: number[]): number {\n  \n}",
-
-    python: 'def numberOfArithmeticSlices(nums):\n    pass\n',
+    javascript: `function numberOfArithmeticSlices(nums) {
+  let total = 0, cur = 0;
+  for (let i = 2; i < nums.length; i++) {
+    if (nums[i] - nums[i - 1] === nums[i - 1] - nums[i - 2]) total += ++cur;
+    else cur = 0;
+  }
+  return total;
+}`,
+    typescript: `function numberOfArithmeticSlices(nums: number[]): number {
+  let total = 0, cur = 0;
+  for (let i = 2; i < nums.length; i++) {
+    if (nums[i]! - nums[i - 1]! === nums[i - 1]! - nums[i - 2]!) total += ++cur;
+    else cur = 0;
+  }
+  return total;
+}`,
+    python: `def numberOfArithmeticSlices(nums):
+    total = cur = 0
+    for i in range(2, len(nums)):
+        if nums[i] - nums[i-1] == nums[i-1] - nums[i-2]:
+            cur += 1
+            total += cur
+        else:
+            cur = 0
+    return total`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: 3 },

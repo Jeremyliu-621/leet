@@ -25,10 +25,34 @@ Each child \`i\` has a greed factor \`g[i]\`, which is the minimum size of a coo
   functionName: 'findContentChildren',
   params: ['g', 's'],
   starterCode: {
-    javascript: 'function findContentChildren(g, s) {\n  \n}\n',
-    typescript: "function findContentChildren(g: number[], s: number[]): number {\n  \n}",
-
-    python: 'def findContentChildren(g, s):\n    pass\n',
+    javascript: `function findContentChildren(g, s) {
+  g.sort((a, b) => a - b);
+  s.sort((a, b) => a - b);
+  let i = 0, j = 0;
+  while (i < g.length && j < s.length) {
+    if (s[j] >= g[i]) i++;
+    j++;
+  }
+  return i;
+}`,
+    typescript: `function findContentChildren(g: number[], s: number[]): number {
+  g.sort((a, b) => a - b);
+  s.sort((a, b) => a - b);
+  let i = 0, j = 0;
+  while (i < g.length && j < s.length) {
+    if (s[j]! >= g[i]!) i++;
+    j++;
+  }
+  return i;
+}`,
+    python: `def findContentChildren(g, s):
+    g.sort(); s.sort()
+    i = j = 0
+    while i < len(g) and j < len(s):
+        if s[j] >= g[i]:
+            i += 1
+        j += 1
+    return i`,
   },
   visibleTests: [
     { args: [[1, 2, 3], [1, 1]], expected: 1 },

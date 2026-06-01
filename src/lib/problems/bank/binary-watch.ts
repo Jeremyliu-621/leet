@@ -41,10 +41,33 @@ return res;\`\`\``
   functionName: 'readBinaryWatch',
   params: ['turnedOn'],
   starterCode: {
-    javascript: 'function readBinaryWatch(turnedOn) {\n  \n}\n',
-    typescript: "function readBinaryWatch(turnedOn: number): string[] {\n  \n}",
-
-    python: 'def readBinaryWatch(turnedOn):\n    pass\n',
+    javascript: `function readBinaryWatch(turnedOn) {
+  const res = [];
+  for (let h = 0; h < 12; h++) {
+    for (let m = 0; m < 60; m++) {
+      const bits = (h.toString(2) + m.toString(2)).split('').filter(c => c === '1').length;
+      if (bits === turnedOn) res.push(h + ':' + (m < 10 ? '0' + m : '' + m));
+    }
+  }
+  return res;
+}`,
+    typescript: `function readBinaryWatch(turnedOn: number): string[] {
+  const res: string[] = [];
+  for (let h = 0; h < 12; h++) {
+    for (let m = 0; m < 60; m++) {
+      const bits = (h.toString(2) + m.toString(2)).split('').filter(c => c === '1').length;
+      if (bits === turnedOn) res.push(h + ':' + (m < 10 ? '0' + m : '' + m));
+    }
+  }
+  return res;
+}`,
+    python: `def readBinaryWatch(turnedOn):
+    res = []
+    for h in range(12):
+        for m in range(60):
+            if bin(h).count('1') + bin(m).count('1') == turnedOn:
+                res.append(f'{h}:{m:02d}')
+    return res`,
   },
   visibleTests: [
     { args: [1], expected: ['0:01', '0:02', '0:04', '0:08', '0:16', '0:32', '1:00', '2:00', '4:00', '8:00'] },

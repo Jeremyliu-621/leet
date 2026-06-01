@@ -21,10 +21,29 @@ export const problem: Problem = {
   functionName: 'convertToBase7',
   params: ['num'],
   starterCode: {
-    javascript: 'function convertToBase7(num) {\n  \n}\n',
-    typescript: "function convertToBase7(num: number): string {\n  \n}",
-
-    python: 'def convertToBase7(num):\n    pass\n',
+    javascript: `function convertToBase7(num) {
+  if (num === 0) return '0';
+  const sign = num < 0 ? '-' : '';
+  let n = Math.abs(num), res = '';
+  while (n > 0) { res = (n % 7) + res; n = Math.floor(n / 7); }
+  return sign + res;
+}`,
+    typescript: `function convertToBase7(num: number): string {
+  if (num === 0) return '0';
+  const sign = num < 0 ? '-' : '';
+  let n = Math.abs(num), res = '';
+  while (n > 0) { res = (n % 7) + res; n = Math.floor(n / 7); }
+  return sign + res;
+}`,
+    python: `def convertToBase7(num):
+    if num == 0:
+        return '0'
+    sign = '-' if num < 0 else ''
+    n, res = abs(num), ''
+    while n:
+        res = str(n % 7) + res
+        n //= 7
+    return sign + res`,
   },
   visibleTests: [
     { args: [100], expected: '202' },
