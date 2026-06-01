@@ -45792,6 +45792,58 @@ def maximizeTotalCost(nums):
         pos, neg = max(pos, neg) + nums[i], pos - nums[i]
     return max(pos, neg)
 `,
+  // batch 267
+  'maximum-value-of-ordered-triplet-ii': `
+def maximumTripletValue(nums):
+    ans = maxDiff = maxI = 0
+    for k in range(len(nums)):
+        ans = max(ans, maxDiff * nums[k])
+        maxDiff = max(maxDiff, maxI - nums[k])
+        maxI = max(maxI, nums[k])
+    return ans
+`,
+  'sum-of-absolute-differences-in-sorted-array': `
+def getSumAbsoluteDifferences(nums):
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    result = []
+    for i, v in enumerate(nums):
+        left = i * v - prefix[i]
+        right = (prefix[n] - prefix[i + 1]) - (n - 1 - i) * v
+        result.append(left + right)
+    return result
+`,
+  'minimum-days-to-eat-n-oranges': `
+def minDays(n):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(n):
+        if n <= 1:
+            return n
+        return 1 + min(n % 2 + dp(n // 2), n % 3 + dp(n // 3))
+    return dp(n)
+`,
+  'minimum-intervals-to-include-each-query': `
+def minInterval(intervals, queries):
+    import heapq
+    intervals.sort()
+    sorted_q = sorted(enumerate(queries), key=lambda x: x[1])
+    ans = [-1] * len(queries)
+    heap = []
+    j = 0
+    for idx, q in sorted_q:
+        while j < len(intervals) and intervals[j][0] <= q:
+            l, r = intervals[j]
+            heapq.heappush(heap, (r - l + 1, r))
+            j += 1
+        while heap and heap[0][1] < q:
+            heapq.heappop(heap)
+        if heap:
+            ans[idx] = heap[0][0]
+    return ans
+`,
   // batch 266
   'count-distinct-integers-added-to-array': `
 def distinctIntegers(nums1, nums2):

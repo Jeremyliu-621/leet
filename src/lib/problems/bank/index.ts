@@ -3097,6 +3097,11 @@ import { problem as countSubmatricesEqualFreqXY } from './count-submatrices-with
 import { problem as kthSmallestPrimeFraction } from './k-th-smallest-prime-fraction';
 import { problem as minValidStringsToFormTargetII } from './minimum-number-of-valid-strings-to-form-target-ii';
 import { problem as maximumXorScoreSubarrayQueries } from './maximum-xor-score-subarray-queries';
+// batch 267b
+import { problem as maxOrderedTripletII } from './maximum-value-of-ordered-triplet-ii';
+import { problem as sumAbsDiffSortedArray } from './sum-of-absolute-differences-in-sorted-array';
+import { problem as minDaysEatNOranges } from './minimum-days-to-eat-n-oranges';
+import { problem as minIntervalsIncludeQuery } from './minimum-intervals-to-include-each-query';
 // batch 266
 import { problem as findMaximumMarkedElements } from './find-maximum-number-of-marked-elements';
 import { problem as longestPathDifferentAdjacentChars } from './longest-path-different-adjacent-characters';
@@ -6442,6 +6447,11 @@ export const problems: readonly Problem[] = [
   kthSmallestPrimeFraction,
   minValidStringsToFormTargetII,
   maximumXorScoreSubarrayQueries,
+  // batch 267b
+  maxOrderedTripletII,
+  sumAbsDiffSortedArray,
+  minDaysEatNOranges,
+  minIntervalsIncludeQuery,
   // batch 266
   findMaximumMarkedElements,
   longestPathDifferentAdjacentChars,

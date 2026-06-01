@@ -46688,6 +46688,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(pos, neg);
   },
+  // batch 267
+  'sum-of-absolute-differences-in-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    return nums.map((v, i) => {
+      const left = i * v - prefix[i]!;
+      const right = (prefix[n]! - prefix[i + 1]!) - (n - 1 - i) * v;
+      return left + right;
+    });
+  },
+  'minimum-days-to-eat-n-oranges': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const memo = new Map<number, number>();
+    function dp(n: number): number {
+      if (n <= 1) return n;
+      if (memo.has(n)) return memo.get(n)!;
+      const res = 1 + Math.min(n % 2 + dp(Math.floor(n / 2)), n % 3 + dp(Math.floor(n / 3)));
+      memo.set(n, res);
+      return res;
+    }
+    return dp(n);
+  },
+  'minimum-intervals-to-include-each-query': (...args: unknown[]) => {
+    const intervals = (args[0] as number[][]).map(x => [...x]);
+    const queries = args[1] as number[];
+    intervals.sort((a, b) => a[0]! - b[0]!);
+    const sorted = queries.map((q, i) => [q, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const ans = new Array<number>(queries.length).fill(-1);
+    const heap: [number, number][] = [];
+    const push = (v: [number, number]) => {
+      heap.push(v);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] <= heap[i]![0]) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p;
+      }
+    };
+    const pop = () => {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2*i+1, r = 2*i+2;
+          let m = i;
+          if (l < heap.length && heap[l]![0] < heap[m]![0]) m = l;
+          if (r < heap.length && heap[r]![0] < heap[m]![0]) m = r;
+          if (m === i) break;
+          [heap[i], heap[m]] = [heap[m]!, heap[i]!]; i = m;
+        }
+      }
+      return top;
+    };
+    let j = 0;
+    for (const [q, idx] of sorted) {
+      while (j < intervals.length && intervals[j]![0]! <= q) {
+        const [l, r] = intervals[j++]!;
+        push([r! - l! + 1, r!]);
+      }
+      while (heap.length && heap[0]![1] < q) pop();
+      if (heap.length) ans[idx] = heap[0]![0];
+    }
+    return ans;
+  },
   // batch 266
   'count-distinct-integers-added-to-array': (...args: unknown[]) => {
     const nums1 = args[0] as number[];
