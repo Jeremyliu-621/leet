@@ -3028,6 +3028,12 @@ import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top
 import { problem as mostFrequentPrime } from './most-frequent-prime';
 import { problem as findNumberWaysToPlacePeople } from './find-the-number-of-ways-to-place-people';
 import { problem as happyStudents } from './happy-students';
+// batch 238b
+import { problem as countBeautifulNumbers } from './count-beautiful-numbers';
+import { problem as applyOperationsMaximizeScore } from './apply-operations-to-maximize-score';
+import { problem as sumOfGoodSubsequences } from './find-the-sum-of-good-subsequences';
+import { problem as countKConstraintSubstringsII } from './count-substrings-that-satisfy-k-constraint-ii';
+import { problem as countBalancedPermutations } from './count-number-of-balanced-permutations';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6091,4 +6097,10 @@ export const problems: readonly Problem[] = [
   mostFrequentPrime,
   findNumberWaysToPlacePeople,
   happyStudents,
+  // batch 238b
+  countBeautifulNumbers,
+  applyOperationsMaximizeScore,
+  sumOfGoodSubsequences,
+  countKConstraintSubstringsII,
+  countBalancedPermutations,
 ];

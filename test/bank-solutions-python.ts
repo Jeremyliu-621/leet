@@ -42201,4 +42201,184 @@ def countHappyStudents(nums):
             count += 1
     return count
 `,
+
+  // --- batch 238b -----------------------------------------------------------
+  'count-beautiful-numbers': `
+def countBeautifulNumbers(lo, hi):
+    MOD_LCM = 2520
+
+    def count_up_to(n):
+        if n <= 0:
+            return 0
+        digits = [int(c) for c in str(n)]
+        length = len(digits)
+        from functools import lru_cache
+
+        @lru_cache(maxsize=None)
+        def dp(pos, digit_sum, num_mod, tight, started):
+            if pos == length:
+                if not started:
+                    return 0
+                return 1 if digit_sum > 0 and num_mod % digit_sum == 0 else 0
+            limit = digits[pos] if tight else 9
+            result = 0
+            for d in range(0, limit + 1):
+                if d == 0 and not started:
+                    result += dp(pos + 1, digit_sum, num_mod, tight and d == limit, False)
+                elif d == 0:
+                    continue
+                else:
+                    result += dp(
+                        pos + 1,
+                        digit_sum + d,
+                        (num_mod * 10 + d) % MOD_LCM,
+                        tight and d == limit,
+                        True
+                    )
+            return result
+
+        ans = dp(0, 0, 0, True, False)
+        dp.cache_clear()
+        return ans
+
+    return count_up_to(hi) - count_up_to(lo - 1)
+`,
+
+  'apply-operations-to-maximize-score': `
+def applyOperations(nums, k):
+    MOD = 10**9 + 7
+    n = len(nums)
+    left = [0] * n
+    right = [0] * n
+    stack = []
+
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]:
+            stack.pop()
+        left[i] = i - stack[-1] if stack else i + 1
+        stack.append(i)
+    stack.clear()
+
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] <= nums[i]:
+            stack.pop()
+        right[i] = stack[-1] - i if stack else n - i
+        stack.append(i)
+
+    items = sorted([(nums[i], left[i] * right[i]) for i in range(n)], reverse=True)
+
+    score = 0
+    rem = k
+    for v, cnt in items:
+        if rem <= 0:
+            break
+        take = min(cnt, rem)
+        score = (score + v * take) % MOD
+        rem -= take
+    return score
+`,
+
+  'find-the-sum-of-good-subsequences': `
+def sumOfGoodSubsequences(nums):
+    MOD = 10**9 + 7
+    cnt = {}
+    dp = {}
+
+    for x in nums:
+        c = cnt.get(x - 1, 0) + cnt.get(x, 0) + cnt.get(x + 1, 0)
+        s = dp.get(x - 1, 0) + dp.get(x, 0) + dp.get(x + 1, 0)
+        new_cnt = (1 + c) % MOD
+        new_dp = (x * (1 + c) + s) % MOD
+        cnt[x] = (cnt.get(x, 0) + new_cnt) % MOD
+        dp[x] = (dp.get(x, 0) + new_dp) % MOD
+
+    return sum(dp.values()) % MOD
+`,
+
+  'count-substrings-that-satisfy-k-constraint-ii': `
+def countKConstraintSubstrings(s, k, queries):
+    n = len(s)
+    min_left = [0] * n
+    zeros = ones = left = 0
+
+    for i in range(n):
+        if s[i] == '0':
+            zeros += 1
+        else:
+            ones += 1
+        while zeros > k and ones > k:
+            if s[left] == '0':
+                zeros -= 1
+            else:
+                ones -= 1
+            left += 1
+        min_left[i] = left
+
+    pref_a = [0] * (n + 1)
+    for i in range(n):
+        pref_a[i + 1] = pref_a[i] + (i - min_left[i] + 1)
+
+    result = []
+    for l, r in queries:
+        lo2, hi2 = l, r + 1
+        while lo2 < hi2:
+            mid = (lo2 + hi2) // 2
+            if min_left[mid] >= l:
+                hi2 = mid
+            else:
+                lo2 = mid + 1
+        p = lo2
+        cnt1 = p - l
+        contrib1 = cnt1 * (cnt1 + 1) // 2
+        contrib2 = pref_a[r + 1] - pref_a[p]
+        result.append(contrib1 + contrib2)
+    return result
+`,
+
+  'count-number-of-balanced-permutations': `
+def countBalancedPermutations(num):
+    MOD = 10**9 + 7
+    n = len(num)
+    cnt = [0] * 10
+    S = 0
+    for c in num:
+        cnt[int(c)] += 1
+        S += int(c)
+    if S % 2 != 0:
+        return 0
+    target = S // 2
+    n_even = (n + 1) // 2
+    n_odd = n // 2
+    max_n = n + 1
+    fact = [1] * max_n
+    for i in range(1, max_n):
+        fact[i] = fact[i - 1] * i % MOD
+    inv_fact = [1] * max_n
+    inv_fact[max_n - 1] = pow(fact[max_n - 1], MOD - 2, MOD)
+    for i in range(max_n - 2, -1, -1):
+        inv_fact[i] = inv_fact[i + 1] * (i + 1) % MOD
+
+    dp = [[0] * (target + 1) for _ in range(n_even + 1)]
+    dp[0][0] = 1
+
+    for d in range(10):
+        if cnt[d] == 0:
+            continue
+        ndp = [[0] * (target + 1) for _ in range(n_even + 1)]
+        for j in range(n_even + 1):
+            for kk in range(target + 1):
+                if dp[j][kk] == 0:
+                    continue
+                for e in range(min(cnt[d], n_even - j) + 1):
+                    new_k = kk + d * e
+                    if new_k > target:
+                        break
+                    ndp[j + e][new_k] = (
+                        ndp[j + e][new_k]
+                        + dp[j][kk] * inv_fact[e] % MOD * inv_fact[cnt[d] - e] % MOD
+                    ) % MOD
+        dp = ndp
+
+    return dp[n_even][target] * fact[n_even] % MOD * fact[n_odd] % MOD
+`,
 };

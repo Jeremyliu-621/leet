@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2642** problems; 8220 tests green. Batches 102–238 complete.
+**Current focus:** Bank at **2647** problems; 8235 tests green. Batches 102–238b complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 239+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 238b — count-beautiful-numbers, apply-operations-to-maximize-score, find-the-sum-of-good-subsequences, count-substrings-k-constraint-ii, count-balanced-permutations (2026-06-01)
+Five new hard problems: `count-beautiful-numbers` (hard/math+digit-dp, LC-style — digit DP with (pos, digit_sum, num_mod_2520, tight, started) state; count integers with no-zero digits where digit_sum divides the number), `apply-operations-to-maximize-score` (hard/arrays+math+stack, LC 2818 — monotonic stack finds per-element subarray count; greedy top-k by value), `find-the-sum-of-good-subsequences` (hard/arrays+hash-map+dp, LC 3351 — hash-map DP: cnt[v]/dp[v] tracks count+sum of subsequences ending at v; update from v-1,v,v+1 neighbors), `count-substrings-that-satisfy-k-constraint-ii` (hard/strings+sliding-window+binary-search, LC 3261 — sliding window computes minLeft[i]; prefix sums + binary search answer each query in O(log n)), `count-number-of-balanced-permutations` (hard/math+dp, LC 3343 — combinatorial DP: pick digits for even positions summing to target/2; multiply by nEven! * nOdd!). Bank at **2647**; 8235 tests.
 
 ### feat(bank): batch 238 — count-submatrices-top-left-k, most-frequent-prime, find-ways-to-place-people, happy-students (2026-06-01)
 Four new problems: `count-submatrices-with-top-left-element-and-sum-less-than-k` (medium/arrays+sliding-window, LC 3070 — 2D prefix sum; count (i,j) where prefix[i][j] ≤ k), `most-frequent-prime` (medium/arrays+math, LC 3044 — traverse 8 directions from each cell accumulating multi-digit numbers; find most frequent prime), `find-the-number-of-ways-to-place-people` (medium/arrays+two-pointers, LC 3027 — sort by x asc/y desc; O(n^3) check no point lies inside each pair's rectangle), `happy-students` (medium/arrays+binary-search, LC 2860 — sort; for each m check sorted[m-1]≤m AND sorted[m]>m). Bank at **2642**; 8220 tests.

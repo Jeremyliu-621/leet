@@ -43020,4 +43020,168 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return count;
   },
+
+  // --- batch 238b -----------------------------------------------------------
+  'count-beautiful-numbers': (...args: unknown[]) => {
+    const lo = args[0] as number, hi = args[1] as number;
+    const MOD_LCM = 2520;
+    function countUpTo(n: number): number {
+      if (n <= 0) return 0;
+      const digits = String(n).split('').map(Number);
+      const len = digits.length;
+      const memo = new Map<string, number>();
+      function dp(pos: number, digitSum: number, numMod: number, tight: boolean, started: boolean): number {
+        if (pos === len) {
+          if (!started) return 0;
+          return digitSum > 0 && numMod % digitSum === 0 ? 1 : 0;
+        }
+        const key = `${pos},${digitSum},${numMod},${tight ? 1 : 0},${started ? 1 : 0}`;
+        if (memo.has(key)) return memo.get(key)!;
+        const limit = tight ? digits[pos]! : 9;
+        let result = 0;
+        for (let d = 0; d <= limit; d++) {
+          if (d === 0 && !started) {
+            result += dp(pos + 1, digitSum, numMod, tight && d === limit, false);
+          } else if (d === 0) {
+            continue;
+          } else {
+            result += dp(pos + 1, digitSum + d, (numMod * 10 + d) % MOD_LCM, tight && d === limit, true);
+          }
+        }
+        memo.set(key, result);
+        return result;
+      }
+      return dp(0, 0, 0, true, false);
+    }
+    return countUpTo(hi) - countUpTo(lo - 1);
+  },
+
+  'apply-operations-to-maximize-score': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const MOD = 1000000007n;
+    const n = nums.length;
+    const left = new Array<number>(n).fill(0);
+    const right = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length > 0 && nums[stack[stack.length - 1]!]! < nums[i]!) stack.pop();
+      left[i] = stack.length > 0 ? i - stack[stack.length - 1]! : i + 1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length > 0 && nums[stack[stack.length - 1]!]! <= nums[i]!) stack.pop();
+      right[i] = stack.length > 0 ? stack[stack.length - 1]! - i : n - i;
+      stack.push(i);
+    }
+    const items = nums.map((v, i) => [v, left[i]! * right[i]!] as [number, number]);
+    items.sort((a, b) => b[0] - a[0]);
+    let score = 0n;
+    let rem = BigInt(k);
+    for (const [v, cnt] of items) {
+      if (rem <= 0n) break;
+      const take = BigInt(cnt) < rem ? BigInt(cnt) : rem;
+      score = (score + BigInt(v) * take) % MOD;
+      rem -= take;
+    }
+    return Number(score);
+  },
+
+  'find-the-sum-of-good-subsequences': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const cnt = new Map<number, bigint>();
+    const dp = new Map<number, bigint>();
+    for (const x of nums) {
+      const v = BigInt(x);
+      const c = (cnt.get(x - 1) ?? 0n) + (cnt.get(x) ?? 0n) + (cnt.get(x + 1) ?? 0n);
+      const s = (dp.get(x - 1) ?? 0n) + (dp.get(x) ?? 0n) + (dp.get(x + 1) ?? 0n);
+      const newCnt = (1n + c) % MOD;
+      const newDp = (v * (1n + c) + s) % MOD;
+      cnt.set(x, ((cnt.get(x) ?? 0n) + newCnt) % MOD);
+      dp.set(x, ((dp.get(x) ?? 0n) + newDp) % MOD);
+    }
+    let total = 0n;
+    for (const val of dp.values()) total = (total + val) % MOD;
+    return Number(total);
+  },
+
+  'count-substrings-that-satisfy-k-constraint-ii': (...args: unknown[]) => {
+    const s = args[0] as string, k = args[1] as number, queries = args[2] as number[][];
+    const n = s.length;
+    const minLeft = new Array<number>(n).fill(0);
+    let zeros = 0, ones = 0, left = 0;
+    for (let i = 0; i < n; i++) {
+      if (s[i] === '0') zeros++; else ones++;
+      while (zeros > k && ones > k) {
+        if (s[left] === '0') zeros--; else ones--;
+        left++;
+      }
+      minLeft[i] = left;
+    }
+    const prefA = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) {
+      prefA[i + 1] = prefA[i]! + (i - minLeft[i]! + 1);
+    }
+    return queries.map(([ql, qr]) => {
+      const l = ql!, r = qr!;
+      let lo2 = l, hi2 = r + 1;
+      while (lo2 < hi2) {
+        const mid = (lo2 + hi2) >> 1;
+        if (minLeft[mid]! >= l) hi2 = mid; else lo2 = mid + 1;
+      }
+      const p = lo2;
+      const cnt1 = p - l;
+      const contrib1 = (cnt1 * (cnt1 + 1)) / 2;
+      const contrib2 = prefA[r + 1]! - prefA[p]!;
+      return contrib1 + contrib2;
+    });
+  },
+
+  'count-number-of-balanced-permutations': (...args: unknown[]) => {
+    const num = args[0] as string;
+    const MOD = 1000000007n;
+    const n = num.length;
+    const cnt = new Array<number>(10).fill(0);
+    let S = 0;
+    for (const c of num) { cnt[parseInt(c)]!++; S += parseInt(c); }
+    if (S % 2 !== 0) return 0;
+    const target = S / 2;
+    const nEven = Math.ceil(n / 2);
+    const nOdd = Math.floor(n / 2);
+    const maxN = n + 1;
+    const fact = new Array<bigint>(maxN).fill(1n);
+    for (let i = 1; i < maxN; i++) fact[i] = fact[i - 1]! * BigInt(i) % MOD;
+    const inv_fact = new Array<bigint>(maxN).fill(1n);
+    function power(base: bigint, exp: bigint, mod: bigint): bigint {
+      let result = 1n;
+      base = base % mod;
+      while (exp > 0n) {
+        if (exp % 2n === 1n) result = result * base % mod;
+        exp = exp / 2n;
+        base = base * base % mod;
+      }
+      return result;
+    }
+    inv_fact[maxN - 1] = power(fact[maxN - 1]!, MOD - 2n, MOD);
+    for (let i = maxN - 2; i >= 0; i--) inv_fact[i] = inv_fact[i + 1]! * BigInt(i + 1) % MOD;
+    let dp: bigint[][] = Array.from({ length: nEven + 1 }, () => new Array<bigint>(target + 1).fill(0n));
+    dp[0]![0] = 1n;
+    for (let d = 0; d <= 9; d++) {
+      if (cnt[d] === 0) continue;
+      const ndp: bigint[][] = Array.from({ length: nEven + 1 }, () => new Array<bigint>(target + 1).fill(0n));
+      for (let j = 0; j <= nEven; j++) {
+        for (let kk = 0; kk <= target; kk++) {
+          if (dp[j]![kk] === 0n) continue;
+          for (let e = 0; e <= Math.min(cnt[d]!, nEven - j); e++) {
+            const newK = kk + d * e;
+            if (newK > target) break;
+            ndp[j + e]![newK] = (ndp[j + e]![newK]! + dp[j]![kk]! * inv_fact[e]! % MOD * inv_fact[cnt[d]! - e]! % MOD) % MOD;
+          }
+        }
+      }
+      dp = ndp;
+    }
+    return Number(dp[nEven]![target]! * fact[nEven]! % MOD * fact[nOdd]! % MOD);
+  },
 };
