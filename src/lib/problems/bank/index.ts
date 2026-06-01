@@ -3088,6 +3088,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 246
+import { problem as minOpsXorEqualK } from './minimum-operations-to-make-array-xor-equal-to-k';
+import { problem as countNodesEqualSumDesc } from './count-nodes-equal-to-sum-of-descendants';
+import { problem as minimumPathTriangle } from './minimum-path-sum-in-triangle';
+import { problem as maximizeXorFromArray } from './maximum-xor-with-an-element-from-array';
 // batch 245
 import { problem as minimumCostWalkGraph } from './minimum-cost-walk-in-weighted-graph';
 import { problem as findGridRegionAverage } from './find-the-grid-of-region-average';
@@ -6251,4 +6256,9 @@ export const problems: readonly Problem[] = [
   findGridRegionAverage,
   minFlipsBinaryGridPalindrome,
   minAbsDiffConstraint,
+  // batch 246
+  minOpsXorEqualK,
+  countNodesEqualSumDesc,
+  minimumPathTriangle,
+  maximizeXorFromArray,
 ];

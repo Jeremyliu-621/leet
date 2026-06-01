@@ -43520,6 +43520,79 @@ def idealArrays(n, maxValue):
     return ans
 `,
 
+  'minimum-operations-to-make-array-xor-equal-to-k': `
+def minOperationsXor(nums, k):
+    xor_all = 0
+    for x in nums:
+        xor_all ^= x
+    return bin(xor_all ^ k).count('1')
+`,
+
+  'count-nodes-equal-to-sum-of-descendants': `
+def equalToDescendants(root):
+    arr = root
+    count = [0]
+    def dfs(i):
+        if i >= len(arr) or arr[i] is None:
+            return 0
+        l_sum = dfs(2 * i + 1)
+        r_sum = dfs(2 * i + 2)
+        desc_sum = l_sum + r_sum
+        if arr[i] == desc_sum:
+            count[0] += 1
+        return arr[i] + desc_sum
+    dfs(0)
+    return count[0]
+`,
+
+  'minimum-path-sum-in-triangle': `
+def minimumTotal(triangle):
+    dp = list(triangle[-1])
+    for i in range(len(triangle) - 2, -1, -1):
+        for j in range(i + 1):
+            dp[j] = triangle[i][j] + min(dp[j], dp[j+1])
+    return dp[0]
+`,
+
+  'maximum-xor-with-an-element-from-array': `
+def maximizeXor(nums, queries):
+    n = len(queries)
+    idx = sorted(range(n), key=lambda i: queries[i][1])
+    nums_sorted = sorted(nums)
+    BITS = 30
+    trie = {}
+    def insert(x):
+        node = trie
+        for b in range(BITS, -1, -1):
+            bit = (x >> b) & 1
+            if bit not in node:
+                node[bit] = {}
+            node = node[bit]
+    def query(x):
+        node = trie
+        res = 0
+        for b in range(BITS, -1, -1):
+            bit = (x >> b) & 1
+            want = bit ^ 1
+            if want in node:
+                res |= (1 << b)
+                node = node[want]
+            elif bit in node:
+                node = node[bit]
+            else:
+                return -1
+        return res
+    ans = [0] * n
+    ni = 0
+    for qi in idx:
+        x, m = queries[qi]
+        while ni < len(nums_sorted) and nums_sorted[ni] <= m:
+            insert(nums_sorted[ni])
+            ni += 1
+        ans[qi] = -1 if ni == 0 else query(x)
+    return ans
+`,
+
   'minimum-cost-walk-in-weighted-graph': `
 def minimumCostWalk(n, edges, query):
     parent = list(range(n))

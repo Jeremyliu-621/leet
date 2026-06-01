@@ -44300,6 +44300,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'minimum-operations-to-make-array-xor-equal-to-k': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const xorAll = nums.reduce((acc, x) => acc ^ x, 0);
+    let diff = xorAll ^ k, cnt = 0;
+    while (diff > 0) { cnt += diff & 1; diff >>= 1; }
+    return cnt;
+  },
+
+  'count-nodes-equal-to-sum-of-descendants': (root: unknown) => {
+    const arr = root as (number | null)[];
+    let count = 0;
+    const dfs = (i: number): number => {
+      if (i >= arr.length || arr[i] === null || arr[i] === undefined) return 0;
+      const lSum = dfs(2 * i + 1), rSum = dfs(2 * i + 2);
+      const descSum = lSum + rSum;
+      if ((arr[i] as number) === descSum) count++;
+      return (arr[i] as number) + descSum;
+    };
+    dfs(0);
+    return count;
+  },
+
+  'minimum-path-sum-in-triangle': (...args: unknown[]) => {
+    const [triangle] = args as [number[][]];
+    const dp = [...triangle[triangle.length - 1]!];
+    for (let i = triangle.length - 2; i >= 0; i--)
+      for (let j = 0; j <= i; j++)
+        dp[j] = triangle[i]![j]! + Math.min(dp[j]!, dp[j + 1]!);
+    return dp[0]!;
+  },
+
+  'maximum-xor-with-an-element-from-array': (...args: unknown[]) => {
+    const [nums, queries] = args as [number[], number[][]];
+    const n = queries.length;
+    const idx = Array.from({ length: n }, (_, i) => i);
+    idx.sort((a, b) => queries[a]![1]! - queries[b]![1]!);
+    const sortedNums = [...nums].sort((a, b) => a - b);
+    const BITS = 30;
+    const trie = new Int32Array(2 * (n + nums.length) * (BITS + 1)).fill(-1);
+    let sz = 1;
+    function insert(x: number) {
+      let node = 0;
+      for (let b = BITS; b >= 0; b--) {
+        const bit = (x >> b) & 1;
+        if (trie[node * 2 + bit] === -1) trie[node * 2 + bit] = sz++;
+        node = trie[node * 2 + bit]!;
+      }
+    }
+    function query(x: number): number {
+      let node = 0, res = 0;
+      for (let b = BITS; b >= 0; b--) {
+        const bit = (x >> b) & 1, want = bit ^ 1;
+        if (trie[node * 2 + want] !== -1) { res |= (1 << b); node = trie[node * 2 + want]!; }
+        else if (trie[node * 2 + bit] !== -1) node = trie[node * 2 + bit]!;
+        else return -1;
+      }
+      return res;
+    }
+    const ans = new Array<number>(n);
+    let ni = 0;
+    for (const qi of idx) {
+      const x = queries[qi]![0]!, m = queries[qi]![1]!;
+      while (ni < sortedNums.length && sortedNums[ni]! <= m) insert(sortedNums[ni++]!);
+      ans[qi] = ni === 0 ? -1 : query(x);
+    }
+    return ans;
+  },
+
   'minimum-cost-walk-in-weighted-graph': (...args: unknown[]) => {
     const [n, edges, query] = args as [number, number[][], number[][]];
     const parent = Array.from({ length: n }, (_, i) => i);

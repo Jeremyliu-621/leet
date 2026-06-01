@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2709** problems; 8421 tests green. Batches 102–245 complete.
+**Current focus:** Bank at **2713** problems; 8433 tests green. Batches 102–246 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 246+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 247+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 246 — xor-equal-k, count-nodes-sum-desc, min-path-triangle, max-xor-from-array (2026-06-01)
+Four new problems: `minimum-operations-to-make-array-xor-equal-to-k` (medium/bit-manipulation, LC 2997 — popcount(XOR_all ^ k) = min flip operations needed), `count-nodes-equal-to-sum-of-descendants` (medium/tree, LC 2265 — post-order DFS counting nodes where val equals sum of all descendants), `minimum-path-sum-in-triangle` (medium/dp, LC 120 — bottom-up DP in-place: dp[j]=triangle[i][j]+min(dp[j],dp[j+1])), `maximum-xor-with-an-element-from-array` (hard/trie+binary-search, LC 1707 — offline queries sorted by limit; insert nums into binary trie greedily; query max XOR). Bank at **2713**; 8433 tests.
 
 ### feat(bank): batch 245 — min-cost-walk-graph, grid-region-average, flip-grid-palindrome, min-abs-diff-constraint (2026-06-01)
 Four new problems: `minimum-cost-walk-in-weighted-graph` (hard/graph+union-find+bit-manipulation, LC 3108 — DSU tracking AND of all edge weights per component; min walk cost = component AND), `find-the-grid-of-region-average` (medium/arrays+simulation, LC 2900 — 3x3 region qualifies if all adjacent pixel diffs ≤ threshold; average qualifying regions per cell), `minimum-number-of-flips-to-make-binary-grid-palindrome` (medium/arrays, LC 3239 — 4-corner group cost + middle row/col pair checks), `minimum-absolute-difference-between-elements-with-constraint` (medium/arrays+binary-search, LC 2817 — sweep with sorted insertion array; binary search for closest element in valid index range). Bank at **2704**; 8406 tests.
