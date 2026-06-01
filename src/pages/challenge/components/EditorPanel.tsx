@@ -770,20 +770,9 @@ export function EditorPanel({
               return true;
             },
           },
-          // Autocomplete first — accepts a completion with Tab/Enter while the
-          // popup is open. Falls through to plain Tab insertion below otherwise.
-          ...completionKeymap,
-          // Close-brackets Backspace deletes both halves of an empty pair.
-          ...closeBracketsKeymap,
-          // Cmd/Ctrl+F search panel.
-          ...searchKeymap,
-          // Code-folding shortcuts.
-          ...foldKeymap,
-          // Undo/redo.
-          ...historyKeymap,
-          // Arrow keys, selection, copy/paste, etc.
-          ...defaultKeymap,
-          // Tab inserts spaces at the cursor (not structural re-indent).
+          // Tab inserts spaces at the cursor position (not structural
+          // re-indent). Must come before completionKeymap / defaultKeymap
+          // so it wins the Tab binding.
           {
             key: 'Tab',
             run(view) {
@@ -809,6 +798,19 @@ export function EditorPanel({
               return true;
             },
           },
+          // Autocomplete — accepts a completion with Enter while the
+          // popup is open. Tab is handled above.
+          ...completionKeymap,
+          // Close-brackets Backspace deletes both halves of an empty pair.
+          ...closeBracketsKeymap,
+          // Cmd/Ctrl+F search panel.
+          ...searchKeymap,
+          // Code-folding shortcuts.
+          ...foldKeymap,
+          // Undo/redo.
+          ...historyKeymap,
+          // Arrow keys, selection, copy/paste, etc.
+          ...defaultKeymap,
           // Mod-J: toggle terminal panel (mirrors VS Code panel toggle).
           {
             key: 'Mod-j',
