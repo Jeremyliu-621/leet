@@ -76,7 +76,7 @@ export function ProblemBrowserSection() {
     const base = ALL_PROBLEMS.filter((p) => {
       if (diffFilter !== 'all' && p.difficulty !== diffFilter) return false;
       if (tagFilter !== 'all' && !p.tags.includes(tagFilter)) return false;
-      if (query && !p.title.toLowerCase().includes(query) && !p.id.includes(query) && !p.tags.some((t) => t.includes(query))) return false;
+      if (query && !p.title.toLowerCase().includes(query) && !p.id.includes(query) && !p.tags.some((t) => t.toLowerCase().includes(query))) return false;
       if (unsolvedOnly && solvedIds.has(p.id)) return false;
       return true;
     });
@@ -341,7 +341,7 @@ export function ProblemBrowserSection() {
                         type="button"
                         onClick={() => handlePractice(p.id)}
                         aria-label={`Practice ${p.title}`}
-                        className="shrink-0 rounded-sm border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[9px] text-faint opacity-0 transition-opacity group-hover:opacity-100 hover:border-border-strong hover:text-muted focus:opacity-100 focus:outline focus:outline-2 focus:outline-offset-1 focus:outline-accent"
+                        className="shrink-0 rounded-sm border border-border bg-surface-2 px-1.5 py-0.5 font-mono text-[9px] text-faint [@media(hover:none)]:opacity-100 opacity-0 transition-opacity group-hover:opacity-100 hover:border-border-strong hover:text-muted focus:opacity-100 focus:outline focus:outline-2 focus:outline-offset-1 focus:outline-accent"
                       >
                         →
                       </button>
