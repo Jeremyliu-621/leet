@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2748** problems; 8538 tests green. Batches 102–253 complete.
+**Current focus:** Bank at **2753** problems; 8553 tests green. Batches 102–252 (full) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 254+; continued UX polish.
+**Next up:** Batch 253+; continued UX polish.
+
+### feat(bank): batch 252 (part 2) — maximal-range, total-chars-transformations-i, count-k-subseq-beauty, smallest-digit-product, max-semi-decreasing (2026-06-01)
+Five new problems completing batch 252: `maximal-range-that-each-element-is-maximum-in-it` (easy/arrays+stack, LC 2832 — monotone stack left/right boundaries; ranges[i]=right-left-1), `total-characters-in-string-after-transformations-i` (medium/strings+math, LC 2837 — freq array[26] simulation; z splits into a+b; sum mod 10^9+7), `count-k-subsequences-of-a-string-with-maximum-beauty` (medium/strings+math+hash-map, LC 2842 — sort freqs descending; formula C(tied,need)*prod_above*min_freq^need mod p), `smallest-number-with-given-digit-product` (medium/math, LC 2847 — greedy factor 9→2; if n>1 return -1; sort ascending), `maximum-length-of-semi-decreasing-subarrays` (medium/arrays+stack+binary-search, LC 2863 — suffix-minima positions have monotone values; binary search per left endpoint). Bank at **2753**; 8553 tests.
 
 ### feat(terminal): show output value for passing tests; fix(a11y): ARIA polish; docs(site): bump count (2026-06-01)
 Three improvements: (1) Passing test cards in the Test Results tab now show the actual return value with a copy button — fills LeetCode parity gap where passing tests display output; added `output: unknown` to `TestVerdict` pass variant, populated in `buildVerdict`, displayed in `TestResultCard` expanded view; tests updated. (2) A11y quick wins: `aria-valuetext` added to both the main panel splitter ("Problem panel: X%") and terminal resize handle ("Terminal panel: Xpx"); terminal resize handle gains `aria-valuenow/min/max`; language selector radiogroup label improved to "Select programming language"; `RunHistoryBar` gets `aria-live="polite"` so new run results are announced; `CustomTestPanel` toggle button gets descriptive expand/collapse `aria-label`. (3) Marketing site bumped from "2,730+" to "2,740+" in all three locations.
