@@ -35,9 +35,28 @@ Find the maximum profit you can achieve. You may complete as many transactions a
   functionName: 'maxProfit',
   params: ['prices', 'fee'],
   starterCode: {
-    javascript: `function maxProfit(prices, fee) {\n\n}`,
-    typescript: 'function maxProfit(prices: number[], fee: number): number {\n\n}',
-    python: `def maxProfit(prices, fee):\n    pass`,
+    javascript: `function maxProfit(prices, fee) {
+  let cash = 0, hold = -prices[0];
+  for (let i = 1; i < prices.length; i++) {
+    cash = Math.max(cash, hold + prices[i] - fee);
+    hold = Math.max(hold, cash - prices[i]);
+  }
+  return cash;
+}`,
+    typescript: `function maxProfit(prices: number[], fee: number): number {
+  let cash = 0, hold = -prices[0]!;
+  for (let i = 1; i < prices.length; i++) {
+    cash = Math.max(cash, hold + prices[i]! - fee);
+    hold = Math.max(hold, cash - prices[i]!);
+  }
+  return cash;
+}`,
+    python: `def maxProfit(prices, fee):
+    cash, hold = 0, -prices[0]
+    for price in prices[1:]:
+        cash = max(cash, hold + price - fee)
+        hold = max(hold, cash - price)
+    return cash`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 8, 4, 9], 2], expected: 8 },

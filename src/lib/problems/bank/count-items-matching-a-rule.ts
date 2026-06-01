@@ -40,11 +40,17 @@ Return *the number of items that match the given rule*.`,
   functionName: 'countMatches',
   params: ['items', 'ruleKey', 'ruleValue'],
   starterCode: {
-    javascript: `function countMatches(items, ruleKey, ruleValue) {\n\n}`,
-    typescript: `function countMatches(items: string[][], ruleKey: string, ruleValue: string): number {
-
+    javascript: `function countMatches(items, ruleKey, ruleValue) {
+  const idx = ruleKey === 'type' ? 0 : ruleKey === 'color' ? 1 : 2;
+  return items.filter(item => item[idx] === ruleValue).length;
 }`,
-    python: `def countMatches(items, ruleKey: str, ruleValue: str) -> int:\n    pass`,
+    typescript: `function countMatches(items: string[][], ruleKey: string, ruleValue: string): number {
+  const idx = ruleKey === 'type' ? 0 : ruleKey === 'color' ? 1 : 2;
+  return items.filter(item => item[idx] === ruleValue).length;
+}`,
+    python: `def countMatches(items, ruleKey, ruleValue):
+    idx = {'type': 0, 'color': 1, 'name': 2}[ruleKey]
+    return sum(1 for item in items if item[idx] == ruleValue)`,
   },
   visibleTests: [
     { args: [[['phone','blue','pixel'],['computer','silver','lenovo'],['phone','gold','iphone']], 'color', 'silver'], expected: 1 },

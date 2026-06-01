@@ -45,10 +45,51 @@ The input is a flat array of individual roll scores (not frames). Spare/strike b
   functionName: 'bowlingScore',
   params: ['rolls'],
   starterCode: {
-    javascript: `function bowlingScore(rolls) {\n  \n}`,
-    typescript: "function bowlingScore(rolls: number[]): number {\n  \n}",
-
-    python: `def bowlingScore(rolls):\n    pass`,
+    javascript: `function bowlingScore(rolls) {
+  let score = 0, i = 0;
+  for (let frame = 0; frame < 10; frame++) {
+    if (rolls[i] === 10) { // strike
+      score += 10 + rolls[i + 1] + rolls[i + 2];
+      i++;
+    } else if (rolls[i] + rolls[i + 1] === 10) { // spare
+      score += 10 + rolls[i + 2];
+      i += 2;
+    } else {
+      score += rolls[i] + rolls[i + 1];
+      i += 2;
+    }
+  }
+  return score;
+}`,
+    typescript: `function bowlingScore(rolls: number[]): number {
+  let score = 0, i = 0;
+  for (let frame = 0; frame < 10; frame++) {
+    if (rolls[i] === 10) {
+      score += 10 + rolls[i + 1]! + rolls[i + 2]!;
+      i++;
+    } else if (rolls[i]! + rolls[i + 1]! === 10) {
+      score += 10 + rolls[i + 2]!;
+      i += 2;
+    } else {
+      score += rolls[i]! + rolls[i + 1]!;
+      i += 2;
+    }
+  }
+  return score;
+}`,
+    python: `def bowlingScore(rolls):
+    score = i = 0
+    for _ in range(10):
+        if rolls[i] == 10:  # strike
+            score += 10 + rolls[i+1] + rolls[i+2]
+            i += 1
+        elif rolls[i] + rolls[i+1] == 10:  # spare
+            score += 10 + rolls[i+2]
+            i += 2
+        else:
+            score += rolls[i] + rolls[i+1]
+            i += 2
+    return score`,
   },
   visibleTests: [
     {
