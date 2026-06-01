@@ -33,12 +33,27 @@ A **subarray** is a contiguous part of an array.`,
   params: ['nums'],
   starterCode: {
     javascript: `function maxSubArray(nums) {
-
+  let best = nums[0], cur = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    cur = Math.max(nums[i], cur + nums[i]);
+    best = Math.max(best, cur);
+  }
+  return best;
 }`,
-    typescript: "function maxSubArray(nums: number[]): number {\n\n}",
-
+    typescript: `function maxSubArray(nums: number[]): number {
+  let best = nums[0]!, cur = nums[0]!;
+  for (let i = 1; i < nums.length; i++) {
+    cur = Math.max(nums[i]!, cur + nums[i]!);
+    best = Math.max(best, cur);
+  }
+  return best;
+}`,
     python: `def maxSubArray(nums):
-    pass`,
+    best = cur = nums[0]
+    for n in nums[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: [[-2, 1, -3, 4, -1, 2, 1, -5, 4]], expected: 6 },

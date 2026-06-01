@@ -38,10 +38,27 @@ Increment the large integer by one and return the resulting array of digits.`,
   functionName: 'plusOne',
   params: ['digits'],
   starterCode: {
-    javascript: 'function plusOne(digits) {\n  // your code here\n}\n',
-    typescript: "function plusOne(digits: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def plusOne(digits: list) -> list:\n    # your code here\n    pass\n',
+    javascript: `function plusOne(digits) {
+  for (let i = digits.length - 1; i >= 0; i--) {
+    if (digits[i] < 9) { digits[i]++; return digits; }
+    digits[i] = 0;
+  }
+  return [1, ...digits];
+}`,
+    typescript: `function plusOne(digits: number[]): number[] {
+  for (let i = digits.length - 1; i >= 0; i--) {
+    if (digits[i]! < 9) { digits[i]!++; return digits; }
+    digits[i] = 0;
+  }
+  return [1, ...digits];
+}`,
+    python: `def plusOne(digits):
+    for i in range(len(digits) - 1, -1, -1):
+        if digits[i] < 9:
+            digits[i] += 1
+            return digits
+        digits[i] = 0
+    return [1] + digits`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: [1, 2, 4] },

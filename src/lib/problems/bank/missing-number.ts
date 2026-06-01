@@ -41,10 +41,17 @@ The array has exactly one missing number — your job is to find it.
   functionName: 'missingNumber',
   params: ['nums'],
   starterCode: {
-    javascript: 'function missingNumber(nums) {\n  // your code here\n}\n',
-    typescript: "function missingNumber(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def missingNumber(nums):\n    # your code here\n    pass\n',
+    javascript: `function missingNumber(nums) {
+  const n = nums.length;
+  return (n * (n + 1)) / 2 - nums.reduce((a, b) => a + b, 0);
+}`,
+    typescript: `function missingNumber(nums: number[]): number {
+  const n = nums.length;
+  return (n * (n + 1)) / 2 - nums.reduce((a, b) => a + b, 0);
+}`,
+    python: `def missingNumber(nums):
+    n = len(nums)
+    return n * (n + 1) // 2 - sum(nums)`,
   },
   visibleTests: [
     { args: [[3, 0, 1]], expected: 2 },

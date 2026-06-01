@@ -36,10 +36,28 @@ function moveZeroes(nums) {
   functionName: 'moveZeroes',
   params: ['nums'],
   starterCode: {
-    javascript: 'function moveZeroes(nums) {\n  \n  return nums;\n}\n',
-    typescript: "function moveZeroes(nums: number[]): number[] {\n  \n  return nums;\n}",
-
-    python: 'def moveZeroes(nums):\n    pass\n',
+    javascript: `function moveZeroes(nums) {
+  let pos = 0;
+  for (const n of nums) { if (n !== 0) nums[pos++] = n; }
+  while (pos < nums.length) nums[pos++] = 0;
+  return nums;
+}`,
+    typescript: `function moveZeroes(nums: number[]): number[] {
+  let pos = 0;
+  for (const n of nums) { if (n !== 0) nums[pos++] = n; }
+  while (pos < nums.length) nums[pos++] = 0;
+  return nums;
+}`,
+    python: `def moveZeroes(nums):
+    pos = 0
+    for n in nums:
+        if n != 0:
+            nums[pos] = n
+            pos += 1
+    while pos < len(nums):
+        nums[pos] = 0
+        pos += 1
+    return nums`,
   },
   visibleTests: [
     { args: [[0, 1, 0, 3, 12]], expected: [1, 3, 12, 0, 0] },

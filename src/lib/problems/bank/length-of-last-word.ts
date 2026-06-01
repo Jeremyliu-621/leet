@@ -36,10 +36,16 @@ export const problem: Problem = {
   functionName: 'lengthOfLastWord',
   params: ['s'],
   starterCode: {
-    javascript: 'function lengthOfLastWord(s) {\n  // your code here\n}\n',
-    typescript: "function lengthOfLastWord(s: string): number {\n  // your code here\n}",
-
-    python: 'def lengthOfLastWord(s: str) -> int:\n    # your code here\n    pass\n',
+    javascript: `function lengthOfLastWord(s) {
+  s = s.trimEnd();
+  return s.length - s.lastIndexOf(' ') - 1;
+}`,
+    typescript: `function lengthOfLastWord(s: string): number {
+  s = s.trimEnd();
+  return s.length - s.lastIndexOf(' ') - 1;
+}`,
+    python: `def lengthOfLastWord(s):
+    return len(s.rstrip().split(' ')[-1])`,
   },
   visibleTests: [
     { args: ['Hello World'], expected: 5 },

@@ -37,10 +37,25 @@ Your solution must run in **O(log n)** time.`,
   functionName: 'searchInsert',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function searchInsert(nums, target) {\n  // your code here\n}\n',
-    typescript: "function searchInsert(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def searchInsert(nums: list, target: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function searchInsert(nums, target) {
+  let lo = 0, hi = nums.length;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (nums[mid] < target) lo = mid + 1; else hi = mid; }
+  return lo;
+}`,
+    typescript: `function searchInsert(nums: number[], target: number): number {
+  let lo = 0, hi = nums.length;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (nums[mid]! < target) lo = mid + 1; else hi = mid; }
+  return lo;
+}`,
+    python: `def searchInsert(nums, target):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 6], 5], expected: 2 },
