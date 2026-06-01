@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2859** problems; 8894 tests green. Batch 269 complete.
+**Current focus:** Bank at **2859** problems; 8894 tests green. Batch 269 complete. Starter backfill ongoing.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 270+; continued UX polish.
+**Next up:** Batch 270+; more starter backfill; continued UX polish.
 
 ### feat(bank): batch 269 — take-gifts-from-richest-pile, minimum-number-of-coins-for-fruits-i (2026-06-01)
 Two new problems: `take-gifts-from-richest-pile` (easy/arrays+heap, LC 2558 — k-step max-heap simulation; each step extract max pile, replace with floor(sqrt(max)); sum remaining; O(k log n)), `minimum-number-of-coins-for-fruits-i` (medium/arrays+dp, LC 2944 — buying fruit i (1-indexed) gives next i fruits free; right-to-left DP: dp[i]=prices[i-1]+min(dp[j] for j in [i+1..2i+1]); dp[n+1]=0; O(n²)). Bank at **2859**; 8894 tests.

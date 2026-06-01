@@ -42,13 +42,30 @@ Return the answer in any order.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function twoSum(nums, target) {
-
+  const map = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const comp = target - nums[i];
+    if (map.has(comp)) return [map.get(comp), i];
+    map.set(nums[i], i);
+  }
+  return [];
 }`,
     typescript: `function twoSum(nums: number[], target: number): number[] {
-
+  const map = new Map<number, number>();
+  for (let i = 0; i < nums.length; i++) {
+    const comp = target - nums[i]!;
+    if (map.has(comp)) return [map.get(comp)!, i];
+    map.set(nums[i]!, i);
+  }
+  return [];
 }`,
     python: `def twoSum(nums, target):
-    pass`,
+    seen = {}
+    for i, v in enumerate(nums):
+        if target - v in seen:
+            return [seen[target - v], i]
+        seen[v] = i
+    return []`,
   },
   visibleTests: [
     { args: [[2, 7, 11, 15], 9], expected: [0, 1] },

@@ -46430,17 +46430,6 @@ def placedCoins(edges, cost):
 `,
 
   // batch 269
-  'maximum-value-of-ordered-triplet-ii': `def maximumTripletValue(nums):
-    max_i = nums[0]
-    max_diff = float('-inf')
-    ans = 0
-    for j in range(1, len(nums)):
-        ans = max(ans, max_diff * nums[j])
-        max_diff = max(max_diff, max_i - nums[j])
-        max_i = max(max_i, nums[j])
-    return ans
-`,
-
   'take-gifts-from-richest-pile': `def pickGifts(gifts, k):
     import heapq, math
     heap = [-g for g in gifts]

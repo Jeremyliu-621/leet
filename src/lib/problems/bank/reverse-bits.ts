@@ -37,12 +37,27 @@ function reverseBits(n) {
   params: ['n'],
   starterCode: {
     javascript: `function reverseBits(n) {
-
+  let result = 0;
+  for (let i = 0; i < 32; i++) {
+    result = ((result * 2) + (n & 1)) >>> 0;
+    n = Math.floor(n / 2);
+  }
+  return result >>> 0;
 }`,
-    typescript: "function reverseBits(n: number): number {\n\n}",
-
+    typescript: `function reverseBits(n: number): number {
+  let result = 0;
+  for (let i = 0; i < 32; i++) {
+    result = ((result * 2) + (n & 1)) >>> 0;
+    n = Math.floor(n / 2);
+  }
+  return result >>> 0;
+}`,
     python: `def reverseBits(n):
-    pass`,
+    result = 0
+    for _ in range(32):
+        result = (result << 1) | (n & 1)
+        n >>= 1
+    return result`,
   },
   visibleTests: [
     { args: [43261596], expected: 964176192 },

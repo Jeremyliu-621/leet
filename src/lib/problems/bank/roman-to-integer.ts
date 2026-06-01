@@ -52,10 +52,33 @@ Roman numerals use these symbols:
   functionName: 'romanToInt',
   params: ['s'] as readonly string[],
   starterCode: {
-    javascript: 'function romanToInt(s) {\n  // your code here\n}\n',
-    typescript: "function romanToInt(s: string): number {\n  // your code here\n}",
-
-    python: 'def romanToInt(s: str) -> int:\n    # your code here\n    pass\n',
+    javascript: `function romanToInt(s) {
+  const map = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+  let res = 0;
+  for (let i = 0; i < s.length; i++) {
+    const cur = map[s[i]], next = map[s[i + 1]] ?? 0;
+    res += cur < next ? -cur : cur;
+  }
+  return res;
+}`,
+    typescript: `function romanToInt(s: string): number {
+  const map: Record<string, number> = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 };
+  let res = 0;
+  for (let i = 0; i < s.length; i++) {
+    const cur = map[s[i]!]!, next = map[s[i + 1]!] ?? 0;
+    res += cur < next ? -cur : cur;
+  }
+  return res;
+}`,
+    python: `def romanToInt(s):
+    val = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}
+    res = 0
+    for i in range(len(s)):
+        if i + 1 < len(s) and val[s[i]] < val[s[i+1]]:
+            res -= val[s[i]]
+        else:
+            res += val[s[i]]
+    return res`,
   },
   visibleTests: [
     { args: ['III'], expected: 3 },

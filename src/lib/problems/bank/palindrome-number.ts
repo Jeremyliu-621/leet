@@ -36,10 +36,21 @@ export const problem: Problem = {
   functionName: 'isPalindrome',
   params: ['x'],
   starterCode: {
-    javascript: 'function isPalindrome(x) {\n  // your code here\n}\n',
-    typescript: "function isPalindrome(x: number): boolean {\n  // your code here\n}",
-
-    python: 'def isPalindrome(x: int) -> bool:\n    # your code here\n    pass\n',
+    javascript: `function isPalindrome(x) {
+  if (x < 0 || (x % 10 === 0 && x !== 0)) return false;
+  let rev = 0;
+  while (x > rev) { rev = rev * 10 + (x % 10); x = Math.floor(x / 10); }
+  return x === rev || x === Math.floor(rev / 10);
+}`,
+    typescript: `function isPalindrome(x: number): boolean {
+  if (x < 0 || (x % 10 === 0 && x !== 0)) return false;
+  let rev = 0;
+  while (x > rev) { rev = rev * 10 + (x % 10); x = Math.floor(x / 10); }
+  return x === rev || x === Math.floor(rev / 10);
+}`,
+    python: `def isPalindrome(x):
+    s = str(x)
+    return s == s[::-1]`,
   },
   visibleTests: [
     { args: [121], expected: true },

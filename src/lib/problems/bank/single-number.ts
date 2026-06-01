@@ -39,13 +39,15 @@ function singleNumber(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function singleNumber(nums) {
-  // Return the element that appears only once
+  return nums.reduce((acc, n) => acc ^ n, 0);
 }`,
-    typescript: "function singleNumber(nums: number[]): number {\n  // Return the element that appears only once\n}",
-
+    typescript: `function singleNumber(nums: number[]): number {
+  return nums.reduce((acc, n) => acc ^ n, 0);
+}`,
     python: `def singleNumber(nums):
-    # Return the element that appears only once
-    pass`,
+    from functools import reduce
+    from operator import xor
+    return reduce(xor, nums)`,
   },
   visibleTests: [
     { args: [[2, 2, 1]], expected: 1 },

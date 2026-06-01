@@ -41,12 +41,21 @@ function hammingWeight(n) {
   params: ['n'],
   starterCode: {
     javascript: `function hammingWeight(n) {
-
+  let count = 0;
+  while (n > 0) { count += n & 1; n >>>= 1; }
+  return count;
 }`,
-    typescript: "function hammingWeight(n: number): number {\n\n}",
-
+    typescript: `function hammingWeight(n: number): number {
+  let count = 0;
+  while (n > 0) { count += n & 1; n >>>= 1; }
+  return count;
+}`,
     python: `def hammingWeight(n):
-    pass`,
+    count = 0
+    while n:
+        count += n & 1
+        n >>= 1
+    return count`,
   },
   visibleTests: [
     { args: [11], expected: 3 },

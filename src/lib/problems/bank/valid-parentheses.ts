@@ -28,10 +28,30 @@ An input string is valid if:
   functionName: 'isValid',
   params: ['s'],
   starterCode: {
-    javascript: 'function isValid(s) {\n  \n}\n',
-    typescript: "function isValid(s: string): boolean {\n  \n}",
-
-    python: 'def isValid(s):\n    pass\n',
+    javascript: `function isValid(s) {
+  const stack = [], map = { ')': '(', ']': '[', '}': '{' };
+  for (const c of s) {
+    if ('([{'.includes(c)) stack.push(c);
+    else if (stack.pop() !== map[c]) return false;
+  }
+  return stack.length === 0;
+}`,
+    typescript: `function isValid(s: string): boolean {
+  const stack: string[] = [], map: Record<string, string> = { ')':'(', ']':'[', '}':'{' };
+  for (const c of s) {
+    if ('([{'.includes(c)) stack.push(c);
+    else if (stack.pop() !== map[c]) return false;
+  }
+  return stack.length === 0;
+}`,
+    python: `def isValid(s):
+    stack, close = [], {')':'(', ']':'[', '}':'{'}
+    for c in s:
+        if c in '([{':
+            stack.append(c)
+        elif not stack or stack.pop() != close[c]:
+            return False
+    return not stack`,
   },
   visibleTests: [
     { args: ['()'], expected: true },

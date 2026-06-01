@@ -32,10 +32,27 @@ Given an integer array \`nums\` representing the amount of money at each house, 
   functionName: 'rob',
   params: ['nums'],
   starterCode: {
-    javascript: 'function rob(nums) {\n  \n}\n',
-    typescript: "function rob(nums: number[]): number {\n  \n}",
-
-    python: 'def rob(nums: list[int]) -> int:\n    pass\n',
+    javascript: `function rob(nums) {
+  let prev2 = 0, prev1 = 0;
+  for (const n of nums) {
+    const curr = Math.max(prev1, prev2 + n);
+    prev2 = prev1; prev1 = curr;
+  }
+  return prev1;
+}`,
+    typescript: `function rob(nums: number[]): number {
+  let prev2 = 0, prev1 = 0;
+  for (const n of nums) {
+    const curr = Math.max(prev1, prev2 + n);
+    prev2 = prev1; prev1 = curr;
+  }
+  return prev1;
+}`,
+    python: `def rob(nums):
+    prev2 = prev1 = 0
+    for n in nums:
+        prev2, prev1 = prev1, max(prev1, prev2 + n)
+    return prev1`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 1]], expected: 4 },

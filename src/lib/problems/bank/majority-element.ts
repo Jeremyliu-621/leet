@@ -40,10 +40,34 @@ Can you solve it in O(n) time and O(1) space?`,
   functionName: 'majorityElement',
   params: ['nums'],
   starterCode: {
-    javascript: 'function majorityElement(nums) {\n  // your code here\n}\n',
-    typescript: "function majorityElement(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def majorityElement(nums):\n    # your code here\n    pass\n',
+    javascript: `function majorityElement(nums) {
+  let candidate = nums[0], count = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (count === 0) { candidate = nums[i]; count = 1; }
+    else if (nums[i] === candidate) count++;
+    else count--;
+  }
+  return candidate;
+}`,
+    typescript: `function majorityElement(nums: number[]): number {
+  let candidate = nums[0]!, count = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (count === 0) { candidate = nums[i]!; count = 1; }
+    else if (nums[i] === candidate) count++;
+    else count--;
+  }
+  return candidate;
+}`,
+    python: `def majorityElement(nums):
+    candidate, count = nums[0], 1
+    for n in nums[1:]:
+        if count == 0:
+            candidate, count = n, 1
+        elif n == candidate:
+            count += 1
+        else:
+            count -= 1
+    return candidate`,
   },
   visibleTests: [
     { args: [[3, 2, 3]], expected: 3 },
