@@ -41,12 +41,46 @@ A **subsequence** is derived from \`nums\` by deleting some (possibly zero) elem
   params: ['nums'],
   starterCode: {
     javascript: `function countArithmeticSlices(nums) {
-
+  const n = nums.length;
+  const dp = Array.from({length: n}, () => new Map());
+  let ans = 0;
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < i; j++) {
+      const d = nums[i] - nums[j];
+      const cnt = dp[j].get(d) ?? 0;
+      ans += cnt;
+      dp[i].set(d, (dp[i].get(d) ?? 0) + cnt + 1);
+    }
+  }
+  return ans;
 }`,
-    typescript: "function countArithmeticSlices(nums: number[]): number {\n\n}",
-
+    typescript: `function countArithmeticSlices(nums: number[]): number {
+  const n = nums.length;
+  const dp = Array.from({length: n}, () => new Map<number, number>());
+  let ans = 0;
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < i; j++) {
+      const d = nums[i]! - nums[j]!;
+      const cnt = dp[j]!.get(d) ?? 0;
+      ans += cnt;
+      dp[i]!.set(d, (dp[i]!.get(d) ?? 0) + cnt + 1);
+    }
+  }
+  return ans;
+}`,
     python: `def countArithmeticSlices(nums):
-    `,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import defaultdict
+    n = len(nums)
+    dp = [defaultdict(int) for _ in range(n)]
+    ans = 0
+    for i in range(1, n):
+        for j in range(i):
+            d = nums[i] - nums[j]
+            cnt = dp[j][d]
+            ans += cnt
+            dp[i][d] += cnt + 1
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 4, 6, 8, 10]], expected: 7 },

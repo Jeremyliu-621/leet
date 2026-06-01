@@ -42,13 +42,66 @@ This is the large-input version — \`n\` can be up to **10^5**, requiring an O(
   params: ['maxHeights'],
   starterCode: {
     javascript: `function maximumSumOfHeights(maxHeights) {
-
+  const n = maxHeights.length;
+  const left = new Array(n).fill(0), right = new Array(n).fill(0);
+  const stack = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && maxHeights[stack[stack.length-1]] > maxHeights[i]) stack.pop();
+    const prev = stack.length ? stack[stack.length-1] : -1;
+    left[i] = prev === -1 ? (i+1)*maxHeights[i] : left[prev] + (i-prev)*maxHeights[i];
+    stack.push(i);
+  }
+  stack.length = 0;
+  for (let i = n-1; i >= 0; i--) {
+    while (stack.length && maxHeights[stack[stack.length-1]] > maxHeights[i]) stack.pop();
+    const next = stack.length ? stack[stack.length-1] : n;
+    right[i] = next === n ? (n-i)*maxHeights[i] : right[next] + (next-i)*maxHeights[i];
+    stack.push(i);
+  }
+  let best = 0;
+  for (let i = 0; i < n; i++) best = Math.max(best, left[i] + right[i] - maxHeights[i]);
+  return best;
 }`,
     typescript: `function maximumSumOfHeights(maxHeights: number[]): number {
-
+  const n = maxHeights.length;
+  const left = new Array<number>(n).fill(0), right = new Array<number>(n).fill(0);
+  const stack: number[] = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && maxHeights[stack[stack.length-1]!]! > maxHeights[i]!) stack.pop();
+    const prev = stack.length ? stack[stack.length-1]! : -1;
+    left[i] = prev === -1 ? (i+1)*maxHeights[i]! : left[prev]! + (i-prev)*maxHeights[i]!;
+    stack.push(i);
+  }
+  stack.length = 0;
+  for (let i = n-1; i >= 0; i--) {
+    while (stack.length && maxHeights[stack[stack.length-1]!]! > maxHeights[i]!) stack.pop();
+    const next = stack.length ? stack[stack.length-1]! : n;
+    right[i] = next === n ? (n-i)*maxHeights[i]! : right[next]! + (next-i)*maxHeights[i]!;
+    stack.push(i);
+  }
+  let best = 0;
+  for (let i = 0; i < n; i++) best = Math.max(best, left[i]! + right[i]! - maxHeights[i]!);
+  return best;
 }`,
     python: `def maximumSumOfHeights(maxHeights):
-    pass
+    maxHeights = list(maxHeights.to_py()) if hasattr(maxHeights, 'to_py') else list(maxHeights)
+    n = len(maxHeights)
+    left, right = [0]*n, [0]*n
+    stack = []
+    for i in range(n):
+        while stack and maxHeights[stack[-1]] > maxHeights[i]:
+            stack.pop()
+        prev = stack[-1] if stack else -1
+        left[i] = (i+1)*maxHeights[i] if prev == -1 else left[prev] + (i-prev)*maxHeights[i]
+        stack.append(i)
+    stack.clear()
+    for i in range(n-1, -1, -1):
+        while stack and maxHeights[stack[-1]] > maxHeights[i]:
+            stack.pop()
+        nxt = stack[-1] if stack else n
+        right[i] = (n-i)*maxHeights[i] if nxt == n else right[nxt] + (nxt-i)*maxHeights[i]
+        stack.append(i)
+    return max(left[i] + right[i] - maxHeights[i] for i in range(n))
 `,
   },
   visibleTests: [
