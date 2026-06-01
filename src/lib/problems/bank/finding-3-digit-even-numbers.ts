@@ -42,9 +42,41 @@ Return the result in **increasing order**.`,
   functionName: 'findEvenNumbers',
   params: ['digits'],
   starterCode: {
-    javascript: 'function findEvenNumbers(digits) {\n  // your code here\n}\n',
-    typescript: 'function findEvenNumbers(digits: number[]): number[] {\n  // your code here\n  return [];\n}',
-    python: 'def findEvenNumbers(digits):\n    # your code here\n    pass\n',
+    javascript: `function findEvenNumbers(digits) {
+  const freq = new Array(10).fill(0);
+  for (const d of digits) freq[d]++;
+  const res = [];
+  for (let n = 100; n <= 998; n += 2) {
+    const f = new Array(10).fill(0);
+    const ds = [Math.floor(n / 100), Math.floor(n / 10) % 10, n % 10];
+    for (const d of ds) f[d]++;
+    if (ds.every((d) => f[d] <= freq[d])) res.push(n);
+  }
+  return res;
+}`,
+    typescript: `function findEvenNumbers(digits: number[]): number[] {
+  const freq = new Array<number>(10).fill(0);
+  for (const d of digits) freq[d]!++;
+  const res: number[] = [];
+  for (let n = 100; n <= 998; n += 2) {
+    const f = new Array<number>(10).fill(0);
+    const ds = [Math.floor(n / 100), Math.floor(n / 10) % 10, n % 10];
+    for (const d of ds) f[d]!++;
+    if (ds.every((d) => f[d]! <= freq[d]!)) res.push(n);
+  }
+  return res;
+}`,
+    python: `def findEvenNumbers(digits):
+    digits = list(digits.to_py()) if hasattr(digits, 'to_py') else list(digits)
+    from collections import Counter
+    freq = Counter(digits)
+    res = []
+    for n in range(100, 999, 2):
+        ds = [n // 100, (n // 10) % 10, n % 10]
+        f = Counter(ds)
+        if all(f[d] <= freq[d] for d in f):
+            res.append(n)
+    return res`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 0]], expected: [102, 120, 130, 132, 210, 230, 302, 310, 312, 320] },

@@ -40,10 +40,23 @@ Return an array containing the indices of all **stable** mountains in **any orde
   functionName: 'stableMountains',
   params: ['height', 'threshold'],
   starterCode: {
-    javascript: 'function stableMountains(height, threshold) {\n  // your code here\n}\n',
-    typescript: "function stableMountains(height: number[], threshold: number): number[] {\n  // your code here\n}",
-
-    python: 'def stableMountains(height, threshold):\n    # your code here\n    pass\n',
+    javascript: `function stableMountains(height, threshold) {
+  const res = [];
+  for (let i = 1; i < height.length; i++) {
+    if (height[i - 1] > threshold) res.push(i);
+  }
+  return res;
+}`,
+    typescript: `function stableMountains(height: number[], threshold: number): number[] {
+  const res: number[] = [];
+  for (let i = 1; i < height.length; i++) {
+    if (height[i - 1]! > threshold) res.push(i);
+  }
+  return res;
+}`,
+    python: `def stableMountains(height, threshold):
+    height = list(height.to_py()) if hasattr(height, 'to_py') else list(height)
+    return [i for i in range(1, len(height)) if height[i - 1] > threshold]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 2], expected: [3, 4] },

@@ -38,10 +38,23 @@ Return the triangular sum of \`nums\`.`,
   functionName: 'triangularSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function triangularSum(nums) {\n  // your code here\n}\n',
-    typescript: "function triangularSum(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def triangularSum(nums):\n    # your code here\n    pass\n',
+    javascript: `function triangularSum(nums) {
+  while (nums.length > 1) {
+    nums = nums.slice(0, -1).map((_, i) => (nums[i] + nums[i + 1]) % 10);
+  }
+  return nums[0];
+}`,
+    typescript: `function triangularSum(nums: number[]): number {
+  while (nums.length > 1) {
+    nums = nums.slice(0, -1).map((_, i) => (nums[i]! + nums[i + 1]!) % 10);
+  }
+  return nums[0]!;
+}`,
+    python: `def triangularSum(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    while len(nums) > 1:
+        nums = [(nums[i] + nums[i + 1]) % 10 for i in range(len(nums) - 1)]
+    return nums[0]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: 8 },

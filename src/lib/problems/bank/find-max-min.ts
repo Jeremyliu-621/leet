@@ -38,10 +38,29 @@ Find both in a single pass (O(n)) rather than sorting or calling \`Math.max\` / 
   functionName: 'findMaxMin',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findMaxMin(nums) {\n  // your code here\n}\n',
-    typescript: "function findMaxMin(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def findMaxMin(nums):\n    # your code here\n    pass\n',
+    javascript: `function findMaxMin(nums) {
+  let max = nums[0], min = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > max) max = nums[i];
+    if (nums[i] < min) min = nums[i];
+  }
+  return [max, min];
+}`,
+    typescript: `function findMaxMin(nums: number[]): number[] {
+  let max = nums[0]!, min = nums[0]!;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i]! > max) max = nums[i]!;
+    if (nums[i]! < min) min = nums[i]!;
+  }
+  return [max, min];
+}`,
+    python: `def findMaxMin(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    mx, mn = nums[0], nums[0]
+    for x in nums[1:]:
+        if x > mx: mx = x
+        if x < mn: mn = x
+    return [mx, mn]`,
   },
   visibleTests: [
     { args: [[3, 1, 4, 1, 5, 9, 2, 6]], expected: [9, 1] },

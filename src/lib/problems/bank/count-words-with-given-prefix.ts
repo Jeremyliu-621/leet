@@ -34,10 +34,16 @@ A **prefix** of a string \`s\` is any leading contiguous substring of \`s\`.`,
   functionName: 'prefixCount',
   params: ['words', 'pref'],
   starterCode: {
-    javascript: 'function prefixCount(words, pref) {\n  // your code here\n}\n',
-    typescript: "function prefixCount(words: string[], pref: string): number {\n  // your code here\n}",
-
-    python: 'def prefixCount(words, pref):\n    # your code here\n    pass\n',
+    javascript: `function prefixCount(words, pref) {
+  return words.filter(w => w.startsWith(pref)).length;
+}`,
+    typescript: `function prefixCount(words: string[], pref: string): number {
+  return words.filter(w => w.startsWith(pref)).length;
+}`,
+    python: `def prefixCount(words, pref):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    if hasattr(pref, 'to_py'): pref = pref.to_py()
+    return sum(1 for w in words if w.startswith(pref))`,
   },
   visibleTests: [
     { args: [['pay', 'attention', 'practice', 'attend'], 'at'], expected: 2 },

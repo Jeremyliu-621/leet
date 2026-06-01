@@ -40,9 +40,39 @@ export const problem: Problem = {
   functionName: 'luckyNumbers',
   params: ['matrix'],
   starterCode: {
-    javascript: 'function luckyNumbers(matrix) {\n  // your code here\n}\n',
-    typescript: 'function luckyNumbers(matrix: number[][]): number[] {\n  // your code here\n  return [];\n}',
-    python: 'def luckyNumbers(matrix):\n    # your code here\n    pass\n',
+    javascript: `function luckyNumbers(matrix) {
+  const m = matrix.length, n = matrix[0].length;
+  const colMax = Array.from({ length: n }, (_, c) => Math.max(...matrix.map(r => r[c])));
+  const res = [];
+  for (const row of matrix) {
+    const min = Math.min(...row);
+    const c = row.indexOf(min);
+    if (colMax[c] === min) res.push(min);
+  }
+  return res;
+}`,
+    typescript: `function luckyNumbers(matrix: number[][]): number[] {
+  const m = matrix.length, n = matrix[0]!.length;
+  const colMax = Array.from({ length: n }, (_, c) => Math.max(...matrix.map(r => r[c]!)));
+  const res: number[] = [];
+  for (const row of matrix) {
+    const min = Math.min(...row);
+    const c = row.indexOf(min);
+    if (colMax[c]! === min) res.push(min);
+  }
+  return res;
+}`,
+    python: `def luckyNumbers(matrix):
+    matrix = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (matrix.to_py() if hasattr(matrix, 'to_py') else matrix)]
+    m, n = len(matrix), len(matrix[0])
+    col_max = [max(matrix[r][c] for r in range(m)) for c in range(n)]
+    res = []
+    for row in matrix:
+        mn = min(row)
+        c = row.index(mn)
+        if col_max[c] == mn:
+            res.append(mn)
+    return res`,
   },
   visibleTests: [
     { args: [[[3, 7, 8], [9, 11, 13], [15, 16, 17]]], expected: [15] },

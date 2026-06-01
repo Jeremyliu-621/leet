@@ -39,10 +39,40 @@ You must implement an algorithm that runs in **O(n) time** and uses **O(1) extra
   functionName: 'firstMissingPositive',
   params: ['nums'],
   starterCode: {
-    javascript: 'function firstMissingPositive(nums) {\n  // your code here\n}\n',
-    typescript: "function firstMissingPositive(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def firstMissingPositive(nums):\n    # your code here\n    pass\n',
+    javascript: `function firstMissingPositive(nums) {
+  const n = nums.length;
+  for (let i = 0; i < n; i++) if (nums[i] <= 0 || nums[i] > n) nums[i] = n + 1;
+  for (let i = 0; i < n; i++) {
+    const v = Math.abs(nums[i]);
+    if (v <= n) nums[v - 1] = -Math.abs(nums[v - 1]);
+  }
+  for (let i = 0; i < n; i++) if (nums[i] > 0) return i + 1;
+  return n + 1;
+}`,
+    typescript: `function firstMissingPositive(nums: number[]): number {
+  const n = nums.length;
+  for (let i = 0; i < n; i++) if (nums[i]! <= 0 || nums[i]! > n) nums[i] = n + 1;
+  for (let i = 0; i < n; i++) {
+    const v = Math.abs(nums[i]!);
+    if (v <= n) nums[v - 1] = -Math.abs(nums[v - 1]!);
+  }
+  for (let i = 0; i < n; i++) if (nums[i]! > 0) return i + 1;
+  return n + 1;
+}`,
+    python: `def firstMissingPositive(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    for i in range(n):
+        if nums[i] <= 0 or nums[i] > n:
+            nums[i] = n + 1
+    for i in range(n):
+        v = abs(nums[i])
+        if v <= n:
+            nums[v - 1] = -abs(nums[v - 1])
+    for i in range(n):
+        if nums[i] > 0:
+            return i + 1
+    return n + 1`,
   },
   visibleTests: [
     { args: [[1, 2, 0]], expected: 3 },

@@ -42,10 +42,37 @@ Output: 4
   functionName: 'movesToMakeZigzag',
   params: ['nums'],
   starterCode: {
-    javascript: 'function movesToMakeZigzag(nums) {\n  // your code here\n}\n',
-    typescript: "function movesToMakeZigzag(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def movesToMakeZigzag(nums):\n    pass\n',
+    javascript: `function movesToMakeZigzag(nums) {
+  const res = [0, 0];
+  for (let i = 0; i < nums.length; i++) {
+    let minNeighbor = Infinity;
+    if (i > 0) minNeighbor = Math.min(minNeighbor, nums[i - 1]);
+    if (i < nums.length - 1) minNeighbor = Math.min(minNeighbor, nums[i + 1]);
+    res[i % 2] += Math.max(0, nums[i] - minNeighbor + 1);
+  }
+  return Math.min(res[0], res[1]);
+}`,
+    typescript: `function movesToMakeZigzag(nums: number[]): number {
+  const res = [0, 0];
+  for (let i = 0; i < nums.length; i++) {
+    let minNeighbor = Infinity;
+    if (i > 0) minNeighbor = Math.min(minNeighbor, nums[i - 1]!);
+    if (i < nums.length - 1) minNeighbor = Math.min(minNeighbor, nums[i + 1]!);
+    res[i % 2]! += Math.max(0, nums[i]! - minNeighbor + 1);
+  }
+  return Math.min(res[0]!, res[1]!);
+}`,
+    python: `def movesToMakeZigzag(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    res = [0, 0]
+    n = len(nums)
+    for i in range(n):
+        neighbors = []
+        if i > 0: neighbors.append(nums[i - 1])
+        if i < n - 1: neighbors.append(nums[i + 1])
+        min_nb = min(neighbors) if neighbors else float('inf')
+        res[i % 2] += max(0, nums[i] - min_nb + 1)
+    return min(res)`,
   },
   visibleTests: [
     { args: [[1,2,3]], expected: 2 },

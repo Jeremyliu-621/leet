@@ -38,10 +38,30 @@ If no such integer exists, return \`-1\`.`,
   functionName: 'findMaxK',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findMaxK(nums) {\n  // your code here\n}\n',
-    typescript: "function findMaxK(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def findMaxK(nums):\n    # your code here\n    pass\n',
+    javascript: `function findMaxK(nums) {
+  const s = new Set(nums);
+  let ans = -1;
+  for (const n of nums) {
+    if (n > 0 && s.has(-n)) ans = Math.max(ans, n);
+  }
+  return ans;
+}`,
+    typescript: `function findMaxK(nums: number[]): number {
+  const s = new Set(nums);
+  let ans = -1;
+  for (const n of nums) {
+    if (n > 0 && s.has(-n)) ans = Math.max(ans, n);
+  }
+  return ans;
+}`,
+    python: `def findMaxK(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = set(nums)
+    ans = -1
+    for n in nums:
+        if n > 0 and -n in s:
+            ans = max(ans, n)
+    return ans`,
   },
   visibleTests: [
     { args: [[-1, 2, -3, 3]], expected: 3 },

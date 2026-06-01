@@ -37,10 +37,34 @@ export const problem: Problem = {
   functionName: 'firstNotSmaller',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function firstNotSmaller(nums, target) {\n  // your code here\n}\n',
-    typescript: "function firstNotSmaller(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def firstNotSmaller(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function firstNotSmaller(nums, target) {
+  let lo = 0, hi = nums.length - 1, result = nums.length;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid] >= target) { result = mid; hi = mid - 1; }
+    else lo = mid + 1;
+  }
+  return result;
+}`,
+    typescript: `function firstNotSmaller(nums: number[], target: number): number {
+  let lo = 0, hi = nums.length - 1, result = nums.length;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid]! >= target) { result = mid; hi = mid - 1; }
+    else lo = mid + 1;
+  }
+  return result;
+}`,
+    python: `def firstNotSmaller(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lo, hi, result = 0, len(nums) - 1, len(nums)
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] >= target:
+            result = mid; hi = mid - 1
+        else:
+            lo = mid + 1
+    return result`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 7], 5], expected: 2 },

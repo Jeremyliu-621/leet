@@ -39,10 +39,34 @@ You must write an algorithm that runs in **O(log n)** time.
   functionName: 'findPeakElement',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findPeakElement(nums) {\n  // your code here\n}\n',
-    typescript: "function findPeakElement(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def findPeakElement(nums: list) -> int:\n    # your code here\n    pass\n',
+    javascript: `function findPeakElement(nums) {
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid] < nums[mid + 1]) lo = mid + 1;
+    else hi = mid;
+  }
+  return lo;
+}`,
+    typescript: `function findPeakElement(nums: number[]): number {
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid]! < nums[mid + 1]!) lo = mid + 1;
+    else hi = mid;
+  }
+  return lo;
+}`,
+    python: `def findPeakElement(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < nums[mid + 1]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 1]], expected: 2 },

@@ -36,10 +36,33 @@ Return the concatenation value of \`nums\`.`,
   functionName: 'findTheArrayConcVal',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findTheArrayConcVal(nums) {\n  // your code here\n}\n',
-    typescript: "function findTheArrayConcVal(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def findTheArrayConcVal(nums):\n    # your code here\n    pass\n',
+    javascript: `function findTheArrayConcVal(nums) {
+  let l = 0, r = nums.length - 1, val = 0;
+  while (l < r) {
+    val += parseInt(\`\${nums[l]}\${nums[r]}\`);
+    l++; r--;
+  }
+  if (l === r) val += nums[l];
+  return val;
+}`,
+    typescript: `function findTheArrayConcVal(nums: number[]): number {
+  let l = 0, r = nums.length - 1, val = 0;
+  while (l < r) {
+    val += parseInt(\`\${nums[l]!}\${nums[r]!}\`);
+    l++; r--;
+  }
+  if (l === r) val += nums[l]!;
+  return val;
+}`,
+    python: `def findTheArrayConcVal(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    l, r, val = 0, len(nums) - 1, 0
+    while l < r:
+        val += int(str(nums[l]) + str(nums[r]))
+        l += 1; r -= 1
+    if l == r:
+        val += nums[l]
+    return val`,
   },
   visibleTests: [
     { args: [[7, 52, 2, 4]], expected: 596 },

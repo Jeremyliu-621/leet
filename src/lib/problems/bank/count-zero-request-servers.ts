@@ -41,10 +41,72 @@ Return an array \`ans\` of length \`queries.length\` where \`ans[j]\` is the ans
   functionName: 'countServers',
   params: ['n', 'logs', 'x', 'queries'],
   starterCode: {
-    javascript: 'function countServers(n, logs, x, queries) {\n  // your code here\n}\n',
-    typescript: "function countServers(n: number, logs: number[][], x: number, queries: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def countServers(n, logs, x, queries):\n    # your code here\n    pass\n',
+    javascript: `function countServers(n, logs, x, queries) {
+  logs = [...logs].sort((a, b) => a[1] - b[1]);
+  const qi = queries.map((q, i) => [q, i]).sort((a, b) => a[0] - b[0]);
+  const ans = new Array(queries.length).fill(0);
+  const freq = new Map();
+  let l = 0, r = 0;
+  for (const [q, idx] of qi) {
+    const lo = q - x, hi = q;
+    while (r < logs.length && logs[r][1] <= hi) {
+      freq.set(logs[r][0], (freq.get(logs[r][0]) ?? 0) + 1);
+      r++;
+    }
+    while (l < r && logs[l][1] < lo) {
+      const sid = logs[l][0];
+      const cnt = freq.get(sid) - 1;
+      if (cnt === 0) freq.delete(sid); else freq.set(sid, cnt);
+      l++;
+    }
+    ans[idx] = n - freq.size;
+  }
+  return ans;
+}`,
+    typescript: `function countServers(n: number, logs: number[][], x: number, queries: number[]): number[] {
+  const sortedLogs = [...logs].sort((a, b) => a[1]! - b[1]!);
+  const qi = queries.map((q, i) => [q, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+  const ans = new Array<number>(queries.length).fill(0);
+  const freq = new Map<number, number>();
+  let l = 0, r = 0;
+  for (const [q, idx] of qi) {
+    const lo = q - x, hi = q;
+    while (r < sortedLogs.length && sortedLogs[r]![1]! <= hi) {
+      const sid = sortedLogs[r]![0]!;
+      freq.set(sid, (freq.get(sid) ?? 0) + 1);
+      r++;
+    }
+    while (l < r && sortedLogs[l]![1]! < lo) {
+      const sid = sortedLogs[l]![0]!;
+      const cnt = freq.get(sid)! - 1;
+      if (cnt === 0) freq.delete(sid); else freq.set(sid, cnt);
+      l++;
+    }
+    ans[idx] = n - freq.size;
+  }
+  return ans;
+}`,
+    python: `def countServers(n, logs, x, queries):
+    logs = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (logs.to_py() if hasattr(logs, 'to_py') else logs)]
+    queries = list(queries.to_py() if hasattr(queries, 'to_py') else queries)
+    logs.sort(key=lambda e: e[1])
+    qi = sorted(enumerate(queries), key=lambda e: e[1])
+    ans = [0] * len(queries)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = r = 0
+    for orig_i, q in qi:
+        lo, hi = q - x, q
+        while r < len(logs) and logs[r][1] <= hi:
+            freq[logs[r][0]] += 1
+            r += 1
+        while l < r and logs[l][1] < lo:
+            freq[logs[l][0]] -= 1
+            if freq[logs[l][0]] == 0:
+                del freq[logs[l][0]]
+            l += 1
+        ans[orig_i] = n - len(freq)
+    return ans`,
   },
   visibleTests: [
     { args: [3, [[1, 3], [2, 6], [1, 5]], 5, [10, 11]], expected: [1, 2] },

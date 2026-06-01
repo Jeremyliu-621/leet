@@ -33,10 +33,41 @@ Return a **0-indexed** integer array \`ans\` of size \`2\` where \`ans[0]\` equa
   functionName: 'findMissingAndRepeatedValues',
   params: ['grid'],
   starterCode: {
-    javascript: 'function findMissingAndRepeatedValues(grid) {\n  // your code here\n}\n',
-    typescript: "function findMissingAndRepeatedValues(grid: number[][]): number[] {\n  // your code here\n}",
-
-    python: 'def findMissingAndRepeatedValues(grid):\n    # your code here\n    pass\n',
+    javascript: `function findMissingAndRepeatedValues(grid) {
+  const flat = grid.flat();
+  const n2 = flat.length;
+  const cnt = new Array(n2 + 1).fill(0);
+  for (const v of flat) cnt[v]++;
+  let a = 0, b = 0;
+  for (let i = 1; i <= n2; i++) {
+    if (cnt[i] === 2) a = i;
+    if (cnt[i] === 0) b = i;
+  }
+  return [a, b];
+}`,
+    typescript: `function findMissingAndRepeatedValues(grid: number[][]): number[] {
+  const flat = grid.flat();
+  const n2 = flat.length;
+  const cnt = new Array<number>(n2 + 1).fill(0);
+  for (const v of flat) cnt[v]!++;
+  let a = 0, b = 0;
+  for (let i = 1; i <= n2; i++) {
+    if (cnt[i] === 2) a = i;
+    if (cnt[i] === 0) b = i;
+  }
+  return [a, b];
+}`,
+    python: `def findMissingAndRepeatedValues(grid):
+    grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    flat = [v for row in grid for v in row]
+    n2 = len(flat)
+    from collections import Counter
+    cnt = Counter(flat)
+    a = b = 0
+    for i in range(1, n2 + 1):
+        if cnt[i] == 2: a = i
+        if cnt[i] == 0: b = i
+    return [a, b]`,
   },
   visibleTests: [
     { args: [[[1, 3], [2, 2]]], expected: [2, 4] },

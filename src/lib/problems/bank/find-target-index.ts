@@ -36,10 +36,35 @@ export const problem: Problem = {
   functionName: 'findTargetIndex',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function findTargetIndex(nums, target) {\n  // your code here\n}\n',
-    typescript: "function findTargetIndex(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def findTargetIndex(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function findTargetIndex(nums, target) {
+  let lo = 0, hi = nums.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid] === target) return mid;
+    else if (nums[mid] < target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}`,
+    typescript: `function findTargetIndex(nums: number[], target: number): number {
+  let lo = 0, hi = nums.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid]! === target) return mid;
+    else if (nums[mid]! < target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}`,
+    python: `def findTargetIndex(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target: return mid
+        elif nums[mid] < target: lo = mid + 1
+        else: hi = mid - 1
+    return -1`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 7, 9], 7], expected: 3 },
