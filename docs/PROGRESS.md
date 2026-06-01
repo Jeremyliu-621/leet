@@ -6,11 +6,14 @@
 
 ---
 
-**Last updated:** 2026-05-30
+**Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2621** problems; 8157 tests green. Batches 102–232 complete.
+**Current focus:** Bank at **2625** problems; 8169 tests green. Batches 102–233 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 233+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 234+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 233 — visit-array-positions-to-maximize-score, largest-element-after-merge-operations, shortest-distance-road-queries-i+ii (2026-06-01)
+Four new problems: `visit-array-positions-to-maximize-score` (medium/arrays+dp, LC 2786 — two-state DP on value parity: dp[0]=best score ending at even, dp[1]=best at odd; parity change costs x), `largest-element-in-array-after-merge-operations` (medium/arrays+simulation, LC 2789 — right-to-left greedy: accumulate cur, reset when nums[i] > cur), `shortest-distance-after-road-addition-queries-i` (medium/graph+shortest-path, LC 3243 — BFS after each query addition), `shortest-distance-after-road-addition-queries-ii` (hard/graph+union-find, LC 3244 — link-compression: deactivate skipped nodes with path compression, O(nα(n))). Bank at **2625**; 8169 tests.
 
 ### feat(bank): batch 232 — max-diff-ascending, min-swaps-balanced-str, count-subarrays-equal-ends, split-strings-by-separator (2026-05-30)
 Four new problems: `maximum-difference-between-ascending-elements` (easy/arrays, running min scan, return max diff or -1), `minimum-number-of-swaps-to-make-the-string-balanced` (medium/strings, count misplaced "]" with open-bracket counter, ceil(bad/2)), `count-subarrays-with-equal-ends` (medium/arrays+hash-map, frequency map O(n): add freq[v] then increment), `split-strings-by-separator` (easy/strings, split+filter empty strings). Bank at **2621**; 8157 tests.
