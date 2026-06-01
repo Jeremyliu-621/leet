@@ -48,12 +48,17 @@ function capitalizeTitle(title) {
   params: ['title'],
   starterCode: {
     javascript: `function capitalizeTitle(title) {
-
+  return title.split(' ').map(w =>
+    w.length <= 2 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase()
+  ).join(' ');
 }`,
-    typescript: "function capitalizeTitle(title: string): string {\n\n}",
-
+    typescript: `function capitalizeTitle(title: string): string {
+  return title.split(' ').map(w =>
+    w.length <= 2 ? w.toLowerCase() : w[0]!.toUpperCase() + w.slice(1).toLowerCase()
+  ).join(' ');
+}`,
     python: `def capitalizeTitle(title):
-    pass`,
+    return ' '.join(w.lower() if len(w) <= 2 else w.capitalize() for w in title.split())`,
   },
   visibleTests: [
     { args: ['capiTalIze tHe titLe'], expected: 'Capitalize The Title' },

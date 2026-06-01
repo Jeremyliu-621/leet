@@ -40,12 +40,17 @@ return res;\`\`\``
   params: ['nums', 'n'],
   starterCode: {
     javascript: `function shuffle(nums, n) {
-
+  const res = [];
+  for (let i = 0; i < n; i++) { res.push(nums[i]); res.push(nums[i + n]); }
+  return res;
 }`,
-    typescript: "function shuffle(nums: number[], n: number): number[] {\n\n}",
-
+    typescript: `function shuffle(nums: number[], n: number): number[] {
+  const res: number[] = [];
+  for (let i = 0; i < n; i++) { res.push(nums[i]!); res.push(nums[i + n]!); }
+  return res;
+}`,
     python: `def shuffle(nums, n):
-    pass`,
+    return [x for i in range(n) for x in (nums[i], nums[i + n])]`,
   },
   visibleTests: [
     { args: [[2, 5, 1, 3, 4, 7], 3], expected: [2, 3, 5, 4, 1, 7] },

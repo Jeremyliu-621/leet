@@ -34,11 +34,35 @@ You must write an algorithm with \`O(log n)\` runtime complexity.`,
   functionName: 'search',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: `function search(nums, target) {\n\n}`,
-    typescript: `function search(nums: number[], target: number): number {
-
+    javascript: `function search(nums, target) {
+  let lo = 0, hi = nums.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid] === target) return mid;
+    if (nums[mid] < target) lo = mid + 1; else hi = mid - 1;
+  }
+  return -1;
 }`,
-    python: `def search(nums: list[int], target: int) -> int:\n    pass`,
+    typescript: `function search(nums: number[], target: number): number {
+  let lo = 0, hi = nums.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid] === target) return mid;
+    if (nums[mid]! < target) lo = mid + 1; else hi = mid - 1;
+  }
+  return -1;
+}`,
+    python: `def search(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1`,
   },
   visibleTests: [
     { args: [[-1, 0, 3, 5, 9, 12], 9], expected: 4 },

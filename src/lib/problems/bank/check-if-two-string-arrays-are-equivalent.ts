@@ -40,12 +40,13 @@ A string is **represented** by an array if the array elements concatenated **in 
   params: ['word1', 'word2'],
   starterCode: {
     javascript: `function arrayStringsAreEqual(word1, word2) {
-
+  return word1.join('') === word2.join('');
 }`,
-    typescript: "function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {\n\n}",
-
+    typescript: `function arrayStringsAreEqual(word1: string[], word2: string[]): boolean {
+  return word1.join('') === word2.join('');
+}`,
     python: `def arrayStringsAreEqual(word1, word2):
-    pass`,
+    return ''.join(word1) == ''.join(word2)`,
   },
   visibleTests: [
     { args: [['ab', 'c'], ['a', 'bc']], expected: true },

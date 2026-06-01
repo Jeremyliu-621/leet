@@ -31,12 +31,13 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function findNumbers(nums) {
-
+  return nums.filter(n => String(n).length % 2 === 0).length;
 }`,
-    typescript: "function findNumbers(nums: number[]): number {\n\n}",
-
+    typescript: `function findNumbers(nums: number[]): number {
+  return nums.filter(n => String(n).length % 2 === 0).length;
+}`,
     python: `def findNumbers(nums):
-    pass`,
+    return sum(1 for n in nums if len(str(n)) % 2 == 0)`,
   },
   visibleTests: [
     { args: [[12, 345, 2, 6, 7896]], expected: 2 },

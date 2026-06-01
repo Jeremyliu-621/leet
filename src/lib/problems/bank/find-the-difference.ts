@@ -40,12 +40,22 @@ function findTheDifference(s, t) {
   params: ['s', 't'],
   starterCode: {
     javascript: `function findTheDifference(s, t) {
-
+  let c = 0;
+  for (const ch of s) c ^= ch.charCodeAt(0);
+  for (const ch of t) c ^= ch.charCodeAt(0);
+  return String.fromCharCode(c);
 }`,
-    typescript: "function findTheDifference(s: string, t: string): string {\n\n}",
-
+    typescript: `function findTheDifference(s: string, t: string): string {
+  let c = 0;
+  for (const ch of s) c ^= ch.charCodeAt(0);
+  for (const ch of t) c ^= ch.charCodeAt(0);
+  return String.fromCharCode(c);
+}`,
     python: `def findTheDifference(s, t):
-    pass`,
+    c = 0
+    for ch in s + t:
+        c ^= ord(ch)
+    return chr(c)`,
   },
   visibleTests: [
     { args: ['abcd', 'abcde'], expected: 'e' },

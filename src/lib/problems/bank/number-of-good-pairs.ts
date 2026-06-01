@@ -41,10 +41,22 @@ function numIdenticalPairs(nums) {
   functionName: 'numIdenticalPairs',
   params: ['nums'],
   starterCode: {
-    javascript: 'function numIdenticalPairs(nums) {\n  \n}\n',
-    typescript: "function numIdenticalPairs(nums: number[]): number {\n  \n}",
-
-    python: 'def numIdenticalPairs(nums):\n    pass\n',
+    javascript: `function numIdenticalPairs(nums) {
+  let count = 0;
+  const freq = new Map();
+  for (const n of nums) { count += freq.get(n) ?? 0; freq.set(n, (freq.get(n) ?? 0) + 1); }
+  return count;
+}`,
+    typescript: `function numIdenticalPairs(nums: number[]): number {
+  let count = 0;
+  const freq = new Map<number, number>();
+  for (const n of nums) { count += freq.get(n) ?? 0; freq.set(n, (freq.get(n) ?? 0) + 1); }
+  return count;
+}`,
+    python: `def numIdenticalPairs(nums):
+    from collections import Counter
+    freq = Counter(nums)
+    return sum(v * (v - 1) // 2 for v in freq.values())`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 1, 1, 3]], expected: 4 },

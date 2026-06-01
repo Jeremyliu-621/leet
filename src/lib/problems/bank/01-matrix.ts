@@ -33,12 +33,55 @@ export const problem: Problem = {
   params: ['mat'],
   starterCode: {
     javascript: `function updateMatrix(mat) {
-
+  const m = mat.length, n = mat[0].length;
+  const dist = mat.map(r => r.map(v => v === 0 ? 0 : Infinity));
+  const queue = [];
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (mat[r][c] === 0) queue.push([r, c]);
+  const dirs = [[1,0],[-1,0],[0,1],[0,-1]];
+  let qi = 0;
+  while (qi < queue.length) {
+    const [r, c] = queue[qi++];
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && dist[nr][nc] > dist[r][c] + 1) {
+        dist[nr][nc] = dist[r][c] + 1;
+        queue.push([nr, nc]);
+      }
+    }
+  }
+  return dist;
 }`,
-    typescript: "function updateMatrix(mat: number[][]): number[][] {\n\n}",
-
+    typescript: `function updateMatrix(mat: number[][]): number[][] {
+  const m = mat.length, n = mat[0]!.length;
+  const dist = mat.map(r => r.map(v => v === 0 ? 0 : Infinity));
+  const queue: [number, number][] = [];
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (mat[r]![c] === 0) queue.push([r, c]);
+  const dirs: [number, number][] = [[1,0],[-1,0],[0,1],[0,-1]];
+  let qi = 0;
+  while (qi < queue.length) {
+    const [r, c] = queue[qi++]!;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr!, nc = c + dc!;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && dist[nr]![nc]! > dist[r]![c]! + 1) {
+        dist[nr]![nc] = dist[r]![c]! + 1;
+        queue.push([nr, nc]);
+      }
+    }
+  }
+  return dist;
+}`,
     python: `def updateMatrix(mat):
-    pass`,
+    from collections import deque
+    m, n = len(mat), len(mat[0])
+    dist = [[0 if mat[r][c] == 0 else float('inf') for c in range(n)] for r in range(m)]
+    queue = deque((r, c) for r in range(m) for c in range(n) if mat[r][c] == 0)
+    for r, c in queue:
+        for dr, dc in ((1,0),(-1,0),(0,1),(0,-1)):
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and dist[nr][nc] > dist[r][c] + 1:
+                dist[nr][nc] = dist[r][c] + 1
+                queue.append((nr, nc))
+    return dist`,
   },
   visibleTests: [
     {

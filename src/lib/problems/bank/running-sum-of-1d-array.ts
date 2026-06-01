@@ -35,10 +35,21 @@ The running sum of an array is defined as: \`runningSum[i] = sum(nums[0]…nums[
   functionName: 'runningSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function runningSum(nums) {\n  // your code here\n}\n',
-    typescript: "function runningSum(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def runningSum(nums):\n    # your code here\n    pass\n',
+    javascript: `function runningSum(nums) {
+  let s = 0;
+  return nums.map(n => (s += n, s));
+}`,
+    typescript: `function runningSum(nums: number[]): number[] {
+  let s = 0;
+  return nums.map(n => (s += n, s));
+}`,
+    python: `def runningSum(nums):
+    s = 0
+    result = []
+    for n in nums:
+        s += n
+        result.append(s)
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [1, 3, 6, 10] },
