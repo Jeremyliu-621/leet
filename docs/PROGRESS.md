@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2743** problems; 8523 tests green. Batches 102–251 complete.
+**Current focus:** Bank at **2745** problems; 8529 tests green. Batches 102–252 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 252+; continued UX polish.
+**Next up:** Batch 253+; continued UX polish.
+
+### feat(bank): batch 252 — set-after-removals, x-y-equal, distribute-arrays-ii-upgrade; batch 251b — max-xor-two-numbers (2026-06-01)
+Batch 252: `maximum-size-of-a-set-after-removals` (medium/arrays+hash-map, LC 3002 — greedy formula: min(unique1,n/2)+min(unique2,n/2)+min(shared,remaining)), `minimum-number-of-operations-to-make-x-and-y-equal` (medium/dp, LC 2998 — memoized DP rounding to nearest multiples of 5/11 + ±1 adjustments), upgraded `distribute-elements-into-two-arrays-ii` (hard/arrays+binary-indexed-tree — added BIT-based O(n log n) starter code with coordinate compression; was empty). Batch 251b: `maximum-xor-of-two-numbers-in-array` (medium/trie+bit-manipulation, LC 421 — binary trie greedy: insert all nums, then for each pick opposite bits). Bank at **2745**; 8529 tests.
 
 ### feat(bank): batch 251 — lex-smallest-substr-op, relocate-marbles, beautiful-substrings, array-to-zero, split-array (2026-06-01)
 Five new problems: `lexicographically-smallest-string-after-substring-operation` (medium/strings, LC 2734 — greedy: skip leading a's; decrement non-a's until next original a; special case all-a's changes last char to z), `relocate-marbles` (medium/arrays, LC 2766 — Set-based simulation: remove from, add to; sort at end), `partition-string-into-minimum-beautiful-substrings` (medium/dp, LC 2767 — beautiful=binary representation of 5^k; DP dp[i]=min partitions; precompute powers-of-5 set), `apply-operations-to-make-all-array-elements-equal-to-zero` (medium/arrays, LC 2772 — sweep left to right; greedy diff array: track active ops; start new ops when rem>0; fail if i+k>n or rem<0), `check-if-it-is-possible-to-split-array` (medium/arrays+dp, LC 2811 — n=1: true; n>=2: true iff some adjacent pair sums >= m). Bank at **2743**; 8523 tests.
