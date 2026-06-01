@@ -40,10 +40,34 @@ You may assume that you have an **infinite** number of each kind of coin.`,
   functionName: 'coinChange',
   params: ['coins', 'amount'],
   starterCode: {
-    javascript: 'function coinChange(coins, amount) {\n  \n}\n',
-    typescript: "function coinChange(coins: number[], amount: number): number {\n  \n}",
-
-    python: 'def coinChange(coins: list[int], amount: int) -> int:\n    pass\n',
+    javascript: `function coinChange(coins, amount) {
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+  for (let i = 1; i <= amount; i++) {
+    for (const c of coins) {
+      if (i >= c) dp[i] = Math.min(dp[i], dp[i - c] + 1);
+    }
+  }
+  return dp[amount] === Infinity ? -1 : dp[amount];
+}`,
+    typescript: `function coinChange(coins: number[], amount: number): number {
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+  for (let i = 1; i <= amount; i++) {
+    for (const c of coins) {
+      if (i >= c) dp[i] = Math.min(dp[i]!, dp[i - c]! + 1);
+    }
+  }
+  return dp[amount] === Infinity ? -1 : dp[amount]!;
+}`,
+    python: `def coinChange(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    for i in range(1, amount + 1):
+        for c in coins:
+            if i >= c:
+                dp[i] = min(dp[i], dp[i - c] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1`,
   },
   visibleTests: [
     { args: [[1, 5, 10, 25], 36], expected: 3 },

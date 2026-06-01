@@ -22,10 +22,36 @@ export const problem: Problem = {
   functionName: 'findMaxLength',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findMaxLength(nums) {\n  \n}\n',
-    typescript: "function findMaxLength(nums: number[]): number {\n  \n}",
-
-    python: 'def findMaxLength(nums):\n    pass\n',
+    javascript: `function findMaxLength(nums) {
+  const map = new Map([[0, -1]]);
+  let sum = 0, max = 0;
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i] === 0 ? -1 : 1;
+    if (map.has(sum)) max = Math.max(max, i - map.get(sum));
+    else map.set(sum, i);
+  }
+  return max;
+}`,
+    typescript: `function findMaxLength(nums: number[]): number {
+  const map = new Map<number, number>([[0, -1]]);
+  let sum = 0, max = 0;
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i] === 0 ? -1 : 1;
+    if (map.has(sum)) max = Math.max(max, i - map.get(sum)!);
+    else map.set(sum, i);
+  }
+  return max;
+}`,
+    python: `def findMaxLength(nums):
+    seen = {0: -1}
+    s = max_len = 0
+    for i, v in enumerate(nums):
+        s += -1 if v == 0 else 1
+        if s in seen:
+            max_len = max(max_len, i - seen[s])
+        else:
+            seen[s] = i
+    return max_len`,
   },
   visibleTests: [
     { args: [[0, 1]], expected: 2 },

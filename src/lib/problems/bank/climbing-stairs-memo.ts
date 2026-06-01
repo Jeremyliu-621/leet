@@ -39,10 +39,34 @@ function climbStairs(n) {
   functionName: 'climbStairs',
   params: ['n'],
   starterCode: {
-    javascript: 'function climbStairs(n) {\n  \n}\n',
-    typescript: "function climbStairs(n: number): number {\n  \n}",
-
-    python: 'def climbStairs(n):\n    pass\n',
+    javascript: `function climbStairs(n) {
+  const memo = {};
+  function dp(i) {
+    if (i <= 1) return 1;
+    if (i in memo) return memo[i];
+    return memo[i] = dp(i - 1) + dp(i - 2);
+  }
+  return dp(n);
+}`,
+    typescript: `function climbStairs(n: number): number {
+  const memo: Record<number, number> = {};
+  function dp(i: number): number {
+    if (i <= 1) return 1;
+    if (i in memo) return memo[i]!;
+    return memo[i] = dp(i - 1) + dp(i - 2);
+  }
+  return dp(n);
+}`,
+    python: `def climbStairs(n):
+    memo = {}
+    def dp(i):
+        if i <= 1:
+            return 1
+        if i in memo:
+            return memo[i]
+        memo[i] = dp(i - 1) + dp(i - 2)
+        return memo[i]
+    return dp(n)`,
   },
   visibleTests: [
     { args: [2], expected: 2 },

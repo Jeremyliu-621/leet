@@ -47,10 +47,30 @@ function clearDigits(s) {
   functionName: 'clearDigits',
   params: ['s'],
   starterCode: {
-    javascript: 'function clearDigits(s) {\n  \n}\n',
-    typescript: "function clearDigits(s: string): string {\n  \n}",
-
-    python: 'def clearDigits(s):\n    pass\n',
+    javascript: `function clearDigits(s) {
+  const stack = [];
+  for (const c of s) {
+    if (c >= '0' && c <= '9') stack.pop();
+    else stack.push(c);
+  }
+  return stack.join('');
+}`,
+    typescript: `function clearDigits(s: string): string {
+  const stack: string[] = [];
+  for (const c of s) {
+    if (c >= '0' && c <= '9') stack.pop();
+    else stack.push(c);
+  }
+  return stack.join('');
+}`,
+    python: `def clearDigits(s):
+    stack = []
+    for c in s:
+        if c.isdigit():
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)`,
   },
   visibleTests: [
     { args: ['cb34'], expected: '' },

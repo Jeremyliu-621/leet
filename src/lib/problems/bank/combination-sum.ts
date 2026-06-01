@@ -64,10 +64,52 @@ The combination must be in **non-decreasing order** and the result set must not 
   params: ['candidates', 'target'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: 'function combinationSum(candidates, target) {\n  \n}\n',
-    typescript: "function combinationSumRunner(candidates: number[], target: number): number[][] {\n  \n}",
-
-    python: 'def combinationSum(candidates, target):\n    pass\n',
+    javascript: `function combinationSum(candidates, target) {
+  candidates.sort((a, b) => a - b);
+  const res = [];
+  function bt(start, rem, path) {
+    if (rem === 0) { res.push([...path]); return; }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i] > rem) break;
+      path.push(candidates[i]);
+      bt(i, rem - candidates[i], path);
+      path.pop();
+    }
+  }
+  bt(0, target, []);
+  return res;
+}`,
+    typescript: `// combinationSumRunner wrapper is pre-defined. Implement combinationSum below:
+function combinationSum(candidates: number[], target: number): number[][] {
+  candidates.sort((a, b) => a - b);
+  const res: number[][] = [];
+  function bt(start: number, rem: number, path: number[]): void {
+    if (rem === 0) { res.push([...path]); return; }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i]! > rem) break;
+      path.push(candidates[i]!);
+      bt(i, rem - candidates[i]!, path);
+      path.pop();
+    }
+  }
+  bt(0, target, []);
+  return res;
+}`,
+    python: `def combinationSum(candidates, target):
+    candidates = sorted(candidates)
+    res = []
+    def bt(start, rem, path):
+        if rem == 0:
+            res.append(path[:])
+            return
+        for i in range(start, len(candidates)):
+            if candidates[i] > rem:
+                break
+            path.append(candidates[i])
+            bt(i, rem - candidates[i], path)
+            path.pop()
+    bt(0, target, [])
+    return res`,
   },
   visibleTests: [
     { args: [[2, 3, 6, 7], 7], expected: [[2,2,3],[7]] },
