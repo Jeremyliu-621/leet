@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2625** problems; 8169 tests green. Batches 102–233 complete.
+**Current focus:** Bank at **2627** problems; 8175 tests green. Batches 102–234 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 234+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 235+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 234 — matrix-similarity-after-cyclic-shifts, remove-adjacent-almost-equal-characters (2026-06-01)
+Two new problems: `matrix-similarity-after-cyclic-shifts` (easy/arrays+simulation, LC 2946 — cyclic shift even rows right k%n, odd rows left k%n; check if result equals original), `remove-adjacent-almost-equal-characters` (medium/strings+greedy, LC 2957 — greedy: skip i+1 whenever |word[i]-word[i+1]|<=1, count replacements). Bank at **2627**; 8175 tests.
 
 ### feat(bank): batch 233 — visit-array-positions-to-maximize-score, largest-element-after-merge-operations, shortest-distance-road-queries-i+ii (2026-06-01)
 Four new problems: `visit-array-positions-to-maximize-score` (medium/arrays+dp, LC 2786 — two-state DP on value parity: dp[0]=best score ending at even, dp[1]=best at odd; parity change costs x), `largest-element-in-array-after-merge-operations` (medium/arrays+simulation, LC 2789 — right-to-left greedy: accumulate cur, reset when nums[i] > cur), `shortest-distance-after-road-addition-queries-i` (medium/graph+shortest-path, LC 3243 — BFS after each query addition), `shortest-distance-after-road-addition-queries-ii` (hard/graph+union-find, LC 3244 — link-compression: deactivate skipped nodes with path compression, O(nα(n))). Bank at **2625**; 8169 tests.
