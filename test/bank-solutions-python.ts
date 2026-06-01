@@ -41934,4 +41934,32 @@ def shortestDistanceAfterQueriesII(n, queries):
         results.append(dist)
     return results
 `,
+  'matrix-similarity-after-cyclic-shifts': `
+def areSimilar(mat, k):
+    n = len(mat[0])
+    eff = k % n
+    if eff == 0:
+        return True
+    for i, row in enumerate(mat):
+        for j in range(n):
+            if i % 2 == 0:
+                expected = row[(j - eff) % n]
+            else:
+                expected = row[(j + eff) % n]
+            if row[j] != expected:
+                return False
+    return True
+`,
+  'remove-adjacent-almost-equal-characters': `
+def removeAlmostEqualCharacters(word):
+    ops = 0
+    i = 0
+    while i < len(word) - 1:
+        if abs(ord(word[i]) - ord(word[i + 1])) <= 1:
+            ops += 1
+            i += 2
+        else:
+            i += 1
+    return ops
+`,
 };

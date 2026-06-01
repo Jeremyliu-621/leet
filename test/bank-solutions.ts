@@ -42771,4 +42771,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return results;
   },
+  // batch 234
+  'matrix-similarity-after-cyclic-shifts': (...args: unknown[]) => {
+    const [mat, k] = args as [number[][], number];
+    const n = mat[0]!.length;
+    const eff = k % n;
+    if (eff === 0) return true;
+    for (let i = 0; i < mat.length; i++) {
+      for (let j = 0; j < n; j++) {
+        const row = mat[i]!;
+        const expected = i % 2 === 0
+          ? row[(j - eff + n) % n]!
+          : row[(j + eff) % n]!;
+        if (row[j] !== expected) return false;
+      }
+    }
+    return true;
+  },
+  'remove-adjacent-almost-equal-characters': (...args: unknown[]) => {
+    const word = args[0] as string;
+    let ops = 0;
+    for (let i = 0; i < word.length - 1; i++) {
+      if (Math.abs(word.charCodeAt(i) - word.charCodeAt(i + 1)) <= 1) {
+        ops++;
+        i++;
+      }
+    }
+    return ops;
+  },
 };

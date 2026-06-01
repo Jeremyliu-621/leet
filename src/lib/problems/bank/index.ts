@@ -3006,6 +3006,9 @@ import { problem as visitArrayPosMaxScore } from './visit-array-positions-to-max
 import { problem as largestElemAfterMerge } from './largest-element-in-array-after-merge-operations';
 import { problem as shortestDistRoadQueriesI } from './shortest-distance-after-road-addition-queries-i';
 import { problem as shortestDistRoadQueriesII } from './shortest-distance-after-road-addition-queries-ii';
+// batch 234
+import { problem as matrixSimilarityCyclicShifts } from './matrix-similarity-after-cyclic-shifts';
+import { problem as removeAdjacentAlmostEqual } from './remove-adjacent-almost-equal-characters';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6047,4 +6050,7 @@ export const problems: readonly Problem[] = [
   largestElemAfterMerge,
   shortestDistRoadQueriesI,
   shortestDistRoadQueriesII,
+  // batch 234
+  matrixSimilarityCyclicShifts,
+  removeAdjacentAlmostEqual,
 ];
