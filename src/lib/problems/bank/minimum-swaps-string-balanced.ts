@@ -48,10 +48,29 @@ Return the **minimum** number of swaps to make \`s\` balanced.`,
   functionName: 'minSwaps',
   params: ['s'],
   starterCode: {
-    javascript: 'function minSwaps(s) {\n  // your code here\n}\n',
-    typescript: "function minSwaps(s: string): number {\n  // your code here\n}",
-
-    python: 'def minSwaps(s):\n    # your code here\n    pass\n',
+    javascript: `function minSwaps(s) {
+  let bal = 0, mis = 0;
+  for (const c of s) {
+    bal += c === '[' ? 1 : -1;
+    if (bal < 0) { mis++; bal = 0; }
+  }
+  return Math.ceil(mis / 2);
+}`,
+    typescript: `function minSwaps(s: string): number {
+  let bal = 0, mis = 0;
+  for (const c of s) {
+    bal += c === '[' ? 1 : -1;
+    if (bal < 0) { mis++; bal = 0; }
+  }
+  return Math.ceil(mis / 2);
+}`,
+    python: `def minSwaps(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    bal = mis = 0
+    for c in s:
+        bal += 1 if c == '[' else -1
+        if bal < 0: mis += 1; bal = 0
+    return -(-mis // 2)`,
   },
   visibleTests: [
     { args: ['][]['], expected: 1 },

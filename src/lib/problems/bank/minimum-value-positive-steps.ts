@@ -38,10 +38,22 @@ Return the minimum **positive** value of \`startValue\` such that the step-by-st
   functionName: 'minStartValue',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minStartValue(nums) {\n  // your code here\n}\n',
-    typescript: "function minStartValue(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def minStartValue(nums):\n    # your code here\n    pass\n',
+    javascript: `function minStartValue(nums) {
+  let s = 0, mn = Infinity;
+  for (const n of nums) { s += n; mn = Math.min(mn, s); }
+  return Math.max(1, 1 - mn);
+}`,
+    typescript: `function minStartValue(nums: number[]): number {
+  let s = 0, mn = Infinity;
+  for (const n of nums) { s += n; mn = Math.min(mn, s); }
+  return Math.max(1, 1 - mn);
+}`,
+    python: `def minStartValue(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = mn = 0
+    for n in nums:
+        s += n; mn = min(mn, s)
+    return max(1, 1 - mn)`,
   },
   visibleTests: [
     { args: [[-3, 2, -3, 4, 2]], expected: 5 },

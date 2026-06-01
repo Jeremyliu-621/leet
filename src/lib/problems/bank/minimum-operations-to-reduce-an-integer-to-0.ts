@@ -33,14 +33,33 @@ Return the minimum number of operations needed to reduce \`n\` to \`0\`.`,
   params: ['n'],
   starterCode: {
     javascript: `function minOperations(n) {
-  // your code here
+  let ops = 0;
+  while (n > 0) {
+    if (n % 2 === 0) n >>= 1;
+    else if (n === 1 || (n & 3) === 1) n--;
+    else n++;
+    ops++;
+  }
+  return ops;
 }`,
     typescript: `function minOperations(n: number): number {
-  // your code here
+  let ops = 0;
+  while (n > 0) {
+    if (n % 2 === 0) n >>= 1;
+    else if (n === 1 || (n & 3) === 1) n--;
+    else n++;
+    ops++;
+  }
+  return ops;
 }`,
     python: `def minOperations(n):
-    # your code here
-    pass`,
+    ops = 0
+    while n > 0:
+        if n % 2 == 0: n >>= 1
+        elif n == 1 or (n & 3) == 1: n -= 1
+        else: n += 1
+        ops += 1
+    return ops`,
   },
   visibleTests: [
     { args: [7], expected: 5 },

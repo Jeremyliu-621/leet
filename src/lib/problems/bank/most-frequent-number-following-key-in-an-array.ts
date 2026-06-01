@@ -40,14 +40,28 @@ Return the \`target\` with the **maximum** count. The test cases will be generat
   params: ['nums', 'key'],
   starterCode: {
     javascript: `function mostFrequent(nums, key) {
-  // your code here
+  const freq = new Map();
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === key) freq.set(nums[i + 1], (freq.get(nums[i + 1]) ?? 0) + 1);
+  }
+  let best = -1, bestCount = 0;
+  for (const [v, c] of freq) if (c > bestCount) { bestCount = c; best = v; }
+  return best;
 }`,
     typescript: `function mostFrequent(nums: number[], key: number): number {
-  // your code here
+  const freq = new Map<number, number>();
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === key) freq.set(nums[i + 1]!, (freq.get(nums[i + 1]!) ?? 0) + 1);
+  }
+  let best = -1, bestCount = 0;
+  for (const [v, c] of freq) if (c > bestCount) { bestCount = c; best = v; }
+  return best;
 }`,
     python: `def mostFrequent(nums, key):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import Counter
+    freq = Counter(nums[i + 1] for i in range(len(nums) - 1) if nums[i] == key)
+    return freq.most_common(1)[0][0]`,
   },
   visibleTests: [
     { args: [[1, 100, 200, 1, 100], 1], expected: 100 },

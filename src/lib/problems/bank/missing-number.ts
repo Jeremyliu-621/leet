@@ -50,6 +50,7 @@ The array has exactly one missing number — your job is to find it.
   return (n * (n + 1)) / 2 - nums.reduce((a, b) => a + b, 0);
 }`,
     python: `def missingNumber(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
     n = len(nums)
     return n * (n + 1) // 2 - sum(nums)`,
   },

@@ -39,10 +39,27 @@ Return the **minimum number of operations** needed so that all remaining element
   functionName: 'minimumOperations',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minimumOperations(nums) {\n  // your code here\n}\n',
-    typescript: "function minimumOperations(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def minimumOperations(nums):\n    # your code here\n    pass\n',
+    javascript: `function minimumOperations(nums) {
+  for (let k = 0; k <= Math.ceil(nums.length / 3); k++) {
+    const suffix = nums.slice(k * 3);
+    if (new Set(suffix).size === suffix.length) return k;
+  }
+  return Math.ceil(nums.length / 3);
+}`,
+    typescript: `function minimumOperations(nums: number[]): number {
+  for (let k = 0; k <= Math.ceil(nums.length / 3); k++) {
+    const suffix = nums.slice(k * 3);
+    if (new Set(suffix).size === suffix.length) return k;
+  }
+  return Math.ceil(nums.length / 3);
+}`,
+    python: `def minimumOperations(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import math
+    for k in range(math.ceil(len(nums) / 3) + 1):
+        suffix = nums[k * 3:]
+        if len(set(suffix)) == len(suffix): return k
+    return math.ceil(len(nums) / 3)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 2, 3, 3, 5, 7]], expected: 2 },

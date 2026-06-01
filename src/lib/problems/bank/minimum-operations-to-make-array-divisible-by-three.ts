@@ -37,10 +37,15 @@ Return the **minimum** number of operations to make every element of \`nums\` di
   functionName: 'minimumOperations',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minimumOperations(nums) {\n  // your code here\n}\n',
-    typescript: "function minimumOperations(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def minimumOperations(nums):\n    # your code here\n    pass\n',
+    javascript: `function minimumOperations(nums) {
+  return nums.reduce((total, n) => total + Math.min(n % 3, 3 - n % 3), 0);
+}`,
+    typescript: `function minimumOperations(nums: number[]): number {
+  return nums.reduce((total, n) => total + Math.min(n % 3, 3 - n % 3), 0);
+}`,
+    python: `def minimumOperations(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return sum(min(n % 3, 3 - n % 3) for n in nums)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: 3 },
