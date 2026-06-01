@@ -41,13 +41,26 @@ Return the resulting array.
   params: ['nums'],
   starterCode: {
     javascript: `function applyOperations(nums) {
-  // your code here
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === nums[i+1]) { nums[i] *= 2; nums[i+1] = 0; }
+  }
+  const nz = nums.filter(x => x !== 0);
+  return [...nz, ...new Array(nums.length - nz.length).fill(0)];
 }`,
     typescript: `function applyOperations(nums: number[]): number[] {
-  // your code here
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === nums[i+1]) { nums[i]! *= 2; nums[i+1] = 0; }
+  }
+  const nz = nums.filter(x => x !== 0);
+  return [...nz, ...new Array<number>(nums.length - nz.length).fill(0)];
 }`,
     python: `def applyOperations(nums):
-    # your code here
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    for i in range(len(nums) - 1):
+        if nums[i] == nums[i+1]:
+            nums[i] *= 2
+            nums[i+1] = 0
+    return [x for x in nums if x != 0] + [0] * nums.count(0)
 `,
   },
   visibleTests: [

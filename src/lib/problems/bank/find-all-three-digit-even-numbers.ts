@@ -37,14 +37,40 @@ A **three-digit even number** is an integer between 100 and 998 (inclusive) that
   params: ['digits'],
   starterCode: {
     javascript: `function findEvenNumbers(digits) {
-  // your code here
+  const cnt = new Array(10).fill(0);
+  for (const d of digits) cnt[d]++;
+  const result = [];
+  for (let n = 100; n < 1000; n += 2) {
+    const d0 = Math.floor(n / 100), d1 = Math.floor(n / 10) % 10, d2 = n % 10;
+    const used = [0,0,0,0,0,0,0,0,0,0];
+    used[d0]++; used[d1]++; used[d2]++;
+    if (used[d0] <= cnt[d0] && used[d1] <= cnt[d1] && used[d2] <= cnt[d2]) result.push(n);
+  }
+  return result;
 }`,
     typescript: `function findEvenNumbers(digits: number[]): number[] {
-  // your code here
+  const cnt = new Array<number>(10).fill(0);
+  for (const d of digits) cnt[d]!++;
+  const result: number[] = [];
+  for (let n = 100; n < 1000; n += 2) {
+    const d0 = Math.floor(n / 100), d1 = Math.floor(n / 10) % 10, d2 = n % 10;
+    const used = new Array<number>(10).fill(0);
+    used[d0]!++; used[d1]!++; used[d2]!++;
+    if (used[d0]! <= cnt[d0]! && used[d1]! <= cnt[d1]! && used[d2]! <= cnt[d2]!) result.push(n);
+  }
+  return result;
 }`,
     python: `def findEvenNumbers(digits):
-    # your code here
-    pass`,
+    digits = list(digits.to_py()) if hasattr(digits, 'to_py') else list(digits)
+    from collections import Counter
+    cnt = Counter(digits)
+    result = []
+    for n in range(100, 1000, 2):
+        d0, d1, d2 = n // 100, (n // 10) % 10, n % 10
+        used = Counter([d0, d1, d2])
+        if all(used[d] <= cnt[d] for d in used):
+            result.append(n)
+    return result`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 0]], expected: [102, 120, 130, 132, 210, 230, 302, 310, 312, 320] },

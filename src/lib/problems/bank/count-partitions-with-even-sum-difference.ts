@@ -43,14 +43,16 @@ Return the number of partitions where the **difference** between the sum of the 
   params: ['nums'],
   starterCode: {
     javascript: `function countPartitions(nums) {
-  // your code here
+  const total = nums.reduce((a, b) => a + b, 0);
+  return total % 2 === 0 ? nums.length - 1 : 0;
 }`,
     typescript: `function countPartitions(nums: number[]): number {
-  // your code here
+  const total = nums.reduce((a, b) => a + b, 0);
+  return total % 2 === 0 ? nums.length - 1 : 0;
 }`,
     python: `def countPartitions(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return len(nums) - 1 if sum(nums) % 2 == 0 else 0`,
   },
   visibleTests: [
     { args: [[10, 10, 3, 7, 6]], expected: 4 },

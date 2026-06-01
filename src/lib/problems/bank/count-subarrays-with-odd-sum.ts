@@ -38,14 +38,38 @@ Since the answer can be large, return it modulo \`10^9 + 7\`.`,
   params: ['arr'],
   starterCode: {
     javascript: `function numOfSubarrays(arr) {
-  // your code here
+  const MOD = 1_000_000_007;
+  let even = 1, odd = 0, prefix = 0, result = 0;
+  for (const x of arr) {
+    prefix += x;
+    if (prefix % 2 === 0) { result = (result + odd) % MOD; even++; }
+    else { result = (result + even) % MOD; odd++; }
+  }
+  return result;
 }`,
     typescript: `function numOfSubarrays(arr: number[]): number {
-  // your code here
+  const MOD = 1_000_000_007;
+  let even = 1, odd = 0, prefix = 0, result = 0;
+  for (const x of arr) {
+    prefix += x;
+    if (prefix % 2 === 0) { result = (result + odd) % MOD; even++; }
+    else { result = (result + even) % MOD; odd++; }
+  }
+  return result;
 }`,
     python: `def numOfSubarrays(arr):
-    # your code here
-    pass`,
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    MOD = 10**9 + 7
+    even, odd, prefix, result = 1, 0, 0, 0
+    for x in arr:
+        prefix += x
+        if prefix % 2 == 0:
+            result = (result + odd) % MOD
+            even += 1
+        else:
+            result = (result + even) % MOD
+            odd += 1
+    return result`,
   },
   visibleTests: [
     { args: [[1,3,5]], expected: 4 },

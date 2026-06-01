@@ -39,14 +39,36 @@ A sequence of \`n\` integers is called a **permutation** if it contains all inte
   params: ['A', 'B'],
   starterCode: {
     javascript: `function findThePrefixCommonArray(A, B) {
-  // your code here
+  const seen = new Set(), result = [];
+  let common = 0;
+  for (let i = 0; i < A.length; i++) {
+    if (seen.has(A[i])) common++; else seen.add(A[i]);
+    if (seen.has(B[i])) common++; else seen.add(B[i]);
+    result.push(common);
+  }
+  return result;
 }`,
     typescript: `function findThePrefixCommonArray(A: number[], B: number[]): number[] {
-  // your code here
+  const seen = new Set<number>(), result: number[] = [];
+  let common = 0;
+  for (let i = 0; i < A.length; i++) {
+    if (seen.has(A[i]!)) common++; else seen.add(A[i]!);
+    if (seen.has(B[i]!)) common++; else seen.add(B[i]!);
+    result.push(common);
+  }
+  return result;
 }`,
     python: `def findThePrefixCommonArray(A, B):
-    # your code here
-    pass`,
+    A = list(A.to_py()) if hasattr(A, 'to_py') else list(A)
+    B = list(B.to_py()) if hasattr(B, 'to_py') else list(B)
+    seen, result, common = set(), [], 0
+    for a, b in zip(A, B):
+        if a in seen: common += 1
+        else: seen.add(a)
+        if b in seen: common += 1
+        else: seen.add(b)
+        result.append(common)
+    return result`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 4], [3, 1, 2, 4]], expected: [0, 2, 3, 4] },
