@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2813** problems; 8765 tests green. Batches 102–263 complete.
+**Current focus:** Bank at **2815** problems; 8771 tests green. Batches 102–263 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 264+; continued UX polish.
 
@@ -23,6 +23,9 @@ Three new hard problems: `rearranging-fruits` (hard/arrays+hash-map+math, LC 256
 
 ### feat(editor): expand snippet library + terminal verdict breakdown (2026-06-01)
 Expanded CodeMirror snippet completions: Python adds `pq` (heapq min-heap), `pqmax` (heapq max via negation), `deque` (collections.deque), `counter` (Counter), `bisect` (bisect_left/right), `cache` (@functools.cache), `inf` (float('inf')), `mod` (10**9+7), `sortkey` (sorted with lambda). Java adds `pqmax` (reverseOrder), `queue` (LinkedList), `dq` (ArrayDeque), `stk` (ArrayDeque stack), `tmap` (TreeMap), `tset` (TreeSet), `mod`. C++ adds `pqmax` (no comparator), `stk`, `queue`, `dq` (deque), `tmap` (std::map), `mod`, `inf`. JS/TS adds `mod` (BigInt 1_000_000_007n), `inf` (Infinity). `KeyboardShortcutsModal` updated to document all new snippets. Terminal `Test Results` tab now shows a failure-type breakdown ("N wrong · M errors") alongside the pass/fail ratio when both error types are present.
+
+### feat(bank): batch 261 (local) — count-prefix-suffix-pairs-i, max-product-palindromic-subsequences (2026-06-01)
+Two new problems: `count-prefix-suffix-pairs-i` (easy/strings+arrays, LC 3042 — O(n²) brute force: for each pair (i,j) i<j, check startsWith+endsWith), `maximum-product-of-the-length-of-two-palindromic-subsequences` (medium/strings+dp+bit-manipulation, LC 2002 — bitmask DP for LPS of all 4096 subsets; SOS DP for maxLPS in each complement; best pair = max lps[mask]×maxLPS[full^mask]). Bank at **2811**; 8753 tests.
 
 ### feat(bank): batch 261 — hash-divided-string, min-array-changes-diffs-equal, find-subarray-bitwise-and-closest-k, occurrence-first-almost-equal-substring (2026-06-01)
 Four new problems: `hash-divided-string` (easy/strings+math, LC 3271 — split into k-char groups, sum char values mod p, map to chars; O(n)), `minimum-array-changes-to-make-differences-equal` (medium/arrays+hash-map, LC 3224 — difference array + freq map; maximize pairs with zero or one change cost), `find-subarray-with-bitwise-and-closest-to-k` (medium/arrays+bit-manipulation, LC 3171 — sliding set of distinct AND values; at most O(log max_val) per step), `find-the-occurrence-of-first-almost-equal-substring` (hard/strings, LC 3298 — Z-array prefix+suffix match lengths; almost equal iff prefix+suffix >= m-1). Bank at **2809**; 8747 tests.

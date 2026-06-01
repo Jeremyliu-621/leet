@@ -46624,6 +46624,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(pos, neg);
   },
+  // batch 263
+  'minimum-suffix-flips': (...args: unknown[]) => {
+    const target = args[0] as string;
+    let flips = 0, cur = '0';
+    for (const c of target) {
+      if (c !== cur) { flips++; cur = c; }
+    }
+    return flips;
+  },
+  'detect-pattern-of-length-m-repeated-k-or-more-times': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const m = args[1] as number;
+    const k = args[2] as number;
+    for (let i = 0; i + m * k <= arr.length; i++) {
+      let ok = true;
+      for (let j = 0; j < m * (k - 1); j++) {
+        if (arr[i + j] !== arr[i + j + m]) { ok = false; break; }
+      }
+      if (ok) return true;
+    }
+    return false;
+  },
   // batch 261
   'count-prefix-suffix-pairs-i': (...args: unknown[]) => {
     const words = args[0] as string[];

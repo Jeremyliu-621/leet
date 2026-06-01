@@ -45740,6 +45740,29 @@ def maximizeTotalCost(nums):
         pos, neg = max(pos, neg) + nums[i], pos - nums[i]
     return max(pos, neg)
 `,
+  // batch 263
+  'minimum-suffix-flips': `
+def minFlips(target):
+    flips, cur = 0, '0'
+    for c in target:
+        if c != cur:
+            flips += 1
+            cur = c
+    return flips
+`,
+  'detect-pattern-of-length-m-repeated-k-or-more-times': `
+def containsPattern(arr, m, k):
+    n = len(arr)
+    for i in range(n - m * k + 1):
+        ok = True
+        for j in range(m * (k - 1)):
+            if arr[i + j] != arr[i + j + m]:
+                ok = False
+                break
+        if ok:
+            return True
+    return False
+`,
   // batch 261
   'count-prefix-suffix-pairs-i': `
 def countPrefixSuffixPairs(words):

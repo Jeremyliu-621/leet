@@ -3094,6 +3094,8 @@ import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-sub
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
 // batch 263
 import { problem as countSubarraysFixedBounds } from './count-subarrays-fixed-bounds';
+import { problem as minSuffixFlips } from './minimum-suffix-flips';
+import { problem as detectPatternMK } from './detect-pattern-of-length-m-repeated-k-or-more-times';
 // batch 262
 import { problem as rearrangingFruits } from './rearranging-fruits';
 import { problem as timeToCrossABridge } from './time-to-cross-a-bridge';
@@ -6396,6 +6398,8 @@ export const problems: readonly Problem[] = [
   smallestRangeKLists,
   // batch 263
   countSubarraysFixedBounds,
+  minSuffixFlips,
+  detectPatternMK,
   // batch 262
   rearrangingFruits,
   timeToCrossABridge,
