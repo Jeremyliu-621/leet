@@ -46429,6 +46429,56 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 273
+  'the-kth-factor-of-n': `def kthFactor(n, k):
+    count = 0
+    for i in range(1, n + 1):
+        if n % i == 0:
+            count += 1
+            if count == k:
+                return i
+    return -1
+`,
+
+  'last-moment-before-all-ants-fall-off-a-plank': `def getLastMoment(n, left, right):
+    ans = 0
+    for p in left: ans = max(ans, p)
+    for p in right: ans = max(ans, n - p)
+    return ans
+`,
+
+  'count-anagrams': `def countAnagrams(s):
+    MOD = 10**9 + 7
+    def mod_inv(a): return pow(a, MOD - 2, MOD)
+    ans = 1
+    for word in s.split():
+        from collections import Counter
+        freq = Counter(word)
+        n = len(word)
+        count = 1
+        for i in range(1, n + 1): count = count * i % MOD
+        for f in freq.values():
+            for i in range(1, f + 1): count = count * mod_inv(i) % MOD
+        ans = ans * count % MOD
+    return ans
+`,
+
+  'minimum-number-of-fuel-stops': `def minRefuelStops(target, startFuel, stations):
+    import heapq
+    heap = []
+    fuel = startFuel
+    stops = 0
+    i = 0
+    while fuel < target:
+        while i < len(stations) and stations[i][0] <= fuel:
+            heapq.heappush(heap, -stations[i][1])
+            i += 1
+        if not heap: return -1
+        fuel += -heapq.heappop(heap)
+        stops += 1
+    return stops
+`,
+
   // batch 272
   'power-of-four': `def isPowerOfFour(n):
     return n > 0 and (n & (n - 1)) == 0 and n % 3 == 1

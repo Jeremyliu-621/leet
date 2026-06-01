@@ -47404,6 +47404,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 273
+  'the-kth-factor-of-n': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    let count = 0;
+    for (let i = 1; i <= n; i++) {
+      if (n % i === 0) { count++; if (count === k) return i; }
+    }
+    return -1;
+  },
+
+  'last-moment-before-all-ants-fall-off-a-plank': (...args: unknown[]) => {
+    const n = args[0] as number, left = args[1] as number[], right = args[2] as number[];
+    let ans = 0;
+    for (const p of left) if (p > ans) ans = p;
+    for (const p of right) if (n - p > ans) ans = n - p;
+    return ans;
+  },
+
+  'count-anagrams': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1000000007n;
+    function modPow(b: bigint, e: bigint, m: bigint): bigint {
+      let r = 1n; b %= m;
+      while (e > 0n) { if (e & 1n) r = r * b % m; b = b * b % m; e >>= 1n; }
+      return r;
+    }
+    let ans = 1n;
+    for (const word of s.split(' ')) {
+      const wn = word.length;
+      const freq = new Map<string, number>();
+      for (const c of word) freq.set(c, (freq.get(c) ?? 0) + 1);
+      let count = 1n;
+      for (let i = 1; i <= wn; i++) count = count * BigInt(i) % MOD;
+      for (const f of freq.values()) {
+        for (let i = 1; i <= f; i++) count = count * modPow(BigInt(i), MOD - 2n, MOD) % MOD;
+      }
+      ans = ans * count % MOD;
+    }
+    return Number(ans);
+  },
+
+  'minimum-number-of-fuel-stops': (...args: unknown[]) => {
+    const target = args[0] as number, fuel = args[1] as number;
+    const stations = args[2] as number[][];
+    let curFuel = fuel, stops = 0, i = 0;
+    const heap: number[] = [];
+    while (curFuel < target) {
+      while (i < stations.length && stations[i]![0]! <= curFuel) {
+        heap.push(stations[i]![1]!);
+        heap.sort((a, b) => b - a);
+        i++;
+      }
+      if (heap.length === 0) return -1;
+      curFuel += heap.shift()!;
+      stops++;
+    }
+    return stops;
+  },
+
   // batch 272
   'power-of-four': (...args: unknown[]) => {
     const n = args[0] as number;

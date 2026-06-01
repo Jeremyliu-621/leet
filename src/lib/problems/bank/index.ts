@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 273
+import { problem as theKthFactorOfN } from './the-kth-factor-of-n';
+import { problem as lastMomentAnts } from './last-moment-before-all-ants-fall-off-a-plank';
+import { problem as countAnagrams } from './count-anagrams';
+import { problem as minRefuelStops } from './minimum-number-of-fuel-stops';
 // batch 272
 import { problem as powerOfFour } from './power-of-four';
 import { problem as elementMoreThan25Pct } from './element-appearing-more-than-25percent-in-sorted-array';
@@ -6473,6 +6478,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 273
+  theKthFactorOfN,
+  lastMomentAnts,
+  countAnagrams,
+  minRefuelStops,
   // batch 272
   powerOfFour,
   elementMoreThan25Pct,
