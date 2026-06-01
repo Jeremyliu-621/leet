@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2724** problems; 8466 tests green. Batches 102–248 complete.
+**Current focus:** Bank at **2729** problems; 8481 tests green. Batches 102–249 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 249+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 250+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 249 — monkeys-polygon, square-free-subsets, distinct-board, bowling-winner, sum-of-distances (2026-06-01)
+Five new problems: `count-collisions-of-monkeys-on-a-polygon` (medium/math, LC 2550 — (2^n − 2) mod 10^9+7; only all-CW or all-CCW arrangements are collision-free; BigInt fast exponentiation), `count-the-number-of-square-free-subsets` (medium/math+dp+bit-manipulation, LC 2572 — bitmask DP over 10 primes ≤ 30; 0/1-knapsack backward pass per element; answer = sum(dp) − 1), `count-distinct-numbers-on-board` (easy/math, LC 2549 — n=1→1; n>1→n−1; n mod (n−1)=1 chains all values 2..n onto the board), `determine-the-winner-of-a-bowling-game` (easy/arrays+simulation, LC 2660 — double pin count when either of last 2 turns was a strike; compare totals), `sum-of-distances` (medium/arrays+math, LC 2615 — group same-value indices; prefix+suffix running sum computes Σ|i−j| in O(n)). Bank at **2729**; 8481 tests.
 
 ### feat(bank): batch 248 — valid-palindrome-iii, palindrome-partitioning-iv, construct-distanced-sequence, longest-happy-string (2026-06-01)
 Four new problems: `valid-palindrome-iii` (hard/dp+strings, LC 1216 — dp[i][j]=min deletions to make s[i..j] palindrome; answer: dp[0][n-1]<=k), `palindrome-partitioning-iv` (hard/dp+strings, LC 1745 — precompute O(n²) isPalin table; try all split pairs (i,j) for 3-palindrome partition), `construct-the-lexicographically-largest-valid-sequence` (medium/backtracking, LC 1718 — backtrack left-to-right, try n→1 greedily; place num at idx and idx+num simultaneously), `find-the-longest-happy-string` (medium/heap, LC 1405 — greedy max-heap: always pick most frequent that won't create 3 consecutive; preamble validator checks validity and returns length). Bank at **2724**; 8466 tests.
