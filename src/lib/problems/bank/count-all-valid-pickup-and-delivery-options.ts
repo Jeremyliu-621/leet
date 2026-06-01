@@ -40,10 +40,10 @@ export const problem: Problem = {
   functionName: 'countOrders',
   params: ['n'],
   starterCode: {
-    javascript: 'function countOrders(n) {\n  \n}\n',
-    typescript: "function countOrders(n: number): number {\n  \n}",
+    javascript: 'function countOrders(n) {\n  const MOD = 1_000_000_007n;\n  let dp = 1n;\n  for (let i = 2; i <= n; i++) {\n    dp = dp * BigInt(i) * BigInt(2 * i - 1) % MOD;\n  }\n  return Number(dp);\n}\n',
+    typescript: "function countOrders(n: number): number {\n  const MOD = 1_000_000_007n;\n  let dp = 1n;\n  for (let i = 2; i <= n; i++) {\n    dp = dp * BigInt(i) * BigInt(2 * i - 1) % MOD;\n  }\n  return Number(dp);\n}",
 
-    python: 'def countOrders(n):\n    ',
+    python: 'def countOrders(n):\n    MOD = 10**9 + 7\n    dp = 1\n    for i in range(2, n + 1):\n        dp = dp * i * (2 * i - 1) % MOD\n    return dp\n',
   },
   visibleTests: [
     { args: [1], expected: 1 },
