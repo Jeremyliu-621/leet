@@ -45614,6 +45614,79 @@ def getFinalState(nums, k, multiplier):
     return ans
 `,
 
+  // batch 261
+  'hash-divided-string': `
+def stringHash(s, k, p):
+    result = []
+    for i in range(0, len(s), k):
+        total = sum(ord(c) - 96 for c in s[i:i+k])
+        result.append(chr(97 + total % p))
+    return ''.join(result)
+`,
+  'minimum-array-changes-to-make-differences-equal': `
+def minChanges(nums, k):
+    n = len(nums)
+    P = n // 2
+    freq_d = [0] * (k + 2)
+    diff_m = [0] * (k + 2)
+    for i in range(P):
+        a, b = nums[i], nums[n - 1 - i]
+        D = abs(a - b)
+        M = max(a, k - a, b, k - b)
+        freq_d[D] += 1
+        diff_m[0] += 1
+        if M + 1 <= k + 1:
+            diff_m[M + 1] -= 1
+    cnt_m = 0
+    best = 0
+    for d in range(k + 1):
+        cnt_m += diff_m[d]
+        score = freq_d[d] + cnt_m
+        if score > best:
+            best = score
+    return 2 * P - best
+`,
+  'find-subarray-with-bitwise-and-closest-to-k': `
+def minimumDifference(nums, k):
+    ans = float('inf')
+    prev = set()
+    for num in nums:
+        curr = {num}
+        for p in prev:
+            curr.add(p & num)
+        for v in curr:
+            ans = min(ans, abs(v - k))
+        prev = curr
+    return ans
+`,
+  'find-the-occurrence-of-first-almost-equal-substring': `
+def minStartingIndex(s, pattern):
+    n, m = len(s), len(pattern)
+    if m > n:
+        return -1
+    def z_array(t):
+        z = [0] * len(t)
+        z[0] = len(t)
+        l = r = 0
+        for i in range(1, len(t)):
+            if i < r:
+                z[i] = min(r - i, z[i - l])
+            while i + z[i] < len(t) and t[z[i]] == t[i + z[i]]:
+                z[i] += 1
+            if i + z[i] > r:
+                l, r = i, i + z[i]
+        return z
+    z1 = z_array(pattern + '#' + s)
+    rev_p = pattern[::-1]
+    rev_s = s[::-1]
+    z2 = z_array(rev_p + '#' + rev_s)
+    for i in range(n - m + 1):
+        prefix = min(m, z1[m + 1 + i])
+        suffix = min(m, z2[m + 1 + (n - m - i)])
+        if prefix + suffix >= m - 1:
+            return i
+    return -1
+`,
   // batch 260
   'xor-queries-of-a-subarray': `
 def xorQueries(arr, queries):

@@ -46487,6 +46487,88 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 261
+  'hash-divided-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const p = args[2] as number;
+    let result = '';
+    for (let i = 0; i < s.length; i += k) {
+      let sum = 0;
+      for (let j = i; j < i + k; j++) sum += s.charCodeAt(j) - 96;
+      result += String.fromCharCode(97 + (sum % p));
+    }
+    return result;
+  },
+  'minimum-array-changes-to-make-differences-equal': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const P = n / 2;
+    const freqD = new Array(k + 2).fill(0);
+    const diffM = new Array(k + 2).fill(0);
+    for (let i = 0; i < P; i++) {
+      const a = nums[i]!, b = nums[n - 1 - i]!;
+      const D = Math.abs(a - b);
+      const M = Math.max(a, k - a, b, k - b);
+      freqD[D]++;
+      diffM[0]++;
+      if (M + 1 <= k + 1) diffM[M + 1]--;
+    }
+    let cntM = 0, best = 0;
+    for (let d = 0; d <= k; d++) {
+      cntM += diffM[d]!;
+      const score = (freqD[d] ?? 0) + cntM;
+      if (score > best) best = score;
+    }
+    return 2 * P - best;
+  },
+  'find-subarray-with-bitwise-and-closest-to-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    let ans = Infinity;
+    let prev = new Set<number>();
+    for (const num of nums) {
+      const curr = new Set<number>([num]);
+      for (const p of prev) curr.add(p & num);
+      for (const v of curr) {
+        const diff = Math.abs(v - k);
+        if (diff < ans) ans = diff;
+      }
+      prev = curr;
+    }
+    return ans;
+  },
+  'find-the-occurrence-of-first-almost-equal-substring': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const pattern = args[1] as string;
+    const n = s.length, m = pattern.length;
+    if (m > n) return -1;
+    const zArray = (t: string): number[] => {
+      const len = t.length;
+      const z: number[] = new Array(len).fill(0);
+      z[0] = len;
+      let l = 0, r = 0;
+      for (let i = 1; i < len; i++) {
+        if (i < r) z[i] = Math.min(r - i, z[i - l] ?? 0);
+        let cur = z[i] ?? 0;
+        while (i + cur < len && t[cur] === t[i + cur]) cur++;
+        z[i] = cur;
+        if (i + cur > r) { l = i; r = i + cur; }
+      }
+      return z;
+    };
+    const z1 = zArray(pattern + '#' + s);
+    const revP = [...pattern].reverse().join('');
+    const revS = [...s].reverse().join('');
+    const z2 = zArray(revP + '#' + revS);
+    for (let i = 0; i <= n - m; i++) {
+      const prefix = Math.min(m, z1[m + 1 + i] ?? 0);
+      const suffix = Math.min(m, z2[m + 1 + (n - m - i)] ?? 0);
+      if (prefix + suffix >= m - 1) return i;
+    }
+    return -1;
+  },
   // batch 260
   'xor-queries-of-a-subarray': (...args: unknown[]) => {
     const arr = args[0] as number[];
