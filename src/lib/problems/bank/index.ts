@@ -3092,6 +3092,9 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 259
+import { problem as validSubarraySize } from './subarray-with-elements-greater-than-varying-threshold';
+import { problem as maximizeTotalCost } from './maximize-total-cost-of-alternating-subarrays';
 // batch 258
 import { problem as twoEditWords } from './words-within-two-edits-of-dictionary';
 import { problem as componentValue } from './create-components-with-same-value';
@@ -6368,6 +6371,9 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 259
+  validSubarraySize,
+  maximizeTotalCost,
   // batch 258
   twoEditWords,
   componentValue,

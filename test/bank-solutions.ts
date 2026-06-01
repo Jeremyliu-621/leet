@@ -46373,6 +46373,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 259
+  'subarray-with-elements-greater-than-varying-threshold': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const threshold = args[1] as number;
+    const n = nums.length;
+    const stack: number[] = [];
+    const left = new Array(n).fill(-1);
+    for (let i = 0; i < n; i++) {
+      while (stack.length && nums[stack[stack.length - 1]!]! >= nums[i]!) stack.pop();
+      left[i] = stack.length ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    const right = new Array(n).fill(n);
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length && nums[stack[stack.length - 1]!]! > nums[i]!) stack.pop();
+      right[i] = stack.length ? stack[stack.length - 1]! : n;
+      stack.push(i);
+    }
+    for (let i = 0; i < n; i++) {
+      const len = right[i]! - left[i]! - 1;
+      if (nums[i]! * len > threshold) return len;
+    }
+    return -1;
+  },
+  'maximize-total-cost-of-alternating-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let pos = nums[0]!, neg = -Infinity;
+    for (let i = 1; i < nums.length; i++) {
+      [pos, neg] = [Math.max(pos, neg) + nums[i]!, pos - nums[i]!];
+    }
+    return Math.max(pos, neg);
+  },
   // batch 258
   'words-within-two-edits-of-dictionary': (...args: unknown[]) => {
     const queries = args[0] as string[];

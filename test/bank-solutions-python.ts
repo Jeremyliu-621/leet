@@ -45509,6 +45509,37 @@ def getFinalState(nums, k, multiplier):
     return ans
 `,
 
+  // batch 259
+  'subarray-with-elements-greater-than-varying-threshold': `
+def validSubarraySize(nums, threshold):
+    n = len(nums)
+    left = [-1] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] >= nums[i]:
+            stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    right = [n] * n
+    stack = []
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] > nums[i]:
+            stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    for i in range(n):
+        length = right[i] - left[i] - 1
+        if nums[i] * length > threshold:
+            return length
+    return -1
+`,
+  'maximize-total-cost-of-alternating-subarrays': `
+def maximizeTotalCost(nums):
+    pos, neg = nums[0], float('-inf')
+    for i in range(1, len(nums)):
+        pos, neg = max(pos, neg) + nums[i], pos - nums[i]
+    return max(pos, neg)
+`,
   // batch 258
   'words-within-two-edits-of-dictionary': `
 def twoEditWords(queries, dictionary):
