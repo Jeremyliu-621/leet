@@ -46063,4 +46063,99 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
 
     return (queries as [number, number, number][]).map(([left, right, value]) => query(left, right, value));
   },
+
+  // batch 257
+  'lexicographically-smallest-string-after-swap': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const a = [...s];
+    for (let i = 0; i < a.length - 1; i++) {
+      const x = Number(a[i]!), y = Number(a[i + 1]!);
+      if (x > y && x % 2 === y % 2) {
+        [a[i], a[i + 1]] = [a[i + 1]!, a[i]!];
+        return a.join('');
+      }
+    }
+    return s;
+  },
+
+  'vowels-game-in-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const vowels = new Set('aeiou');
+    for (const c of s) if (vowels.has(c)) return true;
+    return false;
+  },
+
+  'reach-end-of-array-with-max-score': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = 0, curMax = 0;
+    for (let i = 0; i < nums.length - 1; i++) {
+      curMax = Math.max(curMax, nums[i]!);
+      ans += curMax;
+    }
+    return ans;
+  },
+
+  'final-array-state-after-k-multiplication-operations-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const multiplier = args[2] as number;
+    const MOD = 1000000007n;
+    const n = nums.length;
+    if (multiplier === 1) return nums;
+    const mul = BigInt(multiplier);
+
+    const h: [bigint, number][] = nums.map((v, i) => [BigInt(v), i]);
+    const less = (a: [bigint, number], b: [bigint, number]) =>
+      a[0] < b[0] || (a[0] === b[0] && a[1] < b[1]);
+    const sift = (i: number) => {
+      const sz = h.length;
+      for (;;) {
+        let m = i;
+        const l = 2 * i + 1, r = 2 * i + 2;
+        if (l < sz && less(h[l]!, h[m]!)) m = l;
+        if (r < sz && less(h[r]!, h[m]!)) m = r;
+        if (m === i) break;
+        [h[i], h[m]] = [h[m]!, h[i]!]; i = m;
+      }
+    };
+    for (let i = (n >> 1) - 1; i >= 0; i--) sift(i);
+
+    let maxBig = BigInt(nums.reduce((a, b) => a > b ? a : b, 0));
+    const counts = new Array<number>(n).fill(0);
+    let ops = 0;
+    while (ops < k && h[0]![0] * mul <= maxBig) {
+      const [val, idx] = h[0]!;
+      const nv = val * mul;
+      counts[idx] = counts[idx]! + 1;
+      if (nv > maxBig) maxBig = nv;
+      h[0] = [nv, idx];
+      sift(0);
+      ops++;
+    }
+
+    const modpow = (b: bigint, e: number, m: bigint): bigint => {
+      let r = 1n; b = b % m;
+      for (let x = e; x > 0; x >>= 1) {
+        if (x & 1) r = r * b % m;
+        b = b * b % m;
+      }
+      return r;
+    };
+
+    if (ops === k)
+      return nums.map((v, i) => Number(BigInt(v) * modpow(mul, counts[i]!, MOD) % MOD));
+
+    const remaining = k - ops;
+    const fullRounds = Math.floor(remaining / n);
+    const extra = remaining % n;
+    const sortedH = [...h].sort((a, b) =>
+      a![0] < b![0] ? -1 : a![0] > b![0] ? 1 : a![1] - b![1]);
+    const result = new Array<number>(n);
+    for (let rank = 0; rank < n; rank++) {
+      const [, origIdx] = sortedH[rank]!;
+      const bonus = rank < extra ? 1 : 0;
+      result[origIdx] = Number(BigInt(nums[origIdx]!) * modpow(mul, counts[origIdx]! + fullRounds + bonus, MOD) % MOD);
+    }
+    return result;
+  },
 };

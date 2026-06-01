@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 257
+import { problem as rightTriangles } from './right-triangles';
+import { problem as lexSmallestStringAfterSwap } from './lexicographically-smallest-string-after-swap';
+import { problem as vowelsGameString } from './vowels-game-in-a-string';
+import { problem as reachEndArrayMaxScore } from './reach-end-of-array-with-max-score';
+import { problem as finalArrayStateKMultOpsII } from './final-array-state-after-k-multiplication-operations-ii';
 // batch 256
 import { problem as minimumLevelsGainPoints } from './minimum-levels-to-gain-more-points';
 import { problem as markElementsArrayQueries } from './mark-elements-on-array-by-performing-queries';
@@ -3108,7 +3114,6 @@ import { problem as biggestThreeRhombusSums } from './get-biggest-three-rhombus-
 import { problem as maximumNumElementsTwoArrays } from './maximum-number-of-elements-in-two-arrays';
 import { problem as rangeFrequencyQueries } from './range-frequency-queries';
 // batch 255 (local)
-import { problem as rightTriangles } from './right-triangles';
 import { problem as findAllPossibleStableBinaryArraysI } from './find-all-possible-stable-binary-arrays-i';
 import { problem as findAllPossibleStableBinaryArraysII } from './find-all-possible-stable-binary-arrays-ii';
 import { problem as maximumPointsInsideSquare } from './maximum-points-inside-the-square';
@@ -6348,6 +6353,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 257
+  rightTriangles,
+  lexSmallestStringAfterSwap,
+  vowelsGameString,
+  reachEndArrayMaxScore,
+  finalArrayStateKMultOpsII,
   // batch 256
   minimumLevelsGainPoints,
   markElementsArrayQueries,
@@ -6364,7 +6375,6 @@ export const problems: readonly Problem[] = [
   maximumNumElementsTwoArrays,
   rangeFrequencyQueries,
   // batch 255 (local)
-  rightTriangles,
   findAllPossibleStableBinaryArraysI,
   findAllPossibleStableBinaryArraysII,
   maximumPointsInsideSquare,

@@ -45172,16 +45172,17 @@ def stringIndices(wordsContainer, wordsQuery):
     return result
 `,
 
+  // batch 255 (local)
   'right-triangles': `
 def numberOfRightTriangles(grid):
     m, n = len(grid), len(grid[0])
-    row_sum = [sum(grid[r]) for r in range(m)]
-    col_sum = [sum(grid[r][c] for r in range(m)) for c in range(n)]
+    row_ones = [sum(row) for row in grid]
+    col_ones = [sum(grid[i][j] for i in range(m)) for j in range(n)]
     ans = 0
-    for r in range(m):
-        for c in range(n):
-            if grid[r][c] == 1:
-                ans += (row_sum[r] - 1) * (col_sum[c] - 1)
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                ans += (row_ones[i] - 1) * (col_ones[j] - 1)
     return ans
 `,
 
@@ -45259,6 +45260,65 @@ def sumCounts(nums):
         for r in range(l, n):
             seen.add(nums[r])
             ans = (ans + len(seen) * len(seen)) % MOD
+    return ans
+`,
+
+  // batch 257
+  'lexicographically-smallest-string-after-swap': `
+def getSmallestString(s):
+    a = list(s)
+    for i in range(len(a) - 1):
+        x, y = int(a[i]), int(a[i + 1])
+        if x > y and x % 2 == y % 2:
+            a[i], a[i + 1] = a[i + 1], a[i]
+            return ''.join(a)
+    return s
+`,
+
+  'vowels-game-in-a-string': `
+def doesAliceWin(s):
+    vowels = set('aeiou')
+    return any(c in vowels for c in s)
+`,
+
+  'reach-end-of-array-with-max-score': `
+def findMaximumScore(nums):
+    ans = cur_max = 0
+    for i in range(len(nums) - 1):
+        cur_max = max(cur_max, nums[i])
+        ans += cur_max
+    return ans
+`,
+
+  'final-array-state-after-k-multiplication-operations-ii': `
+import heapq
+def getFinalState(nums, k, multiplier):
+    MOD = 10**9 + 7
+    n = len(nums)
+    if multiplier == 1:
+        return nums
+    heap = [(v, i) for i, v in enumerate(nums)]
+    heapq.heapify(heap)
+    max_val = max(nums)
+    counts = [0] * n
+    ops = 0
+    while ops < k and heap[0][0] * multiplier <= max_val:
+        val, idx = heapq.heappop(heap)
+        new_val = val * multiplier
+        counts[idx] += 1
+        if new_val > max_val:
+            max_val = new_val
+        heapq.heappush(heap, (new_val, idx))
+        ops += 1
+    if ops == k:
+        return [nums[i] * pow(multiplier, counts[i], MOD) % MOD for i in range(n)]
+    remaining = k - ops
+    full_rounds, extra = divmod(remaining, n)
+    cur_sorted = sorted(heap)
+    ans = [0] * n
+    for rank, (val, idx) in enumerate(cur_sorted):
+        bonus = 1 if rank < extra else 0
+        ans[idx] = nums[idx] * pow(multiplier, counts[idx] + full_rounds + bonus, MOD) % MOD
     return ans
 `,
 };
