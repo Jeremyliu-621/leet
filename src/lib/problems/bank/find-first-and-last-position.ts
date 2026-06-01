@@ -43,10 +43,46 @@ You must write an algorithm with **O(log n)** runtime complexity.
   functionName: 'searchRange',
   params: ['nums', 'target'] as readonly string[],
   starterCode: {
-    javascript: 'function searchRange(nums, target) {\n  // your code here\n}\n',
-    typescript: "function searchRange(nums: number[], target: number): number[] {\n  // your code here\n}",
-
-    python: 'def searchRange(nums: list[int], target: int) -> list[int]:\n    # your code here\n    pass\n',
+    javascript: `function searchRange(nums, target) {
+  function search(findFirst) {
+    let lo = 0, hi = nums.length - 1, res = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid] === target) { res = mid; if (findFirst) hi = mid - 1; else lo = mid + 1; }
+      else if (nums[mid] < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return res;
+  }
+  return [search(true), search(false)];
+}`,
+    typescript: `function searchRange(nums: number[], target: number): number[] {
+  function search(findFirst: boolean): number {
+    let lo = 0, hi = nums.length - 1, res = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid]! === target) { res = mid; if (findFirst) hi = mid - 1; else lo = mid + 1; }
+      else if (nums[mid]! < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return res;
+  }
+  return [search(true), search(false)];
+}`,
+    python: `def searchRange(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    def search(find_first):
+        lo, hi, res = 0, len(nums) - 1, -1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if nums[mid] == target:
+                res = mid
+                if find_first: hi = mid - 1
+                else: lo = mid + 1
+            elif nums[mid] < target: lo = mid + 1
+            else: hi = mid - 1
+        return res
+    return [search(True), search(False)]`,
   },
   visibleTests: [
     { args: [[5,7,7,8,8,10], 8], expected: [3,4] },

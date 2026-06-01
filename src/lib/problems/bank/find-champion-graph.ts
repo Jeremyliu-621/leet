@@ -29,10 +29,26 @@ Return the index of the **champion** team, or \`-1\` if there is no champion.`,
   functionName: 'findChampion',
   params: ['grid'],
   starterCode: {
-    javascript: 'function findChampion(grid) {\n  // your code here\n}\n',
-    typescript: "function findChampion(grid: number[][]): number {\n  // your code here\n}",
-
-    python: 'def findChampion(grid):\n    # your code here\n    pass\n',
+    javascript: `function findChampion(grid) {
+  const n = grid.length;
+  for (let i = 0; i < n; i++) {
+    if (grid[i].reduce((s, v) => s + v, 0) === n - 1) return i;
+  }
+  return -1;
+}`,
+    typescript: `function findChampion(grid: number[][]): number {
+  const n = grid.length;
+  for (let i = 0; i < n; i++) {
+    if (grid[i]!.reduce((s, v) => s + v, 0) === n - 1) return i;
+  }
+  return -1;
+}`,
+    python: `def findChampion(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    for i in range(n):
+        if sum(grid[i]) == n - 1: return i
+    return -1`,
   },
   visibleTests: [
     { args: [[[0, 1], [0, 0]]], expected: 0 },

@@ -38,10 +38,47 @@ Given the integer array \`fruits\`, return the **maximum** number of fruits you 
   functionName: 'totalFruit',
   params: ['fruits'],
   starterCode: {
-    javascript: 'function totalFruit(fruits) {\n  // your code here\n}\n',
-    typescript: "function totalFruit(fruits: number[]): number {\n  // your code here\n}",
-
-    python: 'def totalFruit(fruits):\n    # your code here\n    pass\n',
+    javascript: `function totalFruit(fruits) {
+  const freq = new Map();
+  let l = 0, ans = 0;
+  for (let r = 0; r < fruits.length; r++) {
+    freq.set(fruits[r], (freq.get(fruits[r]) ?? 0) + 1);
+    while (freq.size > 2) {
+      const f = fruits[l++];
+      freq.set(f, freq.get(f) - 1);
+      if (freq.get(f) === 0) freq.delete(f);
+    }
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    typescript: `function totalFruit(fruits: number[]): number {
+  const freq = new Map<number, number>();
+  let l = 0, ans = 0;
+  for (let r = 0; r < fruits.length; r++) {
+    freq.set(fruits[r]!, (freq.get(fruits[r]!) ?? 0) + 1);
+    while (freq.size > 2) {
+      const f = fruits[l++]!;
+      freq.set(f, freq.get(f)! - 1);
+      if (freq.get(f) === 0) freq.delete(f);
+    }
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    python: `def totalFruit(fruits):
+    fruits = list(fruits.to_py()) if hasattr(fruits, 'to_py') else list(fruits)
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = ans = 0
+    for r, f in enumerate(fruits):
+        freq[f] += 1
+        while len(freq) > 2:
+            freq[fruits[l]] -= 1
+            if freq[fruits[l]] == 0: del freq[fruits[l]]
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 1]], expected: 3 },

@@ -34,14 +34,55 @@ Given an array \`changed\`, return \`original\` *if* \`changed\` *is a* **double
   params: ['changed'],
   starterCode: {
     javascript: `function findOriginalArray(changed) {
-  // your code here
+  if (changed.length % 2 !== 0) return [];
+  changed.sort((a, b) => a - b);
+  const cnt = new Map();
+  for (const x of changed) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+  const result = [];
+  for (const x of changed) {
+    if (!cnt.has(x)) continue;
+    cnt.set(x, cnt.get(x) - 1);
+    if (cnt.get(x) === 0) cnt.delete(x);
+    const d = x * 2;
+    if (!cnt.has(d)) return [];
+    cnt.set(d, cnt.get(d) - 1);
+    if (cnt.get(d) === 0) cnt.delete(d);
+    result.push(x);
+  }
+  return result;
 }`,
     typescript: `function findOriginalArray(changed: number[]): number[] {
-  // your code here
+  if (changed.length % 2 !== 0) return [];
+  changed.sort((a, b) => a - b);
+  const cnt = new Map<number, number>();
+  for (const x of changed) cnt.set(x, (cnt.get(x) ?? 0) + 1);
+  const result: number[] = [];
+  for (const x of changed) {
+    if (!cnt.has(x)) continue;
+    cnt.set(x, cnt.get(x)! - 1);
+    if (cnt.get(x) === 0) cnt.delete(x);
+    const d = x * 2;
+    if (!cnt.has(d)) return [];
+    cnt.set(d, cnt.get(d)! - 1);
+    if (cnt.get(d) === 0) cnt.delete(d);
+    result.push(x);
+  }
+  return result;
 }`,
     python: `def findOriginalArray(changed):
-    # your code here
-    pass`,
+    changed = list(changed.to_py()) if hasattr(changed, 'to_py') else list(changed)
+    if len(changed) % 2 != 0: return []
+    changed.sort()
+    from collections import Counter
+    cnt = Counter(changed)
+    result = []
+    for x in changed:
+        if cnt[x] == 0: continue
+        cnt[x] -= 1
+        if cnt[x * 2] == 0: return []
+        cnt[x * 2] -= 1
+        result.append(x)
+    return result`,
   },
   visibleTests: [
     { args: [[1, 3, 4, 2, 6, 8]], expected: [1, 3, 4] },

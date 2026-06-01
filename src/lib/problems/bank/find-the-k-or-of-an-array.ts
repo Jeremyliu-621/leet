@@ -42,13 +42,30 @@ Return the **K-or** of \`nums\`.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function findKOr(nums, k) {
-  // your code here
+  let result = 0;
+  for (let bit = 0; bit < 31; bit++) {
+    let count = 0;
+    for (const n of nums) if (n & (1 << bit)) count++;
+    if (count >= k) result |= 1 << bit;
+  }
+  return result;
 }`,
-    typescript: "function findKOr(nums: number[], k: number): number {\n  // your code here\n}",
-
+    typescript: `function findKOr(nums: number[], k: number): number {
+  let result = 0;
+  for (let bit = 0; bit < 31; bit++) {
+    let count = 0;
+    for (const n of nums) if (n & (1 << bit)) count++;
+    if (count >= k) result |= 1 << bit;
+  }
+  return result;
+}`,
     python: `def findKOr(nums, k):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    result = 0
+    for bit in range(31):
+        if sum(1 for n in nums if n & (1 << bit)) >= k:
+            result |= 1 << bit
+    return result`,
   },
   visibleTests: [
     { args: [[7, 12, 9, 8, 9, 15], 4], expected: 9 },

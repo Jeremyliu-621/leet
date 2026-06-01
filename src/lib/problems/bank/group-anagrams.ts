@@ -40,10 +40,33 @@ Return the result with each group's strings sorted ascending alphabetically, and
   functionName: 'groupAnagrams',
   params: ['strs'],
   starterCode: {
-    javascript: 'function groupAnagrams(strs) {\n  // your code here\n}\n',
-    typescript: "function groupAnagrams(strs: string[]): string[][] {\n  // your code here\n}",
-
-    python: 'def groupAnagrams(strs):\n    # your code here\n    pass\n',
+    javascript: `function groupAnagrams(strs) {
+  const map = new Map();
+  for (const s of strs) {
+    const key = [...s].sort().join('');
+    const group = map.get(key) ?? [];
+    group.push(s);
+    map.set(key, group);
+  }
+  return [...map.values()].map(g => g.sort()).sort((a, b) => a[0].localeCompare(b[0]));
+}`,
+    typescript: `function groupAnagrams(strs: string[]): string[][] {
+  const map = new Map<string, string[]>();
+  for (const s of strs) {
+    const key = [...s].sort().join('');
+    const group = map.get(key) ?? [];
+    group.push(s);
+    map.set(key, group);
+  }
+  return [...map.values()].map(g => g.sort()).sort((a, b) => a[0]!.localeCompare(b[0]!));
+}`,
+    python: `def groupAnagrams(strs):
+    strs = list(strs.to_py()) if hasattr(strs, 'to_py') else list(strs)
+    from collections import defaultdict
+    m = defaultdict(list)
+    for s in strs:
+        m[tuple(sorted(s))].append(s)
+    return sorted([sorted(g) for g in m.values()], key=lambda g: g[0])`,
   },
   visibleTests: [
     {

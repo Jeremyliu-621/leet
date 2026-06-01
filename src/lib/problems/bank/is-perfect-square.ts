@@ -38,10 +38,37 @@ Do **not** use the built-in square root function (\`Math.sqrt\`). Use binary sea
   functionName: 'isPerfectSquare',
   params: ['n'],
   starterCode: {
-    javascript: 'function isPerfectSquare(n) {\n  // your code here\n}\n',
-    typescript: "function isPerfectSquare(n: number): boolean {\n  // your code here\n}",
-
-    python: 'def isPerfectSquare(n):\n    # your code here\n    pass\n',
+    javascript: `function isPerfectSquare(n) {
+  let lo = 1, hi = n;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    const sq = mid * mid;
+    if (sq === n) return true;
+    if (sq < n) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return false;
+}`,
+    typescript: `function isPerfectSquare(n: number): boolean {
+  let lo = 1, hi = n;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    const sq = mid * mid;
+    if (sq === n) return true;
+    if (sq < n) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return false;
+}`,
+    python: `def isPerfectSquare(n):
+    lo, hi = 1, n
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        sq = mid * mid
+        if sq == n: return True
+        if sq < n: lo = mid + 1
+        else: hi = mid - 1
+    return False`,
   },
   visibleTests: [
     { args: [16], expected: true },

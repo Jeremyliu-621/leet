@@ -44,10 +44,37 @@ Return the result string after sorting \`s\` with this algorithm.`,
   functionName: 'sortString',
   params: ['s'],
   starterCode: {
-    javascript: 'function sortString(s) {\n  // your code here\n}\n',
-    typescript: "function sortString(s: string): string {\n  // your code here\n}",
-
-    python: 'def sortString(s):\n    # your code here\n    pass\n',
+    javascript: `function sortString(s) {
+  const cnt = new Array(26).fill(0);
+  for (const c of s) cnt[c.charCodeAt(0) - 97]++;
+  let res = '';
+  while (res.length < s.length) {
+    for (let i = 0; i < 26; i++) if (cnt[i] > 0) { res += String.fromCharCode(97 + i); cnt[i]--; }
+    for (let i = 25; i >= 0; i--) if (cnt[i] > 0) { res += String.fromCharCode(97 + i); cnt[i]--; }
+  }
+  return res;
+}`,
+    typescript: `function sortString(s: string): string {
+  const cnt = new Array(26).fill(0) as number[];
+  for (const c of s) cnt[c.charCodeAt(0) - 97]!++;
+  let res = '';
+  while (res.length < s.length) {
+    for (let i = 0; i < 26; i++) if (cnt[i]! > 0) { res += String.fromCharCode(97 + i); cnt[i]!--; }
+    for (let i = 25; i >= 0; i--) if (cnt[i]! > 0) { res += String.fromCharCode(97 + i); cnt[i]!--; }
+  }
+  return res;
+}`,
+    python: `def sortString(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    cnt = [0] * 26
+    for c in s: cnt[ord(c) - 97] += 1
+    res = []
+    while len(res) < len(s):
+        for i in range(26):
+            if cnt[i] > 0: res.append(chr(97 + i)); cnt[i] -= 1
+        for i in range(25, -1, -1):
+            if cnt[i] > 0: res.append(chr(97 + i)); cnt[i] -= 1
+    return ''.join(res)`,
   },
   visibleTests: [
     { args: ['aaaabbbbcccc'], expected: 'abccbaabccba' },
