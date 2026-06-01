@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 258
+import { problem as minNumberOperations } from './minimum-number-of-increments-on-subarrays-to-form-target-array';
+import { problem as twoEditWords } from './words-within-two-edits-of-dictionary';
+import { problem as componentValue } from './create-components-with-same-value';
 // batch 257
 import { problem as rightTriangles } from './right-triangles';
 import { problem as lexSmallestStringAfterSwap } from './lexicographically-smallest-string-after-swap';
@@ -6359,6 +6363,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 258
+  minNumberOperations,
+  twoEditWords,
+  componentValue,
   // batch 257
   rightTriangles,
   lexSmallestStringAfterSwap,

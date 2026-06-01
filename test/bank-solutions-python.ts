@@ -45416,4 +45416,53 @@ def getFinalState(nums, k, multiplier):
         ans[idx] = nums[idx] * pow(multiplier, counts[idx] + full_rounds + bonus, MOD) % MOD
     return ans
 `,
+
+  // batch 258
+  'minimum-number-of-increments-on-subarrays-to-form-target-array': `
+def minNumberOperations(target):
+    ops = target[0]
+    for i in range(1, len(target)):
+        ops += max(0, target[i] - target[i - 1])
+    return ops
+`,
+  'words-within-two-edits-of-dictionary': `
+def twoEditWords(queries, dictionary):
+    result = []
+    for q in queries:
+        for d in dictionary:
+            if sum(1 for a, b in zip(q, d) if a != b) <= 2:
+                result.append(q)
+                break
+    return result
+`,
+  'create-components-with-same-value': `
+def componentValue(nums, edges):
+    from collections import defaultdict
+    import sys
+    sys.setrecursionlimit(30000)
+    n = len(nums)
+    total = sum(nums)
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    def dfs(node, parent, target):
+        s = nums[node]
+        for nxt in adj[node]:
+            if nxt == parent:
+                continue
+            sub = dfs(nxt, node, target)
+            if sub == -1:
+                return -1
+            s += sub
+        if s > target:
+            return -1
+        return 0 if s == target else s
+    for k in range(n - 1, 0, -1):
+        if total % (k + 1) != 0:
+            continue
+        if dfs(0, -1, total // (k + 1)) == 0:
+            return k
+    return 0
+`,
 };

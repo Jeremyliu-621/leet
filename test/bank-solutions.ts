@@ -46262,4 +46262,47 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return result;
   },
+
+  // batch 258
+  'minimum-number-of-increments-on-subarrays-to-form-target-array': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    return target.reduce((ops, cur, i) => ops + (i === 0 ? cur : Math.max(0, cur - target[i - 1]!)), 0);
+  },
+  'words-within-two-edits-of-dictionary': (...args: unknown[]) => {
+    const queries = args[0] as string[];
+    const dictionary = args[1] as string[];
+    return queries.filter(q =>
+      dictionary.some(d => {
+        let diff = 0;
+        for (let i = 0; i < q.length; i++) {
+          if (q[i] !== d[i] && ++diff > 2) return false;
+        }
+        return true;
+      }),
+    );
+  },
+  'create-components-with-same-value': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const edges = args[1] as number[][];
+    const n = nums.length;
+    const total = nums.reduce((a, b) => a + b, 0);
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of edges) { adj[edge[0]!]!.push(edge[1]!); adj[edge[1]!]!.push(edge[0]!); }
+    function dfs(node: number, parent: number, target: number): number {
+      let sum = nums[node]!;
+      for (const next of adj[node]!) {
+        if (next === parent) continue;
+        const sub = dfs(next, node, target);
+        if (sub === -1) return -1;
+        sum += sub;
+      }
+      if (sum > target) return -1;
+      return sum === target ? 0 : sum;
+    }
+    for (let k = n - 1; k >= 1; k--) {
+      if (total % (k + 1) !== 0) continue;
+      if (dfs(0, -1, total / (k + 1)) === 0) return k;
+    }
+    return 0;
+  },
 };
