@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2700** problems; 8394 tests green. Batches 102–244 complete.
+**Current focus:** Bank at **2705** problems; 8409 tests green. Batches 102–244 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 245+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 244 (local) — euler-path, convex-hull, aho-corasick, max-flow, lca (2026-06-01)
+Five new algorithm problems: `euler-path-circuit` (hard/graph — Hierholzer's O(V+E) directed Euler path/circuit; degree balance check + pointer-based DFS), `convex-hull-graham` (hard/math — Graham scan O(n log n); pivot = min-y-then-x; CCW sort by cross product; strict left turn stack; no collinear hull points), `aho-corasick-multi-pattern` (hard/strings+trie — BFS failure-link construction; output chaining via fail links; sorted [pattern, startIndex] result), `max-flow-edmonds-karp` (hard/graph+shortest-path — BFS augmenting paths; O(VE²) adjacency-matrix residual graph; min-cut = max-flow), `lca-binary-lifting` (hard/tree+binary-search — O(n log n) up[k][u] table; O(log n) LCA via depth equalization + simultaneous lifting). Bank at **2705**; 8409 tests.
 
 ### feat(bank): batch 244 — largest-local-matrix, max-employees-invited, ideal-arrays, shortest-path-obstacles (2026-06-01)
 Four new problems: `largest-local-values-in-matrix` (easy/simulation, LC 2373 — 3x3 window max scan for each interior cell), `maximum-employees-to-be-invited` (hard/graph, LC 2127 — functional graph topological peel for chain lengths; cycle decomposition separates large cycles from extended 2-cycles), `count-the-number-of-ideal-arrays` (hard/dp+math, LC 2338 — divisibility chain DP f[v][l] + C(n-1,l-1) stars-and-bars placement), `shortest-path-in-a-grid-with-obstacles-elimination` (hard/shortest-path, LC 1293 — BFS with (r,c,k_remaining) state avoiding re-visiting same cell with same k). Bank at **2700**; 8394 tests.
