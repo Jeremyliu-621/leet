@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 255
+import { problem as countUniqueGoodSubseqs } from './count-unique-good-subsequences';
+import { problem as sumKMirrorNumbers } from './sum-of-k-mirror-numbers';
+import { problem as buildSturdyBrickWall } from './number-of-ways-to-build-sturdy-brick-wall';
+import { problem as countSubMultisetsBounded } from './count-of-sub-multisets-with-bounded-sum';
+import { problem as biggestThreeRhombusSums } from './get-biggest-three-rhombus-sums-in-a-grid';
 // batch 254
 import { problem as globalAndLocalInversions } from './global-and-local-inversions';
 import { problem as minimizeTotalPriceTrips } from './minimize-the-total-price-of-the-trips';
@@ -6327,6 +6333,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 255
+  countUniqueGoodSubseqs,
+  sumKMirrorNumbers,
+  buildSturdyBrickWall,
+  countSubMultisetsBounded,
+  biggestThreeRhombusSums,
   // batch 254
   globalAndLocalInversions,
   minimizeTotalPriceTrips,

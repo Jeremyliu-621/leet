@@ -41,14 +41,78 @@ Given the base \`k\` and the number \`n\`, return the **sum** of the \`n\` small
   params: ['k', 'n'],
   starterCode: {
     javascript: `function kMirror(k, n) {
-  // return the sum of the n smallest k-mirror numbers
+  const isKPalin = (num) => {
+    const d = [];
+    while (num > 0) { d.push(num % k); num = Math.floor(num / k); }
+    for (let i = 0, j = d.length - 1; i < j; i++, j--)
+      if (d[i] !== d[j]) return false;
+    return true;
+  };
+  let count = 0, sum = 0;
+  for (let len = 1; count < n; len++) {
+    const half = Math.ceil(len / 2);
+    const start = half === 1 ? 1 : Math.pow(10, half - 1);
+    const end = Math.pow(10, half);
+    for (let h = start; h < end && count < n; h++) {
+      const s = String(h);
+      const rev = s.split('').reverse().join('');
+      const pal = len % 2 === 1 ? s + rev.slice(1) : s + rev;
+      const num = parseInt(pal, 10);
+      if (isKPalin(num)) { sum += num; count++; }
+    }
+  }
+  return sum;
 }`,
     typescript: `function kMirror(k: number, n: number): number {
-  // return the sum of the n smallest k-mirror numbers
+  const isKPalin = (num: number): boolean => {
+    const d: number[] = [];
+    while (num > 0) { d.push(num % k); num = Math.floor(num / k); }
+    for (let i = 0, j = d.length - 1; i < j; i++, j--)
+      if (d[i] !== d[j]) return false;
+    return true;
+  };
+  let count = 0, sum = 0;
+  for (let len = 1; count < n; len++) {
+    const half = Math.ceil(len / 2);
+    const start = half === 1 ? 1 : Math.pow(10, half - 1);
+    const end = Math.pow(10, half);
+    for (let h = start; h < end && count < n; h++) {
+      const s = String(h);
+      const rev = s.split('').reverse().join('');
+      const pal = len % 2 === 1 ? s + rev.slice(1) : s + rev;
+      const num = parseInt(pal, 10);
+      if (isKPalin(num)) { sum += num; count++; }
+    }
+  }
+  return sum;
 }`,
-    python: `def kMirror(k: int, n: int) -> int:
-    # return the sum of the n smallest k-mirror numbers
-    pass`,
+    python: `def kMirror(k, n):
+    def is_k_palin(num):
+        d = []
+        while num > 0:
+            d.append(num % k)
+            num //= k
+        return d == d[::-1]
+
+    count = 0
+    total = 0
+    length = 1
+    while count < n:
+        half = (length + 1) // 2
+        start = 1 if half == 1 else 10 ** (half - 1)
+        end = 10 ** half
+        for h in range(start, end):
+            if count >= n:
+                break
+            s = str(h)
+            rev = s[::-1]
+            pal = s + rev[1:] if length % 2 == 1 else s + rev
+            num = int(pal)
+            if is_k_palin(num):
+                total += num
+                count += 1
+        length += 1
+    return total`,
   },
   visibleTests: [
     { args: [2, 5], expected: 25 },

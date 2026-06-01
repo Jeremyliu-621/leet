@@ -45653,4 +45653,137 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+
+  'count-unique-good-subsequences': (...args: unknown[]) => {
+    const binary = args[0] as string;
+    const MOD = 1000000007n;
+    let dp0 = 0n, dp1 = 0n;
+    let hasZero = false;
+    for (const c of binary) {
+      if (c === '1') {
+        dp1 = (dp0 + dp1 + 1n) % MOD;
+      } else {
+        hasZero = true;
+        dp0 = (dp0 + dp1) % MOD;
+      }
+    }
+    return Number((dp0 + dp1 + (hasZero ? 1n : 0n)) % MOD);
+  },
+
+  'sum-of-k-mirror-numbers': (...args: unknown[]) => {
+    const k = args[0] as number;
+    const n = args[1] as number;
+    const isKPalin = (num: number): boolean => {
+      const d: number[] = [];
+      while (num > 0) { d.push(num % k); num = Math.floor(num / k); }
+      for (let i = 0, j = d.length - 1; i < j; i++, j--)
+        if (d[i] !== d[j]) return false;
+      return true;
+    };
+    let count = 0, sum = 0;
+    for (let len = 1; count < n; len++) {
+      const half = Math.ceil(len / 2);
+      const start = half === 1 ? 1 : Math.pow(10, half - 1);
+      const end = Math.pow(10, half);
+      for (let h = start; h < end && count < n; h++) {
+        const s = String(h);
+        const rev = s.split('').reverse().join('');
+        const pal = len % 2 === 1 ? s + rev.slice(1) : s + rev;
+        const num = parseInt(pal, 10);
+        if (isKPalin(num)) { sum += num; count++; }
+      }
+    }
+    return sum;
+  },
+
+  'number-of-ways-to-build-sturdy-brick-wall': (...args: unknown[]) => {
+    const height = args[0] as number;
+    const width = args[1] as number;
+    const bricks = args[2] as number[];
+    const MOD = 1000000007n;
+    const masks: number[] = [];
+    const gen = (pos: number, mask: number): void => {
+      if (pos === width) { masks.push(mask); return; }
+      for (const b of bricks) {
+        if (pos + b <= width) {
+          const nm = pos + b < width ? mask | (1 << (pos + b - 1)) : mask;
+          gen(pos + b, nm);
+        }
+      }
+    };
+    gen(0, 0);
+    const R = masks.length;
+    let dp = new Array(R).fill(1n) as bigint[];
+    for (let row = 1; row < height; row++) {
+      const ndp = new Array(R).fill(0n) as bigint[];
+      for (let j = 0; j < R; j++)
+        for (let i = 0; i < R; i++)
+          if ((masks[i]! & masks[j]!) === 0)
+            ndp[j] = (ndp[j]! + dp[i]!) % MOD;
+      dp = ndp;
+    }
+    return Number(dp.reduce((a, b) => (a! + b!) % MOD, 0n));
+  },
+
+  'count-of-sub-multisets-with-bounded-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const l = args[1] as number;
+    const r = args[2] as number;
+    const MOD = 1000000007n;
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const zeros = freq.get(0) ?? 0;
+    freq.delete(0);
+    const dp = new Array(r + 1).fill(0n) as bigint[];
+    dp[0] = 1n;
+    for (const [val, cnt] of freq) {
+      if (val > r) continue;
+      const ndp = [...dp];
+      for (let rem = 0; rem < val; rem++) {
+        let w = 0n, c = 0;
+        for (let s = rem; s <= r; s += val) {
+          w = (w + dp[s]!) % MOD;
+          c++;
+          if (c > cnt + 1) {
+            w = (w - dp[s - (cnt + 1) * val]! + MOD) % MOD;
+          }
+          ndp[s] = w;
+        }
+      }
+      for (let i = 0; i <= r; i++) dp[i] = ndp[i]!;
+    }
+    let ans = 0n;
+    for (let s = l; s <= r; s++) ans = (ans + dp[s]!) % MOD;
+    ans = (ans * BigInt(zeros + 1)) % MOD;
+    if (l === 0) ans = (ans - 1n + MOD) % MOD;
+    return Number(ans);
+  },
+
+  'get-biggest-three-rhombus-sums-in-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const top3 = new Set<number>();
+    const addToTop3 = (v: number) => {
+      top3.add(v);
+      if (top3.size > 3) {
+        let min = Infinity;
+        for (const x of top3) min = Math.min(min, x);
+        top3.delete(min);
+      }
+    };
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        addToTop3(grid[r]![c]!);
+        for (let k = 1; r - k >= 0 && r + k < m && c - k >= 0 && c + k < n; k++) {
+          let s = 0;
+          for (let i = 0; i < k; i++) {
+            s += grid[r - k + i]![c + i]! + grid[r + i]![c + k - i]!
+               + grid[r + k - i]![c - i]! + grid[r - i]![c - k + i]!;
+          }
+          addToTop3(s);
+        }
+      }
+    }
+    return [...top3].sort((a, b) => b - a);
+  },
 };

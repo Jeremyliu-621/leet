@@ -49,14 +49,81 @@ A **rhombus** centered at \`(r, c)\` with side length \`k\`:
   params: ['grid'],
   starterCode: {
     javascript: `function getBiggestThree(grid) {
-  // return the 3 biggest distinct rhombus sums in descending order
+  const m = grid.length, n = grid[0].length;
+  const top3 = new Set();
+  const addToTop3 = (v) => {
+    top3.add(v);
+    if (top3.size > 3) {
+      let min = Infinity;
+      for (const x of top3) min = Math.min(min, x);
+      top3.delete(min);
+    }
+  };
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      addToTop3(grid[r][c]);
+      for (let k = 1; r - k >= 0 && r + k < m && c - k >= 0 && c + k < n; k++) {
+        let s = 0;
+        for (let i = 0; i < k; i++) {
+          s += grid[r - k + i][c + i] + grid[r + i][c + k - i]
+             + grid[r + k - i][c - i] + grid[r - i][c - k + i];
+        }
+        addToTop3(s);
+      }
+    }
+  }
+  return [...top3].sort((a, b) => b - a);
 }`,
     typescript: `function getBiggestThree(grid: number[][]): number[] {
-  // return the 3 biggest distinct rhombus sums in descending order
+  const m = grid.length, n = grid[0]!.length;
+  const top3 = new Set<number>();
+  const addToTop3 = (v: number) => {
+    top3.add(v);
+    if (top3.size > 3) {
+      let min = Infinity;
+      for (const x of top3) min = Math.min(min, x);
+      top3.delete(min);
+    }
+  };
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      addToTop3(grid[r]![c]!);
+      for (let k = 1; r - k >= 0 && r + k < m && c - k >= 0 && c + k < n; k++) {
+        let s = 0;
+        for (let i = 0; i < k; i++) {
+          s += grid[r - k + i]![c + i]! + grid[r + i]![c + k - i]!
+             + grid[r + k - i]![c - i]! + grid[r - i]![c - k + i]!;
+        }
+        addToTop3(s);
+      }
+    }
+  }
+  return [...top3].sort((a, b) => b - a);
 }`,
-    python: `def getBiggestThree(grid: list[list[int]]) -> list[int]:
-    # return the 3 biggest distinct rhombus sums in descending order
-    pass`,
+    python: `def getBiggestThree(grid):
+    m, n = len(grid), len(grid[0])
+    top3 = set()
+
+    def add_to_top3(v):
+        top3.add(v)
+        if len(top3) > 3:
+            top3.discard(min(top3))
+
+    for r in range(m):
+        for c in range(n):
+            add_to_top3(grid[r][c])
+            k = 1
+            while r - k >= 0 and r + k < m and c - k >= 0 and c + k < n:
+                s = 0
+                for i in range(k):
+                    s += grid[r - k + i][c + i]
+                    s += grid[r + i][c + k - i]
+                    s += grid[r + k - i][c - i]
+                    s += grid[r - i][c - k + i]
+                add_to_top3(s)
+                k += 1
+
+    return sorted(top3, reverse=True)`,
   },
   visibleTests: [
     {

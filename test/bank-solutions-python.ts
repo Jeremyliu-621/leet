@@ -44907,4 +44907,128 @@ def maxSubarrayLength(nums):
             ans = max(ans, S[idx][0] - i + 1)
     return ans
 `,
+
+  'count-unique-good-subsequences': `
+def countGoodSubsequences(binary):
+    MOD = 10**9 + 7
+    dp0 = dp1 = 0
+    has_zero = False
+    for c in binary:
+        if c == '1':
+            dp1 = (dp0 + dp1 + 1) % MOD
+        else:
+            has_zero = True
+            dp0 = (dp0 + dp1) % MOD
+    return (dp0 + dp1 + (1 if has_zero else 0)) % MOD
+`,
+
+  'sum-of-k-mirror-numbers': `
+def kMirror(k, n):
+    def is_k_palin(num):
+        d = []
+        while num > 0:
+            d.append(num % k)
+            num //= k
+        return d == d[::-1]
+
+    count = 0
+    total = 0
+    length = 1
+    while count < n:
+        half = (length + 1) // 2
+        start = 1 if half == 1 else 10 ** (half - 1)
+        end = 10 ** half
+        for h in range(start, end):
+            if count >= n:
+                break
+            s = str(h)
+            rev = s[::-1]
+            pal = s + rev[1:] if length % 2 == 1 else s + rev
+            num = int(pal)
+            if is_k_palin(num):
+                total += num
+                count += 1
+        length += 1
+    return total
+`,
+
+  'number-of-ways-to-build-sturdy-brick-wall': `
+def buildWall(height, width, bricks):
+    MOD = 10**9 + 7
+    masks = []
+    def gen(pos, mask):
+        if pos == width:
+            masks.append(mask)
+            return
+        for b in bricks:
+            if pos + b <= width:
+                nm = mask | (1 << (pos + b - 1)) if pos + b < width else mask
+                gen(pos + b, nm)
+    gen(0, 0)
+    R = len(masks)
+    dp = [1] * R
+    for _ in range(1, height):
+        ndp = [0] * R
+        for j in range(R):
+            for i in range(R):
+                if (masks[i] & masks[j]) == 0:
+                    ndp[j] = (ndp[j] + dp[i]) % MOD
+        dp = ndp
+    return sum(dp) % MOD
+`,
+
+  'count-of-sub-multisets-with-bounded-sum': `
+def countSubMultisets(nums, l, r):
+    from collections import Counter
+    MOD = 10**9 + 7
+    freq = Counter(nums)
+    zeros = freq.pop(0, 0)
+    dp = [0] * (r + 1)
+    dp[0] = 1
+    for val, cnt in freq.items():
+        if val > r:
+            continue
+        ndp = dp[:]
+        for rem in range(val):
+            w, c = 0, 0
+            for s in range(rem, r + 1, val):
+                w = (w + dp[s]) % MOD
+                c += 1
+                if c > cnt + 1:
+                    w = (w - dp[s - (cnt + 1) * val]) % MOD
+                ndp[s] = w
+        dp = ndp
+    ans = sum(dp[l:r+1]) % MOD
+    ans = ans * (zeros + 1) % MOD
+    if l == 0:
+        ans = (ans - 1) % MOD
+    return ans
+`,
+
+  'get-biggest-three-rhombus-sums-in-a-grid': `
+def getBiggestThree(grid):
+    m, n = len(grid), len(grid[0])
+    top3 = set()
+
+    def add_to_top3(v):
+        top3.add(v)
+        if len(top3) > 3:
+            top3.discard(min(top3))
+
+    for r in range(m):
+        for c in range(n):
+            add_to_top3(grid[r][c])
+            k = 1
+            while r - k >= 0 and r + k < m and c - k >= 0 and c + k < n:
+                s = 0
+                for i in range(k):
+                    s += grid[r - k + i][c + i]
+                    s += grid[r + i][c + k - i]
+                    s += grid[r + k - i][c - i]
+                    s += grid[r - i][c - k + i]
+                add_to_top3(s)
+                k += 1
+
+    return sorted(top3, reverse=True)
+`,
 };

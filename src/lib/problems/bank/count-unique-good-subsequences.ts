@@ -43,14 +43,44 @@ A **subsequence** is a sequence that can be derived from another sequence by del
   params: ['binary'],
   starterCode: {
     javascript: `function countGoodSubsequences(binary) {
-  // return the count of unique good subsequences mod 10^9 + 7
+  const MOD = 1000000007n;
+  let dp0 = 0n, dp1 = 0n;
+  let hasZero = false;
+  for (const c of binary) {
+    if (c === '1') {
+      dp1 = (dp0 + dp1 + 1n) % MOD;
+    } else {
+      hasZero = true;
+      dp0 = (dp0 + dp1) % MOD;
+    }
+  }
+  return Number((dp0 + dp1 + (hasZero ? 1n : 0n)) % MOD);
 }`,
     typescript: `function countGoodSubsequences(binary: string): number {
-  // return the count of unique good subsequences mod 10^9 + 7
+  const MOD = 1000000007n;
+  let dp0 = 0n, dp1 = 0n;
+  let hasZero = false;
+  for (const c of binary) {
+    if (c === '1') {
+      dp1 = (dp0 + dp1 + 1n) % MOD;
+    } else {
+      hasZero = true;
+      dp0 = (dp0 + dp1) % MOD;
+    }
+  }
+  return Number((dp0 + dp1 + (hasZero ? 1n : 0n)) % MOD);
 }`,
-    python: `def countGoodSubsequences(binary: str) -> int:
-    # return the count of unique good subsequences mod 10**9 + 7
-    pass`,
+    python: `def countGoodSubsequences(binary):
+    MOD = 10**9 + 7
+    dp0 = dp1 = 0
+    has_zero = False
+    for c in binary:
+        if c == '1':
+            dp1 = (dp0 + dp1 + 1) % MOD
+        else:
+            has_zero = True
+            dp0 = (dp0 + dp1) % MOD
+    return (dp0 + dp1 + (1 if has_zero else 0)) % MOD`,
   },
   visibleTests: [
     { args: ['001'], expected: 2 },

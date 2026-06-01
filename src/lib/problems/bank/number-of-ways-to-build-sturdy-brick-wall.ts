@@ -41,14 +41,77 @@ Two walls are considered **different** if they differ in any row.`,
   params: ['height', 'width', 'bricks'],
   starterCode: {
     javascript: `function buildWall(height, width, bricks) {
-  // return the number of ways to build a sturdy wall modulo 10^9 + 7
+  const MOD = 1000000007n;
+  const masks = [];
+  const gen = (pos, mask) => {
+    if (pos === width) { masks.push(mask); return; }
+    for (const b of bricks) {
+      if (pos + b <= width) {
+        const nm = pos + b < width ? mask | (1 << (pos + b - 1)) : mask;
+        gen(pos + b, nm);
+      }
+    }
+  };
+  gen(0, 0);
+  const R = masks.length;
+  let dp = new Array(R).fill(1n);
+  for (let row = 1; row < height; row++) {
+    const ndp = new Array(R).fill(0n);
+    for (let j = 0; j < R; j++)
+      for (let i = 0; i < R; i++)
+        if ((masks[i] & masks[j]) === 0)
+          ndp[j] = (ndp[j] + dp[i]) % MOD;
+    dp = ndp;
+  }
+  return Number(dp.reduce((a, b) => (a + b) % MOD, 0n));
 }`,
     typescript: `function buildWall(height: number, width: number, bricks: number[]): number {
-  // return the number of ways to build a sturdy wall modulo 10^9 + 7
+  const MOD = 1000000007n;
+  const masks: number[] = [];
+  const gen = (pos: number, mask: number): void => {
+    if (pos === width) { masks.push(mask); return; }
+    for (const b of bricks) {
+      if (pos + b <= width) {
+        const nm = pos + b < width ? mask | (1 << (pos + b - 1)) : mask;
+        gen(pos + b, nm);
+      }
+    }
+  };
+  gen(0, 0);
+  const R = masks.length;
+  let dp = new Array(R).fill(1n);
+  for (let row = 1; row < height; row++) {
+    const ndp = new Array(R).fill(0n);
+    for (let j = 0; j < R; j++)
+      for (let i = 0; i < R; i++)
+        if ((masks[i]! & masks[j]!) === 0)
+          ndp[j] = (ndp[j]! + dp[i]!) % MOD;
+    dp = ndp;
+  }
+  return Number(dp.reduce((a, b) => (a! + b!) % MOD, 0n));
 }`,
-    python: `def buildWall(height: int, width: int, bricks: list[int]) -> int:
-    # return the number of ways to build a sturdy wall modulo 10**9 + 7
-    pass`,
+    python: `def buildWall(height, width, bricks):
+    MOD = 10**9 + 7
+    masks = []
+    def gen(pos, mask):
+        if pos == width:
+            masks.append(mask)
+            return
+        for b in bricks:
+            if pos + b <= width:
+                nm = mask | (1 << (pos + b - 1)) if pos + b < width else mask
+                gen(pos + b, nm)
+    gen(0, 0)
+    R = len(masks)
+    dp = [1] * R
+    for _ in range(1, height):
+        ndp = [0] * R
+        for j in range(R):
+            for i in range(R):
+                if (masks[i] & masks[j]) == 0:
+                    ndp[j] = (ndp[j] + dp[i]) % MOD
+        dp = ndp
+    return sum(dp) % MOD`,
   },
   visibleTests: [
     { args: [2, 3, [1, 2]], expected: 2 },
