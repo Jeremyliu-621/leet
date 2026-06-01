@@ -3093,7 +3093,6 @@ import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
 // batch 258
-import { problem as minNumberOperations } from './minimum-number-of-increments-on-subarrays-to-form-target-array';
 import { problem as twoEditWords } from './words-within-two-edits-of-dictionary';
 import { problem as componentValue } from './create-components-with-same-value';
 // batch 257
@@ -6364,7 +6363,6 @@ export const problems: readonly Problem[] = [
   countDiffSubseqGCDs,
   smallestRangeKLists,
   // batch 258
-  minNumberOperations,
   twoEditWords,
   componentValue,
   // batch 257

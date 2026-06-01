@@ -46264,10 +46264,6 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
   // batch 258
-  'minimum-number-of-increments-on-subarrays-to-form-target-array': (...args: unknown[]) => {
-    const target = args[0] as number[];
-    return target.reduce((ops, cur, i) => ops + (i === 0 ? cur : Math.max(0, cur - target[i - 1]!)), 0);
-  },
   'words-within-two-edits-of-dictionary': (...args: unknown[]) => {
     const queries = args[0] as string[];
     const dictionary = args[1] as string[];
