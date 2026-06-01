@@ -23,8 +23,7 @@ function CopyButton({ value }: { value: string }) {
       type="button"
       onClick={handleCopy}
       aria-label="Copy to clipboard"
-      className="ml-1 text-faint hover:text-muted transition-colors align-middle focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
-      style={{ fontSize: '9px', letterSpacing: '0.05em' }}
+      className="ml-1 text-[9px] tracking-[0.05em] text-faint hover:text-muted transition-colors align-middle focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
     >
       {copied ? '✓' : 'copy'}
     </button>
@@ -705,9 +704,16 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
               aria-label={collapsed ? 'Expand terminal panel' : 'Collapse terminal panel'}
               aria-pressed={collapsed}
               title={collapsed ? 'Expand terminal' : 'Collapse terminal'}
-              className="px-1.5 py-1 font-mono text-[10px] text-faint hover:text-muted transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
+              className="px-1.5 py-1 text-faint hover:text-muted transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
             >
-              {collapsed ? '▲' : '▼'}
+              <svg
+                className={`h-3 w-3 transition-transform duration-150 ${collapsed ? 'rotate-180' : ''}`}
+                viewBox="0 0 12 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M2 4.5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
           )}
         </div>
@@ -882,9 +888,14 @@ function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExp
             {verdict.durationMs}ms
           </span>
         )}
-        <span className="ml-auto font-mono text-[10px] text-faint" aria-hidden="true">
-          {expanded ? '▲' : '▼'}
-        </span>
+        <svg
+          className={`ml-auto h-3 w-3 flex-shrink-0 text-faint transition-transform duration-150 ${expanded ? 'rotate-180' : ''}`}
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M2 4.5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
 
       {expanded && (

@@ -67,9 +67,14 @@ export function SubmissionsPanel({ submissions, onRestore }: SubmissionsPanelPro
             {submissions.length}
           </span>
         </div>
-        <span className="font-mono text-[10px] text-faint" aria-hidden="true">
-          {open ? '▲' : '▼'}
-        </span>
+        <svg
+          className={`h-3 w-3 flex-shrink-0 text-faint transition-transform duration-150 ${open ? 'rotate-180' : ''}`}
+          viewBox="0 0 12 12"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M2 4.5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </button>
 
       {open && (
