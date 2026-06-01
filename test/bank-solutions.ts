@@ -45349,4 +45349,120 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (const c of candidates) result = Math.min(result, computeMax(c));
     return result;
   },
+
+  'maximal-range-that-each-element-is-maximum-in-it': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const left = new Array<number>(n).fill(-1);
+    const right = new Array<number>(n).fill(n);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length && nums[stack[stack.length - 1]!]! < nums[i]!) {
+        stack.pop();
+      }
+      left[i] = stack.length ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length && nums[stack[stack.length - 1]!]! < nums[i]!) {
+        stack.pop();
+      }
+      right[i] = stack.length ? stack[stack.length - 1]! : n;
+      stack.push(i);
+    }
+    return nums.map((_, i) => right[i]! - left[i]! - 1);
+  },
+
+  'total-characters-in-string-after-transformations-i': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const freq = new Array<bigint>(26).fill(0n);
+    for (const ch of s) freq[ch.charCodeAt(0) - 97]! += 1n;
+    for (let step = 0; step < t; step++) {
+      const next = new Array<bigint>(26).fill(0n);
+      for (let i = 0; i < 25; i++) next[i + 1]! += freq[i]!;
+      next[0]! = (next[0]! + freq[25]!) % MOD;
+      next[1]! = (next[1]! + freq[25]!) % MOD;
+      for (let i = 0; i < 26; i++) next[i]! %= MOD;
+      for (let i = 0; i < 26; i++) freq[i] = next[i]!;
+    }
+    return Number(freq.reduce((a, b) => (a + b) % MOD, 0n));
+  },
+
+  'count-k-subsequences-of-a-string-with-maximum-beauty': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const cnt = new Map<string, number>();
+    for (const ch of s) cnt.set(ch, (cnt.get(ch) ?? 0) + 1);
+    if (cnt.size < k) return 0;
+    const freqs = [...cnt.values()].sort((a, b) => b - a);
+    const minFreq = freqs[k - 1]!;
+    let above = 0;
+    let prodAbove = 1n;
+    for (const f of freqs) {
+      if (f > minFreq) { above++; prodAbove = prodAbove * BigInt(f) % MOD; }
+    }
+    const tied = freqs.filter(f => f === minFreq).length;
+    const need = k - above;
+    const modPow = (base: bigint, exp: bigint, mod: bigint): bigint => {
+      let result = 1n; base %= mod;
+      while (exp > 0n) {
+        if (exp & 1n) result = result * base % mod;
+        base = base * base % mod;
+        exp >>= 1n;
+      }
+      return result;
+    };
+    const inv = (a: bigint) => modPow(a, MOD - 2n, MOD);
+    let comb = 1n;
+    for (let i = 0; i < need; i++) {
+      comb = comb * BigInt(tied - i) % MOD * inv(BigInt(i + 1)) % MOD;
+    }
+    return Number(comb * prodAbove % MOD * modPow(BigInt(minFreq), BigInt(need), MOD) % MOD);
+  },
+
+  'smallest-number-with-given-digit-product': (...args: unknown[]) => {
+    let n = args[0] as number;
+    if (n === 1) return '1';
+    const digits: number[] = [];
+    for (let d = 9; d >= 2; d--) {
+      while (n % d === 0) {
+        digits.push(d);
+        n = Math.floor(n / d);
+      }
+    }
+    if (n > 1) return '-1';
+    digits.sort((a, b) => a - b);
+    return digits.join('');
+  },
+
+  'maximum-length-of-semi-decreasing-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const S: [number, number][] = [];
+    let minVal = Infinity;
+    for (let j = n - 1; j >= 0; j--) {
+      if (nums[j]! < minVal) {
+        S.push([j, nums[j]!]);
+        minVal = nums[j]!;
+      }
+    }
+    S.reverse();
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      let lo = 0, hi = S.length - 1, best = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (S[mid]![1] < nums[i]!) { best = mid; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      if (best >= 0 && S[best]![0] > i) {
+        ans = Math.max(ans, S[best]![0] - i + 1);
+      }
+    }
+    return ans;
+  },
 };

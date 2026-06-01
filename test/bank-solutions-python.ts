@@ -44623,4 +44623,97 @@ def minimumDistance(points):
     candidates = {max_sum_idx, min_sum_idx, max_diff_idx, min_diff_idx}
     return min(compute_max(c) for c in candidates)
 `,
+
+  'maximal-range-that-each-element-is-maximum-in-it': `
+def maximumLengthOfRanges(nums):
+    n = len(nums)
+    left = [-1] * n
+    right = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]:
+            stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack = []
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] < nums[i]:
+            stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    return [right[i] - left[i] - 1 for i in range(n)]
+`,
+
+  'total-characters-in-string-after-transformations-i': `
+def lengthAfterTransformations(s, t):
+    MOD = 10**9 + 7
+    freq = [0] * 26
+    for ch in s:
+        freq[ord(ch) - ord('a')] += 1
+    for _ in range(t):
+        nxt = [0] * 26
+        for i in range(25):
+            nxt[i + 1] = (nxt[i + 1] + freq[i]) % MOD
+        nxt[0] = (nxt[0] + freq[25]) % MOD
+        nxt[1] = (nxt[1] + freq[25]) % MOD
+        freq = nxt
+    return sum(freq) % MOD
+`,
+
+  'count-k-subsequences-of-a-string-with-maximum-beauty': `
+def countKSubsequencesWithMaxBeauty(s, k):
+    from math import comb
+    MOD = 10**9 + 7
+    from collections import Counter
+    cnt = Counter(s)
+    if len(cnt) < k:
+        return 0
+    freqs = sorted(cnt.values(), reverse=True)
+    min_freq = freqs[k - 1]
+    above = sum(1 for f in freqs if f > min_freq)
+    prod_above = 1
+    for f in freqs:
+        if f > min_freq:
+            prod_above = prod_above * f % MOD
+    tied = sum(1 for f in freqs if f == min_freq)
+    need = k - above
+    result = comb(tied, need) % MOD * prod_above % MOD * pow(min_freq, need, MOD) % MOD
+    return result
+`,
+
+  'smallest-number-with-given-digit-product': `
+def smallestNumber(n):
+    if n == 1:
+        return "1"
+    digits = []
+    for d in range(9, 1, -1):
+        while n % d == 0:
+            digits.append(d)
+            n //= d
+    if n > 1:
+        return "-1"
+    digits.sort()
+    return "".join(map(str, digits))
+`,
+
+  'maximum-length-of-semi-decreasing-subarrays': `
+def maxSubarrayLength(nums):
+    import bisect
+    n = len(nums)
+    S = []
+    min_val = float('inf')
+    for j in range(n - 1, -1, -1):
+        if nums[j] < min_val:
+            S.append((j, nums[j]))
+            min_val = nums[j]
+    S.reverse()
+    positions = [p for p, v in S]
+    values = [v for p, v in S]
+    ans = 0
+    for i in range(n):
+        idx = bisect.bisect_left(values, nums[i]) - 1
+        if idx >= 0 and S[idx][0] > i:
+            ans = max(ans, S[idx][0] - i + 1)
+    return ans
+`,
 };

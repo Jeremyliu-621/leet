@@ -3099,6 +3099,11 @@ import { problem as minimizeManhattanDistances } from './minimize-manhattan-dist
 // batch 252
 import { problem as maximumSizeOfSetAfterRemovals } from './maximum-size-of-a-set-after-removals';
 import { problem as minimumOpsToMakeXYEqual } from './minimum-number-of-operations-to-make-x-and-y-equal';
+import { problem as maximalRangeElementMax } from './maximal-range-that-each-element-is-maximum-in-it';
+import { problem as totalCharsAfterTransformationsI } from './total-characters-in-string-after-transformations-i';
+import { problem as countKSubseqMaxBeauty } from './count-k-subsequences-of-a-string-with-maximum-beauty';
+import { problem as smallestNumberDigitProduct } from './smallest-number-with-given-digit-product';
+import { problem as maxLenSemiDecreasing } from './maximum-length-of-semi-decreasing-subarrays';
 // batch 251
 import { problem as maximumXorOfTwoNumbers } from './maximum-xor-of-two-numbers-in-array';
 import { problem as lexSmallestStringSubstringOp } from './lexicographically-smallest-string-after-substring-operation';
@@ -6319,6 +6324,11 @@ export const problems: readonly Problem[] = [
   // batch 252
   maximumSizeOfSetAfterRemovals,
   minimumOpsToMakeXYEqual,
+  maximalRangeElementMax,
+  totalCharsAfterTransformationsI,
+  countKSubseqMaxBeauty,
+  smallestNumberDigitProduct,
+  maxLenSemiDecreasing,
   // batch 251
   maximumXorOfTwoNumbers,
   lexSmallestStringSubstringOp,
