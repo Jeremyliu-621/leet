@@ -46487,6 +46487,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 262
+  'minimum-number-of-seconds-to-make-mountain-height-zero': (...args: unknown[]) => {
+    const mountainHeight = args[0] as number;
+    const workerTimes = args[1] as number[];
+    const canFinish = (t: number): boolean => {
+      let total = 0;
+      for (const w of workerTimes) {
+        let lo = 0, hi = mountainHeight;
+        while (lo < hi) {
+          const mid = lo + Math.ceil((hi - lo) / 2);
+          if (w * mid * (mid + 1) / 2 <= t) lo = mid;
+          else hi = mid - 1;
+        }
+        total += lo;
+        if (total >= mountainHeight) return true;
+      }
+      return false;
+    };
+    let lo = 0;
+    let hi = workerTimes.reduce((a, b) => Math.max(a, b), 0) * mountainHeight * (mountainHeight + 1) / 2;
+    while (lo < hi) {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      if (canFinish(mid)) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+  'maximum-multiplication-score': (...args: unknown[]) => {
+    const a = args[0] as number[];
+    const b = args[1] as number[];
+    const dp: number[] = [0, -Infinity, -Infinity, -Infinity, -Infinity];
+    for (const x of a) {
+      for (let j = 4; j >= 1; j--) {
+        if (dp[j - 1] !== -Infinity) {
+          dp[j] = Math.max(dp[j]!, dp[j - 1]! + x * b[j - 1]!);
+        }
+      }
+    }
+    return dp[4]!;
+  },
+  'find-maximum-divisibility-score': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const divisors = args[1] as number[];
+    let bestCount = -1, bestDiv = Infinity;
+    for (const d of divisors) {
+      let count = 0;
+      for (const n of nums) if (n % d === 0) count++;
+      if (count > bestCount || (count === bestCount && d < bestDiv)) {
+        bestCount = count;
+        bestDiv = d;
+      }
+    }
+    return bestDiv;
+  },
+  'k-items-with-maximum-sum': (...args: unknown[]) => {
+    const numOnes = args[0] as number;
+    const numZeros = args[1] as number;
+    const numNegOnes = args[2] as number;
+    const k = args[3] as number;
+    void numNegOnes;
+    const ones = Math.min(k, numOnes);
+    const negs = Math.max(0, k - numOnes - numZeros);
+    return ones - negs;
+  },
   // batch 261
   'hash-divided-string': (...args: unknown[]) => {
     const s = args[0] as string;

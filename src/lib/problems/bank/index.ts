@@ -3100,6 +3100,10 @@ import { problem as detectPatternMK } from './detect-pattern-of-length-m-repeate
 import { problem as rearrangingFruits } from './rearranging-fruits';
 import { problem as timeToCrossABridge } from './time-to-cross-a-bridge';
 import { problem as findCoinsInTreeNodes } from './find-number-of-coins-to-place-in-tree-nodes';
+import { problem as minSecondsToMakeMountainHeightZero } from './minimum-number-of-seconds-to-make-mountain-height-zero';
+import { problem as maximumMultiplicationScore } from './maximum-multiplication-score';
+import { problem as findMaximumDivisibilityScore } from './find-maximum-divisibility-score';
+import { problem as kItemsMaximumSum } from './k-items-with-maximum-sum';
 // batch 261
 import { problem as hashDividedString } from './hash-divided-string';
 import { problem as minArrayChangeDiffsEqual } from './minimum-array-changes-to-make-differences-equal';
@@ -6404,6 +6408,10 @@ export const problems: readonly Problem[] = [
   rearrangingFruits,
   timeToCrossABridge,
   findCoinsInTreeNodes,
+  minSecondsToMakeMountainHeightZero,
+  maximumMultiplicationScore,
+  findMaximumDivisibilityScore,
+  kItemsMaximumSum,
   // batch 261
   hashDividedString,
   minArrayChangeDiffsEqual,

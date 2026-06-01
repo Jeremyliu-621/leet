@@ -45614,6 +45614,58 @@ def getFinalState(nums, k, multiplier):
     return ans
 `,
 
+  // batch 262
+  'minimum-number-of-seconds-to-make-mountain-height-zero': `
+def minNumberOfSeconds(mountainHeight, workerTimes):
+    def can_finish(t):
+        total = 0
+        for w in workerTimes:
+            lo, hi = 0, mountainHeight
+            while lo < hi:
+                mid = (lo + hi + 1) // 2
+                if w * mid * (mid + 1) // 2 <= t:
+                    lo = mid
+                else:
+                    hi = mid - 1
+            total += lo
+            if total >= mountainHeight:
+                return True
+        return False
+    lo = 0
+    hi = max(workerTimes) * mountainHeight * (mountainHeight + 1) // 2
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_finish(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'maximum-multiplication-score': `
+def maxScore(a, b):
+    dp = [0] + [float('-inf')] * 4
+    for x in a:
+        for j in range(4, 0, -1):
+            if dp[j - 1] != float('-inf'):
+                dp[j] = max(dp[j], dp[j - 1] + x * b[j - 1])
+    return dp[4]
+`,
+  'find-maximum-divisibility-score': `
+def maximumDivisibilityScore(nums, divisors):
+    best_count, best_div = -1, float('inf')
+    for d in divisors:
+        count = sum(1 for n in nums if n % d == 0)
+        if count > best_count or (count == best_count and d < best_div):
+            best_count = count
+            best_div = d
+    return best_div
+`,
+  'k-items-with-maximum-sum': `
+def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
+    ones = min(k, numOnes)
+    negs = max(0, k - numOnes - numZeros)
+    return ones - negs
+`,
   // batch 261
   'hash-divided-string': `
 def stringHash(s, k, p):
