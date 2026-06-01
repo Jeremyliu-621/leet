@@ -34,10 +34,10 @@ return false;\`\`\``
   functionName: 'isPrefixString',
   params: ['s', 'words'],
   starterCode: {
-    javascript: 'function isPrefixString(s, words) {\n  \n}\n',
-    typescript: "function isPrefixString(s: string, words: string[]): boolean {\n  \n}",
+    javascript: 'function isPrefixString(s, words) {\n  let pre = "";\n  for (const w of words) {\n    pre += w;\n    if (pre === s) return true;\n    if (!s.startsWith(pre)) return false;\n  }\n  return false;\n}\n',
+    typescript: "function isPrefixString(s: string, words: string[]): boolean {\n  let pre = \"\";\n  for (const w of words) {\n    pre += w;\n    if (pre === s) return true;\n    if (!s.startsWith(pre)) return false;\n  }\n  return false;\n}",
 
-    python: 'def isPrefixString(s, words):\n    pass\n',
+    python: 'def isPrefixString(s, words):\n    pre = ""\n    for w in words:\n        pre += w\n        if pre == s:\n            return True\n        if not s.startswith(pre):\n            return False\n    return False\n',
   },
   visibleTests: [
     { args: ['iloveleet', ['i','love','leet','code']], expected: true },

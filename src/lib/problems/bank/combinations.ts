@@ -28,10 +28,10 @@ You may return the answer in **any order**.`,
   functionName: 'combine',
   params: ['n', 'k'],
   starterCode: {
-    javascript: 'function combine(n, k) {\n  \n}\n',
-    typescript: "function combine(n: number, k: number): number[][] {\n  \n}",
+    javascript: 'function combine(n, k) {\n  const result = [];\n  function backtrack(start, current) {\n    if (current.length === k) { result.push([...current]); return; }\n    for (let i = start; i <= n - (k - current.length) + 1; i++) {\n      current.push(i);\n      backtrack(i + 1, current);\n      current.pop();\n    }\n  }\n  backtrack(1, []);\n  return result;\n}\n',
+    typescript: "function combine(n: number, k: number): number[][] {\n  const result: number[][] = [];\n  function backtrack(start: number, current: number[]): void {\n    if (current.length === k) { result.push([...current]); return; }\n    for (let i = start; i <= n - (k - current.length) + 1; i++) {\n      current.push(i);\n      backtrack(i + 1, current);\n      current.pop();\n    }\n  }\n  backtrack(1, []);\n  return result;\n}",
 
-    python: 'def combine(n, k):\n    pass\n',
+    python: 'def combine(n, k):\n    result = []\n    def backtrack(start, current):\n        if len(current) == k:\n            result.append(list(current))\n            return\n        for i in range(start, n - (k - len(current)) + 2):\n            current.append(i)\n            backtrack(i + 1, current)\n            current.pop()\n    backtrack(1, [])\n    return result\n',
   },
   visibleTests: [
     { args: [4, 2], expected: [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]] },

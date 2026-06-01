@@ -25,10 +25,10 @@ A subsequence of an array is obtained by deleting some number of elements (can b
   functionName: 'constrainedSubsetSum',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function constrainedSubsetSum(nums, k) {\n\n}\n',
-    typescript: "function constrainedSubsetSum(nums: number[], k: number): number {\n\n}",
+    javascript: 'function constrainedSubsetSum(nums, k) {\n  const n = nums.length;\n  const dp = [...nums];\n  const dq = [];\n  let best = -Infinity;\n  for (let i = 0; i < n; i++) {\n    if (dq.length && dq[0] < i - k) dq.shift();\n    if (dq.length && dp[dq[0]] > 0) dp[i] += dp[dq[0]];\n    while (dq.length && dp[dq[dq.length - 1]] <= dp[i]) dq.pop();\n    dq.push(i);\n    if (dp[i] > best) best = dp[i];\n  }\n  return best;\n}\n',
+    typescript: "function constrainedSubsetSum(nums: number[], k: number): number {\n  const n = nums.length;\n  const dp = [...nums];\n  const dq: number[] = [];\n  let best = -Infinity;\n  for (let i = 0; i < n; i++) {\n    if (dq.length && dq[0]! < i - k) dq.shift();\n    if (dq.length && dp[dq[0]!]! > 0) dp[i] = dp[i]! + dp[dq[0]!]!;\n    while (dq.length && dp[dq[dq.length - 1]!]! <= dp[i]!) dq.pop();\n    dq.push(i);\n    if (dp[i]! > best) best = dp[i]!;\n  }\n  return best;\n}",
 
-    python: 'def constrainedSubsetSum(nums, k):\n    pass\n',
+    python: 'def constrainedSubsetSum(nums, k):\n    from collections import deque\n    n = len(nums)\n    dp = list(nums)\n    dq = deque()\n    best = float("-inf")\n    for i in range(n):\n        if dq and dq[0] < i - k:\n            dq.popleft()\n        if dq and dp[dq[0]] > 0:\n            dp[i] += dp[dq[0]]\n        while dq and dp[dq[-1]] <= dp[i]:\n            dq.pop()\n        dq.append(i)\n        if dp[i] > best:\n            best = dp[i]\n    return best\n',
   },
   visibleTests: [
     { args: [[10, 2, -10, 5, 20], 2], expected: 37 },

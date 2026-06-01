@@ -57,10 +57,10 @@ Return a list of all possible valid combinations. The list must not contain the 
   params: ['k', 'n'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: 'function combinationSumIII(k, n) {\n  \n}\n',
-    typescript: "function combinationSumIIIRunner(k: number, n: number): number[][] {\n  \n}",
+    javascript: 'function combinationSumIII(k, n) {\n  const result = [];\n  function backtrack(start, remaining, current) {\n    if (current.length === k && remaining === 0) { result.push([...current]); return; }\n    if (current.length === k || remaining <= 0) return;\n    for (let i = start; i <= 9; i++) {\n      current.push(i);\n      backtrack(i + 1, remaining - i, current);\n      current.pop();\n    }\n  }\n  backtrack(1, n, []);\n  return result;\n}\n',
+    typescript: "function combinationSumIIIRunner(k: number, n: number): number[][] {\n  const result: number[][] = [];\n  function backtrack(start: number, remaining: number, current: number[]): void {\n    if (current.length === k && remaining === 0) { result.push([...current]); return; }\n    if (current.length === k || remaining <= 0) return;\n    for (let i = start; i <= 9; i++) {\n      current.push(i);\n      backtrack(i + 1, remaining - i, current);\n      current.pop();\n    }\n  }\n  backtrack(1, n, []);\n  return result;\n}",
 
-    python: 'def combinationSumIII(k, n):\n    pass\n',
+    python: 'def combinationSumIII(k, n):\n    result = []\n    def backtrack(start, remaining, current):\n        if len(current) == k and remaining == 0:\n            result.append(list(current))\n            return\n        if len(current) == k or remaining <= 0:\n            return\n        for i in range(start, 10):\n            current.append(i)\n            backtrack(i + 1, remaining - i, current)\n            current.pop()\n    backtrack(1, n, [])\n    return result\n',
   },
   visibleTests: [
     { args: [3, 7], expected: [[1, 2, 4]] },

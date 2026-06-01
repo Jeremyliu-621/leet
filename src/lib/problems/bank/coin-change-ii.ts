@@ -41,13 +41,24 @@ You may assume that you have an **infinite number of each kind of coin**.`,
   params: ['amount', 'coins'],
   starterCode: {
     javascript: `function change(amount, coins) {
-  // Return number of combinations that make up amount
+  const dp = new Array(amount + 1).fill(0);
+  dp[0] = 1;
+  for (const coin of coins) {
+    for (let i = coin; i <= amount; i++) {
+      dp[i] += dp[i - coin];
+    }
+  }
+  return dp[amount];
 }`,
-    typescript: "function change(amount: number, coins: number[]): number {\n  // Return number of combinations that make up amount\n}",
+    typescript: "function change(amount: number, coins: number[]): number {\n  const dp = new Array(amount + 1).fill(0) as number[];\n  dp[0] = 1;\n  for (const coin of coins) {\n    for (let i = coin; i <= amount; i++) {\n      dp[i]! += dp[i - coin]!;\n    }\n  }\n  return dp[amount]!;\n}",
 
     python: `def change(amount, coins):
-    # Return number of combinations that make up amount
-    pass`,
+    dp = [0] * (amount + 1)
+    dp[0] = 1
+    for coin in coins:
+        for i in range(coin, amount + 1):
+            dp[i] += dp[i - coin]
+    return dp[amount]`,
   },
   visibleTests: [
     { args: [5, [1, 2, 5]], expected: 4 },

@@ -42,10 +42,10 @@ A subarray is a contiguous **non-empty** sequence of elements within an array.`,
   functionName: 'continuousSubarrays',
   params: ['nums'],
   starterCode: {
-    javascript: 'function continuousSubarrays(nums) {\n  \n}\n',
-    typescript: "function continuousSubarrays(nums: number[]): number {\n  \n}",
+    javascript: 'function continuousSubarrays(nums) {\n  let l = 0, count = 0;\n  const maxDq = [], minDq = [];\n  for (let r = 0; r < nums.length; r++) {\n    while (maxDq.length && nums[maxDq[maxDq.length - 1]] <= nums[r]) maxDq.pop();\n    maxDq.push(r);\n    while (minDq.length && nums[minDq[minDq.length - 1]] >= nums[r]) minDq.pop();\n    minDq.push(r);\n    while (nums[maxDq[0]] - nums[minDq[0]] > 2) {\n      l++;\n      if (maxDq[0] < l) maxDq.shift();\n      if (minDq[0] < l) minDq.shift();\n    }\n    count += r - l + 1;\n  }\n  return count;\n}\n',
+    typescript: "function continuousSubarrays(nums: number[]): number {\n  let l = 0, count = 0;\n  const maxDq: number[] = [], minDq: number[] = [];\n  for (let r = 0; r < nums.length; r++) {\n    while (maxDq.length && nums[maxDq[maxDq.length - 1]!]! <= nums[r]!) maxDq.pop();\n    maxDq.push(r);\n    while (minDq.length && nums[minDq[minDq.length - 1]!]! >= nums[r]!) minDq.pop();\n    minDq.push(r);\n    while (nums[maxDq[0]!]! - nums[minDq[0]!]! > 2) {\n      l++;\n      if (maxDq[0]! < l) maxDq.shift();\n      if (minDq[0]! < l) minDq.shift();\n    }\n    count += r - l + 1;\n  }\n  return count;\n}",
 
-    python: 'def continuousSubarrays(nums):\n    pass\n',
+    python: 'def continuousSubarrays(nums):\n    from collections import deque\n    l, count = 0, 0\n    max_dq, min_dq = deque(), deque()\n    for r in range(len(nums)):\n        while max_dq and nums[max_dq[-1]] <= nums[r]:\n            max_dq.pop()\n        max_dq.append(r)\n        while min_dq and nums[min_dq[-1]] >= nums[r]:\n            min_dq.pop()\n        min_dq.append(r)\n        while nums[max_dq[0]] - nums[min_dq[0]] > 2:\n            l += 1\n            if max_dq[0] < l: max_dq.popleft()\n            if min_dq[0] < l: min_dq.popleft()\n        count += r - l + 1\n    return count\n',
   },
   visibleTests: [
     { args: [[5, 4, 2, 4]], expected: 8 },

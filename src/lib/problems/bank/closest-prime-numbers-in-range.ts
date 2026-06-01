@@ -49,10 +49,10 @@ function closestPrimes(left, right) {
   functionName: 'closestPrimes',
   params: ['left', 'right'],
   starterCode: {
-    javascript: 'function closestPrimes(left, right) {\n\n}\n',
-    typescript: "function closestPrimes(left: number, right: number): number[] {\n\n}",
+    javascript: 'function closestPrimes(left, right) {\n  const sieve = new Uint8Array(right + 1).fill(1);\n  sieve[0] = sieve[1] = 0;\n  for (let i = 2; i * i <= right; i++) {\n    if (sieve[i]) for (let j = i * i; j <= right; j += i) sieve[j] = 0;\n  }\n  let prev = -1, best = [-1, -1], gap = Infinity;\n  for (let n = left; n <= right; n++) {\n    if (sieve[n]) {\n      if (prev !== -1 && n - prev < gap) { gap = n - prev; best = [prev, n]; }\n      prev = n;\n    }\n  }\n  return best;\n}\n',
+    typescript: "function closestPrimes(left: number, right: number): number[] {\n  const sieve = new Uint8Array(right + 1).fill(1);\n  sieve[0] = sieve[1] = 0;\n  for (let i = 2; i * i <= right; i++) {\n    if (sieve[i]) for (let j = i * i; j <= right; j += i) sieve[j] = 0;\n  }\n  let prev = -1, best = [-1, -1], gap = Infinity;\n  for (let n = left; n <= right; n++) {\n    if (sieve[n]) {\n      if (prev !== -1 && n - prev < gap) { gap = n - prev; best = [prev, n]; }\n      prev = n;\n    }\n  }\n  return best;\n}",
 
-    python: 'def closestPrimes(left, right):\n    pass\n',
+    python: 'def closestPrimes(left, right):\n    sieve = [True] * (right + 1)\n    sieve[0] = sieve[1] = False\n    i = 2\n    while i * i <= right:\n        if sieve[i]:\n            for j in range(i * i, right + 1, i):\n                sieve[j] = False\n        i += 1\n    prev, best, gap = -1, [-1, -1], float("inf")\n    for n in range(left, right + 1):\n        if sieve[n]:\n            if prev != -1 and n - prev < gap:\n                gap = n - prev\n                best = [prev, n]\n            prev = n\n    return best\n',
   },
   visibleTests: [
     { args: [10, 19], expected: [11, 13] },
