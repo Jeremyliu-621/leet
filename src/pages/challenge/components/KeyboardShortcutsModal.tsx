@@ -25,6 +25,7 @@ const SECTIONS: ShortcutSection[] = [
       { keys: ['Tab'], description: 'Indent / accept completion' },
       { keys: ['⇧Tab', 'Shift+Tab'], description: 'Dedent' },
       { keys: ['⌘/', 'Ctrl+/'], description: 'Toggle line comment' },
+      { keys: ['⌘S', 'Ctrl+S'], description: 'No-op save (code is auto-saved)' },
       { keys: ['⌘⇧D', 'Ctrl+⇧D'], description: 'Duplicate line' },
       { keys: ['⌘⇧K', 'Ctrl+⇧K'], description: 'Delete current line' },
       { keys: ['⌥↑', 'Alt+↑'], description: 'Move line up' },

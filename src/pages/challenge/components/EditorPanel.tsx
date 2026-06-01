@@ -772,6 +772,30 @@ export function EditorPanel({
               return true;
             },
           },
+          // Suppress Ctrl/Cmd+S — code is auto-saved; prevent the
+          // browser's "Save Page" dialog from firing.
+          {
+            key: 'Mod-s',
+            preventDefault: true,
+            run() {
+              return true;
+            },
+          },
+          // Delete entire line with Cmd/Ctrl+Shift+K (VS Code convention)
+          {
+            key: 'Mod-Shift-k',
+            preventDefault: true,
+            run(view) {
+              const { state: s } = view;
+              const line = s.doc.lineAt(s.selection.main.head);
+              const from = line.from;
+              // Include the trailing newline if not the last line.
+              const to = line.to < s.doc.length ? line.to + 1 : line.from > 0 ? line.from - 1 : line.to;
+              const adjustedFrom = line.to < s.doc.length ? from : (line.from > 0 ? from - 1 : from);
+              view.dispatch({ changes: { from: adjustedFrom, to } });
+              return true;
+            },
+          },
           // Tab inserts spaces at the cursor position (not structural
           // re-indent). Must come before completionKeymap / defaultKeymap
           // so it wins the Tab binding.
