@@ -43,10 +43,10 @@ Given two words, \`beginWord\` and \`endWord\`, and a dictionary \`wordList\`, r
   params: ['beginWord', 'endWord', 'wordList'],
   preamble: {},
   starterCode: {
-    javascript: 'function ladderLength(beginWord, endWord, wordList) {\n  \n}\n',
-    typescript: "function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {\n  \n}",
+    javascript: 'function ladderLength(beginWord, endWord, wordList) {\n  const wordSet = new Set(wordList);\n  if (!wordSet.has(endWord)) return 0;\n  const queue = [[beginWord, 1]];\n  const visited = new Set([beginWord]);\n  while (queue.length) {\n    const [word, len] = queue.shift();\n    for (let i = 0; i < word.length; i++) {\n      for (let c = 97; c <= 122; c++) {\n        const next = word.slice(0, i) + String.fromCharCode(c) + word.slice(i + 1);\n        if (next === endWord) return len + 1;\n        if (wordSet.has(next) && !visited.has(next)) {\n          visited.add(next);\n          queue.push([next, len + 1]);\n        }\n      }\n    }\n  }\n  return 0;\n}\n',
+    typescript: "function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {\n  const wordSet = new Set(wordList);\n  if (!wordSet.has(endWord)) return 0;\n  const queue: [string, number][] = [[beginWord, 1]];\n  const visited = new Set<string>([beginWord]);\n  while (queue.length) {\n    const [word, len] = queue.shift()!;\n    for (let i = 0; i < word.length; i++) {\n      for (let c = 97; c <= 122; c++) {\n        const next = word.slice(0, i) + String.fromCharCode(c) + word.slice(i + 1);\n        if (next === endWord) return len + 1;\n        if (wordSet.has(next) && !visited.has(next)) {\n          visited.add(next);\n          queue.push([next, len + 1]);\n        }\n      }\n    }\n  }\n  return 0;\n}",
 
-    python: 'def ladderLength(beginWord, endWord, wordList):\n    pass\n',
+    python: 'def ladderLength(beginWord, endWord, wordList):\n    word_set = set(wordList)\n    if endWord not in word_set:\n        return 0\n    queue = [(beginWord, 1)]\n    visited = {beginWord}\n    while queue:\n        word, length = queue.pop(0)\n        for i in range(len(word)):\n            for c in range(ord(\'a\'), ord(\'z\') + 1):\n                next_word = word[:i] + chr(c) + word[i+1:]\n                if next_word == endWord:\n                    return length + 1\n                if next_word in word_set and next_word not in visited:\n                    visited.add(next_word)\n                    queue.append((next_word, length + 1))\n    return 0\n',
   },
   visibleTests: [
     { args: ['hit', 'cog', ['hot', 'dot', 'dog', 'lot', 'log', 'cog']], expected: 5 },

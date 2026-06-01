@@ -74,11 +74,31 @@ You must implement a solution with **O(1) time complexity** for each function.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// minStackRunner is pre-defined and calls your class below.\nclass MinStack {\n  constructor() {}\n  push(val) {}\n  pop() {}\n  top() {}\n  getMin() {}\n}\n',
-    typescript: "function minStackRunner(ops: string[], args: (number[] | unknown[])[]): (null | number)[] {\n  constructor() {}\n  push(val) {}\n  pop() {}\n  top() {}\n  getMin() {}\n}",
+      '// minStackRunner is pre-defined and calls your class below.\nclass MinStack {\n  constructor() {\n    this.stack = [];\n    this.minStack = [];\n  }\n  push(val) {\n    this.stack.push(val);\n    if (this.minStack.length === 0 || val <= this.minStack[this.minStack.length - 1]) {\n      this.minStack.push(val);\n    }\n  }\n  pop() {\n    const val = this.stack.pop();\n    if (val === this.minStack[this.minStack.length - 1]) this.minStack.pop();\n  }\n  top() {\n    return this.stack[this.stack.length - 1];\n  }\n  getMin() {\n    return this.minStack[this.minStack.length - 1];\n  }\n}\n',
+    typescript: `// minStackRunner is pre-defined and calls your class below.
+class MinStack {
+  private stack: number[] = [];
+  private minStack: number[] = [];
+  push(val: number): void {
+    this.stack.push(val);
+    if (this.minStack.length === 0 || val <= this.minStack[this.minStack.length - 1]!) {
+      this.minStack.push(val);
+    }
+  }
+  pop(): void {
+    const val = this.stack.pop()!;
+    if (val === this.minStack[this.minStack.length - 1]) this.minStack.pop();
+  }
+  top(): number {
+    return this.stack[this.stack.length - 1]!;
+  }
+  getMin(): number {
+    return this.minStack[this.minStack.length - 1]!;
+  }
+}`,
 
     python:
-      '# minStackRunner is pre-defined and calls your class below.\nclass MinStack:\n    def __init__(self): pass\n    def push(self, val): pass\n    def pop(self): pass\n    def top(self): pass\n    def getMin(self): pass\n',
+      '# minStackRunner is pre-defined and calls your class below.\nclass MinStack:\n    def __init__(self):\n        self.stack = []\n        self.min_stack = []\n    def push(self, val):\n        self.stack.append(val)\n        if not self.min_stack or val <= self.min_stack[-1]:\n            self.min_stack.append(val)\n    def pop(self):\n        val = self.stack.pop()\n        if val == self.min_stack[-1]:\n            self.min_stack.pop()\n    def top(self):\n        return self.stack[-1]\n    def getMin(self):\n        return self.min_stack[-1]\n',
   },
   visibleTests: [
     {

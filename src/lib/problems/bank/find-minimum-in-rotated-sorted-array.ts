@@ -53,10 +53,10 @@ return nums[lo];\`\`\``
   functionName: 'findMin',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findMin(nums) {\n\n}\n',
-    typescript: "function findMin(nums: number[]): number {\n\n}",
+    javascript: 'function findMin(nums) {\n  let lo = 0, hi = nums.length - 1;\n  while (lo < hi) {\n    const mid = (lo + hi) >> 1;\n    if (nums[mid] > nums[hi]) lo = mid + 1;\n    else hi = mid;\n  }\n  return nums[lo];\n}\n',
+    typescript: "function findMin(nums: number[]): number {\n  let lo = 0, hi = nums.length - 1;\n  while (lo < hi) {\n    const mid = (lo + hi) >> 1;\n    if (nums[mid]! > nums[hi]!) lo = mid + 1;\n    else hi = mid;\n  }\n  return nums[lo]!;\n}",
 
-    python: 'def findMin(nums):\n    pass\n',
+    python: 'def findMin(nums):\n    lo, hi = 0, len(nums) - 1\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if nums[mid] > nums[hi]:\n            lo = mid + 1\n        else:\n            hi = mid\n    return nums[lo]\n',
   },
   visibleTests: [
     { args: [[3, 4, 5, 1, 2]], expected: 1 },

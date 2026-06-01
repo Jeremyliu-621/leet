@@ -36,12 +36,42 @@ You must write an algorithm that runs in \`O(n)\` time and **without using the d
   params: ['nums'],
   starterCode: {
     javascript: `function productExceptSelf(nums) {
-
+  const n = nums.length;
+  const result = new Array(n).fill(1);
+  // Forward pass: result[i] holds product of all elements before i
+  let prefix = 1;
+  for (let i = 0; i < n; i++) { result[i] = prefix; prefix *= nums[i]; }
+  // Backward pass: multiply by product of all elements after i
+  let suffix = 1;
+  for (let i = n - 1; i >= 0; i--) { result[i] *= suffix; suffix *= nums[i]; }
+  return result;
 }`,
-    typescript: "function productExceptSelf(nums: number[]): number[] {\n\n}",
+    typescript: `function productExceptSelf(nums: number[]): number[] {
+  const n = nums.length;
+  const result = new Array<number>(n).fill(1);
+  // Forward pass: result[i] holds product of all elements before i
+  let prefix = 1;
+  for (let i = 0; i < n; i++) { result[i] = prefix; prefix *= nums[i]!; }
+  // Backward pass: multiply by product of all elements after i
+  let suffix = 1;
+  for (let i = n - 1; i >= 0; i--) { result[i]! *= suffix; suffix *= nums[i]!; }
+  return result;
+}`,
 
     python: `def productExceptSelf(nums):
-    pass`,
+    n = len(nums)
+    result = [1] * n
+    # Forward pass: result[i] holds product of all elements before i
+    prefix = 1
+    for i in range(n):
+        result[i] = prefix
+        prefix *= nums[i]
+    # Backward pass: multiply by product of all elements after i
+    suffix = 1
+    for i in range(n - 1, -1, -1):
+        result[i] *= suffix
+        suffix *= nums[i]
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [24, 12, 8, 6] },

@@ -73,62 +73,70 @@ def myStackRunner(ops, vals):
   starterCode: {
     javascript: `class MyStack {
   constructor() {
-    // Initialize your data structure here
+    this.queue = [];
   }
 
   push(x) {
-    // Push element x onto stack
+    this.queue.push(x);
+    // Rotate so the new element is at the front (LIFO order)
+    for (let i = 0; i < this.queue.length - 1; i++) {
+      this.queue.push(this.queue.shift());
+    }
   }
 
   pop() {
-    // Removes the element on top of the stack and returns it
+    return this.queue.shift();
   }
 
   top() {
-    // Get the top element
+    return this.queue[0];
   }
 
   empty() {
-    // Returns whether the stack is empty
+    return this.queue.length === 0;
   }
 }`,
     typescript: `class MyStack {
-  constructor() {
-    // Initialize your data structure here
-  }
+  private queue: number[] = [];
 
   push(x: number): void {
-    // Push element x onto stack
+    this.queue.push(x);
+    // Rotate so the new element is at the front (LIFO order)
+    for (let i = 0; i < this.queue.length - 1; i++) {
+      this.queue.push(this.queue.shift()!);
+    }
   }
 
   pop(): number {
-    // Removes the element on top of the stack and returns it
+    return this.queue.shift()!;
   }
 
   top(): number {
-    // Get the top element
+    return this.queue[0]!;
   }
 
   empty(): boolean {
-    // Returns whether the stack is empty
+    return this.queue.length === 0;
   }
 }`,
     python: `class MyStack:
     def __init__(self):
-        # Initialize your data structure here
-        pass
+        self.queue = []
 
     def push(self, x: int) -> None:
-        pass
+        self.queue.append(x)
+        # Rotate so the new element is at the front (LIFO order)
+        for _ in range(len(self.queue) - 1):
+            self.queue.append(self.queue.pop(0))
 
     def pop(self) -> int:
-        pass
+        return self.queue.pop(0)
 
     def top(self) -> int:
-        pass
+        return self.queue[0]
 
     def empty(self) -> bool:
-        pass`,
+        return len(self.queue) == 0`,
   },
   visibleTests: [
     {
