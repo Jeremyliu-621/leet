@@ -113,6 +113,26 @@ export const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   sql: 'SQL',
 };
 
+/** All supported languages in display order. */
+export const ALL_LANGUAGES: readonly SupportedLanguage[] = [
+  'javascript', 'typescript', 'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
+];
+
+/** Brief descriptions of each language, used in the Settings page. */
+export const LANGUAGE_DESCRIPTION: Readonly<Record<SupportedLanguage, string>> = {
+  javascript: 'Default. No setup required.',
+  typescript: 'Typed starters for every problem. Type annotations stripped before running.',
+  python: 'Runs via Pyodide (WebAssembly CPython, bundled). ~1–2 s first-boot.',
+  java: 'Practice Java syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  cpp: 'Practice C++ syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  csharp: 'Practice C# syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  go: 'Practice Go syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  rust: 'Practice Rust syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  kotlin: 'Practice Kotlin syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  swift: 'Practice Swift syntax with auto-generated starters. Executed as JavaScript under the hood.',
+  sql: 'Practice SQL syntax. Executed as JavaScript under the hood.',
+};
+
 /**
  * Languages that display with native syntax highlighting but execute as
  * JavaScript in the sandbox. Users can practice the language's syntax and

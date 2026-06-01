@@ -17,7 +17,7 @@ import type {
   ThemePreference,
   UnlockToken,
 } from '../../lib/types';
-import { DIFFICULTIES, PROBLEM_TAGS } from '../../lib/types';
+import { ALL_LANGUAGES, DIFFICULTIES, LANGUAGE_SHORT, PROBLEM_TAGS } from '../../lib/types';
 import { getAllProblems } from '../../lib/problems';
 import { computeSolvedStats } from './popup-helpers';
 import type { SolvedStats } from './popup-helpers';
@@ -43,19 +43,7 @@ const BANK_SIZE_BY_TAG: Readonly<Record<ProblemTag, number>> = (() => {
   return counts as Record<ProblemTag, number>;
 })();
 
-const LANGUAGE_OPTIONS: ReadonlyArray<{ value: SupportedLanguage; label: string }> = [
-  { value: 'javascript', label: 'JS' },
-  { value: 'typescript', label: 'TS' },
-  { value: 'python', label: 'Py' },
-  { value: 'java', label: 'Java' },
-  { value: 'cpp', label: 'C++' },
-  { value: 'csharp', label: 'C#' },
-  { value: 'go', label: 'Go' },
-  { value: 'rust', label: 'Rust' },
-  { value: 'kotlin', label: 'Kt' },
-  { value: 'swift', label: 'Swift' },
-  { value: 'sql', label: 'SQL' },
-];
+const LANGUAGE_OPTIONS = ALL_LANGUAGES.map((lang) => ({ value: lang, label: LANGUAGE_SHORT[lang] }));
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
   { value: 'default', label: 'Default' },

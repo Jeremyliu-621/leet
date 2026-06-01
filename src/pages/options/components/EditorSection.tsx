@@ -1,5 +1,6 @@
 import { useId } from 'react';
-import type { EditorKeymap, SupportedLanguage, ThemePreference, UserPreferences } from '../../../lib/types';
+import type { EditorKeymap, ThemePreference, UserPreferences } from '../../../lib/types';
+import { ALL_LANGUAGES, LANGUAGE_LABEL, LANGUAGE_DESCRIPTION } from '../../../lib/types';
 import { SectionCard } from './SectionCard';
 import { FormField } from './FormField';
 
@@ -22,59 +23,11 @@ const INDENT_OPTIONS: ReadonlyArray<{ value: 2 | 4; label: string }> = [
   { value: 4, label: '4 spaces' },
 ];
 
-const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: string }[] = [
-  { value: 'javascript', label: 'JavaScript', description: 'Default. No setup required.' },
-  {
-    value: 'typescript',
-    label: 'TypeScript',
-    description: 'Typed starters (param + return types) for every problem. Type annotations stripped by sucrase before running.',
-  },
-  {
-    value: 'python',
-    label: 'Python',
-    description: 'Runs via Pyodide (WebAssembly CPython, bundled). ~1–2 s first-boot.',
-  },
-  {
-    value: 'java',
-    label: 'Java',
-    description: 'Practice Java syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'cpp',
-    label: 'C++',
-    description: 'Practice C++ syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'csharp',
-    label: 'C#',
-    description: 'Practice C# syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'go',
-    label: 'Go',
-    description: 'Practice Go syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'rust',
-    label: 'Rust',
-    description: 'Practice Rust syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'kotlin',
-    label: 'Kotlin',
-    description: 'Practice Kotlin syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'swift',
-    label: 'Swift',
-    description: 'Practice Swift syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  },
-  {
-    value: 'sql',
-    label: 'SQL',
-    description: 'Practice SQL syntax. Executed as JavaScript under the hood.',
-  },
-];
+const LANGUAGE_OPTIONS = ALL_LANGUAGES.map((lang) => ({
+  value: lang,
+  label: LANGUAGE_LABEL[lang],
+  description: LANGUAGE_DESCRIPTION[lang],
+}));
 
 const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string }[] = [
   { value: 'default', label: 'Default', description: 'Standard browser key bindings.' },
