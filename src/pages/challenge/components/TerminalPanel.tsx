@@ -45,8 +45,7 @@ function ValueDisplay({ value }: { value: string }) {
         onClick={() => setExpanded((v) => !v)}
         aria-label={expanded ? 'Show less of this value' : `Show ${value.length - TRUNCATE_AT} more characters`}
         aria-expanded={expanded}
-        className="ml-1 text-faint hover:text-muted transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
-        style={{ fontSize: '9px' }}
+        className="ml-1 text-[9px] text-faint hover:text-muted transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
       >
         {expanded ? 'less' : `+${value.length - TRUNCATE_AT} chars`}
       </button>

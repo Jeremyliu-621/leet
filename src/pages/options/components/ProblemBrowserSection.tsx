@@ -158,11 +158,19 @@ export function ProblemBrowserSection() {
       <button
         type="button"
         onClick={() => setIsOpen((v) => !v)}
-        className="mb-4 font-mono text-[10px] text-muted underline-offset-2 hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+        className="mb-4 inline-flex items-center gap-1 font-mono text-[10px] text-muted hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
         aria-expanded={isOpen}
         aria-controls="problem-browser-list"
       >
-        {isOpen ? '▾ collapse list' : '▸ browse all problems'}
+        <svg
+          className={`h-2.5 w-2.5 flex-shrink-0 transition-transform duration-150 ${isOpen ? 'rotate-90' : ''}`}
+          viewBox="0 0 10 10"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path d="M3 2l4 3-4 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {isOpen ? 'collapse list' : 'browse all problems'}
       </button>
 
       {/* Compact difficulty summary always visible */}
