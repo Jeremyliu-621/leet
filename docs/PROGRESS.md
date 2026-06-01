@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2691** problems; 8367 tests green. Batches 102–243 complete.
+**Current focus:** Bank at **2696** problems; 8382 tests green. Batches 102–243 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 244+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 243 (local) — quickselect, tarjan-scc, kmp, bridges, total-set-bits (2026-06-01)
+Five new algorithm problems: `quickselect-kth-smallest` (medium/arrays+binary-search — Quickselect O(n) average kth smallest via Lomuto partition with middle pivot), `tarjan-strongly-connected` (hard/graph+stack — Tarjan's SCC DFS with disc/low/onStack; SCCs sorted by min node), `kmp-string-search` (medium/strings — KMP failure function + scan for all occurrence indices including overlapping), `bridge-finding-undirected` (hard/graph — DFS low-link bridge detection; edge (u,v) is bridge if low[v]>disc[u]; normalized [min,max] output), `count-total-set-bits` (medium/math+bit-manipulation — O(log n) period-based formula: sum full periods + remainder per bit position). Bank at **2696**; 8382 tests.
 
 ### feat(bank): batch 243 — remove-methods-project, min-time-jobs-ii, min-ops-subarray-equal, subseq-equal-gcd (2026-06-01)
 Four new problems: `remove-methods-from-project` (medium/graph, LC 2204 — DFS from k to find all suspected methods; if any non-suspected calls suspected return all, else remove suspected), `find-minimum-time-to-finish-all-jobs-ii` (medium/arrays — sort jobs and workers desc, pair by rank, return max(ceil(jobs[i]/workers[i]))), `minimum-operations-to-make-subarray-elements-equal` (medium/arrays+math — slide k-window, sort each window, compute median-deviation cost; return minimum), `find-the-number-of-subsequences-with-equal-gcd` (hard/arrays+math+dp — GCD DP map: for each x, extend all existing subsequences; answer=sum of C(cnt,2) over all GCD values). Bank at **2691**; 8367 tests.
