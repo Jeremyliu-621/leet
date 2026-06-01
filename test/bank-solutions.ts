@@ -46688,6 +46688,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(pos, neg);
   },
+  // batch 264
+  'find-mirror-score-of-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stacks: number[][] = Array.from({ length: 26 }, () => []);
+    let score = 0;
+    for (let i = 0; i < s.length; i++) {
+      const c = s.charCodeAt(i) - 97;
+      if (stacks[c]!.length > 0) {
+        score += i - stacks[c]!.pop()!;
+      } else {
+        stacks[c]!.push(i);
+      }
+    }
+    return score;
+  },
+  'maximum-manhattan-distance-after-k-changes': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    let e = 0, w = 0, n = 0, sou = 0;
+    for (const c of s) {
+      if (c === 'E') e++;
+      else if (c === 'W') w++;
+      else if (c === 'N') n++;
+      else sou++;
+    }
+    const quad = (dx: number, dy: number, opp: number) =>
+      (e - w) * dx + (n - sou) * dy + 2 * Math.min(k, opp);
+    return Math.max(quad(1, 1, w + sou), quad(1, -1, w + n), quad(-1, 1, e + sou), quad(-1, -1, e + n));
+  },
+  'shortest-and-lexicographically-smallest-beautiful-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    const ones: number[] = [];
+    for (let i = 0; i < s.length; i++) if (s[i] === '1') ones.push(i);
+    if (ones.length < k) return '';
+    let best = '';
+    for (let i = 0; i <= ones.length - k; i++) {
+      const sub = s.slice(ones[i]!, ones[i + k - 1]! + 1);
+      if (best === '' || sub.length < best.length || (sub.length === best.length && sub < best)) best = sub;
+    }
+    return best;
+  },
+  'keep-multiplying-found-values-by-two': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let original = args[1] as number;
+    const set = new Set(nums);
+    while (set.has(original)) original *= 2;
+    return original;
+  },
+  'divide-array-in-sets-of-k-consecutive-numbers': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    if (nums.length % k !== 0) return false;
+    const freq = new Map<number, number>();
+    for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+    const sorted = [...new Set(nums)].sort((a, b) => a - b);
+    for (const n of sorted) {
+      const cnt = freq.get(n) ?? 0;
+      if (cnt === 0) continue;
+      for (let i = 0; i < k; i++) {
+        const cur = freq.get(n + i) ?? 0;
+        if (cur < cnt) return false;
+        freq.set(n + i, cur - cnt);
+      }
+    }
+    return true;
+  },
   // batch 263
   'minimum-suffix-flips': (...args: unknown[]) => {
     const target = args[0] as string;

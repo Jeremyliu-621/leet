@@ -45792,6 +45792,66 @@ def maximizeTotalCost(nums):
         pos, neg = max(pos, neg) + nums[i], pos - nums[i]
     return max(pos, neg)
 `,
+  // batch 264
+  'find-mirror-score-of-a-string': `
+def calculateScore(s):
+    stacks = [[] for _ in range(26)]
+    score = 0
+    for i, ch in enumerate(s):
+        c = ord(ch) - ord('a')
+        if stacks[c]:
+            score += i - stacks[c].pop()
+        else:
+            stacks[c].append(i)
+    return score
+`,
+  'maximum-manhattan-distance-after-k-changes': `
+def maxDistance(s, k):
+    e = w = n = sou = 0
+    for c in s:
+        if c == 'E': e += 1
+        elif c == 'W': w += 1
+        elif c == 'N': n += 1
+        else: sou += 1
+    def quad(dx, dy, opp):
+        return (e - w) * dx + (n - sou) * dy + 2 * min(k, opp)
+    return max(quad(1,1,w+sou), quad(1,-1,w+n), quad(-1,1,e+sou), quad(-1,-1,e+n))
+`,
+  'shortest-and-lexicographically-smallest-beautiful-string': `
+def shortestBeautifulSubstring(s, k):
+    ones = [i for i, c in enumerate(s) if c == '1']
+    if len(ones) < k:
+        return ''
+    best = ''
+    for i in range(len(ones) - k + 1):
+        sub = s[ones[i]:ones[i + k - 1] + 1]
+        if not best or len(sub) < len(best) or (len(sub) == len(best) and sub < best):
+            best = sub
+    return best
+`,
+  'keep-multiplying-found-values-by-two': `
+def findFinalValue(nums, original):
+    s = set(nums)
+    while original in s:
+        original *= 2
+    return original
+`,
+  'divide-array-in-sets-of-k-consecutive-numbers': `
+def isPossibleDivide(nums, k):
+    if len(nums) % k != 0:
+        return False
+    from collections import Counter
+    freq = Counter(nums)
+    for n in sorted(freq):
+        cnt = freq[n]
+        if cnt == 0:
+            continue
+        for i in range(k):
+            if freq[n + i] < cnt:
+                return False
+            freq[n + i] -= cnt
+    return True
+`,
   // batch 263
   'minimum-suffix-flips': `
 def minFlips(target):

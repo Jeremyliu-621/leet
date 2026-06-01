@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 264
+import { problem as findMirrorScoreString } from './find-mirror-score-of-a-string';
+import { problem as maxManhattanDistanceKChanges } from './maximum-manhattan-distance-after-k-changes';
+import { problem as shortestLexSmallestBeautifulString } from './shortest-and-lexicographically-smallest-beautiful-string';
+import { problem as keepMultiplyingFoundValuesByTwo } from './keep-multiplying-found-values-by-two';
+import { problem as divideArraySetsKConsecutive } from './divide-array-in-sets-of-k-consecutive-numbers';
 // batch 263
 import { problem as countSubarraysFixedBounds } from './count-subarrays-fixed-bounds';
 import { problem as minSuffixFlips } from './minimum-suffix-flips';
@@ -6400,6 +6406,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 264
+  findMirrorScoreString,
+  maxManhattanDistanceKChanges,
+  shortestLexSmallestBeautifulString,
+  keepMultiplyingFoundValuesByTwo,
+  divideArraySetsKConsecutive,
   // batch 263
   countSubarraysFixedBounds,
   minSuffixFlips,
