@@ -47404,6 +47404,54 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 272
+  'power-of-four': (...args: unknown[]) => {
+    const n = args[0] as number;
+    return n > 0 && (n & (n - 1)) === 0 && n % 3 === 1;
+  },
+
+  'element-appearing-more-than-25percent-in-sorted-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    const q = Math.max(1, Math.floor(n / 4));
+    for (let i = 0; i + q < n; i++) {
+      if (arr[i] === arr[i + q]) return arr[i]!;
+    }
+    return arr[n - 1]!;
+  },
+
+  'minimum-swaps-to-group-all-1s-together-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const k = nums.reduce((s, x) => s + x, 0);
+    if (k === 0 || k === n) return 0;
+    let zeros = 0;
+    for (let i = 0; i < k; i++) if (nums[i] === 0) zeros++;
+    let minZeros = zeros;
+    for (let i = k; i < n + k; i++) {
+      if (nums[i % n] === 0) zeros++;
+      if (nums[(i - k + n) % n] === 0) zeros--;
+      if (zeros < minZeros) minZeros = zeros;
+    }
+    return minZeros;
+  },
+
+  'collect-chocolates': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const x = args[1] as number;
+    const n = nums.length;
+    const minCost = [...nums];
+    let ans = minCost.reduce((s, v) => s + v, 0);
+    for (let j = 1; j < n; j++) {
+      for (let i = 0; i < n; i++) {
+        minCost[i] = Math.min(minCost[i]!, nums[(i - j + n) % n]!);
+      }
+      const total = j * x + minCost.reduce((s, v) => s + v, 0);
+      if (total < ans) ans = total;
+    }
+    return ans;
+  },
+
   // batch 271
   'reverse-words-in-a-string-iii': (...args: unknown[]) => {
     const s = args[0] as string;

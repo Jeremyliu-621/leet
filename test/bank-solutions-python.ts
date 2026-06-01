@@ -46429,6 +46429,45 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 272
+  'power-of-four': `def isPowerOfFour(n):
+    return n > 0 and (n & (n - 1)) == 0 and n % 3 == 1
+`,
+
+  'element-appearing-more-than-25percent-in-sorted-array': `def findSpecialInteger(arr):
+    n = len(arr)
+    q = max(1, n // 4)
+    for i in range(n - q):
+        if arr[i] == arr[i + q]:
+            return arr[i]
+    return arr[-1]
+`,
+
+  'minimum-swaps-to-group-all-1s-together-ii': `def minSwaps(nums):
+    n = len(nums)
+    k = sum(nums)
+    if k == 0 or k == n: return 0
+    zeros = nums[:k].count(0)
+    min_zeros = zeros
+    for i in range(k, n + k):
+        if nums[i % n] == 0: zeros += 1
+        if nums[(i - k) % n] == 0: zeros -= 1
+        if zeros < min_zeros: min_zeros = zeros
+    return min_zeros
+`,
+
+  'collect-chocolates': `def minCost(nums, x):
+    n = len(nums)
+    min_cost = list(nums)
+    ans = sum(min_cost)
+    for j in range(1, n):
+        for i in range(n):
+            min_cost[i] = min(min_cost[i], nums[(i - j) % n])
+        total = j * x + sum(min_cost)
+        if total < ans: ans = total
+    return ans
+`,
+
   // batch 271
   'reverse-words-in-a-string-iii': `def reverseWords(s):
     return ' '.join(w[::-1] for w in s.split(' '))

@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 272
+import { problem as powerOfFour } from './power-of-four';
+import { problem as elementMoreThan25Pct } from './element-appearing-more-than-25percent-in-sorted-array';
+import { problem as minSwapsGroup1sII } from './minimum-swaps-to-group-all-1s-together-ii';
+import { problem as collectChocolates } from './collect-chocolates';
 // batch 271
 import { problem as reverseWordsIII } from './reverse-words-in-a-string-iii';
 import { problem as goalParserInterp } from './goal-parser-interpretation';
@@ -6464,6 +6469,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 272
+  powerOfFour,
+  elementMoreThan25Pct,
+  minSwapsGroup1sII,
+  collectChocolates,
   // batch 271
   reverseWordsIII,
   goalParserInterp,
