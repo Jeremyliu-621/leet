@@ -3107,6 +3107,12 @@ import { problem as countSubMultisetsBounded } from './count-of-sub-multisets-wi
 import { problem as biggestThreeRhombusSums } from './get-biggest-three-rhombus-sums-in-a-grid';
 import { problem as maximumNumElementsTwoArrays } from './maximum-number-of-elements-in-two-arrays';
 import { problem as rangeFrequencyQueries } from './range-frequency-queries';
+// batch 255 (local)
+import { problem as rightTriangles } from './right-triangles';
+import { problem as findAllPossibleStableBinaryArraysI } from './find-all-possible-stable-binary-arrays-i';
+import { problem as findAllPossibleStableBinaryArraysII } from './find-all-possible-stable-binary-arrays-ii';
+import { problem as maximumPointsInsideSquare } from './maximum-points-inside-the-square';
+import { problem as subarraysDistinctSumSquaresII } from './subarrays-distinct-element-sum-of-squares-ii';
 // batch 254
 import { problem as globalAndLocalInversions } from './global-and-local-inversions';
 import { problem as minimizeTotalPriceTrips } from './minimize-the-total-price-of-the-trips';
@@ -6357,6 +6363,12 @@ export const problems: readonly Problem[] = [
   biggestThreeRhombusSums,
   maximumNumElementsTwoArrays,
   rangeFrequencyQueries,
+  // batch 255 (local)
+  rightTriangles,
+  findAllPossibleStableBinaryArraysI,
+  findAllPossibleStableBinaryArraysII,
+  maximumPointsInsideSquare,
+  subarraysDistinctSumSquaresII,
   // batch 254
   globalAndLocalInversions,
   minimizeTotalPriceTrips,

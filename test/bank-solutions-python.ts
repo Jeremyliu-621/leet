@@ -45171,4 +45171,94 @@ def stringIndices(wordsContainer, wordsQuery):
         result.append(cur['best'])
     return result
 `,
+
+  'right-triangles': `
+def numberOfRightTriangles(grid):
+    m, n = len(grid), len(grid[0])
+    row_sum = [sum(grid[r]) for r in range(m)]
+    col_sum = [sum(grid[r][c] for r in range(m)) for c in range(n)]
+    ans = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == 1:
+                ans += (row_sum[r] - 1) * (col_sum[c] - 1)
+    return ans
+`,
+
+  'find-all-possible-stable-binary-arrays-i': `
+def numberOfStableArrays(zero, one, limit):
+    MOD = 10**9 + 7
+    dp0 = [[0]*(one+1) for _ in range(zero+1)]
+    dp1 = [[0]*(one+1) for _ in range(zero+1)]
+    for k in range(1, min(zero, limit)+1):
+        dp0[k][0] = 1
+    for k in range(1, min(one, limit)+1):
+        dp1[0][k] = 1
+    for i in range(1, zero+1):
+        for j in range(1, one+1):
+            for k in range(1, min(i, limit)+1):
+                dp0[i][j] = (dp0[i][j] + dp1[i-k][j]) % MOD
+            for k in range(1, min(j, limit)+1):
+                dp1[i][j] = (dp1[i][j] + dp0[i][j-k]) % MOD
+    return (dp0[zero][one] + dp1[zero][one]) % MOD
+`,
+
+  'find-all-possible-stable-binary-arrays-ii': `
+def numberOfStableArrays(zero, one, limit):
+    MOD = 10**9 + 7
+    dp0 = [[0]*(one+1) for _ in range(zero+1)]
+    dp1 = [[0]*(one+1) for _ in range(zero+1)]
+    for k in range(1, min(zero, limit)+1):
+        dp0[k][0] = 1
+    for k in range(1, min(one, limit)+1):
+        dp1[0][k] = 1
+    for i in range(1, zero+1):
+        for j in range(1, one+1):
+            for k in range(1, min(i, limit)+1):
+                dp0[i][j] = (dp0[i][j] + dp1[i-k][j]) % MOD
+            for k in range(1, min(j, limit)+1):
+                dp1[i][j] = (dp1[i][j] + dp0[i][j-k]) % MOD
+    return (dp0[zero][one] + dp1[zero][one]) % MOD
+`,
+
+  'maximum-points-inside-the-square': `
+def maxPointsInsideSquare(points, s):
+    n = len(points)
+    indexed = sorted(range(n), key=lambda i: max(abs(points[i][0]), abs(points[i][1])))
+    seen = set()
+    ans = 0
+    i = 0
+    while i < n:
+        cur_r = max(abs(points[indexed[i]][0]), abs(points[indexed[i]][1]))
+        j = i
+        while j < n and max(abs(points[indexed[j]][0]), abs(points[indexed[j]][1])) == cur_r:
+            j += 1
+        group_tags = [s[indexed[k]] for k in range(i, j)]
+        group_set = set(group_tags)
+        conflict = len(group_tags) != len(group_set)
+        if not conflict:
+            for t in group_set:
+                if t in seen:
+                    conflict = True
+                    break
+        if conflict:
+            return max(0, cur_r - 1)
+        seen.update(group_set)
+        ans = cur_r
+        i = j
+    return ans
+`,
+
+  'subarrays-distinct-element-sum-of-squares-ii': `
+def sumCounts(nums):
+    MOD = 10**9 + 7
+    n = len(nums)
+    ans = 0
+    for l in range(n):
+        seen = set()
+        for r in range(l, n):
+            seen.add(nums[r])
+            ans = (ans + len(seen) * len(seen)) % MOD
+    return ans
+`,
 };
