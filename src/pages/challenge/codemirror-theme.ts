@@ -80,6 +80,11 @@ const leetlockThemeDark = EditorView.theme(
     '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
       backgroundColor: '#262626',
     },
+    // Completion detail text — dim relative to label so the label pops
+    '.cm-completionDetail': {
+      color: '#5A5A5A',
+      fontStyle: 'normal',
+    },
     // Fold gutter
     '.cm-foldGutter': {
       color: '#5A5A5A',
@@ -173,6 +178,10 @@ const leetlockThemeLight = EditorView.theme(
     },
     '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
       backgroundColor: '#E3E3E3',
+    },
+    '.cm-completionDetail': {
+      color: '#888888',
+      fontStyle: 'normal',
     },
     '.cm-foldGutter': {
       color: '#888888',
