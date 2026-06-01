@@ -42051,4 +42051,71 @@ def reformatNumber(number):
         blocks.append(remaining)
     return '-'.join(blocks)
 `,
+  'longest-uncommon-subsequence-ii': `
+def findLUSlength(strs):
+    def is_subseq(s, t):
+        i = 0
+        for c in t:
+            if i < len(s) and c == s[i]:
+                i += 1
+        return i == len(s)
+    ans = -1
+    for i, s in enumerate(strs):
+        if not any(is_subseq(s, t) for j, t in enumerate(strs) if j != i):
+            ans = max(ans, len(s))
+    return ans
+`,
+  'maximum-strong-pairs-in-an-array-i': `
+def maximumStrongPairCount(nums):
+    nums = sorted(nums)
+    count = 0
+    i = 0
+    while i < len(nums) - 1:
+        if nums[i + 1] <= 2 * nums[i]:
+            count += 1
+            i += 2
+        else:
+            i += 1
+    return count
+`,
+  'find-the-maximum-number-of-elements-in-subset': `
+def findMaximumElement(nums):
+    freq = {}
+    for x in nums:
+        freq[x] = freq.get(x, 0) + 1
+    ans = 1
+    for x in list(freq.keys()):
+        if x == 1:
+            f = freq[1]
+            ans = max(ans, f if f % 2 == 1 else f - 1)
+            continue
+        chain = []
+        v = x
+        while freq.get(v, 0) >= 2:
+            chain.append(v)
+            v = v * v
+            if v > 10**15:
+                break
+        L = len(chain)
+        if L == 0:
+            continue
+        mid = freq.get(v, 0)
+        if mid >= 1:
+            ans = max(ans, 2 * L + 1)
+        else:
+            ans = max(ans, max(1, 2 * L - 1))
+    return ans
+`,
+  'missing-integer': `
+def missingInteger(nums):
+    prefix_sums = set()
+    s = 0
+    for x in nums:
+        s += x
+        prefix_sums.add(s)
+    x = 1
+    while x in prefix_sums:
+        x += 1
+    return x
+`,
 };

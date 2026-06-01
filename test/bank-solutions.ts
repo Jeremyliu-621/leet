@@ -42879,4 +42879,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return blocks.join('-');
   },
+  'longest-uncommon-subsequence-ii': (...args: unknown[]) => {
+    const strs = args[0] as string[];
+    const isSubseq = (s: string, t: string): boolean => {
+      let i = 0;
+      for (const c of t) { if (i < s.length && c === s[i]) i++; }
+      return i === s.length;
+    };
+    let ans = -1;
+    for (let i = 0; i < strs.length; i++) {
+      const valid = !strs.some((t, j) => j !== i && isSubseq(strs[i]!, t));
+      if (valid) ans = Math.max(ans, strs[i]!.length);
+    }
+    return ans;
+  },
+  'maximum-strong-pairs-in-an-array-i': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice().sort((a, b) => a - b);
+    let count = 0;
+    let i = 0;
+    while (i < nums.length - 1) {
+      if (nums[i + 1]! <= 2 * nums[i]!) {
+        count++;
+        i += 2;
+      } else {
+        i++;
+      }
+    }
+    return count;
+  },
+  'find-the-maximum-number-of-elements-in-subset': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const freq: Record<number, number> = {};
+    for (const x of nums) freq[x] = (freq[x] ?? 0) + 1;
+    let ans = 1;
+    for (const key of Object.keys(freq)) {
+      const x = Number(key);
+      if (x === 1) {
+        const f = freq[1]!;
+        ans = Math.max(ans, f % 2 === 1 ? f : f - 1);
+        continue;
+      }
+      const chain: number[] = [];
+      let v = x;
+      while ((freq[v] ?? 0) >= 2) {
+        chain.push(v);
+        v = v * v;
+        if (v > 1e15) break;
+      }
+      const L = chain.length;
+      if (L === 0) { ans = Math.max(ans, 1); }
+      else if ((freq[v] ?? 0) >= 1) { ans = Math.max(ans, 2 * L + 1); }
+      else { ans = Math.max(ans, Math.max(1, 2 * L - 1)); }
+    }
+    return ans;
+  },
+  'missing-integer': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const prefixSums = new Set<number>();
+    let sum = 0;
+    for (const x of nums) { sum += x; prefixSums.add(sum); }
+    let x = 1;
+    while (prefixSums.has(x)) x++;
+    return x;
+  },
 };

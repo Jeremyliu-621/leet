@@ -3018,6 +3018,11 @@ import { problem as appleRedistributionIntoBoxes } from './apple-redistribution-
 import { problem as maximumValueStringArray } from './maximum-value-of-a-string-in-array';
 import { problem as checkIfStringIsPrefixOfArray } from './check-if-string-is-prefix-of-array';
 import { problem as reformatPhoneNumber } from './reformat-phone-number';
+// batch 237
+import { problem as longestUncommonSubsequenceII } from './longest-uncommon-subsequence-ii';
+import { problem as maximumStrongPairsI } from './maximum-strong-pairs-in-an-array-i';
+import { problem as findMaxElementsInSubset } from './find-the-maximum-number-of-elements-in-subset';
+import { problem as missingInteger } from './missing-integer';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6071,4 +6076,9 @@ export const problems: readonly Problem[] = [
   maximumValueStringArray,
   checkIfStringIsPrefixOfArray,
   reformatPhoneNumber,
+  // batch 237
+  longestUncommonSubsequenceII,
+  maximumStrongPairsI,
+  findMaxElementsInSubset,
+  missingInteger,
 ];

@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2634** problems; 8196 tests green. Batches 102–236 complete.
+**Current focus:** Bank at **2638** problems; 8208 tests green. Batches 102–237 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 237+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 238+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 237 — longest-uncommon-subsequence-ii, maximum-strong-pairs-i, find-max-elements-in-subset, missing-integer (2026-06-01)
+Four new problems: `longest-uncommon-subsequence-ii` (medium/arrays+strings+two-pointers, LC 522 — for each string check if it's NOT a subsequence of any other; return max length or -1), `maximum-strong-pairs-in-an-array-i` (easy/arrays+hash-map+sliding-window, LC 2899 — sort + greedy adjacent pairing: pair if nums[i+1]≤2*nums[i]), `find-the-maximum-number-of-elements-in-subset` (medium/arrays+hash-map, LC 3020 — build chain x,x²,x⁴,... with freq≥2; double chain length + optional middle), `missing-integer` (easy/arrays+hash-map, LC 2996 — compute prefix sums set, return smallest positive int not in set). Bank at **2638**; 8208 tests.
 
 ### feat(bank): batch 236 — row-with-maximum-ones, distinct-prime-factors-product-array, distribute-candies-children-ii (2026-06-01)
 Three new problems: `row-with-maximum-ones` (easy/arrays+math, LC 2643 — count 1s per row, return [bestIdx, count]), `distinct-prime-factors-of-product-of-array` (easy/arrays+math+hash-map, LC 2521 — factorize each element, union all prime factors, return set size), `distribute-candies-among-children-ii` (medium/math, LC 2927 — inclusion-exclusion: f(n) - 3f(n-limit-1) + 3f(n-2(limit+1)) - f(n-3(limit+1)) where f(x)=C(x+2,2)). Bank at **2634**; 8196 tests.
