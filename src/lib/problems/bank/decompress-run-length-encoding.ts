@@ -34,10 +34,24 @@ Return the decompressed list.`,
   functionName: 'decompressRLElist',
   params: ['nums'],
   starterCode: {
-    javascript: 'function decompressRLElist(nums) {\n  // your code here\n}\n',
-    typescript: "function decompressRLElist(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def decompressRLElist(nums):\n    # your code here\n    pass\n',
+    javascript: `function decompressRLElist(nums) {
+  const res = [];
+  for (let i = 0; i < nums.length; i += 2)
+    for (let j = 0; j < nums[i]; j++) res.push(nums[i + 1]);
+  return res;
+}`,
+    typescript: `function decompressRLElist(nums: number[]): number[] {
+  const res: number[] = [];
+  for (let i = 0; i < nums.length; i += 2)
+    for (let j = 0; j < nums[i]!; j++) res.push(nums[i + 1]!);
+  return res;
+}`,
+    python: `def decompressRLElist(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    res = []
+    for i in range(0, len(nums), 2):
+        res.extend([nums[i + 1]] * nums[i])
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [2, 4, 4, 4] },

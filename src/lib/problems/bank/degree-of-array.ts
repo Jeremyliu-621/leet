@@ -34,12 +34,45 @@ Your task is to find the smallest possible length of a (contiguous) subarray of 
   functionName: 'findShortestSubArray',
   params: ['nums'],
   starterCode: {
-    javascript:
-      'function findShortestSubArray(nums) {\n  // your code here\n}\n',
-    typescript: "function findShortestSubArray(nums: number[]): number {\n  // your code here\n}",
-
-    python:
-      'def findShortestSubArray(nums):\n    # your code here\n    pass\n',
+    javascript: `function findShortestSubArray(nums) {
+  const freq = {}, first = {}, last = {};
+  for (let i = 0; i < nums.length; i++) {
+    const v = nums[i];
+    freq[v] = (freq[v] || 0) + 1;
+    if (first[v] === undefined) first[v] = i;
+    last[v] = i;
+  }
+  const deg = Math.max(...Object.values(freq));
+  let ans = nums.length;
+  for (const v in freq)
+    if (freq[v] === deg) ans = Math.min(ans, last[v] - first[v] + 1);
+  return ans;
+}`,
+    typescript: `function findShortestSubArray(nums: number[]): number {
+  const freq: Record<number, number> = {};
+  const first: Record<number, number> = {};
+  const last: Record<number, number> = {};
+  for (let i = 0; i < nums.length; i++) {
+    const v = nums[i]!;
+    freq[v] = (freq[v] ?? 0) + 1;
+    if (first[v] === undefined) first[v] = i;
+    last[v] = i;
+  }
+  const deg = Math.max(...Object.values(freq));
+  let ans = nums.length;
+  for (const v in freq)
+    if (freq[+v] === deg) ans = Math.min(ans, last[+v]! - first[+v]! + 1);
+  return ans;
+}`,
+    python: `def findShortestSubArray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    freq, first, last = {}, {}, {}
+    for i, v in enumerate(nums):
+        freq[v] = freq.get(v, 0) + 1
+        if v not in first: first[v] = i
+        last[v] = i
+    deg = max(freq.values())
+    return min(last[v] - first[v] + 1 for v in freq if freq[v] == deg)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 1]], expected: 2 },

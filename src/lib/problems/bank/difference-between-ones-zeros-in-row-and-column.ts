@@ -43,9 +43,24 @@ Return the difference matrix \`diff\`.`,
   functionName: 'onesMinusZeros',
   params: ['grid'],
   starterCode: {
-    javascript: 'function onesMinusZeros(grid) {\n  // your code here\n}\n',
-    typescript: 'function onesMinusZeros(grid: number[][]): number[][] {\n  // your code here\n  return [];\n}',
-    python: 'def onesMinusZeros(grid):\n    # your code here\n    pass\n',
+    javascript: `function onesMinusZeros(grid) {
+  const m = grid.length, n = grid[0].length;
+  const or = grid.map(r => r.reduce((a, v) => a + v, 0));
+  const oc = Array.from({ length: n }, (_, j) => grid.reduce((a, r) => a + r[j], 0));
+  return grid.map((r, i) => r.map((_, j) => 2 * or[i] + 2 * oc[j] - m - n));
+}`,
+    typescript: `function onesMinusZeros(grid: number[][]): number[][] {
+  const m = grid.length, n = grid[0]!.length;
+  const or = grid.map(r => r.reduce((a, v) => a + v, 0));
+  const oc = Array.from({ length: n }, (_, j) => grid.reduce((a, r) => a + r[j]!, 0));
+  return grid.map((r, i) => r.map((_, j) => 2 * or[i]! + 2 * oc[j]! - m - n));
+}`,
+    python: `def onesMinusZeros(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    or_ = [sum(row) for row in grid]
+    oc = [sum(grid[r][c] for r in range(m)) for c in range(n)]
+    return [[2 * or_[i] + 2 * oc[j] - m - n for j in range(n)] for i in range(m)]`,
   },
   visibleTests: [
     {

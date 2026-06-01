@@ -31,9 +31,33 @@ Return the **minimum possible sum** of a k-avoiding array of length \`n\`.`,
   functionName: 'minimumSum',
   params: ['n', 'k'],
   starterCode: {
-    javascript: 'function minimumSum(n, k) {\n  // your code here\n}\n',
-    typescript: 'function minimumSum(n: number, k: number): number {\n  // your code here\n}\n',
-    python: 'def minimumSum(n, k):\n    # your code here\n    pass\n',
+    javascript: `function minimumSum(n, k) {
+  const chosen = new Set();
+  let sum = 0, i = 1;
+  while (chosen.size < n) {
+    if (!chosen.has(k - i)) { chosen.add(i); sum += i; }
+    i++;
+  }
+  return sum;
+}`,
+    typescript: `function minimumSum(n: number, k: number): number {
+  const chosen = new Set<number>();
+  let sum = 0, i = 1;
+  while (chosen.size < n) {
+    if (!chosen.has(k - i)) { chosen.add(i); sum += i; }
+    i++;
+  }
+  return sum;
+}`,
+    python: `def minimumSum(n, k):
+    chosen = set()
+    total, i = 0, 1
+    while len(chosen) < n:
+        if (k - i) not in chosen:
+            chosen.add(i)
+            total += i
+        i += 1
+    return total`,
   },
   visibleTests: [
     {

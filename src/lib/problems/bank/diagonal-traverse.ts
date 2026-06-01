@@ -35,10 +35,36 @@ The traversal goes diagonally — first upward-right, then downward-left, altern
   functionName: 'findDiagonalOrder',
   params: ['mat'],
   starterCode: {
-    javascript: 'function findDiagonalOrder(mat) {\n  // your code here\n}\n',
-    typescript: "function findDiagonalOrder(mat: number[][]): number[] {\n  // your code here\n}",
-
-    python: 'def findDiagonalOrder(mat):\n    # your code here\n    pass\n',
+    javascript: `function findDiagonalOrder(mat) {
+  const m = mat.length, n = mat[0].length, res = [];
+  for (let d = 0; d < m + n - 1; d++) {
+    const tmp = [];
+    for (let r = Math.max(0, d - n + 1); r <= Math.min(d, m - 1); r++)
+      tmp.push(mat[r][d - r]);
+    if (d % 2 === 0) tmp.reverse();
+    res.push(...tmp);
+  }
+  return res;
+}`,
+    typescript: `function findDiagonalOrder(mat: number[][]): number[] {
+  const m = mat.length, n = mat[0]!.length, res: number[] = [];
+  for (let d = 0; d < m + n - 1; d++) {
+    const tmp: number[] = [];
+    for (let r = Math.max(0, d - n + 1); r <= Math.min(d, m - 1); r++)
+      tmp.push(mat[r]![d - r]!);
+    if (d % 2 === 0) tmp.reverse();
+    res.push(...tmp);
+  }
+  return res;
+}`,
+    python: `def findDiagonalOrder(mat):
+    mat = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    m, n, res = len(mat), len(mat[0]), []
+    for d in range(m + n - 1):
+        tmp = [mat[r][d - r] for r in range(max(0, d - n + 1), min(d, m - 1) + 1)]
+        if d % 2 == 0: tmp.reverse()
+        res.extend(tmp)
+    return res`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]], expected: [1, 2, 4, 7, 5, 3, 6, 8, 9] },

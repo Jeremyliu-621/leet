@@ -40,10 +40,37 @@ Return an array \`answer\` where \`answer[i]\` is the number of days after day \
   functionName: 'daysUntilWarmer',
   params: ['temps'],
   starterCode: {
-    javascript: 'function daysUntilWarmer(temps) {\n  // your code here\n}\n',
-    typescript: "function daysUntilWarmer(temps: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def daysUntilWarmer(temps):\n    # your code here\n    pass\n',
+    javascript: `function daysUntilWarmer(temps) {
+  const stack = [], answer = new Array(temps.length).fill(0);
+  for (let i = 0; i < temps.length; i++) {
+    while (stack.length && temps[i] > temps[stack[stack.length - 1]]) {
+      const j = stack.pop();
+      answer[j] = i - j;
+    }
+    stack.push(i);
+  }
+  return answer;
+}`,
+    typescript: `function daysUntilWarmer(temps: number[]): number[] {
+  const stack: number[] = [], answer: number[] = new Array(temps.length).fill(0);
+  for (let i = 0; i < temps.length; i++) {
+    while (stack.length && temps[i]! > temps[stack[stack.length - 1]!]!) {
+      const j = stack.pop()!;
+      answer[j] = i - j;
+    }
+    stack.push(i);
+  }
+  return answer;
+}`,
+    python: `def daysUntilWarmer(temps):
+    temps = list(temps.to_py()) if hasattr(temps, 'to_py') else list(temps)
+    stack, answer = [], [0] * len(temps)
+    for i, t in enumerate(temps):
+        while stack and t > temps[stack[-1]]:
+            j = stack.pop()
+            answer[j] = i - j
+        stack.append(i)
+    return answer`,
   },
   visibleTests: [
     { args: [[73, 74, 75, 71, 69, 72, 76, 73]], expected: [1, 1, 4, 2, 1, 1, 0, 0] },

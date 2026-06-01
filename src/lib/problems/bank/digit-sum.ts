@@ -35,10 +35,18 @@ export const problem: Problem = {
   functionName: 'digitSum',
   params: ['n'],
   starterCode: {
-    javascript: 'function digitSum(n) {\n  // your code here\n}\n',
-    typescript: "function digitSum(n: number): number {\n  // your code here\n}",
-
-    python: 'def digitSum(n):\n    # your code here\n    pass\n',
+    javascript: `function digitSum(n) {
+  let sum = 0;
+  while (n > 0) { sum += n % 10; n = Math.floor(n / 10); }
+  return sum;
+}`,
+    typescript: `function digitSum(n: number): number {
+  let sum = 0;
+  while (n > 0) { sum += n % 10; n = Math.floor(n / 10); }
+  return sum;
+}`,
+    python: `def digitSum(n):
+    return sum(int(c) for c in str(n)) if n > 0 else 0`,
   },
   visibleTests: [
     { args: [472], expected: 13 },
