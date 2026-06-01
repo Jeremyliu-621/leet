@@ -43355,4 +43355,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     // If minIdx > maxIdx, moving min leftward shifts max one step right (saves 1 swap)
     return minIdx + (n - 1 - maxIdx) - (minIdx > maxIdx ? 1 : 0);
   },
+  // batch 240
+  'check-if-strings-can-be-made-equal-with-operations-ii': (...args: unknown[]) => {
+    const [s1, s2] = args as [string, string];
+    const even1: string[] = [], even2: string[] = [], odd1: string[] = [], odd2: string[] = [];
+    for (let i = 0; i < s1.length; i++) {
+      if (i % 2 === 0) { even1.push(s1[i]!); even2.push(s2[i]!); }
+      else { odd1.push(s1[i]!); odd2.push(s2[i]!); }
+    }
+    const sort = (a: string[]) => a.slice().sort().join('');
+    return sort(even1) === sort(even2) && sort(odd1) === sort(odd2);
+  },
+  'find-the-count-of-good-integers': (...args: unknown[]) => {
+    const [n, k] = args as [number, number];
+    const seen = new Set<string>();
+    let ans = 0;
+    const half = Math.ceil(n / 2);
+    const fact: number[] = [1];
+    for (let i = 1; i <= n; i++) fact.push(fact[fact.length - 1]! * i);
+    const lo = 10 ** (half - 1);
+    const hi = 10 ** half;
+    for (let fh = lo; fh < hi; fh++) {
+      const s = String(fh);
+      const rev = (n % 2 === 0 ? s : s.slice(0, -1)).split('').reverse().join('');
+      const pStr = s + rev;
+      if (parseInt(pStr) % k !== 0) continue;
+      const sig = pStr.split('').sort().join('');
+      if (seen.has(sig)) continue;
+      seen.add(sig);
+      const freq = new Array<number>(10).fill(0);
+      for (const c of pStr) freq[parseInt(c)]!++;
+      let total = fact[n]!;
+      for (let d = 0; d < 10; d++) total = Math.floor(total / fact[freq[d]!]!);
+      if (freq[0]! > 0) {
+        freq[0]!--;
+        let lz = fact[n - 1]!;
+        for (let d = 0; d < 10; d++) lz = Math.floor(lz / fact[freq[d]!]!);
+        freq[0]!++;
+        total -= lz;
+      }
+      ans += total;
+    }
+    return ans;
+  },
+  'minimum-cost-of-a-path-with-special-roads': (...args: unknown[]) => {
+    const [start, target, specialRoads] = args as [number[], number[], number[][]];
+    const manhattan = (x1: number, y1: number, x2: number, y2: number) =>
+      Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    const points: number[][] = [start, target];
+    for (const r of specialRoads) {
+      points.push([r[0]!, r[1]!]);
+      points.push([r[2]!, r[3]!]);
+    }
+    const np = points.length;
+    const dist = new Array<number>(np).fill(Infinity);
+    dist[0] = 0;
+    const pq: [number, number][] = [[0, 0]];
+    while (pq.length) {
+      pq.sort((a, b) => a[0]! - b[0]!);
+      const [d, u] = pq.shift()!;
+      if (d! > dist[u!]!) continue;
+      for (let v = 0; v < np; v++) {
+        const nd = d! + manhattan(points[u!]![0]!, points[u!]![1]!, points[v]![0]!, points[v]![1]!);
+        if (nd < dist[v]!) { dist[v] = nd; pq.push([nd, v]); }
+      }
+      for (const r of specialRoads) {
+        if (points[u!]![0] === r[0] && points[u!]![1] === r[1]) {
+          const vi = points.findIndex(p => p[0] === r[2] && p[1] === r[3]);
+          if (vi >= 0) {
+            const nd = d! + r[4]!;
+            if (nd < dist[vi]!) { dist[vi] = nd; pq.push([nd, vi]); }
+          }
+        }
+      }
+    }
+    return dist[1]!;
+  },
+  'find-the-sum-of-subsequence-powers': (...args: unknown[]) => {
+    const [numsRaw, k] = args as [number[], number];
+    const MOD = 1_000_000_007n;
+    const nums = [...numsRaw].sort((a, b) => a - b);
+    const n = nums.length;
+    let dp: Map<number, bigint>[] = nums.map(() => new Map([[Infinity, 1n]]));
+    for (let j = 2; j <= k; j++) {
+      const ndp: Map<number, bigint>[] = nums.map(() => new Map());
+      for (let i = 0; i < n; i++) {
+        for (let prev = 0; prev < i; prev++) {
+          const diff = nums[i]! - nums[prev]!;
+          for (const [minD, cnt] of dp[prev]!) {
+            const newD = Math.min(minD, diff);
+            ndp[i]!.set(newD, ((ndp[i]!.get(newD) ?? 0n) + cnt) % MOD);
+          }
+        }
+      }
+      dp = ndp;
+    }
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      for (const [d, cnt] of dp[i]!) {
+        if (d === Infinity) continue;
+        ans = (ans + BigInt(d) * cnt) % MOD;
+      }
+    }
+    return Number(ans);
+  },
 };

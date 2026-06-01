@@ -3033,6 +3033,11 @@ import { problem as findLongestValidSubseqI } from './find-the-longest-valid-sub
 import { problem as findLongestValidSubseqII } from './find-the-longest-valid-subsequence-ii';
 import { problem as countIncremovableSubarraysII } from './count-the-number-of-incremovable-subarrays-ii';
 import { problem as minAdjacentSwapsValidArray } from './minimum-adjacent-swaps-to-make-a-valid-array';
+// batch 240
+import { problem as canBeEqualWithOpsII } from './check-if-strings-can-be-made-equal-with-operations-ii';
+import { problem as countGoodIntegers } from './find-the-count-of-good-integers';
+import { problem as minimumCostSpecialRoads } from './minimum-cost-of-a-path-with-special-roads';
+import { problem as sumOfSubsequencePowers } from './find-the-sum-of-subsequence-powers';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6123,4 +6128,9 @@ export const problems: readonly Problem[] = [
   findLongestValidSubseqII,
   countIncremovableSubarraysII,
   minAdjacentSwapsValidArray,
+  // batch 240
+  canBeEqualWithOpsII,
+  countGoodIntegers,
+  minimumCostSpecialRoads,
+  sumOfSubsequencePowers,
 ];

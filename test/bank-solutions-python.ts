@@ -42541,4 +42541,101 @@ def minimumSwaps(nums):
         swaps -= 1
     return swaps
 `,
+  // batch 240
+  'check-if-strings-can-be-made-equal-with-operations-ii': `
+def canBeEqualWithOpsII(s1, s2):
+    even1 = sorted(s1[i] for i in range(0, len(s1), 2))
+    even2 = sorted(s2[i] for i in range(0, len(s2), 2))
+    odd1  = sorted(s1[i] for i in range(1, len(s1), 2))
+    odd2  = sorted(s2[i] for i in range(1, len(s2), 2))
+    return even1 == even2 and odd1 == odd2
+`,
+  'find-the-count-of-good-integers': `
+def countGoodIntegers(n, k):
+    from math import factorial, ceil
+    from collections import Counter
+    seen = set()
+    ans = 0
+    half = ceil(n / 2)
+    lo = 10 ** (half - 1)
+    hi = 10 ** half
+    for fh in range(lo, hi):
+        s = str(fh)
+        rev = s[:-1][::-1] if n % 2 == 1 else s[::-1]
+        p_str = s + rev
+        if int(p_str) % k != 0:
+            continue
+        sig = ''.join(sorted(p_str))
+        if sig in seen:
+            continue
+        seen.add(sig)
+        freq = Counter(p_str)
+        total = factorial(n)
+        for f in freq.values():
+            total //= factorial(f)
+        if freq['0'] > 0:
+            freq['0'] -= 1
+            lz = factorial(n - 1)
+            for f in freq.values():
+                lz //= factorial(f)
+            freq['0'] += 1
+            total -= lz
+        ans += total
+    return ans
+`,
+  'minimum-cost-of-a-path-with-special-roads': `
+def minimumCostSpecialRoads(start, target, specialRoads):
+    import heapq
+    points = [tuple(start), tuple(target)]
+    for r in specialRoads:
+        points.append((r[0], r[1]))
+        points.append((r[2], r[3]))
+    n = len(points)
+    dist = [float('inf')] * n
+    dist[0] = 0
+    pq = [(0, 0)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]:
+            continue
+        ux, uy = points[u]
+        for v in range(n):
+            vx, vy = points[v]
+            nd = d + abs(ux - vx) + abs(uy - vy)
+            if nd < dist[v]:
+                dist[v] = nd
+                heapq.heappush(pq, (nd, v))
+        for r in specialRoads:
+            if ux == r[0] and uy == r[1]:
+                vi = next((i for i, p in enumerate(points) if p == (r[2], r[3])), -1)
+                if vi >= 0:
+                    nd = d + r[4]
+                    if nd < dist[vi]:
+                        dist[vi] = nd
+                        heapq.heappush(pq, (nd, vi))
+    return dist[1]
+`,
+  'find-the-sum-of-subsequence-powers': `
+def sumOfPowers(nums, k):
+    MOD = 10**9 + 7
+    nums = sorted(nums)
+    n = len(nums)
+    # dp[i] = dict{min_diff: count}
+    dp = [{float('inf'): 1} for _ in range(n)]
+    for j in range(2, k + 1):
+        ndp = [{} for _ in range(n)]
+        for i in range(n):
+            for prev in range(i):
+                diff = nums[i] - nums[prev]
+                for min_d, cnt in dp[prev].items():
+                    new_d = min(min_d, diff)
+                    ndp[i][new_d] = (ndp[i].get(new_d, 0) + cnt) % MOD
+        dp = ndp
+    ans = 0
+    for i in range(n):
+        for d, cnt in dp[i].items():
+            if d != float('inf'):
+                ans = (ans + d * cnt) % MOD
+    return ans
+`,
 };
