@@ -45,12 +45,45 @@ Return the **maximum possible sum** of heights.
   params: ['maxHeights'],
   starterCode: {
     javascript: `function maximumSumOfHeights(maxHeights) {
-
+  const n = maxHeights.length;
+  let best = 0;
+  for (let p = 0; p < n; p++) {
+    let sum = maxHeights[p], h = maxHeights[p];
+    for (let i = p - 1; i >= 0; i--) { h = Math.min(h, maxHeights[i]); sum += h; }
+    h = maxHeights[p];
+    for (let i = p + 1; i < n; i++) { h = Math.min(h, maxHeights[i]); sum += h; }
+    if (sum > best) best = sum;
+  }
+  return best;
 }`,
-    typescript: "function maximumSumOfHeights(maxHeights: number[]): number {\n\n}",
-
+    typescript: `function maximumSumOfHeights(maxHeights: number[]): number {
+  const n = maxHeights.length;
+  let best = 0;
+  for (let p = 0; p < n; p++) {
+    let sum = maxHeights[p]!, h = maxHeights[p]!;
+    for (let i = p - 1; i >= 0; i--) { h = Math.min(h, maxHeights[i]!); sum += h; }
+    h = maxHeights[p]!;
+    for (let i = p + 1; i < n; i++) { h = Math.min(h, maxHeights[i]!); sum += h; }
+    if (sum > best) best = sum;
+  }
+  return best;
+}`,
     python: `def maximumSumOfHeights(maxHeights):
-    pass
+    maxHeights = list(maxHeights.to_py()) if hasattr(maxHeights, 'to_py') else list(maxHeights)
+    n = len(maxHeights)
+    best = 0
+    for p in range(n):
+        total = maxHeights[p]
+        h = maxHeights[p]
+        for i in range(p - 1, -1, -1):
+            h = min(h, maxHeights[i])
+            total += h
+        h = maxHeights[p]
+        for i in range(p + 1, n):
+            h = min(h, maxHeights[i])
+            total += h
+        best = max(best, total)
+    return best
 `,
   },
   visibleTests: [

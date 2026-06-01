@@ -32,12 +32,36 @@ export const problem: Problem = {
   params: ['nums', 'goal'],
   starterCode: {
     javascript: `function numSubarraysWithSum(nums, goal) {
-
+  const cnt = new Map([[0, 1]]);
+  let sum = 0, result = 0;
+  for (const n of nums) {
+    sum += n;
+    result += cnt.get(sum - goal) ?? 0;
+    cnt.set(sum, (cnt.get(sum) ?? 0) + 1);
+  }
+  return result;
 }`,
-    typescript: "function numSubarraysWithSum(nums: number[], goal: number): number {\n\n}",
-
+    typescript: `function numSubarraysWithSum(nums: number[], goal: number): number {
+  const cnt = new Map<number, number>([[0, 1]]);
+  let sum = 0, result = 0;
+  for (const n of nums) {
+    sum += n;
+    result += cnt.get(sum - goal) ?? 0;
+    cnt.set(sum, (cnt.get(sum) ?? 0) + 1);
+  }
+  return result;
+}`,
     python: `def numSubarraysWithSum(nums, goal):
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import defaultdict
+    cnt = defaultdict(int)
+    cnt[0] = 1
+    s, result = 0, 0
+    for n in nums:
+        s += n
+        result += cnt[s - goal]
+        cnt[s] += 1
+    return result`,
   },
   visibleTests: [
     { args: [[1, 0, 1, 0, 1], 2], expected: 4 },

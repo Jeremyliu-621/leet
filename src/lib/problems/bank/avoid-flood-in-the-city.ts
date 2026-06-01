@@ -48,11 +48,82 @@ If it is impossible to avoid flooding, return an **empty array**.
   params: ['rains'],
   starterCode: {
     javascript: `function avoidFlood(rains) {
-
+  const n = rains.length;
+  const result = new Array(n).fill(1);
+  const fullLake = new Map();
+  const dryDays = [];
+  for (let i = 0; i < n; i++) if (rains[i] === 0) dryDays.push(i);
+  const usedDry = new Uint8Array(dryDays.length);
+  for (let i = 0; i < n; i++) {
+    if (rains[i] === 0) continue;
+    result[i] = -1;
+    const lake = rains[i];
+    if (fullLake.has(lake)) {
+      const lastFill = fullLake.get(lake);
+      let lo = 0, hi = dryDays.length, found = dryDays.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (dryDays[mid] > lastFill) { found = mid; hi = mid; } else lo = mid + 1;
+      }
+      while (found < dryDays.length && usedDry[found]) found++;
+      if (found >= dryDays.length) return [];
+      result[dryDays[found]] = lake;
+      usedDry[found] = 1;
+    }
+    fullLake.set(lake, i);
+  }
+  return result;
 }`,
-    typescript: 'function avoidFlood(rains: number[]): number[] {\n\n}',
+    typescript: `function avoidFlood(rains: number[]): number[] {
+  const n = rains.length;
+  const result = new Array<number>(n).fill(1);
+  const fullLake = new Map<number, number>();
+  const dryDays: number[] = [];
+  for (let i = 0; i < n; i++) if (rains[i] === 0) dryDays.push(i);
+  const usedDry = new Uint8Array(dryDays.length);
+  for (let i = 0; i < n; i++) {
+    if (rains[i] === 0) continue;
+    result[i] = -1;
+    const lake = rains[i]!;
+    if (fullLake.has(lake)) {
+      const lastFill = fullLake.get(lake)!;
+      let lo = 0, hi = dryDays.length, found = dryDays.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (dryDays[mid]! > lastFill) { found = mid; hi = mid; } else lo = mid + 1;
+      }
+      while (found < dryDays.length && usedDry[found]) found++;
+      if (found >= dryDays.length) return [];
+      result[dryDays[found]!] = lake;
+      usedDry[found] = 1;
+    }
+    fullLake.set(lake, i);
+  }
+  return result;
+}`,
     python: `def avoidFlood(rains):
-    pass`,
+    rains = list(rains.to_py()) if hasattr(rains, 'to_py') else list(rains)
+    import bisect
+    n = len(rains)
+    result = [1] * n
+    full_lake = {}
+    dry_days = [i for i, r in enumerate(rains) if r == 0]
+    used = [False] * len(dry_days)
+    for i, lake in enumerate(rains):
+        if lake == 0:
+            continue
+        result[i] = -1
+        if lake in full_lake:
+            last_fill = full_lake[lake]
+            pos = bisect.bisect_right(dry_days, last_fill)
+            while pos < len(dry_days) and used[pos]:
+                pos += 1
+            if pos >= len(dry_days):
+                return []
+            result[dry_days[pos]] = lake
+            used[pos] = True
+        full_lake[lake] = i
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [-1, -1, -1, -1] },

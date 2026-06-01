@@ -36,12 +36,43 @@ Given an integer \`n\`, return **any beautiful array** of length \`n\` that is a
   params: ['n'],
   starterCode: {
     javascript: `function beautifulArray(n) {
-
+  const memo = new Map();
+  function solve(k) {
+    if (k === 1) return [1];
+    if (memo.has(k)) return memo.get(k);
+    const odds = solve(Math.ceil(k / 2)).map(x => 2 * x - 1);
+    const evens = solve(Math.floor(k / 2)).map(x => 2 * x);
+    const res = [...odds, ...evens];
+    memo.set(k, res);
+    return res;
+  }
+  return solve(n);
 }`,
-    typescript: "function beautifulArray(n: number): number[] {\n\n}",
-
+    typescript: `function beautifulArray(n: number): number[] {
+  const memo = new Map<number, number[]>();
+  function solve(k: number): number[] {
+    if (k === 1) return [1];
+    if (memo.has(k)) return memo.get(k)!;
+    const odds = solve(Math.ceil(k / 2)).map(x => 2 * x - 1);
+    const evens = solve(Math.floor(k / 2)).map(x => 2 * x);
+    const res = [...odds, ...evens];
+    memo.set(k, res);
+    return res;
+  }
+  return solve(n);
+}`,
     python: `def beautifulArray(n: int) -> list[int]:
-    pass`,
+    import math
+    memo = {}
+    def solve(k):
+        if k == 1: return [1]
+        if k in memo: return memo[k]
+        odds = [2*x - 1 for x in solve(math.ceil(k / 2))]
+        evens = [2*x for x in solve(k // 2)]
+        res = odds + evens
+        memo[k] = res
+        return res
+    return solve(n)`,
   },
   visibleTests: [
     { args: [1], expected: [1] },
