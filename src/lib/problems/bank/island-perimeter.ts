@@ -44,10 +44,42 @@ Return the **perimeter** of the island.`,
   functionName: 'islandPerimeter',
   params: ['grid'],
   starterCode: {
-    javascript: 'function islandPerimeter(grid) {\n  // your code here\n}\n',
-    typescript: "function islandPerimeter(grid: number[][]): number {\n  // your code here\n}",
-
-    python: 'def islandPerimeter(grid):\n    # your code here\n    pass\n',
+    javascript: `function islandPerimeter(grid) {
+  let p = 0;
+  for (let r = 0; r < grid.length; r++) {
+    for (let c = 0; c < grid[0].length; c++) {
+      if (grid[r][c] === 1) {
+        p += 4;
+        if (r > 0 && grid[r - 1][c] === 1) p -= 2;
+        if (c > 0 && grid[r][c - 1] === 1) p -= 2;
+      }
+    }
+  }
+  return p;
+}`,
+    typescript: `function islandPerimeter(grid: number[][]): number {
+  let p = 0;
+  for (let r = 0; r < grid.length; r++) {
+    for (let c = 0; c < grid[0]!.length; c++) {
+      if (grid[r]![c] === 1) {
+        p += 4;
+        if (r > 0 && grid[r - 1]![c] === 1) p -= 2;
+        if (c > 0 && grid[r]![c - 1] === 1) p -= 2;
+      }
+    }
+  }
+  return p;
+}`,
+    python: `def islandPerimeter(grid):
+    grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    p = 0
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
+            if grid[r][c] == 1:
+                p += 4
+                if r > 0 and grid[r - 1][c] == 1: p -= 2
+                if c > 0 and grid[r][c - 1] == 1: p -= 2
+    return p`,
   },
   visibleTests: [
     {

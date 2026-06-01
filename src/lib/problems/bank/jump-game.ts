@@ -39,10 +39,29 @@ You can jump any number of steps from 1 to \`nums[i]\` from position \`i\`.`,
   functionName: 'canJump',
   params: ['nums'],
   starterCode: {
-    javascript: 'function canJump(nums) {\n  // your code here\n}\n',
-    typescript: "function canJump(nums: number[]): boolean {\n  // your code here\n}",
-
-    python: 'def canJump(nums):\n    # your code here\n    pass\n',
+    javascript: `function canJump(nums) {
+  let maxReach = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (i > maxReach) return false;
+    maxReach = Math.max(maxReach, i + nums[i]);
+  }
+  return true;
+}`,
+    typescript: `function canJump(nums: number[]): boolean {
+  let maxReach = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (i > maxReach) return false;
+    maxReach = Math.max(maxReach, i + nums[i]!);
+  }
+  return true;
+}`,
+    python: `def canJump(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    max_reach = 0
+    for i, v in enumerate(nums):
+        if i > max_reach: return False
+        max_reach = max(max_reach, i + v)
+    return True`,
   },
   visibleTests: [
     { args: [[2, 3, 1, 1, 4]], expected: true },

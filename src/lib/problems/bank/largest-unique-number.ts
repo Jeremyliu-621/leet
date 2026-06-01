@@ -35,11 +35,28 @@ export const problem: Problem = {
   functionName: 'largestUniqueNumber',
   params: ['nums'],
   starterCode: {
-    javascript: 'function largestUniqueNumber(nums) {\n  // your code here\n}\n',
-    typescript: `function largestUniqueNumber(nums: number[]): number {
-
+    javascript: `function largestUniqueNumber(nums) {
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = -1;
+  for (const [v, c] of freq) if (c === 1 && v > ans) ans = v;
+  return ans;
 }`,
-    python: 'def largestUniqueNumber(nums):\n    # your code here\n    pass\n',
+    typescript: `function largestUniqueNumber(nums: number[]): number {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = -1;
+  for (const [v, c] of freq) if (c === 1 && v > ans) ans = v;
+  return ans;
+}`,
+    python: `def largestUniqueNumber(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import Counter
+    freq = Counter(nums)
+    ans = -1
+    for v, c in freq.items():
+        if c == 1 and v > ans: ans = v
+    return ans`,
   },
   visibleTests: [
     { args: [[5, 7, 3, 9, 4, 9, 8, 3, 1]], expected: 8 },

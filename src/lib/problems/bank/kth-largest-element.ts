@@ -41,10 +41,18 @@ For example, in the array \`[3,2,1,5,6,4]\` with \`k=2\`, the 2nd largest elemen
   functionName: 'kthLargest',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function kthLargest(nums, k) {\n  // your code here\n}\n',
-    typescript: "function kthLargest(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def kthLargest(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function kthLargest(nums, k) {
+  nums.sort((a, b) => b - a);
+  return nums[k - 1];
+}`,
+    typescript: `function kthLargest(nums: number[], k: number): number {
+  nums.sort((a, b) => b - a);
+  return nums[k - 1]!;
+}`,
+    python: `def kthLargest(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort(reverse=True)
+    return nums[k - 1]`,
   },
   visibleTests: [
     { args: [[3, 2, 1, 5, 6, 4], 2], expected: 5 },

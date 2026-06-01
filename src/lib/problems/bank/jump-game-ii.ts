@@ -40,10 +40,31 @@ Return the **minimum number of jumps** needed to reach the last index. It is gua
   functionName: 'minJumps',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minJumps(nums) {\n  // your code here\n}\n',
-    typescript: "function minJumps(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def minJumps(nums):\n    # your code here\n    pass\n',
+    javascript: `function minJumps(nums) {
+  let jumps = 0, currentEnd = 0, farthest = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    farthest = Math.max(farthest, i + nums[i]);
+    if (i === currentEnd) { jumps++; currentEnd = farthest; }
+  }
+  return jumps;
+}`,
+    typescript: `function minJumps(nums: number[]): number {
+  let jumps = 0, currentEnd = 0, farthest = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    farthest = Math.max(farthest, i + nums[i]!);
+    if (i === currentEnd) { jumps++; currentEnd = farthest; }
+  }
+  return jumps;
+}`,
+    python: `def minJumps(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    jumps = current_end = farthest = 0
+    for i in range(len(nums) - 1):
+        farthest = max(farthest, i + nums[i])
+        if i == current_end:
+            jumps += 1
+            current_end = farthest
+    return jumps`,
   },
   visibleTests: [
     { args: [[2, 3, 1, 1, 4]], expected: 2 },

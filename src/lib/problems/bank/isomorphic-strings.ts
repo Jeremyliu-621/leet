@@ -26,10 +26,37 @@ Two strings are isomorphic if the characters in \`s\` can be replaced to get \`t
   functionName: 'isIsomorphic',
   params: ['s', 't'],
   starterCode: {
-    javascript: 'function isIsomorphic(s, t) {\n  // your code here\n}\n',
-    typescript: "function isIsomorphic(s: string, t: string): boolean {\n  // your code here\n}",
-
-    python: 'def isIsomorphic(s: str, t: str) -> bool:\n    # your code here\n    pass\n',
+    javascript: `function isIsomorphic(s, t) {
+  const sToT = new Map(), tToS = new Map();
+  for (let i = 0; i < s.length; i++) {
+    const sc = s[i], tc = t[i];
+    if (sToT.has(sc) && sToT.get(sc) !== tc) return false;
+    if (tToS.has(tc) && tToS.get(tc) !== sc) return false;
+    sToT.set(sc, tc);
+    tToS.set(tc, sc);
+  }
+  return true;
+}`,
+    typescript: `function isIsomorphic(s: string, t: string): boolean {
+  const sToT = new Map<string, string>(), tToS = new Map<string, string>();
+  for (let i = 0; i < s.length; i++) {
+    const sc = s[i]!, tc = t[i]!;
+    if (sToT.has(sc) && sToT.get(sc) !== tc) return false;
+    if (tToS.has(tc) && tToS.get(tc) !== sc) return false;
+    sToT.set(sc, tc);
+    tToS.set(tc, sc);
+  }
+  return true;
+}`,
+    python: `def isIsomorphic(s, t):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    s_to_t, t_to_s = {}, {}
+    for sc, tc in zip(s, t):
+        if sc in s_to_t and s_to_t[sc] != tc: return False
+        if tc in t_to_s and t_to_s[tc] != sc: return False
+        s_to_t[sc] = tc; t_to_s[tc] = sc
+    return True`,
   },
   visibleTests: [
     { args: ['egg', 'add'], expected: true },

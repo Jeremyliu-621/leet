@@ -33,10 +33,18 @@ Return \`true\` if the cleaned string is a palindrome, otherwise return \`false\
   functionName: 'isLetterPalindrome',
   params: ['text'],
   starterCode: {
-    javascript: 'function isLetterPalindrome(text) {\n  // your code here\n}\n',
-    typescript: "function isLetterPalindrome(text: string): boolean {\n  // your code here\n}",
-
-    python: 'def isLetterPalindrome(text):\n    # your code here\n    pass\n',
+    javascript: `function isLetterPalindrome(text) {
+  const cleaned = text.toLowerCase().replace(/[^a-z]/g, '');
+  return cleaned === cleaned.split('').reverse().join('');
+}`,
+    typescript: `function isLetterPalindrome(text: string): boolean {
+  const cleaned = text.toLowerCase().replace(/[^a-z]/g, '');
+  return cleaned === cleaned.split('').reverse().join('');
+}`,
+    python: `def isLetterPalindrome(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    cleaned = ''.join(c.lower() for c in text if c.isalpha())
+    return cleaned == cleaned[::-1]`,
   },
   visibleTests: [
     { args: ['Race car'], expected: true },

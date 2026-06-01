@@ -41,10 +41,37 @@ Return the **minimum integer** \`k\` such that she can eat all the bananas withi
   functionName: 'minEatingSpeed',
   params: ['piles', 'h'],
   starterCode: {
-    javascript: 'function minEatingSpeed(piles, h) {\n  // your code here\n}\n',
-    typescript: "function minEatingSpeed(piles: number[], h: number): number {\n  // your code here\n}",
-
-    python: 'def minEatingSpeed(piles: list, h: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function minEatingSpeed(piles, h) {
+  let lo = 1, hi = Math.max(...piles);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    const hours = piles.reduce((s, p) => s + Math.ceil(p / mid), 0);
+    if (hours <= h) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
+    typescript: `function minEatingSpeed(piles: number[], h: number): number {
+  let lo = 1, hi = Math.max(...piles);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    const hours = piles.reduce((s, p) => s + Math.ceil(p / mid), 0);
+    if (hours <= h) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
+    python: `def minEatingSpeed(piles, h):
+    piles = list(piles.to_py()) if hasattr(piles, 'to_py') else list(piles)
+    import math
+    lo, hi = 1, max(piles)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if sum(math.ceil(p / mid) for p in piles) <= h:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[3, 6, 7, 11], 8], expected: 4 },

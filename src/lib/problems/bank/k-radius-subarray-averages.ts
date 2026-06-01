@@ -35,10 +35,43 @@ Build and return an array \`avgs\` of length \`n\` where \`avgs[i]\` is the **k-
   functionName: 'getAverages',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function getAverages(nums, k) {\n  // your code here\n}\n',
-    typescript: "function getAverages(nums: number[], k: number): number[] {\n  // your code here\n}",
-
-    python: 'def getAverages(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function getAverages(nums, k) {
+  const n = nums.length, w = 2 * k + 1;
+  const avgs = new Array(n).fill(-1);
+  if (w > n) return avgs;
+  let sum = 0;
+  for (let i = 0; i < w; i++) sum += nums[i];
+  avgs[k] = Math.floor(sum / w);
+  for (let i = k + 1; i < n - k; i++) {
+    sum += nums[i + k] - nums[i - k - 1];
+    avgs[i] = Math.floor(sum / w);
+  }
+  return avgs;
+}`,
+    typescript: `function getAverages(nums: number[], k: number): number[] {
+  const n = nums.length, w = 2 * k + 1;
+  const avgs = new Array<number>(n).fill(-1);
+  if (w > n) return avgs;
+  let sum = 0;
+  for (let i = 0; i < w; i++) sum += nums[i]!;
+  avgs[k] = Math.floor(sum / w);
+  for (let i = k + 1; i < n - k; i++) {
+    sum += nums[i + k]! - nums[i - k - 1]!;
+    avgs[i] = Math.floor(sum / w);
+  }
+  return avgs;
+}`,
+    python: `def getAverages(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n, w = len(nums), 2 * k + 1
+    avgs = [-1] * n
+    if w > n: return avgs
+    s = sum(nums[:w])
+    avgs[k] = s // w
+    for i in range(k + 1, n - k):
+        s += nums[i + k] - nums[i - k - 1]
+        avgs[i] = s // w
+    return avgs`,
   },
   visibleTests: [
     { args: [[7, 4, 3, 9, 1, 8, 5, 2], 3], expected: [-1, -1, -1, 5, 4, -1, -1, -1] },

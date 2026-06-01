@@ -37,14 +37,18 @@ Return the value of the **k-th character** (1-indexed) of \`word\` after **enoug
   params: ['k'],
   starterCode: {
     javascript: `function kthCharacter(k) {
-  // your code here
+  let bits = 0, n = k - 1;
+  while (n > 0) { bits += n & 1; n >>= 1; }
+  return String.fromCharCode(97 + bits % 26);
 }`,
     typescript: `function kthCharacter(k: number): string {
-  // your code here
+  let bits = 0, n = k - 1;
+  while (n > 0) { bits += n & 1; n >>= 1; }
+  return String.fromCharCode(97 + bits % 26);
 }`,
     python: `def kthCharacter(k):
-    # your code here
-    pass`,
+    bits = bin(k - 1).count('1')
+    return chr(ord('a') + bits % 26)`,
   },
   visibleTests: [
     { args: [5], expected: 'b' },

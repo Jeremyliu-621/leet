@@ -37,10 +37,22 @@ Return the **final** value of \`original\`.`,
   functionName: 'findFinalValue',
   params: ['nums', 'original'],
   starterCode: {
-    javascript: 'function findFinalValue(nums, original) {\n  // your code here\n}\n',
-    typescript: "function findFinalValue(nums: number[], original: number): number {\n  // your code here\n}",
-
-    python: 'def findFinalValue(nums, original):\n    # your code here\n    pass\n',
+    javascript: `function findFinalValue(nums, original) {
+  const s = new Set(nums);
+  while (s.has(original)) original *= 2;
+  return original;
+}`,
+    typescript: `function findFinalValue(nums: number[], original: number): number {
+  const s = new Set(nums);
+  while (s.has(original)) original *= 2;
+  return original;
+}`,
+    python: `def findFinalValue(nums, original):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = set(nums)
+    while original in s:
+        original *= 2
+    return original`,
   },
   visibleTests: [
     { args: [[5, 3, 6, 1, 12], 3], expected: 24 },

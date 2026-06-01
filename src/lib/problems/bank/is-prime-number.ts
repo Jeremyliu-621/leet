@@ -36,10 +36,27 @@ export const problem: Problem = {
   functionName: 'isPrime',
   params: ['n'],
   starterCode: {
-    javascript: 'function isPrime(n) {\n  // your code here\n}\n',
-    typescript: "function isPrime(n: number): boolean {\n  // your code here\n}",
-
-    python: 'def isPrime(n):\n    # your code here\n    pass\n',
+    javascript: `function isPrime(n) {
+  if (n < 2) return false;
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}`,
+    typescript: `function isPrime(n: number): boolean {
+  if (n < 2) return false;
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}`,
+    python: `def isPrime(n):
+    if n < 2: return False
+    i = 2
+    while i * i <= n:
+        if n % i == 0: return False
+        i += 1
+    return True`,
   },
   visibleTests: [
     { args: [7], expected: true },
