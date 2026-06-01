@@ -4,7 +4,7 @@ import type { StorageSchema } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
 import { localDateString } from '../../lib/streak';
-import { applyEditorFontSize, applyTheme } from '../../lib/theme';
+import { applyEditorFontSize, applyTheme, watchSystemTheme } from '../../lib/theme';
 import type {
   BlockRule,
   Difficulty,
@@ -47,6 +47,14 @@ const LANGUAGE_OPTIONS: ReadonlyArray<{ value: SupportedLanguage; label: string 
   { value: 'javascript', label: 'JS' },
   { value: 'typescript', label: 'TS' },
   { value: 'python', label: 'Py' },
+  { value: 'java', label: 'Java' },
+  { value: 'cpp', label: 'C++' },
+  { value: 'csharp', label: 'C#' },
+  { value: 'go', label: 'Go' },
+  { value: 'rust', label: 'Rust' },
+  { value: 'kotlin', label: 'Kt' },
+  { value: 'swift', label: 'Swift' },
+  { value: 'sql', label: 'SQL' },
 ];
 
 const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
@@ -263,6 +271,12 @@ export function Popup() {
       cancelled = true;
     };
   }, []);
+
+  // Watch OS dark/light changes so "system" theme updates the popup live.
+  useEffect(() => {
+    if (!data) return;
+    return watchSystemTheme(() => data.theme);
+  }, [data?.theme]);
 
   async function handleBlock(): Promise<void> {
     if (!data || !data.currentDomain || data.alreadyBlocked) return;

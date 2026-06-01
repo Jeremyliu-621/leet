@@ -558,16 +558,9 @@ export function Challenge() {
         return;
       }
 
-      // Pick the user's preferred language if the problem supports it.
-      // TypeScript is always available (uses JS starter). Other languages
-      // require an explicit starter in the problem definition.
-      const preferred = prefs.preferredLanguage;
-      let initialLanguage: SupportedLanguage = 'javascript';
-      if (preferred === 'typescript') {
-        initialLanguage = 'typescript';
-      } else if (preferred !== 'javascript' && problem.starterCode[preferred]) {
-        initialLanguage = preferred;
-      }
+      // Pick the user's preferred language. All languages are always available
+      // — those without explicit starters get auto-generated ones.
+      const initialLanguage: SupportedLanguage = prefs.preferredLanguage;
       const initialStarter = starterCodeFor(problem, initialLanguage);
 
       // Restore any in-progress draft from a previous session.
