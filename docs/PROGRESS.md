@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2866** problems; 8918 tests green. Batch 271 complete.
+**Current focus:** Bank at **2871** problems; 8930 tests green. Batch 271 (local: reverse-words-iii, goal-parser, find-lucky-integer-array, smallest-string-numeric-val) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 272+; continued UX polish.
+
+### feat(bank): batch 271 (local) — reverse-words-iii, goal-parser-interpretation, find-lucky-integer-in-array, smallest-string-numeric-val (2026-06-01)
+Four new problems: `reverse-words-in-a-string-iii` (easy/strings, LC 557 — split on space, reverse each word, rejoin; O(n)), `goal-parser-interpretation` (easy/strings, LC 1678 — replace "()" with "o" and "(al)" with "al"; O(n)), `find-lucky-integer-in-an-array` (easy/hash-map, LC 1394 — count frequencies; find max where freq[x]==x; O(n)), `smallest-string-with-a-given-numeric-value` (medium/strings+math, LC 1663 — right-to-left greedy: assign min(26, k-i) at position i from right; ensures lex smallest; O(n)). Bank at **2871**; 8930 tests.
 
 ### feat(bank): batch 271 — find-xor-all-subarrays, sort-matrix-diagonally, max-min-sums-k-subarrays, max-sum-k-elements (2026-06-01)
 Four new problems: `find-the-xor-of-all-subarrays` (easy/arrays+math+bit-manipulation — element at index i appears in (i+1)*(n-i) subarrays; XOR is nonzero iff n is odd; result = XOR of even-indexed elements when n is odd; O(n)), `sort-the-matrix-diagonally` (medium/arrays+simulation — group cells by key r-c; sort each diagonal ascending; fill back top-to-bottom per diagonal; O(m*n*log(min(m,n)))), `maximum-and-minimum-sums-of-at-most-k-size-subarrays` (hard/arrays+stack+math — brute O(n*k); optimal O(n) via monotone stacks counting each element's min/max contribution; mod 10^9+7), `maximum-sum-with-at-most-k-elements` (medium/arrays+heap — from each row i take top limits[i] candidates; merge + sort all desc; take top k; O(m*n log n)). Bank at **2866**; 8918 tests.
