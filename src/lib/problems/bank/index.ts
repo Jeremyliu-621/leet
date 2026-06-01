@@ -3023,6 +3023,11 @@ import { problem as longestUncommonSubsequenceII } from './longest-uncommon-subs
 import { problem as maximumStrongPairsI } from './maximum-strong-pairs-in-an-array-i';
 import { problem as findMaxElementsInSubset } from './find-the-maximum-number-of-elements-in-subset';
 import { problem as missingInteger } from './missing-integer';
+// batch 239
+import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
+import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
+import { problem as brightestPositionStreet } from './brightest-position-on-street';
+import { problem as countKFreeSubsets } from './count-the-number-of-k-free-subsets';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6103,4 +6108,9 @@ export const problems: readonly Problem[] = [
   sumOfGoodSubsequences,
   countKConstraintSubstringsII,
   countBalancedPermutations,
+  // batch 239
+  findNthValueAfterKSeconds,
+  checkWordInCrossword,
+  brightestPositionStreet,
+  countKFreeSubsets,
 ];

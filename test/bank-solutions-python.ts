@@ -42381,4 +42381,85 @@ def countBalancedPermutations(num):
 
     return dp[n_even][target] * fact[n_even] % MOD * fact[n_odd] % MOD
 `,
+
+  // --- batch 239 -----------------------------------------------------------
+  'find-the-n-th-value-after-k-seconds': `
+def valueAfterKSeconds(n, k):
+    MOD = 10**9 + 7
+    # C(n+k, k+1) mod MOD
+    ans = 1
+    for i in range(k + 1):
+        ans = ans * (n + k - i) % MOD
+        ans = ans * pow(i + 1, MOD - 2, MOD) % MOD
+    return ans
+`,
+  'check-if-word-can-be-placed-in-crossword': `
+def placeWordInCrossword(board, word):
+    m, n, L = len(board), len(board[0]), len(word)
+    def matches(cells):
+        if len(cells) != L:
+            return False
+        fwd = all(c == '.' or c == word[i] for i, c in enumerate(cells))
+        bwd = all(c == '.' or c == word[L-1-i] for i, c in enumerate(cells))
+        return fwd or bwd
+    for i in range(m):
+        slot = []
+        for j in range(n + 1):
+            if j < n and board[i][j] != '#':
+                slot.append(board[i][j])
+            else:
+                if matches(slot):
+                    return True
+                slot = []
+    for j in range(n):
+        slot = []
+        for i in range(m + 1):
+            if i < m and board[i][j] != '#':
+                slot.append(board[i][j])
+            else:
+                if matches(slot):
+                    return True
+                slot = []
+    return False
+`,
+  'brightest-position-on-street': `
+def brightestPosition(lights):
+    events = []
+    for pos, r in lights:
+        events.append((pos - r, 1))
+        events.append((pos + r + 1, -1))
+    events.sort()
+    max_bright = 0
+    ans = 0
+    cur = 0
+    i = 0
+    while i < len(events):
+        p = events[i][0]
+        while i < len(events) and events[i][0] == p:
+            cur += events[i][1]
+            i += 1
+        if cur > max_bright:
+            max_bright = cur
+            ans = p
+    return ans
+`,
+  'count-the-number-of-k-free-subsets': `
+def countKFreeSubsets(nums, k):
+    MOD = 10**9 + 7
+    groups = {}
+    for x in nums:
+        r = x % k
+        groups.setdefault(r, []).append(x)
+    ans = 1
+    for group in groups.values():
+        group.sort()
+        prev2, prev1 = 1, 2
+        for i in range(1, len(group)):
+            if group[i] - group[i-1] == k:
+                prev2, prev1 = prev1, (prev1 + prev2) % MOD
+            else:
+                prev2, prev1 = prev1, prev1 * 2 % MOD
+        ans = ans * prev1 % MOD
+    return ans
+`,
 };

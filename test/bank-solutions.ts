@@ -43184,4 +43184,94 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(dp[nEven]![target]! * fact[nEven]! % MOD * fact[nOdd]! % MOD);
   },
+
+  // --- batch 239 -----------------------------------------------------------
+  'find-the-n-th-value-after-k-seconds': (...args: unknown[]) => {
+    const [n, k] = args as [number, number];
+    const MOD = 1000000007n;
+    const modpow = (base: bigint, exp: bigint, mod: bigint): bigint => {
+      let result = 1n;
+      base = base % mod;
+      while (exp > 0n) {
+        if (exp % 2n === 1n) result = result * base % mod;
+        exp = exp / 2n;
+        base = base * base % mod;
+      }
+      return result;
+    };
+    let ans = 1n;
+    for (let i = 0; i < k + 1; i++) {
+      ans = ans * BigInt(n + k - i) % MOD;
+      ans = ans * modpow(BigInt(i + 1), MOD - 2n, MOD) % MOD;
+    }
+    return Number(ans);
+  },
+  'check-if-word-can-be-placed-in-crossword': (...args: unknown[]) => {
+    const [board, word] = args as [string[][], string];
+    const m = board.length, n = board[0]!.length, L = word.length;
+    const matches = (cells: string[]): boolean => {
+      if (cells.length !== L) return false;
+      const fwd = cells.every((c, i) => c === '.' || c === word[i]);
+      const bwd = cells.every((c, i) => c === '.' || c === word[L - 1 - i]);
+      return fwd || bwd;
+    };
+    for (let i = 0; i < m; i++) {
+      let slot: string[] = [];
+      for (let j = 0; j <= n; j++) {
+        if (j < n && board[i]![j] !== '#') slot.push(board[i]![j]!);
+        else { if (matches(slot)) return true; slot = []; }
+      }
+    }
+    for (let j = 0; j < n; j++) {
+      let slot: string[] = [];
+      for (let i = 0; i <= m; i++) {
+        if (i < m && board[i]![j] !== '#') slot.push(board[i]![j]!);
+        else { if (matches(slot)) return true; slot = []; }
+      }
+    }
+    return false;
+  },
+  'brightest-position-on-street': (...args: unknown[]) => {
+    const lights = args[0] as number[][];
+    const events: number[][] = [];
+    for (const [pos, range] of lights) {
+      events.push([pos! - range!, 1]);
+      events.push([pos! + range! + 1, -1]);
+    }
+    events.sort((a, b) => a[0]! - b[0]!);
+    let maxBright = 0, ans = 0, cur = 0, i = 0;
+    while (i < events.length) {
+      const p = events[i]![0]!;
+      while (i < events.length && events[i]![0] === p) { cur += events[i++]![1]!; }
+      if (cur > maxBright) { maxBright = cur; ans = p; }
+    }
+    return ans;
+  },
+  'count-the-number-of-k-free-subsets': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    const MOD = 1000000007;
+    const groups = new Map<number, number[]>();
+    for (const x of nums) {
+      const r = ((x % k) + k) % k;
+      if (!groups.has(r)) groups.set(r, []);
+      groups.get(r)!.push(x);
+    }
+    let ans = 1;
+    for (const group of groups.values()) {
+      group.sort((a, b) => a - b);
+      let prev2 = 1, prev1 = 2;
+      for (let i = 1; i < group.length; i++) {
+        if (group[i]! - group[i - 1]! === k) {
+          const cur = (prev1 + prev2) % MOD;
+          prev2 = prev1;
+          prev1 = cur;
+        } else {
+          prev2 = prev1;
+          prev1 = prev1 * 2 % MOD;
+        }
+      }
+      ans = ans * prev1 % MOD;
+    }
+    return ans;
+  },
 };
