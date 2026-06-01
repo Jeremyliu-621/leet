@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2856** problems; 8940 tests green. Batch 268 + 267b complete.
+**Current focus:** Bank at **2859** problems; 8894 tests green. Batch 269 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 269+; continued UX polish.
+**Next up:** Batch 270+; continued UX polish.
+
+### feat(bank): batch 269 — take-gifts-from-richest-pile, minimum-number-of-coins-for-fruits-i (2026-06-01)
+Two new problems: `take-gifts-from-richest-pile` (easy/arrays+heap, LC 2558 — k-step max-heap simulation; each step extract max pile, replace with floor(sqrt(max)); sum remaining; O(k log n)), `minimum-number-of-coins-for-fruits-i` (medium/arrays+dp, LC 2944 — buying fruit i (1-indexed) gives next i fruits free; right-to-left DP: dp[i]=prices[i-1]+min(dp[j] for j in [i+1..2i+1]); dp[n+1]=0; O(n²)). Bank at **2859**; 8894 tests.
 
 ### feat(bank): batch 268 — count-submatrices-equal-freq-xy, k-th-smallest-prime-fraction, min-valid-strings-to-form-target-ii, max-xor-score-subarray-queries (2026-06-01)
 Four new problems: `count-submatrices-with-equal-frequency-of-x-and-y` (medium/arrays+simulation, 2D prefix sums; check freq(x)≥1 and freq(x)==freq(y) per top-left submatrix; O(m*n)), `k-th-smallest-prime-fraction` (medium/arrays+binary-search, binary search on fraction value with O(n) two-pointer count per iteration; converges in 200 iterations), `minimum-number-of-valid-strings-to-form-target-ii` (hard/strings+dp, rolling hash set of all word prefixes; binary search max valid prefix length per position; greedy jump game for min concatenations; O(n log n)), `maximum-xor-score-subarray-queries` (hard/arrays+dp+bit-manipulation, O(n^2) DP dp[i][j]=dp[i][j-1]^dp[i+1][j]; suf[j][i] suffix max over starting points; mx[j][i] cumulative 2D max; O(1) per query). Also bumps marketing site to 2,840+. Bank at **2856**; 8940 tests.
