@@ -40,14 +40,44 @@ You must write an algorithm that runs in **O(m log n)** or **O(n log m)** time.`
   params: ['mat'],
   starterCode: {
     javascript: `function findPeakGrid(mat) {
-  // your code here
+  const m = mat.length;
+  let lo = 0, hi = m - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    let maxCol = 0;
+    for (let c = 1; c < mat[mid].length; c++) if (mat[mid][c] > mat[mid][maxCol]) maxCol = c;
+    if (mat[mid][maxCol] < mat[mid + 1][maxCol]) lo = mid + 1;
+    else hi = mid;
+  }
+  let maxCol = 0;
+  for (let c = 1; c < mat[lo].length; c++) if (mat[lo][c] > mat[lo][maxCol]) maxCol = c;
+  return [lo, maxCol];
 }`,
     typescript: `function findPeakGrid(mat: number[][]): number[] {
-  // your code here
+  const m = mat.length;
+  let lo = 0, hi = m - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    let maxCol = 0;
+    for (let c = 1; c < mat[mid]!.length; c++) if (mat[mid]![c]! > mat[mid]![maxCol]!) maxCol = c;
+    if (mat[mid]![maxCol]! < mat[mid + 1]![maxCol]!) lo = mid + 1;
+    else hi = mid;
+  }
+  let maxCol = 0;
+  for (let c = 1; c < mat[lo]!.length; c++) if (mat[lo]![c]! > mat[lo]![maxCol]!) maxCol = c;
+  return [lo, maxCol];
 }`,
     python: `def findPeakGrid(mat):
-    # your code here
-    pass`,
+    mat = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    m = len(mat)
+    lo, hi = 0, m - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        max_col = max(range(len(mat[mid])), key=lambda c: mat[mid][c])
+        if mat[mid][max_col] < mat[mid + 1][max_col]: lo = mid + 1
+        else: hi = mid
+    max_col = max(range(len(mat[lo])), key=lambda c: mat[lo][c])
+    return [lo, max_col]`,
   },
   visibleTests: [
     { args: [[[1, 4], [3, 2]]], expected: [0, 1] },

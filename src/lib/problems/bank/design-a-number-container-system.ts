@@ -37,36 +37,84 @@ args = [[],[10],[2,10],[1,10],[3,10],[5,10],[10],[1],[2],[3]]`,
   starterCode: {
     javascript: `function numberContainers(operations, args) {
   const results = [null];
-  const indexToNum = new Map();   // index -> current number
-  const numToIndices = new Map(); // number -> sorted array of indices
-
+  const indexToNum = new Map();
+  const numToIndices = new Map();
   for (let i = 1; i < operations.length; i++) {
-    const op = operations[i];
-    const a = args[i];
+    const op = operations[i], a = args[i];
     if (op === 'change') {
-      // your code here — push null to results
+      const [idx, num] = a;
+      if (indexToNum.has(idx)) {
+        const old = indexToNum.get(idx);
+        const arr = numToIndices.get(old);
+        const pos = arr.indexOf(idx);
+        if (pos !== -1) arr.splice(pos, 1);
+      }
+      indexToNum.set(idx, num);
+      if (!numToIndices.has(num)) numToIndices.set(num, []);
+      const arr = numToIndices.get(num);
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid] < idx) lo = mid + 1; else hi = mid; }
+      arr.splice(lo, 0, idx);
+      results.push(null);
     } else if (op === 'find') {
-      // your code here — push smallest index or -1
+      const arr = numToIndices.get(a[0]);
+      results.push(arr && arr.length > 0 ? arr[0] : -1);
     }
   }
   return results;
 }`,
     typescript: `function numberContainers(operations: string[], args: unknown[][]): unknown[] {
-
+  const results: unknown[] = [null];
+  const indexToNum = new Map<number, number>();
+  const numToIndices = new Map<number, number[]>();
+  for (let i = 1; i < operations.length; i++) {
+    const op = operations[i]!, a = args[i] as number[];
+    if (op === 'change') {
+      const [idx, num] = [a[0]!, a[1]!];
+      if (indexToNum.has(idx)) {
+        const old = indexToNum.get(idx)!;
+        const arr = numToIndices.get(old)!;
+        const pos = arr.indexOf(idx);
+        if (pos !== -1) arr.splice(pos, 1);
+      }
+      indexToNum.set(idx, num);
+      if (!numToIndices.has(num)) numToIndices.set(num, []);
+      const arr = numToIndices.get(num)!;
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! < idx) lo = mid + 1; else hi = mid; }
+      arr.splice(lo, 0, idx);
+      results.push(null);
+    } else if (op === 'find') {
+      const arr = numToIndices.get(a[0]!);
+      results.push(arr && arr.length > 0 ? arr[0]! : -1);
+    }
+  }
+  return results;
 }`,
     python: `def numberContainers(operations, args):
     import bisect
+    operations = list(operations.to_py() if hasattr(operations, 'to_py') else operations)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
     results = [None]
-    index_to_num = {}    # index -> current number
-    num_to_indices = {}  # number -> sorted list of indices
-
+    index_to_num = {}
+    num_to_indices = {}
     for i in range(1, len(operations)):
-        op = operations[i]
-        a = list(args[i].to_py() if hasattr(args[i], 'to_py') else args[i])
+        op, a = operations[i], args[i]
         if op == 'change':
-            pass  # your code here
+            idx, num = a[0], a[1]
+            if idx in index_to_num:
+                old = index_to_num[idx]
+                lst = num_to_indices[old]
+                pos = bisect.bisect_left(lst, idx)
+                if pos < len(lst) and lst[pos] == idx: lst.pop(pos)
+            index_to_num[idx] = num
+            if num not in num_to_indices: num_to_indices[num] = []
+            bisect.insort(num_to_indices[num], idx)
+            results.append(None)
         elif op == 'find':
-            pass  # your code here — append smallest index or -1
+            num = a[0]
+            lst = num_to_indices.get(num, [])
+            results.append(lst[0] if lst else -1)
     return results`,
   },
   visibleTests: [

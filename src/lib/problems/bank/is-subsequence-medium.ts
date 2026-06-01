@@ -40,10 +40,42 @@ Return the count **modulo 10^9 + 7**.`,
   functionName: 'countSubsequenceOccurrences',
   params: ['s', 't'],
   starterCode: {
-    javascript: 'function countSubsequenceOccurrences(s, t) {\n  // your code here\n}\n',
-    typescript: "function countSubsequenceOccurrences(s: string, t: string): number {\n  // your code here\n}",
-
-    python: 'def countSubsequenceOccurrences(s, t):\n    # your code here\n    pass\n',
+    javascript: `function countSubsequenceOccurrences(s, t) {
+  const MOD = 1_000_000_007n;
+  const m = s.length, n = t.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0n));
+  for (let j = 0; j <= n; j++) dp[0][j] = 1n;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = dp[i][j - 1];
+      if (s[i - 1] === t[j - 1]) dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % MOD;
+    }
+  return Number(dp[m][n]);
+}`,
+    typescript: `function countSubsequenceOccurrences(s: string, t: string): number {
+  const MOD = 1_000_000_007n;
+  const m = s.length, n = t.length;
+  const dp: bigint[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0n));
+  for (let j = 0; j <= n; j++) dp[0]![j] = 1n;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++) {
+      dp[i]![j] = dp[i]![j - 1]!;
+      if (s[i - 1] === t[j - 1]) dp[i]![j] = (dp[i]![j]! + dp[i - 1]![j - 1]!) % MOD;
+    }
+  return Number(dp[m]![n]!);
+}`,
+    python: `def countSubsequenceOccurrences(s, t):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    MOD = 10**9 + 7
+    m, n = len(s), len(t)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for j in range(n + 1): dp[0][j] = 1
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            dp[i][j] = dp[i][j - 1]
+            if s[i - 1] == t[j - 1]: dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % MOD
+    return dp[m][n]`,
   },
   visibleTests: [
     { args: ['rabbit', 'rabbbit'], expected: 3 },

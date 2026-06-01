@@ -43,12 +43,93 @@ Simulate with arrays of operations. Return results (\`null\` for void operations
   params: ['ops', 'args'],
   starterCode: {
     javascript: `function designBitset(ops, args) {
-  // your code here
+  const size = args[0][0];
+  const bits = new Array(size).fill(0);
+  let flipped = false, count = 0;
+  const results = [null];
+  for (let i = 1; i < ops.length; i++) {
+    const op = ops[i], a = args[i];
+    if (op === 'fix') {
+      const idx = a[0];
+      if ((bits[idx] ^ (flipped ? 1 : 0)) === 0) { bits[idx] ^= 1; count++; }
+      results.push(null);
+    } else if (op === 'unfix') {
+      const idx = a[0];
+      if ((bits[idx] ^ (flipped ? 1 : 0)) === 1) { bits[idx] ^= 1; count--; }
+      results.push(null);
+    } else if (op === 'flip') {
+      flipped = !flipped; count = size - count; results.push(null);
+    } else if (op === 'all') {
+      results.push(count === size);
+    } else if (op === 'one') {
+      results.push(count > 0);
+    } else if (op === 'count') {
+      results.push(count);
+    } else if (op === 'toString') {
+      let s = '';
+      for (let j = 0; j < size; j++) s += (bits[j] ^ (flipped ? 1 : 0)) === 1 ? '1' : '0';
+      results.push(s);
+    }
+  }
+  return results;
 }`,
-    typescript: 'function designBitset(ops: string[], args: (number | number[])[]): (boolean | number | string | null)[] {\n  // your code here\n}',
+    typescript: `function designBitset(ops: string[], args: (number | number[])[]): (boolean | number | string | null)[] {
+  const size = (args[0] as number[])[0]!;
+  const bits = new Array(size).fill(0) as number[];
+  let flipped = false, count = 0;
+  const results: (boolean | number | string | null)[] = [null];
+  for (let i = 1; i < ops.length; i++) {
+    const op = ops[i]!, a = args[i] as number[];
+    if (op === 'fix') {
+      const idx = a[0]!;
+      if ((bits[idx]! ^ (flipped ? 1 : 0)) === 0) { bits[idx]! ^= 1; count++; }
+      results.push(null);
+    } else if (op === 'unfix') {
+      const idx = a[0]!;
+      if ((bits[idx]! ^ (flipped ? 1 : 0)) === 1) { bits[idx]! ^= 1; count--; }
+      results.push(null);
+    } else if (op === 'flip') {
+      flipped = !flipped; count = size - count; results.push(null);
+    } else if (op === 'all') {
+      results.push(count === size);
+    } else if (op === 'one') {
+      results.push(count > 0);
+    } else if (op === 'count') {
+      results.push(count);
+    } else if (op === 'toString') {
+      let s = '';
+      for (let j = 0; j < size; j++) s += (bits[j]! ^ (flipped ? 1 : 0)) === 1 ? '1' : '0';
+      results.push(s);
+    }
+  }
+  return results;
+}`,
     python: `def designBitset(ops, args):
-    # your code here
-    pass`,
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    size = args[0][0]
+    bits = [0] * size
+    flipped = False
+    count = 0
+    results = [None]
+    for i in range(1, len(ops)):
+        op, a = ops[i], args[i]
+        if op == 'fix':
+            idx = a[0]
+            if (bits[idx] ^ (1 if flipped else 0)) == 0: bits[idx] ^= 1; count += 1
+            results.append(None)
+        elif op == 'unfix':
+            idx = a[0]
+            if (bits[idx] ^ (1 if flipped else 0)) == 1: bits[idx] ^= 1; count -= 1
+            results.append(None)
+        elif op == 'flip':
+            flipped = not flipped; count = size - count; results.append(None)
+        elif op == 'all': results.append(count == size)
+        elif op == 'one': results.append(count > 0)
+        elif op == 'count': results.append(count)
+        elif op == 'toString':
+            results.append(''.join('1' if (bits[j] ^ (1 if flipped else 0)) == 1 else '0' for j in range(size)))
+    return results`,
   },
   visibleTests: [
     {
