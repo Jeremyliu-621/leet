@@ -41,14 +41,39 @@ Given \`encodedText\` and the integer \`rows\`, decode \`encodedText\` and retur
   params: ['encodedText', 'rows'],
   starterCode: {
     javascript: `function decodeCiphertext(encodedText, rows) {
-  // your code here
+  const cols = encodedText.length / rows;
+  let result = '';
+  for (let c = 0; c < cols; c++) {
+    let r = 0, cc = c;
+    while (r < rows && cc < cols) {
+      result += encodedText[r * cols + cc];
+      r++; cc++;
+    }
+  }
+  return result.replace(/\\s+$/, '');
 }`,
     typescript: `function decodeCiphertext(encodedText: string, rows: number): string {
-  // your code here
+  const cols = encodedText.length / rows;
+  let result = '';
+  for (let c = 0; c < cols; c++) {
+    let r = 0, cc = c;
+    while (r < rows && cc < cols) {
+      result += encodedText[r * cols + cc];
+      r++; cc++;
+    }
+  }
+  return result.replace(/\\s+$/, '');
 }`,
     python: `def decodeCiphertext(encodedText, rows):
-    # your code here
-    pass`,
+    if hasattr(encodedText, 'to_py'): encodedText = encodedText.to_py()
+    cols = len(encodedText) // rows
+    result = []
+    for c in range(cols):
+        r, cc = 0, c
+        while r < rows and cc < cols:
+            result.append(encodedText[r * cols + cc])
+            r += 1; cc += 1
+    return ''.join(result).rstrip()`,
   },
   visibleTests: [
     { args: ['ch   ie   pr', 3], expected: 'cipher' },

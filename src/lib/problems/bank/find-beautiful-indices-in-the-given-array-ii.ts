@@ -44,14 +44,44 @@ Return the array that contains beautiful indices in **sorted order from smallest
   params: ['s', 'a', 'b', 'k'],
   starterCode: {
     javascript: `function beautifulIndices(s, a, b, k) {
-  // your code here
+  const occA = [], occB = [];
+  for (let i = 0; i <= s.length - a.length; i++)
+    if (s.startsWith(a, i)) occA.push(i);
+  for (let j = 0; j <= s.length - b.length; j++)
+    if (s.startsWith(b, j)) occB.push(j);
+  const result = [];
+  let p = 0;
+  for (const i of occA) {
+    while (p < occB.length && occB[p] < i - k) p++;
+    if (p < occB.length && occB[p] <= i + k) result.push(i);
+  }
+  return result;
 }`,
     typescript: `function beautifulIndices(s: string, a: string, b: string, k: number): number[] {
-  // your code here
+  const occA: number[] = [], occB: number[] = [];
+  for (let i = 0; i <= s.length - a.length; i++)
+    if (s.startsWith(a, i)) occA.push(i);
+  for (let j = 0; j <= s.length - b.length; j++)
+    if (s.startsWith(b, j)) occB.push(j);
+  const result: number[] = [];
+  let p = 0;
+  for (const i of occA) {
+    while (p < occB.length && occB[p]! < i - k) p++;
+    if (p < occB.length && occB[p]! <= i + k) result.push(i);
+  }
+  return result;
 }`,
     python: `def beautifulIndices(s, a, b, k):
-    # your code here
-    pass`,
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(a, 'to_py'): a = a.to_py()
+    if hasattr(b, 'to_py'): b = b.to_py()
+    occA = [i for i in range(len(s) - len(a) + 1) if s[i:i+len(a)] == a]
+    occB = [j for j in range(len(s) - len(b) + 1) if s[j:j+len(b)] == b]
+    result, p = [], 0
+    for i in occA:
+        while p < len(occB) and occB[p] < i - k: p += 1
+        if p < len(occB) and occB[p] <= i + k: result.append(i)
+    return result`,
   },
   visibleTests: [
     { args: ['isawsquirrelnearmysquirrelhouseohmy', 'my', 'squirrel', 15], expected: [16, 33] },

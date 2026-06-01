@@ -43,12 +43,38 @@ Actually, the exact condition is: **the total number of substrings where** \`cou
   params: ['s', 'num1', 'num2'],
   starterCode: {
     javascript: `function fixedRatio(s, num1, num2) {
-  // your code here
+  const cnt = new Map([[0, 1]]);
+  let c0 = 0, c1 = 0, result = 0;
+  for (const c of s) {
+    if (c === '0') c0++; else c1++;
+    const score = c0 * num2 - c1 * num1;
+    result += cnt.get(score) ?? 0;
+    cnt.set(score, (cnt.get(score) ?? 0) + 1);
+  }
+  return result;
 }`,
-    typescript: 'function fixedRatio(s: string, num1: number, num2: number): number {\n  // your code here\n}',
+    typescript: `function fixedRatio(s: string, num1: number, num2: number): number {
+  const cnt = new Map<number, number>([[0, 1]]);
+  let c0 = 0, c1 = 0, result = 0;
+  for (const c of s) {
+    if (c === '0') c0++; else c1++;
+    const score = c0 * num2 - c1 * num1;
+    result += cnt.get(score) ?? 0;
+    cnt.set(score, (cnt.get(score) ?? 0) + 1);
+  }
+  return result;
+}`,
     python: `def fixedRatio(s, num1, num2):
-    # your code here
-    pass`,
+    if hasattr(s, 'to_py'): s = s.to_py()
+    cnt = {0: 1}
+    c0 = c1 = result = 0
+    for ch in s:
+        if ch == '0': c0 += 1
+        else: c1 += 1
+        score = c0 * num2 - c1 * num1
+        result += cnt.get(score, 0)
+        cnt[score] = cnt.get(score, 0) + 1
+    return result`,
   },
   visibleTests: [
     { args: ['0110011', 1, 2], expected: 4 },

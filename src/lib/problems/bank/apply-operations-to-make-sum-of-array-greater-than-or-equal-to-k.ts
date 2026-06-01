@@ -37,14 +37,31 @@ Return the **minimum** number of operations required to make the **sum** of elem
   params: ['k'],
   starterCode: {
     javascript: `function minOperations(k) {
-  // your code here
+  if (k === 1) return 0;
+  let best = Infinity;
+  for (let a = 0; a < k; a++) {
+    const d = Math.ceil(k / (1 + a)) - 1;
+    best = Math.min(best, a + d);
+  }
+  return best;
 }`,
     typescript: `function minOperations(k: number): number {
-  // your code here
+  if (k === 1) return 0;
+  let best = Infinity;
+  for (let a = 0; a < k; a++) {
+    const d = Math.ceil(k / (1 + a)) - 1;
+    best = Math.min(best, a + d);
+  }
+  return best;
 }`,
     python: `def minOperations(k):
-    # your code here
-    pass`,
+    import math
+    if k == 1: return 0
+    best = float('inf')
+    for a in range(k):
+        d = math.ceil(k / (1 + a)) - 1
+        best = min(best, a + d)
+    return best`,
   },
   visibleTests: [
     { args: [11], expected: 5 },
