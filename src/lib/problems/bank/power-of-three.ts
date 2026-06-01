@@ -31,12 +31,21 @@ function isPowerOfThree(n) {
   params: ['n'],
   starterCode: {
     javascript: `function isPowerOfThree(n) {
-
+  if (n <= 0) return false;
+  while (n % 3 === 0) n = Math.floor(n / 3);
+  return n === 1;
 }`,
-    typescript: "function isPowerOfThree(n: number): boolean {\n\n}",
-
+    typescript: `function isPowerOfThree(n: number): boolean {
+  if (n <= 0) return false;
+  while (n % 3 === 0) n = Math.floor(n / 3);
+  return n === 1;
+}`,
     python: `def isPowerOfThree(n):
-    pass`,
+    if n <= 0:
+        return False
+    while n % 3 == 0:
+        n //= 3
+    return n == 1`,
   },
   visibleTests: [
     { args: [27], expected: true },

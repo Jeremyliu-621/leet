@@ -25,10 +25,32 @@ Each letter in \`magazine\` can only be used once in \`ransomNote\`.`,
   functionName: 'canConstruct',
   params: ['ransomNote', 'magazine'],
   starterCode: {
-    javascript: 'function canConstruct(ransomNote, magazine) {\n  // your code here\n}\n',
-    typescript: "function canConstruct(ransomNote: string, magazine: string): boolean {\n  // your code here\n}",
-
-    python: 'def canConstruct(ransomNote: str, magazine: str) -> bool:\n    # your code here\n    pass\n',
+    javascript: `function canConstruct(ransomNote, magazine) {
+  const freq = new Map();
+  for (const c of magazine) freq.set(c, (freq.get(c) ?? 0) + 1);
+  for (const c of ransomNote) {
+    if (!freq.get(c)) return false;
+    freq.set(c, freq.get(c) - 1);
+  }
+  return true;
+}`,
+    typescript: `function canConstruct(ransomNote: string, magazine: string): boolean {
+  const freq = new Map<string, number>();
+  for (const c of magazine) freq.set(c, (freq.get(c) ?? 0) + 1);
+  for (const c of ransomNote) {
+    if (!freq.get(c)) return false;
+    freq.set(c, freq.get(c)! - 1);
+  }
+  return true;
+}`,
+    python: `def canConstruct(ransomNote, magazine):
+    from collections import Counter
+    mag = Counter(magazine)
+    for c in ransomNote:
+        if mag[c] == 0:
+            return False
+        mag[c] -= 1
+    return True`,
   },
   visibleTests: [
     { args: ['a', 'b'], expected: false },

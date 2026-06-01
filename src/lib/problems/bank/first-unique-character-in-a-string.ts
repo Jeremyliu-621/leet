@@ -36,12 +36,24 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: `function firstUniqChar(s) {
-
+  const freq = new Map();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  for (let i = 0; i < s.length; i++) if (freq.get(s[i]) === 1) return i;
+  return -1;
 }`,
-    typescript: "function firstUniqChar(s: string): number {\n\n}",
-
+    typescript: `function firstUniqChar(s: string): number {
+  const freq = new Map<string, number>();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  for (let i = 0; i < s.length; i++) if (freq.get(s[i]) === 1) return i;
+  return -1;
+}`,
     python: `def firstUniqChar(s):
-    pass`,
+    from collections import Counter
+    freq = Counter(s)
+    for i, c in enumerate(s):
+        if freq[c] == 1:
+            return i
+    return -1`,
   },
   visibleTests: [
     { args: ['leetcode'], expected: 0 },
