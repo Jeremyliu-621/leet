@@ -302,14 +302,263 @@ const PYTHON_SNIPPETS = [
   }),
 ];
 
+const JAVA_SNIPPETS = [
+  snippetCompletion('for (int ${i} = 0; ${i} < ${n}; ${i}++) {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (int ${i} = ${arr}.length - 1; ${i} >= 0; ${i}--) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (${Type} ${item} : ${arr}) {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'enhanced for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while (${condition}) {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('Map<${K}, ${V}> ${map} = new HashMap<>();\n${}', {
+    label: 'newmap',
+    detail: 'new HashMap<>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('Set<${T}> ${set} = new HashSet<>();\n${}', {
+    label: 'newset',
+    detail: 'new HashSet<>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('List<${T}> ${list} = new ArrayList<>();\n${}', {
+    label: 'list',
+    detail: 'new ArrayList<>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('int ${n} = ${arr}.length;\n${}', {
+    label: 'len',
+    detail: 'array length',
+    type: 'keyword',
+  }),
+  snippetCompletion('Arrays.sort(${arr});\n${}', {
+    label: 'sort',
+    detail: 'Arrays.sort()',
+    type: 'keyword',
+  }),
+  snippetCompletion('PriorityQueue<${T}> ${pq} = new PriorityQueue<>();\n${}', {
+    label: 'pq',
+    detail: 'PriorityQueue (min-heap)',
+    type: 'keyword',
+  }),
+];
+
+const CPP_SNIPPETS = [
+  snippetCompletion('for (int ${i} = 0; ${i} < ${n}; ${i}++) {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (int ${i} = ${n} - 1; ${i} >= 0; ${i}--) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (auto& ${item} : ${arr}) {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'range-based for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while (${condition}) {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('unordered_map<${K}, ${V}> ${mp};\n${}', {
+    label: 'newmap',
+    detail: 'unordered_map',
+    type: 'keyword',
+  }),
+  snippetCompletion('unordered_set<${T}> ${st};\n${}', {
+    label: 'newset',
+    detail: 'unordered_set',
+    type: 'keyword',
+  }),
+  snippetCompletion('vector<${T}> ${v};\n${}', {
+    label: 'vec',
+    detail: 'vector declaration',
+    type: 'keyword',
+  }),
+  snippetCompletion('int ${n} = ${arr}.size();\n${}', {
+    label: 'len',
+    detail: 'vector size',
+    type: 'keyword',
+  }),
+  snippetCompletion('sort(${arr}.begin(), ${arr}.end());\n${}', {
+    label: 'sort',
+    detail: 'sort ascending',
+    type: 'keyword',
+  }),
+  snippetCompletion('priority_queue<${T}, vector<${T}>, greater<${T}>> ${pq};\n${}', {
+    label: 'pq',
+    detail: 'min-heap priority_queue',
+    type: 'keyword',
+  }),
+];
+
+const GO_SNIPPETS = [
+  snippetCompletion('for ${i} := 0; ${i} < ${n}; ${i}++ {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${i} := ${n} - 1; ${i} >= 0; ${i}-- {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${i}, ${v} := range ${arr} {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'range for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${condition} {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while-style loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition} {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition} {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('${mp} := make(map[${K}]${V})\n${}', {
+    label: 'newmap',
+    detail: 'make(map[K]V)',
+    type: 'keyword',
+  }),
+  snippetCompletion('${n} := len(${arr})\n${}', {
+    label: 'len',
+    detail: 'len()',
+    type: 'keyword',
+  }),
+  snippetCompletion('sort.Ints(${arr})\n${}', {
+    label: 'sort',
+    detail: 'sort.Ints()',
+    type: 'keyword',
+  }),
+  snippetCompletion('${h} := &MinHeap{}\nheap.Init(${h})\n${}', {
+    label: 'heap',
+    detail: 'heap setup',
+    type: 'keyword',
+  }),
+];
+
+const RUST_SNIPPETS = [
+  snippetCompletion('for ${i} in 0..${n} {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for range loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${i} in (0..${n}).rev() {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${item} in ${iter}.iter() {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'for iter loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while ${condition} {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition} {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition} {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('let mut ${map}: HashMap<${K}, ${V}> = HashMap::new();\n${}', {
+    label: 'newmap',
+    detail: 'HashMap::new()',
+    type: 'keyword',
+  }),
+  snippetCompletion('let mut ${set}: HashSet<${T}> = HashSet::new();\n${}', {
+    label: 'newset',
+    detail: 'HashSet::new()',
+    type: 'keyword',
+  }),
+  snippetCompletion('let ${n} = ${arr}.len();\n${}', {
+    label: 'len',
+    detail: 'vec.len()',
+    type: 'keyword',
+  }),
+  snippetCompletion('${arr}.sort();\n${}', {
+    label: 'sort',
+    detail: 'sort ascending',
+    type: 'keyword',
+  }),
+  snippetCompletion('let mut ${v}: Vec<${T}> = Vec::new();\n${}', {
+    label: 'vec',
+    detail: 'Vec::new()',
+    type: 'keyword',
+  }),
+];
+
 /**
  * Returns an EditorState.languageData extension that adds snippet completions
  * for the given language ALONGSIDE the native language completions (i.e. does
  * not replace keyword / variable completions from the language plugin).
  */
 function snippetLanguageData(language: SupportedLanguage) {
-  const snippets =
-    language === 'python' ? PYTHON_SNIPPETS : language === 'typescript' ? TS_SNIPPETS : JS_SNIPPETS;
+  let snippets;
+  switch (language) {
+    case 'python': snippets = PYTHON_SNIPPETS; break;
+    case 'typescript': snippets = TS_SNIPPETS; break;
+    case 'java':
+    case 'kotlin':
+      snippets = JAVA_SNIPPETS; break;
+    case 'cpp':
+    case 'csharp':
+      snippets = CPP_SNIPPETS; break;
+    case 'go': snippets = GO_SNIPPETS; break;
+    case 'rust': snippets = RUST_SNIPPETS; break;
+    default: snippets = JS_SNIPPETS;
+  }
   const source: CompletionSource = (context: CompletionContext) => {
     const word = context.matchBefore(/\w+/);
     if (!word || (word.from === word.to && !context.explicit)) return null;
