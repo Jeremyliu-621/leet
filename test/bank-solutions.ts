@@ -46005,6 +46005,110 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...top3].sort((a, b) => b - a);
   },
 
+  'find-the-median-of-the-uniqueness-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const total = n * (n + 1) / 2;
+    const medianPos = Math.ceil(total / 2);
+    function countAtMost(k: number): number {
+      const freq = new Map<number, number>();
+      let left = 0, cnt = 0;
+      for (let right = 0; right < n; right++) {
+        const rv = nums[right]!;
+        freq.set(rv, (freq.get(rv) ?? 0) + 1);
+        while (freq.size > k) {
+          const lv = nums[left++]!;
+          if (freq.get(lv) === 1) freq.delete(lv);
+          else freq.set(lv, freq.get(lv)! - 1);
+        }
+        cnt += right - left + 1;
+      }
+      return cnt;
+    }
+    let lo = 1, hi = n;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (countAtMost(mid) >= medianPos) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'find-maximum-xor-for-each-query': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maximumBit = args[1] as number;
+    const mask = (1 << maximumBit) - 1;
+    let xorAll = 0;
+    for (const x of nums) xorAll ^= x;
+    const result: number[] = [];
+    for (let i = nums.length - 1; i >= 0; i--) {
+      result.push(xorAll ^ mask);
+      xorAll ^= nums[i]!;
+    }
+    return result;
+  },
+
+  'minimum-number-of-increments-on-subarrays': (...args: unknown[]) => {
+    const target = args[0] as number[];
+    let ops = target[0]!;
+    for (let i = 1; i < target.length; i++) {
+      if (target[i]! > target[i - 1]!) ops += target[i]! - target[i - 1]!;
+    }
+    return ops;
+  },
+
+  'find-the-maximum-length-of-a-good-subsequence-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const dp = Array.from({ length: k + 1 }, () => new Map<number, number>());
+    const maxDp = new Array<number>(k + 1).fill(0);
+    for (const v of nums) {
+      const prevSame = dp.map(d => d.get(v) ?? 0);
+      const prevMax = [...maxDp];
+      for (let j = 0; j <= k; j++) {
+        let val: number;
+        if (j === 0) {
+          val = prevSame[0]! + 1;
+        } else {
+          const fromSame = prevSame[j]! > 0 ? prevSame[j]! + 1 : 0;
+          const fromDiff = prevMax[j - 1]! > 0 ? prevMax[j - 1]! + 1 : 0;
+          val = Math.max(fromSame, fromDiff);
+        }
+        if (val > 0) {
+          dp[j]!.set(v, Math.max(dp[j]!.get(v) ?? 0, val));
+          if (val > maxDp[j]!) maxDp[j] = val;
+        }
+      }
+    }
+    return maxDp[k]!;
+  },
+
+  'find-the-maximum-length-of-a-good-subsequence-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const dp = Array.from({ length: k + 1 }, () => new Map<number, number>());
+    const maxDp = new Array<number>(k + 1).fill(0);
+    for (const v of nums) {
+      const prevSame = dp.map(d => d.get(v) ?? 0);
+      const prevMax = [...maxDp];
+      for (let j = 0; j <= k; j++) {
+        let val: number;
+        if (j === 0) {
+          val = prevSame[0]! + 1;
+        } else {
+          const fromSame = prevSame[j]! > 0 ? prevSame[j]! + 1 : 0;
+          const fromDiff = prevMax[j - 1]! > 0 ? prevMax[j - 1]! + 1 : 0;
+          val = Math.max(fromSame, fromDiff);
+        }
+        if (val > 0) {
+          dp[j]!.set(v, Math.max(dp[j]!.get(v) ?? 0, val));
+          if (val > maxDp[j]!) maxDp[j] = val;
+        }
+      }
+    }
+    return maxDp[k]!;
+  },
+
   'find-score-of-array-after-marking-all-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;

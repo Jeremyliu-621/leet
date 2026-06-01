@@ -3105,6 +3105,12 @@ import { problem as maxStrengthKDisjointSubarrays } from './maximum-strength-of-
 import { problem as shortestUncommonSubstringArr } from './shortest-uncommon-substring-in-an-array';
 import { problem as longestCommonSuffixQueries } from './longest-common-suffix-queries';
 import { problem as findScoreMarkingElements } from './find-score-of-array-after-marking-all-elements';
+// batch 257
+import { problem as findMedianUniquenessArray } from './find-the-median-of-the-uniqueness-array';
+import { problem as findMaxXorEachQuery } from './find-maximum-xor-for-each-query';
+import { problem as minIncrementsOnSubarrays } from './minimum-number-of-increments-on-subarrays';
+import { problem as maxLenGoodSubseqI } from './find-the-maximum-length-of-a-good-subsequence-i';
+import { problem as maxLenGoodSubseqII } from './find-the-maximum-length-of-a-good-subsequence-ii';
 // batch 255
 import { problem as countUniqueGoodSubseqs } from './count-unique-good-subsequences';
 import { problem as sumKMirrorNumbers } from './sum-of-k-mirror-numbers';
@@ -6366,6 +6372,12 @@ export const problems: readonly Problem[] = [
   shortestUncommonSubstringArr,
   longestCommonSuffixQueries,
   findScoreMarkingElements,
+  // batch 257
+  findMedianUniquenessArray,
+  findMaxXorEachQuery,
+  minIncrementsOnSubarrays,
+  maxLenGoodSubseqI,
+  maxLenGoodSubseqII,
   // batch 255
   countUniqueGoodSubseqs,
   sumKMirrorNumbers,

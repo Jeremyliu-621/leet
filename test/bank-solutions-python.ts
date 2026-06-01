@@ -45019,6 +45019,101 @@ def findScore(nums):
     return score
 `,
 
+  'find-the-median-of-the-uniqueness-array': `
+def findMedian(nums):
+    n = len(nums)
+    total = n * (n + 1) // 2
+    median_pos = (total + 1) // 2
+
+    def count_at_most(k):
+        freq = {}
+        left = cnt = 0
+        for right, v in enumerate(nums):
+            freq[v] = freq.get(v, 0) + 1
+            while len(freq) > k:
+                lv = nums[left]
+                if freq[lv] == 1:
+                    del freq[lv]
+                else:
+                    freq[lv] -= 1
+                left += 1
+            cnt += right - left + 1
+        return cnt
+
+    lo, hi = 1, n
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count_at_most(mid) >= median_pos:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'find-maximum-xor-for-each-query': `
+def getMaximumXor(nums, maximumBit):
+    mask = (1 << maximumBit) - 1
+    xor_all = 0
+    for x in nums:
+        xor_all ^= x
+    result = []
+    for i in range(len(nums) - 1, -1, -1):
+        result.append(xor_all ^ mask)
+        xor_all ^= nums[i]
+    return result
+`,
+
+  'minimum-number-of-increments-on-subarrays': `
+def minNumberOperations(target):
+    ops = target[0]
+    for i in range(1, len(target)):
+        if target[i] > target[i - 1]:
+            ops += target[i] - target[i - 1]
+    return ops
+`,
+
+  'find-the-maximum-length-of-a-good-subsequence-i': `
+def maximumLength(nums, k):
+    dp = [{} for _ in range(k + 1)]
+    max_dp = [0] * (k + 1)
+    for v in nums:
+        prev_same = [d.get(v, 0) for d in dp]
+        prev_max = list(max_dp)
+        for j in range(k + 1):
+            if j == 0:
+                val = prev_same[0] + 1
+            else:
+                from_same = prev_same[j] + 1 if prev_same[j] > 0 else 0
+                from_diff = prev_max[j - 1] + 1 if prev_max[j - 1] > 0 else 0
+                val = max(from_same, from_diff)
+            if val > 0:
+                dp[j][v] = max(dp[j].get(v, 0), val)
+                if val > max_dp[j]:
+                    max_dp[j] = val
+    return max_dp[k]
+`,
+
+  'find-the-maximum-length-of-a-good-subsequence-ii': `
+def maximumLength(nums, k):
+    dp = [{} for _ in range(k + 1)]
+    max_dp = [0] * (k + 1)
+    for v in nums:
+        prev_same = [d.get(v, 0) for d in dp]
+        prev_max = list(max_dp)
+        for j in range(k + 1):
+            if j == 0:
+                val = prev_same[0] + 1
+            else:
+                from_same = prev_same[j] + 1 if prev_same[j] > 0 else 0
+                from_diff = prev_max[j - 1] + 1 if prev_max[j - 1] > 0 else 0
+                val = max(from_same, from_diff)
+            if val > 0:
+                dp[j][v] = max(dp[j].get(v, 0), val)
+                if val > max_dp[j]:
+                    max_dp[j] = val
+    return max_dp[k]
+`,
+
   'maximum-number-of-elements-in-two-arrays': `
 def maxElements(nums1, nums2):
     s1, s2 = set(nums1), set(nums2)
