@@ -43520,6 +43520,99 @@ def idealArrays(n, maxValue):
     return ans
 `,
 
+  'minimum-operations-to-sort-binary-tree-by-level': `
+from collections import deque
+def minimumOperationsTree(root):
+    def to_int_or_none(v):
+        try: return int(v)
+        except: return None
+    arr = [to_int_or_none(v) for v in root]
+    def min_swaps_sort(vals):
+        n = len(vals)
+        sorted_vals = sorted(vals)
+        pos = {v: i for i, v in enumerate(vals)}
+        visited = [False] * n
+        swaps = 0
+        for i in range(n):
+            if visited[i] or vals[i] == sorted_vals[i]:
+                visited[i] = True
+                continue
+            cycle_len, j = 0, i
+            while not visited[j]:
+                visited[j] = True
+                j = pos[sorted_vals[j]]
+                cycle_len += 1
+            swaps += cycle_len - 1
+        return swaps
+    q = deque([0])
+    ops = 0
+    while q:
+        next_q = []
+        level_vals = []
+        for i in list(q):
+            level_vals.append(arr[i])
+            l, r = 2*i+1, 2*i+2
+            if l < len(arr) and arr[l] is not None:
+                next_q.append(l)
+            if r < len(arr) and arr[r] is not None:
+                next_q.append(r)
+        ops += min_swaps_sort(level_vals)
+        q = deque(next_q)
+    return ops
+`,
+
+  'sum-of-subsequence-widths': `
+def sumSubseqWidths(nums):
+    MOD = 10**9 + 7
+    n = len(nums)
+    nums = sorted(nums)
+    ans = 0
+    pow2 = 1
+    for i in range(n):
+        ans = (ans + nums[i] * pow2 - nums[n-1-i] * pow2) % MOD
+        pow2 = pow2 * 2 % MOD
+    return ans % MOD
+`,
+
+  'number-of-different-subsequences-gcds': `
+from math import gcd
+def countDifferentSubseqGCDs(nums):
+    max_val = max(nums)
+    present = set(nums)
+    ans = 0
+    for g in range(1, max_val + 1):
+        cur_gcd = 0
+        mult = g
+        while mult <= max_val:
+            if mult in present:
+                cur_gcd = gcd(cur_gcd, mult)
+            mult += g
+        if cur_gcd == g:
+            ans += 1
+    return ans
+`,
+
+  'smallest-range-covering-elements-from-k-lists': `
+import heapq
+def smallestRange(nums):
+    heap = []
+    cur_max = float('-inf')
+    for i, lst in enumerate(nums):
+        heapq.heappush(heap, (lst[0], i, 0))
+        cur_max = max(cur_max, lst[0])
+    range_l, range_r = -10**5, 10**5
+    while len(heap) == len(nums):
+        val, li, ei = heapq.heappop(heap)
+        if cur_max - val < range_r - range_l:
+            range_l, range_r = val, cur_max
+        if ei + 1 >= len(nums[li]):
+            break
+        nxt = nums[li][ei + 1]
+        heapq.heappush(heap, (nxt, li, ei + 1))
+        cur_max = max(cur_max, nxt)
+    return [range_l, range_r]
+`,
+
   'minimum-operations-to-make-array-xor-equal-to-k': `
 def minOperationsXor(nums, k):
     xor_all = 0

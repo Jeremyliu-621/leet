@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2716** problems; 8442 tests green. Batches 102–246 complete.
+**Current focus:** Bank at **2720** problems; 8454 tests green. Batches 102–247 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 247+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 248+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 247 — sort-tree-by-level, subseq-widths, diff-subseq-gcds, smallest-range-k-lists (2026-06-01)
+Four new problems: `minimum-operations-to-sort-binary-tree-by-level` (medium/tree, LC 2471 — BFS level-by-level; min swaps per level = n − cycles in value→sorted-position permutation), `sum-of-subsequence-widths` (hard/arrays+math, LC 891 — sort array; contribution of sorted[i] as max = 2^i subsequences, as min = 2^(n-1-i) subsequences; sum (sorted[i] * (2^i − 2^(n-1-i))) mod 10^9+7), `number-of-different-subsequences-gcds` (hard/arrays+math, LC 1819 — sieve approach: for each g from 1 to max, compute GCD of all multiples of g present in nums; if equals g, count it), `smallest-range-covering-elements-from-k-lists` (hard/arrays+heap, LC 632 — min-heap of (value, listIdx, elemIdx) one from each list; track curMax; pop min and check/update range; advance that list). Bank at **2717**; 8445 tests.
 
 ### feat(bank): batch 245 (local) — sparse-table-RMQ, matrix-exponentiation, suffix-array-LCP (2026-06-01)
 Three new algorithm problems: `sparse-table-range-min` (medium/arrays+binary-search — O(n log n) sparse table; O(1) RMQ via two overlapping windows of size 2^k; no updates required), `matrix-exponentiation` (hard/math+dp — k×k companion matrix; O(k³ log n) via fast matrix power; handles arbitrary linear recurrences including Fibonacci, tribonacci, arithmetic progressions; returns f(n) mod 10^9+7), `suffix-array-lcp` (hard/strings — O(n log² n) prefix-doubling SA; O(n) Kasai LCP construction; returns [SA, LCP] pair). Bank at **2716**; 8442 tests.

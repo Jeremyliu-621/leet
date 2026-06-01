@@ -44300,6 +44300,117 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'minimum-operations-to-sort-binary-tree-by-level': (root: unknown) => {
+    const arr = root as (number | null)[];
+    const q: number[] = [0];
+    let ops = 0;
+    function minSwapsToSort(vals: number[]): number {
+      const n = vals.length;
+      const sorted = [...vals].sort((a, b) => a - b);
+      const pos = new Map<number, number>(vals.map((v, i) => [v, i]));
+      const visited = new Array<boolean>(n).fill(false);
+      let swaps = 0;
+      for (let i = 0; i < n; i++) {
+        if (visited[i] || vals[i] === sorted[i]) { visited[i] = true; continue; }
+        let cycleLen = 0, j = i;
+        while (!visited[j]) { visited[j] = true; j = pos.get(sorted[j]!)!; cycleLen++; }
+        swaps += cycleLen - 1;
+      }
+      return swaps;
+    }
+    while (q.length > 0) {
+      const nextQ: number[] = [];
+      const levelVals: number[] = [];
+      for (const i of q) {
+        levelVals.push(arr[i] as number);
+        const l = 2 * i + 1, r = 2 * i + 2;
+        if (l < arr.length && arr[l] != null) nextQ.push(l);
+        if (r < arr.length && arr[r] != null) nextQ.push(r);
+      }
+      ops += minSwapsToSort(levelVals);
+      q.splice(0, q.length, ...nextQ);
+    }
+    return ops;
+  },
+
+  'sum-of-subsequence-widths': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const sorted = [...nums].sort((a, b) => a - b);
+    let ans = 0n, pow2 = 1n;
+    for (let i = 0; i < n; i++) {
+      ans = (ans + BigInt(sorted[i]!) * pow2 - BigInt(sorted[n - 1 - i]!) * pow2) % MOD;
+      pow2 = pow2 * 2n % MOD;
+    }
+    return Number((ans + MOD) % MOD);
+  },
+
+  'number-of-different-subsequences-gcds': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const maxVal = Math.max(...nums);
+    const present = new Set(nums);
+    function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+    let ans = 0;
+    for (let g = 1; g <= maxVal; g++) {
+      let curGcd = 0;
+      for (let mult = g; mult <= maxVal; mult += g) {
+        if (present.has(mult)) curGcd = gcd(curGcd, mult);
+      }
+      if (curGcd === g) ans++;
+    }
+    return ans;
+  },
+
+  'smallest-range-covering-elements-from-k-lists': (...args: unknown[]) => {
+    const [nums] = args as [number[][]];
+    type Entry = [number, number, number];
+    const heap: Entry[] = [];
+    function heapPush(item: Entry) {
+      heap.push(item);
+      let i = heap.length - 1;
+      while (i > 0) {
+        const p = (i - 1) >> 1;
+        if (heap[p]![0] <= heap[i]![0]) break;
+        [heap[p], heap[i]] = [heap[i]!, heap[p]!];
+        i = p;
+      }
+    }
+    function heapPop(): Entry {
+      const top = heap[0]!;
+      const last = heap.pop()!;
+      if (heap.length > 0) {
+        heap[0] = last;
+        let i = 0;
+        while (true) {
+          const l = 2 * i + 1, r = 2 * i + 2;
+          let sm = i;
+          if (l < heap.length && heap[l]![0] < heap[sm]![0]) sm = l;
+          if (r < heap.length && heap[r]![0] < heap[sm]![0]) sm = r;
+          if (sm === i) break;
+          [heap[i], heap[sm]] = [heap[sm]!, heap[i]!];
+          i = sm;
+        }
+      }
+      return top;
+    }
+    let curMax = -Infinity;
+    for (let i = 0; i < nums.length; i++) {
+      heapPush([nums[i]![0]!, i, 0]);
+      curMax = Math.max(curMax, nums[i]![0]!);
+    }
+    let rangeL = -1e9, rangeR = 1e9;
+    while (heap.length === nums.length) {
+      const [val, li, ei] = heapPop();
+      if (curMax - val < rangeR - rangeL) { rangeL = val; rangeR = curMax; }
+      if (ei + 1 >= nums[li]!.length) break;
+      const next = nums[li]![ei + 1]!;
+      heapPush([next, li, ei + 1]);
+      curMax = Math.max(curMax, next);
+    }
+    return [rangeL, rangeR];
+  },
+
   'minimum-operations-to-make-array-xor-equal-to-k': (...args: unknown[]) => {
     const [nums, k] = args as [number[], number];
     const xorAll = nums.reduce((acc, x) => acc ^ x, 0);

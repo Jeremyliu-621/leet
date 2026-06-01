@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 247
+import { problem as minOpsSortTreeByLevel } from './minimum-operations-to-sort-binary-tree-by-level';
+import { problem as sumSubseqWidths } from './sum-of-subsequence-widths';
+import { problem as countDiffSubseqGCDs } from './number-of-different-subsequences-gcds';
+import { problem as smallestRangeKLists } from './smallest-range-covering-elements-from-k-lists';
 // batch 246
 import { problem as minOpsXorEqualK } from './minimum-operations-to-make-array-xor-equal-to-k';
 import { problem as countNodesEqualSumDesc } from './count-nodes-equal-to-sum-of-descendants';
@@ -6268,4 +6273,9 @@ export const problems: readonly Problem[] = [
   sparseTableRMQ,
   matrixExponentiation,
   suffixArrayLCP,
+  // batch 247
+  minOpsSortTreeByLevel,
+  sumSubseqWidths,
+  countDiffSubseqGCDs,
+  smallestRangeKLists,
 ];
