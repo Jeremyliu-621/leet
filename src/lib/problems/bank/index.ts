@@ -3096,6 +3096,11 @@ import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequence
 import { problem as magicSquaresInGrid } from './magic-squares-in-grid';
 import { problem as kEmptySlots } from './k-empty-slots';
 import { problem as optimalAccountBalancing } from './optimal-account-balancing';
+import { problem as countCompleteComponents } from './count-complete-components';
+import { problem as differenceDistinctDiagonals } from './difference-of-number-of-distinct-values-on-diagonals';
+import { problem as minOpsIntegerZero } from './minimum-operations-to-make-the-integer-zero';
+import { problem as decrementalStringConcat } from './decremental-string-concatenation';
+import { problem as waysToSplitGoodSubarrays } from './ways-to-split-array-into-good-subarrays';
 // batch 249
 import { problem as countCollisionsMonkeys } from './count-collisions-of-monkeys-on-a-polygon';
 import { problem as countSquareFreeSubsets } from './count-the-number-of-square-free-subsets';
@@ -6297,6 +6302,11 @@ export const problems: readonly Problem[] = [
   magicSquaresInGrid,
   kEmptySlots,
   optimalAccountBalancing,
+  countCompleteComponents,
+  differenceDistinctDiagonals,
+  minOpsIntegerZero,
+  decrementalStringConcat,
+  waysToSplitGoodSubarrays,
   // batch 249
   countCollisionsMonkeys,
   countSquareFreeSubsets,

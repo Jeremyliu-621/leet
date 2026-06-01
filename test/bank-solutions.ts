@@ -44893,6 +44893,106 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return usedP + q! + r!;
   },
 
+  'count-complete-components': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const rank = new Array<number>(n).fill(0);
+    function find(x: number): number {
+      if (parent[x] !== x) parent[x] = find(parent[x]!);
+      return parent[x]!;
+    }
+    function union(x: number, y: number): void {
+      const px = find(x), py = find(y);
+      if (px === py) return;
+      if (rank[px]! < rank[py]!) { parent[px] = py; }
+      else if (rank[px]! > rank[py]!) { parent[py] = px; }
+      else { parent[py] = px; rank[px]!++; }
+    }
+    for (const [a, b] of edges) union(a!, b!);
+    const nodeCount = new Map<number, number>();
+    const edgeCount = new Map<number, number>();
+    for (let i = 0; i < n; i++) {
+      const p = find(i);
+      nodeCount.set(p, (nodeCount.get(p) ?? 0) + 1);
+    }
+    for (const [a] of edges) {
+      const p = find(a!);
+      edgeCount.set(p, (edgeCount.get(p) ?? 0) + 1);
+    }
+    let count = 0;
+    for (const [p, nc] of nodeCount) {
+      const ec = edgeCount.get(p) ?? 0;
+      if (ec === nc * (nc - 1) / 2) count++;
+    }
+    return count;
+  },
+
+  'difference-of-number-of-distinct-values-on-diagonals': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const answer: number[][] = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    for (let r = 0; r < m; r++) {
+      for (let c = 0; c < n; c++) {
+        const tl = new Set<number>();
+        let i = 1;
+        while (r - i >= 0 && c - i >= 0) { tl.add(grid[r - i]![c - i]!); i++; }
+        const br = new Set<number>();
+        i = 1;
+        while (r + i < m && c + i < n) { br.add(grid[r + i]![c + i]!); i++; }
+        answer[r]![c] = Math.abs(tl.size - br.size);
+      }
+    }
+    return answer;
+  },
+
+  'minimum-operations-to-make-the-integer-zero': (...args: unknown[]) => {
+    const num1 = args[0] as number, num2 = args[1] as number;
+    for (let k = 1; k <= 64; k++) {
+      const val = num1 - k * num2;
+      if (val < k) return -1;
+      const bits = val.toString(2).split('').filter(b => b === '1').length;
+      if (bits <= k) return k;
+    }
+    return -1;
+  },
+
+  'decremental-string-concatenation': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const INF = Infinity;
+    type State = Map<string, number>;
+    const w0 = words[0]!;
+    let dp: State = new Map([[`${w0[0]}|${w0[w0.length - 1]}`, w0.length]]);
+    for (let i = 1; i < words.length; i++) {
+      const wi = words[i]!;
+      const wf = wi[0]!, wl = wi[wi.length - 1]!;
+      const next: State = new Map();
+      const upd = (key: string, val: number) => {
+        next.set(key, Math.min(next.get(key) ?? INF, val));
+      };
+      for (const [state, len] of dp) {
+        const [sf, sl] = state.split('|') as [string, string];
+        const appendSave = sl === wf ? 1 : 0;
+        upd(`${sf}|${wl}`, len + wi.length - appendSave);
+        const prependSave = wl === sf ? 1 : 0;
+        upd(`${wf}|${sl}`, len + wi.length - prependSave);
+      }
+      dp = next;
+    }
+    return Math.min(...dp.values());
+  },
+
+  'ways-to-split-array-into-good-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1000000007n;
+    const ones: number[] = [];
+    for (let i = 0; i < nums.length; i++) if (nums[i] === 1) ones.push(i);
+    if (ones.length === 0) return 0;
+    let result = 1n;
+    for (let i = 1; i < ones.length; i++) result = (result * BigInt(ones[i]! - ones[i - 1]!)) % MOD;
+    return Number(result);
+  },
+
   'count-collisions-of-monkeys-on-a-polygon': (...args: unknown[]) => {
     const n = args[0] as number;
     const MOD = 1000000007n;

@@ -44193,6 +44193,94 @@ def longestDiverseString(a, b, c):
     return ''.join(res)
 `,
 
+  'count-complete-components': `
+def countCompleteComponents(n, edges):
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    def union(x, y):
+        px, py = find(x), find(y)
+        if px == py: return
+        if rank[px] < rank[py]: px, py = py, px
+        parent[py] = px
+        if rank[px] == rank[py]: rank[px] += 1
+    for a, b in edges:
+        union(a, b)
+    from collections import defaultdict
+    node_cnt = defaultdict(int)
+    edge_cnt = defaultdict(int)
+    for i in range(n):
+        node_cnt[find(i)] += 1
+    for a, b in edges:
+        edge_cnt[find(a)] += 1
+    return sum(1 for p, nc in node_cnt.items() if edge_cnt[p] == nc * (nc - 1) // 2)
+`,
+
+  'difference-of-number-of-distinct-values-on-diagonals': `
+def differenceOfDistinctValues(grid):
+    m, n = len(grid), len(grid[0])
+    answer = [[0] * n for _ in range(m)]
+    for r in range(m):
+        for c in range(n):
+            tl = set()
+            i = 1
+            while r - i >= 0 and c - i >= 0:
+                tl.add(grid[r - i][c - i]); i += 1
+            br = set()
+            i = 1
+            while r + i < m and c + i < n:
+                br.add(grid[r + i][c + i]); i += 1
+            answer[r][c] = abs(len(tl) - len(br))
+    return answer
+`,
+
+  'minimum-operations-to-make-the-integer-zero': `
+def makeTheIntegerZero(num1, num2):
+    for k in range(1, 65):
+        val = num1 - k * num2
+        if val < k:
+            return -1
+        if bin(val).count('1') <= k:
+            return k
+    return -1
+`,
+
+  'decremental-string-concatenation': `
+def minimizeConcatenatedLength(words):
+    INF = float('inf')
+    w0 = words[0]
+    dp = {(w0[0], w0[-1]): len(w0)}
+    for i in range(1, len(words)):
+        wi = words[i]
+        wf, wl = wi[0], wi[-1]
+        nxt = {}
+        for (sf, sl), length in dp.items():
+            append_save = 1 if sl == wf else 0
+            key = (sf, wl)
+            nxt[key] = min(nxt.get(key, INF), length + len(wi) - append_save)
+            prepend_save = 1 if wl == sf else 0
+            key2 = (wf, sl)
+            nxt[key2] = min(nxt.get(key2, INF), length + len(wi) - prepend_save)
+        dp = nxt
+    return min(dp.values())
+`,
+
+  'ways-to-split-array-into-good-subarrays': `
+def numberOfGoodSubarraySplits(nums):
+    MOD = 10**9 + 7
+    ones = [i for i, x in enumerate(nums) if x == 1]
+    if not ones:
+        return 0
+    result = 1
+    for i in range(1, len(ones)):
+        result = result * (ones[i] - ones[i - 1]) % MOD
+    return result
+`,
+
   'count-collisions-of-monkeys-on-a-polygon': `
 def monkeyMove(n):
     MOD = 10**9 + 7
