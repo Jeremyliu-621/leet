@@ -45,10 +45,40 @@ The intersection of two closed intervals \`[a, b]\` and \`[c, d]\` is \`[max(a,c
   functionName: 'intervalIntersection',
   params: ['firstList', 'secondList'] as readonly string[],
   starterCode: {
-    javascript: 'function intervalIntersection(firstList, secondList) {\n  // your code here\n}\n',
-    typescript: "function intervalIntersection(firstList: number[][], secondList: number[][]): number[][] {\n  // your code here\n}",
-
-    python: 'def intervalIntersection(firstList: list[list[int]], secondList: list[list[int]]) -> list[list[int]]:\n    # your code here\n    pass\n',
+    javascript: `function intervalIntersection(firstList, secondList) {
+  const res = [];
+  let i = 0, j = 0;
+  while (i < firstList.length && j < secondList.length) {
+    const lo = Math.max(firstList[i][0], secondList[j][0]);
+    const hi = Math.min(firstList[i][1], secondList[j][1]);
+    if (lo <= hi) res.push([lo, hi]);
+    if (firstList[i][1] < secondList[j][1]) i++; else j++;
+  }
+  return res;
+}`,
+    typescript: `function intervalIntersection(firstList: number[][], secondList: number[][]): number[][] {
+  const res: number[][] = [];
+  let i = 0, j = 0;
+  while (i < firstList.length && j < secondList.length) {
+    const lo = Math.max(firstList[i]![0]!, secondList[j]![0]!);
+    const hi = Math.min(firstList[i]![1]!, secondList[j]![1]!);
+    if (lo <= hi) res.push([lo, hi]);
+    if (firstList[i]![1]! < secondList[j]![1]!) i++; else j++;
+  }
+  return res;
+}`,
+    python: `def intervalIntersection(firstList, secondList):
+    firstList = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (firstList.to_py() if hasattr(firstList, 'to_py') else firstList)]
+    secondList = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (secondList.to_py() if hasattr(secondList, 'to_py') else secondList)]
+    res = []
+    i = j = 0
+    while i < len(firstList) and j < len(secondList):
+        lo = max(firstList[i][0], secondList[j][0])
+        hi = min(firstList[i][1], secondList[j][1])
+        if lo <= hi: res.append([lo, hi])
+        if firstList[i][1] < secondList[j][1]: i += 1
+        else: j += 1
+    return res`,
   },
   visibleTests: [
     { args: [[[0,2],[5,10],[13,23],[24,25]], [[1,5],[8,12],[15,24],[25,26]]], expected: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]] },

@@ -34,10 +34,61 @@ export const problem: Problem = {
   functionName: 'exclusiveTime',
   params: ['n', 'logs'],
   starterCode: {
-    javascript: `function exclusiveTime(n, logs) {\n  // your code here\n}\n`,
-    typescript: "function exclusiveTime(n: number, logs: string[]): number[] {\n  // your code here\n}",
-
-    python: `def exclusiveTime(n, logs):\n    # your code here\n    pass\n`,
+    javascript: `function exclusiveTime(n, logs) {
+  const result = new Array(n).fill(0);
+  const stack = [];
+  let prev = 0;
+  for (const log of logs) {
+    const [id, type, ts] = log.split(':');
+    const t = +ts;
+    if (type === 'start') {
+      if (stack.length) result[stack[stack.length - 1]] += t - prev;
+      stack.push(+id);
+      prev = t;
+    } else {
+      result[+id] += t - prev + 1;
+      stack.pop();
+      prev = t + 1;
+    }
+  }
+  return result;
+}`,
+    typescript: `function exclusiveTime(n: number, logs: string[]): number[] {
+  const result = new Array(n).fill(0) as number[];
+  const stack: number[] = [];
+  let prev = 0;
+  for (const log of logs) {
+    const [id, type, ts] = log.split(':');
+    const t = +ts!;
+    if (type === 'start') {
+      if (stack.length) result[stack[stack.length - 1]!]! += t - prev;
+      stack.push(+id!);
+      prev = t;
+    } else {
+      result[+id!]! += t - prev + 1;
+      stack.pop();
+      prev = t + 1;
+    }
+  }
+  return result;
+}`,
+    python: `def exclusiveTime(n, logs):
+    logs = list(logs.to_py()) if hasattr(logs, 'to_py') else list(logs)
+    result = [0] * n
+    stack = []
+    prev = 0
+    for log in logs:
+        id_, type_, ts = log.split(':')
+        t = int(ts)
+        if type_ == 'start':
+            if stack: result[stack[-1]] += t - prev
+            stack.append(int(id_))
+            prev = t
+        else:
+            result[int(id_)] += t - prev + 1
+            stack.pop()
+            prev = t + 1
+    return result`,
   },
   visibleTests: [
     {

@@ -46,11 +46,54 @@ Return a list of all high-access employees in any order.`,
   functionName: 'findHighAccessEmployees',
   params: ['accessTimes'],
   starterCode: {
-    javascript: 'function findHighAccessEmployees(accessTimes) {\n  // your code here\n}\n',
-    typescript: `function findHighAccessEmployees(accessTimes: string[][]): string[] {
-
+    javascript: `function findHighAccessEmployees(accessTimes) {
+  const toMin = t => +t.slice(0, 2) * 60 + +t.slice(2);
+  const map = new Map();
+  for (const [name, time] of accessTimes) {
+    const group = map.get(name) ?? [];
+    group.push(toMin(time));
+    map.set(name, group);
+  }
+  const result = [];
+  for (const [name, times] of map) {
+    times.sort((a, b) => a - b);
+    for (let i = 0; i + 2 < times.length; i++) {
+      if (times[i + 2] - times[i] < 60) { result.push(name); break; }
+    }
+  }
+  return result;
 }`,
-    python: 'def findHighAccessEmployees(accessTimes):\n    # your code here\n    pass\n',
+    typescript: `function findHighAccessEmployees(accessTimes: string[][]): string[] {
+  const toMin = (t: string) => +t.slice(0, 2) * 60 + +t.slice(2);
+  const map = new Map<string, number[]>();
+  for (const [name, time] of accessTimes) {
+    const group = map.get(name!) ?? [];
+    group.push(toMin(time!));
+    map.set(name!, group);
+  }
+  const result: string[] = [];
+  for (const [name, times] of map) {
+    times.sort((a, b) => a - b);
+    for (let i = 0; i + 2 < times.length; i++) {
+      if (times[i + 2]! - times[i]! < 60) { result.push(name); break; }
+    }
+  }
+  return result;
+}`,
+    python: `def findHighAccessEmployees(accessTimes):
+    accessTimes = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (accessTimes.to_py() if hasattr(accessTimes, 'to_py') else accessTimes)]
+    from collections import defaultdict
+    m = defaultdict(list)
+    for name, t in accessTimes:
+        m[name].append(int(t[:2]) * 60 + int(t[2:]))
+    result = []
+    for name, times in m.items():
+        times.sort()
+        for i in range(len(times) - 2):
+            if times[i + 2] - times[i] < 60:
+                result.append(name)
+                break
+    return result`,
   },
   visibleTests: [
     {

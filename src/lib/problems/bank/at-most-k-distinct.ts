@@ -40,10 +40,47 @@ Use a sliding window with a character-frequency map: expand the right boundary f
   functionName: 'atMostKDistinct',
   params: ['s', 'k'],
   starterCode: {
-    javascript: 'function atMostKDistinct(s, k) {\n  const freq = new Map();\n  let l = 0, best = 0;\n  for (let r = 0; r < s.length; r++) {\n    freq.set(s[r], (freq.get(s[r]) ?? 0) + 1);\n    while (freq.size > k) {\n      const lc = s[l++];\n      freq.set(lc, freq.get(lc) - 1);\n      if (freq.get(lc) === 0) freq.delete(lc);\n    }\n    best = Math.max(best, r - l + 1);\n  }\n  return best;\n}\n',
-    typescript: "function atMostKDistinct(s: string, k: number): number {\n  const freq = new Map<string, number>();\n  let l = 0, best = 0;\n  for (let r = 0; r < s.length; r++) {\n    freq.set(s[r]!, (freq.get(s[r]!) ?? 0) + 1);\n    while (freq.size > k) {\n      const lc = s[l++]!;\n      freq.set(lc, freq.get(lc)! - 1);\n      if (freq.get(lc) === 0) freq.delete(lc);\n    }\n    best = Math.max(best, r - l + 1);\n  }\n  return best;\n}",
-
-    python: 'def atMostKDistinct(s: str, k: int) -> int:\n    from collections import defaultdict\n    freq = defaultdict(int)\n    l = 0\n    best = 0\n    for r, c in enumerate(s):\n        freq[c] += 1\n        while len(freq) > k:\n            lc = s[l]\n            freq[lc] -= 1\n            if freq[lc] == 0:\n                del freq[lc]\n            l += 1\n        best = max(best, r - l + 1)\n    return best\n',
+    javascript: `function atMostKDistinct(s, k) {
+  const freq = new Map();
+  let l = 0, best = 0;
+  for (let r = 0; r < s.length; r++) {
+    freq.set(s[r], (freq.get(s[r]) ?? 0) + 1);
+    while (freq.size > k) {
+      const lc = s[l++];
+      freq.set(lc, freq.get(lc) - 1);
+      if (freq.get(lc) === 0) freq.delete(lc);
+    }
+    best = Math.max(best, r - l + 1);
+  }
+  return best;
+}`,
+    typescript: `function atMostKDistinct(s: string, k: number): number {
+  const freq = new Map<string, number>();
+  let l = 0, best = 0;
+  for (let r = 0; r < s.length; r++) {
+    freq.set(s[r]!, (freq.get(s[r]!) ?? 0) + 1);
+    while (freq.size > k) {
+      const lc = s[l++]!;
+      freq.set(lc, freq.get(lc)! - 1);
+      if (freq.get(lc) === 0) freq.delete(lc);
+    }
+    best = Math.max(best, r - l + 1);
+  }
+  return best;
+}`,
+    python: `def atMostKDistinct(s, k):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l = best = 0
+    for r, c in enumerate(s):
+        freq[c] += 1
+        while len(freq) > k:
+            freq[s[l]] -= 1
+            if freq[s[l]] == 0: del freq[s[l]]
+            l += 1
+        best = max(best, r - l + 1)
+    return best`,
   },
   visibleTests: [
     { args: ['eceba', 2], expected: 3 },

@@ -34,10 +34,36 @@ Return the result with each group's strings sorted lexicographically, and the gr
   functionName: 'groupStrings',
   params: ['strings'],
   starterCode: {
-    javascript: 'function groupStrings(strings) {\n  // your code here\n}\n',
-    typescript: "function groupStrings(strings: string[]): string[][] {\n  // your code here\n}",
-
-    python: 'def groupStrings(strings):\n    # your code here\n    pass\n',
+    javascript: `function groupStrings(strings) {
+  const key = s => s.split('').slice(1).map((c, i) => (c.charCodeAt(0) - s.charCodeAt(i) + 26) % 26).join(',');
+  const map = new Map();
+  for (const s of strings) {
+    const k = key(s);
+    const group = map.get(k) ?? [];
+    group.push(s);
+    map.set(k, group);
+  }
+  return [...map.values()].map(g => g.sort()).sort((a, b) => a[0].localeCompare(b[0]));
+}`,
+    typescript: `function groupStrings(strings: string[]): string[][] {
+  const key = (s: string) => [...s].slice(1).map((c, i) => (c.charCodeAt(0) - s.charCodeAt(i) + 26) % 26).join(',');
+  const map = new Map<string, string[]>();
+  for (const s of strings) {
+    const k = key(s);
+    const group = map.get(k) ?? [];
+    group.push(s);
+    map.set(k, group);
+  }
+  return [...map.values()].map(g => g.sort()).sort((a, b) => a[0]!.localeCompare(b[0]!));
+}`,
+    python: `def groupStrings(strings):
+    strings = list(strings.to_py()) if hasattr(strings, 'to_py') else list(strings)
+    from collections import defaultdict
+    def key(s):
+        return tuple((ord(s[i+1]) - ord(s[i])) % 26 for i in range(len(s)-1))
+    m = defaultdict(list)
+    for s in strings: m[key(s)].append(s)
+    return sorted([sorted(g) for g in m.values()], key=lambda g: g[0])`,
   },
   hints: [
     'Two strings belong to the same shift group if and only if the differences between consecutive characters (mod 26) are identical.',
