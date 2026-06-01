@@ -8,9 +8,13 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2713** problems; 8433 tests green. Batches 102–246 complete.
+**Current focus:** Bank at **2716** problems; 8442 tests green. Batches 102–246 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 247+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 245 (local) — sparse-table-RMQ, matrix-exponentiation, suffix-array-LCP (2026-06-01)
+Three new algorithm problems: `sparse-table-range-min` (medium/arrays+binary-search — O(n log n) sparse table; O(1) RMQ via two overlapping windows of size 2^k; no updates required), `matrix-exponentiation` (hard/math+dp — k×k companion matrix; O(k³ log n) via fast matrix power; handles arbitrary linear recurrences including Fibonacci, tribonacci, arithmetic progressions; returns f(n) mod 10^9+7), `suffix-array-lcp` (hard/strings — O(n log² n) prefix-doubling SA; O(n) Kasai LCP construction; returns [SA, LCP] pair). Bank at **2716**; 8442 tests.
+
 
 ### feat(bank): batch 246 — xor-equal-k, count-nodes-sum-desc, min-path-triangle, max-xor-from-array (2026-06-01)
 Four new problems: `minimum-operations-to-make-array-xor-equal-to-k` (medium/bit-manipulation, LC 2997 — popcount(XOR_all ^ k) = min flip operations needed), `count-nodes-equal-to-sum-of-descendants` (medium/tree, LC 2265 — post-order DFS counting nodes where val equals sum of all descendants), `minimum-path-sum-in-triangle` (medium/dp, LC 120 — bottom-up DP in-place: dp[j]=triangle[i][j]+min(dp[j],dp[j+1])), `maximum-xor-with-an-element-from-array` (hard/trie+binary-search, LC 1707 — offline queries sorted by limit; insert nums into binary trie greedily; query max XOR). Bank at **2713**; 8433 tests.
