@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2678** problems; 8328 tests green. Batches 102–242 complete.
+**Current focus:** Bank at **2683** problems; 8343 tests green. Batches 102–242 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 243+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 242 (local) — serialize-deserialize-tree, manacher, topological-sort-kahn, segment-tree-lazy, extended-gcd (2026-06-01)
+Five new problems with classic algorithm coverage: `serialize-deserialize-tree` (hard/tree+design — preorder serialize with null markers; BFS level-order round-trip; Pyodide-safe null conversion), `manacher-palindrome-radius` (hard/strings — Manacher's O(n) palindrome algorithm; # separator transform; rightmost boundary trick), `topological-sort-kahn` (medium/graph — BFS Kahn's algorithm; in-degree tracking; FIFO queue; cycle detection via count check), `segment-tree-range-update` (hard/binary-indexed-tree — lazy propagation segment tree; O(log n) range-add and range-sum; pushDown before child access), `extended-gcd` (medium/math — Extended Euclidean algorithm; Bézout coefficients; normalize x to smallest non-negative via period b/g). Bank at **2683**; 8343 tests.
 
 ### feat(bank): batch 242 — 5 new problems + TerminalPanel copy buttons (2026-06-01)
 Five new problems: `smallest-divisible-digit-product-i` (easy/math — find smallest x ≥ n with digit product divisible by t; linear scan), `maximum-frequency-after-operations-ii` (hard/arrays+binary-search — same sweep as I but k up to 10⁹; binary search on O(n) candidate targets), `maximize-the-number-of-target-nodes-after-connecting-trees-i` (medium/tree+graph — BFS per node; ans[i]=cnt1[i]+max(cnt2) where cnt2 uses k-1 budget), `minimum-number-of-operations-to-make-elements-in-array-distinct` (easy/arrays+hash-map — scan from right, find rightmost dup at i, return ⌈(i+1)/3⌉), `find-all-three-digit-even-numbers` (easy/arrays+math — iterate 100-998 step 2, freq-map check). Also added CopyButton to expected/actual values in output log fail entries (TerminalPanel), consistent with testcases tab. Bank at **2678**; 8328 tests.
