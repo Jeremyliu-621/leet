@@ -45002,6 +45002,111 @@ def getBiggestThree(grid):
     return sorted(seen, reverse=True)[:3]
 `,
 
+  'minimum-replacements-to-sort-array': `
+def minimumReplacement(nums):
+    import math
+    n = len(nums)
+    ops = 0
+    limit = nums[-1]
+    for i in range(n - 2, -1, -1):
+        if nums[i] > limit:
+            num_parts = math.ceil(nums[i] / limit)
+            ops += num_parts - 1
+            limit = nums[i] // num_parts
+        else:
+            limit = nums[i]
+    return ops
+`,
+
+  'count-subarrays-with-median-k': `
+def countSubarrays(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    idx = nums.index(k)
+    cnt = {0: 1}
+    balance = 0
+    for i in range(idx - 1, -1, -1):
+        balance += 1 if nums[i] > k else -1
+        cnt[balance] = cnt.get(balance, 0) + 1
+    ans = cnt.get(0, 0) + cnt.get(1, 0)
+    balance = 0
+    for i in range(idx + 1, n):
+        balance += 1 if nums[i] > k else -1
+        ans += cnt.get(-balance, 0) + cnt.get(1 - balance, 0)
+    return ans
+`,
+
+  'number-of-ways-to-reach-position-after-exactly-k-steps': `
+def numberOfWays(startPos, endPos, k):
+    MOD = 10**9 + 7
+    d = abs(startPos - endPos)
+    if d > k or (k - d) % 2 != 0:
+        return 0
+    r = (k - d) // 2
+    from math import comb
+    return comb(k, r) % MOD
+`,
+
+  'longest-subarray-with-maximum-bitwise-and': `
+def longestSubarray(nums):
+    max_val = max(nums)
+    best = cur = 0
+    for x in nums:
+        if x == max_val:
+            cur += 1
+            best = max(best, cur)
+        else:
+            cur = 0
+    return best
+`,
+
+  'sort-items-by-groups-respecting-dependencies': `
+def sortItems(n, m, group, beforeItems):
+    group = list(group.to_py()) if hasattr(group, 'to_py') else list(group)
+    before = [list(b.to_py()) if hasattr(b, 'to_py') else list(b) for b in (beforeItems.to_py() if hasattr(beforeItems, 'to_py') else beforeItems)]
+    for i in range(n):
+        if group[i] == -1:
+            group[i] = m
+            m += 1
+    item_adj = [[] for _ in range(n)]
+    item_in = [0] * n
+    grp_adj = [[] for _ in range(m)]
+    grp_in = [0] * m
+    grp_added = set()
+    for i in range(n):
+        for j in before[i]:
+            item_adj[j].append(i)
+            item_in[i] += 1
+            if group[j] != group[i]:
+                key = group[j] * m + group[i]
+                if key not in grp_added:
+                    grp_added.add(key)
+                    grp_adj[group[j]].append(group[i])
+                    grp_in[group[i]] += 1
+    def topo(sz, adj, in_deg):
+        from collections import deque
+        q = deque(i for i in range(sz) if in_deg[i] == 0)
+        res = []
+        while q:
+            u = q.popleft()
+            res.append(u)
+            for v in adj[u]:
+                in_deg[v] -= 1
+                if in_deg[v] == 0:
+                    q.append(v)
+        return res if len(res) == sz else []
+    grp_order = topo(m, grp_adj, grp_in)
+    if not grp_order:
+        return []
+    item_order = topo(n, item_adj, item_in)
+    if not item_order:
+        return []
+    grp_items = [[] for _ in range(m)]
+    for item in item_order:
+        grp_items[group[item]].append(item)
+    return [x for g in grp_order for x in grp_items[g]]
+`,
+
   'min-cost-to-connect-all-points': `
 def minCostConnectPoints(points):
     pts = [[int(p[0]), int(p[1])] for p in (points.to_py() if hasattr(points, 'to_py') else points)]

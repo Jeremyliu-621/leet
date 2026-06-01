@@ -3115,6 +3115,12 @@ import { problem as maxStrengthKDisjointSubarrays } from './maximum-strength-of-
 import { problem as shortestUncommonSubstringArr } from './shortest-uncommon-substring-in-an-array';
 import { problem as longestCommonSuffixQueries } from './longest-common-suffix-queries';
 import { problem as findScoreMarkingElements } from './find-score-of-array-after-marking-all-elements';
+// batch 259
+import { problem as minimumReplacementsToSortArray } from './minimum-replacements-to-sort-array';
+import { problem as countSubarraysWithMedianK } from './count-subarrays-with-median-k';
+import { problem as numberOfWaysReachPositionKSteps } from './number-of-ways-to-reach-position-after-exactly-k-steps';
+import { problem as longestSubarrayWithMaxBitwiseAnd } from './longest-subarray-with-maximum-bitwise-and';
+import { problem as sortItemsByGroupsDeps } from './sort-items-by-groups-respecting-dependencies';
 // batch 258
 import { problem as minCostConnectAllPointsMST } from './min-cost-to-connect-all-points';
 import { problem as maximizeConfusionExamSW } from './maximize-the-confusion-of-an-exam';
@@ -6398,6 +6404,12 @@ export const problems: readonly Problem[] = [
   shortestUncommonSubstringArr,
   longestCommonSuffixQueries,
   findScoreMarkingElements,
+  // batch 259
+  minimumReplacementsToSortArray,
+  countSubarraysWithMedianK,
+  numberOfWaysReachPositionKSteps,
+  longestSubarrayWithMaxBitwiseAnd,
+  sortItemsByGroupsDeps,
   // batch 258
   minCostConnectAllPointsMST,
   maximizeConfusionExamSW,

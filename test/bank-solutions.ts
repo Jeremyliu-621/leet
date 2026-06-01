@@ -46109,6 +46109,120 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxDp[k]!;
   },
 
+  'minimum-replacements-to-sort-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    let ops = 0;
+    let limit = nums[n - 1]!;
+    for (let i = n - 2; i >= 0; i--) {
+      if (nums[i]! > limit) {
+        const numParts = Math.ceil(nums[i]! / limit);
+        ops += numParts - 1;
+        limit = Math.floor(nums[i]! / numParts);
+      } else {
+        limit = nums[i]!;
+      }
+    }
+    return ops;
+  },
+
+  'count-subarrays-with-median-k': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const idx = nums.indexOf(k);
+    const cnt = new Map<number, number>([[0, 1]]);
+    let balance = 0;
+    for (let i = idx - 1; i >= 0; i--) {
+      balance += nums[i]! > k ? 1 : -1;
+      cnt.set(balance, (cnt.get(balance) ?? 0) + 1);
+    }
+    let ans = (cnt.get(0) ?? 0) + (cnt.get(1) ?? 0);
+    balance = 0;
+    for (let i = idx + 1; i < n; i++) {
+      balance += nums[i]! > k ? 1 : -1;
+      ans += (cnt.get(-balance) ?? 0) + (cnt.get(1 - balance) ?? 0);
+    }
+    return ans;
+  },
+
+  'number-of-ways-to-reach-position-after-exactly-k-steps': (...args: unknown[]) => {
+    const startPos = args[0] as number;
+    const endPos = args[1] as number;
+    const k = args[2] as number;
+    const MOD = 1_000_000_007n;
+    const d = Math.abs(startPos - endPos);
+    if (d > k || (k - d) % 2 !== 0) return 0;
+    const r = (k - d) / 2;
+    function modpow(base: bigint, exp: bigint, mod: bigint): bigint {
+      let result = 1n;
+      base = base % mod;
+      while (exp > 0n) {
+        if (exp % 2n === 1n) result = result * base % mod;
+        base = base * base % mod;
+        exp >>= 1n;
+      }
+      return result;
+    }
+    const fact: bigint[] = [1n];
+    for (let i = 1; i <= k; i++) fact.push(fact[i - 1]! * BigInt(i) % MOD);
+    function inv(x: bigint): bigint { return modpow(x, MOD - 2n, MOD); }
+    const comb = fact[k]! * inv(fact[r]!) % MOD * inv(fact[k - r]!) % MOD;
+    return Number(comb);
+  },
+
+  'longest-subarray-with-maximum-bitwise-and': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxVal = Math.max(...nums);
+    let best = 0, cur = 0;
+    for (const x of nums) {
+      if (x === maxVal) { cur++; if (cur > best) best = cur; }
+      else cur = 0;
+    }
+    return best;
+  },
+
+  'sort-items-by-groups-respecting-dependencies': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let m = args[1] as number;
+    const group = (args[2] as number[]).slice();
+    const beforeItems = args[3] as number[][];
+    for (let i = 0; i < n; i++) if (group[i] === -1) group[i] = m++;
+    const itemAdj: number[][] = Array.from({ length: n }, () => []);
+    const itemIn = new Array<number>(n).fill(0);
+    const grpAdj: number[][] = Array.from({ length: m }, () => []);
+    const grpIn = new Array<number>(m).fill(0);
+    const grpAdded = new Set<number>();
+    for (let i = 0; i < n; i++) {
+      for (const j of beforeItems[i]!) {
+        itemAdj[j]!.push(i); itemIn[i]!++;
+        if (group[j] !== group[i]) {
+          const key = group[j]! * m + group[i]!;
+          if (!grpAdded.has(key)) {
+            grpAdded.add(key); grpAdj[group[j]!]!.push(group[i]!); grpIn[group[i]!]!++;
+          }
+        }
+      }
+    }
+    function topoSort(sz: number, adj: number[][], inDeg: number[]): number[] {
+      const q: number[] = [];
+      for (let i = 0; i < sz; i++) if (inDeg[i] === 0) q.push(i);
+      const res: number[] = [];
+      while (q.length) {
+        const u = q.shift()!; res.push(u);
+        for (const v of adj[u]!) if (--inDeg[v]! === 0) q.push(v);
+      }
+      return res.length === sz ? res : [];
+    }
+    const grpOrder = topoSort(m, grpAdj, grpIn);
+    if (!grpOrder.length) return [];
+    const itemOrder = topoSort(n, itemAdj, itemIn);
+    if (!itemOrder.length) return [];
+    const grpItems: number[][] = Array.from({ length: m }, () => []);
+    for (const item of itemOrder) grpItems[group[item]!]!.push(item);
+    return grpOrder.flatMap(g => grpItems[g]!);
+  },
+
   'min-cost-to-connect-all-points': (...args: unknown[]) => {
     const points = args[0] as number[][];
     const n = points.length;
