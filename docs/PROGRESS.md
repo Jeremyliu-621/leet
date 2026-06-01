@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2796** problems; 8714 tests green. Batches 102–258 complete.
+**Current focus:** Bank at **2797** problems; 8711 tests green. Batches 102–259 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 259+; continued UX polish.
+**Next up:** Batch 260+; continued UX polish.
+
+### feat(bank): batch 259 — subarray-varying-threshold, maximize-total-cost-alternating (2026-06-01)
+Two new problems: `subarray-with-elements-greater-than-varying-threshold` (hard/arrays+stack, LC 2334 — monotonic stack left/right bounds; for each element as min, check min*len > threshold), `maximize-total-cost-of-alternating-subarrays` (medium/arrays+dp, LC 3196 — O(n) DP with pos/neg states; pos=max(pos,neg)+num, neg=prev_pos−num). Bank at **2797**; 8711 tests.
 
 ### feat(bank): batch 258 — minimum-number-of-increments-subarrays, words-within-two-edits-dictionary, create-components-same-value (2026-06-01)
 Three new problems: `minimum-number-of-increments-on-subarrays-to-form-target-array` (hard/arrays+stack, LC 1526 — greedy histogram scan: answer = target[0] + Σmax(0, target[i]-target[i-1])), `words-within-two-edits-of-dictionary` (medium/strings+arrays, LC 2452 — brute-force O(q*d*n) character diff count, return queries matching any dict word in ≤2 positions), `create-components-with-same-value` (hard/tree+dp, LC 2440 — try largest-to-smallest k divisors of totalSum; DFS with edge cut when subtree sum hits target; first valid k is answer). Bank at **2791**; 8693 tests.
