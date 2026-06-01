@@ -37,12 +37,31 @@ Given the secret number and the friend's guess (as strings), return the hint for
   params: ['secret', 'guess'],
   starterCode: {
     javascript: `function getHint(secret, guess) {
-
+  let bulls = 0, cows = 0;
+  const sCount = new Array(10).fill(0), gCount = new Array(10).fill(0);
+  for (let i = 0; i < secret.length; i++) {
+    if (secret[i] === guess[i]) bulls++;
+    else { sCount[Number(secret[i])]++; gCount[Number(guess[i])]++; }
+  }
+  for (let d = 0; d < 10; d++) cows += Math.min(sCount[d], gCount[d]);
+  return bulls + 'A' + cows + 'B';
 }`,
-    typescript: "function getHint(secret: string, guess: string): string {\n\n}",
-
+    typescript: `function getHint(secret: string, guess: string): string {
+  let bulls = 0, cows = 0;
+  const sCount = new Array<number>(10).fill(0), gCount = new Array<number>(10).fill(0);
+  for (let i = 0; i < secret.length; i++) {
+    if (secret[i] === guess[i]) bulls++;
+    else { sCount[Number(secret[i])]!++; gCount[Number(guess[i])]!++; }
+  }
+  for (let d = 0; d < 10; d++) cows += Math.min(sCount[d]!, gCount[d]!);
+  return bulls + 'A' + cows + 'B';
+}`,
     python: `def getHint(secret: str, guess: str) -> str:
-    pass`,
+    bulls = sum(s == g for s, g in zip(secret, guess))
+    from collections import Counter
+    s_cnt, g_cnt = Counter(secret), Counter(guess)
+    cows = sum(min(s_cnt[d], g_cnt[d]) for d in s_cnt) - bulls
+    return str(bulls) + 'A' + str(cows) + 'B'`,
   },
   visibleTests: [
     { args: ['1807', '7810'], expected: '1A3B' },

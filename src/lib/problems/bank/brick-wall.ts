@@ -38,12 +38,40 @@ Given the 2D array \`wall\` where \`wall[i]\` is a list of brick widths in the i
   params: ['wall'],
   starterCode: {
     javascript: `function leastBricks(wall) {
-
+  const edgeCounts = new Map();
+  for (const row of wall) {
+    let pos = 0;
+    for (let i = 0; i < row.length - 1; i++) {
+      pos += row[i];
+      edgeCounts.set(pos, (edgeCounts.get(pos) ?? 0) + 1);
+    }
+  }
+  const maxEdges = edgeCounts.size ? Math.max(...edgeCounts.values()) : 0;
+  return wall.length - maxEdges;
 }`,
-    typescript: "function leastBricks(wall: number[][]): number {\n\n}",
-
+    typescript: `function leastBricks(wall: number[][]): number {
+  const edgeCounts = new Map<number, number>();
+  for (const row of wall) {
+    let pos = 0;
+    for (let i = 0; i < row.length - 1; i++) {
+      pos += row[i]!;
+      edgeCounts.set(pos, (edgeCounts.get(pos) ?? 0) + 1);
+    }
+  }
+  const maxEdges = edgeCounts.size ? Math.max(...edgeCounts.values()) : 0;
+  return wall.length - maxEdges;
+}`,
     python: `def leastBricks(wall):
-    pass`,
+    wall = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (wall.to_py() if hasattr(wall, 'to_py') else wall)]
+    from collections import defaultdict
+    counts = defaultdict(int)
+    for row in wall:
+        pos = 0
+        for w in row[:-1]:
+            pos += w
+            counts[pos] += 1
+    max_edges = max(counts.values()) if counts else 0
+    return len(wall) - max_edges`,
   },
   visibleTests: [
     {

@@ -41,12 +41,32 @@ Given two integers \`startValue\` and \`target\`, return the minimum number of o
   params: ['startValue', 'target'],
   starterCode: {
     javascript: `function brokenCalc(startValue, target) {
-
+  let steps = 0;
+  while (target > startValue) {
+    if (target % 2 === 1) target++;
+    else target /= 2;
+    steps++;
+  }
+  return steps + (startValue - target);
 }`,
-    typescript: "function brokenCalc(startValue: number, target: number): number {\n\n}",
-
+    typescript: `function brokenCalc(startValue: number, target: number): number {
+  let steps = 0;
+  while (target > startValue) {
+    if (target % 2 === 1) target++;
+    else target /= 2;
+    steps++;
+  }
+  return steps + (startValue - target);
+}`,
     python: `def brokenCalc(startValue, target):
-    pass`,
+    steps = 0
+    while target > startValue:
+        if target % 2 == 1:
+            target += 1
+        else:
+            target //= 2
+        steps += 1
+    return steps + (startValue - target)`,
   },
   visibleTests: [
     { args: [2, 3], expected: 2 },

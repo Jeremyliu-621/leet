@@ -33,12 +33,14 @@ A **zero-based permutation** \`nums\` is an array of **distinct** integers from 
   params: ['nums'],
   starterCode: {
     javascript: `function buildArray(nums) {
-
+  return nums.map(i => nums[i]);
 }`,
-    typescript: "function buildArray(nums: number[]): number[] {\n\n}",
-
+    typescript: `function buildArray(nums: number[]): number[] {
+  return nums.map(i => nums[i]!);
+}`,
     python: `def buildArray(nums):
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return [nums[i] for i in nums]`,
   },
   visibleTests: [
     { args: [[0, 2, 1, 5, 3, 4]], expected: [0, 1, 2, 4, 5, 3] },

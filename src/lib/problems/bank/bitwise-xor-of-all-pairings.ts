@@ -33,12 +33,28 @@ Return the **bitwise XOR** of all integers in \`nums3\`.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function xorAllNums(nums1, nums2) {
-
+  let result = 0;
+  if (nums2.length % 2 === 1) result ^= nums1.reduce((a, b) => a ^ b, 0);
+  if (nums1.length % 2 === 1) result ^= nums2.reduce((a, b) => a ^ b, 0);
+  return result;
 }`,
-    typescript: "function xorAllNums(nums1: number[], nums2: number[]): number {\n\n}",
-
+    typescript: `function xorAllNums(nums1: number[], nums2: number[]): number {
+  let result = 0;
+  if (nums2.length % 2 === 1) result ^= nums1.reduce((a, b) => a ^ b, 0);
+  if (nums1.length % 2 === 1) result ^= nums2.reduce((a, b) => a ^ b, 0);
+  return result;
+}`,
     python: `def xorAllNums(nums1, nums2):
-    pass`,
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    from functools import reduce
+    import operator
+    result = 0
+    if len(nums2) % 2 == 1:
+        result ^= reduce(operator.xor, nums1, 0)
+    if len(nums1) % 2 == 1:
+        result ^= reduce(operator.xor, nums2, 0)
+    return result`,
   },
   visibleTests: [
     { args: [[2, 1, 3], [10, 2, 5, 0]], expected: 13 },
