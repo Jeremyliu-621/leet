@@ -44,9 +44,26 @@ Return \`true\` *if you can reduce* \`nums\` *to* \`n\` *individual elements (ea
   functionName: 'canSplitArray',
   params: ['nums', 'm'],
   starterCode: {
-    javascript: 'function canSplitArray(nums, m) {\n\n}\n',
-    typescript: 'function canSplitArray(nums: number[], m: number): boolean {\n\n}\n',
-    python: 'def canSplitArray(nums, m):\n    pass\n',
+    javascript: `function canSplitArray(nums, m) {
+  if (nums.length <= 2) return nums.length === 1 || nums[0] + nums[1] >= m;
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] + nums[i + 1] >= m) return true;
+  }
+  return false;
+}`,
+    typescript: `function canSplitArray(nums: number[], m: number): boolean {
+  if (nums.length <= 2) return nums.length === 1 || nums[0]! + nums[1]! >= m;
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i]! + nums[i + 1]! >= m) return true;
+  }
+  return false;
+}`,
+    python: `def canSplitArray(nums, m):
+    if len(nums) <= 1:
+        return True
+    if len(nums) == 2:
+        return nums[0] + nums[1] >= m
+    return any(nums[i] + nums[i+1] >= m for i in range(len(nums) - 1))`,
   },
   visibleTests: [
     { args: [[2,2,1], 4], expected: true },

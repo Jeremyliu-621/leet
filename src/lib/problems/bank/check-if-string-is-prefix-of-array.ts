@@ -36,9 +36,33 @@ Return \`true\` if \`s\` is a **prefix string** of \`words\`, or \`false\` other
   functionName: 'isPrefixString',
   params: ['s', 'words'],
   starterCode: {
-    javascript: 'function isPrefixString(s, words) {\n  \n}\n',
-    typescript: 'function isPrefixString(s: string, words: string[]): boolean {\n  \n}',
-    python: 'def isPrefixString(s, words):\n    pass\n',
+    javascript: `function isPrefixString(s, words) {
+  let built = '';
+  for (const w of words) {
+    built += w;
+    if (built === s) return true;
+    if (built.length >= s.length) return false;
+  }
+  return false;
+}`,
+    typescript: `function isPrefixString(s: string, words: string[]): boolean {
+  let built = '';
+  for (const w of words) {
+    built += w;
+    if (built === s) return true;
+    if (built.length >= s.length) return false;
+  }
+  return false;
+}`,
+    python: `def isPrefixString(s, words):
+    built = ''
+    for w in words:
+        built += w
+        if built == s:
+            return True
+        if len(built) >= len(s):
+            return False
+    return False`,
   },
   visibleTests: [
     { args: ['iloveleetcode', ['i', 'love', 'leetcode', 'apples']], expected: true },

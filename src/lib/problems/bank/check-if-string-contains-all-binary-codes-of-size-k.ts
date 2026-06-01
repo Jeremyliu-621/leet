@@ -36,10 +36,34 @@ export const problem: Problem = {
   functionName: 'hasAllCodes',
   params: ['s', 'k'],
   starterCode: {
-    javascript: 'function hasAllCodes(s, k) {\n\n}\n',
-    typescript: "function hasAllCodes(s: string, k: number): boolean {\n\n}",
-
-    python: 'def hasAllCodes(s, k):\n    pass\n',
+    javascript: `function hasAllCodes(s, k) {
+  if (s.length < k) return false;
+  const seen = new Set();
+  const target = 1 << k;
+  for (let i = 0; i <= s.length - k; i++) {
+    seen.add(s.slice(i, i + k));
+    if (seen.size === target) return true;
+  }
+  return false;
+}`,
+    typescript: `function hasAllCodes(s: string, k: number): boolean {
+  if (s.length < k) return false;
+  const seen = new Set<string>();
+  const target = 1 << k;
+  for (let i = 0; i <= s.length - k; i++) {
+    seen.add(s.slice(i, i + k));
+    if (seen.size === target) return true;
+  }
+  return false;
+}`,
+    python: `def hasAllCodes(s, k):
+    target = 1 << k
+    seen = set()
+    for i in range(len(s) - k + 1):
+        seen.add(s[i:i+k])
+        if len(seen) == target:
+            return True
+    return False`,
   },
   visibleTests: [
     { args: ['00110110', 2], expected: true },

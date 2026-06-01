@@ -36,10 +36,19 @@ Return \`true\` if you can make \`s1\` equal to \`s2\` using any number of opera
   functionName: 'checkStrings',
   params: ['s1', 's2'],
   starterCode: {
-    javascript: 'function checkStrings(s1, s2) {\n  \n}\n',
-    typescript: "function checkStrings(s1: string, s2: string): boolean {\n  \n}",
-
-    python: 'def checkStrings(s1, s2):\n    pass\n',
+    javascript: `function checkStrings(s1, s2) {
+  const sort = (s, parity) =>
+    [...s].filter((_, i) => i % 2 === parity).sort().join('');
+  return sort(s1, 0) === sort(s2, 0) && sort(s1, 1) === sort(s2, 1);
+}`,
+    typescript: `function checkStrings(s1: string, s2: string): boolean {
+  const sort = (s: string, parity: number) =>
+    [...s].filter((_, i) => i % 2 === parity).sort().join('');
+  return sort(s1, 0) === sort(s2, 0) && sort(s1, 1) === sort(s2, 1);
+}`,
+    python: `def checkStrings(s1, s2):
+    return (sorted(s1[::2]) == sorted(s2[::2]) and
+            sorted(s1[1::2]) == sorted(s2[1::2]))`,
   },
   visibleTests: [
     { args: ['abcd', 'cdab'], expected: true },
