@@ -45,10 +45,74 @@ Return the **maximum** number of cherries collection using both robots by follow
   functionName: 'cherryPickup',
   params: ['grid'],
   starterCode: {
-    javascript: 'function cherryPickup(grid) {\n\n}\n',
-    typescript: "function cherryPickup(grid: number[][]): number {\n\n}",
-
-    python: 'def cherryPickup(grid):\n    pass\n',
+    javascript: `function cherryPickup(grid) {
+  const rows = grid.length, cols = grid[0].length;
+  const NEG_INF = -Infinity;
+  // dp[c1][c2] = max cherries, robot1 at col c1, robot2 at col c2
+  let dp = Array.from({ length: cols }, () => new Array(cols).fill(NEG_INF));
+  dp[0][cols - 1] = grid[0][0] + (cols > 1 ? grid[0][cols - 1] : 0);
+  for (let r = 1; r < rows; r++) {
+    const ndp = Array.from({ length: cols }, () => new Array(cols).fill(NEG_INF));
+    for (let c1 = 0; c1 < cols; c1++) {
+      for (let c2 = 0; c2 < cols; c2++) {
+        if (dp[c1][c2] === NEG_INF) continue;
+        for (let d1 = -1; d1 <= 1; d1++) {
+          for (let d2 = -1; d2 <= 1; d2++) {
+            const nc1 = c1 + d1, nc2 = c2 + d2;
+            if (nc1 < 0 || nc1 >= cols || nc2 < 0 || nc2 >= cols) continue;
+            const gain = grid[r][nc1] + (nc1 !== nc2 ? grid[r][nc2] : 0);
+            ndp[nc1][nc2] = Math.max(ndp[nc1][nc2], dp[c1][c2] + gain);
+          }
+        }
+      }
+    }
+    dp = ndp;
+  }
+  return Math.max(...dp.map(row => Math.max(...row)));
+}`,
+    typescript: `function cherryPickup(grid: number[][]): number {
+  const rows = grid.length, cols = grid[0]!.length;
+  const NEG_INF = -Infinity;
+  let dp: number[][] = Array.from({ length: cols }, () => new Array(cols).fill(NEG_INF));
+  dp[0]![cols - 1] = grid[0]![0]! + (cols > 1 ? grid[0]![cols - 1]! : 0);
+  for (let r = 1; r < rows; r++) {
+    const ndp: number[][] = Array.from({ length: cols }, () => new Array(cols).fill(NEG_INF));
+    for (let c1 = 0; c1 < cols; c1++) {
+      for (let c2 = 0; c2 < cols; c2++) {
+        if (dp[c1]![c2] === NEG_INF) continue;
+        for (let d1 = -1; d1 <= 1; d1++) {
+          for (let d2 = -1; d2 <= 1; d2++) {
+            const nc1 = c1 + d1, nc2 = c2 + d2;
+            if (nc1 < 0 || nc1 >= cols || nc2 < 0 || nc2 >= cols) continue;
+            const gain = grid[r]![nc1]! + (nc1 !== nc2 ? grid[r]![nc2]! : 0);
+            ndp[nc1]![nc2] = Math.max(ndp[nc1]![nc2]!, dp[c1]![c2]! + gain);
+          }
+        }
+      }
+    }
+    dp = ndp;
+  }
+  return Math.max(...dp.map(row => Math.max(...row)));
+}`,
+    python: `def cherryPickup(grid):
+    rows, cols = len(grid), len(grid[0])
+    NEG_INF = float('-inf')
+    dp = [[NEG_INF] * cols for _ in range(cols)]
+    dp[0][cols - 1] = grid[0][0] + (grid[0][cols - 1] if cols > 1 else 0)
+    for r in range(1, rows):
+        ndp = [[NEG_INF] * cols for _ in range(cols)]
+        for c1 in range(cols):
+            for c2 in range(cols):
+                if dp[c1][c2] == NEG_INF:
+                    continue
+                for d1 in (-1, 0, 1):
+                    for d2 in (-1, 0, 1):
+                        nc1, nc2 = c1 + d1, c2 + d2
+                        if 0 <= nc1 < cols and 0 <= nc2 < cols:
+                            gain = grid[r][nc1] + (grid[r][nc2] if nc1 != nc2 else 0)
+                            ndp[nc1][nc2] = max(ndp[nc1][nc2], dp[c1][c2] + gain)
+        dp = ndp
+    return max(max(row) for row in dp)`,
   },
   visibleTests: [
     {
