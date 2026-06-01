@@ -46109,6 +46109,116 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return maxDp[k]!;
   },
 
+  'min-cost-to-connect-all-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const n = points.length;
+    const minDist = new Array<number>(n).fill(Infinity);
+    const inMST = new Array<boolean>(n).fill(false);
+    minDist[0] = 0;
+    let total = 0;
+    for (let iter = 0; iter < n; iter++) {
+      let u = -1;
+      for (let i = 0; i < n; i++) {
+        if (!inMST[i] && (u === -1 || minDist[i]! < minDist[u]!)) u = i;
+      }
+      inMST[u] = true;
+      total += minDist[u]!;
+      for (let v = 0; v < n; v++) {
+        if (!inMST[v]) {
+          const d = Math.abs(points[u]![0]! - points[v]![0]!) + Math.abs(points[u]![1]! - points[v]![1]!);
+          if (d < minDist[v]!) minDist[v] = d;
+        }
+      }
+    }
+    return total;
+  },
+
+  'maximize-the-confusion-of-an-exam': (...args: unknown[]) => {
+    const answerKey = args[0] as string;
+    const k = args[1] as number;
+    function maxWindow(ch: string): number {
+      let left = 0, count = 0, best = 0;
+      for (let right = 0; right < answerKey.length; right++) {
+        if (answerKey[right] === ch) count++;
+        while (count > k) {
+          if (answerKey[left] === ch) count--;
+          left++;
+        }
+        best = Math.max(best, right - left + 1);
+      }
+      return best;
+    }
+    return Math.max(maxWindow('T'), maxWindow('F'));
+  },
+
+  'moving-stones-until-consecutive': (...args: unknown[]) => {
+    const a = args[0] as number;
+    const b = args[1] as number;
+    const c = args[2] as number;
+    const stones = [a, b, c].sort((x, y) => x - y) as [number, number, number];
+    const [x, y, z] = stones;
+    if (z - x === 2) return [0, 0];
+    const minMoves = Math.min(y - x, z - y) <= 2 ? 1 : 2;
+    const maxMoves = (y - x - 1) + (z - y - 1);
+    return [minMoves, maxMoves];
+  },
+
+  'maximum-tastiness-of-candy-basket': (...args: unknown[]) => {
+    const price = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    const n = price.length;
+    function canAchieve(gap: number): boolean {
+      let count = 1;
+      let last = price[0]!;
+      for (let i = 1; i < n; i++) {
+        if (price[i]! - last >= gap) {
+          count++;
+          last = price[i]!;
+          if (count >= k) return true;
+        }
+      }
+      return count >= k;
+    }
+    let lo = 0, hi = Math.floor((price[n - 1]! - price[0]!) / (k - 1));
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (canAchieve(mid)) lo = mid;
+      else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'allocate-mailboxes': (...args: unknown[]) => {
+    const houses = (args[0] as number[]).slice().sort((a, b) => a - b);
+    const k = args[1] as number;
+    const n = houses.length;
+    const cost: number[][] = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        let lo = i, hi = j;
+        while (lo < hi) {
+          cost[i]![j] = (cost[i]![j] ?? 0) + houses[hi]! - houses[lo]!;
+          lo++;
+          hi--;
+        }
+      }
+    }
+    const INF = Infinity;
+    const dp: number[][] = Array.from({ length: k + 1 }, () => new Array<number>(n + 1).fill(INF));
+    dp[0]![0] = 0;
+    for (let m = 1; m <= k; m++) {
+      for (let j = m; j <= n; j++) {
+        for (let i = m - 1; i < j; i++) {
+          const prev = dp[m - 1]![i]!;
+          if (prev < INF) {
+            dp[m]![j] = Math.min(dp[m]![j]!, prev + cost[i]![j - 1]!);
+          }
+        }
+      }
+    }
+    return dp[k]![n]!;
+  },
+
   'find-score-of-array-after-marking-all-elements': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const n = nums.length;

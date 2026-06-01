@@ -3108,6 +3108,12 @@ import { problem as maxStrengthKDisjointSubarrays } from './maximum-strength-of-
 import { problem as shortestUncommonSubstringArr } from './shortest-uncommon-substring-in-an-array';
 import { problem as longestCommonSuffixQueries } from './longest-common-suffix-queries';
 import { problem as findScoreMarkingElements } from './find-score-of-array-after-marking-all-elements';
+// batch 258
+import { problem as minCostConnectAllPointsMST } from './min-cost-to-connect-all-points';
+import { problem as maximizeConfusionExamSW } from './maximize-the-confusion-of-an-exam';
+import { problem as movingStonesTillConsecutive } from './moving-stones-until-consecutive';
+import { problem as maxTastinessCandyBasketBS } from './maximum-tastiness-of-candy-basket';
+import { problem as allocateMailboxes } from './allocate-mailboxes';
 // batch 257
 import { problem as findMedianUniquenessArray } from './find-the-median-of-the-uniqueness-array';
 import { problem as findMaxXorEachQuery } from './find-maximum-xor-for-each-query';
@@ -6378,6 +6384,12 @@ export const problems: readonly Problem[] = [
   shortestUncommonSubstringArr,
   longestCommonSuffixQueries,
   findScoreMarkingElements,
+  // batch 258
+  minCostConnectAllPointsMST,
+  maximizeConfusionExamSW,
+  movingStonesTillConsecutive,
+  maxTastinessCandyBasketBS,
+  allocateMailboxes,
   // batch 257
   findMedianUniquenessArray,
   findMaxXorEachQuery,

@@ -45002,6 +45002,98 @@ def getBiggestThree(grid):
     return sorted(seen, reverse=True)[:3]
 `,
 
+  'min-cost-to-connect-all-points': `
+def minCostConnectPoints(points):
+    pts = [[int(p[0]), int(p[1])] for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    n = len(pts)
+    min_dist = [float('inf')] * n
+    in_mst = [False] * n
+    min_dist[0] = 0
+    total = 0
+    for _ in range(n):
+        u = min((i for i in range(n) if not in_mst[i]), key=lambda i: min_dist[i])
+        in_mst[u] = True
+        total += min_dist[u]
+        for v in range(n):
+            if not in_mst[v]:
+                d = abs(pts[u][0] - pts[v][0]) + abs(pts[u][1] - pts[v][1])
+                if d < min_dist[v]:
+                    min_dist[v] = d
+    return total
+`,
+
+  'maximize-the-confusion-of-an-exam': `
+def maxConsecutiveAnswers(answerKey, k):
+    def max_window(ch):
+        left = count = best = 0
+        for right in range(len(answerKey)):
+            if answerKey[right] == ch:
+                count += 1
+            while count > k:
+                if answerKey[left] == ch:
+                    count -= 1
+                left += 1
+            best = max(best, right - left + 1)
+        return best
+    return max(max_window('T'), max_window('F'))
+`,
+
+  'moving-stones-until-consecutive': `
+def numMovesStones(a, b, c):
+    x, y, z = sorted([a, b, c])
+    if z - x == 2:
+        return [0, 0]
+    min_moves = 1 if min(y - x, z - y) <= 2 else 2
+    max_moves = (y - x - 1) + (z - y - 1)
+    return [min_moves, max_moves]
+`,
+
+  'maximum-tastiness-of-candy-basket': `
+def maximumTastiness(price, k):
+    price = sorted(list(price.to_py()) if hasattr(price, 'to_py') else list(price))
+    n = len(price)
+    def can_achieve(gap):
+        count, last = 1, price[0]
+        for i in range(1, n):
+            if price[i] - last >= gap:
+                count += 1
+                last = price[i]
+                if count >= k:
+                    return True
+        return count >= k
+    lo, hi = 0, (price[-1] - price[0]) // (k - 1)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'allocate-mailboxes': `
+def minDistance(houses, k):
+    houses = sorted(list(houses.to_py()) if hasattr(houses, 'to_py') else list(houses))
+    n = len(houses)
+    cost = [[0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(i + 1, n):
+            lo, hi = i, j
+            while lo < hi:
+                cost[i][j] += houses[hi] - houses[lo]
+                lo += 1
+                hi -= 1
+    INF = float('inf')
+    dp = [[INF] * (n + 1) for _ in range(k + 1)]
+    dp[0][0] = 0
+    for m in range(1, k + 1):
+        for j in range(m, n + 1):
+            for i in range(m - 1, j):
+                if dp[m - 1][i] < INF:
+                    dp[m][j] = min(dp[m][j], dp[m - 1][i] + cost[i][j - 1])
+    return dp[k][n]
+`,
+
   'find-score-of-array-after-marking-all-elements': `
 def findScore(nums):
     n = len(nums)
