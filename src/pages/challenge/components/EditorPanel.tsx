@@ -838,6 +838,21 @@ const GO_SNIPPETS = [
     detail: 'heap setup',
     type: 'keyword',
   }),
+  snippetCompletion('${st} := make(map[${K}]struct{})\n${}', {
+    label: 'newset',
+    detail: 'set via map[K]struct{}',
+    type: 'keyword',
+  }),
+  snippetCompletion('const MOD = 1_000_000_007\n${}', {
+    label: 'mod',
+    detail: 'modulo constant',
+    type: 'keyword',
+  }),
+  snippetCompletion('const INF = math.MaxInt\n${}', {
+    label: 'inf',
+    detail: 'math.MaxInt',
+    type: 'keyword',
+  }),
 ];
 
 const RUST_SNIPPETS = [
@@ -894,6 +909,26 @@ const RUST_SNIPPETS = [
   snippetCompletion('let mut ${v}: Vec<${T}> = Vec::new();\n${}', {
     label: 'vec',
     detail: 'Vec::new()',
+    type: 'keyword',
+  }),
+  snippetCompletion('let mut ${dq}: VecDeque<${T}> = VecDeque::new();\n${}', {
+    label: 'deque',
+    detail: 'VecDeque::new()',
+    type: 'keyword',
+  }),
+  snippetCompletion('let mut ${pq}: BinaryHeap<${T}> = BinaryHeap::new();\n${}', {
+    label: 'pq',
+    detail: 'BinaryHeap (max-heap)',
+    type: 'keyword',
+  }),
+  snippetCompletion('const MOD: i64 = 1_000_000_007;\n${}', {
+    label: 'mod',
+    detail: 'modulo constant',
+    type: 'keyword',
+  }),
+  snippetCompletion('let ${inf}: i64 = i64::MAX;\n${}', {
+    label: 'inf',
+    detail: 'i64::MAX',
     type: 'keyword',
   }),
 ];
