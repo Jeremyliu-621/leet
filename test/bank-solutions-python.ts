@@ -46376,4 +46376,122 @@ def placedCoins(edges, cost):
         ans += max(0, min(last_min, last_max) - last_bad)
     return ans
 `,
+
+  // batch 267
+  'count-submatrices-with-equal-frequency-of-x-and-y': `def numberOfSubmatrices(grid, x, y):
+    m, n = len(grid), len(grid[0])
+    px = [[0]*n for _ in range(m)]
+    py = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            vx = 1 if grid[i][j] == x else 0
+            vy = 1 if grid[i][j] == y else 0
+            px[i][j] = vx + (px[i-1][j] if i > 0 else 0) + (px[i][j-1] if j > 0 else 0) - (px[i-1][j-1] if i > 0 and j > 0 else 0)
+            py[i][j] = vy + (py[i-1][j] if i > 0 else 0) + (py[i][j-1] if j > 0 else 0) - (py[i-1][j-1] if i > 0 and j > 0 else 0)
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            if px[i][j] >= 1 and px[i][j] == py[i][j]:
+                count += 1
+    return count
+`,
+
+  'k-th-smallest-prime-fraction': `def kthSmallestPrimeFraction(arr, k):
+    n = len(arr)
+    lo, hi = 0.0, 1.0
+    res = [arr[0], arr[-1]]
+    for _ in range(200):
+        mid = (lo + hi) / 2
+        cnt = 0
+        p, q = 0, 0
+        best = 0.0
+        for j in range(1, n):
+            i = 0
+            while i < j and arr[i] / arr[j] < mid:
+                i += 1
+            cnt += i
+            if i > 0 and arr[i-1] / arr[j] > best:
+                best = arr[i-1] / arr[j]
+                p, q = arr[i-1], arr[j]
+        if cnt == k:
+            res = [p, q]
+            break
+        elif cnt < k:
+            lo = mid
+        else:
+            hi = mid
+        res = [p, q]
+    return res
+`,
+
+  'minimum-number-of-valid-strings-to-form-target-ii': `def minValidStrings(words, target):
+    n = len(target)
+    MOD = (1 << 61) - 1
+    BASE = 131
+    prefix_set = set()
+    max_word_len = 0
+    for word in words:
+        max_word_len = max(max_word_len, len(word))
+        h = 0
+        for ch in word:
+            h = (h * BASE + ord(ch)) % MOD
+            prefix_set.add(h)
+    # Prefix hashes of target
+    target_hash = [0] * (n + 1)
+    pw = [1] * (n + 1)
+    for i in range(n):
+        target_hash[i+1] = (target_hash[i] * BASE + ord(target[i])) % MOD
+        pw[i+1] = (pw[i] * BASE) % MOD
+    def get_hash(l, r):
+        return (target_hash[r] - target_hash[l] * pw[r - l]) % MOD
+    # Compute reach for each position via binary search
+    reach = [0] * n
+    for j in range(n):
+        lo2, hi2, best = 1, min(max_word_len, n - j), 0
+        while lo2 <= hi2:
+            mid2 = (lo2 + hi2) // 2
+            if get_hash(j, j + mid2) in prefix_set:
+                best = mid2
+                lo2 = mid2 + 1
+            else:
+                hi2 = mid2 - 1
+        reach[j] = j + best
+    # Greedy jump game
+    jumps, cur_end, farthest = 0, 0, 0
+    for i in range(n):
+        farthest = max(farthest, reach[i])
+        if i == cur_end:
+            if farthest <= cur_end:
+                return -1
+            jumps += 1
+            cur_end = farthest
+            if cur_end >= n:
+                break
+    return jumps
+`,
+
+  'maximum-xor-score-subarray-queries': `def maximumSubarrayXor(nums, queries):
+    n = len(nums)
+    # dp[i][j] = XOR score of nums[i..j]
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = nums[i]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = dp[i][j-1] ^ dp[i+1][j]
+    # suf[j][i] = max dp[a][j] for a in [i..j]
+    # mx[j][i] = max score for any subarray within [i..j]
+    suf = [[0]*n for _ in range(n)]
+    mx = [[0]*n for _ in range(n)]
+    for j in range(n):
+        suf[j][j] = dp[j][j]
+        for i in range(j-1, -1, -1):
+            suf[j][i] = max(dp[i][j], suf[j][i+1])
+        mx[j][j] = dp[j][j]
+        for i in range(j-1, -1, -1):
+            prev = mx[j-1][i] if j > 0 else 0
+            mx[j][i] = max(prev, suf[j][i])
+    return [mx[r][l] for l, r in queries]
+`,
 };

@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 268
+import { problem as countSubmatricesEqualFreqXY } from './count-submatrices-with-equal-frequency-of-x-and-y';
+import { problem as kthSmallestPrimeFraction } from './k-th-smallest-prime-fraction';
+import { problem as minValidStringsToFormTargetII } from './minimum-number-of-valid-strings-to-form-target-ii';
+import { problem as maximumXorScoreSubarrayQueries } from './maximum-xor-score-subarray-queries';
 // batch 266
 import { problem as findMaximumMarkedElements } from './find-maximum-number-of-marked-elements';
 import { problem as longestPathDifferentAdjacentChars } from './longest-path-different-adjacent-characters';
@@ -6432,6 +6437,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 268
+  countSubmatricesEqualFreqXY,
+  kthSmallestPrimeFraction,
+  minValidStringsToFormTargetII,
+  maximumXorScoreSubarrayQueries,
   // batch 266
   findMaximumMarkedElements,
   longestPathDifferentAdjacentChars,

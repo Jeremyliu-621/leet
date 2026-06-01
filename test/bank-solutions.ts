@@ -47335,4 +47335,145 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+
+  // batch 267
+  'count-submatrices-with-equal-frequency-of-x-and-y': (...args: unknown[]) => {
+    const grid = args[0] as string[][];
+    const x = args[1] as string;
+    const y = args[2] as string;
+    const m = grid.length;
+    const n = grid[0]!.length;
+    const px = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    const py = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const vx = grid[i]![j] === x ? 1 : 0;
+        const vy = grid[i]![j] === y ? 1 : 0;
+        px[i]![j] = vx + (i > 0 ? px[i-1]![j]! : 0) + (j > 0 ? px[i]![j-1]! : 0) - (i > 0 && j > 0 ? px[i-1]![j-1]! : 0);
+        py[i]![j] = vy + (i > 0 ? py[i-1]![j]! : 0) + (j > 0 ? py[i]![j-1]! : 0) - (i > 0 && j > 0 ? py[i-1]![j-1]! : 0);
+      }
+    }
+    let count = 0;
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        if (px[i]![j]! >= 1 && px[i]![j] === py[i]![j]) count++;
+      }
+    }
+    return count;
+  },
+
+  'k-th-smallest-prime-fraction': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const k = args[1] as number;
+    const n = arr.length;
+    let lo = 0, hi = 1;
+    let resNum = arr[0]!, resDen = arr[n - 1]!;
+    for (let iter = 0; iter < 200; iter++) {
+      const mid = (lo + hi) / 2;
+      let cnt = 0;
+      let p = 0, q = 0;
+      let bestVal = 0;
+      for (let j = 1; j < n; j++) {
+        let i = 0;
+        while (i < j && arr[i]! / arr[j]! < mid) i++;
+        cnt += i;
+        if (i > 0 && arr[i-1]! / arr[j]! > bestVal) {
+          bestVal = arr[i-1]! / arr[j]!;
+          p = arr[i-1]!;
+          q = arr[j]!;
+        }
+      }
+      if (cnt === k) { resNum = p; resDen = q; break; }
+      else if (cnt < k) lo = mid;
+      else hi = mid;
+      resNum = p; resDen = q;
+    }
+    return [resNum, resDen];
+  },
+
+  'minimum-number-of-valid-strings-to-form-target-ii': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const target = args[1] as string;
+    const n = target.length;
+    const MOD = (1n << 61n) - 1n;
+    const BASE = 131n;
+    // Build set of prefix hashes for all words
+    const prefixSet = new Set<bigint>();
+    let maxWordLen = 0;
+    for (const word of words) {
+      maxWordLen = Math.max(maxWordLen, word.length);
+      let h = 0n;
+      for (let i = 0; i < word.length; i++) {
+        h = (h * BASE + BigInt(word.charCodeAt(i))) % MOD;
+        prefixSet.add(h);
+      }
+    }
+    // Compute target prefix hashes
+    const targetHash = new Array<bigint>(n + 1).fill(0n);
+    const pw = new Array<bigint>(n + 1).fill(1n);
+    for (let i = 0; i < n; i++) {
+      targetHash[i + 1] = (targetHash[i]! * BASE + BigInt(target.charCodeAt(i))) % MOD;
+      pw[i + 1] = (pw[i]! * BASE) % MOD;
+    }
+    const getHash = (l: number, r: number) => {
+      return (targetHash[r]! - targetHash[l]! * pw[r - l]! % MOD + MOD * 2n) % MOD;
+    };
+    // For each position, find max valid prefix length using binary search
+    const reach = new Array<number>(n).fill(0);
+    for (let j = 0; j < n; j++) {
+      let lo = 1, hi = Math.min(maxWordLen, n - j);
+      let best = 0;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (prefixSet.has(getHash(j, j + mid))) { best = mid; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      reach[j] = j + best;
+    }
+    // Greedy jump game
+    let jumps = 0, curEnd = 0, farthest = 0;
+    for (let i = 0; i < n; i++) {
+      farthest = Math.max(farthest, reach[i]!);
+      if (i === curEnd) {
+        if (farthest <= curEnd) return -1;
+        jumps++;
+        curEnd = farthest;
+        if (curEnd >= n) break;
+      }
+    }
+    return jumps;
+  },
+
+  'maximum-xor-score-subarray-queries': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = nums.length;
+    // dp[i][j] = XOR score of nums[i..j]
+    const dp = Array.from({ length: n }, (_, i) => {
+      const row = new Array<number>(n).fill(0);
+      row[i] = nums[i]!;
+      return row;
+    });
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i + len - 1 < n; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = dp[i]![j - 1]! ^ dp[i + 1]![j]!;
+      }
+    }
+    // suf[j][i] = max dp[a][j] for a in [i..j]
+    // mx[j][i] = max dp[a][b] for i<=a<=b<=j
+    const suf = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    const mx = Array.from({ length: n }, () => new Array<number>(n).fill(0));
+    for (let j = 0; j < n; j++) {
+      suf[j]![j] = dp[j]![j]!;
+      for (let i = j - 1; i >= 0; i--) {
+        suf[j]![i] = Math.max(dp[i]![j]!, suf[j]![i + 1]!);
+      }
+      mx[j]![j] = dp[j]![j]!;
+      for (let i = j - 1; i >= 0; i--) {
+        mx[j]![i] = Math.max(j > 0 ? mx[j - 1]![i]! : 0, suf[j]![i]!);
+      }
+    }
+    return queries.map(q => mx[q[1]!]![q[0]!]!);
+  },
 };
