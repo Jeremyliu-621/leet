@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2824** problems; 8798 tests green. Batch 264 complete.
+**Current focus:** Bank at **2832** problems; 8825 tests green. Batch 266 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 265+; continued UX polish.
+**Next up:** Batch 267+; continued UX polish.
+
+### feat(bank): batch 266 — find-maximum-marked-elements, longest-path-adjacent-chars, maximize-score-removing-substrings, maximum-points-archery (2026-06-01)
+Four new problems: `find-maximum-number-of-marked-elements` (medium/arrays+binary-search, LC 2576 — binary search on k pairs; check sorted[i]*2≤sorted[n-k+i] for i∈[0,k); return 2k), `longest-path-with-different-adjacent-characters` (hard/tree+dp, LC 2246 — DFS from root; at each node collect depths of children with s[c]≠s[u]; path through u = 1+top1+top2; track global max), `maximize-score-after-removing-substrings` (medium/strings+stack, LC 2124 — greedy: remove higher-value pair first via stack; push chars, pop when top+curr form target pair), `maximum-points-in-an-archery-competition` (medium/arrays+bit-manipulation, LC 2212 — 2^12=4096 bitmask enumeration; for each subset check cost≤numArrows and track max score; preamble-based validation). Bank at **2832**; 8825 tests.
+
+### feat(bank): batch 265 — chessboard-color, equal-divisible-pairs, work-sessions, abs-val-expr, uni-value-grid (2026-06-01)
+Five new problems added by remote session. Bank at **2828**; 8813 tests.
 
 ### feat(bank): batch 264 — mirror-score-string, manhattan-k-changes, beautiful-string, multiply-found, divide-sets-k (2026-06-01)
 Five new problems: `find-mirror-score-of-a-string` (medium/strings+stack, LC 3445 — per-char stack of unmatched positions; match closest previous same char for score; O(n)), `maximum-manhattan-distance-after-k-changes` (medium/math+strings, LC 3443 — 4-quadrant greedy: base + 2*min(k, opposing_count); each opposing step flipped gains +2 to Manhattan distance), `shortest-and-lexicographically-smallest-beautiful-string` (medium/strings+sliding-window, LC 2904 — collect positions of 1s; slide k-consecutive window; shortest then lex-min substring), `keep-multiplying-found-values-by-two` (easy/arrays+hash-map, LC 2154 — HashSet lookup, keep doubling original; O(n+log(max_val))), `divide-array-in-sets-of-k-consecutive-numbers` (medium/arrays+hash-map, LC 1296 — freq map + sorted unique values; greedy consecutive group deduction; O(n log n)). Bank at **2824**; 8798 tests.
