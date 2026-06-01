@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2812** problems; 8762 tests green. Batches 102–262 complete.
+**Current focus:** Bank at **2813** problems; 8765 tests green. Batches 102–263 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 263+; continued UX polish.
+**Next up:** Batch 264+; continued UX polish.
+
+### refactor(ui): replace ▲/▼ chevrons with animated SVG + fix all inline styles (2026-06-01)
+All expand/collapse UI controls now use a consistent rotating SVG chevron (12×12 viewBox, 1.5px round path, `transition-transform duration-150`) instead of Unicode ▲/▼/▸/▾. Affected components: TestResultCard (TerminalPanel), terminal collapse toggle (TerminalPanel), SubmissionsPanel, CustomTestPanel, ProblemBrowserSection. Also removes all remaining inline `style={{ fontSize: '9px', letterSpacing: '0.05em' }}` from CopyButton in TerminalPanel and ProblemPanel, replaced with Tailwind `text-[9px] tracking-[0.05em]`/`text-[9px]`.
+
+### feat(bank): batch 263 — count-subarrays-fixed-bounds + update 4 existing problems (2026-06-01)
+New problem: `count-subarrays-fixed-bounds` (hard/arrays+sliding-window, LC 2444 — three-pointer O(n) single pass: lastBad tracks last out-of-range element, lastMin/lastMax track last occurrence of minK/maxK; for each i, answer += max(0, min(lastMin, lastMax) - lastBad)). Also improves 4 existing problems: `longest-turbulent-subarray` (tags, Level hints, tests), `maximum-product-subarray` (3rd visible test, Level hints), `most-stones-removed-with-same-row-or-column` (3rd visible example, Level hints, tests), `minimum-operations-to-reduce-x-to-zero` (Level hints, more tests). Bank at **2813**; 8765 tests.
 
 ### feat(bank): batch 262 — rearranging-fruits, time-to-cross-a-bridge, find-number-of-coins-to-place-in-tree-nodes (2026-06-01)
 Three new hard problems: `rearranging-fruits` (hard/arrays+hash-map+math, LC 2561 — parity check on combined fruit frequencies; build surplus lists sorted ascending; greedy pairing with indirect-swap optimization via 2×globalMin), `time-to-cross-a-bridge` (hard/arrays+heap+simulation, LC 2532 — event-driven 4-queue simulation; left-bank workers have bridge priority; lowest-efficiency dispatched first; stop committing r→l once k rocks in flight), `find-number-of-coins-to-place-in-tree-nodes` (hard/tree+heap+math, LC 2973 — DFS collecting top-3/bottom-2 per subtree; max(0, top[0]*top[1]*top[2]) from 5-candidate set at each node). Also improves `count-pairs-in-two-arrays` (better examples + Level 1/2/3 hints) and `minimum-time-to-complete-all-tasks` (Level 1/2/3 hints + better tags). Bank at **2812**; 8762 tests.
