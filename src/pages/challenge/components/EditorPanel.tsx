@@ -634,6 +634,8 @@ export function EditorPanel({
   const wrapCompartmentRef = useRef(new Compartment());
   const snippetCompartmentRef = useRef(new Compartment());
   const autocompleteCompartmentRef = useRef(new Compartment());
+  // Indent unit in a Compartment so changes in settings take effect live.
+  const indentCompartmentRef = useRef(new Compartment());
 
   // Stable refs — the editor builds ONCE; refs let the keymap and the doc-
   // change effect read fresh callback values without rebuilding.
@@ -705,8 +707,8 @@ export function EditorPanel({
         // Autocomplete in a Compartment so it can be toggled live.
         autocompleteCompartmentRef.current.of(autocompleteProp ? autocompletion() : []),
         search(),
-        // Indent unit — respects user preference
-        indentUnit.of(indentSpaces(indentSize)),
+        // Indent unit — through Compartment for live reconfiguration.
+        indentCompartmentRef.current.of(indentUnit.of(indentSpaces(indentSize))),
         // Snippet completions — additive, via languageData so native keyword
         // and variable completions from the language plugin are still active.
         snippetCompartmentRef.current.of(snippetLanguageData(language)),
@@ -907,6 +909,15 @@ export function EditorPanel({
       effects: fontSizeCompartmentRef.current.reconfigure(fontSizeTheme(fontSize)),
     });
   }, [fontSize]);
+
+  // Reconfigure indent unit when indent size changes.
+  useEffect(() => {
+    const view = viewRef.current;
+    if (!view) return;
+    view.dispatch({
+      effects: indentCompartmentRef.current.reconfigure(indentUnit.of(indentSpaces(indentSize))),
+    });
+  }, [indentSize]);
 
   // Swap the colour theme when resolvedTheme changes.
   useEffect(() => {

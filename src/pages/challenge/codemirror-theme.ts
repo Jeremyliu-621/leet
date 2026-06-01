@@ -13,7 +13,7 @@ const leetlockThemeDark = EditorView.theme(
       backgroundColor: '#0A0A0A',
       color: '#EDEDED',
       height: '100%',
-      fontSize: '13px',
+      // fontSize controlled by fontSizeCompartment — do NOT set here.
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
     },
     '.cm-scroller': {
@@ -119,7 +119,7 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: '#FFFFFF',
       color: '#0A0A0A',
       height: '100%',
-      fontSize: '13px',
+      // fontSize controlled by fontSizeCompartment — do NOT set here.
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
     },
     '.cm-scroller': {

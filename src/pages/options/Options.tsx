@@ -35,7 +35,7 @@ import {
   setValue,
   updateValue,
 } from '../../lib/storage';
-import { applyTheme } from '../../lib/theme';
+import { applyTheme, applyEditorFontSize, watchSystemTheme } from '../../lib/theme';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { verifySecret } from '../../lib/crypto';
 import {
@@ -174,6 +174,17 @@ export function Options() {
   useEffect(() => {
     if (data?.prefs.theme) applyTheme(data.prefs.theme);
   }, [data?.prefs.theme]);
+
+  // Watch OS theme changes so "system" reacts to dark/light mode toggles.
+  useEffect(() => {
+    if (!data) return;
+    return watchSystemTheme(() => data.prefs.theme ?? 'dark');
+  }, [data?.prefs.theme]);
+
+  // Apply editor font size changes live.
+  useEffect(() => {
+    if (data?.prefs.editorFontSize != null) applyEditorFontSize(data.prefs.editorFontSize);
+  }, [data?.prefs.editorFontSize]);
 
   // ---------------------------------------------------------------------------
   // Helpers
