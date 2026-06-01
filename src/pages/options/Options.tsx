@@ -580,24 +580,6 @@ export function Options() {
   // Derive pending-change summaries for section notices
   // ---------------------------------------------------------------------------
 
-  function pendingNoticeForBlockRule(ruleId: string, pending: CooldownPendingChange[]): string | null {
-    const match = pending.find(
-      (p) =>
-        p.kind === 'remove-block-rule' &&
-        (p.payload as { ruleId?: string })?.ruleId === ruleId,
-    );
-    return match ? `Removal pending` : null;
-  }
-
-  function pendingNoticeForKeyword(ruleId: string, pending: CooldownPendingChange[]): string | null {
-    const match = pending.find(
-      (p) =>
-        p.kind === 'remove-keyword-rule' &&
-        (p.payload as { ruleId?: string })?.ruleId === ruleId,
-    );
-    return match ? `Removal pending` : null;
-  }
-
   function hasPendingKind(kinds: CooldownPendingChange['kind'][], pending: CooldownPendingChange[]): boolean {
     return pending.some((p) => kinds.includes(p.kind));
   }
@@ -648,10 +630,6 @@ export function Options() {
   const frictionPendingNotice = hasPendingKind(['reduce-friction'], d.pending)
     ? 'Some changes are pending cooldown.'
     : null;
-
-  // Suppress unused variable warnings — these are used contextually in the render below.
-  void pendingNoticeForBlockRule;
-  void pendingNoticeForKeyword;
 
   return (
     <>
@@ -770,13 +748,13 @@ export function Options() {
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
           />
 
-          {/* 7. Failure */}
+          {/* 7. Failure action */}
           <FailureSection
             prefs={d.prefs}
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
           />
 
-          {/* 7. Strict mode */}
+          {/* 8. Strict mode */}
           <StrictModeSection
             prefs={d.prefs}
             pendingNotice={strictPendingNotice}
@@ -784,32 +762,32 @@ export function Options() {
             onChangeCooldown={handleChangeCooldown(d)}
           />
 
-          {/* 8. Password lock */}
+          {/* 9. Password lock */}
           <PasswordLockSection lock={d.lock} onSave={handleSaveLock} />
 
-          {/* 9. Accountability partner */}
+          {/* 10. Accountability partner */}
           <AccountabilitySection partner={d.partner} onSave={handleSavePartner} />
 
-          {/* 10. Pending changes */}
+          {/* 11. Pending changes */}
           <PendingChangesSection pending={d.pending} onCancel={handleCancelPending} />
 
-          {/* 11. Sync status */}
+          {/* 12. Sync status */}
           <SyncStatusSection lastSyncAt={null} />
 
-          {/* 12. Import / Export */}
+          {/* 13. Import / Export */}
           <ImportExportSection />
 
-          {/* 13. Reset */}
+          {/* 14. Reset */}
           <ResetSection
             lock={d.lock}
             strictMode={d.prefs.strictMode}
             onReset={handleReset(d)}
           />
 
-          {/* 14. Problem bank browser */}
+          {/* 15. Problem bank browser */}
           <ProblemBrowserSection />
 
-          {/* 15. About — bundled-Pyodide reassurance + boot-time stat */}
+          {/* 16. About */}
           <AboutSection />
         </main>
       </div>
