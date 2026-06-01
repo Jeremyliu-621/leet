@@ -8,11 +8,14 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2879** problems; 8954 tests green. Batch 272 complete.
+**Current focus:** Bank at **2882** problems; 8966 tests green. Batches 272a + 272b complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 273+; continued UX polish.
 
-### feat(bank): batch 272 — power-of-four, element-more-than-25pct, min-swaps-1s-ii, collect-chocolates (2026-06-01)
+### feat(bank): batch 272b — find-max-string-pairs, count-substr-vowel-consonant, take-k-chars-left-right, min-extra-white-tiles (2026-06-01)
+Four new problems: `find-the-maximum-number-of-string-pairs` (easy/hash-map — iterate words; for each w, if reverse(w) in seen, count pair; else add to seen; O(n)), `count-substrings-with-vowel-and-consonant` (easy/strings+math — total − all-vowel runs − all-consonant runs; runs of length L contribute L*(L+1)/2; O(n)), `take-k-characters-from-left-and-right` (medium/sliding-window — maximize middle window where outside has ≥k of each 'a'/'b'/'c'; answer=n−maxWindow; O(n)), `minimum-extra-white-tiles-after-placing-carpets` (hard/dp — dp[i][j]=min extra whites in floor[0..i] with j carpets; transition: skip tile or place carpet ending at i; O(n·numCarpets)). Bank at **2882**; 8966 tests.
+
+### feat(bank): batch 272a — power-of-four, element-more-than-25pct, min-swaps-1s-ii, collect-chocolates (2026-06-01)
 Four new problems: `power-of-four` (easy/math+bit-manipulation, LC 342 — n>0 && isPow2(n) && n%3==1; 4^k ≡ 1 mod 3 for all k; O(1)), `element-appearing-more-than-25percent-in-sorted-array` (easy/arrays, LC 1287 — check arr[i]==arr[i+max(1,n/4)]; element appearing >n/4 times must span q positions in sorted order; O(n)), `minimum-swaps-to-group-all-1s-together-ii` (medium/arrays+sliding-window, LC 2134 — circular sliding window of size k=count(1s); min 0s in any window = min swaps; double array or mod indexing; O(n)), `collect-chocolates` (medium/arrays+math, LC 2735 — j rotations cost j*x; maintain running min array across rotations; total=j*x+sum(minCost); iterate j=0..n-1; O(n²)). Bank at **2879**; 8954 tests.
 
 ### feat(bank): batch 271 (local) — reverse-words-iii, goal-parser-interpretation, find-lucky-integer-in-array, smallest-string-numeric-val (2026-06-01)
