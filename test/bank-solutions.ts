@@ -43818,7 +43818,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
-  // batch 242 (local)
+  // batch 242 (remote)
   'serialize-deserialize-tree': (...args: unknown[]) => {
     const arr = args[0] as (number | null)[];
     if (arr.length === 0) return [];
@@ -43954,5 +43954,87 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       const y = (g - a * x) / b;
       return [g, x, y];
     });
+  },
+
+  'minimum-score-triangulation-polygon': (...args: unknown[]) => {
+    const [values] = args as [number[]];
+    const n = values.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let len = 3; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = Infinity;
+        for (let k = i + 1; k < j; k++) {
+          dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + values[i]! * values[k]! * values[j]!);
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+
+  'minimum-operations-to-make-array-empty': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const count = new Map<number, number>();
+    for (const n of nums) count.set(n, (count.get(n) ?? 0) + 1);
+    let ops = 0;
+    for (const c of count.values()) {
+      if (c === 1) return -1;
+      ops += Math.ceil(c / 3);
+    }
+    return ops;
+  },
+
+  'minimum-weighted-subgraph-path': (...args: unknown[]) => {
+    const [n, edges, src1, src2, dest] = args as [number, number[][], number, number, number];
+    const INF = Number.MAX_SAFE_INTEGER;
+    const g: [number, number][][] = Array.from({ length: n }, () => []);
+    const rg: [number, number][][] = Array.from({ length: n }, () => []);
+    for (const e of edges) {
+      g[e[0]!]!.push([e[1]!, e[2]!]);
+      rg[e[1]!]!.push([e[0]!, e[2]!]);
+    }
+    function dijkstra(graph: [number, number][][], src: number): number[] {
+      const dist = new Array<number>(n).fill(INF);
+      dist[src] = 0;
+      const queue: [number, number][] = [[0, src]];
+      while (queue.length > 0) {
+        queue.sort((a, b) => a[0]! - b[0]!);
+        const [d, u] = queue.shift()!;
+        if (d! > dist[u!]!) continue;
+        for (const [v, w] of graph[u!]!) {
+          const nd = dist[u!]! + w!;
+          if (nd < dist[v!]!) { dist[v!] = nd; queue.push([nd, v!]); }
+        }
+      }
+      return dist;
+    }
+    const d1 = dijkstra(g, src1);
+    const d2 = dijkstra(g, src2);
+    const d3 = dijkstra(rg, dest);
+    let ans = INF;
+    for (let i = 0; i < n; i++) {
+      if (d1[i]! < INF && d2[i]! < INF && d3[i]! < INF) {
+        ans = Math.min(ans, d1[i]! + d2[i]! + d3[i]!);
+      }
+    }
+    return ans >= INF ? -1 : ans;
+  },
+
+  'minimum-cost-homecoming-of-a-robot': (...args: unknown[]) => {
+    const [startPos, homePos, rowCosts, colCosts] = args as [number[], number[], number[], number[]];
+    let cost = 0;
+    const [r1, c1] = startPos as [number, number];
+    const [r2, c2] = homePos as [number, number];
+    if (r2 > r1) {
+      for (let r = r1 + 1; r <= r2; r++) cost += rowCosts[r]!;
+    } else {
+      for (let r = r1 - 1; r >= r2; r--) cost += rowCosts[r]!;
+    }
+    if (c2 > c1) {
+      for (let c = c1 + 1; c <= c2; c++) cost += colCosts[c]!;
+    } else {
+      for (let c = c1 - 1; c >= c2; c--) cost += colCosts[c]!;
+    }
+    return cost;
   },
 };

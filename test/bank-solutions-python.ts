@@ -43005,7 +43005,7 @@ def findEvenNumbers(digits):
             result.append(num)
     return result
 `,
-  // batch 242 (local)
+  // batch 242 (remote)
   'serialize-deserialize-tree': `
 def serializeDeserializeTree(tree):
     from collections import deque
@@ -43162,5 +43162,84 @@ def extendedGcd(pairs):
         y = (g - a * x) // b
         result.append([g, x, y])
     return result
+`,
+
+  'minimum-score-triangulation-polygon': `
+def minScoreTriangulation(values):
+    n = len(values)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(3, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
+    return dp[0][n - 1]
+`,
+
+  'minimum-operations-to-make-array-empty': `
+from math import ceil
+from collections import Counter
+def minOperations(nums):
+    count = Counter(nums)
+    ops = 0
+    for c in count.values():
+        if c == 1:
+            return -1
+        ops += ceil(c / 3)
+    return ops
+`,
+
+  'minimum-weighted-subgraph-path': `
+import heapq
+def minimumWeight(n, edges, src1, src2, dest):
+    INF = float('inf')
+    g = [[] for _ in range(n)]
+    rg = [[] for _ in range(n)]
+    for u, v, w in edges:
+        g[u].append((v, w))
+        rg[v].append((u, w))
+    def dijkstra(graph, src):
+        dist = [INF] * n
+        dist[src] = 0
+        heap = [(0, src)]
+        while heap:
+            d, u = heapq.heappop(heap)
+            if d > dist[u]:
+                continue
+            for v, w in graph[u]:
+                nd = dist[u] + w
+                if nd < dist[v]:
+                    dist[v] = nd
+                    heapq.heappush(heap, (nd, v))
+        return dist
+    d1 = dijkstra(g, src1)
+    d2 = dijkstra(g, src2)
+    d3 = dijkstra(rg, dest)
+    ans = INF
+    for i in range(n):
+        if d1[i] < INF and d2[i] < INF and d3[i] < INF:
+            ans = min(ans, d1[i] + d2[i] + d3[i])
+    return -1 if ans == INF else ans
+`,
+
+  'minimum-cost-homecoming-of-a-robot': `
+def minCostHomecoming(startPos, homePos, rowCosts, colCosts):
+    r1, c1 = startPos
+    r2, c2 = homePos
+    cost = 0
+    if r2 > r1:
+        for r in range(r1 + 1, r2 + 1):
+            cost += rowCosts[r]
+    else:
+        for r in range(r1 - 1, r2 - 1, -1):
+            cost += rowCosts[r]
+    if c2 > c1:
+        for c in range(c1 + 1, c2 + 1):
+            cost += colCosts[c]
+    else:
+        for c in range(c1 - 1, c2 - 1, -1):
+            cost += colCosts[c]
+    return cost
 `,
 };

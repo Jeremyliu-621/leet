@@ -3066,6 +3066,11 @@ import { problem as countRectanglesContainingEachPoint } from './count-number-of
 import { problem as parseBoolExpr } from './parsing-a-boolean-expression';
 import { problem as numOfWaysSameBST } from './number-of-ways-to-reorder-array-to-get-same-bst';
 import { problem as countPairsOfNodes } from './count-pairs-of-nodes';
+// batch 242
+import { problem as minScoreTriangulationPolygon } from './minimum-score-triangulation-polygon';
+import { problem as minOperationsArrayEmpty } from './minimum-operations-to-make-array-empty';
+import { problem as minCostHomecomingRobot } from './minimum-cost-homecoming-of-a-robot';
+import { problem as minimumWeightedSubgraphPath } from './minimum-weighted-subgraph-path';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6176,7 +6181,7 @@ export const problems: readonly Problem[] = [
   reverseLinkedListGroups,
   longestIncreasingPathMatrix,
   unionFindComponents,
-  // batch 242
+  // batch 242 (remote)
   smallestDivisibleDigitProductI,
   maxFrequencyAfterOpsII,
   maxTargetNodesI,
@@ -6187,4 +6192,9 @@ export const problems: readonly Problem[] = [
   topologicalSortKahn,
   segTreeRangeUpdate,
   extendedGcd,
+  // batch 242 (local)
+  minScoreTriangulationPolygon,
+  minOperationsArrayEmpty,
+  minCostHomecomingRobot,
+  minimumWeightedSubgraphPath,
 ];
