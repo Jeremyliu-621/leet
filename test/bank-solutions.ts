@@ -47404,7 +47404,35 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 267
+  // batch 269
+  'take-gifts-from-richest-pile': (...args: unknown[]) => {
+    const gifts = [...(args[0] as number[])];
+    const k = args[1] as number;
+    for (let step = 0; step < k; step++) {
+      let maxIdx = 0;
+      for (let i = 1; i < gifts.length; i++) {
+        if (gifts[i]! > gifts[maxIdx]!) maxIdx = i;
+      }
+      gifts[maxIdx] = Math.floor(Math.sqrt(gifts[maxIdx]!));
+    }
+    return gifts.reduce((s, x) => s + x, 0);
+  },
+
+  'minimum-number-of-coins-for-fruits-i': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const n = prices.length;
+    const dp = new Array<number>(n + 2).fill(0);
+    for (let i = n; i >= 1; i--) {
+      let minNext = Infinity;
+      for (let j = i + 1; j <= Math.min(2 * i + 1, n + 1); j++) {
+        minNext = Math.min(minNext, dp[j]!);
+      }
+      dp[i] = prices[i - 1]! + (minNext === Infinity ? 0 : minNext);
+    }
+    return dp[1]!;
+  },
+
+  // batch 267 (old)
   'count-submatrices-with-equal-frequency-of-x-and-y': (...args: unknown[]) => {
     const grid = args[0] as string[][];
     const x = args[1] as string;

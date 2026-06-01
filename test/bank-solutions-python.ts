@@ -46429,7 +46429,38 @@ def placedCoins(edges, cost):
     return ans
 `,
 
-  // batch 267
+  // batch 269
+  'maximum-value-of-ordered-triplet-ii': `def maximumTripletValue(nums):
+    max_i = nums[0]
+    max_diff = float('-inf')
+    ans = 0
+    for j in range(1, len(nums)):
+        ans = max(ans, max_diff * nums[j])
+        max_diff = max(max_diff, max_i - nums[j])
+        max_i = max(max_i, nums[j])
+    return ans
+`,
+
+  'take-gifts-from-richest-pile': `def pickGifts(gifts, k):
+    import heapq, math
+    heap = [-g for g in gifts]
+    heapq.heapify(heap)
+    for _ in range(k):
+        top = -heapq.heappop(heap)
+        heapq.heappush(heap, -int(math.isqrt(top)))
+    return -sum(heap)
+`,
+
+  'minimum-number-of-coins-for-fruits-i': `def minimumCoins(prices):
+    n = len(prices)
+    dp = [0] * (n + 2)
+    for i in range(n, 0, -1):
+        min_next = min(dp[i+1:min(2*i+2, n+2)])
+        dp[i] = prices[i-1] + min_next
+    return dp[1]
+`,
+
+  // batch 267 (old)
   'count-submatrices-with-equal-frequency-of-x-and-y': `def numberOfSubmatrices(grid, x, y):
     m, n = len(grid), len(grid[0])
     px = [[0]*n for _ in range(m)]
