@@ -15,6 +15,9 @@
 ### refactor(ui): replace ▲/▼ chevrons with animated SVG + fix all inline styles (2026-06-01)
 All expand/collapse UI controls now use a consistent rotating SVG chevron (12×12 viewBox, 1.5px round path, `transition-transform duration-150`) instead of Unicode ▲/▼/▸/▾. Affected components: TestResultCard (TerminalPanel), terminal collapse toggle (TerminalPanel), SubmissionsPanel, CustomTestPanel, ProblemBrowserSection. Also removes all remaining inline `style={{ fontSize: '9px', letterSpacing: '0.05em' }}` from CopyButton in TerminalPanel and ProblemPanel, replaced with Tailwind `text-[9px] tracking-[0.05em]`/`text-[9px]`.
 
+### feat(bank): batch 263 (local) — minimum-suffix-flips, detect-pattern-mk (2026-06-01)
+Two new problems: `minimum-suffix-flips` (medium/strings+simulation, LC 1529 — scan left to right counting transitions from '0'; each change in consecutive characters requires exactly one new suffix flip; O(n)), `detect-pattern-of-length-m-repeated-k-or-more-times` (easy/arrays+simulation, LC 1566 — for each start index, check arr[i+j]==arr[i+j+m] for all j in [0, m*(k-1)); O(n*m*k)). Also improves `count-odd-numbers-in-an-interval-range` with detailed description and extra hidden tests. Bank at **2815**; 8771 tests.
+
 ### feat(bank): batch 263 — count-subarrays-fixed-bounds + update 4 existing problems (2026-06-01)
 New problem: `count-subarrays-fixed-bounds` (hard/arrays+sliding-window, LC 2444 — three-pointer O(n) single pass: lastBad tracks last out-of-range element, lastMin/lastMax track last occurrence of minK/maxK; for each i, answer += max(0, min(lastMin, lastMax) - lastBad)). Also improves 4 existing problems: `longest-turbulent-subarray` (tags, Level hints, tests), `maximum-product-subarray` (3rd visible test, Level hints), `most-stones-removed-with-same-row-or-column` (3rd visible example, Level hints, tests), `minimum-operations-to-reduce-x-to-zero` (Level hints, more tests). Bank at **2813**; 8765 tests.
 
