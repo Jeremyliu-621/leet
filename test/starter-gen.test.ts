@@ -81,4 +81,41 @@ describe('generateStarter', () => {
       );
     }
   });
+
+  it('handles zero-parameter functions correctly', () => {
+    const jsCompiled = ['java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql', 'javascript'] as const;
+    for (const lang of jsCompiled) {
+      const code = generateStarter(lang, 'solve', []);
+      expect(code, `${lang} zero-param starter`).toContain('function solve()');
+    }
+  });
+
+  it('handles single-parameter functions correctly', () => {
+    const code = generateStarter('java', 'findMax', ['arr']);
+    expect(code).toContain('function findMax(arr)');
+    expect(code).toContain('Object arr');
+  });
+
+  it('converts camelCase to snake_case for Rust', () => {
+    const code = generateStarter('rust', 'longestSubstring', ['inputStr']);
+    expect(code).toContain('longest_substring');
+    expect(code).toContain('input_str');
+  });
+
+  it('capitalises class name for Java and C#', () => {
+    const javaCode = generateStarter('java', 'maxProfit', ['prices']);
+    expect(javaCode).toContain('MaxProfit');
+    const csCode = generateStarter('csharp', 'maxProfit', ['prices']);
+    expect(csCode).toContain('MaxProfit');
+  });
+
+  it('generates valid TypeScript starter (same as JS)', () => {
+    const code = generateStarter('typescript', fn, params);
+    expect(code).toContain('function twoSum(nums, target)');
+  });
+
+  it('generates valid Python starter (same as JS fallback)', () => {
+    const code = generateStarter('python', fn, params);
+    expect(code).toContain('function twoSum(nums, target)');
+  });
 });

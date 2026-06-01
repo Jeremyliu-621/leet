@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { applyTheme, resolveTheme } from '../src/lib/theme/theme';
+import { applyTheme, resolveBaseTheme, resolveTheme } from '../src/lib/theme/theme';
 
 describe('resolveTheme', () => {
   beforeEach(() => {
@@ -55,5 +55,47 @@ describe('applyTheme', () => {
   it('returns the resolved theme', () => {
     expect(applyTheme('dark')).toBe('dark');
     expect(applyTheme('light')).toBe('light');
+  });
+
+  it('writes system-dark when system preference is dark', () => {
+    applyTheme('system');
+    const setAttribute = document.documentElement.setAttribute as unknown as ReturnType<typeof vi.fn>;
+    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'system-dark');
+  });
+
+  it('writes system-light when system preference is light', () => {
+    (globalThis as unknown as { window: Window }).window = {
+      matchMedia: vi.fn(() => ({ matches: false })),
+    } as unknown as Window;
+    applyTheme('system');
+    const setAttribute = document.documentElement.setAttribute as unknown as ReturnType<typeof vi.fn>;
+    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'system-light');
+  });
+});
+
+describe('resolveBaseTheme', () => {
+  beforeEach(() => {
+    (globalThis as { window?: Window }).window = {
+      matchMedia: vi.fn(() => ({ matches: true })),
+    } as unknown as Window;
+  });
+
+  it('returns dark for dark preference', () => {
+    expect(resolveBaseTheme('dark')).toBe('dark');
+  });
+
+  it('returns light for light preference', () => {
+    expect(resolveBaseTheme('light')).toBe('light');
+  });
+
+  it('returns dark for system when OS prefers dark', () => {
+    expect(resolveBaseTheme('system')).toBe('dark');
+  });
+
+  it('returns light for system when OS prefers light', () => {
+    (globalThis as unknown as { window: Window }).window = {
+      matchMedia: vi.fn(() => ({ matches: false })),
+    } as unknown as Window;
+    expect(resolveBaseTheme('system')).toBe('light');
   });
 });
