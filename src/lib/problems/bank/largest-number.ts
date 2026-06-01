@@ -41,10 +41,25 @@ Since the result may be very large, return it as a string rather than an integer
   functionName: 'largestNumber',
   params: ['nums'],
   starterCode: {
-    javascript: 'function largestNumber(nums) {\n  // your code here\n}\n',
-    typescript: "function largestNumber(nums: number[]): string {\n  // your code here\n}",
-
-    python: 'def largestNumber(nums):\n    # your code here\n    pass\n',
+    javascript: `function largestNumber(nums) {
+  const strs = nums.map(String);
+  strs.sort((a, b) => (b + a) > (a + b) ? 1 : -1);
+  if (strs[0] === '0') return '0';
+  return strs.join('');
+}`,
+    typescript: `function largestNumber(nums: number[]): string {
+  const strs = nums.map(String);
+  strs.sort((a, b) => (b + a) > (a + b) ? 1 : -1);
+  if (strs[0] === '0') return '0';
+  return strs.join('');
+}`,
+    python: `def largestNumber(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import functools
+    strs = list(map(str, nums))
+    strs.sort(key=functools.cmp_to_key(lambda a, b: (1 if b + a > a + b else -1)))
+    if strs[0] == '0': return '0'
+    return ''.join(strs)`,
   },
   visibleTests: [
     { args: [[10, 2]], expected: '210' },

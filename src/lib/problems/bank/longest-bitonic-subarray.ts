@@ -40,11 +40,36 @@ The bitonic length centered at index \`i\` is \`inc[i] + dec[i] - 1\`. Return th
   functionName: 'longestBitonicSubarray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function longestBitonicSubarray(nums) {\n  // your code here\n}\n',
-    typescript: `function longestBitonicSubarray(nums: number[]): number {
-
+    javascript: `function longestBitonicSubarray(nums) {
+  const n = nums.length;
+  const inc = new Array(n).fill(1);
+  const dec = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) if (nums[i] > nums[i - 1]) inc[i] = inc[i - 1] + 1;
+  for (let i = n - 2; i >= 0; i--) if (nums[i] > nums[i + 1]) dec[i] = dec[i + 1] + 1;
+  let best = 1;
+  for (let i = 0; i < n; i++) best = Math.max(best, inc[i] + dec[i] - 1);
+  return best;
 }`,
-    python: 'def longestBitonicSubarray(nums):\n    # your code here\n    pass\n',
+    typescript: `function longestBitonicSubarray(nums: number[]): number {
+  const n = nums.length;
+  const inc = new Array(n).fill(1) as number[];
+  const dec = new Array(n).fill(1) as number[];
+  for (let i = 1; i < n; i++) if (nums[i]! > nums[i - 1]!) inc[i]! = inc[i - 1]! + 1;
+  for (let i = n - 2; i >= 0; i--) if (nums[i]! > nums[i + 1]!) dec[i]! = dec[i + 1]! + 1;
+  let best = 1;
+  for (let i = 0; i < n; i++) best = Math.max(best, inc[i]! + dec[i]! - 1);
+  return best;
+}`,
+    python: `def longestBitonicSubarray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    inc = [1] * n
+    dec = [1] * n
+    for i in range(1, n):
+        if nums[i] > nums[i - 1]: inc[i] = inc[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if nums[i] > nums[i + 1]: dec[i] = dec[i + 1] + 1
+    return max(inc[i] + dec[i] - 1 for i in range(n))`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 4, 2]], expected: 5 },

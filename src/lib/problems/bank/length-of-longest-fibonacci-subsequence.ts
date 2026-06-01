@@ -39,10 +39,54 @@ Explanation: [1,11,12] or [3,11,14] or [7,11,18]
   functionName: 'lenLongestFibSubseq',
   params: ['arr'],
   starterCode: {
-    javascript: 'function lenLongestFibSubseq(arr) {\n  // your code here\n}\n',
-    typescript: "function lenLongestFibSubseq(arr: number[]): number {\n  // your code here\n}",
-
-    python: 'def lenLongestFibSubseq(arr):\n    pass\n',
+    javascript: `function lenLongestFibSubseq(arr) {
+  const n = arr.length;
+  const idx = new Map(arr.map((v, i) => [v, i]));
+  const dp = Array.from({ length: n }, () => new Array(n).fill(2));
+  let best = 0;
+  for (let j = 1; j < n; j++) {
+    for (let i = 0; i < j; i++) {
+      const prev = arr[j] - arr[i];
+      if (prev < arr[i] && idx.has(prev)) {
+        const k = idx.get(prev);
+        dp[i][j] = dp[k][i] + 1;
+        best = Math.max(best, dp[i][j]);
+      }
+    }
+  }
+  return best >= 3 ? best : 0;
+}`,
+    typescript: `function lenLongestFibSubseq(arr: number[]): number {
+  const n = arr.length;
+  const idx = new Map(arr.map((v, i) => [v, i]));
+  const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(2));
+  let best = 0;
+  for (let j = 1; j < n; j++) {
+    for (let i = 0; i < j; i++) {
+      const prev = arr[j]! - arr[i]!;
+      if (prev < arr[i]! && idx.has(prev)) {
+        const k = idx.get(prev)!;
+        dp[i]![j] = dp[k]![i]! + 1;
+        best = Math.max(best, dp[i]![j]!);
+      }
+    }
+  }
+  return best >= 3 ? best : 0;
+}`,
+    python: `def lenLongestFibSubseq(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    n = len(arr)
+    idx = {v: i for i, v in enumerate(arr)}
+    dp = [[2] * n for _ in range(n)]
+    best = 0
+    for j in range(1, n):
+        for i in range(j):
+            prev = arr[j] - arr[i]
+            if prev < arr[i] and prev in idx:
+                k = idx[prev]
+                dp[i][j] = dp[k][i] + 1
+                best = max(best, dp[i][j])
+    return best if best >= 3 else 0`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6, 7, 8]], expected: 5 },

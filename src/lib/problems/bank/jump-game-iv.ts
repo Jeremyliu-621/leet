@@ -42,10 +42,66 @@ Return the **minimum number of steps** to reach the **last index** of the array.
   functionName: 'minJumps',
   params: ['arr'],
   starterCode: {
-    javascript: 'function minJumps(arr) {\n  // your code here\n}\n',
-    typescript: "function minJumps(arr: number[]): number {\n  // your code here\n}",
-
-    python: 'def minJumps(arr):\n    # your code here\n    pass\n',
+    javascript: `function minJumps(arr) {
+  const n = arr.length;
+  if (n === 1) return 0;
+  const graph = new Map();
+  for (let i = 0; i < n; i++) {
+    if (!graph.has(arr[i])) graph.set(arr[i], []);
+    graph.get(arr[i]).push(i);
+  }
+  const visited = new Set([0]);
+  const q = [[0, 0]];
+  while (q.length) {
+    const [i, steps] = q.shift();
+    const next = [i - 1, i + 1, ...(graph.get(arr[i]) ?? [])];
+    graph.delete(arr[i]);
+    for (const j of next) {
+      if (j === n - 1) return steps + 1;
+      if (j >= 0 && j < n && !visited.has(j)) { visited.add(j); q.push([j, steps + 1]); }
+    }
+  }
+  return -1;
+}`,
+    typescript: `function minJumps(arr: number[]): number {
+  const n = arr.length;
+  if (n === 1) return 0;
+  const graph = new Map<number, number[]>();
+  for (let i = 0; i < n; i++) {
+    if (!graph.has(arr[i]!)) graph.set(arr[i]!, []);
+    graph.get(arr[i]!)!.push(i);
+  }
+  const visited = new Set([0]);
+  const q: [number, number][] = [[0, 0]];
+  while (q.length) {
+    const [i, steps] = q.shift()!;
+    const next = [i - 1, i + 1, ...(graph.get(arr[i]!) ?? [])];
+    graph.delete(arr[i]!);
+    for (const j of next) {
+      if (j === n - 1) return steps + 1;
+      if (j >= 0 && j < n && !visited.has(j)) { visited.add(j); q.push([j, steps + 1]); }
+    }
+  }
+  return -1;
+}`,
+    python: `def minJumps(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    from collections import defaultdict, deque
+    n = len(arr)
+    if n == 1: return 0
+    graph = defaultdict(list)
+    for i, v in enumerate(arr): graph[v].append(i)
+    visited = {0}
+    q = deque([(0, 0)])
+    while q:
+        i, steps = q.popleft()
+        neighbors = [i - 1, i + 1] + graph.pop(arr[i], [])
+        for j in neighbors:
+            if j == n - 1: return steps + 1
+            if 0 <= j < n and j not in visited:
+                visited.add(j)
+                q.append((j, steps + 1))
+    return -1`,
   },
   visibleTests: [
     {
