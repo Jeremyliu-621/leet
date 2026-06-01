@@ -33,14 +33,45 @@ A **special triplet** is a triplet of indices \`(i, j, k)\` such that \`i < j < 
   params: ['nums'],
   starterCode: {
     javascript: `function countSpecialTriplets(nums) {
-  // your code here
+  const n = nums.length;
+  let cnt = 0;
+  const prefix = new Map();
+  for (let j = 1; j < n - 1; j++) {
+    const prev = nums[j - 1];
+    prefix.set(prev, (prefix.get(prev) ?? 0) + 1);
+    for (let k = j + 1; k < n; k++) {
+      const need = nums[j] - nums[k];
+      cnt += prefix.get(need) ?? 0;
+    }
+  }
+  return cnt;
 }`,
     typescript: `function countSpecialTriplets(nums: number[]): number {
-  // your code here
+  const n = nums.length;
+  let cnt = 0;
+  const prefix = new Map<number, number>();
+  for (let j = 1; j < n - 1; j++) {
+    const prev = nums[j - 1]!;
+    prefix.set(prev, (prefix.get(prev) ?? 0) + 1);
+    for (let k = j + 1; k < n; k++) {
+      const need = nums[j]! - nums[k]!;
+      cnt += prefix.get(need) ?? 0;
+    }
+  }
+  return cnt;
 }`,
     python: `def countSpecialTriplets(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    cnt = 0
+    prefix = {}
+    for j in range(1, n - 1):
+        prev = nums[j - 1]
+        prefix[prev] = prefix.get(prev, 0) + 1
+        for k in range(j + 1, n):
+            need = nums[j] - nums[k]
+            cnt += prefix.get(need, 0)
+    return cnt`,
   },
   visibleTests: [
     { args: [[1, 2, 1]], expected: 1 },

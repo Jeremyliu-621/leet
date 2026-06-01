@@ -37,10 +37,28 @@ export const problem: Problem = {
   functionName: 'countKDifference',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function countKDifference(nums, k) {\n  // your code here\n}\n',
-    typescript: "function countKDifference(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def countKDifference(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function countKDifference(nums, k) {
+  let cnt = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++)
+      if (Math.abs(nums[i] - nums[j]) === k) cnt++;
+  return cnt;
+}`,
+    typescript: `function countKDifference(nums: number[], k: number): number {
+  let cnt = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++)
+      if (Math.abs(nums[i]! - nums[j]!) === k) cnt++;
+  return cnt;
+}`,
+    python: `def countKDifference(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    cnt = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if abs(nums[i] - nums[j]) == k:
+                cnt += 1
+    return cnt`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 1], 1], expected: 4 },

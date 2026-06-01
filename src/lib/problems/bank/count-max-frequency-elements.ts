@@ -34,10 +34,25 @@ The **frequency** of an element is the number of occurrences of that element in 
   functionName: 'maxFrequencyElements',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxFrequencyElements(nums) {\n  // your code here\n}\n',
-    typescript: "function maxFrequencyElements(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def maxFrequencyElements(nums):\n    # your code here\n    pass\n',
+    javascript: `function maxFrequencyElements(nums) {
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  const max = Math.max(...freq.values());
+  return [...freq.values()].filter(f => f === max).reduce((a, b) => a + b, 0);
+}`,
+    typescript: `function maxFrequencyElements(nums: number[]): number {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  const max = Math.max(...freq.values());
+  return [...freq.values()].filter(f => f === max).reduce((a, b) => a + b, 0);
+}`,
+    python: `def maxFrequencyElements(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    freq = {}
+    for n in nums:
+        freq[n] = freq.get(n, 0) + 1
+    mx = max(freq.values())
+    return sum(f for f in freq.values() if f == mx)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 1, 4]], expected: 4 },

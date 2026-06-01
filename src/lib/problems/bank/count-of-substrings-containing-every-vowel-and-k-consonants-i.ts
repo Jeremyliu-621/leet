@@ -39,14 +39,72 @@ Return the total number of substrings of \`word\` that contain every vowel (\`'a
   params: ['word', 'k'],
   starterCode: {
     javascript: `function countOfSubstrings(word, k) {
-  // your code here
+  const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+  function atLeast(minK) {
+    const vFreq = new Map();
+    let cons = 0, l = 0, ans = 0;
+    for (let r = 0; r < word.length; r++) {
+      const c = word[r];
+      if (VOWELS.has(c)) vFreq.set(c, (vFreq.get(c) ?? 0) + 1);
+      else cons++;
+      while (vFreq.size === 5 && cons >= minK) {
+        const lc = word[l];
+        if (VOWELS.has(lc)) {
+          const f = vFreq.get(lc) - 1;
+          if (f === 0) vFreq.delete(lc); else vFreq.set(lc, f);
+        } else cons--;
+        l++;
+      }
+      ans += l;
+    }
+    return ans;
+  }
+  return atLeast(k) - atLeast(k + 1);
 }`,
     typescript: `function countOfSubstrings(word: string, k: number): number {
-  // your code here
+  const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+  function atLeast(minK: number): number {
+    const vFreq = new Map<string, number>();
+    let cons = 0, l = 0, ans = 0;
+    for (let r = 0; r < word.length; r++) {
+      const c = word[r]!;
+      if (VOWELS.has(c)) vFreq.set(c, (vFreq.get(c) ?? 0) + 1);
+      else cons++;
+      while (vFreq.size === 5 && cons >= minK) {
+        const lc = word[l]!;
+        if (VOWELS.has(lc)) {
+          const f = vFreq.get(lc)! - 1;
+          if (f === 0) vFreq.delete(lc); else vFreq.set(lc, f);
+        } else cons--;
+        l++;
+      }
+      ans += l;
+    }
+    return ans;
+  }
+  return atLeast(k) - atLeast(k + 1);
 }`,
     python: `def countOfSubstrings(word, k):
-    # your code here
-`,
+    if hasattr(word, 'to_py'): word = word.to_py()
+    VOWELS = set('aeiou')
+    def at_least(min_k):
+        v_freq, cons, l, ans = {}, 0, 0, 0
+        for r, c in enumerate(word):
+            if c in VOWELS:
+                v_freq[c] = v_freq.get(c, 0) + 1
+            else:
+                cons += 1
+            while len(v_freq) == 5 and cons >= min_k:
+                lc = word[l]
+                if lc in VOWELS:
+                    v_freq[lc] -= 1
+                    if v_freq[lc] == 0: del v_freq[lc]
+                else:
+                    cons -= 1
+                l += 1
+            ans += l
+        return ans
+    return at_least(k) - at_least(k + 1)`,
   },
   visibleTests: [
     { args: ['aeiouabc', 1], expected: 2 },

@@ -28,10 +28,32 @@ export const problem: Problem = {
   functionName: 'countNegatives',
   params: ['grid'],
   starterCode: {
-    javascript: 'function countNegatives(grid) {\n  // your code here\n}\n',
-    typescript: "function countNegatives(grid: number[][]): number {\n  // your code here\n}",
-
-    python: 'def countNegatives(grid):\n    # your code here\n    pass\n',
+    javascript: `function countNegatives(grid) {
+  let r = 0, c = grid[0].length - 1, cnt = 0;
+  while (r < grid.length && c >= 0) {
+    if (grid[r][c] < 0) { cnt += grid.length - r; c--; }
+    else r++;
+  }
+  return cnt;
+}`,
+    typescript: `function countNegatives(grid: number[][]): number {
+  let r = 0, c = grid[0]!.length - 1, cnt = 0;
+  while (r < grid.length && c >= 0) {
+    if (grid[r]![c]! < 0) { cnt += grid.length - r; c--; }
+    else r++;
+  }
+  return cnt;
+}`,
+    python: `def countNegatives(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    r, c, cnt = 0, len(grid[0]) - 1, 0
+    while r < len(grid) and c >= 0:
+        if grid[r][c] < 0:
+            cnt += len(grid) - r
+            c -= 1
+        else:
+            r += 1
+    return cnt`,
   },
   visibleTests: [
     { args: [[[4, 3, 2, -1], [3, 2, 1, -1], [1, 1, -1, -2], [-1, -1, -2, -3]]], expected: 8 },
