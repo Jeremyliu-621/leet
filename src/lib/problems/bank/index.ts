@@ -3278,6 +3278,10 @@ import { problem as findTheXorOfAllSubarrays } from './find-the-xor-of-all-subar
 import { problem as sortTheMatrixDiagonally } from './sort-the-matrix-diagonally';
 import { problem as maximumAndMinimumSumsOfAtMostKSizeSubarrays } from './maximum-and-minimum-sums-of-at-most-k-size-subarrays';
 import { problem as maximumSumWithAtMostKElements } from './maximum-sum-with-at-most-k-elements';
+import { problem as findTheMaximumNumberOfStringPairs } from './find-the-maximum-number-of-string-pairs';
+import { problem as countSubstringsWithVowelAndConsonant } from './count-substrings-with-vowel-and-consonant';
+import { problem as takeKCharactersFromLeftAndRight } from './take-k-characters-from-left-and-right';
+import { problem as minimumExtraWhiteTilesAfterPlacingCarpets } from './minimum-extra-white-tiles-after-placing-carpets';
 // batch 248
 import { problem as validPalindromeIii } from './valid-palindrome-iii';
 import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
@@ -6661,4 +6665,9 @@ export const problems: readonly Problem[] = [
   sortTheMatrixDiagonally,
   maximumAndMinimumSumsOfAtMostKSizeSubarrays,
   maximumSumWithAtMostKElements,
+  // batch 272
+  findTheMaximumNumberOfStringPairs,
+  countSubstringsWithVowelAndConsonant,
+  takeKCharactersFromLeftAndRight,
+  minimumExtraWhiteTilesAfterPlacingCarpets,
 ];

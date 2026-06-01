@@ -47846,4 +47846,74 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let j = dp.length - 1; j >= 0; j--) if (dp[j]) return j;
     return 0;
   },
+
+  // batch 272
+  'find-the-maximum-number-of-string-pairs': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const seen = new Set<string>();
+    let pairs = 0;
+    for (const w of words) {
+      const rev = w.split('').reverse().join('');
+      if (seen.has(rev)) { pairs++; seen.delete(rev); }
+      else seen.add(w);
+    }
+    return pairs;
+  },
+
+  'count-substrings-with-vowel-and-consonant': (...args: unknown[]) => {
+    const word = args[0] as string;
+    const VOWELS = new Set(['a', 'e', 'i', 'o', 'u']);
+    const n = word.length;
+    const total = n * (n + 1) / 2;
+    let sub = 0, i = 0;
+    while (i < n) {
+      const isV = VOWELS.has(word[i]!);
+      let j = i;
+      while (j < n && VOWELS.has(word[j]!) === isV) j++;
+      const len = j - i;
+      sub += len * (len + 1) / 2;
+      i = j;
+    }
+    return total - sub;
+  },
+
+  'take-k-characters-from-left-and-right': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    if (k === 0) return 0;
+    const n = s.length;
+    const count = [0, 0, 0];
+    for (const c of s) count[c.charCodeAt(0) - 97]!++;
+    if (count[0]! < k || count[1]! < k || count[2]! < k) return -1;
+    const inside = [0, 0, 0];
+    let l = 0, maxWindow = 0;
+    for (let r = 0; r < n; r++) {
+      inside[s.charCodeAt(r) - 97]!++;
+      while (inside[0]! > count[0]! - k || inside[1]! > count[1]! - k || inside[2]! > count[2]! - k) {
+        inside[s.charCodeAt(l) - 97]!--;
+        l++;
+      }
+      maxWindow = Math.max(maxWindow, r - l + 1);
+    }
+    return n - maxWindow;
+  },
+
+  'minimum-extra-white-tiles-after-placing-carpets': (...args: unknown[]) => {
+    const floor = args[0] as string;
+    const numCarpets = args[1] as number;
+    const carpetLen = args[2] as number;
+    const n = floor.length;
+    let prev = new Array<number>(n + 1).fill(0);
+    for (let i = 1; i <= n; i++) prev[i] = prev[i - 1]! + (floor[i - 1] === '1' ? 1 : 0);
+    for (let j = 1; j <= numCarpets; j++) {
+      const cur = new Array<number>(n + 1).fill(0);
+      for (let i = 1; i <= n; i++) {
+        const opt1 = cur[i - 1]! + (floor[i - 1] === '1' ? 1 : 0);
+        const opt2 = prev[Math.max(0, i - carpetLen)]!;
+        cur[i] = Math.min(opt1, opt2);
+      }
+      prev = cur;
+    }
+    return prev[n]!;
+  },
 };

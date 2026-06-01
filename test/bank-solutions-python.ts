@@ -46817,4 +46817,69 @@ def maxTotalReward(rewardValues):
             return j
     return 0
 `,
+
+  // batch 272
+  'find-the-maximum-number-of-string-pairs': `def maximumNumberOfStringPairs(words):
+    seen = set()
+    pairs = 0
+    for w in words:
+        rev = w[::-1]
+        if rev in seen:
+            pairs += 1
+            seen.remove(rev)
+        else:
+            seen.add(w)
+    return pairs
+`,
+
+  'count-substrings-with-vowel-and-consonant': `def countOfSubstrings(word):
+    vowels = set('aeiou')
+    n = len(word)
+    total = n * (n + 1) // 2
+    sub = 0
+    i = 0
+    while i < n:
+        is_vowel = word[i] in vowels
+        j = i
+        while j < n and (word[j] in vowels) == is_vowel:
+            j += 1
+        length = j - i
+        sub += length * (length + 1) // 2
+        i = j
+    return total - sub
+`,
+
+  'take-k-characters-from-left-and-right': `def takeCharacters(s, k):
+    if k == 0:
+        return 0
+    n = len(s)
+    count = [s.count('a'), s.count('b'), s.count('c')]
+    if any(c < k for c in count):
+        return -1
+    inside = [0, 0, 0]
+    l = 0
+    max_window = 0
+    for r in range(n):
+        inside[ord(s[r]) - ord('a')] += 1
+        while any(inside[i] > count[i] - k for i in range(3)):
+            inside[ord(s[l]) - ord('a')] -= 1
+            l += 1
+        max_window = max(max_window, r - l + 1)
+    return n - max_window
+`,
+
+  'minimum-extra-white-tiles-after-placing-carpets': `def minimumWhiteTiles(floor, numCarpets, carpetLen):
+    n = len(floor)
+    prev = [0] * (n + 1)
+    for i in range(1, n + 1):
+        prev[i] = prev[i-1] + (1 if floor[i-1] == '1' else 0)
+    for _ in range(numCarpets):
+        cur = [0] * (n + 1)
+        for i in range(1, n + 1):
+            opt1 = cur[i-1] + (1 if floor[i-1] == '1' else 0)
+            opt2 = prev[max(0, i - carpetLen)]
+            cur[i] = min(opt1, opt2)
+        prev = cur
+    return prev[n]
+`,
 };
