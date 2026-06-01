@@ -45654,6 +45654,122 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  'minimum-levels-to-gain-more-points': (...args: unknown[]) => {
+    const possible = args[0] as number[];
+    const n = possible.length;
+    let total = 0;
+    for (const p of possible) total += 2 * p - 1;
+    let prefix = 0;
+    for (let j = 0; j < n - 1; j++) {
+      prefix += 2 * possible[j]! - 1;
+      if (2 * prefix > total) return j + 1;
+    }
+    return -1;
+  },
+
+  'mark-elements-on-array-by-performing-queries': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = nums.length;
+    const marked = new Array(n).fill(false);
+    let total = nums.reduce((a, b) => a + b, 0);
+    const heap = nums.map((v, i) => [v, i] as [number, number]).sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+    let ptr = 0;
+    const ans: number[] = [];
+    for (const q of queries) {
+      const idx = q[0]!, k = q[1]!;
+      if (!marked[idx]) {
+        marked[idx] = true;
+        total -= nums[idx]!;
+      }
+      let remaining = k;
+      while (remaining > 0 && ptr < n) {
+        const [v, i] = heap[ptr]!;
+        ptr++;
+        if (!marked[i!]) {
+          marked[i!] = true;
+          total -= v!;
+          remaining--;
+        }
+      }
+      ans.push(total);
+    }
+    return ans;
+  },
+
+  'maximum-strength-of-k-disjoint-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const NEG_INF = -Infinity;
+    const dp: [number, number][] = Array.from({length: k + 1}, () => [NEG_INF, NEG_INF]);
+    dp[0]![0] = 0;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = k; j >= 1; j--) {
+        const sg = j % 2 === 1 ? j : -j;
+        const ext = dp[j]![1] === NEG_INF ? NEG_INF : dp[j]![1]! + sg * nums[i]!;
+        const start = dp[j-1]![0] === NEG_INF ? NEG_INF : dp[j-1]![0]! + sg * nums[i]!;
+        dp[j]![1] = Math.max(ext, start);
+        dp[j]![0] = Math.max(dp[j]![0]!, dp[j]![1]!);
+      }
+    }
+    return dp[k]![0]!;
+  },
+
+  'shortest-uncommon-substring-in-an-array': (...args: unknown[]) => {
+    const arr = args[0] as string[];
+    const n = arr.length;
+    const subsets = arr.map(w => {
+      const s = new Set<string>();
+      for (let a = 0; a < w.length; a++)
+        for (let b = a + 1; b <= w.length; b++)
+          s.add(w.slice(a, b));
+      return s;
+    });
+    return arr.map((w, i) => {
+      for (let len = 1; len <= w.length; len++) {
+        for (let a = 0; a + len <= w.length; a++) {
+          const sub = w.slice(a, a + len);
+          let unique = true;
+          for (let j = 0; j < n; j++) {
+            if (j !== i && subsets[j]!.has(sub)) { unique = false; break; }
+          }
+          if (unique) return sub;
+        }
+      }
+      return '-1';
+    });
+  },
+
+  'longest-common-suffix-queries': (...args: unknown[]) => {
+    const wordsContainer = args[0] as string[];
+    const wordsQuery = args[1] as string[];
+    type TrieNode = { ch: Record<string, TrieNode>; best: number };
+    const root: TrieNode = { ch: {}, best: -1 };
+    const updateBest = (node: TrieNode, idx: number, len: number): void => {
+      const bLen = node.best === -1 ? Infinity : wordsContainer[node.best]!.length;
+      if (len < bLen || (len === bLen && idx < node.best)) node.best = idx;
+    };
+    for (let idx = 0; idx < wordsContainer.length; idx++) {
+      const w = wordsContainer[idx]!;
+      let cur = root;
+      updateBest(cur, idx, w.length);
+      for (let i = w.length - 1; i >= 0; i--) {
+        const c = w[i]!;
+        if (!cur.ch[c]) cur.ch[c] = { ch: {}, best: -1 };
+        cur = cur.ch[c]!;
+        updateBest(cur, idx, w.length);
+      }
+    }
+    return wordsQuery.map(q => {
+      let cur = root;
+      for (let i = q.length - 1; i >= 0; i--) {
+        if (!cur.ch[q[i]!]) break;
+        cur = cur.ch[q[i]!]!;
+      }
+      return cur.best;
+    });
+  },
+
   'count-unique-good-subsequences': (...args: unknown[]) => {
     const binary = args[0] as string;
     const MOD = 1000000007n;

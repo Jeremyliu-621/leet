@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 256
+import { problem as minimumLevelsGainPoints } from './minimum-levels-to-gain-more-points';
+import { problem as markElementsArrayQueries } from './mark-elements-on-array-by-performing-queries';
+import { problem as maxStrengthKDisjointSubarrays } from './maximum-strength-of-k-disjoint-subarrays';
+import { problem as shortestUncommonSubstringArr } from './shortest-uncommon-substring-in-an-array';
+import { problem as longestCommonSuffixQueries } from './longest-common-suffix-queries';
 // batch 255
 import { problem as countUniqueGoodSubseqs } from './count-unique-good-subsequences';
 import { problem as sumKMirrorNumbers } from './sum-of-k-mirror-numbers';
@@ -6335,6 +6341,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 256
+  minimumLevelsGainPoints,
+  markElementsArrayQueries,
+  maxStrengthKDisjointSubarrays,
+  shortestUncommonSubstringArr,
+  longestCommonSuffixQueries,
   // batch 255
   countUniqueGoodSubseqs,
   sumKMirrorNumbers,

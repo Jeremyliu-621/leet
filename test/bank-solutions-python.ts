@@ -45046,4 +45046,112 @@ def maxSubarrayLength(nums):
     return ans
 `,
 
+  'minimum-levels-to-gain-more-points': `
+def minimumLevels(possible):
+    n = len(possible)
+    total = sum(2 * p - 1 for p in possible)
+    prefix = 0
+    for j in range(n - 1):
+        prefix += 2 * possible[j] - 1
+        if 2 * prefix > total:
+            return j + 1
+    return -1
+`,
+
+  'mark-elements-on-array-by-performing-queries': `
+def unmarkedSumArray(nums, queries):
+    n = len(nums)
+    marked = [False] * n
+    total = sum(nums)
+    heap = sorted(range(n), key=lambda i: (nums[i], i))
+    ptr = 0
+    ans = []
+    for idx, k in queries:
+        if not marked[idx]:
+            marked[idx] = True
+            total -= nums[idx]
+        remaining = k
+        while remaining > 0 and ptr < n:
+            i = heap[ptr]
+            ptr += 1
+            if not marked[i]:
+                marked[i] = True
+                total -= nums[i]
+                remaining -= 1
+        ans.append(total)
+    return ans
+`,
+
+  'maximum-strength-of-k-disjoint-subarrays': `
+def maximumStrength(nums, k):
+    n = len(nums)
+    NEG_INF = float('-inf')
+    dp = [[NEG_INF, NEG_INF] for _ in range(k + 1)]
+    dp[0][0] = 0
+    for i in range(n):
+        for j in range(k, 0, -1):
+            sg = j if j % 2 == 1 else -j
+            ext = dp[j][1] + sg * nums[i] if dp[j][1] != NEG_INF else NEG_INF
+            start = dp[j-1][0] + sg * nums[i] if dp[j-1][0] != NEG_INF else NEG_INF
+            dp[j][1] = max(ext, start)
+            dp[j][0] = max(dp[j][0], dp[j][1])
+    return dp[k][0]
+`,
+
+  'shortest-uncommon-substring-in-an-array': `
+def shortestUncommonSubstring(arr):
+    n = len(arr)
+    subsets = []
+    for w in arr:
+        s = set()
+        for a in range(len(w)):
+            for b in range(a + 1, len(w) + 1):
+                s.add(w[a:b])
+        subsets.append(s)
+    result = []
+    for i, w in enumerate(arr):
+        found = None
+        for length in range(1, len(w) + 1):
+            for a in range(len(w) - length + 1):
+                sub = w[a:a + length]
+                if all(j == i or sub not in subsets[j] for j in range(n)):
+                    found = sub
+                    break
+            if found:
+                break
+        result.append(found if found else '-1')
+    return result
+`,
+
+  'longest-common-suffix-queries': `
+def stringIndices(wordsContainer, wordsQuery):
+    root = {'ch': {}, 'best': -1}
+
+    def update_best(node, idx, length):
+        if node['best'] == -1:
+            best_len = float('inf')
+        else:
+            best_len = len(wordsContainer[node['best']])
+        if length < best_len or (length == best_len and idx < node['best']):
+            node['best'] = idx
+
+    for idx, w in enumerate(wordsContainer):
+        cur = root
+        update_best(cur, idx, len(w))
+        for c in reversed(w):
+            if c not in cur['ch']:
+                cur['ch'][c] = {'ch': {}, 'best': -1}
+            cur = cur['ch'][c]
+            update_best(cur, idx, len(w))
+
+    result = []
+    for q in wordsQuery:
+        cur = root
+        for c in reversed(q):
+            if c not in cur['ch']:
+                break
+            cur = cur['ch'][c]
+        result.append(cur['best'])
+    return result
+`,
 };
