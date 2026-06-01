@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { LANGUAGE_SHORT } from '../../lib/types';
+import { ALL_LANGUAGES, LANGUAGE_SHORT } from '../../lib/types';
 import type { SupportedLanguage, SubmissionRecord, UserPreferences } from '../../lib/types';
 import type { Problem } from '../../lib/problems/types';
 import type { JudgeResult } from '../../lib/judge';
@@ -121,25 +121,12 @@ type RunMode = 'run' | 'submit';
 /** Seconds deducted from the challenge timer per revealed hint. */
 const HINT_COST_SECONDS = 60;
 
-/** All languages that could potentially be available, in display order. */
-const ALL_EXTRA_LANGUAGES: SupportedLanguage[] = [
-  'python',
-  'java',
-  'cpp',
-  'csharp',
-  'go',
-  'rust',
-  'kotlin',
-  'swift',
-  'sql',
-];
-
 /** Languages available for a given problem, in display order. */
 function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
   // All languages are always available. Languages without explicit starter
   // code get an auto-generated skeleton via generateStarter(). Execution for
   // non-JS/Python languages falls back to JavaScript in the sandbox.
-  return ['javascript', 'typescript', ...ALL_EXTRA_LANGUAGES];
+  return [...ALL_LANGUAGES];
 }
 
 /** Returns the starter code for a given language, falling back to auto-generated. */
