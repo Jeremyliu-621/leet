@@ -3046,6 +3046,12 @@ import { problem as manacherPalindromeRadius } from './manacher-palindrome-radiu
 import { problem as topologicalSortKahn } from './topological-sort-kahn';
 import { problem as segTreeRangeUpdate } from './segment-tree-range-update';
 import { problem as extendedGcd } from './extended-gcd';
+// batch 243
+import { problem as quickselectKthSmallest } from './quickselect-kth-smallest';
+import { problem as tarjanSCC } from './tarjan-strongly-connected';
+import { problem as kmpSearch } from './kmp-string-search';
+import { problem as findBridges } from './bridge-finding-undirected';
+import { problem as countTotalSetBits } from './count-total-set-bits';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6207,4 +6213,9 @@ export const problems: readonly Problem[] = [
   minimumTimeJobsII,
   minOpsSubarrayEqual,
   countSubseqEqualGCD,
+  quickselectKthSmallest,
+  tarjanSCC,
+  kmpSearch,
+  findBridges,
+  countTotalSetBits,
 ];

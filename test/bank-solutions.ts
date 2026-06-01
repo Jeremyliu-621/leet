@@ -44105,4 +44105,116 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(ans);
   },
+
+  'quickselect-kth-smallest': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const k = args[1] as number;
+    function partition(arr: number[], lo: number, hi: number): number {
+      const mid = lo + Math.floor((hi - lo) / 2);
+      [arr[lo], arr[mid]] = [arr[mid]!, arr[lo]!];
+      const pivot = arr[lo]!;
+      let i = lo + 1, j = hi;
+      while (i <= j) {
+        if (arr[i]! <= pivot) i++;
+        else { [arr[i], arr[j]] = [arr[j]!, arr[i]!]; j--; }
+      }
+      [arr[lo], arr[j]] = [arr[j]!, arr[lo]!];
+      return j;
+    }
+    function select(arr: number[], lo: number, hi: number, target: number): number {
+      const p = partition(arr, lo, hi);
+      if (p === target) return arr[p]!;
+      if (p < target) return select(arr, p + 1, hi, target);
+      return select(arr, lo, p - 1, target);
+    }
+    return select(nums, 0, nums.length - 1, k - 1);
+  },
+
+  'tarjan-strongly-connected': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) adj[u as number]!.push(v as number);
+    const disc = new Array<number>(n).fill(-1);
+    const low = new Array<number>(n).fill(0);
+    const onStack = new Array<boolean>(n).fill(false);
+    const stack: number[] = [];
+    const sccs: number[][] = [];
+    let timer = 0;
+    function dfs(u: number) {
+      disc[u] = low[u] = timer++;
+      stack.push(u); onStack[u] = true;
+      for (const v of adj[u]!) {
+        if (disc[v] === -1) { dfs(v); low[u] = Math.min(low[u]!, low[v]!); }
+        else if (onStack[v]) { low[u] = Math.min(low[u]!, disc[v]!); }
+      }
+      if (low[u] === disc[u]) {
+        const scc: number[] = [];
+        let w: number;
+        do { w = stack.pop()!; onStack[w] = false; scc.push(w); } while (w !== u);
+        sccs.push(scc.sort((a, b) => a - b));
+      }
+    }
+    for (let i = 0; i < n; i++) if (disc[i] === -1) dfs(i);
+    return sccs.sort((a, b) => a[0]! - b[0]!);
+  },
+
+  'kmp-string-search': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const pattern = args[1] as string;
+    const m = pattern.length;
+    const lps = new Array<number>(m).fill(0);
+    let len = 0, i = 1;
+    while (i < m) {
+      if (pattern[i] === pattern[len]) { lps[i++] = ++len; }
+      else if (len > 0) { len = lps[len - 1]!; }
+      else { lps[i++] = 0; }
+    }
+    const result: number[] = [];
+    let j = 0;
+    for (let idx = 0; idx < text.length; idx++) {
+      while (j > 0 && text[idx] !== pattern[j]) j = lps[j - 1]!;
+      if (text[idx] === pattern[j]) j++;
+      if (j === m) { result.push(idx - m + 1); j = lps[j - 1]!; }
+    }
+    return result;
+  },
+
+  'bridge-finding-undirected': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const e of edges) { adj[e[0] as number]!.push(e[1] as number); adj[e[1] as number]!.push(e[0] as number); }
+    const disc = new Array<number>(n).fill(-1);
+    const low = new Array<number>(n).fill(0);
+    const bridges: number[][] = [];
+    let timer = 0;
+    function dfs(u: number, parent: number) {
+      disc[u] = low[u] = timer++;
+      for (const v of adj[u]!) {
+        if (v === parent) continue;
+        if (disc[v] === -1) {
+          dfs(v, u);
+          low[u] = Math.min(low[u]!, low[v]!);
+          if (low[v]! > disc[u]!) bridges.push([Math.min(u, v), Math.max(u, v)]);
+        } else {
+          low[u] = Math.min(low[u]!, disc[v]!);
+        }
+      }
+    }
+    for (let i = 0; i < n; i++) if (disc[i] === -1) dfs(i, -1);
+    return bridges.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+  },
+
+  'count-total-set-bits': (...args: unknown[]) => {
+    const n = args[0] as number;
+    let total = 0;
+    for (let b = 0; (1 << b) <= n; b++) {
+      const period = 1 << (b + 1);
+      const full = Math.floor((n + 1) / period);
+      const rem = Math.max(0, (n + 1) % period - (1 << b));
+      total += full * (1 << b) + rem;
+    }
+    return total;
+  },
 };

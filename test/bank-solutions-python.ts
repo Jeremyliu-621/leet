@@ -43300,4 +43300,139 @@ def countSubseqEqualGCD(nums):
         ans = (ans + cnt * (cnt - 1) // 2) % MOD
     return ans
 `,
+
+  'quickselect-kth-smallest': `
+def quickselectKthSmallest(nums: list, k: int) -> int:
+    nums = list(nums)
+    def partition(lo, hi):
+        mid = lo + (hi - lo) // 2
+        nums[lo], nums[mid] = nums[mid], nums[lo]
+        pivot = nums[lo]
+        i, j = lo + 1, hi
+        while i <= j:
+            if nums[i] <= pivot:
+                i += 1
+            else:
+                nums[i], nums[j] = nums[j], nums[i]
+                j -= 1
+        nums[lo], nums[j] = nums[j], nums[lo]
+        return j
+    def select(lo, hi, target):
+        p = partition(lo, hi)
+        if p == target:
+            return nums[p]
+        if p < target:
+            return select(p + 1, hi, target)
+        return select(lo, p - 1, target)
+    return select(0, len(nums) - 1, k - 1)
+`,
+  'tarjan-strongly-connected': `
+def tarjanSCC(n: int, edges: list) -> list:
+    import sys
+    sys.setrecursionlimit(10000)
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        adj[u].append(v)
+    disc = [-1] * n
+    low = [0] * n
+    on_stack = [False] * n
+    stack = []
+    sccs = []
+    timer = [0]
+    def dfs(u):
+        disc[u] = low[u] = timer[0]
+        timer[0] += 1
+        stack.append(u)
+        on_stack[u] = True
+        for v in adj[u]:
+            if disc[v] == -1:
+                dfs(v)
+                low[u] = min(low[u], low[v])
+            elif on_stack[v]:
+                low[u] = min(low[u], disc[v])
+        if low[u] == disc[u]:
+            scc = []
+            while True:
+                w = stack.pop()
+                on_stack[w] = False
+                scc.append(w)
+                if w == u:
+                    break
+            sccs.append(sorted(scc))
+    for i in range(n):
+        if disc[i] == -1:
+            dfs(i)
+    return sorted(sccs, key=lambda s: s[0])
+`,
+  'kmp-string-search': `
+def kmpSearch(text: str, pattern: str) -> list:
+    m = len(pattern)
+    lps = [0] * m
+    length, i = 0, 1
+    while i < m:
+        if pattern[i] == pattern[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        elif length > 0:
+            length = lps[length - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    result = []
+    j = 0
+    for idx in range(len(text)):
+        while j > 0 and text[idx] != pattern[j]:
+            j = lps[j - 1]
+        if text[idx] == pattern[j]:
+            j += 1
+        if j == m:
+            result.append(idx - m + 1)
+            j = lps[j - 1]
+    return result
+`,
+  'bridge-finding-undirected': `
+def findBridges(n: int, edges: list) -> list:
+    import sys
+    sys.setrecursionlimit(10000)
+    adj = [[] for _ in range(n)]
+    for e in edges:
+        u, v = int(e[0]), int(e[1])
+        adj[u].append(v)
+        adj[v].append(u)
+    disc = [-1] * n
+    low = [0] * n
+    bridges = []
+    timer = [0]
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]
+        timer[0] += 1
+        for v in adj[u]:
+            if v == parent:
+                continue
+            if disc[v] == -1:
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > disc[u]:
+                    bridges.append([min(u, v), max(u, v)])
+            else:
+                low[u] = min(low[u], disc[v])
+    for i in range(n):
+        if disc[i] == -1:
+            dfs(i, -1)
+    return sorted(bridges, key=lambda e: (e[0], e[1]))
+`,
+  'count-total-set-bits': `
+def countTotalSetBits(n: int) -> int:
+    total = 0
+    b = 0
+    while (1 << b) <= n:
+        period = 1 << (b + 1)
+        full = (n + 1) // period
+        rem = max(0, (n + 1) % period - (1 << b))
+        total += full * (1 << b) + rem
+        b += 1
+    return total
+`,
 };
