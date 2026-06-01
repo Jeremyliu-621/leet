@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 253
+import { problem as countSubstringsRearrangedII } from './count-substrings-that-can-be-rearranged-to-contain-a-string-ii';
+import { problem as findIndexOfPermutation } from './find-the-index-of-permutation';
+import { problem as minimizeManhattanDistances } from './minimize-manhattan-distances';
 // batch 252
 import { problem as maximumSizeOfSetAfterRemovals } from './maximum-size-of-a-set-after-removals';
 import { problem as minimumOpsToMakeXYEqual } from './minimum-number-of-operations-to-make-x-and-y-equal';
@@ -6308,6 +6312,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 253
+  countSubstringsRearrangedII,
+  findIndexOfPermutation,
+  minimizeManhattanDistances,
   // batch 252
   maximumSizeOfSetAfterRemovals,
   minimumOpsToMakeXYEqual,

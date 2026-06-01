@@ -45276,4 +45276,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     };
     return backtrack(0);
   },
+
+  'count-substrings-that-can-be-rearranged-to-contain-a-string-ii': (...args: unknown[]) => {
+    const word1 = args[0] as string;
+    const word2 = args[1] as string;
+    const MOD = 1000000007n;
+    const need: Record<string, number> = {};
+    for (const c of word2) need[c] = (need[c] ?? 0) + 1;
+    const needCount = Object.keys(need).length;
+    const have: Record<string, number> = {};
+    let satisfied = 0, left = 0, result = 0n;
+    for (let right = 0; right < word1.length; right++) {
+      const c = word1[right]!;
+      if (need[c]) {
+        have[c] = (have[c] ?? 0) + 1;
+        if (have[c] === need[c]) satisfied++;
+      }
+      while (satisfied === needCount) {
+        const lc = word1[left]!;
+        if (need[lc] && have[lc] === need[lc]) break;
+        if (need[lc]) have[lc] = (have[lc] ?? 0) - 1;
+        left++;
+      }
+      if (satisfied === needCount) result = (result + BigInt(left + 1)) % MOD;
+    }
+    return Number(result);
+  },
+
+  'find-the-index-of-permutation': (...args: unknown[]) => {
+    const perm = args[0] as number[];
+    const MOD = 1000000007n;
+    const n = perm.length;
+    const fact: bigint[] = [1n];
+    for (let i = 1; i <= n; i++) fact.push(fact[i - 1]! * BigInt(i) % MOD);
+    const bit = new Int32Array(n + 2);
+    const update = (i: number, d: number) => { for (; i <= n; i += i & -i) bit[i]! += d; };
+    const query = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    for (let i = 1; i <= n; i++) update(i, 1);
+    let result = 0n;
+    for (let i = 0; i < n; i++) {
+      const less = query(perm[i]! - 1);
+      result = (result + BigInt(less) * fact[n - 1 - i]!) % MOD;
+      update(perm[i]!, -1);
+    }
+    return Number(result);
+  },
+
+  'minimize-manhattan-distances': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const computeMax = (exclude: number): number => {
+      let maxSum = -Infinity, minSum = Infinity, maxDiff = -Infinity, minDiff = Infinity;
+      for (let i = 0; i < points.length; i++) {
+        if (i === exclude) continue;
+        const [x, y] = points[i]!;
+        maxSum = Math.max(maxSum, x! + y!);
+        minSum = Math.min(minSum, x! + y!);
+        maxDiff = Math.max(maxDiff, x! - y!);
+        minDiff = Math.min(minDiff, x! - y!);
+      }
+      return Math.max(maxSum - minSum, maxDiff - minDiff);
+    };
+    let maxSumIdx = 0, minSumIdx = 0, maxDiffIdx = 0, minDiffIdx = 0;
+    for (let i = 0; i < points.length; i++) {
+      const [x, y] = points[i]!;
+      if (x! + y! > points[maxSumIdx]![0]! + points[maxSumIdx]![1]!) maxSumIdx = i;
+      if (x! + y! < points[minSumIdx]![0]! + points[minSumIdx]![1]!) minSumIdx = i;
+      if (x! - y! > points[maxDiffIdx]![0]! - points[maxDiffIdx]![1]!) maxDiffIdx = i;
+      if (x! - y! < points[minDiffIdx]![0]! - points[minDiffIdx]![1]!) minDiffIdx = i;
+    }
+    const candidates = new Set([maxSumIdx, minSumIdx, maxDiffIdx, minDiffIdx]);
+    let result = Infinity;
+    for (const c of candidates) result = Math.min(result, computeMax(c));
+    return result;
+  },
 };

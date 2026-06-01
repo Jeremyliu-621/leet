@@ -44543,4 +44543,84 @@ def minTransfers(transactions):
         return best
     return backtrack(0)
 `,
+
+  'count-substrings-that-can-be-rearranged-to-contain-a-string-ii': `
+def countSubstrings(word1, word2):
+    from collections import Counter
+    MOD = 10**9 + 7
+    need = Counter(word2)
+    need_count = len(need)
+    have = {}
+    satisfied = 0
+    left = 0
+    result = 0
+    for right, c in enumerate(word1):
+        if c in need:
+            have[c] = have.get(c, 0) + 1
+            if have[c] == need[c]:
+                satisfied += 1
+        while satisfied == need_count:
+            lc = word1[left]
+            if lc in need and have.get(lc, 0) == need[lc]:
+                break
+            if lc in need:
+                have[lc] -= 1
+            left += 1
+        if satisfied == need_count:
+            result = (result + left + 1) % MOD
+    return result
+`,
+
+  'find-the-index-of-permutation': `
+def getPermutationIndex(perm):
+    MOD = 10**9 + 7
+    n = len(perm)
+    fact = [1] * (n + 1)
+    for i in range(1, n + 1):
+        fact[i] = fact[i-1] * i % MOD
+    bit = [0] * (n + 2)
+    def update(i, d):
+        while i <= n:
+            bit[i] += d
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    for i in range(1, n + 1):
+        update(i, 1)
+    result = 0
+    for i, v in enumerate(perm):
+        less = query(v - 1)
+        result = (result + less * fact[n - 1 - i]) % MOD
+        update(v, -1)
+    return result
+`,
+
+  'minimize-manhattan-distances': `
+def minimumDistance(points):
+    def compute_max(exclude):
+        max_sum = min_sum = max_diff = min_diff = None
+        for i, (x, y) in enumerate(points):
+            if i == exclude:
+                continue
+            s, d = x + y, x - y
+            max_sum = s if max_sum is None else max(max_sum, s)
+            min_sum = s if min_sum is None else min(min_sum, s)
+            max_diff = d if max_diff is None else max(max_diff, d)
+            min_diff = d if min_diff is None else min(min_diff, d)
+        return max(max_sum - min_sum, max_diff - min_diff)
+
+    max_sum_idx = min_sum_idx = max_diff_idx = min_diff_idx = 0
+    for i, (x, y) in enumerate(points):
+        if x + y > points[max_sum_idx][0] + points[max_sum_idx][1]: max_sum_idx = i
+        if x + y < points[min_sum_idx][0] + points[min_sum_idx][1]: min_sum_idx = i
+        if x - y > points[max_diff_idx][0] - points[max_diff_idx][1]: max_diff_idx = i
+        if x - y < points[min_diff_idx][0] - points[min_diff_idx][1]: min_diff_idx = i
+
+    candidates = {max_sum_idx, min_sum_idx, max_diff_idx, min_diff_idx}
+    return min(compute_max(c) for c in candidates)
+`,
 };
