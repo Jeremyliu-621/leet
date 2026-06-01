@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2737** problems; 8505 tests green. Batches 102–250 complete.
+**Current focus:** Bank at **2743** problems; 8523 tests green. Batches 102–251 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 251+; continued UX polish.
+**Next up:** Batch 252+; continued UX polish.
+
+### feat(bank): batch 251 — lex-smallest-substr-op, relocate-marbles, beautiful-substrings, array-to-zero, split-array (2026-06-01)
+Five new problems: `lexicographically-smallest-string-after-substring-operation` (medium/strings, LC 2734 — greedy: skip leading a's; decrement non-a's until next original a; special case all-a's changes last char to z), `relocate-marbles` (medium/arrays, LC 2766 — Set-based simulation: remove from, add to; sort at end), `partition-string-into-minimum-beautiful-substrings` (medium/dp, LC 2767 — beautiful=binary representation of 5^k; DP dp[i]=min partitions; precompute powers-of-5 set), `apply-operations-to-make-all-array-elements-equal-to-zero` (medium/arrays, LC 2772 — sweep left to right; greedy diff array: track active ops; start new ops when rem>0; fail if i+k>n or rem<0), `check-if-it-is-possible-to-split-array` (medium/arrays+dp, LC 2811 — n=1: true; n>=2: true iff some adjacent pair sums >= m). Bank at **2743**; 8523 tests.
 
 ### feat(bank): batch 250b — count-complete-components, diagonal-distinct, integer-zero, decremental-concat, good-subarrays (2026-06-01)
 Five new problems extending batch 250: `count-complete-components` (medium/graph+union-find, LC 2685 — DSU to find components; complete iff edge_count == k*(k-1)/2), `difference-of-number-of-distinct-values-on-diagonals` (medium/arrays+hash-map, LC 2711 — scan top-left and bottom-right diagonals with Sets; answer is absolute difference of sizes), `minimum-operations-to-make-the-integer-zero` (medium/bit-manipulation, LC 2749 — iterate k=1..; check val=num1-k*num2 >= k and popcount(val) <= k), `decremental-string-concatenation` (medium/strings+dp, LC 2746 — DP on (firstChar, lastChar) state; at each step choose prepend or append, saving 1 if chars match at junction), `ways-to-split-array-into-good-subarrays` (medium/arrays+math, LC 2750 — count 1s positions; multiply gaps between consecutive 1s mod 10^9+7). Bank at **2737**; 8505 tests.
