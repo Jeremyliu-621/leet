@@ -46429,6 +46429,63 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 270
+  'find-first-and-last-position-of-element-in-sorted-array': `def searchRange(nums, target):
+    def find(go_right):
+        lo, hi, ans = 0, len(nums) - 1, -1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if nums[mid] == target:
+                ans = mid
+                if go_right: lo = mid + 1
+                else: hi = mid - 1
+            elif nums[mid] < target: lo = mid + 1
+            else: hi = mid - 1
+        return ans
+    return [find(False), find(True)]
+`,
+
+  'find-the-punishment-number-of-an-integer': `def punishmentNumber(n):
+    def can_partition(s, pos, rem):
+        if pos == len(s): return rem == 0
+        for end in range(pos + 1, len(s) + 1):
+            val = int(s[pos:end])
+            if val <= rem and can_partition(s, end, rem - val):
+                return True
+        return False
+    ans = 0
+    for i in range(1, n + 1):
+        if can_partition(str(i * i), 0, i):
+            ans += i * i
+    return ans
+`,
+
+  'cycle-length-queries-in-a-tree': `def cycleLengthQueries(n, queries):
+    res = []
+    for a, b in queries:
+        dist = 0
+        while a != b:
+            if a > b: a >>= 1
+            else: b >>= 1
+            dist += 1
+        res.append(dist + 1)
+    return res
+`,
+
+  'minimum-hours-of-training-to-win-a-competition': `def minNumberOfHours(initialEnergy, initialExperience, energy, experience):
+    cur_e, cur_x, hours = initialEnergy, initialExperience, 0
+    for e, x in zip(energy, experience):
+        if cur_e <= e:
+            hours += e + 1 - cur_e
+            cur_e = e + 1
+        if cur_x <= x:
+            hours += x + 1 - cur_x
+            cur_x = x + 1
+        cur_e -= e
+        cur_x += x
+    return hours
+`,
+
   // batch 269
   'take-gifts-from-richest-pile': `def pickGifts(gifts, k):
     import heapq, math

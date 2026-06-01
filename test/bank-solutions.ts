@@ -47404,6 +47404,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 270
+  'find-first-and-last-position-of-element-in-sorted-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    function find(goRight: boolean): number {
+      let lo = 0, hi = nums.length - 1, ans = -1;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (nums[mid] === target) { ans = mid; if (goRight) lo = mid + 1; else hi = mid - 1; }
+        else if (nums[mid]! < target) lo = mid + 1;
+        else hi = mid - 1;
+      }
+      return ans;
+    }
+    return [find(false), find(true)];
+  },
+
+  'find-the-punishment-number-of-an-integer': (...args: unknown[]) => {
+    const n = args[0] as number;
+    function canPartition(s: string, pos: number, rem: number): boolean {
+      if (pos === s.length) return rem === 0;
+      for (let end = pos + 1; end <= s.length; end++) {
+        const val = parseInt(s.slice(pos, end), 10);
+        if (val <= rem && canPartition(s, end, rem - val)) return true;
+      }
+      return false;
+    }
+    let ans = 0;
+    for (let i = 1; i <= n; i++) {
+      if (canPartition(String(i * i), 0, i)) ans += i * i;
+    }
+    return ans;
+  },
+
+  'cycle-length-queries-in-a-tree': (...args: unknown[]) => {
+    const queries = args[1] as number[][];
+    return queries.map(([a, b]) => {
+      let [u, v] = [a!, b!], dist = 0;
+      while (u !== v) { if (u > v) u >>= 1; else v >>= 1; dist++; }
+      return dist + 1;
+    });
+  },
+
+  'minimum-hours-of-training-to-win-a-competition': (...args: unknown[]) => {
+    let curE = args[0] as number, curX = args[1] as number;
+    const energy = args[2] as number[], experience = args[3] as number[];
+    let hours = 0;
+    for (let i = 0; i < energy.length; i++) {
+      if (curE <= energy[i]!) { hours += energy[i]! + 1 - curE; curE = energy[i]! + 1; }
+      if (curX <= experience[i]!) { hours += experience[i]! + 1 - curX; curX = experience[i]! + 1; }
+      curE -= energy[i]!;
+      curX += experience[i]!;
+    }
+    return hours;
+  },
+
   // batch 269
   'take-gifts-from-richest-pile': (...args: unknown[]) => {
     const gifts = [...(args[0] as number[])];

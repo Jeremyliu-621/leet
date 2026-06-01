@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 270
+import { problem as findFirstLastPosition } from './find-first-and-last-position-of-element-in-sorted-array';
+import { problem as punishmentNumberOfInt } from './find-the-punishment-number-of-an-integer';
+import { problem as cycleLengthQueriesTree } from './cycle-length-queries-in-a-tree';
+import { problem as minHoursTraining } from './minimum-hours-of-training-to-win-a-competition';
 // batch 269
 import { problem as takeGiftsRichestPile } from './take-gifts-from-richest-pile';
 import { problem as minCoinsForFruitsI } from './minimum-number-of-coins-for-fruits-i';
@@ -6445,6 +6450,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 270
+  findFirstLastPosition,
+  punishmentNumberOfInt,
+  cycleLengthQueriesTree,
+  minHoursTraining,
   // batch 269
   takeGiftsRichestPile,
   minCoinsForFruitsI,
