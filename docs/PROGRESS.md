@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2882** problems; 8966 tests green. Batches 272a + 272b complete.
+**Current focus:** Bank at **2882** problems; 8942 tests green. Starter backfill ongoing (~600 stubs filled so far).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 273+; continued UX polish.
+**Next up:** Batch 273+; continued starter backfill; UX polish.
 
 ### feat(bank): batch 272b — find-max-string-pairs, count-substr-vowel-consonant, take-k-chars-left-right, min-extra-white-tiles (2026-06-01)
 Four new problems: `find-the-maximum-number-of-string-pairs` (easy/hash-map — iterate words; for each w, if reverse(w) in seen, count pair; else add to seen; O(n)), `count-substrings-with-vowel-and-consonant` (easy/strings+math — total − all-vowel runs − all-consonant runs; runs of length L contribute L*(L+1)/2; O(n)), `take-k-characters-from-left-and-right` (medium/sliding-window — maximize middle window where outside has ≥k of each 'a'/'b'/'c'; answer=n−maxWindow; O(n)), `minimum-extra-white-tiles-after-placing-carpets` (hard/dp — dp[i][j]=min extra whites in floor[0..i] with j carpets; transition: skip tile or place carpet ending at i; O(n·numCarpets)). Bank at **2882**; 8966 tests.
