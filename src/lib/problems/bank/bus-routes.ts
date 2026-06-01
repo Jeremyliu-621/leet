@@ -46,12 +46,84 @@ Return the **minimum number of buses** you must take to travel from \`source\` t
   params: ['routes', 'source', 'target'],
   starterCode: {
     javascript: `function numBusesToDestination(routes, source, target) {
-
+  if (source === target) return 0;
+  const stopToRoutes = new Map();
+  for (let r = 0; r < routes.length; r++)
+    for (const stop of routes[r]) {
+      if (!stopToRoutes.has(stop)) stopToRoutes.set(stop, []);
+      stopToRoutes.get(stop).push(r);
+    }
+  const visitedStops = new Set([source]), visitedRoutes = new Set();
+  let queue = [source], buses = 0;
+  while (queue.length > 0) {
+    const next = [];
+    buses++;
+    for (const stop of queue) {
+      for (const route of (stopToRoutes.get(stop) ?? [])) {
+        if (visitedRoutes.has(route)) continue;
+        visitedRoutes.add(route);
+        for (const s of routes[route]) {
+          if (s === target) return buses;
+          if (!visitedStops.has(s)) { visitedStops.add(s); next.push(s); }
+        }
+      }
+    }
+    queue = next;
+  }
+  return -1;
 }`,
-    typescript: "function numBusesToDestination(routes: number[][], source: number, target: number): number {\n\n}",
-
+    typescript: `function numBusesToDestination(routes: number[][], source: number, target: number): number {
+  if (source === target) return 0;
+  const stopToRoutes = new Map<number, number[]>();
+  for (let r = 0; r < routes.length; r++)
+    for (const stop of routes[r]!) {
+      if (!stopToRoutes.has(stop)) stopToRoutes.set(stop, []);
+      stopToRoutes.get(stop)!.push(r);
+    }
+  const visitedStops = new Set([source]), visitedRoutes = new Set<number>();
+  let queue = [source], buses = 0;
+  while (queue.length > 0) {
+    const next: number[] = [];
+    buses++;
+    for (const stop of queue) {
+      for (const route of (stopToRoutes.get(stop) ?? [])) {
+        if (visitedRoutes.has(route)) continue;
+        visitedRoutes.add(route);
+        for (const s of routes[route]!) {
+          if (s === target) return buses;
+          if (!visitedStops.has(s)) { visitedStops.add(s); next.push(s); }
+        }
+      }
+    }
+    queue = next;
+  }
+  return -1;
+}`,
     python: `def numBusesToDestination(routes: list[list[int]], source: int, target: int) -> int:
-    pass`,
+    routes = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in (routes.to_py() if hasattr(routes, 'to_py') else routes)]
+    if source == target: return 0
+    from collections import defaultdict, deque
+    stop_to_routes = defaultdict(list)
+    for r, route in enumerate(routes):
+        for stop in route:
+            stop_to_routes[stop].append(r)
+    visited_stops = {source}
+    visited_routes = set()
+    queue = deque([source])
+    buses = 0
+    while queue:
+        buses += 1
+        for _ in range(len(queue)):
+            stop = queue.popleft()
+            for r in stop_to_routes[stop]:
+                if r in visited_routes: continue
+                visited_routes.add(r)
+                for s in routes[r]:
+                    if s == target: return buses
+                    if s not in visited_stops:
+                        visited_stops.add(s)
+                        queue.append(s)
+    return -1`,
   },
   visibleTests: [
     { args: [[[1, 2, 7], [3, 6, 7]], 1, 6], expected: 2 },

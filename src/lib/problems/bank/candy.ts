@@ -38,10 +38,29 @@ Return the **minimum** number of candies you need to have to distribute.`,
   functionName: 'candy',
   params: ['ratings'],
   starterCode: {
-    javascript: 'function candy(ratings) {\n  // your code here\n}\n',
-    typescript: "function candy(ratings: number[]): number {\n  // your code here\n}",
-
-    python: 'def candy(ratings):\n    # your code here\n    pass\n',
+    javascript: `function candy(ratings) {
+  const n = ratings.length;
+  const c = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) if (ratings[i] > ratings[i-1]) c[i] = c[i-1] + 1;
+  for (let i = n-2; i >= 0; i--) if (ratings[i] > ratings[i+1]) c[i] = Math.max(c[i], c[i+1] + 1);
+  return c.reduce((a, b) => a + b, 0);
+}`,
+    typescript: `function candy(ratings: number[]): number {
+  const n = ratings.length;
+  const c = new Array<number>(n).fill(1);
+  for (let i = 1; i < n; i++) if (ratings[i]! > ratings[i-1]!) c[i] = c[i-1]! + 1;
+  for (let i = n-2; i >= 0; i--) if (ratings[i]! > ratings[i+1]!) c[i] = Math.max(c[i]!, c[i+1]! + 1);
+  return c.reduce((a, b) => a + b, 0);
+}`,
+    python: `def candy(ratings):
+    ratings = list(ratings.to_py()) if hasattr(ratings, 'to_py') else list(ratings)
+    n = len(ratings)
+    c = [1] * n
+    for i in range(1, n):
+        if ratings[i] > ratings[i-1]: c[i] = c[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if ratings[i] > ratings[i+1]: c[i] = max(c[i], c[i+1] + 1)
+    return sum(c)`,
   },
   visibleTests: [
     { args: [[1, 0, 2]], expected: 5 },

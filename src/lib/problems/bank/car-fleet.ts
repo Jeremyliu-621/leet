@@ -41,10 +41,34 @@ Return the **number of car fleets** that will arrive at the destination.
   functionName: 'carFleet',
   params: ['target', 'position', 'speed'],
   starterCode: {
-    javascript: 'function carFleet(target, position, speed) {\n  // your code here\n}\n',
-    typescript: "function carFleet(target: number, position: number[], speed: number[]): number {\n  // your code here\n}",
-
-    python: 'def carFleet(target: int, position: list, speed: list) -> int:\n    # your code here\n    pass\n',
+    javascript: `function carFleet(target, position, speed) {
+  const pairs = position.map((p, i) => [p, speed[i]]).sort((a, b) => b[0] - a[0]);
+  const stack = [];
+  for (const [p, s] of pairs) {
+    const t = (target - p) / s;
+    if (!stack.length || t > stack[stack.length - 1]) stack.push(t);
+  }
+  return stack.length;
+}`,
+    typescript: `function carFleet(target: number, position: number[], speed: number[]): number {
+  const pairs = position.map((p, i) => [p, speed[i]!] as [number, number]).sort((a, b) => b[0] - a[0]);
+  const stack: number[] = [];
+  for (const [p, s] of pairs) {
+    const t = (target - p) / s;
+    if (!stack.length || t > stack[stack.length - 1]!) stack.push(t);
+  }
+  return stack.length;
+}`,
+    python: `def carFleet(target: int, position: list, speed: list) -> int:
+    position = list(position.to_py()) if hasattr(position, 'to_py') else list(position)
+    speed = list(speed.to_py()) if hasattr(speed, 'to_py') else list(speed)
+    pairs = sorted(zip(position, speed), key=lambda x: -x[0])
+    stack = []
+    for p, s in pairs:
+        t = (target - p) / s
+        if not stack or t > stack[-1]:
+            stack.append(t)
+    return len(stack)`,
   },
   visibleTests: [
     { args: [12, [10, 8, 0, 5, 3], [2, 4, 1, 1, 3]], expected: 3 },
