@@ -60,6 +60,24 @@ const SECTIONS: ShortcutSection[] = [
       { keys: ['?'], description: 'Open this shortcuts modal' },
     ],
   },
+  {
+    heading: 'Snippets (JS / TS / Python)',
+    rows: [
+      { keys: ['for'], description: 'for loop → Tab to expand' },
+      { keys: ['forr'], description: 'reverse for loop' },
+      { keys: ['forof'], description: 'for...of loop (JS/TS)' },
+      { keys: ['fore'], description: 'for enumerate loop (Python)' },
+      { keys: ['while'], description: 'while loop' },
+      { keys: ['if'], description: 'if statement' },
+      { keys: ['ife'], description: 'if-else' },
+      { keys: ['newmap'], description: 'new Map()' },
+      { keys: ['newset'], description: 'new Set()' },
+      { keys: ['len'], description: 'array / list length' },
+      { keys: ['sort'], description: 'sort ascending' },
+      { keys: ['ddict'], description: 'defaultdict (Python)' },
+      { keys: ['heap'], description: 'heapq setup (Python)' },
+    ],
+  },
 ];
 
 interface Props {

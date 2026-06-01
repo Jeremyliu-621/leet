@@ -206,6 +206,59 @@ const JS_SNIPPETS = [
   }),
 ];
 
+const TS_SNIPPETS = [
+  snippetCompletion('for (let ${i} = 0; ${i} < ${n}; ${i}++) {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (let ${i} = ${arr}.length - 1; ${i} >= 0; ${i}--) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (const ${item} of ${iterable}) {\n\t${}\n}', {
+    label: 'forof',
+    detail: 'for...of loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while (${condition}) {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('const ${name} = new Map<${K}, ${V}>();\n${}', {
+    label: 'newmap',
+    detail: 'new Map<K, V>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('const ${name} = new Set<${T}>();\n${}', {
+    label: 'newset',
+    detail: 'new Set<T>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('const ${n}: number = ${arr}.length;\n${}', {
+    label: 'len',
+    detail: 'array length (typed)',
+    type: 'keyword',
+  }),
+  snippetCompletion('${arr}.sort((a, b) => a - b);\n${}', {
+    label: 'sort',
+    detail: 'sort ascending',
+    type: 'keyword',
+  }),
+];
+
 const PYTHON_SNIPPETS = [
   snippetCompletion('for ${i} in range(${n}):\n\t${}', {
     label: 'for',
@@ -255,7 +308,8 @@ const PYTHON_SNIPPETS = [
  * not replace keyword / variable completions from the language plugin).
  */
 function snippetLanguageData(language: SupportedLanguage) {
-  const snippets = language === 'python' ? PYTHON_SNIPPETS : JS_SNIPPETS;
+  const snippets =
+    language === 'python' ? PYTHON_SNIPPETS : language === 'typescript' ? TS_SNIPPETS : JS_SNIPPETS;
   const source: CompletionSource = (context: CompletionContext) => {
     const word = context.matchBefore(/\w+/);
     if (!word || (word.from === word.to && !context.explicit)) return null;

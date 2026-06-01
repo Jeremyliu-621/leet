@@ -25,7 +25,7 @@ honest, frictionless gate that *feels* like LeetCode when you hit it.
 | Bracket matching                         | Yes                                                                                                 | Yes (`bracketMatching()` extension)         |   ✅   |    —     |                                                                                                                          |
 | Auto-close brackets / quotes             | Yes — auto-pairs `()`, `[]`, `{}`, `""`, `''`                                                       | Yes (`closeBrackets()` from `@codemirror/autocomplete`) |   ✅   |    —     | Shipped in Phase 13 Editor QoL pass.                                                                                    |
 | Autocomplete / IntelliSense              | JS keyword + variable autocomplete (free tier); language-aware IntelliSense gated behind Premium    | `autocompletion()` wired; JS + Python keyword completions |   ✅   |    —     | Free-tier parity. Type-aware IntelliSense is out-of-scope.                                                               |
-| Snippet expansion                        | Some language stubs offered on first open                                                           | Starter code only                           |   ❌   |    L     | Out-of-scope unless we ship many languages.                                                                              |
+| Snippet expansion                        | Some language stubs offered on first open                                                           | Keyword abbreviations (for/forr/while/if/ife/etc.) in JS + Python; expand on Tab via CM6 `languageData` source | ✅ | — | Shipped Phase 13. Additive — native language completions still active alongside snippets. |
 | Multi-cursor                             | Yes (Monaco default — alt-click, ctrl-d)                                                            | Yes (`drawSelection` + `allowMultipleSelections`) |   ✅   |    —     | Alt-Click adds a cursor; Ctrl-D/Cmd-D selects next occurrence.                                                           |
 | Vim keymap                               | Yes — Settings → Code editor → Key binding → Vim                                                    | Yes — `editorKeymap: 'vim'` via `@replit/codemirror-vim`; toggle in popup + options |   ✅   |    —     | Full modal Vim; persisted to `userPreferences`.                                                                          |
 | Emacs keymap                             | Yes (same menu)                                                                                     | Yes — `editorKeymap: 'emacs'` via `@replit/codemirror-emacs`; toggle in popup + options | ✅ | — | Full Emacs bindings (Ctrl-A/E, M-f/b, Ctrl-K, etc.); persisted to `userPreferences`.                                    |
@@ -171,10 +171,10 @@ All H/M priority items have been addressed. Remaining gaps are L priority:
 
 1. **Browser-zoom QA** — quick check at 150% and 200% before 1.0.
 2. **Image support in problem descriptions** — needed for tree/grid problems; significant authoring cost.
-3. Everything else (runtime/memory percentiles, snippet expansion, font family picker)
-   is post-1.0 and should be evaluated against actual user feedback.
+3. Everything else (runtime/memory percentiles, font family picker) is post-1.0 and should
+   be evaluated against actual user feedback.
 
-*Completed since last audit: LaTeX / math rendering ✅ (`remark-math` + `rehype-katex`, Phase 13).*
+*Completed since last audit: LaTeX / math rendering ✅ (`remark-math` + `rehype-katex`, Phase 13); snippet expansion ✅ (CM6 `languageData`-based keyword snippets for JS + Python, Phase 13).*
 
 *Completed from previous iterations: Emacs keymap ✅; Recover last submitted code ✅; Syntax highlighting in code blocks ✅; Persistent submission history ✅; Per-test input in verdict ✅.*
 
