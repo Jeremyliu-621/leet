@@ -47404,6 +47404,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 271
+  'reverse-words-in-a-string-iii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    return s.split(' ').map(w => w.split('').reverse().join('')).join(' ');
+  },
+
+  'goal-parser-interpretation': (...args: unknown[]) => {
+    const command = args[0] as string;
+    return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
+  },
+
+  'find-lucky-integer-in-an-array': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const freq = new Map<number, number>();
+    for (const x of arr) freq.set(x, (freq.get(x) ?? 0) + 1);
+    let ans = -1;
+    for (const [k, v] of freq) if (k === v) ans = Math.max(ans, k);
+    return ans;
+  },
+
+  'smallest-string-with-a-given-numeric-value': (...args: unknown[]) => {
+    let n = args[0] as number, k = args[1] as number;
+    const chars = new Array<string>(n);
+    for (let i = n - 1; i >= 0; i--) {
+      const val = Math.min(26, k - i);
+      chars[i] = String.fromCharCode(96 + val);
+      k -= val;
+    }
+    return chars.join('');
+  },
+
   // batch 270
   'find-first-and-last-position-of-element-in-sorted-array': (...args: unknown[]) => {
     const nums = args[0] as number[];

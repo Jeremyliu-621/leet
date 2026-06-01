@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 271
+import { problem as reverseWordsIII } from './reverse-words-in-a-string-iii';
+import { problem as goalParserInterp } from './goal-parser-interpretation';
+import { problem as findLuckyIntegerInArray } from './find-lucky-integer-in-an-array';
+import { problem as smallestStringNumVal } from './smallest-string-with-a-given-numeric-value';
 // batch 270
 import { problem as findFirstLastPosition } from './find-first-and-last-position-of-element-in-sorted-array';
 import { problem as punishmentNumberOfInt } from './find-the-punishment-number-of-an-integer';
@@ -6454,6 +6459,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 271
+  reverseWordsIII,
+  goalParserInterp,
+  findLuckyIntegerInArray,
+  smallestStringNumVal,
   // batch 270
   findFirstLastPosition,
   punishmentNumberOfInt,

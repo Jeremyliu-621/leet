@@ -46429,6 +46429,34 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 271
+  'reverse-words-in-a-string-iii': `def reverseWords(s):
+    return ' '.join(w[::-1] for w in s.split(' '))
+`,
+
+  'goal-parser-interpretation': `def interpret(command):
+    return command.replace('()', 'o').replace('(al)', 'al')
+`,
+
+  'find-lucky-integer-in-an-array': `def findLucky(arr):
+    from collections import Counter
+    freq = Counter(arr)
+    ans = -1
+    for k, v in freq.items():
+        if k == v:
+            ans = max(ans, k)
+    return ans
+`,
+
+  'smallest-string-with-a-given-numeric-value': `def getSmallestString(n, k):
+    chars = [''] * n
+    for i in range(n - 1, -1, -1):
+        val = min(26, k - i)
+        chars[i] = chr(96 + val)
+        k -= val
+    return ''.join(chars)
+`,
+
   // batch 270
   'find-first-and-last-position-of-element-in-sorted-array': `def searchRange(nums, target):
     def find(go_right):
