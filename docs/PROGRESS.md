@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2788** problems; 8705 tests green. Batches 102–257 complete.
+**Current focus:** Bank at **2791** problems; 8693 tests green. Batches 102–258 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 258+; continued UX polish.
+**Next up:** Batch 259+; continued UX polish.
+
+### feat(bank): batch 258 — minimum-number-of-increments-subarrays, words-within-two-edits-dictionary, create-components-same-value (2026-06-01)
+Three new problems: `minimum-number-of-increments-on-subarrays-to-form-target-array` (hard/arrays+stack, LC 1526 — greedy histogram scan: answer = target[0] + Σmax(0, target[i]-target[i-1])), `words-within-two-edits-of-dictionary` (medium/strings+arrays, LC 2452 — brute-force O(q*d*n) character diff count, return queries matching any dict word in ≤2 positions), `create-components-with-same-value` (hard/tree+dp, LC 2440 — try largest-to-smallest k divisors of totalSum; DFS with edge cut when subtree sum hits target; first valid k is answer). Bank at **2791**; 8693 tests.
 
 ### feat(bank): batch 257 — right-triangles (starter), lex-smallest-swap, vowels-game, reach-end-max-score, final-array-state-k-mult-ii (2026-06-01)
 Five new problems: `right-triangles` (medium/arrays+math, LC 3128 — full starter code backfill; for each 1-cell as right-angle vertex, contribution = (rowOnes-1)*(colOnes-1)), `lexicographically-smallest-string-after-swap` (easy/strings, LC 3216 — greedy: first adjacent same-parity pair where s[i]>s[i+1], swap and return), `vowels-game-in-a-string` (medium/math+strings, LC 3227 — Alice wins iff vowelCount>0: odd→take all; even→take one, Bob stuck with odd remaining), `reach-end-of-array-with-max-score` (medium/arrays+math, LC 3282 — O(n) running max sum: each unit step earns max(nums[0..i])), `final-array-state-after-k-multiplication-operations-ii` (hard/arrays+heap+math, LC 3266 — BigInt min-heap simulation until balanced (min*mul>max), then batch remaining ops as full_rounds+modpow). Bank at **2783**; 8665 tests.
