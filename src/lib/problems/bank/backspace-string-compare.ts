@@ -46,12 +46,31 @@ function backspaceCompare(s, t) {
   params: ['s', 't'],
   starterCode: {
     javascript: `function backspaceCompare(s, t) {
-
+  function process(str) {
+    const stack = [];
+    for (const c of str) c === '#' ? stack.pop() : stack.push(c);
+    return stack.join('');
+  }
+  return process(s) === process(t);
 }`,
-    typescript: "function backspaceCompare(s: string, t: string): boolean {\n\n}",
-
+    typescript: `function backspaceCompare(s: string, t: string): boolean {
+  function process(str: string): string {
+    const stack: string[] = [];
+    for (const c of str) c === '#' ? stack.pop() : stack.push(c);
+    return stack.join('');
+  }
+  return process(s) === process(t);
+}`,
     python: `def backspaceCompare(s, t):
-    pass`,
+    def process(st):
+        stack = []
+        for c in st:
+            if c == '#':
+                if stack: stack.pop()
+            else:
+                stack.append(c)
+        return ''.join(stack)
+    return process(s) == process(t)`,
   },
   visibleTests: [
     { args: ['ab#c', 'ad#c'], expected: true },

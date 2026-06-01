@@ -30,12 +30,29 @@ Return *any valid array*. It is guaranteed that an answer exists for the given \
   params: ['n', 'k'],
   starterCode: {
     javascript: `function constructArray(n, k) {
-
+  const result = [];
+  let lo = 1, hi = k + 1;
+  for (let i = 0; i < k + 1; i++) result.push(i % 2 === 0 ? lo++ : hi--);
+  for (let i = k + 2; i <= n; i++) result.push(i);
+  return result;
 }`,
-    typescript: "function constructArray(n: number, k: number): number[] {\n\n}",
-
+    typescript: `function constructArray(n: number, k: number): number[] {
+  const result: number[] = [];
+  let lo = 1, hi = k + 1;
+  for (let i = 0; i < k + 1; i++) result.push(i % 2 === 0 ? lo++ : hi--);
+  for (let i = k + 2; i <= n; i++) result.push(i);
+  return result;
+}`,
     python: `def constructArray(n: int, k: int) -> list[int]:
-    pass`,
+    result = []
+    lo, hi = 1, k + 1
+    for i in range(k + 1):
+        result.append(lo if i % 2 == 0 else hi)
+        if i % 2 == 0: lo += 1
+        else: hi -= 1
+    for i in range(k + 2, n + 1):
+        result.append(i)
+    return result`,
   },
   visibleTests: [
     { args: [3, 1], expected: [1, 2, 3] },

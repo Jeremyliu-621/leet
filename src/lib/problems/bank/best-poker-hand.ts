@@ -49,12 +49,33 @@ Return a string representing the **best** type of poker hand you can make with t
   params: ['ranks', 'suits'],
   starterCode: {
     javascript: `function bestHand(ranks, suits) {
-
+  if (new Set(suits).size === 1) return 'Flush';
+  const freq = new Map();
+  for (const r of ranks) freq.set(r, (freq.get(r) ?? 0) + 1);
+  const max = Math.max(...freq.values());
+  if (max >= 3) return 'Three of a Kind';
+  if (max >= 2) return 'Pair';
+  return 'High Card';
 }`,
-    typescript: "function bestHand(ranks: number[], suits: string[]): string {\n\n}",
-
+    typescript: `function bestHand(ranks: number[], suits: string[]): string {
+  if (new Set(suits).size === 1) return 'Flush';
+  const freq = new Map<number, number>();
+  for (const r of ranks) freq.set(r, (freq.get(r) ?? 0) + 1);
+  const max = Math.max(...freq.values());
+  if (max >= 3) return 'Three of a Kind';
+  if (max >= 2) return 'Pair';
+  return 'High Card';
+}`,
     python: `def bestHand(ranks, suits):
-    pass`,
+    ranks = list(ranks.to_py()) if hasattr(ranks, 'to_py') else list(ranks)
+    suits = list(suits.to_py()) if hasattr(suits, 'to_py') else list(suits)
+    if len(set(suits)) == 1:
+        return 'Flush'
+    from collections import Counter
+    max_freq = max(Counter(ranks).values())
+    if max_freq >= 3: return 'Three of a Kind'
+    if max_freq >= 2: return 'Pair'
+    return 'High Card'`,
   },
   visibleTests: [
     { args: [[13, 2, 3, 1, 9], ['a', 'a', 'a', 'a', 'a']], expected: 'Flush' },

@@ -34,13 +34,16 @@ Return the average salary of employees excluding the minimum and maximum salary.
   params: ['salary'],
   starterCode: {
     javascript: `function average(salary) {
-
+  const mn = Math.min(...salary), mx = Math.max(...salary);
+  return (salary.reduce((s, v) => s + v, 0) - mn - mx) / (salary.length - 2);
 }`,
     typescript: `function average(salary: number[]): number {
-
+  const mn = Math.min(...salary), mx = Math.max(...salary);
+  return (salary.reduce((s, v) => s + v, 0) - mn - mx) / (salary.length - 2);
 }`,
     python: `def average(salary):
-    pass`,
+    salary = list(salary.to_py()) if hasattr(salary, 'to_py') else list(salary)
+    return (sum(salary) - min(salary) - max(salary)) / (len(salary) - 2)`,
   },
   visibleTests: [
     { args: [[4000, 3000, 1000, 2000]], expected: 2500.0 },

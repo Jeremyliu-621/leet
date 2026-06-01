@@ -36,13 +36,14 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function arrayAverage(nums) {
-
+  return nums.reduce((s, v) => s + v, 0) / nums.length;
 }`,
     typescript: `function arrayAverage(nums: number[]): number {
-
+  return nums.reduce((s, v) => s + v, 0) / nums.length;
 }`,
-    python: `def arrayAverage(nums: list[int]) -> float:
-    pass`,
+    python: `def arrayAverage(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return sum(nums) / len(nums)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: 3.0 },

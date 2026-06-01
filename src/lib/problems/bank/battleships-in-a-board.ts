@@ -38,12 +38,35 @@ Count the battleships **without** modifying the board and using **O(1)** extra s
   params: ['board'],
   starterCode: {
     javascript: `function countBattleships(board) {
-
+  let count = 0;
+  for (let r = 0; r < board.length; r++)
+    for (let c = 0; c < board[0].length; c++)
+      if (board[r][c] === 'X' &&
+          (r === 0 || board[r-1][c] !== 'X') &&
+          (c === 0 || board[r][c-1] !== 'X'))
+        count++;
+  return count;
 }`,
-    typescript: "function countBattleships(board: string[][]): number {\n\n}",
-
-    python: `def countBattleships(board: list[list[str]]) -> int:
-    pass`,
+    typescript: `function countBattleships(board: string[][]): number {
+  let count = 0;
+  for (let r = 0; r < board.length; r++)
+    for (let c = 0; c < board[0]!.length; c++)
+      if (board[r]![c] === 'X' &&
+          (r === 0 || board[r-1]![c] !== 'X') &&
+          (c === 0 || board[r]![c-1] !== 'X'))
+        count++;
+  return count;
+}`,
+    python: `def countBattleships(board):
+    board = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in (board.to_py() if hasattr(board, 'to_py') else board)]
+    count = 0
+    for r in range(len(board)):
+        for c in range(len(board[0])):
+            if (board[r][c] == 'X' and
+                    (r == 0 or board[r-1][c] != 'X') and
+                    (c == 0 or board[r][c-1] != 'X')):
+                count += 1
+    return count`,
   },
   visibleTests: [
     {

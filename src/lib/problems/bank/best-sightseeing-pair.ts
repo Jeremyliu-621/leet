@@ -33,12 +33,29 @@ Return the maximum score of a sightseeing pair.`,
   params: ['values'],
   starterCode: {
     javascript: `function maxScoreSightseeingPair(values) {
-
+  let best = 0, maxI = values[0];
+  for (let j = 1; j < values.length; j++) {
+    best = Math.max(best, maxI + values[j] - j);
+    maxI = Math.max(maxI, values[j] + j);
+  }
+  return best;
 }`,
-    typescript: "function maxScoreSightseeingPair(values: number[]): number {\n\n}",
-
+    typescript: `function maxScoreSightseeingPair(values: number[]): number {
+  let best = 0, maxI = values[0]!;
+  for (let j = 1; j < values.length; j++) {
+    best = Math.max(best, maxI + values[j]! - j);
+    maxI = Math.max(maxI, values[j]! + j);
+  }
+  return best;
+}`,
     python: `def maxScoreSightseeingPair(values):
-    pass`,
+    values = list(values.to_py()) if hasattr(values, 'to_py') else list(values)
+    best = 0
+    max_i = values[0]
+    for j in range(1, len(values)):
+        best = max(best, max_i + values[j] - j)
+        max_i = max(max_i, values[j] + j)
+    return best`,
   },
   visibleTests: [
     { args: [[8,1,5,2,6]], expected: 11 },

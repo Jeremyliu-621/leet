@@ -35,13 +35,16 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: `function hasAlternatingBits(n) {
-
+  const x = n ^ (n >> 1);
+  return (x & (x + 1)) === 0;
 }`,
     typescript: `function hasAlternatingBits(n: number): boolean {
-
+  const x = n ^ (n >> 1);
+  return (x & (x + 1)) === 0;
 }`,
     python: `def hasAlternatingBits(n: int) -> bool:
-    pass`,
+    x = n ^ (n >> 1)
+    return (x & (x + 1)) == 0`,
   },
   visibleTests: [
     { args: [5], expected: true },
