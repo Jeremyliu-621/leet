@@ -533,6 +533,260 @@ const CPP_SNIPPETS = [
   }),
 ];
 
+const KOTLIN_SNIPPETS = [
+  snippetCompletion('for (${i} in 0 until ${n}) {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop (0 until n)',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (${i} in ${n} - 1 downTo 0) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop (downTo)',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ((${i}, ${v}) in ${arr}.withIndex()) {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'for withIndex (enumerate)',
+    type: 'keyword',
+  }),
+  snippetCompletion('while (${condition}) {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${mp} = mutableMapOf<${K}, ${V}>()\n${}', {
+    label: 'newmap',
+    detail: 'mutableMapOf<K,V>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${st} = mutableSetOf<${T}>()\n${}', {
+    label: 'newset',
+    detail: 'mutableSetOf<T>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${list} = mutableListOf<${T}>()\n${}', {
+    label: 'list',
+    detail: 'mutableListOf<T>()',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${n} = ${arr}.size\n${}', {
+    label: 'len',
+    detail: 'arr.size',
+    type: 'keyword',
+  }),
+  snippetCompletion('${arr}.sort()\n${}', {
+    label: 'sort',
+    detail: 'sort ascending',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${pq} = PriorityQueue<${T}>()\n${}', {
+    label: 'pq',
+    detail: 'PriorityQueue min-heap',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${pq} = PriorityQueue<${T}>(compareByDescending { it })\n${}', {
+    label: 'pqmax',
+    detail: 'PriorityQueue max-heap',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${dq} = ArrayDeque<${T}>()\n${}', {
+    label: 'dq',
+    detail: 'ArrayDeque (deque / stack / queue)',
+    type: 'keyword',
+  }),
+  snippetCompletion('val ${sm} = sortedMapOf<${K}, ${V}>()\n${}', {
+    label: 'tmap',
+    detail: 'sortedMapOf<K,V>() (TreeMap equivalent)',
+    type: 'keyword',
+  }),
+  snippetCompletion('val MOD = 1_000_000_007L\n${}', {
+    label: 'mod',
+    detail: 'modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('val INF = Long.MAX_VALUE\n${}', {
+    label: 'inf',
+    detail: 'large infinity constant',
+    type: 'keyword',
+  }),
+];
+
+const CSHARP_SNIPPETS = [
+  snippetCompletion('for (int ${i} = 0; ${i} < ${n}; ${i}++) {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (int ${i} = ${n} - 1; ${i} >= 0; ${i}--) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('foreach (var ${item} in ${arr}) {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'foreach loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('while (${condition}) {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if (${condition}) {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${mp} = new Dictionary<${K}, ${V}>();\n${}', {
+    label: 'newmap',
+    detail: 'Dictionary<K,V>',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${st} = new HashSet<${T}>();\n${}', {
+    label: 'newset',
+    detail: 'HashSet<T>',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${list} = new List<${T}>();\n${}', {
+    label: 'list',
+    detail: 'List<T>',
+    type: 'keyword',
+  }),
+  snippetCompletion('int ${n} = ${arr}.Length;\n${}', {
+    label: 'len',
+    detail: 'arr.Length',
+    type: 'keyword',
+  }),
+  snippetCompletion('Array.Sort(${arr});\n${}', {
+    label: 'sort',
+    detail: 'Array.Sort(arr)',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${pq} = new PriorityQueue<${T}, ${int}>();\n${}', {
+    label: 'pq',
+    detail: 'PriorityQueue<T,int> min-heap (.NET 6+)',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${stk} = new Stack<${T}>();\n${}', {
+    label: 'stk',
+    detail: 'Stack<T>',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${q} = new Queue<${T}>();\n${}', {
+    label: 'queue',
+    detail: 'Queue<T>',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${sm} = new SortedDictionary<${K}, ${V}>();\n${}', {
+    label: 'tmap',
+    detail: 'SortedDictionary<K,V> (TreeMap equivalent)',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${ss} = new SortedSet<${T}>();\n${}', {
+    label: 'tset',
+    detail: 'SortedSet<T> (TreeSet equivalent)',
+    type: 'keyword',
+  }),
+  snippetCompletion('const int MOD = 1_000_000_007;\n${}', {
+    label: 'mod',
+    detail: 'modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('const long INF = long.MaxValue;\n${}', {
+    label: 'inf',
+    detail: 'large infinity constant',
+    type: 'keyword',
+  }),
+];
+
+const SWIFT_SNIPPETS = [
+  snippetCompletion('for ${i} in 0..<${n} {\n\t${}\n}', {
+    label: 'for',
+    detail: 'for range loop (0..<n)',
+    type: 'keyword',
+  }),
+  snippetCompletion('for ${i} in stride(from: ${n} - 1, through: 0, by: -1) {\n\t${}\n}', {
+    label: 'forr',
+    detail: 'reverse for loop (stride)',
+    type: 'keyword',
+  }),
+  snippetCompletion('for (${i}, ${v}) in ${arr}.enumerated() {\n\t${}\n}', {
+    label: 'fore',
+    detail: 'for enumerated (index + value)',
+    type: 'keyword',
+  }),
+  snippetCompletion('while ${condition} {\n\t${}\n}', {
+    label: 'while',
+    detail: 'while loop',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition} {\n\t${}\n}', {
+    label: 'if',
+    detail: 'if statement',
+    type: 'keyword',
+  }),
+  snippetCompletion('if ${condition} {\n\t${}\n} else {\n\t${}\n}', {
+    label: 'ife',
+    detail: 'if-else',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${mp}: [${K}: ${V}] = [:]\n${}', {
+    label: 'newmap',
+    detail: '[K:V] dictionary literal',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${st}: Set<${T}> = []\n${}', {
+    label: 'newset',
+    detail: 'Set<T>',
+    type: 'keyword',
+  }),
+  snippetCompletion('var ${arr}: [${T}] = []\n${}', {
+    label: 'list',
+    detail: '[T] array',
+    type: 'keyword',
+  }),
+  snippetCompletion('let ${n} = ${arr}.count\n${}', {
+    label: 'len',
+    detail: 'arr.count',
+    type: 'keyword',
+  }),
+  snippetCompletion('${arr}.sort()\n${}', {
+    label: 'sort',
+    detail: 'sort ascending (mutating)',
+    type: 'keyword',
+  }),
+  snippetCompletion('let ${sorted} = ${arr}.sorted()\n${}', {
+    label: 'sortkey',
+    detail: 'sorted() → new array',
+    type: 'keyword',
+  }),
+  snippetCompletion('let MOD = 1_000_000_007\n${}', {
+    label: 'mod',
+    detail: 'modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('let INF = Int.max\n${}', {
+    label: 'inf',
+    detail: 'Int.max (large sentinel)',
+    type: 'keyword',
+  }),
+];
+
 const GO_SNIPPETS = [
   snippetCompletion('for ${i} := 0; ${i} < ${n}; ${i}++ {\n\t${}\n}', {
     label: 'for',
@@ -654,12 +908,11 @@ function snippetLanguageData(language: SupportedLanguage) {
   switch (language) {
     case 'python': snippets = PYTHON_SNIPPETS; break;
     case 'typescript': snippets = TS_SNIPPETS; break;
-    case 'java':
-    case 'kotlin':
-      snippets = JAVA_SNIPPETS; break;
-    case 'cpp':
-    case 'csharp':
-      snippets = CPP_SNIPPETS; break;
+    case 'java': snippets = JAVA_SNIPPETS; break;
+    case 'kotlin': snippets = KOTLIN_SNIPPETS; break;
+    case 'cpp': snippets = CPP_SNIPPETS; break;
+    case 'csharp': snippets = CSHARP_SNIPPETS; break;
+    case 'swift': snippets = SWIFT_SNIPPETS; break;
     case 'go': snippets = GO_SNIPPETS; break;
     case 'rust': snippets = RUST_SNIPPETS; break;
     default: snippets = JS_SNIPPETS;
