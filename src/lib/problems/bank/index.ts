@@ -3041,6 +3041,11 @@ import { problem as maxFrequencyAfterOpsII } from './maximum-frequency-after-ope
 import { problem as maxTargetNodesI } from './maximize-the-number-of-target-nodes-after-connecting-trees-i';
 import { problem as minOpsDistinctElements } from './minimum-number-of-operations-to-make-elements-in-array-distinct';
 import { problem as findAllThreeDigitEvenNumbers } from './find-all-three-digit-even-numbers';
+import { problem as serializeDeserializeTree } from './serialize-deserialize-tree';
+import { problem as manacherPalindromeRadius } from './manacher-palindrome-radius';
+import { problem as topologicalSortKahn } from './topological-sort-kahn';
+import { problem as segTreeRangeUpdate } from './segment-tree-range-update';
+import { problem as extendedGcd } from './extended-gcd';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6177,4 +6182,9 @@ export const problems: readonly Problem[] = [
   maxTargetNodesI,
   minOpsDistinctElements,
   findAllThreeDigitEvenNumbers,
+  serializeDeserializeTree,
+  manacherPalindromeRadius,
+  topologicalSortKahn,
+  segTreeRangeUpdate,
+  extendedGcd,
 ];

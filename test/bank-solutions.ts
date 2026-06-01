@@ -43727,6 +43727,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return res;
   },
+  // batch 242 (remote)
   'smallest-divisible-digit-product-i': (...args: unknown[]) => {
     const [n, t] = args as [number, number];
     for (let x = n; ; x++) {
@@ -43815,5 +43816,143 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (used[d0] <= freq[d0] && used[d1] <= freq[d1] && used[d2] <= freq[d2]) result.push(num);
     }
     return result;
+  },
+
+  // batch 242 (local)
+  'serialize-deserialize-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    if (arr.length === 0) return [];
+    // Build tree from level-order array
+    interface TNode { val: number; left: TNode | null; right: TNode | null }
+    const root: TNode = { val: arr[0] as number, left: null, right: null };
+    const queue: TNode[] = [root];
+    let i = 1;
+    while (queue.length && i < arr.length) {
+      const node = queue.shift()!;
+      if (i < arr.length && arr[i] !== null) { node.left = { val: arr[i] as number, left: null, right: null }; queue.push(node.left); }
+      i++;
+      if (i < arr.length && arr[i] !== null) { node.right = { val: arr[i] as number, left: null, right: null }; queue.push(node.right); }
+      i++;
+    }
+    // Serialize via preorder with null markers
+    const tokens: string[] = [];
+    function ser(n: TNode | null) { if (!n) { tokens.push('null'); return; } tokens.push(String(n.val)); ser(n.left); ser(n.right); }
+    ser(root);
+    // Deserialize
+    const it = tokens[Symbol.iterator]();
+    function des(): TNode | null {
+      const t = it.next().value as string;
+      if (t === 'null') return null;
+      return { val: parseInt(t), left: des(), right: des() };
+    }
+    const r2 = des();
+    // Level-order output, strip trailing nulls
+    const result: (number | null)[] = [];
+    const q2: (TNode | null)[] = [r2];
+    while (q2.length) {
+      const n = q2.shift()!;
+      if (!n) { result.push(null); continue; }
+      result.push(n.val);
+      q2.push(n.left);
+      q2.push(n.right);
+    }
+    while (result.length && result[result.length - 1] === null) result.pop();
+    return result;
+  },
+
+  'manacher-palindrome-radius': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = '#' + s.split('').join('#') + '#';
+    const n = t.length;
+    const p = new Array<number>(n).fill(0);
+    let c = 0, r = 0;
+    for (let i = 0; i < n; i++) {
+      const mirror = 2 * c - i;
+      if (i < r) p[i] = Math.min(r - i, p[mirror]!);
+      while (i - p[i]! - 1 >= 0 && i + p[i]! + 1 < n && t[i - p[i]! - 1] === t[i + p[i]! + 1]) p[i]!++;
+      if (i + p[i]! > r) { c = i; r = i + p[i]!; }
+    }
+    let best = 0, bestI = 0;
+    for (let i = 0; i < n; i++) { if (p[i]! > best) { best = p[i]!; bestI = i; } }
+    const start = (bestI - best) / 2;
+    return s.slice(start, start + best);
+  },
+
+  'topological-sort-kahn': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const inDeg = new Array<number>(n).fill(0);
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) { adj[u as number]!.push(v as number); inDeg[v as number]!++; }
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
+    const result: number[] = [];
+    let head = 0;
+    while (head < queue.length) {
+      const u = queue[head++]!;
+      result.push(u);
+      for (const v of adj[u]!) { if (--inDeg[v]! === 0) queue.push(v); }
+    }
+    return result.length === n ? result : [];
+  },
+
+  'segment-tree-range-update': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const operations = args[1] as [string, number, number, number?][];
+    const n = nums.length;
+    const tree = new Array<number>(4 * n).fill(0);
+    const lazy = new Array<number>(4 * n).fill(0);
+    function build(v: number, tl: number, tr: number) {
+      if (tl === tr) { tree[v] = nums[tl - 1]!; return; }
+      const tm = (tl + tr) >> 1;
+      build(2 * v, tl, tm); build(2 * v + 1, tm + 1, tr);
+      tree[v] = tree[2 * v]! + tree[2 * v + 1]!;
+    }
+    function push(v: number, tl: number, tr: number) {
+      if (lazy[v]) {
+        const tm = (tl + tr) >> 1;
+        tree[2 * v]! += lazy[v]! * (tm - tl + 1); lazy[2 * v]! += lazy[v]!;
+        tree[2 * v + 1]! += lazy[v]! * (tr - tm); lazy[2 * v + 1]! += lazy[v]!;
+        lazy[v] = 0;
+      }
+    }
+    function update(v: number, tl: number, tr: number, l: number, r: number, delta: number) {
+      if (l > tr || r < tl) return;
+      if (l <= tl && tr <= r) { tree[v]! += delta * (tr - tl + 1); lazy[v]! += delta; return; }
+      push(v, tl, tr);
+      const tm = (tl + tr) >> 1;
+      update(2 * v, tl, tm, l, r, delta); update(2 * v + 1, tm + 1, tr, l, r, delta);
+      tree[v] = tree[2 * v]! + tree[2 * v + 1]!;
+    }
+    function query(v: number, tl: number, tr: number, l: number, r: number): number {
+      if (l > tr || r < tl) return 0;
+      if (l <= tl && tr <= r) return tree[v]!;
+      push(v, tl, tr);
+      const tm = (tl + tr) >> 1;
+      return query(2 * v, tl, tm, l, r) + query(2 * v + 1, tm + 1, tr, l, r);
+    }
+    build(1, 1, n);
+    const res: number[] = [];
+    for (const [op, l, r, delta] of operations) {
+      if (op === 'add') update(1, 1, n, l, r, delta!);
+      else res.push(query(1, 1, n, l, r));
+    }
+    return res;
+  },
+
+  'extended-gcd': (...args: unknown[]) => {
+    const pairs = args[0] as [number, number][];
+    function extgcd(a: number, b: number): [number, number, number] {
+      if (b === 0) return [a, 1, 0];
+      const [g, x1, y1] = extgcd(b, a % b);
+      return [g, y1, x1 - Math.floor(a / b) * y1];
+    }
+    return pairs.map(([a, b]) => {
+      const [g, x0] = extgcd(a, b);
+      const period = b / g;
+      const x = ((x0 % period) + period) % period;
+      const y = (g - a * x) / b;
+      return [g, x, y];
+    });
   },
 };

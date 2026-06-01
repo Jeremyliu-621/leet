@@ -42909,6 +42909,7 @@ def dynamicComponents(n, operations):
             res.append(find(op[1]) == find(op[2]))
     return res
 `,
+  // batch 242 (remote)
   'smallest-divisible-digit-product-i': `
 def smallestDivisibleDigitProductI(n, t):
     x = n
@@ -43002,6 +43003,164 @@ def findEvenNumbers(digits):
         used[d2] += 1
         if used[d0] <= freq[d0] and used[d1] <= freq[d1] and used[d2] <= freq[d2]:
             result.append(num)
+    return result
+`,
+  // batch 242 (local)
+  'serialize-deserialize-tree': `
+def serializeDeserializeTree(tree):
+    from collections import deque
+    # Normalize input: convert JsProxy values to Python (null -> None, numbers -> int)
+    def to_val(v):
+        if v is None: return None
+        try: iv = int(v); return None if str(v) in ('null', 'jsnull', 'undefined') else iv
+        except: return None
+    arr = [to_val(tree[i]) for i in range(len(tree))]
+    if not arr or arr[0] is None:
+        return []
+    root = [arr[0], None, None]
+    q = deque([root])
+    i = 1
+    while q and i < len(arr):
+        node = q.popleft()
+        if i < len(arr) and arr[i] is not None:
+            child = [arr[i], None, None]
+            node[1] = child
+            q.append(child)
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            child = [arr[i], None, None]
+            node[2] = child
+            q.append(child)
+        i += 1
+    # Serialize preorder
+    tokens = []
+    def ser(n):
+        if n is None:
+            tokens.append('null')
+            return
+        tokens.append(str(n[0]))
+        ser(n[1])
+        ser(n[2])
+    ser(root)
+    # Deserialize
+    it = iter(tokens)
+    def des():
+        t = next(it)
+        if t == 'null':
+            return None
+        n = [int(t), None, None]
+        n[1] = des()
+        n[2] = des()
+        return n
+    r2 = des()
+    # Level order
+    result = []
+    q2 = deque([r2])
+    while q2:
+        n = q2.popleft()
+        if n is None:
+            result.append(None)
+            continue
+        result.append(n[0])
+        q2.append(n[1])
+        q2.append(n[2])
+    while result and result[-1] is None:
+        result.pop()
+    return result
+`,
+  'manacher-palindrome-radius': `
+def longestPalindromeManacher(s):
+    t = '#' + '#'.join(s) + '#'
+    n = len(t)
+    p = [0] * n
+    c = r = 0
+    for i in range(n):
+        mirror = 2 * c - i
+        if i < r:
+            p[i] = min(r - i, p[mirror])
+        while i - p[i] - 1 >= 0 and i + p[i] + 1 < n and t[i - p[i] - 1] == t[i + p[i] + 1]:
+            p[i] += 1
+        if i + p[i] > r:
+            c, r = i, i + p[i]
+    best_i = max(range(n), key=lambda i: p[i])
+    best = p[best_i]
+    start = (best_i - best) // 2
+    return s[start:start + best]
+`,
+  'topological-sort-kahn': `
+def topologicalSortKahn(n, edges):
+    from collections import deque
+    in_deg = [0] * n
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        in_deg[v] += 1
+    q = deque(i for i in range(n) if in_deg[i] == 0)
+    result = []
+    while q:
+        u = q.popleft()
+        result.append(u)
+        for v in adj[u]:
+            in_deg[v] -= 1
+            if in_deg[v] == 0:
+                q.append(v)
+    return result if len(result) == n else []
+`,
+  'segment-tree-range-update': `
+def segTreeRangeUpdate(nums, operations):
+    n = len(nums)
+    tree = [0] * (4 * n)
+    lazy = [0] * (4 * n)
+    def build(v, tl, tr):
+        if tl == tr:
+            tree[v] = nums[tl - 1]
+            return
+        tm = (tl + tr) // 2
+        build(2*v, tl, tm); build(2*v+1, tm+1, tr)
+        tree[v] = tree[2*v] + tree[2*v+1]
+    def push(v, tl, tr):
+        if lazy[v]:
+            tm = (tl + tr) // 2
+            tree[2*v] += lazy[v] * (tm - tl + 1); lazy[2*v] += lazy[v]
+            tree[2*v+1] += lazy[v] * (tr - tm); lazy[2*v+1] += lazy[v]
+            lazy[v] = 0
+    def update(v, tl, tr, l, r, delta):
+        if l > tr or r < tl: return
+        if l <= tl and tr <= r:
+            tree[v] += delta * (tr - tl + 1); lazy[v] += delta; return
+        push(v, tl, tr)
+        tm = (tl + tr) // 2
+        update(2*v, tl, tm, l, r, delta); update(2*v+1, tm+1, tr, l, r, delta)
+        tree[v] = tree[2*v] + tree[2*v+1]
+    def query(v, tl, tr, l, r):
+        if l > tr or r < tl: return 0
+        if l <= tl and tr <= r: return tree[v]
+        push(v, tl, tr)
+        tm = (tl + tr) // 2
+        return query(2*v, tl, tm, l, r) + query(2*v+1, tm+1, tr, l, r)
+    build(1, 1, n)
+    res = []
+    for op in operations:
+        if op[0] == 'add':
+            update(1, 1, n, op[1], op[2], op[3])
+        else:
+            res.append(query(1, 1, n, op[1], op[2]))
+    return res
+`,
+  'extended-gcd': `
+def extendedGcd(pairs):
+    def extgcd(a, b):
+        if b == 0:
+            return a, 1, 0
+        g, x1, y1 = extgcd(b, a % b)
+        return g, y1, x1 - (a // b) * y1
+    result = []
+    for a, b in pairs:
+        g, x0, _ = extgcd(a, b)
+        period = b // g
+        x = (x0 % period + period) % period
+        y = (g - a * x) // b
+        result.append([g, x, y])
     return result
 `,
 };
