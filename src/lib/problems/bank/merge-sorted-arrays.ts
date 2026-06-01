@@ -35,13 +35,36 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function mergeSortedArrays(nums1, nums2) {
-  // your code here
+  const res = [];
+  let i = 0, j = 0;
+  while (i < nums1.length && j < nums2.length) {
+    if (nums1[i] <= nums2[j]) res.push(nums1[i++]);
+    else res.push(nums2[j++]);
+  }
+  while (i < nums1.length) res.push(nums1[i++]);
+  while (j < nums2.length) res.push(nums2[j++]);
+  return res;
 }`,
-    typescript:
-      'function mergeSortedArrays(nums1: number[], nums2: number[]): number[] {\n  // your code here\n}',
+    typescript: `function mergeSortedArrays(nums1: number[], nums2: number[]): number[] {
+  const res: number[] = [];
+  let i = 0, j = 0;
+  while (i < nums1.length && j < nums2.length) {
+    if (nums1[i]! <= nums2[j]!) res.push(nums1[i++]!);
+    else res.push(nums2[j++]!);
+  }
+  while (i < nums1.length) res.push(nums1[i++]!);
+  while (j < nums2.length) res.push(nums2[j++]!);
+  return res;
+}`,
     python: `def mergeSortedArrays(nums1, nums2):
-    # your code here
-    pass`,
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    res, i, j = [], 0, 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] <= nums2[j]: res.append(nums1[i]); i += 1
+        else: res.append(nums2[j]); j += 1
+    res.extend(nums1[i:]); res.extend(nums2[j:])
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, 3], [2, 5, 6]], expected: [1, 2, 2, 3, 5, 6] },

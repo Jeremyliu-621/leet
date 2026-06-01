@@ -23,9 +23,26 @@ export const problem: Problem = {
   functionName: 'maximumProduct',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maximumProduct(nums) {\n  // your code here\n}\n',
-    typescript: 'function maximumProduct(nums: number[]): number {\n  // your code here\n  return 0;\n}',
-    python: 'def maximumProduct(nums):\n    # your code here\n    pass\n',
+    javascript: `function maximumProduct(nums) {
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  return Math.max(
+    nums[n - 1] * nums[n - 2] * nums[n - 3],
+    nums[0] * nums[1] * nums[n - 1]
+  );
+}`,
+    typescript: `function maximumProduct(nums: number[]): number {
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  return Math.max(
+    nums[n - 1]! * nums[n - 2]! * nums[n - 3]!,
+    nums[0]! * nums[1]! * nums[n - 1]!
+  );
+}`,
+    python: `def maximumProduct(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort()
+    return max(nums[-1] * nums[-2] * nums[-3], nums[0] * nums[1] * nums[-1])`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 6 },

@@ -37,10 +37,24 @@ Return a **2D integer array** \`ret\` where \`ret[i] = [valuei, weighti]\`, with
   functionName: 'mergeSimilarItems',
   params: ['items1', 'items2'],
   starterCode: {
-    javascript: 'function mergeSimilarItems(items1, items2) {\n  // your code here\n}\n',
-    typescript: "function mergeSimilarItems(items1: number[][], items2: number[][]): number[][] {\n  // your code here\n}",
-
-    python: 'def mergeSimilarItems(items1, items2):\n    # your code here\n    pass\n',
+    javascript: `function mergeSimilarItems(items1, items2) {
+  const m = new Map();
+  for (const [v, w] of [...items1, ...items2]) m.set(v, (m.get(v) ?? 0) + w);
+  return [...m].sort((a, b) => a[0] - b[0]);
+}`,
+    typescript: `function mergeSimilarItems(items1: number[][], items2: number[][]): number[][] {
+  const m = new Map<number, number>();
+  for (const item of [...items1, ...items2]) m.set(item[0]!, (m.get(item[0]!) ?? 0) + item[1]!);
+  return [...m].sort((a, b) => a[0]! - b[0]!);
+}`,
+    python: `def mergeSimilarItems(items1, items2):
+    items1 = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (items1.to_py() if hasattr(items1, 'to_py') else items1)]
+    items2 = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (items2.to_py() if hasattr(items2, 'to_py') else items2)]
+    from collections import defaultdict
+    m = defaultdict(int)
+    for v, w in items1 + items2:
+        m[v] += w
+    return sorted(m.items())`,
   },
   visibleTests: [
     { args: [[[1, 1], [4, 5], [3, 8]], [[3, 1], [1, 5]]], expected: [[1, 6], [3, 9], [4, 5]] },

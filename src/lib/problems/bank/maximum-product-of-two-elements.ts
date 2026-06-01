@@ -35,9 +35,18 @@ export const problem: Problem = {
   functionName: 'maxProduct',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxProduct(nums) {\n  // your code here\n}\n',
-    typescript: 'function maxProduct(nums: number[]): number {\n  // your code here\n}',
-    python: 'def maxProduct(nums):\n    # your code here\n    pass\n',
+    javascript: `function maxProduct(nums) {
+  nums.sort((a, b) => b - a);
+  return (nums[0] - 1) * (nums[1] - 1);
+}`,
+    typescript: `function maxProduct(nums: number[]): number {
+  nums.sort((a, b) => b - a);
+  return (nums[0]! - 1) * (nums[1]! - 1);
+}`,
+    python: `def maxProduct(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort(reverse=True)
+    return (nums[0] - 1) * (nums[1] - 1)`,
   },
   visibleTests: [
     { args: [[3, 4, 5, 2]], expected: 12 },
