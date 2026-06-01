@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2745** problems; 8529 tests green. Batches 102–252 complete.
+**Current focus:** Bank at **2748** problems; 8538 tests green. Batches 102–253 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 253+; continued UX polish.
+**Next up:** Batch 254+; continued UX polish.
+
+### feat(bank): batch 253 — count-substrings-rearranged-ii, find-index-permutation, minimize-manhattan-distances (2026-06-01)
+Three new problems: `count-substrings-that-can-be-rearranged-to-contain-a-string-ii` (hard/strings+sliding-window+hash-map, LC 3298 — sliding window counting valid substrings mod 10^9+7; "valid" = multiset superset of word2; count left+1 valid substrings ending at each right), `find-the-index-of-permutation` (medium/arrays+binary-indexed-tree+math, LC 3109 — Lehmer code using BIT for O(n log n) prefix counts of unused elements; result mod 10^9+7), `minimize-manhattan-distances` (hard/arrays+math, LC 3102 — Manhattan distance = max(range(x+y), range(x-y)); only 4 extreme-index candidates need removal; try each, take min). Bank at **2748**; 8538 tests.
 
 ### feat(bank): batch 252 — set-after-removals, x-y-equal, distribute-arrays-ii-upgrade; batch 251b — max-xor-two-numbers (2026-06-01)
 Batch 252: `maximum-size-of-a-set-after-removals` (medium/arrays+hash-map, LC 3002 — greedy formula: min(unique1,n/2)+min(unique2,n/2)+min(shared,remaining)), `minimum-number-of-operations-to-make-x-and-y-equal` (medium/dp, LC 2998 — memoized DP rounding to nearest multiples of 5/11 + ±1 adjustments), upgraded `distribute-elements-into-two-arrays-ii` (hard/arrays+binary-indexed-tree — added BIT-based O(n log n) starter code with coordinate compression; was empty). Batch 251b: `maximum-xor-of-two-numbers-in-array` (medium/trie+bit-manipulation, LC 421 — binary trie greedy: insert all nums, then for each pick opposite bits). Bank at **2745**; 8529 tests.
