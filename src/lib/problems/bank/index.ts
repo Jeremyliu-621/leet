@@ -3097,6 +3097,8 @@ import { problem as hashDividedString } from './hash-divided-string';
 import { problem as minArrayChangeDiffsEqual } from './minimum-array-changes-to-make-differences-equal';
 import { problem as findSubarrayBitwiseAndClosestK } from './find-subarray-with-bitwise-and-closest-to-k';
 import { problem as findOccurrenceFirstAlmostEqualSubstr } from './find-the-occurrence-of-first-almost-equal-substring';
+import { problem as countPrefixSuffixPairsI } from './count-prefix-suffix-pairs-i';
+import { problem as maxProductPalinSubseq } from './maximum-product-of-the-length-of-two-palindromic-subsequences';
 // batch 260
 import { problem as xorQueries } from './xor-queries-of-a-subarray';
 import { problem as averageSalary } from './average-salary-excluding-the-minimum-and-maximum-salary';
@@ -6391,6 +6393,8 @@ export const problems: readonly Problem[] = [
   minArrayChangeDiffsEqual,
   findSubarrayBitwiseAndClosestK,
   findOccurrenceFirstAlmostEqualSubstr,
+  countPrefixSuffixPairsI,
+  maxProductPalinSubseq,
   // batch 260
   xorQueries,
   averageSalary,

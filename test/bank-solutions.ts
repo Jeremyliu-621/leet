@@ -46624,6 +46624,46 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.max(pos, neg);
   },
+  // batch 261
+  'count-prefix-suffix-pairs-i': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    let count = 0;
+    for (let i = 0; i < words.length; i++)
+      for (let j = i + 1; j < words.length; j++)
+        if (words[j]!.startsWith(words[i]!) && words[j]!.endsWith(words[i]!)) count++;
+    return count;
+  },
+  'maximum-product-of-the-length-of-two-palindromic-subsequences': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const full = (1 << n) - 1;
+    const lps = new Array(1 << n).fill(0);
+    for (let mask = 1; mask < (1 << n); mask++) {
+      const chars: string[] = [];
+      for (let i = 0; i < n; i++) if (mask & (1 << i)) chars.push(s[i]!);
+      const m = chars.length;
+      const dp: number[][] = Array.from({ length: m }, () => new Array(m).fill(0));
+      for (let i = 0; i < m; i++) dp[i]![i] = 1;
+      for (let len = 2; len <= m; len++) {
+        for (let i = 0; i <= m - len; i++) {
+          const j = i + len - 1;
+          if (chars[i] === chars[j]) dp[i]![j] = len === 2 ? 2 : dp[i + 1]![j - 1]! + 2;
+          else dp[i]![j] = Math.max(dp[i + 1]![j]!, dp[i]![j - 1]!);
+        }
+      }
+      lps[mask] = dp[0]![m - 1]!;
+    }
+    const maxLPS = [...lps];
+    for (let i = 0; i < n; i++)
+      for (let mask = 0; mask < (1 << n); mask++)
+        if (mask & (1 << i)) maxLPS[mask] = Math.max(maxLPS[mask]!, maxLPS[mask ^ (1 << i)]!);
+    let ans = 0;
+    for (let mask = 1; mask < (1 << n); mask++) {
+      const comp = full ^ mask;
+      if (comp) ans = Math.max(ans, lps[mask]! * maxLPS[comp]!);
+    }
+    return ans;
+  },
   // batch 258
   'words-within-two-edits-of-dictionary': (...args: unknown[]) => {
     const queries = args[0] as string[];

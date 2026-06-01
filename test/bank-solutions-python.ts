@@ -45740,6 +45740,47 @@ def maximizeTotalCost(nums):
         pos, neg = max(pos, neg) + nums[i], pos - nums[i]
     return max(pos, neg)
 `,
+  // batch 261
+  'count-prefix-suffix-pairs-i': `
+def countPrefixSuffixPairs(words):
+    count = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if words[j].startswith(words[i]) and words[j].endswith(words[i]):
+                count += 1
+    return count
+`,
+  'maximum-product-of-the-length-of-two-palindromic-subsequences': `
+def maxProduct(s):
+    n = len(s)
+    full = (1 << n) - 1
+    lps = [0] * (1 << n)
+    for mask in range(1, 1 << n):
+        chars = [s[i] for i in range(n) if mask & (1 << i)]
+        m = len(chars)
+        dp = [[0]*m for _ in range(m)]
+        for i in range(m):
+            dp[i][i] = 1
+        for length in range(2, m+1):
+            for i in range(m - length + 1):
+                j = i + length - 1
+                if chars[i] == chars[j]:
+                    dp[i][j] = 2 if length == 2 else dp[i+1][j-1] + 2
+                else:
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+        lps[mask] = dp[0][m-1]
+    max_lps = lps[:]
+    for i in range(n):
+        for mask in range(1 << n):
+            if mask & (1 << i):
+                max_lps[mask] = max(max_lps[mask], max_lps[mask ^ (1 << i)])
+    ans = 0
+    for mask in range(1, 1 << n):
+        comp = full ^ mask
+        if comp:
+            ans = max(ans, lps[mask] * max_lps[comp])
+    return ans
+`,
   // batch 258
   'words-within-two-edits-of-dictionary': `
 def twoEditWords(queries, dictionary):
