@@ -3058,6 +3058,10 @@ import { problem as convexHullGraham } from './convex-hull-graham';
 import { problem as ahoCorasick } from './aho-corasick-multi-pattern';
 import { problem as maxFlowEdmondsKarp } from './max-flow-edmonds-karp';
 import { problem as lcaBinaryLifting } from './lca-binary-lifting';
+// batch 245
+import { problem as sparseTableRMQ } from './sparse-table-range-min';
+import { problem as matrixExponentiation } from './matrix-exponentiation';
+import { problem as suffixArrayLCP } from './suffix-array-lcp';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6261,4 +6265,7 @@ export const problems: readonly Problem[] = [
   countNodesEqualSumDesc,
   minimumPathTriangle,
   maximizeXorFromArray,
+  sparseTableRMQ,
+  matrixExponentiation,
+  suffixArrayLCP,
 ];

@@ -43912,4 +43912,105 @@ def lcaBinaryLifting(parent: list, queries: list) -> list:
         result.append(up[0][a])
     return result
 `,
+  'sparse-table-range-min': `
+def sparseTableRMQ(nums: list, queries: list) -> list:
+    import math
+    n = len(nums)
+    LOG = max(1, math.floor(math.log2(n)) + 1) if n > 0 else 1
+    table = [nums[:]]
+    for k in range(1, LOG):
+        prev = table[k-1]
+        cur = []
+        for i in range(n):
+            j = i + (1 << (k-1))
+            cur.append(min(prev[i], prev[j]) if j < n else prev[i])
+        table.append(cur)
+    log2 = [0] * (n + 1)
+    for i in range(2, n + 1):
+        log2[i] = log2[i >> 1] + 1
+    result = []
+    for q in queries:
+        l, r = int(q[0]), int(q[1])
+        k = log2[r - l + 1]
+        result.append(min(table[k][l], table[k][r - (1 << k) + 1]))
+    return result
+`,
+  'matrix-exponentiation': `
+def matrixExponentiation(coefficients: list, init: list, n: int) -> int:
+    MOD = 10**9 + 7
+    k = len(coefficients)
+    if n < k:
+        return init[n] % MOD
+    def mat_mul(A, B):
+        size = len(A)
+        C = [[0]*size for _ in range(size)]
+        for i in range(size):
+            for l in range(size):
+                if A[i][l]:
+                    for j in range(size):
+                        C[i][j] = (C[i][j] + A[i][l] * B[l][j]) % MOD
+        return C
+    def mat_pow(M, p):
+        size = len(M)
+        result = [[1 if i==j else 0 for j in range(size)] for i in range(size)]
+        while p > 0:
+            if p & 1:
+                result = mat_mul(result, M)
+            M = mat_mul(M, M)
+            p >>= 1
+        return result
+    M = []
+    for i in range(k):
+        row = []
+        for j in range(k):
+            if i == 0:
+                row.append(int(coefficients[j]) % MOD)
+            elif j == i - 1:
+                row.append(1)
+            else:
+                row.append(0)
+        M.append(row)
+    state = mat_pow(M, n - k + 1)
+    init_vec = [int(init[k-1-j]) % MOD for j in range(k)]
+    ans = 0
+    for j in range(k):
+        ans = (ans + state[0][j] * init_vec[j]) % MOD
+    return ans
+`,
+  'suffix-array-lcp': `
+def suffixArrayLCP(s: str) -> list:
+    n = len(s)
+    rank = [ord(c) for c in s]
+    sa = list(range(n))
+    gap = 1
+    while gap < n:
+        r = rank[:]
+        sa.sort(key=lambda i: (r[i], r[i+gap] if i+gap < n else -1))
+        rank[sa[0]] = 0
+        for i in range(1, n):
+            rank[sa[i]] = rank[sa[i-1]]
+            a_key = (r[sa[i]], r[sa[i]+gap] if sa[i]+gap < n else -1)
+            b_key = (r[sa[i-1]], r[sa[i-1]+gap] if sa[i-1]+gap < n else -1)
+            if a_key != b_key:
+                rank[sa[i]] += 1
+        if rank[sa[n-1]] == n - 1:
+            break
+        gap <<= 1
+    inv = [0] * n
+    for i in range(n):
+        inv[sa[i]] = i
+    lcp = [0] * n
+    h = 0
+    for i in range(n):
+        if inv[i] == 0:
+            h = 0
+            continue
+        j = sa[inv[i] - 1]
+        while i + h < n and j + h < n and s[i+h] == s[j+h]:
+            h += 1
+        lcp[inv[i]] = h
+        if h > 0:
+            h -= 1
+    return [sa, lcp]
+`,
 };

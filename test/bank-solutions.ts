@@ -44634,4 +44634,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       return up[0]![a]!;
     });
   },
+
+  'sparse-table-range-min': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = nums.length;
+    const LOG = Math.floor(Math.log2(n)) + 1;
+    const table: number[][] = Array.from({ length: LOG }, () => new Array(n).fill(0));
+    table[0] = nums.slice();
+    for (let k = 1; k < LOG; k++) {
+      for (let i = 0; i + (1 << k) <= n; i++) {
+        table[k]![i] = Math.min(table[k - 1]![i]!, table[k - 1]![i + (1 << (k - 1))]!);
+      }
+    }
+    const log2 = new Array<number>(n + 1).fill(0);
+    for (let i = 2; i <= n; i++) log2[i] = log2[i >> 1]! + 1;
+    return queries.map(([l, r]) => {
+      const k = log2[r! - l! + 1]!;
+      return Math.min(table[k]![l!]!, table[k]![r! - (1 << k) + 1]!);
+    });
+  },
+
+  'matrix-exponentiation': (...args: unknown[]) => {
+    const coef = args[0] as number[];
+    const init = args[1] as number[];
+    const n = args[2] as number;
+    const k = coef.length;
+    const MOD = 1000000007n;
+    if (n < k) return Number(BigInt(init[n]!) % MOD);
+    type Mat = bigint[][];
+    const eye = (): Mat => Array.from({ length: k }, (_, i) => Array.from({ length: k }, (_, j) => i === j ? 1n : 0n));
+    const mul = (A: Mat, B: Mat): Mat => {
+      const C = eye().map(r => r.map(() => 0n));
+      for (let i = 0; i < k; i++) for (let l = 0; l < k; l++) if (A[i]![l]! !== 0n)
+        for (let j = 0; j < k; j++) C[i]![j] = (C[i]![j]! + A[i]![l]! * B[l]![j]!) % MOD;
+      return C;
+    };
+    const matpow = (M: Mat, p: number): Mat => {
+      let result = eye();
+      while (p > 0) { if (p & 1) result = mul(result, M); M = mul(M, M); p >>= 1; }
+      return result;
+    };
+    const M: Mat = Array.from({ length: k }, (_, i) => Array.from({ length: k }, (_, j) =>
+      i === 0 ? (BigInt(coef[j]!) + MOD) % MOD : (j === i - 1 ? 1n : 0n)));
+    const state = matpow(M, n - k + 1);
+    const initVec = init.slice(0, k).reverse().map(v => (BigInt(v) % MOD));
+    let ans = 0n;
+    for (let j = 0; j < k; j++) ans = (ans + state[0]![j]! * initVec[j]!) % MOD;
+    return Number(ans);
+  },
+
+  'suffix-array-lcp': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    let rank = Array.from({ length: n }, (_, i) => s.charCodeAt(i));
+    let sa = Array.from({ length: n }, (_, i) => i);
+    for (let gap = 1; gap < n; gap <<= 1) {
+      const r = rank.slice();
+      sa.sort((a, b) => r[a]! !== r[b]! ? r[a]! - r[b]! : (r[a + gap] ?? -1) - (r[b + gap] ?? -1));
+      rank[sa[0]!] = 0;
+      for (let i = 1; i < n; i++) {
+        rank[sa[i]!] = rank[sa[i - 1]!]!;
+        if (r[sa[i]!]! !== r[sa[i - 1]!]! || (r[sa[i]! + gap] ?? -1) !== (r[sa[i - 1]! + gap] ?? -1))
+          rank[sa[i]!]!++;
+      }
+      if (rank[sa[n - 1]!] === n - 1) break;
+    }
+    const inv = new Array<number>(n).fill(0);
+    for (let i = 0; i < n; i++) inv[sa[i]!] = i;
+    const lcp = new Array<number>(n).fill(0);
+    let h = 0;
+    for (let i = 0; i < n; i++) {
+      if (inv[i]! === 0) { h = 0; continue; }
+      const j = sa[inv[i]! - 1]!;
+      while (i + h < n && j + h < n && s[i + h] === s[j + h]) h++;
+      lcp[inv[i]!] = h;
+      if (h > 0) h--;
+    }
+    return [sa, lcp];
+  },
 };
