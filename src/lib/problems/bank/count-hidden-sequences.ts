@@ -43,11 +43,31 @@ Return the number of **possible** hidden sequences there are. If there are no po
   functionName: 'countHiddenSequences',
   params: ['differences', 'lower', 'upper'],
   starterCode: {
-    javascript: `function countHiddenSequences(differences, lower, upper) {\n\n}`,
-    typescript: `function countHiddenSequences(differences: number[], lower: number, upper: number): number {
-
+    javascript: `function countHiddenSequences(differences, lower, upper) {
+  let prefix = 0, minP = 0, maxP = 0;
+  for (const d of differences) {
+    prefix += d;
+    minP = Math.min(minP, prefix);
+    maxP = Math.max(maxP, prefix);
+  }
+  return Math.max(0, (upper - maxP) - (lower - minP) + 1);
 }`,
-    python: `def countHiddenSequences(differences: list[int], lower: int, upper: int) -> int:\n    pass`,
+    typescript: `function countHiddenSequences(differences: number[], lower: number, upper: number): number {
+  let prefix = 0, minP = 0, maxP = 0;
+  for (const d of differences) {
+    prefix += d;
+    minP = Math.min(minP, prefix);
+    maxP = Math.max(maxP, prefix);
+  }
+  return Math.max(0, (upper - maxP) - (lower - minP) + 1);
+}`,
+    python: `def countHiddenSequences(differences, lower, upper):
+    prefix = min_p = max_p = 0
+    for d in differences:
+        prefix += d
+        min_p = min(min_p, prefix)
+        max_p = max(max_p, prefix)
+    return max(0, (upper - max_p) - (lower - min_p) + 1)`,
   },
   visibleTests: [
     { args: [[1, -3, 4], 1, 6], expected: 2 },

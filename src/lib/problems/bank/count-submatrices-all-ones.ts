@@ -30,10 +30,56 @@ export const problem: Problem = {
   functionName: 'numSubmat',
   params: ['mat'],
   starterCode: {
-    javascript: 'function numSubmat(mat) {\n\n}',
-    typescript: "function numSubmat(mat: number[][]): number {\n\n}",
-
-    python: 'def numSubmat(mat):\n    pass',
+    javascript: `function numSubmat(mat) {
+  const m = mat.length, n = mat[0].length;
+  const h = new Array(n).fill(0);
+  let total = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      h[j] = mat[i][j] === 0 ? 0 : h[j] + 1;
+    }
+    // Count submatrices ending at row i, with right edge at column j
+    for (let j = 0; j < n; j++) {
+      let minH = h[j];
+      for (let k = j; k >= 0; k--) {
+        minH = Math.min(minH, h[k]);
+        total += minH;
+      }
+    }
+  }
+  return total;
+}`,
+    typescript: `function numSubmat(mat: number[][]): number {
+  const m = mat.length, n = mat[0]!.length;
+  const h = new Array(n).fill(0);
+  let total = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      h[j] = mat[i]![j] === 0 ? 0 : h[j]! + 1;
+    }
+    for (let j = 0; j < n; j++) {
+      let minH = h[j]!;
+      for (let k = j; k >= 0; k--) {
+        minH = Math.min(minH, h[k]!);
+        total += minH;
+      }
+    }
+  }
+  return total;
+}`,
+    python: `def numSubmat(mat):
+    m, n = len(mat), len(mat[0])
+    h = [0] * n
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            h[j] = 0 if mat[i][j] == 0 else h[j] + 1
+        for j in range(n):
+            min_h = h[j]
+            for k in range(j, -1, -1):
+                min_h = min(min_h, h[k])
+                total += min_h
+    return total`,
   },
   visibleTests: [
     { args: [[[1, 0, 1], [1, 1, 0], [1, 1, 0]]], expected: 13 },

@@ -36,10 +36,53 @@ The remaining elements after removing subarray \`nums[l..r]\` are the concatenat
   functionName: 'incremovableSubarrayCount',
   params: ['nums'],
   starterCode: {
-    javascript: 'function incremovableSubarrayCount(nums) {\n\n}',
-    typescript: "function incremovableSubarrayCount(nums: number[]): number {\n\n}",
-
-    python: 'def incremovableSubarrayCount(nums):\n    pass',
+    javascript: `function incremovableSubarrayCount(nums) {
+  const n = nums.length;
+  function isStrictlyIncreasing(a, b) { // check nums[a..b-1]
+    for (let i = a; i < b - 1; i++) if (nums[i] >= nums[i + 1]) return false;
+    return true;
+  }
+  let count = 0;
+  for (let l = 0; l < n; l++) {
+    for (let r = l; r < n; r++) {
+      const leftOk = l === 0 || isStrictlyIncreasing(0, l);
+      const rightOk = r === n - 1 || isStrictlyIncreasing(r + 1, n);
+      const joinOk = l === 0 || r === n - 1 || nums[l - 1] < nums[r + 1];
+      if (leftOk && rightOk && joinOk) count++;
+    }
+  }
+  return count;
+}`,
+    typescript: `function incremovableSubarrayCount(nums: number[]): number {
+  const n = nums.length;
+  function isStrictlyIncreasing(a: number, b: number): boolean {
+    for (let i = a; i < b - 1; i++) if (nums[i]! >= nums[i + 1]!) return false;
+    return true;
+  }
+  let count = 0;
+  for (let l = 0; l < n; l++) {
+    for (let r = l; r < n; r++) {
+      const leftOk = l === 0 || isStrictlyIncreasing(0, l);
+      const rightOk = r === n - 1 || isStrictlyIncreasing(r + 1, n);
+      const joinOk = l === 0 || r === n - 1 || nums[l - 1]! < nums[r + 1]!;
+      if (leftOk && rightOk && joinOk) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def incremovableSubarrayCount(nums):
+    n = len(nums)
+    def is_inc(a, b):
+        return all(nums[i] < nums[i+1] for i in range(a, b-1))
+    count = 0
+    for l in range(n):
+        for r in range(l, n):
+            left_ok = l == 0 or is_inc(0, l)
+            right_ok = r == n - 1 or is_inc(r + 1, n)
+            join_ok = l == 0 or r == n - 1 or nums[l-1] < nums[r+1]
+            if left_ok and right_ok and join_ok:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: 10 },
