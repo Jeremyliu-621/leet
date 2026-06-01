@@ -24,7 +24,6 @@ import {
   defaultKeymap,
   history,
   historyKeymap,
-  indentWithTab,
   toggleComment,
 } from '@codemirror/commands';
 import {
@@ -784,8 +783,32 @@ export function EditorPanel({
           ...historyKeymap,
           // Arrow keys, selection, copy/paste, etc.
           ...defaultKeymap,
-          // Tab inserts spaces — respects indent size.
-          indentWithTab,
+          // Tab inserts spaces at the cursor (not structural re-indent).
+          {
+            key: 'Tab',
+            run(view) {
+              const spaces = ' '.repeat(indentSizeRef.current);
+              view.dispatch(view.state.replaceSelection(spaces));
+              return true;
+            },
+          },
+          {
+            key: 'Shift-Tab',
+            run(view) {
+              // Remove up to indentSize spaces before the cursor on the current line.
+              const { state } = view;
+              const head = state.selection.main.head;
+              const line = state.doc.lineAt(head);
+              const colInLine = head - line.from;
+              const textBefore = line.text.slice(0, colInLine);
+              const trailingSpaces = textBefore.length - textBefore.trimEnd().length;
+              const toRemove = Math.min(trailingSpaces, indentSizeRef.current);
+              if (toRemove > 0) {
+                view.dispatch({ changes: { from: head - toRemove, to: head } });
+              }
+              return true;
+            },
+          },
           // Mod-J: toggle terminal panel (mirrors VS Code panel toggle).
           {
             key: 'Mod-j',
