@@ -41,10 +41,35 @@ Use the **Sieve of Eratosthenes** for an efficient O(n log log n) solution:
   functionName: 'countPrimesUpTo',
   params: ['n'],
   starterCode: {
-    javascript: 'function countPrimesUpTo(n) {\n  // your code here\n}\n',
-    typescript: "function countPrimesUpTo(n: number): number {\n  // your code here\n}",
-
-    python: 'def countPrimesUpTo(n):\n    # your code here\n    pass\n',
+    javascript: `function countPrimesUpTo(n) {
+  if (n < 2) return 0;
+  const isPrime = new Array(n).fill(true);
+  isPrime[0] = isPrime[1] = false;
+  for (let i = 2; i * i < n; i++) {
+    if (isPrime[i]) for (let j = i * i; j < n; j += i) isPrime[j] = false;
+  }
+  return isPrime.filter(Boolean).length;
+}`,
+    typescript: `function countPrimesUpTo(n: number): number {
+  if (n < 2) return 0;
+  const isPrime: boolean[] = new Array(n).fill(true);
+  isPrime[0] = isPrime[1] = false;
+  for (let i = 2; i * i < n; i++) {
+    if (isPrime[i]) for (let j = i * i; j < n; j += i) isPrime[j] = false;
+  }
+  return isPrime.filter(Boolean).length;
+}`,
+    python: `def countPrimesUpTo(n):
+    if n < 2: return 0
+    is_prime = [True] * n
+    is_prime[0] = is_prime[1] = False
+    i = 2
+    while i * i < n:
+        if is_prime[i]:
+            for j in range(i * i, n, i):
+                is_prime[j] = False
+        i += 1
+    return sum(is_prime)`,
   },
   visibleTests: [
     { args: [10], expected: 4 },

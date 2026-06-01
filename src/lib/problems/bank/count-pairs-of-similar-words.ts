@@ -43,10 +43,35 @@ Return the number of pairs \`(i, j)\` such that \`0 <= i < j <= word.length - 1\
   functionName: 'similarPairs',
   params: ['words'],
   starterCode: {
-    javascript: 'function similarPairs(words) {\n  // your code here\n}\n',
-    typescript: "function similarPairs(words: string[]): number {\n  // your code here\n}",
-
-    python: 'def similarPairs(words):\n    # your code here\n    pass\n',
+    javascript: `function similarPairs(words) {
+  const cnt = new Map();
+  let ans = 0;
+  for (const w of words) {
+    const key = [...new Set(w)].sort().join('');
+    ans += cnt.get(key) ?? 0;
+    cnt.set(key, (cnt.get(key) ?? 0) + 1);
+  }
+  return ans;
+}`,
+    typescript: `function similarPairs(words: string[]): number {
+  const cnt = new Map<string, number>();
+  let ans = 0;
+  for (const w of words) {
+    const key = [...new Set(w)].sort().join('');
+    ans += cnt.get(key) ?? 0;
+    cnt.set(key, (cnt.get(key) ?? 0) + 1);
+  }
+  return ans;
+}`,
+    python: `def similarPairs(words):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    cnt = {}
+    ans = 0
+    for w in words:
+        key = ''.join(sorted(set(w)))
+        ans += cnt.get(key, 0)
+        cnt[key] = cnt.get(key, 0) + 1
+    return ans`,
   },
   visibleTests: [
     { args: [['aba', 'aabb', 'abcd', 'bac', 'aabc']], expected: 2 },

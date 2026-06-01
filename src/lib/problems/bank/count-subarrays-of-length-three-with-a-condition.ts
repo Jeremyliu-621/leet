@@ -40,10 +40,21 @@ nums[i] + nums[i+2] == nums[i+1] / 2
   functionName: 'countSubarrays',
   params: ['nums'],
   starterCode: {
-    javascript: 'function countSubarrays(nums) {\n  // your code here\n}\n',
-    typescript: "function countSubarrays(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def countSubarrays(nums):\n    # your code here\n    pass\n',
+    javascript: `function countSubarrays(nums) {
+  let cnt = 0;
+  for (let i = 0; i < nums.length - 2; i++)
+    if (2 * (nums[i] + nums[i + 2]) === nums[i + 1]) cnt++;
+  return cnt;
+}`,
+    typescript: `function countSubarrays(nums: number[]): number {
+  let cnt = 0;
+  for (let i = 0; i < nums.length - 2; i++)
+    if (2 * (nums[i]! + nums[i + 2]!) === nums[i + 1]!) cnt++;
+  return cnt;
+}`,
+    python: `def countSubarrays(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return sum(1 for i in range(len(nums) - 2) if 2 * (nums[i] + nums[i + 2]) == nums[i + 1])`,
   },
   visibleTests: [
     { args: [[1, 2, 1, 4, 1]], expected: 1 },

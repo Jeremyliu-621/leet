@@ -33,10 +33,29 @@ A **set bit** is a bit equal to \`1\`. A number is **prime** if it is greater th
   functionName: 'countPrimeSetBits',
   params: ['left', 'right'],
   starterCode: {
-    javascript: 'function countPrimeSetBits(left, right) {\n  // your code here\n}\n',
-    typescript: "function countPrimeSetBits(left: number, right: number): number {\n  // your code here\n}",
-
-    python: 'def countPrimeSetBits(left, right):\n    # your code here\n    pass\n',
+    javascript: `function countPrimeSetBits(left, right) {
+  const PRIMES = new Set([2, 3, 5, 7, 11, 13, 17, 19]);
+  let cnt = 0;
+  for (let n = left; n <= right; n++) {
+    let bits = 0, x = n;
+    while (x) { bits += x & 1; x >>= 1; }
+    if (PRIMES.has(bits)) cnt++;
+  }
+  return cnt;
+}`,
+    typescript: `function countPrimeSetBits(left: number, right: number): number {
+  const PRIMES = new Set([2, 3, 5, 7, 11, 13, 17, 19]);
+  let cnt = 0;
+  for (let n = left; n <= right; n++) {
+    let bits = 0, x = n;
+    while (x) { bits += x & 1; x >>= 1; }
+    if (PRIMES.has(bits)) cnt++;
+  }
+  return cnt;
+}`,
+    python: `def countPrimeSetBits(left, right):
+    PRIMES = {2, 3, 5, 7, 11, 13, 17, 19}
+    return sum(1 for n in range(left, right + 1) if bin(n).count('1') in PRIMES)`,
   },
   visibleTests: [
     { args: [6, 10], expected: 4 },

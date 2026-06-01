@@ -29,10 +29,14 @@ export const problem: Problem = {
   functionName: 'countVowelStrings',
   params: ['n'],
   starterCode: {
-    javascript: `function countVowelStrings(n) {\n  // your code here\n}\n`,
-    typescript: "function countVowelStrings(n: number): number {\n  // your code here\n}",
-
-    python: `def countVowelStrings(n):\n    # your code here\n    pass\n`,
+    javascript: `function countVowelStrings(n) {
+  return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
+}`,
+    typescript: `function countVowelStrings(n: number): number {
+  return (n + 1) * (n + 2) * (n + 3) * (n + 4) / 24;
+}`,
+    python: `def countVowelStrings(n):
+    return (n + 1) * (n + 2) * (n + 3) * (n + 4) // 24`,
   },
   visibleTests: [
     { args: [1], expected: 5 },

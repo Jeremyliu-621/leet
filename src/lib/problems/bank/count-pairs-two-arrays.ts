@@ -23,10 +23,34 @@ export const problem: Problem = {
   functionName: 'countPairs',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function countPairs(nums, target) {\n  // your code here\n}\n',
-    typescript: "function countPairs(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def countPairs(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function countPairs(nums, target) {
+  nums.sort((a, b) => a - b);
+  let l = 0, r = nums.length - 1, cnt = 0;
+  while (l < r) {
+    if (nums[l] + nums[r] < target) { cnt += r - l; l++; }
+    else r--;
+  }
+  return cnt;
+}`,
+    typescript: `function countPairs(nums: number[], target: number): number {
+  nums.sort((a, b) => a - b);
+  let l = 0, r = nums.length - 1, cnt = 0;
+  while (l < r) {
+    if (nums[l]! + nums[r]! < target) { cnt += r - l; l++; }
+    else r--;
+  }
+  return cnt;
+}`,
+    python: `def countPairs(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort()
+    l, r, cnt = 0, len(nums) - 1, 0
+    while l < r:
+        if nums[l] + nums[r] < target:
+            cnt += r - l; l += 1
+        else:
+            r -= 1
+    return cnt`,
   },
   visibleTests: [
     { args: [[-1, 1, 2, 3, 1], 2], expected: 3 },

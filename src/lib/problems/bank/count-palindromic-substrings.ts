@@ -37,10 +37,34 @@ A **palindrome** reads the same forwards and backwards. A **substring** is a con
   functionName: 'countPalindromicSubstrings',
   params: ['s'],
   starterCode: {
-    javascript: 'function countPalindromicSubstrings(s) {\n  // your code here\n}\n',
-    typescript: "function countPalindromicSubstrings(s: string): number {\n  // your code here\n}",
-
-    python: 'def countPalindromicSubstrings(s):\n    # your code here\n    pass\n',
+    javascript: `function countPalindromicSubstrings(s) {
+  let count = 0;
+  for (let i = 0; i < s.length; i++) {
+    for (let l = i, r = i; l >= 0 && r < s.length && s[l] === s[r]; l--, r++) count++;
+    for (let l = i, r = i + 1; l >= 0 && r < s.length && s[l] === s[r]; l--, r++) count++;
+  }
+  return count;
+}`,
+    typescript: `function countPalindromicSubstrings(s: string): number {
+  let count = 0;
+  for (let i = 0; i < s.length; i++) {
+    for (let l = i, r = i; l >= 0 && r < s.length && s[l] === s[r]; l--, r++) count++;
+    for (let l = i, r = i + 1; l >= 0 && r < s.length && s[l] === s[r]; l--, r++) count++;
+  }
+  return count;
+}`,
+    python: `def countPalindromicSubstrings(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    count = 0
+    n = len(s)
+    for i in range(n):
+        l, r = i, i
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1; l -= 1; r += 1
+        l, r = i, i + 1
+        while l >= 0 and r < n and s[l] == s[r]:
+            count += 1; l -= 1; r += 1
+    return count`,
   },
   visibleTests: [
     { args: ['abc'], expected: 3 },

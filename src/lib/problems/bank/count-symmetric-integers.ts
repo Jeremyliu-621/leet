@@ -33,10 +33,41 @@ Return the **number of symmetric integers** in the range \`[low, high]\`.`,
   functionName: 'countSymmetricIntegers',
   params: ['low', 'high'],
   starterCode: {
-    javascript: 'function countSymmetricIntegers(low, high) {\n  // your code here\n}\n',
-    typescript: "function countSymmetricIntegers(low: number, high: number): number {\n  // your code here\n}",
-
-    python: 'def countSymmetricIntegers(low, high):\n    # your code here\n    pass\n',
+    javascript: `function countSymmetricIntegers(low, high) {
+  let cnt = 0;
+  for (let n = low; n <= high; n++) {
+    const s = String(n);
+    const len = s.length;
+    if (len % 2 !== 0) continue;
+    const half = len >> 1;
+    let diff = 0;
+    for (let i = 0; i < half; i++) diff += +s[i] - +s[half + i];
+    if (diff === 0) cnt++;
+  }
+  return cnt;
+}`,
+    typescript: `function countSymmetricIntegers(low: number, high: number): number {
+  let cnt = 0;
+  for (let n = low; n <= high; n++) {
+    const s = String(n);
+    const len = s.length;
+    if (len % 2 !== 0) continue;
+    const half = len >> 1;
+    let diff = 0;
+    for (let i = 0; i < half; i++) diff += +s[i]! - +s[half + i]!;
+    if (diff === 0) cnt++;
+  }
+  return cnt;
+}`,
+    python: `def countSymmetricIntegers(low, high):
+    cnt = 0
+    for n in range(low, high + 1):
+        s = str(n)
+        if len(s) % 2 != 0: continue
+        half = len(s) // 2
+        if sum(int(c) for c in s[:half]) == sum(int(c) for c in s[half:]):
+            cnt += 1
+    return cnt`,
   },
   visibleTests: [
     { args: [1, 100], expected: 9 },

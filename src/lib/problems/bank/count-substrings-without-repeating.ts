@@ -39,9 +39,51 @@ For example, in \`"abc"\`, every substring has unique characters: \`"a"\`, \`"b"
   functionName: 'countSubstringsNoRepeat',
   params: ['s'],
   starterCode: {
-    javascript: 'function countSubstringsNoRepeat(s) {\n  // your code here\n}\n',
-    typescript: 'function countSubstringsNoRepeat(s: string): number {\n  // your code here\n}',
-    python: 'def countSubstringsNoRepeat(s):\n    # your code here\n    pass\n',
+    javascript: `function countSubstringsNoRepeat(s) {
+  const freq = new Map();
+  let l = 0, cnt = 0;
+  for (let r = 0; r < s.length; r++) {
+    const c = s[r];
+    freq.set(c, (freq.get(c) ?? 0) + 1);
+    while (freq.get(c) > 1) {
+      const lc = s[l];
+      freq.set(lc, freq.get(lc) - 1);
+      if (freq.get(lc) === 0) freq.delete(lc);
+      l++;
+    }
+    cnt += r - l + 1;
+  }
+  return cnt;
+}`,
+    typescript: `function countSubstringsNoRepeat(s: string): number {
+  const freq = new Map<string, number>();
+  let l = 0, cnt = 0;
+  for (let r = 0; r < s.length; r++) {
+    const c = s[r]!;
+    freq.set(c, (freq.get(c) ?? 0) + 1);
+    while (freq.get(c)! > 1) {
+      const lc = s[l]!;
+      freq.set(lc, freq.get(lc)! - 1);
+      if (freq.get(lc) === 0) freq.delete(lc);
+      l++;
+    }
+    cnt += r - l + 1;
+  }
+  return cnt;
+}`,
+    python: `def countSubstringsNoRepeat(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    freq = {}
+    l = cnt = 0
+    for r, c in enumerate(s):
+        freq[c] = freq.get(c, 0) + 1
+        while freq[c] > 1:
+            lc = s[l]
+            freq[lc] -= 1
+            if freq[lc] == 0: del freq[lc]
+            l += 1
+        cnt += r - l + 1
+    return cnt`,
   },
   visibleTests: [
     { args: ['abc'], expected: 6 },
