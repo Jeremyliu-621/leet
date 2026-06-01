@@ -46189,6 +46189,61 @@ def placedCoins(edges, cost):
     bob[0] += remaining
     return bob
 `,
+  // batch 265
+  'rows-with-most-ones': `def rowsWithMostOnes(mat):
+    counts = [sum(row) for row in mat]
+    mx = max(counts)
+    return [i for i, c in enumerate(counts) if c == mx]
+`,
+  'adding-spaces-to-a-string': `def addSpaces(s, spaces):
+    res = []
+    j = 0
+    for i, ch in enumerate(s):
+        if j < len(spaces) and spaces[j] == i:
+            res.append(' ')
+            j += 1
+        res.append(ch)
+    return ''.join(res)
+`,
+  'check-if-move-is-legal': `def checkMove(board, rMove, cMove, color):
+    opposite = 'B' if color == 'W' else 'W'
+    for dr, dc in [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]:
+        r, c, length = rMove + dr, cMove + dc, 0
+        while 0 <= r < 8 and 0 <= c < 8 and board[r][c] == opposite:
+            r += dr; c += dc; length += 1
+        if length > 0 and 0 <= r < 8 and 0 <= c < 8 and board[r][c] == color:
+            return True
+    return False
+`,
+  'stamping-the-grid': `def possibleToStamp(grid, stampHeight, stampWidth):
+    m, n = len(grid), len(grid[0])
+    pre = [[0] * (n + 1) for _ in range(m + 1)]
+    for r in range(1, m + 1):
+        for c in range(1, n + 1):
+            pre[r][c] = grid[r-1][c-1] + pre[r-1][c] + pre[r][c-1] - pre[r-1][c-1]
+    def query(r1, c1, r2, c2):
+        return pre[r2][c2] - pre[r1-1][c2] - pre[r2][c1-1] + pre[r1-1][c1-1]
+    stamp = [[0] * (n + 1) for _ in range(m + 1)]
+    for r in range(1, m - stampHeight + 2):
+        for c in range(1, n - stampWidth + 2):
+            if query(r, c, r + stampHeight - 1, c + stampWidth - 1) == 0:
+                stamp[r][c] = 1
+    cov = [[0] * (n + 1) for _ in range(m + 1)]
+    for r in range(1, m + 1):
+        for c in range(1, n + 1):
+            cov[r][c] = stamp[r][c] + cov[r-1][c] + cov[r][c-1] - cov[r-1][c-1]
+    def cov_query(r1, c1, r2, c2):
+        return cov[r2][c2] - cov[r1-1][c2] - cov[r2][c1-1] + cov[r1-1][c1-1]
+    for r in range(1, m + 1):
+        for c in range(1, n + 1):
+            if grid[r-1][c-1] == 1:
+                continue
+            r1 = max(1, r - stampHeight + 1)
+            c1 = max(1, c - stampWidth + 1)
+            if cov_query(r1, c1, r, c) == 0:
+                return False
+    return True
+`,
   // batch 263
   'count-subarrays-fixed-bounds': `def countSubarrays(nums, minK, maxK):
     ans = 0

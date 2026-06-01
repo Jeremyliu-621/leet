@@ -30,20 +30,21 @@ Return the **maximum number of words** that appear in a single sentence.`,
     },
   ],
   hints: [
-    'Count words in each sentence by counting spaces and adding 1.',
-    'Return the maximum count.',
-    `\`\`\`js
-function mostWordsFound(sentences) {
-  return Math.max(...sentences.map(s => s.split(" ").length));
-}\`\`\``,
+    'Level 1: Count the words in each sentence. A sentence with k spaces has k+1 words.',
+    'Level 2: Split each sentence on spaces and take the length. Return the max across all sentences.',
+    'Level 3: O(total characters) time. One-liner: Math.max(...sentences.map(s => s.split(" ").length)).',
   ],
   functionName: 'mostWordsFound',
   params: ['sentences'],
   starterCode: {
-    javascript: 'function mostWordsFound(sentences) {\n  \n}\n',
-    typescript: "function mostWordsFound(sentences: string[]): number {\n  \n}",
-
-    python: 'def mostWordsFound(sentences):\n    pass\n',
+    javascript: `function mostWordsFound(sentences) {
+  return Math.max(...sentences.map(s => s.split(' ').length));
+}`,
+    typescript: `function mostWordsFound(sentences: string[]): number {
+  return Math.max(...sentences.map(s => s.split(' ').length));
+}`,
+    python: `def mostWordsFound(sentences):
+    return max(len(s.split()) for s in sentences)`,
   },
   visibleTests: [
     {

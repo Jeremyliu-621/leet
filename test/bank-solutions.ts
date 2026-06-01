@@ -47119,6 +47119,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return bestScore;
   },
 
+  // batch 265
+  'rows-with-most-ones': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const counts = mat.map(row => row.reduce((a, b) => a + b, 0));
+    const max = Math.max(...counts);
+    return counts.reduce((acc: number[], c, i) => { if (c === max) acc.push(i); return acc; }, []);
+  },
+  'adding-spaces-to-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const spaces = args[1] as number[];
+    const res: string[] = [];
+    let j = 0;
+    for (let i = 0; i < s.length; i++) {
+      if (j < spaces.length && spaces[j] === i) { res.push(' '); j++; }
+      res.push(s[i]!);
+    }
+    return res.join('');
+  },
+  'check-if-move-is-legal': (...args: unknown[]) => {
+    const board = args[0] as string[][];
+    const rMove = args[1] as number;
+    const cMove = args[2] as number;
+    const color = args[3] as string;
+    const opposite = color === 'W' ? 'B' : 'W';
+    const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+    for (const [dr, dc] of dirs) {
+      let r = rMove + dr!, c = cMove + dc!, len = 0;
+      while (r >= 0 && r < 8 && c >= 0 && c < 8 && board[r]![c] === opposite) {
+        r += dr!; c += dc!; len++;
+      }
+      if (len > 0 && r >= 0 && r < 8 && c >= 0 && c < 8 && board[r]![c] === color) return true;
+    }
+    return false;
+  },
+  'stamping-the-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const stampHeight = args[1] as number;
+    const stampWidth = args[2] as number;
+    const m = grid.length, n = grid[0]!.length;
+    const pre = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0) as number[]);
+    for (let r = 1; r <= m; r++)
+      for (let c = 1; c <= n; c++)
+        pre[r]![c] = grid[r-1]![c-1]! + pre[r-1]![c]! + pre[r]![c-1]! - pre[r-1]![c-1]!;
+    const query = (r1: number, c1: number, r2: number, c2: number) =>
+      pre[r2]![c2]! - pre[r1-1]![c2]! - pre[r2]![c1-1]! + pre[r1-1]![c1-1]!;
+    const stamp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0) as number[]);
+    for (let r = 1; r + stampHeight - 1 <= m; r++)
+      for (let c = 1; c + stampWidth - 1 <= n; c++)
+        if (query(r, c, r + stampHeight - 1, c + stampWidth - 1) === 0) stamp[r]![c] = 1;
+    const cov = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0) as number[]);
+    for (let r = 1; r <= m; r++)
+      for (let c = 1; c <= n; c++)
+        cov[r]![c] = stamp[r]![c]! + cov[r-1]![c]! + cov[r]![c-1]! - cov[r-1]![c-1]!;
+    const covQuery = (r1: number, c1: number, r2: number, c2: number) =>
+      cov[r2]![c2]! - cov[r1-1]![c2]! - cov[r2]![c1-1]! + cov[r1-1]![c1-1]!;
+    for (let r = 1; r <= m; r++)
+      for (let c = 1; c <= n; c++) {
+        if (grid[r-1]![c-1] === 1) continue;
+        const r1 = Math.max(1, r - stampHeight + 1), c1 = Math.max(1, c - stampWidth + 1);
+        if (covQuery(r1, c1, r, c) === 0) return false;
+      }
+    return true;
+  },
   // batch 263
   'count-subarrays-fixed-bounds': (...args: unknown[]) => {
     const nums = args[0] as number[];

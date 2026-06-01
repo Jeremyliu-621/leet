@@ -3226,6 +3226,11 @@ import { problem as countSquareFreeSubsets } from './count-the-number-of-square-
 import { problem as countDistinctNumbersOnBoard } from './count-distinct-numbers-on-board';
 import { problem as determineBowlingWinner } from './determine-the-winner-of-a-bowling-game';
 import { problem as sumOfDistances } from './sum-of-distances';
+// batch 265
+import { problem as rowsWithMostOnes } from './rows-with-most-ones';
+import { problem as addingSpacesToAString } from './adding-spaces-to-a-string';
+import { problem as checkIfMoveIsLegal } from './check-if-move-is-legal';
+import { problem as stampingTheGrid } from './stamping-the-grid';
 // batch 248
 import { problem as validPalindromeIii } from './valid-palindrome-iii';
 import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
@@ -6556,4 +6561,9 @@ export const problems: readonly Problem[] = [
   palindromePartitioningIv,
   constructDistancedSequence,
   findTheLongestHappyString,
+  // batch 265
+  rowsWithMostOnes,
+  addingSpacesToAString,
+  checkIfMoveIsLegal,
+  stampingTheGrid,
 ];
