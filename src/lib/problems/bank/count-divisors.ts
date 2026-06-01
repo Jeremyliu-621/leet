@@ -39,10 +39,26 @@ Like primality testing, you only need to check divisors up to √n: if \`d\` div
   functionName: 'countDivisors',
   params: ['n'],
   starterCode: {
-    javascript: 'function countDivisors(n) {\n  // your code here\n}\n',
-    typescript: "function countDivisors(n: number): number {\n  // your code here\n}",
-
-    python: 'def countDivisors(n):\n    # your code here\n    pass\n',
+    javascript: `function countDivisors(n) {
+  let count = 0;
+  for (let d = 1; d * d <= n; d++)
+    if (n % d === 0) count += (d * d === n) ? 1 : 2;
+  return count;
+}`,
+    typescript: `function countDivisors(n: number): number {
+  let count = 0;
+  for (let d = 1; d * d <= n; d++)
+    if (n % d === 0) count += (d * d === n) ? 1 : 2;
+  return count;
+}`,
+    python: `def countDivisors(n):
+    count = 0
+    d = 1
+    while d * d <= n:
+        if n % d == 0:
+            count += 1 if d * d == n else 2
+        d += 1
+    return count`,
   },
   visibleTests: [
     { args: [12], expected: 6 },

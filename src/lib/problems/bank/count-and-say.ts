@@ -42,10 +42,45 @@ Given a positive integer \`n\`, return the \`n\`th term of the count-and-say seq
   functionName: 'countAndSay',
   params: ['n'],
   starterCode: {
-    javascript: 'function countAndSay(n) {\n  // your code here\n}\n',
-    typescript: "function countAndSay(n: number): string {\n  // your code here\n}",
-
-    python: 'def countAndSay(n):\n    # your code here\n    pass\n',
+    javascript: `function countAndSay(n) {
+  let s = '1';
+  for (let k = 1; k < n; k++) {
+    let result = '', i = 0;
+    while (i < s.length) {
+      let count = 1;
+      while (i + count < s.length && s[i + count] === s[i]) count++;
+      result += count + s[i];
+      i += count;
+    }
+    s = result;
+  }
+  return s;
+}`,
+    typescript: `function countAndSay(n: number): string {
+  let s = '1';
+  for (let k = 1; k < n; k++) {
+    let result = '', i = 0;
+    while (i < s.length) {
+      let count = 1;
+      while (i + count < s.length && s[i + count] === s[i]) count++;
+      result += count + s[i]!;
+      i += count;
+    }
+    s = result;
+  }
+  return s;
+}`,
+    python: `def countAndSay(n):
+    s = '1'
+    for _ in range(n - 1):
+        result, i = '', 0
+        while i < len(s):
+            count = 1
+            while i + count < len(s) and s[i + count] == s[i]: count += 1
+            result += str(count) + s[i]
+            i += count
+        s = result
+    return s`,
   },
   visibleTests: [
     { args: [1], expected: '1' },

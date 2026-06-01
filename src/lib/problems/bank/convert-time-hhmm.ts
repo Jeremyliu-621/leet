@@ -32,10 +32,26 @@ In one operation you can increase the time \`current\` by \`1\`, \`5\`, \`15\`, 
   functionName: 'convertTime',
   params: ['current', 'correct'],
   starterCode: {
-    javascript: 'function convertTime(current, correct) {\n  // your code here\n}\n',
-    typescript: "function convertTime(current: string, correct: string): number {\n  // your code here\n}",
-
-    python: 'def convertTime(current, correct):\n    # your code here\n    pass\n',
+    javascript: `function convertTime(current, correct) {
+  const toMin = s => +s.slice(0,2)*60 + +s.slice(3);
+  let d = toMin(correct) - toMin(current), ops = 0;
+  for (const s of [60, 15, 5, 1]) { ops += Math.floor(d/s); d %= s; }
+  return ops;
+}`,
+    typescript: `function convertTime(current: string, correct: string): number {
+  const toMin = (s: string) => +s.slice(0,2)*60 + +s.slice(3);
+  let d = toMin(correct) - toMin(current), ops = 0;
+  for (const s of [60, 15, 5, 1]) { ops += Math.floor(d/s); d %= s; }
+  return ops;
+}`,
+    python: `def convertTime(current, correct):
+    if hasattr(current, 'to_py'): current = current.to_py()
+    if hasattr(correct, 'to_py'): correct = correct.to_py()
+    to_min = lambda s: int(s[:2])*60 + int(s[3:])
+    d, ops = to_min(correct) - to_min(current), 0
+    for s in [60, 15, 5, 1]:
+        ops += d // s; d %= s
+    return ops`,
   },
   visibleTests: [
     { args: ['02:30', '04:35'], expected: 3 },

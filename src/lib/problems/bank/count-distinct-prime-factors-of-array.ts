@@ -37,9 +37,38 @@ A **prime factor** of an integer \`n\` is a prime number that divides \`n\` even
   functionName: 'countDistinctPrimeFactors',
   params: ['nums'],
   starterCode: {
-    javascript: 'function countDistinctPrimeFactors(nums) {\n  // your code here\n}\n',
-    typescript: 'function countDistinctPrimeFactors(nums: number[]): number {\n  // your code here\n}\n',
-    python: 'def countDistinctPrimeFactors(nums):\n    # your code here\n    pass\n',
+    javascript: `function countDistinctPrimeFactors(nums) {
+  const primes = new Set();
+  for (let n of nums) {
+    for (let p = 2; p * p <= n; p++) {
+      if (n % p === 0) { primes.add(p); while (n % p === 0) n = Math.floor(n / p); }
+    }
+    if (n > 1) primes.add(n);
+  }
+  return primes.size;
+}`,
+    typescript: `function countDistinctPrimeFactors(nums: number[]): number {
+  const primes = new Set<number>();
+  for (let n of nums) {
+    for (let p = 2; p * p <= n; p++) {
+      if (n % p === 0) { primes.add(p); while (n % p === 0) n = Math.floor(n / p); }
+    }
+    if (n > 1) primes.add(n);
+  }
+  return primes.size;
+}`,
+    python: `def countDistinctPrimeFactors(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    primes = set()
+    for n in nums:
+        p = 2
+        while p * p <= n:
+            if n % p == 0:
+                primes.add(p)
+                while n % p == 0: n //= p
+            p += 1
+        if n > 1: primes.add(n)
+    return len(primes)`,
   },
   visibleTests: [
     {

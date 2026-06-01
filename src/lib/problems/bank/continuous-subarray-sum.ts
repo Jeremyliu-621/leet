@@ -42,10 +42,37 @@ A **good subarray** is a subarray where:
   functionName: 'checkSubarraySum',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function checkSubarraySum(nums, k) {\n  // your code here\n}\n',
-    typescript: "function checkSubarraySum(nums: number[], k: number): boolean {\n  // your code here\n}",
-
-    python: 'def checkSubarraySum(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function checkSubarraySum(nums, k) {
+  const seen = new Map([[0, -1]]);
+  let s = 0;
+  for (let i = 0; i < nums.length; i++) {
+    s = (s + nums[i]) % k;
+    if (seen.has(s)) { if (i - seen.get(s) >= 2) return true; }
+    else seen.set(s, i);
+  }
+  return false;
+}`,
+    typescript: `function checkSubarraySum(nums: number[], k: number): boolean {
+  const seen = new Map<number, number>([[0, -1]]);
+  let s = 0;
+  for (let i = 0; i < nums.length; i++) {
+    s = (s + nums[i]!) % k;
+    if (seen.has(s)) { if (i - seen.get(s)! >= 2) return true; }
+    else seen.set(s, i);
+  }
+  return false;
+}`,
+    python: `def checkSubarraySum(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    seen = {0: -1}
+    s = 0
+    for i, n in enumerate(nums):
+        s = (s + n) % k
+        if s in seen:
+            if i - seen[s] >= 2: return True
+        else:
+            seen[s] = i
+    return False`,
   },
   visibleTests: [
     { args: [[23, 2, 4, 6, 7], 6], expected: true },

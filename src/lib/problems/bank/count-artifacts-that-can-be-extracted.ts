@@ -37,14 +37,41 @@ Return the number of artifacts that can be **extracted** — i.e., every cell of
   params: ['n', 'artifacts', 'dig'],
   starterCode: {
     javascript: `function digArtifacts(n, artifacts, dig) {
-  // your code here
+  const dug = new Set(dig.map(([r, c]) => r + ',' + c));
+  let count = 0;
+  for (const [r1, c1, r2, c2] of artifacts) {
+    let ok = true;
+    for (let r = r1; r <= r2 && ok; r++)
+      for (let c = c1; c <= c2 && ok; c++)
+        if (!dug.has(r + ',' + c)) ok = false;
+    if (ok) count++;
+  }
+  return count;
 }`,
     typescript: `function digArtifacts(n: number, artifacts: number[][], dig: number[][]): number {
-  // your code here
+  const dug = new Set(dig.map(d => d[0]! + ',' + d[1]!));
+  let count = 0;
+  for (const art of artifacts) {
+    const [r1, c1, r2, c2] = art as [number, number, number, number];
+    let ok = true;
+    for (let r = r1; r <= r2 && ok; r++)
+      for (let c = c1; c <= c2 && ok; c++)
+        if (!dug.has(r + ',' + c)) ok = false;
+    if (ok) count++;
+  }
+  return count;
 }`,
     python: `def digArtifacts(n, artifacts, dig):
-    # your code here
-    pass`,
+    artifacts = list(artifacts.to_py()) if hasattr(artifacts, 'to_py') else list(artifacts)
+    dig = list(dig.to_py()) if hasattr(dig, 'to_py') else list(dig)
+    artifacts = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in artifacts]
+    dig = [list(d.to_py() if hasattr(d, 'to_py') else d) for d in dig]
+    dug = {(d[0], d[1]) for d in dig}
+    count = 0
+    for r1, c1, r2, c2 in artifacts:
+        if all((r, c) in dug for r in range(r1, r2+1) for c in range(c1, c2+1)):
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [2, [[0, 0, 0, 0], [0, 1, 1, 1]], [[0, 0], [0, 1]]], expected: 1 },

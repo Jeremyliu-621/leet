@@ -41,10 +41,24 @@ There is a concise O(n) solution using frequency counting: when you encounter a 
   functionName: 'countGoodPairs',
   params: ['nums'],
   starterCode: {
-    javascript: 'function countGoodPairs(nums) {\n  // your code here\n}\n',
-    typescript: "function countGoodPairs(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def countGoodPairs(nums):\n    # your code here\n    pass\n',
+    javascript: `function countGoodPairs(nums) {
+  const freq = new Map();
+  let count = 0;
+  for (const n of nums) { count += freq.get(n) ?? 0; freq.set(n, (freq.get(n) ?? 0) + 1); }
+  return count;
+}`,
+    typescript: `function countGoodPairs(nums: number[]): number {
+  const freq = new Map<number, number>();
+  let count = 0;
+  for (const n of nums) { count += freq.get(n) ?? 0; freq.set(n, (freq.get(n) ?? 0) + 1); }
+  return count;
+}`,
+    python: `def countGoodPairs(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import Counter
+    cnt, count = Counter(), 0
+    for n in nums: count += cnt[n]; cnt[n] += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 1, 1, 3]], expected: 4 },

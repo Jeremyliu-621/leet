@@ -22,10 +22,23 @@ An integer \`val\` divides \`nums\` if \`nums % val == 0\`.`,
   functionName: 'countDigits',
   params: ['num'],
   starterCode: {
-    javascript: 'function countDigits(num) {\n  // your code here\n}\n',
-    typescript: "function countDigits(num: number): number {\n  // your code here\n}",
-
-    python: 'def countDigits(num):\n    # your code here\n    pass\n',
+    javascript: `function countDigits(num) {
+  let n = num, c = 0;
+  while (n > 0) { const d = n % 10; if (d !== 0 && num % d === 0) c++; n = Math.floor(n / 10); }
+  return c;
+}`,
+    typescript: `function countDigits(num: number): number {
+  let n = num, c = 0;
+  while (n > 0) { const d = n % 10; if (d !== 0 && num % d === 0) c++; n = Math.floor(n / 10); }
+  return c;
+}`,
+    python: `def countDigits(num):
+    n, c = num, 0
+    while n > 0:
+        d = n % 10
+        if d != 0 and num % d == 0: c += 1
+        n //= 10
+    return c`,
   },
   visibleTests: [
     { args: [7], expected: 1 },

@@ -35,10 +35,21 @@ Return the number of rectangles that can form a square with the **maximum** side
   functionName: 'countGoodRectangles',
   params: ['rectangles'],
   starterCode: {
-    javascript: 'function countGoodRectangles(rectangles) {\n  // your code here\n}\n',
-    typescript: "function countGoodRectangles(rectangles: number[][]): number {\n  // your code here\n}",
-
-    python: 'def countGoodRectangles(rectangles):\n    # your code here\n    pass\n',
+    javascript: `function countGoodRectangles(rectangles) {
+  const sides = rectangles.map(([l, w]) => Math.min(l, w));
+  const mx = Math.max(...sides);
+  return sides.filter(s => s === mx).length;
+}`,
+    typescript: `function countGoodRectangles(rectangles: number[][]): number {
+  const sides = rectangles.map(r => Math.min(r[0]!, r[1]!));
+  const mx = Math.max(...sides);
+  return sides.filter(s => s === mx).length;
+}`,
+    python: `def countGoodRectangles(rectangles):
+    rectangles = list(rectangles.to_py()) if hasattr(rectangles, 'to_py') else list(rectangles)
+    sides = [min(list(r.to_py() if hasattr(r, 'to_py') else r)) for r in rectangles]
+    mx = max(sides)
+    return sum(1 for s in sides if s == mx)`,
   },
   visibleTests: [
     { args: [[[5, 8], [3, 9], [5, 12], [16, 5]]], expected: 3 },
