@@ -12,6 +12,9 @@
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 254+; continued UX polish.
 
+### feat(terminal): show output value for passing tests; fix(a11y): ARIA polish; docs(site): bump count (2026-06-01)
+Three improvements: (1) Passing test cards in the Test Results tab now show the actual return value with a copy button — fills LeetCode parity gap where passing tests display output; added `output: unknown` to `TestVerdict` pass variant, populated in `buildVerdict`, displayed in `TestResultCard` expanded view; tests updated. (2) A11y quick wins: `aria-valuetext` added to both the main panel splitter ("Problem panel: X%") and terminal resize handle ("Terminal panel: Xpx"); terminal resize handle gains `aria-valuenow/min/max`; language selector radiogroup label improved to "Select programming language"; `RunHistoryBar` gets `aria-live="polite"` so new run results are announced; `CustomTestPanel` toggle button gets descriptive expand/collapse `aria-label`. (3) Marketing site bumped from "2,730+" to "2,740+" in all three locations.
+
 ### feat(bank): batch 253 — count-substrings-rearranged-ii, find-index-permutation, minimize-manhattan-distances (2026-06-01)
 Three new problems: `count-substrings-that-can-be-rearranged-to-contain-a-string-ii` (hard/strings+sliding-window+hash-map, LC 3298 — sliding window counting valid substrings mod 10^9+7; "valid" = multiset superset of word2; count left+1 valid substrings ending at each right), `find-the-index-of-permutation` (medium/arrays+binary-indexed-tree+math, LC 3109 — Lehmer code using BIT for O(n log n) prefix counts of unused elements; result mod 10^9+7), `minimize-manhattan-distances` (hard/arrays+math, LC 3102 — Manhattan distance = max(range(x+y), range(x-y)); only 4 extreme-index candidates need removal; try each, take min). Bank at **2748**; 8538 tests.
 
