@@ -1119,7 +1119,7 @@ export function EditorPanel({
           <div
             ref={langContainerRef}
             role="radiogroup"
-            aria-label="Code language"
+            aria-label="Select programming language"
             className="flex items-center gap-0.5 overflow-x-auto scrollbar-none"
           >
             {availableLanguages.map((lang) => {
@@ -1249,6 +1249,10 @@ export function EditorPanel({
           role="separator"
           aria-orientation="horizontal"
           aria-label="Resize terminal panel"
+          aria-valuenow={terminalHeight}
+          aria-valuemin={TERMINAL_MIN_PX}
+          aria-valuemax={TERMINAL_MAX_PX}
+          aria-valuetext={`Terminal panel: ${terminalHeight}px`}
           tabIndex={0}
           className="group relative h-1 shrink-0 cursor-row-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           onPointerDown={handleTerminalResizePointerDown}

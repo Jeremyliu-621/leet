@@ -116,6 +116,7 @@ export function CustomTestPanel({ params, onRun, result, defaultArgs }: CustomTe
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls="custom-test-body"
+        aria-label={open ? 'Collapse custom test panel' : 'Expand custom test panel'}
         className="flex w-full items-center justify-between px-4 py-2 text-left transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
       >
         <span className="font-mono text-[10px] uppercase tracking-widest text-faint">

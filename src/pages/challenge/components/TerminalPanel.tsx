@@ -474,6 +474,8 @@ function RunHistoryBar({ history }: { history: TerminalEntry[][] }) {
     <div
       className="flex items-center gap-2 pb-2 mb-1 border-b border-border overflow-x-auto flex-nowrap"
       aria-label={`Run history: ${summaries.length} runs`}
+      aria-live="polite"
+      aria-atomic="false"
     >
       <span className="shrink-0 font-mono text-[9px] uppercase tracking-wider text-faint">history</span>
       {summaries.map((s, i) => (

@@ -96,6 +96,7 @@ function DraggableSplitter({ onDrag, onDragEnd, containerRef, currentPct }: Spli
       aria-valuenow={Math.round(currentPct)}
       aria-valuemin={PANEL_MIN_PCT}
       aria-valuemax={PANEL_MAX_PCT}
+      aria-valuetext={`Problem panel: ${Math.round(currentPct)}%`}
       tabIndex={0}
       className="group relative hidden w-1 shrink-0 cursor-col-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 focus-visible:ring-offset-bg lg:flex items-center justify-center"
       onPointerDown={handlePointerDown}
