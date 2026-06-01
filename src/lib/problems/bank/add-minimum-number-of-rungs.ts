@@ -37,13 +37,34 @@ Return the **minimum** number of rungs that must be added to the ladder in order
   params: ['rungs', 'dist'],
   starterCode: {
     javascript: `function addRungs(rungs, dist) {
-
+  let count = 0, prev = 0;
+  for (const rung of rungs) {
+    const gap = rung - prev;
+    if (gap > dist) count += Math.ceil(gap / dist) - 1;
+    prev = rung;
+  }
+  return count;
 }`,
     typescript: `function addRungs(rungs: number[], dist: number): number {
-
+  let count = 0, prev = 0;
+  for (const rung of rungs) {
+    const gap = rung - prev;
+    if (gap > dist) count += Math.ceil(gap / dist) - 1;
+    prev = rung;
+  }
+  return count;
 }`,
     python: `def addRungs(rungs, dist):
-    pass`,
+    import math
+    rungs = list(rungs.to_py()) if hasattr(rungs, 'to_py') else list(rungs)
+    count = 0
+    prev = 0
+    for rung in rungs:
+        gap = rung - prev
+        if gap > dist:
+            count += math.ceil(gap / dist) - 1
+        prev = rung
+    return count`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 10], 2], expected: 2 },

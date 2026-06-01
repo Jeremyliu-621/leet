@@ -43,9 +43,50 @@ Return *an array of the indices that have the **highest** division score*, in **
   functionName: 'maxScoreIndices',
   params: ['nums'],
   starterCode: {
-    javascript: `function maxScoreIndices(nums) {\n\n}`,
-    python: `def maxScoreIndices(nums) -> list:\n    pass`,
-    typescript: `function maxScoreIndices(nums: number[]): number[] {\n\n}`,
+    javascript: `function maxScoreIndices(nums) {
+  const n = nums.length;
+  const totalOnes = nums.reduce((s, v) => s + v, 0);
+  let zeros = 0, ones = totalOnes, maxScore = 0;
+  const scores = [];
+  for (let i = 0; i <= n; i++) {
+    const score = zeros + ones;
+    scores.push(score);
+    if (score > maxScore) maxScore = score;
+    if (i < n) { if (nums[i] === 0) zeros++; else ones--; }
+  }
+  return scores.map((s, i) => [s, i]).filter(([s]) => s === maxScore).map(([, i]) => i);
+}`,
+    typescript: `function maxScoreIndices(nums: number[]): number[] {
+  const n = nums.length;
+  const totalOnes = nums.reduce((s, v) => s + v, 0);
+  let zeros = 0, ones = totalOnes, maxScore = 0;
+  const scores: number[] = [];
+  for (let i = 0; i <= n; i++) {
+    const score = zeros + ones;
+    scores.push(score);
+    if (score > maxScore) maxScore = score;
+    if (i < n) { if (nums[i] === 0) zeros++; else ones--; }
+  }
+  return scores.map((s, i) => [s, i] as [number, number]).filter(([s]) => s === maxScore).map(([, i]) => i);
+}`,
+    python: `def maxScoreIndices(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    total_ones = sum(nums)
+    zeros, ones = 0, total_ones
+    max_score = 0
+    scores = []
+    for i in range(n + 1):
+        score = zeros + ones
+        scores.append(score)
+        if score > max_score:
+            max_score = score
+        if i < n:
+            if nums[i] == 0:
+                zeros += 1
+            else:
+                ones -= 1
+    return [i for i, s in enumerate(scores) if s == max_score]`,
   },
   visibleTests: [
     { args: [[0, 0, 1, 0]], expected: [2, 4] },

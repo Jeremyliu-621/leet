@@ -38,13 +38,14 @@ Formally, return \`nums[0] - nums[1] + nums[2] - nums[3] + …\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function alternatingSum(nums) {
-
+  return nums.reduce((s, v, i) => s + (i % 2 === 0 ? v : -v), 0);
 }`,
     typescript: `function alternatingSum(nums: number[]): number {
-
+  return nums.reduce((s, v, i) => s + (i % 2 === 0 ? v : -v), 0);
 }`,
-    python: `def alternatingSum(nums: list[int]) -> int:
-    pass`,
+    python: `def alternatingSum(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return sum(v if i % 2 == 0 else -v for i, v in enumerate(nums))`,
   },
   visibleTests: [
     { args: [[4, 2, 5, 3]], expected: 4 },

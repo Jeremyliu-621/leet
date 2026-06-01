@@ -35,13 +35,32 @@ Return the modified string **after** the spaces have been added.`,
   params: ['s', 'spaces'],
   starterCode: {
     javascript: `function addSpaces(s, spaces) {
-
+  const spaceSet = new Set(spaces);
+  const result = [];
+  for (let i = 0; i < s.length; i++) {
+    if (spaceSet.has(i)) result.push(' ');
+    result.push(s[i]);
+  }
+  return result.join('');
 }`,
     typescript: `function addSpaces(s: string, spaces: number[]): string {
-
+  const spaceSet = new Set(spaces);
+  const result: string[] = [];
+  for (let i = 0; i < s.length; i++) {
+    if (spaceSet.has(i)) result.push(' ');
+    result.push(s[i]);
+  }
+  return result.join('');
 }`,
     python: `def addSpaces(s, spaces):
-    pass`,
+    spaces = list(spaces.to_py()) if hasattr(spaces, 'to_py') else list(spaces)
+    space_set = set(spaces)
+    result = []
+    for i, ch in enumerate(s):
+        if i in space_set:
+            result.append(' ')
+        result.append(ch)
+    return ''.join(result)`,
   },
   visibleTests: [
     { args: ['LeetcodeHelpsMeLearn', [8, 13, 15]], expected: 'Leetcode Helps Me Learn' },

@@ -37,13 +37,13 @@ Given an integer \`num\`, return \`true\` if \`num\` equals the result of revers
   params: ['num'],
   starterCode: {
     javascript: `function isSameAfterReversals(num) {
-
+  return num === 0 || num % 10 !== 0;
 }`,
     typescript: `function isSameAfterReversals(num: number): boolean {
-
+  return num === 0 || num % 10 !== 0;
 }`,
     python: `def isSameAfterReversals(num):
-    pass`,
+    return num == 0 or num % 10 != 0`,
   },
   visibleTests: [
     { args: [526], expected: true },

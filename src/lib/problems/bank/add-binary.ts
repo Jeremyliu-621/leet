@@ -36,12 +36,26 @@ function addBinary(a, b) {
   params: ['a', 'b'],
   starterCode: {
     javascript: `function addBinary(a, b) {
-
+  let i = a.length - 1, j = b.length - 1, carry = 0, result = '';
+  while (i >= 0 || j >= 0 || carry) {
+    const sum = (i >= 0 ? parseInt(a[i--]) : 0) + (j >= 0 ? parseInt(b[j--]) : 0) + carry;
+    result = (sum % 2) + result;
+    carry = Math.floor(sum / 2);
+  }
+  return result;
 }`,
-    typescript: "function addBinary(a: string, b: string): string {\n\n}",
+    typescript: `function addBinary(a: string, b: string): string {
+  let i = a.length - 1, j = b.length - 1, carry = 0, result = '';
+  while (i >= 0 || j >= 0 || carry) {
+    const sum = (i >= 0 ? parseInt(a[i--]) : 0) + (j >= 0 ? parseInt(b[j--]) : 0) + carry;
+    result = (sum % 2) + result;
+    carry = Math.floor(sum / 2);
+  }
+  return result;
+}`,
 
     python: `def addBinary(a, b):
-    pass`,
+    return bin(int(a, 2) + int(b, 2))[2:]`,
   },
   visibleTests: [
     { args: ['11', '1'], expected: '100' },

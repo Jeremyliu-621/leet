@@ -36,13 +36,14 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function allElementsDistinct(nums) {
-
+  return new Set(nums).size === nums.length;
 }`,
     typescript: `function allElementsDistinct(nums: number[]): boolean {
-
+  return new Set(nums).size === nums.length;
 }`,
-    python: `def allElementsDistinct(nums: list[int]) -> bool:
-    pass`,
+    python: `def allElementsDistinct(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return len(set(nums)) == len(nums)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: true },

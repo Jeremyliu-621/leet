@@ -27,12 +27,41 @@ A **132 pattern** is a subsequence of three integers \`nums[i]\`, \`nums[j]\` an
   params: ['nums'],
   starterCode: {
     javascript: `function find132pattern(nums) {
-
+  const stack = [];
+  let min3 = -Infinity;
+  for (let i = nums.length - 1; i >= 0; i--) {
+    if (nums[i] < min3) return true;
+    while (stack.length && stack[stack.length - 1] < nums[i]) {
+      min3 = stack.pop();
+    }
+    stack.push(nums[i]);
+  }
+  return false;
 }`,
-    typescript: "function find132pattern(nums: number[]): boolean {\n\n}",
+    typescript: `function find132pattern(nums: number[]): boolean {
+  const stack: number[] = [];
+  let min3 = -Infinity;
+  for (let i = nums.length - 1; i >= 0; i--) {
+    if (nums[i] < min3) return true;
+    while (stack.length && stack[stack.length - 1] < nums[i]) {
+      min3 = stack.pop()!;
+    }
+    stack.push(nums[i]);
+  }
+  return false;
+}`,
 
     python: `def find132pattern(nums):
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    stack = []
+    min3 = float('-inf')
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] < min3:
+            return True
+        while stack and stack[-1] < nums[i]:
+            min3 = stack.pop()
+        stack.append(nums[i])
+    return False`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: false },

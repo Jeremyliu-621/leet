@@ -34,12 +34,18 @@ function addDigits(num) {
   params: ['num'],
   starterCode: {
     javascript: `function addDigits(num) {
-
+  if (num === 0) return 0;
+  return num % 9 === 0 ? 9 : num % 9;
 }`,
-    typescript: "function addDigits(num: number): number {\n\n}",
+    typescript: `function addDigits(num: number): number {
+  if (num === 0) return 0;
+  return num % 9 === 0 ? 9 : num % 9;
+}`,
 
     python: `def addDigits(num):
-    pass`,
+    if num == 0:
+        return 0
+    return 9 if num % 9 == 0 else num % 9`,
   },
   visibleTests: [
     { args: [38], expected: 2 },

@@ -40,12 +40,16 @@ Return the sum of all digits with their corresponding sign.`,
   params: ['n'],
   starterCode: {
     javascript: `function alternateDigitSum(n) {
-
+  const digits = String(n).split('').map(Number);
+  return digits.reduce((sum, d, i) => sum + (i % 2 === 0 ? d : -d), 0);
 }`,
-    typescript: "function alternateDigitSum(n: number): number {\n\n}",
-
+    typescript: `function alternateDigitSum(n: number): number {
+  const digits = String(n).split('').map(Number);
+  return digits.reduce((sum, d, i) => sum + (i % 2 === 0 ? d : -d), 0);
+}`,
     python: `def alternateDigitSum(n):
-    pass`,
+    digits = [int(d) for d in str(n)]
+    return sum(d if i % 2 == 0 else -d for i, d in enumerate(digits))`,
   },
   visibleTests: [
     { args: [521], expected: 4 },

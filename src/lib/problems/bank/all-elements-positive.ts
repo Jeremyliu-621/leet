@@ -36,13 +36,14 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function allElementsPositive(nums) {
-
+  return nums.every(v => v > 0);
 }`,
     typescript: `function allElementsPositive(nums: number[]): boolean {
-
+  return nums.every(v => v > 0);
 }`,
-    python: `def allElementsPositive(nums: list[int]) -> bool:
-    pass`,
+    python: `def allElementsPositive(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return all(v > 0 for v in nums)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: true },

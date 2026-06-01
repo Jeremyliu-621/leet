@@ -31,12 +31,52 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function advantageCount(nums1, nums2) {
-
+  nums1.sort((a, b) => a - b);
+  const n = nums2.length;
+  const sortedIdx = Array.from({length: n}, (_, i) => i).sort((a, b) => nums2[b] - nums2[a]);
+  const result = new Array(n);
+  let lo = 0, hi = n - 1;
+  for (const idx of sortedIdx) {
+    if (nums1[hi] > nums2[idx]) {
+      result[idx] = nums1[hi--];
+    } else {
+      result[idx] = nums1[lo++];
+    }
+  }
+  return result;
 }`,
-    typescript: "function advantageCount(nums1: number[], nums2: number[]): number[] {\n\n}",
+    typescript: `function advantageCount(nums1: number[], nums2: number[]): number[] {
+  nums1.sort((a, b) => a - b);
+  const n = nums2.length;
+  const sortedIdx = Array.from({length: n}, (_, i) => i).sort((a, b) => nums2[b] - nums2[a]);
+  const result = new Array(n);
+  let lo = 0, hi = n - 1;
+  for (const idx of sortedIdx) {
+    if (nums1[hi] > nums2[idx]) {
+      result[idx] = nums1[hi--];
+    } else {
+      result[idx] = nums1[lo++];
+    }
+  }
+  return result;
+}`,
 
     python: `def advantageCount(nums1, nums2):
-    pass`,
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    nums1.sort()
+    n = len(nums2)
+    sorted_idx = sorted(range(n), key=lambda i: -nums2[i])
+    result = [0] * n
+    lo, hi = 0, n - 1
+    for idx in sorted_idx:
+        if nums1[hi] > nums2[idx]:
+            result[idx] = nums1[hi]
+            hi -= 1
+        else:
+            result[idx] = nums1[lo]
+            lo += 1
+    return result`,
   },
   visibleTests: [
     { args: [[2, 7, 11, 15], [1, 10, 4, 11]], expected: [2, 11, 7, 15] },
