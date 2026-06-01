@@ -47,7 +47,7 @@ import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
-import { LANGUAGE_LABEL } from '../../../lib/types';
+import { LANGUAGE_LABEL, JS_SYNTAX_ONLY_LANGUAGES } from '../../../lib/types';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { TerminalPanel } from './TerminalPanel';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
@@ -1236,6 +1236,18 @@ export function EditorPanel({
               cancel
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Syntax-practice notice for JS-compiled languages */}
+      {JS_SYNTAX_ONLY_LANGUAGES.has(language) && pendingLang === null && (
+        <div
+          role="note"
+          className="shrink-0 flex items-center gap-2 border-b border-border bg-surface px-3 py-1"
+        >
+          <span className="font-mono text-[10px] text-faint">
+            {LANGUAGE_LABEL[language]} syntax practice — tests run as JavaScript
+          </span>
         </div>
       )}
 

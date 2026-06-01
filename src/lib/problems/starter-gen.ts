@@ -3,9 +3,11 @@
  * functionName and params. Used as a fallback when a problem doesn't ship
  * an explicit starter for a given language.
  *
- * The generated code is a syntactically valid stub the user can fill in.
- * Since execution for these languages falls back to JavaScript in the
- * browser sandbox, the starters are primarily for practice and familiarity.
+ * JS/TS/Python starters are passed through to their respective runtimes.
+ * For JS-syntax-only languages (Java, C++, etc.), the starters are valid
+ * JavaScript with a comment showing the equivalent signature in the target
+ * language. This keeps them executable in the JavaScript sandbox while still
+ * providing syntax-practice value.
  */
 import type { SupportedLanguage } from '../types';
 
@@ -37,74 +39,82 @@ export function generateStarter(
   }
 }
 
+// All starters below are valid JavaScript. The first line is a comment showing
+// what the equivalent signature looks like in the target language.
+
 function javaStarter(fn: string, params: readonly string[]): string {
   const className = capitalise(fn);
-  const paramList = params.map((p) => `Object ${p}`).join(', ');
-  return `class ${className} {
-    public Object ${fn}(${paramList}) {
+  const javaParams = params.map((p) => `Object ${p}`).join(', ');
+  const jsSig = params.join(', ');
+  return `// Java: class ${className} { public Object ${fn}(${javaParams}) { ... } }
+function ${fn}(${jsSig}) {
 
-    }
 }`;
 }
 
 function cppStarter(fn: string, params: readonly string[]): string {
-  const className = capitalise(fn);
-  const paramList = params.map((p) => `auto ${p}`).join(', ');
-  return `class ${className} {
-public:
-    auto ${fn}(${paramList}) {
+  const cppParams = params.map((p) => `auto ${p}`).join(', ');
+  const jsSig = params.join(', ');
+  return `// C++: auto ${fn}(${cppParams}) { ... }
+function ${fn}(${jsSig}) {
 
-    }
-};`;
+}`;
 }
 
 function csharpStarter(fn: string, params: readonly string[]): string {
   const className = capitalise(fn);
-  const paramList = params.map((p) => `object ${p}`).join(', ');
-  return `public class ${className} {
-    public object ${fn}(${paramList}) {
+  const csParams = params.map((p) => `object ${p}`).join(', ');
+  const jsSig = params.join(', ');
+  return `// C#: class ${className} { public object ${fn}(${csParams}) { ... } }
+function ${fn}(${jsSig}) {
 
-    }
 }`;
 }
 
 function goStarter(fn: string, params: readonly string[]): string {
-  const paramList = params.map((p) => `${p} interface{}`).join(', ');
-  return `func ${fn}(${paramList}) interface{} {
+  const goParams = params.map((p) => `${p} interface{}`).join(', ');
+  const jsSig = params.join(', ');
+  return `// Go: func ${fn}(${goParams}) interface{} { ... }
+function ${fn}(${jsSig}) {
 
 }`;
 }
 
 function rustStarter(fn: string, params: readonly string[]): string {
-  const structName = capitalise(fn);
   const snakeName = toSnakeCase(fn);
-  const paramList = params.map((p) => `${toSnakeCase(p)}: Vec<i32>`).join(', ');
-  return `impl ${structName} {
-    pub fn ${snakeName}(${paramList}) -> Vec<i32> {
+  const rustParams = params.map((p) => `${toSnakeCase(p)}: Vec<i32>`).join(', ');
+  const jsSig = params.join(', ');
+  return `// Rust: fn ${snakeName}(${rustParams}) -> Vec<i32> { ... }
+function ${fn}(${jsSig}) {
 
-    }
 }`;
 }
 
 function kotlinStarter(fn: string, params: readonly string[]): string {
-  const paramList = params.map((p) => `${p}: Any`).join(', ');
-  return `fun ${fn}(${paramList}): Any {
+  const ktParams = params.map((p) => `${p}: Any`).join(', ');
+  const jsSig = params.join(', ');
+  return `// Kotlin: fun ${fn}(${ktParams}): Any { ... }
+function ${fn}(${jsSig}) {
 
 }`;
 }
 
 function swiftStarter(fn: string, params: readonly string[]): string {
-  const className = capitalise(fn);
-  const paramList = params.map((p) => `_ ${p}: Any`).join(', ');
-  return `class ${className} {
-    func ${fn}(${paramList}) -> Any {
+  const swiftParams = params.map((p) => `_ ${p}: Any`).join(', ');
+  const jsSig = params.join(', ');
+  return `// Swift: func ${fn}(${swiftParams}) -> Any { ... }
+function ${fn}(${jsSig}) {
 
-    }
 }`;
 }
 
-function sqlStarter(_fn: string, _params: readonly string[]): string {
-  return `-- Write your SQL query below\nSELECT`;
+function sqlStarter(fn: string, params: readonly string[]): string {
+  const jsSig = params.join(', ');
+  return `// SQL practice — note the equivalent JS function runs the tests:
+// SELECT ...
+function ${fn}(${jsSig}) {
+
+}`;
 }
 
 function capitalise(s: string): string {

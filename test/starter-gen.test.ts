@@ -5,59 +5,80 @@ describe('generateStarter', () => {
   const fn = 'twoSum';
   const params = ['nums', 'target'] as const;
 
-  it('generates a Java class named after the function', () => {
+  // All JS-syntax-only starters must be valid JavaScript (contain a function
+  // declaration with the correct name) plus a comment with the target language signature.
+
+  it('generates a valid-JS Java starter with language comment', () => {
     const code = generateStarter('java', fn, params);
-    expect(code).toContain('class TwoSum');
-    expect(code).toContain('twoSum');
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// Java:');
     expect(code).toContain('Object nums');
     expect(code).toContain('Object target');
   });
 
-  it('generates a C++ class named after the function', () => {
+  it('generates a valid-JS C++ starter with language comment', () => {
     const code = generateStarter('cpp', fn, params);
-    expect(code).toContain('class TwoSum');
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// C++:');
     expect(code).toContain('auto twoSum');
     expect(code).toContain('auto nums');
   });
 
-  it('generates a C# class named after the function', () => {
+  it('generates a valid-JS C# starter with language comment', () => {
     const code = generateStarter('csharp', fn, params);
-    expect(code).toContain('public class TwoSum');
-    expect(code).toContain('twoSum');
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// C#:');
+    expect(code).toContain('object twoSum');
   });
 
-  it('generates a Go function', () => {
+  it('generates a valid-JS Go starter with language comment', () => {
     const code = generateStarter('go', fn, params);
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// Go:');
     expect(code).toContain('func twoSum');
     expect(code).toContain('nums interface{}');
   });
 
-  it('generates a Rust impl named after the function', () => {
+  it('generates a valid-JS Rust starter with language comment', () => {
     const code = generateStarter('rust', fn, params);
-    expect(code).toContain('impl TwoSum');
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// Rust:');
     expect(code).toContain('two_sum');
   });
 
-  it('generates a Kotlin function', () => {
+  it('generates a valid-JS Kotlin starter with language comment', () => {
     const code = generateStarter('kotlin', fn, params);
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// Kotlin:');
     expect(code).toContain('fun twoSum');
     expect(code).toContain('nums: Any');
   });
 
-  it('generates a Swift class named after the function', () => {
+  it('generates a valid-JS Swift starter with language comment', () => {
     const code = generateStarter('swift', fn, params);
-    expect(code).toContain('class TwoSum');
+    expect(code).toContain('function twoSum(nums, target)');
+    expect(code).toContain('// Swift:');
     expect(code).toContain('func twoSum');
   });
 
-  it('generates a SQL comment stub', () => {
+  it('generates a valid-JS SQL starter with SELECT comment', () => {
     const code = generateStarter('sql', fn, params);
+    expect(code).toContain('function twoSum(nums, target)');
     expect(code).toContain('SELECT');
-    expect(code).toContain('Write your SQL query');
   });
 
   it('falls back to JS-style for javascript', () => {
     const code = generateStarter('javascript', fn, params);
     expect(code).toContain('function twoSum(nums, target)');
+  });
+
+  it('all JS-syntax-only starters contain a top-level function declaration', () => {
+    const jsCompiled = ['java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql'] as const;
+    for (const lang of jsCompiled) {
+      const code = generateStarter(lang, fn, params);
+      expect(code, `${lang} starter should have a JS function declaration`).toContain(
+        `function ${fn}(${params.join(', ')})`,
+      );
+    }
   });
 });

@@ -1,5 +1,6 @@
 import { transform as sucraseTransform } from 'sucrase';
 import type { Problem, TestCase } from '../problems/types';
+import { JS_SYNTAX_ONLY_LANGUAGES } from '../types';
 import type { SupportedLanguage } from '../types';
 import type { RunRequest, RunResponse } from '../messaging/messages';
 import { buildVerdict } from './verdict';
@@ -77,21 +78,6 @@ export interface RunTestsOptions {
   language?: SupportedLanguage;
 }
 
-/**
- * Languages that compile down to JavaScript for execution. Their starter code
- * is displayed with proper syntax highlighting, but the actual execution
- * happens as JS. This is the pragmatic approach for browser-sandboxed execution.
- */
-const JS_COMPILED_LANGUAGES = new Set([
-  'java',
-  'cpp',
-  'csharp',
-  'go',
-  'rust',
-  'kotlin',
-  'swift',
-  'sql',
-] as const);
 
 /**
  * Transpiles TypeScript to JavaScript using sucrase.
@@ -148,7 +134,7 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
   // directly (the problem provides a JS version alongside the display language).
   // This is the pragmatic approach: syntax highlighting matches the language,
   // but execution uses the JS equivalent.
-  const isJsCompiled = JS_COMPILED_LANGUAGES.has(rawLang as never);
+  const isJsCompiled = JS_SYNTAX_ONLY_LANGUAGES.has(rawLang);
   if (isJsCompiled) {
     // For JS-compiled languages, use the JS starter/preamble. The user writes
     // in their chosen syntax, and the problem ships a JS version for execution.

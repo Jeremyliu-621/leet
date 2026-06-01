@@ -113,6 +113,22 @@ export const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   sql: 'SQL',
 };
 
+/**
+ * Languages that display with native syntax highlighting but execute as
+ * JavaScript in the sandbox. Users can practice the language's syntax and
+ * idioms, but the actual test runner uses the problem's JavaScript solution.
+ */
+export const JS_SYNTAX_ONLY_LANGUAGES = new Set<SupportedLanguage>([
+  'java',
+  'cpp',
+  'csharp',
+  'go',
+  'rust',
+  'kotlin',
+  'swift',
+  'sql',
+]);
+
 // --- Block rules ----------------------------------------------------------
 
 export type BlockRuleKind = 'domain' | 'url';
