@@ -32,10 +32,21 @@ export const problem: Problem = {
   functionName: 'rangeBitwiseAnd',
   params: ['left', 'right'],
   starterCode: {
-    javascript: 'function rangeBitwiseAnd(left, right) {\n  // your code here\n}\n',
-    typescript: "function rangeBitwiseAnd(left: number, right: number): number {\n  // your code here\n}",
-
-    python: 'def rangeBitwiseAnd(left, right):\n    # your code here\n    pass\n',
+    javascript: `function rangeBitwiseAnd(left, right) {
+  let shift = 0;
+  while (left !== right) { left >>= 1; right >>= 1; shift++; }
+  return left << shift;
+}`,
+    typescript: `function rangeBitwiseAnd(left: number, right: number): number {
+  let shift = 0;
+  while (left !== right) { left >>= 1; right >>= 1; shift++; }
+  return left << shift;
+}`,
+    python: `def rangeBitwiseAnd(left, right):
+    shift = 0
+    while left != right:
+        left >>= 1; right >>= 1; shift += 1
+    return left << shift`,
   },
   visibleTests: [
     { args: [5, 7], expected: 4 },

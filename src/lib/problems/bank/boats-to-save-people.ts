@@ -41,10 +41,32 @@ Return the **minimum number of boats** needed to carry every person.
   functionName: 'numRescueBoats',
   params: ['people', 'limit'],
   starterCode: {
-    javascript: 'function numRescueBoats(people, limit) {\n  // your code here\n}\n',
-    typescript: "function numRescueBoats(people: number[], limit: number): number {\n  // your code here\n}",
-
-    python: 'def numRescueBoats(people, limit):\n    # your code here\n    pass\n',
+    javascript: `function numRescueBoats(people, limit) {
+  people.sort((a, b) => a - b);
+  let left = 0, right = people.length - 1, boats = 0;
+  while (left <= right) {
+    if (people[left] + people[right] <= limit) left++;
+    right--; boats++;
+  }
+  return boats;
+}`,
+    typescript: `function numRescueBoats(people: number[], limit: number): number {
+  people.sort((a, b) => a - b);
+  let left = 0, right = people.length - 1, boats = 0;
+  while (left <= right) {
+    if (people[left]! + people[right]! <= limit) left++;
+    right--; boats++;
+  }
+  return boats;
+}`,
+    python: `def numRescueBoats(people, limit):
+    people = list(people.to_py()) if hasattr(people, 'to_py') else list(people)
+    people.sort()
+    left, right, boats = 0, len(people) - 1, 0
+    while left <= right:
+        if people[left] + people[right] <= limit: left += 1
+        right -= 1; boats += 1
+    return boats`,
   },
   visibleTests: [
     { args: [[1, 2], 3], expected: 1 },

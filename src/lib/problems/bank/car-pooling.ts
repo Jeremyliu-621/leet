@@ -35,10 +35,36 @@ Return \`true\` if it is possible to pick up and drop off all passengers for all
   functionName: 'carPooling',
   params: ['trips', 'capacity'],
   starterCode: {
-    javascript: 'function carPooling(trips, capacity) {\n  // your code here\n}\n',
-    typescript: "function carPooling(trips: number[][], capacity: number): boolean {\n  // your code here\n}",
-
-    python: 'def carPooling(trips, capacity):\n    # your code here\n    pass\n',
+    javascript: `function carPooling(trips, capacity) {
+  const diff = new Array(1001).fill(0);
+  for (const [n, f, t] of trips) { diff[f] += n; diff[t] -= n; }
+  let cur = 0;
+  for (const d of diff) { cur += d; if (cur > capacity) return false; }
+  return true;
+}`,
+    typescript: `function carPooling(trips: number[][], capacity: number): boolean {
+  const diff = new Array<number>(1001).fill(0);
+  for (const trip of trips) {
+    const [n, f, t] = trip as [number, number, number];
+    diff[f] = (diff[f] ?? 0) + n;
+    diff[t] = (diff[t] ?? 0) - n;
+  }
+  let cur = 0;
+  for (const d of diff) { cur += d; if (cur > capacity) return false; }
+  return true;
+}`,
+    python: `def carPooling(trips, capacity):
+    trips = list(trips.to_py()) if hasattr(trips, 'to_py') else list(trips)
+    diff = [0] * 1001
+    for trip in trips:
+        trip = list(trip.to_py()) if hasattr(trip, 'to_py') else list(trip)
+        n, f, t = trip[0], trip[1], trip[2]
+        diff[f] += n; diff[t] -= n
+    cur = 0
+    for d in diff:
+        cur += d
+        if cur > capacity: return False
+    return True`,
   },
   visibleTests: [
     { args: [[[2, 1, 5], [3, 3, 7]], 4], expected: false },

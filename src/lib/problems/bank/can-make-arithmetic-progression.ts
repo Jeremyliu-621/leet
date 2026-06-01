@@ -24,10 +24,21 @@ Given an array of numbers \`arr\`, return \`true\` if the array can be rearrange
   functionName: 'canMakeArithmeticProgression',
   params: ['arr'],
   starterCode: {
-    javascript: 'function canMakeArithmeticProgression(arr) {\n  // your code here\n}\n',
-    typescript: "function canMakeArithmeticProgression(arr: number[]): boolean {\n  // your code here\n}",
-
-    python: 'def canMakeArithmeticProgression(arr):\n    # your code here\n    pass\n',
+    javascript: `function canMakeArithmeticProgression(arr) {
+  arr.sort((a, b) => a - b);
+  const d = arr[1] - arr[0];
+  return arr.every((_, i) => i < 2 || arr[i] - arr[i-1] === d);
+}`,
+    typescript: `function canMakeArithmeticProgression(arr: number[]): boolean {
+  arr.sort((a, b) => a - b);
+  const d = arr[1]! - arr[0]!;
+  return arr.every((_, i) => i < 2 || arr[i]! - arr[i-1]! === d);
+}`,
+    python: `def canMakeArithmeticProgression(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    arr.sort()
+    d = arr[1] - arr[0]
+    return all(arr[i] - arr[i-1] == d for i in range(2, len(arr)))`,
   },
   visibleTests: [
     { args: [[3, 5, 1]], expected: true },

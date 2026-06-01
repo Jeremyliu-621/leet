@@ -30,9 +30,23 @@ export const problem: Problem = {
   functionName: 'maxProfit',
   params: ['prices'],
   starterCode: {
-    javascript: 'function maxProfit(prices) {\n  // your code here\n}\n',
-    typescript: 'function maxProfit(prices: number[]): number {\n  // your code here\n}\n',
-    python: 'def maxProfit(prices: list) -> int:\n    # your code here\n    pass\n',
+    javascript: `function maxProfit(prices) {
+  let min = Infinity, profit = 0;
+  for (const p of prices) { min = Math.min(min, p); profit = Math.max(profit, p - min); }
+  return profit;
+}`,
+    typescript: `function maxProfit(prices: number[]): number {
+  let min = Infinity, profit = 0;
+  for (const p of prices) { min = Math.min(min, p); profit = Math.max(profit, p - min); }
+  return profit;
+}`,
+    python: `def maxProfit(prices: list) -> int:
+    prices = list(prices.to_py()) if hasattr(prices, 'to_py') else list(prices)
+    min_p, profit = float('inf'), 0
+    for p in prices:
+        min_p = min(min_p, p)
+        profit = max(profit, p - min_p)
+    return profit`,
   },
   visibleTests: [
     { args: [[7, 1, 5, 3, 6, 4]], expected: 5 },

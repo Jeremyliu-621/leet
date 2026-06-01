@@ -39,10 +39,21 @@ Return the **maximum profit** you can achieve.`,
   functionName: 'maxProfitMultiple',
   params: ['prices'],
   starterCode: {
-    javascript: 'function maxProfitMultiple(prices) {\n  // your code here\n}\n',
-    typescript: "function maxProfitMultiple(prices: number[]): number {\n  // your code here\n}",
-
-    python: 'def maxProfitMultiple(prices):\n    # your code here\n    pass\n',
+    javascript: `function maxProfitMultiple(prices) {
+  let profit = 0;
+  for (let i = 1; i < prices.length; i++)
+    if (prices[i] > prices[i-1]) profit += prices[i] - prices[i-1];
+  return profit;
+}`,
+    typescript: `function maxProfitMultiple(prices: number[]): number {
+  let profit = 0;
+  for (let i = 1; i < prices.length; i++)
+    if (prices[i]! > prices[i-1]!) profit += prices[i]! - prices[i-1]!;
+  return profit;
+}`,
+    python: `def maxProfitMultiple(prices):
+    prices = list(prices.to_py()) if hasattr(prices, 'to_py') else list(prices)
+    return sum(prices[i] - prices[i-1] for i in range(1, len(prices)) if prices[i] > prices[i-1])`,
   },
   visibleTests: [
     { args: [[7, 1, 5, 3, 6, 4]], expected: 7 },

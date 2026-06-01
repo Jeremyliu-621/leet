@@ -22,10 +22,30 @@ Two \`1\`'s are adjacent if there are only \`0\`'s separating them (possibly no 
   functionName: 'binaryGap',
   params: ['n'],
   starterCode: {
-    javascript: 'function binaryGap(n) {\n  // your code here\n}\n',
-    typescript: "function binaryGap(n: number): number {\n  // your code here\n}",
-
-    python: 'def binaryGap(n):\n    # your code here\n    pass\n',
+    javascript: `function binaryGap(n) {
+  let last = -1, best = 0, pos = 0;
+  while (n) {
+    if (n & 1) { if (last >= 0) best = Math.max(best, pos - last); last = pos; }
+    n >>>= 1; pos++;
+  }
+  return best;
+}`,
+    typescript: `function binaryGap(n: number): number {
+  let last = -1, best = 0, pos = 0;
+  while (n) {
+    if (n & 1) { if (last >= 0) best = Math.max(best, pos - last); last = pos; }
+    n >>>= 1; pos++;
+  }
+  return best;
+}`,
+    python: `def binaryGap(n):
+    last, best, pos = -1, 0, 0
+    while n:
+        if n & 1:
+            if last >= 0: best = max(best, pos - last)
+            last = pos
+        n >>= 1; pos += 1
+    return best`,
   },
   visibleTests: [
     { args: [22], expected: 2 },

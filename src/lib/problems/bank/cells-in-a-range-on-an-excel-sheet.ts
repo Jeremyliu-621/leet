@@ -40,10 +40,27 @@ Return the **list of cells** \`(c, r)\` such that \`c1 <= c <= c2\` and \`r1 <= 
   functionName: 'cellsInRange',
   params: ['s'],
   starterCode: {
-    javascript: 'function cellsInRange(s) {\n  // your code here\n}\n',
-    typescript: "function cellsInRange(s: string): string[] {\n  // your code here\n}",
-
-    python: 'def cellsInRange(s):\n    # your code here\n    pass\n',
+    javascript: `function cellsInRange(s) {
+  const result = [];
+  for (let c = s.charCodeAt(0); c <= s.charCodeAt(3); c++)
+    for (let r = +s[1]; r <= +s[4]; r++)
+      result.push(String.fromCharCode(c) + r);
+  return result;
+}`,
+    typescript: `function cellsInRange(s: string): string[] {
+  const result: string[] = [];
+  for (let c = s.charCodeAt(0); c <= s.charCodeAt(3); c++)
+    for (let r = +s[1]!; r <= +s[4]!; r++)
+      result.push(String.fromCharCode(c) + r);
+  return result;
+}`,
+    python: `def cellsInRange(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    result = []
+    for c in range(ord(s[0]), ord(s[3]) + 1):
+        for r in range(int(s[1]), int(s[4]) + 1):
+            result.append(chr(c) + str(r))
+    return result`,
   },
   visibleTests: [
     { args: ['K1:L2'], expected: ['K1', 'K2', 'L1', 'L2'] },

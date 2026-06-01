@@ -39,10 +39,15 @@ Words are separated by single spaces. A word is any sequence of characters betwe
   functionName: 'capitalizeWords',
   params: ['sentence'],
   starterCode: {
-    javascript: 'function capitalizeWords(sentence) {\n  // your code here\n}\n',
-    typescript: "function capitalizeWords(sentence: string): string {\n  // your code here\n}",
-
-    python: 'def capitalizeWords(sentence):\n    # your code here\n    pass\n',
+    javascript: `function capitalizeWords(sentence) {
+  return sentence.split(' ').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+}`,
+    typescript: `function capitalizeWords(sentence: string): string {
+  return sentence.split(' ').map(w => w[0]!.toUpperCase() + w.slice(1)).join(' ');
+}`,
+    python: `def capitalizeWords(sentence):
+    if hasattr(sentence, 'to_py'): sentence = sentence.to_py()
+    return ' '.join(w[0].upper() + w[1:] for w in sentence.split(' '))`,
   },
   visibleTests: [
     { args: ['hello world'], expected: 'Hello World' },

@@ -40,10 +40,32 @@ A linear scan would work but runs in O(n); the binary search approach runs in O(
   functionName: 'countOccurrences',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function countOccurrences(nums, target) {\n  // your code here\n}\n',
-    typescript: "function countOccurrences(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def countOccurrences(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function countOccurrences(nums, target) {
+  function lb(t) {
+    let lo = 0, hi = nums.length;
+    while (lo < hi) { const mid = (lo+hi)>>1; if (nums[mid] >= t) hi = mid; else lo = mid+1; }
+    return lo;
+  }
+  return lb(target+1) - lb(target);
+}`,
+    typescript: `function countOccurrences(nums: number[], target: number): number {
+  function lb(t: number): number {
+    let lo = 0, hi = nums.length;
+    while (lo < hi) { const mid = (lo+hi)>>1; if (nums[mid]! >= t) hi = mid; else lo = mid+1; }
+    return lo;
+  }
+  return lb(target+1) - lb(target);
+}`,
+    python: `def countOccurrences(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    def lb(t):
+        lo, hi = 0, len(nums)
+        while lo < hi:
+            mid = (lo+hi)//2
+            if nums[mid] >= t: hi = mid
+            else: lo = mid+1
+        return lo
+    return lb(target+1) - lb(target)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 2, 3], 2], expected: 3 },
