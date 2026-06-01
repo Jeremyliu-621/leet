@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2805** problems; 8735 tests green. Batches 102–260 complete.
+**Current focus:** Bank at **2809** problems; 8747 tests green. Batches 102–261 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 261+; continued UX polish.
+**Next up:** Batch 262+; continued UX polish.
+
+### feat(bank): batch 261 — hash-divided-string, min-array-changes-diffs-equal, find-subarray-bitwise-and-closest-k, occurrence-first-almost-equal-substring (2026-06-01)
+Four new problems: `hash-divided-string` (easy/strings+math, LC 3271 — split into k-char groups, sum char values mod p, map to chars; O(n)), `minimum-array-changes-to-make-differences-equal` (medium/arrays+hash-map, LC 3224 — difference array + freq map; maximize pairs with zero or one change cost), `find-subarray-with-bitwise-and-closest-to-k` (medium/arrays+bit-manipulation, LC 3171 — sliding set of distinct AND values; at most O(log max_val) per step), `find-the-occurrence-of-first-almost-equal-substring` (hard/strings, LC 3298 — Z-array prefix+suffix match lengths; almost equal iff prefix+suffix >= m-1). Bank at **2809**; 8747 tests.
 
 ### feat(bank): batch 260 — xor-queries-subarray, average-salary-excl-min-max, prefix-aligned (2026-06-01)
 Three new problems: `xor-queries-of-a-subarray` (medium/arrays+bit-manipulation, LC 1310 — prefix XOR array; O(n+q)), `average-salary-excluding-the-minimum-and-maximum-salary` (easy/arrays, LC 1491 — (sum−min−max)/(n−2)), `number-of-times-binary-string-is-prefix-aligned` (medium/arrays, LC 1375 — running max equals step index). Bank at **2800**; 8720 tests.
