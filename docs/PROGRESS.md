@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2659** problems; 8271 tests green. Batches 102–240 complete.
+**Current focus:** Bank at **2664** problems; 8286 tests green. Batches 102–240 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 241+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 240 — modular-exponentiation, xor-parity-of-sum, greedy-interval-cover, rolling-hash-search, bitmask-dp-task-cover (2026-06-01)
+Five new problems spanning number theory, bit manipulation, greedy intervals, string hashing, and bitmask DP: `modular-exponentiation` (medium/math+bit-manipulation — iterative binary exponentiation, O(log exp)), `xor-parity-of-sum` (easy/bit-manipulation — XOR of LSBs determines sum parity in O(n)), `greedy-interval-cover` (medium/arrays+binary-search — greedy jump-game style interval cover, sort by start then greedily extend reach), `rolling-hash-search` (medium/strings+math — Rabin-Karp with base=31 mod 10^9+7 for O(n+m) substring search), `bitmask-dp-task-cover` (hard/dynamic-programming+bit-manipulation — 2^n subset DP over task bitmasks for minimum cost set cover). Bank at **2664**; 8286 tests.
 
 ### feat(bank): batch 240 — check-strings-equal-ops-ii, count-good-integers, min-cost-special-roads, sum-subsequence-powers (2026-06-01)
 Four new problems: `check-if-strings-can-be-made-equal-with-operations-ii` (medium/strings+hash-map, LC 2840 — since i↔i+2 swaps preserve parity, sort even/odd-indexed chars of each string and compare), `find-the-count-of-good-integers` (medium/math, LC 3272 — enumerate n-digit palindromes divisible by k; deduplicate by sorted digit signature; count valid permutations n!/∏freq[d]! minus leading-zero variants), `minimum-cost-of-a-path-with-special-roads` (medium/graph+shortest-path, LC 2977 — Dijkstra over {start, target, all road endpoints}; edges = Manhattan distance or special road cost), `find-the-sum-of-subsequence-powers` (hard/arrays+dp, LC 3098 — sort; dp[i] maps min-diff→count over length-j subsequences ending at i; BigInt mod 10^9+7). Bank at **2659**; 8271 tests.

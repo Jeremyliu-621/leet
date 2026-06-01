@@ -27,7 +27,7 @@ const LANGUAGE_OPTIONS: { value: SupportedLanguage; label: string; description: 
   {
     value: 'typescript',
     label: 'TypeScript',
-    description: 'Type annotations stripped by sucrase before running. JS starter is valid TS.',
+    description: 'Typed starters (param + return types) for every problem. Type annotations stripped by sucrase before running.',
   },
   {
     value: 'python',

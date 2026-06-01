@@ -3023,6 +3023,12 @@ import { problem as longestUncommonSubsequenceII } from './longest-uncommon-subs
 import { problem as maximumStrongPairsI } from './maximum-strong-pairs-in-an-array-i';
 import { problem as findMaxElementsInSubset } from './find-the-maximum-number-of-elements-in-subset';
 import { problem as missingInteger } from './missing-integer';
+// batch 240
+import { problem as modularExponentiation } from './modular-exponentiation';
+import { problem as xorParityOfSum } from './xor-parity-of-sum';
+import { problem as greedyIntervalCover } from './greedy-interval-cover';
+import { problem as rollingHashSearch } from './rolling-hash-search';
+import { problem as bitmaskDpTaskCover } from './bitmask-dp-task-cover';
 // batch 239
 import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-after-k-seconds';
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
@@ -6133,4 +6139,9 @@ export const problems: readonly Problem[] = [
   countGoodIntegers,
   minimumCostSpecialRoads,
   sumOfSubsequencePowers,
+  modularExponentiation,
+  xorParityOfSum,
+  greedyIntervalCover,
+  rollingHashSearch,
+  bitmaskDpTaskCover,
 ];

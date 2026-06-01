@@ -50,11 +50,11 @@ export function AboutSection() {
           no telemetry.
         </p>
         <p>
-          <span className="font-semibold text-text">TypeScript support</span> strips
-          type annotations via <span className="font-mono">sucrase</span> before
-          passing your code to the JavaScript runner — no compilation server,
-          no network request. The JS starter code is valid TypeScript, so you can
-          add types freely.
+          <span className="font-semibold text-text">TypeScript support</span> provides
+          typed starters for every problem (parameter and return types inferred from
+          test cases). Type annotations are stripped via <span className="font-mono">sucrase</span>{' '}
+          before passing your code to the JavaScript runner — no compilation server,
+          no network request.
         </p>
         <p>
           <span className="font-semibold text-text">Python support</span> is

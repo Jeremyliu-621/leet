@@ -42638,4 +42638,82 @@ def sumOfPowers(nums, k):
                 ans = (ans + d * cnt) % MOD
     return ans
 `,
+
+  // batch 240
+  'modular-exponentiation': `
+def modPow(base, exp, m):
+    if m == 1:
+        return 0
+    result = 1
+    base %= m
+    while exp > 0:
+        if exp & 1:
+            result = result * base % m
+        base = base * base % m
+        exp >>= 1
+    return result
+`,
+  'xor-parity-of-sum': `
+def isOddSum(nums):
+    parity = 0
+    for n in nums:
+        parity ^= (n & 1)
+    return parity == 1
+`,
+  'greedy-interval-cover': `
+def minIntervalsCover(intervals, lo, hi):
+    intervals.sort()
+    count = 0
+    reach = lo - 1
+    i = 0
+    while reach < hi:
+        best = reach
+        while i < len(intervals) and intervals[i][0] <= reach + 1:
+            best = max(best, intervals[i][1])
+            i += 1
+        if best == reach:
+            return -1
+        reach = best
+        count += 1
+    return count
+`,
+  'rolling-hash-search': `
+def rollingHashSearch(text, pattern):
+    MOD = 10**9 + 7
+    BASE = 31
+    m, n = len(pattern), len(text)
+    if m > n:
+        return -1
+    def code(c):
+        return ord(c) - ord('a') + 1
+    ph = wh = 0
+    pw = 1
+    for i in range(m):
+        ph = (ph * BASE + code(pattern[i])) % MOD
+        wh = (wh * BASE + code(text[i])) % MOD
+        if i < m - 1:
+            pw = pw * BASE % MOD
+    if ph == wh and text[:m] == pattern:
+        return 0
+    for i in range(1, n - m + 1):
+        wh = (wh - code(text[i - 1]) * pw) % MOD
+        wh = (wh * BASE + code(text[i + m - 1])) % MOD
+        if wh == ph and text[i:i + m] == pattern:
+            return i
+    return -1
+`,
+  'bitmask-dp-task-cover': `
+def minCostCoverTasks(n, groups, costs):
+    full = (1 << n) - 1
+    dp = [float('inf')] * (full + 1)
+    dp[0] = 0
+    gmasks = [sum(1 << t for t in g) for g in groups]
+    for mask in range(full + 1):
+        if dp[mask] == float('inf'):
+            continue
+        for i, gm in enumerate(gmasks):
+            nxt = mask | gm
+            dp[nxt] = min(dp[nxt], dp[mask] + costs[i])
+    return -1 if dp[full] == float('inf') else dp[full]
+`,
 };

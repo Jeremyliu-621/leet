@@ -43459,4 +43459,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Number(ans);
   },
+
+  // batch 240
+  'modular-exponentiation': (...args: unknown[]) => {
+    let [base, exp, m] = args as [number, number, number];
+    if (m === 1) return 0;
+    let result = 1n;
+    let b = BigInt(base) % BigInt(m);
+    const mod = BigInt(m);
+    while (exp > 0) {
+      if (exp & 1) result = result * b % mod;
+      b = b * b % mod;
+      exp >>= 1;
+    }
+    return Number(result);
+  },
+
+  'xor-parity-of-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let parity = 0;
+    for (const n of nums) parity ^= (n & 1);
+    return parity === 1;
+  },
+
+  'greedy-interval-cover': (...args: unknown[]) => {
+    const intervals = args[0] as number[][];
+    const lo = args[1] as number;
+    const hi = args[2] as number;
+    intervals.sort((a, b) => a[0]! - b[0]!);
+    let count = 0, reach = lo - 1, i = 0;
+    while (reach < hi) {
+      let best = reach;
+      while (i < intervals.length && intervals[i]![0]! <= reach + 1) {
+        best = Math.max(best, intervals[i]![1]!);
+        i++;
+      }
+      if (best === reach) return -1;
+      reach = best;
+      count++;
+    }
+    return count;
+  },
+
+  'rolling-hash-search': (...args: unknown[]) => {
+    const text = args[0] as string;
+    const pattern = args[1] as string;
+    const MOD = 1_000_000_007n, BASE = 31n;
+    const m = pattern.length, n = text.length;
+    if (m > n) return -1;
+    const code = (s: string) => BigInt(s.charCodeAt(0) - 96);
+    let ph = 0n, wh = 0n, pw = 1n;
+    for (let i = 0; i < m; i++) {
+      ph = (ph * BASE + code(pattern[i]!)) % MOD;
+      wh = (wh * BASE + code(text[i]!)) % MOD;
+      if (i < m - 1) pw = pw * BASE % MOD;
+    }
+    if (ph === wh && text.slice(0, m) === pattern) return 0;
+    for (let i = 1; i <= n - m; i++) {
+      wh = (wh - code(text[i - 1]!) * pw % MOD + MOD) % MOD;
+      wh = (wh * BASE + code(text[i + m - 1]!)) % MOD;
+      if (wh === ph && text.slice(i, i + m) === pattern) return i;
+    }
+    return -1;
+  },
+
+  'bitmask-dp-task-cover': (...args: unknown[]) => {
+    const [n, groups, costs] = args as [number, number[][], number[]];
+    const full = (1 << n) - 1;
+    const dp = new Array<number>(full + 1).fill(Infinity);
+    dp[0] = 0;
+    const gmasks = groups.map(g => g.reduce((mask, t) => mask | (1 << t), 0));
+    for (let mask = 0; mask <= full; mask++) {
+      if (dp[mask] === Infinity) continue;
+      for (let i = 0; i < groups.length; i++) {
+        const next = mask | gmasks[i]!;
+        dp[next] = Math.min(dp[next]!, dp[mask]! + costs[i]!);
+      }
+    }
+    return dp[full] === Infinity ? -1 : dp[full]!;
+  },
 };
