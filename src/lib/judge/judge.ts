@@ -130,17 +130,13 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
     execCode = transpiled.code;
   }
 
-  // Languages that aren't JS or Python get their JS starter code executed
-  // directly (the problem provides a JS version alongside the display language).
-  // This is the pragmatic approach: syntax highlighting matches the language,
-  // but execution uses the JS equivalent.
+  // For JS-syntax-only languages (Java, C++, etc.), the auto-generated starters
+  // are valid JavaScript with a comment showing the target language's signature.
+  // The user fills in the JavaScript function body; execution passes their code
+  // directly to the JavaScript sandbox. This gives syntax-practice value (syntax
+  // highlighting, language-specific snippets) while keeping tests runnable.
   const isJsCompiled = JS_SYNTAX_ONLY_LANGUAGES.has(rawLang);
   if (isJsCompiled) {
-    // For JS-compiled languages, use the JS starter/preamble. The user writes
-    // in their chosen syntax, and the problem ships a JS version for execution.
-    // In practice this means these languages are "display-only" until we add
-    // real compilers — the code the user writes IS already valid JS because
-    // the problem provides it as JS starter code.
     execCode = options.code;
   }
 
