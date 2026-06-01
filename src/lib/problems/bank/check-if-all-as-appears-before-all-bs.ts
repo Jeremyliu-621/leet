@@ -32,10 +32,10 @@ export const problem: Problem = {
   functionName: 'checkString',
   params: ['s'],
   starterCode: {
-    javascript: 'function checkString(s) {\n\n}\n',
-    typescript: "function checkString(s: string): boolean {\n\n}",
+    javascript: 'function checkString(s) {\n  return !s.includes("ba");\n}\n',
+    typescript: "function checkString(s: string): boolean {\n  return !s.includes('ba');\n}",
 
-    python: 'def checkString(s: str) -> bool:\n    pass\n',
+    python: 'def checkString(s: str) -> bool:\n    return "ba" not in s\n',
   },
   visibleTests: [
     { args: ['aaabbb'], expected: true },

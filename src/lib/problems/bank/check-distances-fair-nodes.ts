@@ -47,10 +47,10 @@ function checkDistances(s, distance) {
   functionName: 'checkDistances',
   params: ['s', 'distance'],
   starterCode: {
-    javascript: 'function checkDistances(s, distance) {\n  \n}\n',
-    typescript: "function checkDistances(s: string, distance: number[]): boolean {\n  \n}",
+    javascript: 'function checkDistances(s, distance) {\n  const first = {};\n  for (let i = 0; i < s.length; i++) {\n    const c = s.charCodeAt(i) - 97;\n    if (c in first) {\n      if (i - first[c] - 1 !== distance[c]) return false;\n    } else {\n      first[c] = i;\n    }\n  }\n  return true;\n}\n',
+    typescript: "function checkDistances(s: string, distance: number[]): boolean {\n  const first: Record<number, number> = {};\n  for (let i = 0; i < s.length; i++) {\n    const c = s.charCodeAt(i) - 97;\n    if (c in first) {\n      if (i - first[c]! - 1 !== distance[c]) return false;\n    } else {\n      first[c] = i;\n    }\n  }\n  return true;\n}",
 
-    python: 'def checkDistances(s, distance):\n    pass\n',
+    python: 'def checkDistances(s, distance):\n    first = {}\n    for i, ch in enumerate(s):\n        c = ord(ch) - ord(\'a\')\n        if c in first:\n            if i - first[c] - 1 != distance[c]:\n                return False\n        else:\n            first[c] = i\n    return True\n',
   },
   visibleTests: [
     { args: ['abaccb', [1,3,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]], expected: true },

@@ -38,9 +38,9 @@ Given \`n\`, return the **total amount of money** he will have in the Leetcode b
   functionName: 'totalMoney',
   params: ['n'],
   starterCode: {
-    javascript: 'function totalMoney(n) {\n  \n}',
-    typescript: 'function totalMoney(n: number): number {\n  \n}',
-    python: 'def totalMoney(n):\n    ',
+    javascript: 'function totalMoney(n) {\n  let total = 0;\n  for (let i = 0; i < n; i++) {\n    const week = Math.floor(i / 7);\n    const day = i % 7;\n    total += week + day + 1;\n  }\n  return total;\n}',
+    typescript: 'function totalMoney(n: number): number {\n  let total = 0;\n  for (let i = 0; i < n; i++) {\n    const week = Math.floor(i / 7);\n    const day = i % 7;\n    total += week + day + 1;\n  }\n  return total;\n}',
+    python: 'def totalMoney(n):\n    total = 0\n    for i in range(n):\n        week = i // 7\n        day = i % 7\n        total += week + day + 1\n    return total\n',
   },
   visibleTests: [
     { args: [4], expected: 10 },

@@ -41,10 +41,10 @@ Return \`true\` if you can find a way to do that or \`false\` otherwise.`,
   functionName: 'canArrange',
   params: ['arr', 'k'],
   starterCode: {
-    javascript: 'function canArrange(arr, k) {\n  \n}\n',
-    typescript: "function canArrange(arr: number[], k: number): boolean {\n  \n}",
+    javascript: 'function canArrange(arr, k) {\n  const rem = new Array(k).fill(0);\n  for (const x of arr) rem[((x % k) + k) % k]++;\n  if (rem[0] % 2 !== 0) return false;\n  for (let r = 1; r <= Math.floor(k / 2); r++) {\n    if (r === k - r) { if (rem[r] % 2 !== 0) return false; }\n    else if (rem[r] !== rem[k - r]) return false;\n  }\n  return true;\n}\n',
+    typescript: "function canArrange(arr: number[], k: number): boolean {\n  const rem = new Array<number>(k).fill(0);\n  for (const x of arr) rem[((x % k) + k) % k]!++;\n  if (rem[0]! % 2 !== 0) return false;\n  for (let r = 1; r <= Math.floor(k / 2); r++) {\n    if (r === k - r) { if (rem[r]! % 2 !== 0) return false; }\n    else if (rem[r] !== rem[k - r]) return false;\n  }\n  return true;\n}",
 
-    python: 'def canArrange(arr, k):\n    pass\n',
+    python: 'def canArrange(arr, k):\n    rem = [0] * k\n    for x in arr:\n        rem[((x % k) + k) % k] += 1\n    if rem[0] % 2 != 0:\n        return False\n    for r in range(1, k // 2 + 1):\n        if r == k - r:\n            if rem[r] % 2 != 0:\n                return False\n        elif rem[r] != rem[k - r]:\n            return False\n    return True\n',
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 10, 6, 7, 8, 9], 5], expected: true },

@@ -40,10 +40,10 @@ function buyChoco(prices, money) {
   functionName: 'buyChoco',
   params: ['prices', 'money'],
   starterCode: {
-    javascript: 'function buyChoco(prices, money) {\n  \n}\n',
-    typescript: "function buyChoco(prices: number[], money: number): number {\n  \n}",
+    javascript: 'function buyChoco(prices, money) {\n  prices.sort((a, b) => a - b);\n  const cost = prices[0] + prices[1];\n  return cost > money ? money : money - cost;\n}\n',
+    typescript: "function buyChoco(prices: number[], money: number): number {\n  prices.sort((a, b) => a - b);\n  const cost = prices[0]! + prices[1]!;\n  return cost > money ? money : money - cost;\n}",
 
-    python: 'def buyChoco(prices, money):\n    pass\n',
+    python: 'def buyChoco(prices, money):\n    prices.sort()\n    cost = prices[0] + prices[1]\n    return money if cost > money else money - cost\n',
   },
   visibleTests: [
     { args: [[1, 2, 2], 3], expected: 0 },

@@ -36,10 +36,10 @@ function areOccurrencesEqual(s) {
   functionName: 'areOccurrencesEqual',
   params: ['s'],
   starterCode: {
-    javascript: 'function areOccurrencesEqual(s) {\n  \n}\n',
-    typescript: "function areOccurrencesEqual(s: string): boolean {\n  \n}",
+    javascript: 'function areOccurrencesEqual(s) {\n  const freq = {};\n  for (const c of s) freq[c] = (freq[c] || 0) + 1;\n  const vals = Object.values(freq);\n  return vals.every(v => v === vals[0]);\n}\n',
+    typescript: "function areOccurrencesEqual(s: string): boolean {\n  const freq: Record<string, number> = {};\n  for (const c of s) freq[c] = (freq[c] ?? 0) + 1;\n  const vals = Object.values(freq);\n  return vals.every(v => v === vals[0]);\n}",
 
-    python: 'def areOccurrencesEqual(s):\n    pass\n',
+    python: 'def areOccurrencesEqual(s):\n    from collections import Counter\n    counts = Counter(s)\n    vals = list(counts.values())\n    return all(v == vals[0] for v in vals)\n',
   },
   visibleTests: [
     { args: ['abacbc'], expected: true },

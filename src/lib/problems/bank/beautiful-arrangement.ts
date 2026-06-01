@@ -36,10 +36,10 @@ Return the **number of beautiful arrangements** you can construct.
   functionName: 'countArrangement',
   params: ['n'],
   starterCode: {
-    javascript: 'function countArrangement(n) {\n  // your code here\n}\n',
-    typescript: "function countArrangement(n: number): number {\n  // your code here\n}",
+    javascript: 'function countArrangement(n) {\n  const visited = new Array(n + 1).fill(false);\n  let count = 0;\n  function bt(pos) {\n    if (pos > n) { count++; return; }\n    for (let k = 1; k <= n; k++) {\n      if (!visited[k] && (k % pos === 0 || pos % k === 0)) {\n        visited[k] = true;\n        bt(pos + 1);\n        visited[k] = false;\n      }\n    }\n  }\n  bt(1);\n  return count;\n}\n',
+    typescript: "function countArrangement(n: number): number {\n  const visited = new Array<boolean>(n + 1).fill(false);\n  let count = 0;\n  function bt(pos: number): void {\n    if (pos > n) { count++; return; }\n    for (let k = 1; k <= n; k++) {\n      if (!visited[k] && (k % pos === 0 || pos % k === 0)) {\n        visited[k] = true;\n        bt(pos + 1);\n        visited[k] = false;\n      }\n    }\n  }\n  bt(1);\n  return count;\n}",
 
-    python: 'def countArrangement(n):\n    # your code here\n    pass\n',
+    python: 'def countArrangement(n):\n    visited = [False] * (n + 1)\n    count = [0]\n    def bt(pos):\n        if pos > n:\n            count[0] += 1\n            return\n        for k in range(1, n + 1):\n            if not visited[k] and (k % pos == 0 or pos % k == 0):\n                visited[k] = True\n                bt(pos + 1)\n                visited[k] = False\n    bt(1)\n    return count[0]\n',
   },
   visibleTests: [
     { args: [2], expected: 2 },

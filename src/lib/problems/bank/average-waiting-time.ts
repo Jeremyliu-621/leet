@@ -37,10 +37,10 @@ Return the **average** waiting time of all customers. Solutions within \`10^-5\`
   functionName: 'averageWaitingTime',
   params: ['customers'],
   starterCode: {
-    javascript: 'function averageWaitingTime(customers) {\n\n}\n',
-    typescript: "function averageWaitingTime(customers: number[][]): number {\n\n}",
+    javascript: 'function averageWaitingTime(customers) {\n  let currentTime = 0, totalWait = 0;\n  for (const [arrival, duration] of customers) {\n    currentTime = Math.max(currentTime, arrival) + duration;\n    totalWait += currentTime - arrival;\n  }\n  return totalWait / customers.length;\n}\n',
+    typescript: "function averageWaitingTime(customers: number[][]): number {\n  let currentTime = 0, totalWait = 0;\n  for (const customer of customers) {\n    const arrival = customer[0]!;\n    const duration = customer[1]!;\n    currentTime = Math.max(currentTime, arrival) + duration;\n    totalWait += currentTime - arrival;\n  }\n  return totalWait / customers.length;\n}",
 
-    python: 'def averageWaitingTime(customers):\n    pass\n',
+    python: 'def averageWaitingTime(customers):\n    current_time = 0\n    total_wait = 0\n    for arrival, duration in customers:\n        current_time = max(current_time, arrival) + duration\n        total_wait += current_time - arrival\n    return total_wait / len(customers)\n',
   },
   visibleTests: [
     { args: [[[1,2],[2,5],[4,3]]], expected: 5.0 },

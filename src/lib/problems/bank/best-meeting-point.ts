@@ -31,10 +31,10 @@ The distance is calculated using Manhattan distance: \`|row1 - row2| + |col1 - c
   functionName: 'minTotalDistance',
   params: ['grid'],
   starterCode: {
-    javascript: 'function minTotalDistance(grid) {\n\n}\n',
-    typescript: "function minTotalDistance(grid: number[][]): number {\n\n}",
+    javascript: 'function minTotalDistance(grid) {\n  const rows = [], cols = [];\n  for (let r = 0; r < grid.length; r++)\n    for (let c = 0; c < grid[0].length; c++)\n      if (grid[r][c] === 1) { rows.push(r); cols.push(c); }\n  cols.sort((a, b) => a - b);\n  function minDist(arr) {\n    const mid = arr[Math.floor(arr.length / 2)];\n    return arr.reduce((s, x) => s + Math.abs(x - mid), 0);\n  }\n  return minDist(rows) + minDist(cols);\n}\n',
+    typescript: "function minTotalDistance(grid: number[][]): number {\n  const rows: number[] = [], cols: number[] = [];\n  for (let r = 0; r < grid.length; r++)\n    for (let c = 0; c < grid[0]!.length; c++)\n      if (grid[r]![c] === 1) { rows.push(r); cols.push(c); }\n  cols.sort((a, b) => a - b);\n  function minDist(arr: number[]): number {\n    const mid = arr[Math.floor(arr.length / 2)]!;\n    return arr.reduce((s, x) => s + Math.abs(x - mid), 0);\n  }\n  return minDist(rows) + minDist(cols);\n}",
 
-    python: 'def minTotalDistance(grid):\n    pass\n',
+    python: 'def minTotalDistance(grid):\n    rows, cols = [], []\n    for r in range(len(grid)):\n        for c in range(len(grid[0])):\n            if grid[r][c] == 1:\n                rows.append(r)\n                cols.append(c)\n    cols.sort()\n    def min_dist(arr):\n        mid = arr[len(arr) // 2]\n        return sum(abs(x - mid) for x in arr)\n    return min_dist(rows) + min_dist(cols)\n',
   },
   visibleTests: [
     { args: [[[1, 0, 0, 0, 1], [0, 0, 0, 0, 0], [0, 0, 1, 0, 0]]], expected: 6 },

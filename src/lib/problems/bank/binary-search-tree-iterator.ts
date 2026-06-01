@@ -115,10 +115,10 @@ You may assume that \`next()\` calls are always valid (i.e., there will be at le
   params: ['ops', 'vals', 'treeArr'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// bstIteratorRunner is pre-defined and calls your class below.\nclass BSTIterator {\n  constructor(root) {\n    // root has .val, .left, .right\n  }\n  next() {\n    // return next smallest value\n  }\n  hasNext() {\n    // return true if more elements exist\n  }\n}\n',
-    typescript: "function bstIteratorRunner(ops: string[], vals: unknown[], treeArr: (number | null)[]): (number | boolean)[] {\n  constructor(root) {\n    // root has .val, .left, .right\n  }\n  next() {\n    // return next smallest value\n  }\n  hasNext() {\n    // return true if more elements exist\n  }\n}",
+    javascript: '// bstIteratorRunner is pre-defined and calls your class below.\nclass BSTIterator {\n  constructor(root) {\n    this.stack = [];\n    this._pushLeft(root);\n  }\n  _pushLeft(node) {\n    while (node) {\n      this.stack.push(node);\n      node = node.left;\n    }\n  }\n  next() {\n    const node = this.stack.pop();\n    this._pushLeft(node.right);\n    return node.val;\n  }\n  hasNext() {\n    return this.stack.length > 0;\n  }\n}\n',
+    typescript: "// bstIteratorRunner is pre-defined and calls your class below.\ninterface TreeNode { val: number; left: TreeNode | null; right: TreeNode | null; }\nclass BSTIterator {\n  private stack: TreeNode[] = [];\n  constructor(root: TreeNode | null) {\n    this.pushLeft(root);\n  }\n  private pushLeft(node: TreeNode | null): void {\n    while (node) {\n      this.stack.push(node);\n      node = node.left;\n    }\n  }\n  next(): number {\n    const node = this.stack.pop()!;\n    this.pushLeft(node.right);\n    return node.val;\n  }\n  hasNext(): boolean {\n    return this.stack.length > 0;\n  }\n}",
 
-    python: '# bstIteratorRunner is pre-defined and calls your class below.\nclass BSTIterator:\n    def __init__(self, root):\n        # root has .val, .left, .right\n        pass\n    def next(self):\n        pass  # return next smallest value\n    def hasNext(self):\n        pass  # return True if more elements exist\n',
+    python: '# bstIteratorRunner is pre-defined and calls your class below.\nclass BSTIterator:\n    def __init__(self, root):\n        self.stack = []\n        self._push_left(root)\n    def _push_left(self, node):\n        while node:\n            self.stack.append(node)\n            node = node.left\n    def next(self):\n        node = self.stack.pop()\n        self._push_left(node.right)\n        return node.val\n    def hasNext(self):\n        return len(self.stack) > 0\n',
   },
   visibleTests: [
     {
