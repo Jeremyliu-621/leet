@@ -37,10 +37,14 @@ Given the number of stones \`n\`, return \`true\` if you can **guarantee a win**
   functionName: 'canWinNim',
   params: ['n'],
   starterCode: {
-    javascript: 'function canWinNim(n) {\n  // your code here\n}\n',
-    typescript: "function canWinNim(n: number): boolean {\n  // your code here\n}",
-
-    python: 'def canWinNim(n):\n    # your code here\n    pass\n',
+    javascript: `function canWinNim(n) {
+  return n % 4 !== 0;
+}`,
+    typescript: `function canWinNim(n: number): boolean {
+  return n % 4 !== 0;
+}`,
+    python: `def canWinNim(n):
+    return n % 4 != 0`,
   },
   visibleTests: [
     { args: [4], expected: false },

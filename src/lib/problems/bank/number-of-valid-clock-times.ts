@@ -41,10 +41,35 @@ Return an integer, the number of valid clock times that can be created by replac
   functionName: 'countTime',
   params: ['time'],
   starterCode: {
-    javascript: 'function countTime(time) {\n  // your code here\n}\n',
-    typescript: "function countTime(time: string): number {\n  // your code here\n}",
-
-    python: 'def countTime(time):\n    # your code here\n    pass\n',
+    javascript: `function countTime(time) {
+  let cnt = 0;
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m++) {
+      const s = \`\${String(h).padStart(2, '0')}:\${String(m).padStart(2, '0')}\`;
+      if ([...time].every((c, i) => c === '?' || c === s[i])) cnt++;
+    }
+  }
+  return cnt;
+}`,
+    typescript: `function countTime(time: string): number {
+  let cnt = 0;
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m++) {
+      const s = \`\${String(h).padStart(2, '0')}:\${String(m).padStart(2, '0')}\`;
+      if ([...time].every((c, i) => c === '?' || c === s[i])) cnt++;
+    }
+  }
+  return cnt;
+}`,
+    python: `def countTime(time):
+    if hasattr(time, 'to_py'): time = time.to_py()
+    cnt = 0
+    for h in range(24):
+        for m in range(60):
+            s = f'{h:02d}:{m:02d}'
+            if all(c == '?' or c == s[i] for i, c in enumerate(time)):
+                cnt += 1
+    return cnt`,
   },
   visibleTests: [
     { args: ['?5:00'], expected: 2 },

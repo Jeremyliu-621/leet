@@ -35,10 +35,26 @@ All strings except one have the same difference array. Return the string with th
   functionName: 'oddString',
   params: ['words'],
   starterCode: {
-    javascript: 'function oddString(words) {\n  // your code here\n}\n',
-    typescript: "function oddString(words: string[]): string {\n  // your code here\n}",
-
-    python: 'def oddString(words):\n    # your code here\n    pass\n',
+    javascript: `function oddString(words) {
+  const diff = w => w.slice(1).split('').map((c, i) => c.charCodeAt(0) - w.charCodeAt(i)).join(',');
+  const m = new Map();
+  for (const w of words) { const k = diff(w); if (!m.has(k)) m.set(k, []); m.get(k).push(w); }
+  return [...m.values()].find(v => v.length === 1)[0];
+}`,
+    typescript: `function oddString(words: string[]): string {
+  const diff = (w: string) => w.slice(1).split('').map((c, i) => c.charCodeAt(0) - w.charCodeAt(i)).join(',');
+  const m = new Map<string, string[]>();
+  for (const w of words) { const k = diff(w); if (!m.has(k)) m.set(k, []); m.get(k)!.push(w); }
+  return m.values().toArray().find(v => v.length === 1)![0]!;
+}`,
+    python: `def oddString(words):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    def diff(w):
+        return tuple(ord(w[i+1]) - ord(w[i]) for i in range(len(w)-1))
+    from collections import defaultdict
+    m = defaultdict(list)
+    for w in words: m[diff(w)].append(w)
+    return next(v[0] for v in m.values() if len(v) == 1)`,
   },
   visibleTests: [
     { args: [['abc', 'bcd', 'abd']], expected: 'abd' },

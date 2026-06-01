@@ -30,10 +30,16 @@ export const problem: Problem = {
   functionName: 'percentageLetter',
   params: ['s', 'letter'],
   starterCode: {
-    javascript: 'function percentageLetter(s, letter) {\n  // your code here\n}\n',
-    typescript: "function percentageLetter(s: string, letter: string): number {\n  // your code here\n}",
-
-    python: 'def percentageLetter(s, letter):\n    # your code here\n    pass\n',
+    javascript: `function percentageLetter(s, letter) {
+  return Math.floor(s.split('').filter(c => c === letter).length / s.length * 100);
+}`,
+    typescript: `function percentageLetter(s: string, letter: string): number {
+  return Math.floor(s.split('').filter(c => c === letter).length / s.length * 100);
+}`,
+    python: `def percentageLetter(s, letter):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(letter, 'to_py'): letter = letter.to_py()
+    return int(s.count(letter) / len(s) * 100)`,
   },
   visibleTests: [
     { args: ['foobar', 'o'], expected: 33 },

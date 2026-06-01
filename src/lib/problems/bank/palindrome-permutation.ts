@@ -37,10 +37,24 @@ A **palindrome** reads the same forwards and backwards. For a string to have a p
   functionName: 'canPermutePalindrome',
   params: ['s'],
   starterCode: {
-    javascript: 'function canPermutePalindrome(s) {\n  // your code here\n}\n',
-    typescript: "function canPermutePalindrome(s: string): boolean {\n  // your code here\n}",
-
-    python: 'def canPermutePalindrome(s):\n    # your code here\n    pass\n',
+    javascript: `function canPermutePalindrome(s) {
+  const freq = new Map();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  let odds = 0;
+  for (const v of freq.values()) if (v % 2 !== 0) odds++;
+  return odds <= 1;
+}`,
+    typescript: `function canPermutePalindrome(s: string): boolean {
+  const freq = new Map<string, number>();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  let odds = 0;
+  for (const v of freq.values()) if (v % 2 !== 0) odds++;
+  return odds <= 1;
+}`,
+    python: `def canPermutePalindrome(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    from collections import Counter
+    return sum(1 for v in Counter(s).values() if v % 2 != 0) <= 1`,
   },
   visibleTests: [
     { args: ['code'], expected: false },
