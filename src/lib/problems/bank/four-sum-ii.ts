@@ -39,12 +39,31 @@ This reduces O(n⁴) brute force to **O(n²)** time.`,
   functionName: 'fourSumII',
   params: ['nums1', 'nums2', 'nums3', 'nums4'],
   starterCode: {
-    javascript:
-      'function fourSumII(nums1, nums2, nums3, nums4) {\n  // your code here\n}\n',
-    typescript: "function fourSumII(nums1: number[], nums2: number[], nums3: number[], nums4: number[]): number {\n  // your code here\n}",
-
-    python:
-      'def fourSumII(nums1: list[int], nums2: list[int], nums3: list[int], nums4: list[int]) -> int:\n    # your code here\n    pass\n',
+    javascript: `function fourSumII(nums1, nums2, nums3, nums4) {
+  const map = new Map();
+  for (const a of nums1) for (const b of nums2) map.set(a + b, (map.get(a + b) ?? 0) + 1);
+  let count = 0;
+  for (const c of nums3) for (const d of nums4) count += map.get(-(c + d)) ?? 0;
+  return count;
+}`,
+    typescript: `function fourSumII(nums1: number[], nums2: number[], nums3: number[], nums4: number[]): number {
+  const map = new Map<number, number>();
+  for (const a of nums1) for (const b of nums2) map.set(a + b, (map.get(a + b) ?? 0) + 1);
+  let count = 0;
+  for (const c of nums3) for (const d of nums4) count += map.get(-(c + d)) ?? 0;
+  return count;
+}`,
+    python: `def fourSumII(nums1, nums2, nums3, nums4):
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    nums3 = list(nums3.to_py()) if hasattr(nums3, 'to_py') else list(nums3)
+    nums4 = list(nums4.to_py()) if hasattr(nums4, 'to_py') else list(nums4)
+    from collections import defaultdict
+    mp = defaultdict(int)
+    for a in nums1:
+        for b in nums2:
+            mp[a + b] += 1
+    return sum(mp[-(c + d)] for c in nums3 for d in nums4)`,
   },
   visibleTests: [
     { args: [[1, 2], [-2, -1], [-1, 2], [0, 2]], expected: 2 },

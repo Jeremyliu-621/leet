@@ -33,10 +33,15 @@ Return the resulting string after interpretation.`,
   functionName: 'interpret',
   params: ['command'],
   starterCode: {
-    javascript: 'function interpret(command) {\n  // your code here\n}\n',
-    typescript: "function interpret(command: string): string {\n  // your code here\n}",
-
-    python: 'def interpret(command):\n    # your code here\n    pass\n',
+    javascript: `function interpret(command) {
+  return command.replace(/\\(al\\)/g, 'al').replace(/\\(\\)/g, 'o');
+}`,
+    typescript: `function interpret(command: string): string {
+  return command.replace(/\\(al\\)/g, 'al').replace(/\\(\\)/g, 'o');
+}`,
+    python: `def interpret(command):
+    if hasattr(command, 'to_py'): command = command.to_py()
+    return command.replace('(al)', 'al').replace('()', 'o')`,
   },
   visibleTests: [
     { args: ['G()(al)'], expected: 'Goal' },

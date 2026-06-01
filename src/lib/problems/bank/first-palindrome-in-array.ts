@@ -39,12 +39,22 @@ A string is **palindromic** if it reads the same forwards and backwards.`,
   params: ['words'],
   starterCode: {
     javascript: `function firstPalindrome(words) {
-  // your code here
+  for (const w of words) {
+    if (w === w.split('').reverse().join('')) return w;
+  }
+  return '';
 }`,
-    typescript: 'function firstPalindrome(words: string[]): string {\n  // your code here\n}',
+    typescript: `function firstPalindrome(words: string[]): string {
+  for (const w of words) {
+    if (w === w.split('').reverse().join('')) return w;
+  }
+  return '';
+}`,
     python: `def firstPalindrome(words):
-    # your code here
-    pass`,
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    for w in words:
+        if w == w[::-1]: return w
+    return ''`,
   },
   visibleTests: [
     { args: [['abc', 'car', 'ada', 'racecar', 'cool']], expected: 'ada' },

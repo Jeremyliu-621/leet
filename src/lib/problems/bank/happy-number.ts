@@ -42,10 +42,38 @@ Return \`true\` if \`n\` is a happy number, otherwise return \`false\`.
   functionName: 'isHappyNumber',
   params: ['n'],
   starterCode: {
-    javascript: 'function isHappyNumber(n) {\n  // your code here\n}\n',
-    typescript: "function isHappyNumber(n: number): boolean {\n  // your code here\n}",
-
-    python: 'def isHappyNumber(n):\n    # your code here\n    pass\n',
+    javascript: `function isHappyNumber(n) {
+  const seen = new Set();
+  while (n !== 1) {
+    if (seen.has(n)) return false;
+    seen.add(n);
+    let sum = 0;
+    while (n > 0) { const d = n % 10; sum += d * d; n = Math.floor(n / 10); }
+    n = sum;
+  }
+  return true;
+}`,
+    typescript: `function isHappyNumber(n: number): boolean {
+  const seen = new Set<number>();
+  while (n !== 1) {
+    if (seen.has(n)) return false;
+    seen.add(n);
+    let sum = 0;
+    while (n > 0) { const d = n % 10; sum += d * d; n = Math.floor(n / 10); }
+    n = sum;
+  }
+  return true;
+}`,
+    python: `def isHappyNumber(n):
+    seen = set()
+    while n != 1:
+        if n in seen: return False
+        seen.add(n)
+        s = 0
+        while n > 0:
+            d = n % 10; s += d * d; n //= 10
+        n = s
+    return True`,
   },
   visibleTests: [
     { args: [19], expected: true },

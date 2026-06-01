@@ -34,10 +34,15 @@ To invert means to replace each \`0\` with \`1\` and each \`1\` with \`0\`: \`[0
   functionName: 'flipAndInvertImage',
   params: ['image'],
   starterCode: {
-    javascript: 'function flipAndInvertImage(image) {\n  // your code here\n}\n',
-    typescript: "function flipAndInvertImage(image: number[][]): number[][] {\n  // your code here\n}",
-
-    python: 'def flipAndInvertImage(image):\n    # your code here\n    pass\n',
+    javascript: `function flipAndInvertImage(image) {
+  return image.map(row => row.slice().reverse().map(x => x ^ 1));
+}`,
+    typescript: `function flipAndInvertImage(image: number[][]): number[][] {
+  return image.map(row => row.slice().reverse().map(x => x ^ 1));
+}`,
+    python: `def flipAndInvertImage(image):
+    image = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (image.to_py() if hasattr(image, 'to_py') else image)]
+    return [list(reversed([x ^ 1 for x in row])) for row in image]`,
   },
   visibleTests: [
     { args: [[[1, 1, 0], [1, 0, 1], [0, 0, 0]]], expected: [[1, 0, 0], [0, 1, 0], [1, 1, 1]] },

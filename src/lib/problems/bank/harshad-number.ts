@@ -36,9 +36,17 @@ Given an integer \`x\`, return the *sum of the digits* of \`x\` if \`x\` is a Ha
   functionName: 'sumOfTheDigitsOfHarshadNumber',
   params: ['x'],
   starterCode: {
-    javascript: 'function sumOfTheDigitsOfHarshadNumber(x) {\n  // your code here\n}\n',
-    typescript: 'function sumOfTheDigitsOfHarshadNumber(x: number): number {\n  // your code here\n}',
-    python: 'def sumOfTheDigitsOfHarshadNumber(x):\n    # your code here\n    pass\n',
+    javascript: `function sumOfTheDigitsOfHarshadNumber(x) {
+  const s = String(x).split('').reduce((a, c) => a + Number(c), 0);
+  return x % s === 0 ? s : -1;
+}`,
+    typescript: `function sumOfTheDigitsOfHarshadNumber(x: number): number {
+  const s = String(x).split('').reduce((a, c) => a + Number(c), 0);
+  return x % s === 0 ? s : -1;
+}`,
+    python: `def sumOfTheDigitsOfHarshadNumber(x):
+    s = sum(int(d) for d in str(x))
+    return s if x % s == 0 else -1`,
   },
   visibleTests: [
     { args: [18], expected: 9 },

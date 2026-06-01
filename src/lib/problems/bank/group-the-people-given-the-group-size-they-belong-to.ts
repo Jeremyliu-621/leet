@@ -40,14 +40,38 @@ It is **guaranteed** that there exists at least one valid solution for the given
   params: ['groupSizes'],
   starterCode: {
     javascript: `function groupThePeople(groupSizes) {
-  // your code here
+  const map = new Map();
+  const res = [];
+  for (let i = 0; i < groupSizes.length; i++) {
+    const s = groupSizes[i];
+    if (!map.has(s)) map.set(s, []);
+    map.get(s).push(i);
+    if (map.get(s).length === s) { res.push(map.get(s)); map.set(s, []); }
+  }
+  return res;
 }`,
     typescript: `function groupThePeople(groupSizes: number[]): number[][] {
-  // your code here
+  const map = new Map<number, number[]>();
+  const res: number[][] = [];
+  for (let i = 0; i < groupSizes.length; i++) {
+    const s = groupSizes[i]!;
+    if (!map.has(s)) map.set(s, []);
+    map.get(s)!.push(i);
+    if (map.get(s)!.length === s) { res.push(map.get(s)!); map.set(s, []); }
+  }
+  return res;
 }`,
     python: `def groupThePeople(groupSizes):
-    # your code here
-    pass`,
+    groupSizes = list(groupSizes.to_py()) if hasattr(groupSizes, 'to_py') else list(groupSizes)
+    from collections import defaultdict
+    buckets = defaultdict(list)
+    res = []
+    for i, s in enumerate(groupSizes):
+        buckets[s].append(i)
+        if len(buckets[s]) == s:
+            res.append(list(buckets[s]))
+            buckets[s] = []
+    return res`,
   },
   visibleTests: [
     { args: [[3, 3, 3, 3, 3, 3]], expected: [[0, 1, 2], [3, 4, 5]] },

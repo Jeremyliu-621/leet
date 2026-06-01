@@ -43,9 +43,27 @@ Return the **distance from the origin** of the **furthest** point you can get to
   functionName: 'furthestDistanceFromOrigin',
   params: ['moves'],
   starterCode: {
-    javascript: 'function furthestDistanceFromOrigin(moves) {\n  // your code here\n}\n',
-    typescript: 'function furthestDistanceFromOrigin(moves: string): number {\n  // your code here\n}',
-    python: 'def furthestDistanceFromOrigin(moves):\n    # your code here\n    pass\n',
+    javascript: `function furthestDistanceFromOrigin(moves) {
+  let l = 0, r = 0, free = 0;
+  for (const m of moves) {
+    if (m === 'L') l++;
+    else if (m === 'R') r++;
+    else free++;
+  }
+  return Math.abs(l - r) + free;
+}`,
+    typescript: `function furthestDistanceFromOrigin(moves: string): number {
+  let l = 0, r = 0, free = 0;
+  for (const m of moves) {
+    if (m === 'L') l++;
+    else if (m === 'R') r++;
+    else free++;
+  }
+  return Math.abs(l - r) + free;
+}`,
+    python: `def furthestDistanceFromOrigin(moves):
+    if hasattr(moves, 'to_py'): moves = moves.to_py()
+    return abs(moves.count('L') - moves.count('R')) + moves.count('_')`,
   },
   visibleTests: [
     { args: ['L_RL__R'], expected: 3 },

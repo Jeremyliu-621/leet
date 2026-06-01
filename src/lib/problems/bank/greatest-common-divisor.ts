@@ -34,10 +34,18 @@ The other number at that point is the greatest common divisor.`,
   functionName: 'greatestCommonDivisor',
   params: ['a', 'b'],
   starterCode: {
-    javascript: 'function greatestCommonDivisor(a, b) {\n  // your code here\n}\n',
-    typescript: "function greatestCommonDivisor(a: number, b: number): number {\n  // your code here\n}",
-
-    python: 'def greatestCommonDivisor(a, b):\n    # your code here\n    pass\n',
+    javascript: `function greatestCommonDivisor(a, b) {
+  while (b !== 0) { [a, b] = [b, a % b]; }
+  return a;
+}`,
+    typescript: `function greatestCommonDivisor(a: number, b: number): number {
+  while (b !== 0) { [a, b] = [b, a % b]; }
+  return a;
+}`,
+    python: `def greatestCommonDivisor(a, b):
+    while b:
+        a, b = b, a % b
+    return a`,
   },
   visibleTests: [
     { args: [12, 18], expected: 6 },

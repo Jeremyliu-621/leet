@@ -36,10 +36,29 @@ export const problem: Problem = {
   functionName: 'firstUniqueChar',
   params: ['text'],
   starterCode: {
-    javascript: 'function firstUniqueChar(text) {\n  // your code here\n}\n',
-    typescript: "function firstUniqueChar(text: string): number {\n  // your code here\n}",
-
-    python: 'def firstUniqueChar(text):\n    # your code here\n    pass\n',
+    javascript: `function firstUniqueChar(text) {
+  const freq = new Map();
+  for (const ch of text) freq.set(ch, (freq.get(ch) ?? 0) + 1);
+  for (let i = 0; i < text.length; i++) {
+    if (freq.get(text[i]) === 1) return i;
+  }
+  return -1;
+}`,
+    typescript: `function firstUniqueChar(text: string): number {
+  const freq = new Map<string, number>();
+  for (const ch of text) freq.set(ch, (freq.get(ch) ?? 0) + 1);
+  for (let i = 0; i < text.length; i++) {
+    if (freq.get(text[i]!) === 1) return i;
+  }
+  return -1;
+}`,
+    python: `def firstUniqueChar(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    from collections import Counter
+    freq = Counter(text)
+    for i, ch in enumerate(text):
+        if freq[ch] == 1: return i
+    return -1`,
   },
   visibleTests: [
     { args: ['leetcode'], expected: 0 },

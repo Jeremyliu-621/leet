@@ -33,10 +33,33 @@ The integer square root is the largest whole number \`r\` such that \`r * r\` is
   functionName: 'integerSquareRoot',
   params: ['n'],
   starterCode: {
-    javascript: 'function integerSquareRoot(n) {\n  // your code here\n}\n',
-    typescript: "function integerSquareRoot(n: number): number {\n  // your code here\n}",
-
-    python: 'def integerSquareRoot(n):\n    # your code here\n    pass\n',
+    javascript: `function integerSquareRoot(n) {
+  let lo = 0, hi = n, res = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (mid * mid <= n) { res = mid; lo = mid + 1; }
+    else hi = mid - 1;
+  }
+  return res;
+}`,
+    typescript: `function integerSquareRoot(n: number): number {
+  let lo = 0, hi = n, res = 0;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (mid * mid <= n) { res = mid; lo = mid + 1; }
+    else hi = mid - 1;
+  }
+  return res;
+}`,
+    python: `def integerSquareRoot(n):
+    lo, hi, res = 0, n, 0
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if mid * mid <= n:
+            res = mid; lo = mid + 1
+        else:
+            hi = mid - 1
+    return res`,
   },
   visibleTests: [
     { args: [16], expected: 4 },
