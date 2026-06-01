@@ -44264,4 +44264,66 @@ def distance(arr):
             suffix += idx
     return answer
 `,
+
+  'magic-squares-in-grid': `
+def numMagicSquaresInside(grid):
+    rows, cols = len(grid), len(grid[0])
+    def is_magic(r, c):
+        seen = set()
+        for i in range(r, r + 3):
+            for j in range(c, c + 3):
+                v = grid[i][j]
+                if v < 1 or v > 9 or v in seen:
+                    return False
+                seen.add(v)
+        for i in range(r, r + 3):
+            if grid[i][c] + grid[i][c+1] + grid[i][c+2] != 15:
+                return False
+        for j in range(c, c + 3):
+            if grid[r][j] + grid[r+1][j] + grid[r+2][j] != 15:
+                return False
+        if grid[r][c] + grid[r+1][c+1] + grid[r+2][c+2] != 15:
+            return False
+        if grid[r][c+2] + grid[r+1][c+1] + grid[r+2][c] != 15:
+            return False
+        return True
+    return sum(1 for r in range(rows - 2) for c in range(cols - 2) if is_magic(r, c))
+`,
+
+  'k-empty-slots': `
+def kEmptySlots(bulbs, k):
+    import bisect
+    on = []
+    for day, pos in enumerate(bulbs):
+        idx = bisect.bisect_left(on, pos)
+        on.insert(idx, pos)
+        if idx > 0 and pos - on[idx - 1] == k + 1:
+            return day + 1
+        if idx < len(on) - 1 and on[idx + 1] - pos == k + 1:
+            return day + 1
+    return -1
+`,
+
+  'optimal-account-balancing': `
+def minTransfers(transactions):
+    from collections import defaultdict
+    balance = defaultdict(int)
+    for frm, to, amount in transactions:
+        balance[frm] -= amount
+        balance[to] += amount
+    debts = [v for v in balance.values() if v != 0]
+    def backtrack(start):
+        while start < len(debts) and debts[start] == 0:
+            start += 1
+        if start == len(debts):
+            return 0
+        best = float('inf')
+        for j in range(start + 1, len(debts)):
+            if debts[start] * debts[j] < 0:
+                debts[j] += debts[start]
+                best = min(best, 1 + backtrack(start + 1))
+                debts[j] -= debts[start]
+        return best
+    return backtrack(0)
+`,
 };

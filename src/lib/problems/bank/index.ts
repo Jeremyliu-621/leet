@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 250
+import { problem as magicSquaresInGrid } from './magic-squares-in-grid';
+import { problem as kEmptySlots } from './k-empty-slots';
+import { problem as optimalAccountBalancing } from './optimal-account-balancing';
 // batch 249
 import { problem as countCollisionsMonkeys } from './count-collisions-of-monkeys-on-a-polygon';
 import { problem as countSquareFreeSubsets } from './count-the-number-of-square-free-subsets';
@@ -6289,6 +6293,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 250
+  magicSquaresInGrid,
+  kEmptySlots,
+  optimalAccountBalancing,
   // batch 249
   countCollisionsMonkeys,
   countSquareFreeSubsets,

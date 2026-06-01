@@ -44984,4 +44984,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return answer;
   },
+
+  'magic-squares-in-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const rows = grid.length, cols = grid[0]!.length;
+    let count = 0;
+    const isMagic = (r: number, c: number): boolean => {
+      const seen = new Set<number>();
+      for (let i = r; i < r + 3; i++)
+        for (let j = c; j < c + 3; j++) {
+          const v = grid[i]![j]!;
+          if (v < 1 || v > 9 || seen.has(v)) return false;
+          seen.add(v);
+        }
+      for (let i = r; i < r + 3; i++)
+        if (grid[i]![c]! + grid[i]![c+1]! + grid[i]![c+2]! !== 15) return false;
+      for (let j = c; j < c + 3; j++)
+        if (grid[r]![j]! + grid[r+1]![j]! + grid[r+2]![j]! !== 15) return false;
+      if (grid[r]![c]! + grid[r+1]![c+1]! + grid[r+2]![c+2]! !== 15) return false;
+      if (grid[r]![c+2]! + grid[r+1]![c+1]! + grid[r+2]![c]! !== 15) return false;
+      return true;
+    };
+    for (let r = 0; r <= rows - 3; r++)
+      for (let c = 0; c <= cols - 3; c++)
+        if (isMagic(r, c)) count++;
+    return count;
+  },
+
+  'k-empty-slots': (...args: unknown[]) => {
+    const bulbs = args[0] as number[], k = args[1] as number;
+    const on: number[] = [];
+    const insertSorted = (pos: number): number => {
+      let lo = 0, hi = on.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (on[mid]! < pos) lo = mid + 1; else hi = mid; }
+      on.splice(lo, 0, pos);
+      return lo;
+    };
+    for (let day = 0; day < bulbs.length; day++) {
+      const pos = bulbs[day]!;
+      const idx = insertSorted(pos);
+      if (idx > 0 && pos - on[idx - 1]! === k + 1) return day + 1;
+      if (idx < on.length - 1 && on[idx + 1]! - pos === k + 1) return day + 1;
+    }
+    return -1;
+  },
+
+  'optimal-account-balancing': (...args: unknown[]) => {
+    const transactions = args[0] as number[][];
+    const balance = new Map<number, number>();
+    for (const [from, to, amount] of transactions) {
+      balance.set(from!, (balance.get(from!) ?? 0) - amount!);
+      balance.set(to!, (balance.get(to!) ?? 0) + amount!);
+    }
+    const debts = [...balance.values()].filter(v => v !== 0);
+    const backtrack = (start: number): number => {
+      while (start < debts.length && debts[start] === 0) start++;
+      if (start === debts.length) return 0;
+      let min = Infinity;
+      for (let j = start + 1; j < debts.length; j++) {
+        if (debts[start]! * debts[j]! < 0) {
+          debts[j] = debts[j]! + debts[start]!;
+          min = Math.min(min, 1 + backtrack(start + 1));
+          debts[j] = debts[j]! - debts[start]!;
+        }
+      }
+      return min;
+    };
+    return backtrack(0);
+  },
 };
