@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2687** problems; 8355 tests green. Batches 102–242 complete.
+**Current focus:** Bank at **2691** problems; 8367 tests green. Batches 102–243 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 243+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 244+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 243 — remove-methods-project, min-time-jobs-ii, min-ops-subarray-equal, subseq-equal-gcd (2026-06-01)
+Four new problems: `remove-methods-from-project` (medium/graph, LC 2204 — DFS from k to find all suspected methods; if any non-suspected calls suspected return all, else remove suspected), `find-minimum-time-to-finish-all-jobs-ii` (medium/arrays — sort jobs and workers desc, pair by rank, return max(ceil(jobs[i]/workers[i]))), `minimum-operations-to-make-subarray-elements-equal` (medium/arrays+math — slide k-window, sort each window, compute median-deviation cost; return minimum), `find-the-number-of-subsequences-with-equal-gcd` (hard/arrays+math+dp — GCD DP map: for each x, extend all existing subsequences; answer=sum of C(cnt,2) over all GCD values). Bank at **2691**; 8367 tests.
 
 ### feat(bank): batch 242 (local) — triangulation-polygon, array-empty-ops, homecoming-robot, weighted-subgraph-path (2026-06-01)
 Four new problems: `minimum-score-triangulation-polygon` (hard/dp, LC 1039 — interval DP dp[i][j]=min over k of dp[i][k]+dp[k][j]+v[i]*v[k]*v[j]), `minimum-operations-to-make-array-empty` (medium/arrays+math, LC 2870 — ceil(freq/3) per value or -1 if any freq==1), `minimum-cost-homecoming-of-a-robot` (medium/arrays, LC 2087 — optimal path never backtracks; sum rowCosts/colCosts on direct route), `minimum-weighted-subgraph-path` (hard/graph+shortest-path, LC 2203 — 3× Dijkstra from src1, src2, reversed-from-dest; answer=min d1[m]+d2[m]+d3[m]). Bank at **2687**; 8355 tests.

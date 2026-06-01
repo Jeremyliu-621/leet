@@ -3071,6 +3071,11 @@ import { problem as minScoreTriangulationPolygon } from './minimum-score-triangu
 import { problem as minOperationsArrayEmpty } from './minimum-operations-to-make-array-empty';
 import { problem as minCostHomecomingRobot } from './minimum-cost-homecoming-of-a-robot';
 import { problem as minimumWeightedSubgraphPath } from './minimum-weighted-subgraph-path';
+// batch 243
+import { problem as remainingMethodsProject } from './remove-methods-from-project';
+import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
+import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
+import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6197,4 +6202,9 @@ export const problems: readonly Problem[] = [
   minOperationsArrayEmpty,
   minCostHomecomingRobot,
   minimumWeightedSubgraphPath,
+  // batch 243
+  remainingMethodsProject,
+  minimumTimeJobsII,
+  minOpsSubarrayEqual,
+  countSubseqEqualGCD,
 ];

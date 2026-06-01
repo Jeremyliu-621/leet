@@ -43242,4 +43242,62 @@ def minCostHomecoming(startPos, homePos, rowCosts, colCosts):
             cost += colCosts[c]
     return cost
 `,
+
+  'remove-methods-from-project': `
+def remainingMethods(n, k, invocations):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in invocations:
+        adj[a].append(b)
+    suspected = set()
+    stack = [k]
+    while stack:
+        cur = stack.pop()
+        if cur in suspected:
+            continue
+        suspected.add(cur)
+        for nb in adj[cur]:
+            stack.append(nb)
+    for a, b in invocations:
+        if a not in suspected and b in suspected:
+            return list(range(n))
+    return [i for i in range(n) if i not in suspected]
+`,
+
+  'find-minimum-time-to-finish-all-jobs-ii': `
+import math
+def minimumTimeII(jobs, workers):
+    js = sorted(jobs, reverse=True)
+    ws = sorted(workers, reverse=True)
+    return max(math.ceil(js[i] / ws[i]) for i in range(len(js)))
+`,
+
+  'minimum-operations-to-make-subarray-elements-equal': `
+def minOperationsEqualSubarray(nums, k):
+    min_cost = float('inf')
+    for i in range(len(nums) - k + 1):
+        window = sorted(nums[i:i+k])
+        median = window[k // 2]
+        cost = sum(abs(x - median) for x in window)
+        min_cost = min(min_cost, cost)
+    return min_cost
+`,
+
+  'find-the-number-of-subsequences-with-equal-gcd': `
+from math import gcd
+def countSubseqEqualGCD(nums):
+    MOD = 10**9 + 7
+    dp = {}
+    for x in nums:
+        updates = {x: 1}
+        for g, cnt in dp.items():
+            ng = gcd(g, x)
+            updates[ng] = (updates.get(ng, 0) + cnt) % MOD
+        for ng, cnt in updates.items():
+            dp[ng] = (dp.get(ng, 0) + cnt) % MOD
+    ans = 0
+    for cnt in dp.values():
+        ans = (ans + cnt * (cnt - 1) // 2) % MOD
+    return ans
+`,
 };

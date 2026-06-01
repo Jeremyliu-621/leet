@@ -44037,4 +44037,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return cost;
   },
+
+  'remove-methods-from-project': (...args: unknown[]) => {
+    const [n, k, invocations] = args as [number, number, number[][]];
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const edge of invocations) { const a = edge[0]!, b = edge[1]!; adj[a]!.push(b); }
+    const suspected = new Set<number>();
+    const stack = [k];
+    while (stack.length > 0) {
+      const cur = stack.pop()!;
+      if (suspected.has(cur)) continue;
+      suspected.add(cur);
+      for (const nb of adj[cur]!) stack.push(nb);
+    }
+    for (const edge of invocations) {
+      const a = edge[0]!, b = edge[1]!;
+      if (!suspected.has(a) && suspected.has(b)) {
+        return Array.from({ length: n }, (_, i) => i);
+      }
+    }
+    return Array.from({ length: n }, (_, i) => i).filter(i => !suspected.has(i));
+  },
+
+  'find-minimum-time-to-finish-all-jobs-ii': (...args: unknown[]) => {
+    const [jobs, workers] = args as [number[], number[]];
+    const js = [...jobs].sort((a, b) => b - a);
+    const ws = [...workers].sort((a, b) => b - a);
+    let ans = 0;
+    for (let i = 0; i < js.length; i++) {
+      ans = Math.max(ans, Math.ceil(js[i]! / ws[i]!));
+    }
+    return ans;
+  },
+
+  'minimum-operations-to-make-subarray-elements-equal': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    let minCost = Infinity;
+    for (let i = 0; i <= nums.length - k; i++) {
+      const window = nums.slice(i, i + k).sort((a, b) => a - b);
+      const median = window[Math.floor(k / 2)]!;
+      let cost = 0;
+      for (const x of window) cost += Math.abs(x - median);
+      minCost = Math.min(minCost, cost);
+    }
+    return minCost;
+  },
+
+  'find-the-number-of-subsequences-with-equal-gcd': (...args: unknown[]) => {
+    const [nums] = args as [number[]];
+    const MOD = 1_000_000_007n;
+    function gcd(a: bigint, b: bigint): bigint { return b === 0n ? a : gcd(b, a % b); }
+    const dp = new Map<bigint, bigint>();
+    for (const x of nums) {
+      const bx = BigInt(x);
+      const updates = new Map<bigint, bigint>([[bx, 1n]]);
+      for (const [g, cnt] of dp) {
+        const ng = gcd(g, bx);
+        updates.set(ng, ((updates.get(ng) ?? 0n) + cnt) % MOD);
+      }
+      for (const [ng, cnt] of updates) {
+        dp.set(ng, ((dp.get(ng) ?? 0n) + cnt) % MOD);
+      }
+    }
+    let ans = 0n;
+    for (const cnt of dp.values()) {
+      ans = (ans + (cnt * (cnt - 1n)) / 2n) % MOD;
+    }
+    return Number(ans);
+  },
 };
