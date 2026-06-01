@@ -42,9 +42,35 @@ Return the **minimum** number of boxes you need to select from \`capacity\` such
   functionName: 'minimumBoxes',
   params: ['packages', 'capacity'],
   starterCode: {
-    javascript: 'function minimumBoxes(packages, capacity) {\n  \n}\n',
-    typescript: 'function minimumBoxes(packages: number[], capacity: number[]): number {\n  \n}',
-    python: 'def minimumBoxes(packages, capacity):\n    pass\n',
+    javascript: `function minimumBoxes(packages, capacity) {
+  const total = packages.reduce((a, b) => a + b, 0);
+  capacity.sort((a, b) => b - a);
+  let sum = 0;
+  for (let i = 0; i < capacity.length; i++) {
+    sum += capacity[i];
+    if (sum >= total) return i + 1;
+  }
+  return capacity.length;
+}`,
+    typescript: `function minimumBoxes(packages: number[], capacity: number[]): number {
+  const total = packages.reduce((a, b) => a + b, 0);
+  capacity.sort((a, b) => b - a);
+  let sum = 0;
+  for (let i = 0; i < capacity.length; i++) {
+    sum += capacity[i]!;
+    if (sum >= total) return i + 1;
+  }
+  return capacity.length;
+}`,
+    python: `def minimumBoxes(packages, capacity):
+    total = sum(packages)
+    capacity.sort(reverse=True)
+    s = 0
+    for i, c in enumerate(capacity):
+        s += c
+        if s >= total:
+            return i + 1
+    return len(capacity)`,
   },
   visibleTests: [
     { args: [[1, 3, 2], [4, 3, 1, 5, 2]], expected: 2 },

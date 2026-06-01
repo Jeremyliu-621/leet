@@ -35,10 +35,60 @@ Answers within \`10^-5\` of the actual answers are accepted.`,
   functionName: 'getCollisionTimes',
   params: ['cars'],
   starterCode: {
-    javascript: 'function getCollisionTimes(cars) {\n\n}\n',
-    typescript: "function getCollisionTimes(cars: number[][]): number[] {\n\n}",
-
-    python: 'def getCollisionTimes(cars):\n    pass\n',
+    javascript: `function getCollisionTimes(cars) {
+  const n = cars.length;
+  const ans = new Array(n).fill(-1);
+  const stack = []; // stores car indices, right to left
+  for (let i = n - 1; i >= 0; i--) {
+    const [pi, si] = cars[i];
+    while (stack.length > 0) {
+      const j = stack[stack.length - 1];
+      const [pj, sj] = cars[j];
+      if (si <= sj) break; // i can never catch j
+      const t = (pj - pi) / (si - sj);
+      if (ans[j] === -1 || t <= ans[j]) { ans[i] = t; break; }
+      stack.pop(); // j merges before i reaches it; check next
+    }
+    stack.push(i);
+  }
+  return ans;
+}`,
+    typescript: `function getCollisionTimes(cars: number[][]): number[] {
+  const n = cars.length;
+  const ans = new Array<number>(n).fill(-1);
+  const stack: number[] = [];
+  for (let i = n - 1; i >= 0; i--) {
+    const [pi, si] = cars[i]!;
+    while (stack.length > 0) {
+      const j = stack[stack.length - 1]!;
+      const [pj, sj] = cars[j]!;
+      if (si! <= sj!) break;
+      const t = (pj! - pi!) / (si! - sj!);
+      if (ans[j] === -1 || t <= ans[j]!) { ans[i] = t; break; }
+      stack.pop();
+    }
+    stack.push(i);
+  }
+  return ans;
+}`,
+    python: `def getCollisionTimes(cars):
+    n = len(cars)
+    ans = [-1.0] * n
+    stack = []  # stores car indices, right to left
+    for i in range(n - 1, -1, -1):
+        pi, si = cars[i]
+        while stack:
+            j = stack[-1]
+            pj, sj = cars[j]
+            if si <= sj:
+                break  # i can never catch j
+            t = (pj - pi) / (si - sj)
+            if ans[j] == -1 or t <= ans[j]:
+                ans[i] = t
+                break
+            stack.pop()
+        stack.append(i)
+    return ans`,
   },
   visibleTests: [
     { args: [[[1,2],[2,1],[4,3],[7,2]]], expected: [1.0, -1.0, 3.0, -1.0] },

@@ -48,10 +48,61 @@ Explanation: The additive sequence is 1, 99, 100, 199.
   functionName: 'isAdditiveNumber',
   params: ['num'],
   starterCode: {
-    javascript: 'function isAdditiveNumber(num) {\n\n}\n',
-    typescript: "function isAdditiveNumber(num: string): boolean {\n\n}",
-
-    python: 'def isAdditiveNumber(num):\n    pass\n',
+    javascript: `function isAdditiveNumber(num) {
+  function check(a, b, rest) {
+    const sum = String(BigInt(a) + BigInt(b));
+    if (!rest.startsWith(sum)) return false;
+    if (rest === sum) return true;
+    return check(b, sum, rest.slice(sum.length));
+  }
+  const n = num.length;
+  for (let i = 1; i <= n / 2; i++) {
+    if (i > 1 && num[0] === '0') break; // leading zero
+    for (let j = i + 1; j < n; j++) {
+      const s = num.slice(i, j);
+      if (s.length > 1 && s[0] === '0') break; // leading zero
+      if (check(num.slice(0, i), s, num.slice(j))) return true;
+    }
+  }
+  return false;
+}`,
+    typescript: `function isAdditiveNumber(num: string): boolean {
+  function check(a: string, b: string, rest: string): boolean {
+    const sum = String(BigInt(a) + BigInt(b));
+    if (!rest.startsWith(sum)) return false;
+    if (rest === sum) return true;
+    return check(b, sum, rest.slice(sum.length));
+  }
+  const n = num.length;
+  for (let i = 1; i <= n / 2; i++) {
+    if (i > 1 && num[0] === '0') break;
+    for (let j = i + 1; j < n; j++) {
+      const s = num.slice(i, j);
+      if (s.length > 1 && s[0] === '0') break;
+      if (check(num.slice(0, i), s, num.slice(j))) return true;
+    }
+  }
+  return false;
+}`,
+    python: `def isAdditiveNumber(num):
+    def check(a, b, rest):
+        s = str(int(a) + int(b))
+        if not rest.startswith(s):
+            return False
+        if rest == s:
+            return True
+        return check(b, s, rest[len(s):])
+    n = len(num)
+    for i in range(1, n // 2 + 1):
+        if i > 1 and num[0] == '0':
+            break
+        for j in range(i + 1, n):
+            part = num[i:j]
+            if len(part) > 1 and part[0] == '0':
+                break
+            if check(num[:i], part, num[j:]):
+                return True
+    return False`,
   },
   visibleTests: [
     { args: ['112358'], expected: true },

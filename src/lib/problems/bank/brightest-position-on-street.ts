@@ -33,9 +33,48 @@ Return the **brightest** position on the street (the position covered by the mos
   functionName: 'brightestPosition',
   params: ['lights'],
   starterCode: {
-    javascript: 'function brightestPosition(lights) {\n  \n}\n',
-    typescript: 'function brightestPosition(lights: number[][]): number {\n  \n}',
-    python: 'def brightestPosition(lights):\n    pass\n',
+    javascript: `function brightestPosition(lights) {
+  const events = [];
+  for (const [pos, range] of lights) {
+    events.push([pos - range, 1]);
+    events.push([pos + range + 1, -1]);
+  }
+  events.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let best = -Infinity, count = 0, ans = 0;
+  for (const [pos, delta] of events) {
+    count += delta;
+    if (count > best) { best = count; ans = pos; }
+  }
+  return ans;
+}`,
+    typescript: `function brightestPosition(lights: number[][]): number {
+  const events: [number, number][] = [];
+  for (const [pos, range] of lights) {
+    events.push([pos! - range!, 1]);
+    events.push([pos! + range! + 1, -1]);
+  }
+  events.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+  let best = -Infinity, count = 0, ans = 0;
+  for (const [pos, delta] of events) {
+    count += delta!;
+    if (count > best) { best = count; ans = pos!; }
+  }
+  return ans;
+}`,
+    python: `def brightestPosition(lights):
+    events = []
+    for pos, r in lights:
+        events.append((pos - r, 1))
+        events.append((pos + r + 1, -1))
+    events.sort()
+    best = count = 0
+    ans = float('-inf')
+    for pos, delta in events:
+        count += delta
+        if count > best:
+            best = count
+            ans = pos
+    return ans`,
   },
   visibleTests: [
     { args: [[[-3, 2], [1, 2], [3, 3]]], expected: -1 },
