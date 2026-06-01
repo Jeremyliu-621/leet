@@ -53,14 +53,39 @@ The \`target\` array is guaranteed to be achievable.
   params: ['target', 'n'],
   starterCode: {
     javascript: `function buildArray(target, n) {
-  // Return the array of "Push" / "Pop" operation strings
+  const set = new Set(target), ops = [];
+  for (let i = 1; i <= n; i++) {
+    ops.push('Push');
+    if (!set.has(i)) ops.push('Pop');
+    if (ops.filter(o => o === 'Push').length - ops.filter(o => o === 'Pop').length === target.length) break;
+  }
+  return ops;
 }`,
-    typescript: "function buildArray(target: number[], n: number): string[] {\n  // Return the array of \"Push\" / \"Pop\" operation strings\n}",
-
-    python: `def buildArray(target, n: int):
+    typescript: `function buildArray(target: number[], n: number): string[] {
+  const set = new Set(target);
+  const ops: string[] = [];
+  let count = 0;
+  for (let i = 1; i <= n && count < target.length; i++) {
+    ops.push('Push');
+    if (set.has(i)) count++;
+    else ops.push('Pop');
+  }
+  return ops;
+}`,
+    python: `def buildArray(target, n):
     target = list(target)
-    # Return the list of "Push" / "Pop" operation strings
-    pass`,
+    target_set = set(target)
+    ops = []
+    count = 0
+    for i in range(1, n + 1):
+        if count == len(target):
+            break
+        ops.append('Push')
+        if i in target_set:
+            count += 1
+        else:
+            ops.append('Pop')
+    return ops`,
   },
   visibleTests: [
     { args: [[1, 3], 3], expected: ['Push', 'Push', 'Pop', 'Push'] },

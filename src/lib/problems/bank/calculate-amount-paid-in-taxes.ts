@@ -43,13 +43,31 @@ Given an integer \`income\` representing the amount earned, return the amount of
   params: ['brackets', 'income'],
   starterCode: {
     javascript: `function calculateTax(brackets, income) {
-
+  let tax = 0, prev = 0;
+  for (const [upper, percent] of brackets) {
+    if (income <= prev) break;
+    tax += (Math.min(income, upper) - prev) * percent / 100;
+    prev = upper;
+  }
+  return tax;
 }`,
     typescript: `function calculateTax(brackets: number[][], income: number): number {
-
+  let tax = 0, prev = 0;
+  for (const [upper, percent] of brackets) {
+    if (income <= prev) break;
+    tax += (Math.min(income, upper!) - prev) * percent! / 100;
+    prev = upper!;
+  }
+  return tax;
 }`,
     python: `def calculateTax(brackets, income):
-    pass`,
+    tax = prev = 0
+    for upper, percent in brackets:
+        if income <= prev:
+            break
+        tax += (min(income, upper) - prev) * percent / 100
+        prev = upper
+    return tax`,
   },
   visibleTests: [
     { args: [[[3, 50], [7, 10], [12, 25]], 10], expected: 2.65 },

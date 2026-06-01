@@ -40,13 +40,13 @@ The string \`s\` is considered an acronym of \`words\` if it can be formed by co
   params: ['words', 's'],
   starterCode: {
     javascript: `function isAcronym(words, s) {
-
+  return s === words.map(w => w[0]).join('');
 }`,
     typescript: `function isAcronym(words: string[], s: string): boolean {
-
+  return s === words.map(w => w[0]).join('');
 }`,
     python: `def isAcronym(words, s):
-    pass`,
+    return s == ''.join(w[0] for w in words)`,
   },
   visibleTests: [
     { args: [['alice', 'bob', 'charlie'], 'abc'], expected: true },

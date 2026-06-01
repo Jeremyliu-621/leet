@@ -40,12 +40,21 @@ function canMakeArithmeticProgression(arr) {
   params: ['arr'],
   starterCode: {
     javascript: `function canMakeArithmeticProgression(arr) {
-
+  arr.sort((a, b) => a - b);
+  const d = arr[1] - arr[0];
+  for (let i = 2; i < arr.length; i++) if (arr[i] - arr[i - 1] !== d) return false;
+  return true;
 }`,
-    typescript: "function canMakeArithmeticProgression(arr: number[]): boolean {\n\n}",
-
+    typescript: `function canMakeArithmeticProgression(arr: number[]): boolean {
+  arr.sort((a, b) => a - b);
+  const d = arr[1]! - arr[0]!;
+  for (let i = 2; i < arr.length; i++) if (arr[i]! - arr[i - 1]! !== d) return false;
+  return true;
+}`,
     python: `def canMakeArithmeticProgression(arr):
-    pass`,
+    arr.sort()
+    d = arr[1] - arr[0]
+    return all(arr[i] - arr[i-1] == d for i in range(2, len(arr)))`,
   },
   visibleTests: [
     { args: [[3, 5, 1]], expected: true },

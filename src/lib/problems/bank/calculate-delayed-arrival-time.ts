@@ -35,12 +35,13 @@ Note that the time in this problem is in **24-hour format**.`,
   params: ['arrivalTime', 'delayedTime'],
   starterCode: {
     javascript: `function findDelayedArrivalTime(arrivalTime, delayedTime) {
-
+  return (arrivalTime + delayedTime) % 24;
 }`,
-    typescript: "function findDelayedArrivalTime(arrivalTime: number, delayedTime: number): number {\n\n}",
-
+    typescript: `function findDelayedArrivalTime(arrivalTime: number, delayedTime: number): number {
+  return (arrivalTime + delayedTime) % 24;
+}`,
     python: `def findDelayedArrivalTime(arrivalTime, delayedTime):
-    pass`,
+    return (arrivalTime + delayedTime) % 24`,
   },
   visibleTests: [
     { args: [15, 5], expected: 20 },
