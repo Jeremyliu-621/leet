@@ -31,14 +31,13 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: `function checkString(s) {
-  // your code here
+  return !s.includes('ba');
 }`,
     typescript: `function checkString(s: string): boolean {
-  // your code here
+  return !s.includes('ba');
 }`,
     python: `def checkString(s):
-    # your code here
-    pass`,
+    return 'ba' not in s`,
   },
   visibleTests: [
     { args: ['aaabbb'], expected: true },

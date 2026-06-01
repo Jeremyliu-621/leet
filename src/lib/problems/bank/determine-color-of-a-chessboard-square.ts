@@ -38,14 +38,13 @@ The coordinate will always represent a valid chessboard square. The coordinate w
   params: ['coordinates'],
   starterCode: {
     javascript: `function squareIsWhite(coordinates) {
-  // your code here
+  return (coordinates.charCodeAt(0) + Number(coordinates[1])) % 2 === 1;
 }`,
     typescript: `function squareIsWhite(coordinates: string): boolean {
-  // your code here
+  return (coordinates.charCodeAt(0) + Number(coordinates[1])) % 2 === 1;
 }`,
     python: `def squareIsWhite(coordinates):
-    # your code here
-    pass`,
+    return (ord(coordinates[0]) + int(coordinates[1])) % 2 == 1`,
   },
   visibleTests: [
     { args: ['a1'], expected: false },

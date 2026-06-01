@@ -42,14 +42,32 @@ Return \`num\` after the algorithm stops.`,
   params: ['num', 'k'],
   starterCode: {
     javascript: `function calculateDigitSum(num, k) {
-  // your code here
+  while (num.length > k) {
+    let next = '';
+    for (let i = 0; i < num.length; i += k) {
+      const g = num.slice(i, i + k);
+      next += String(g.split('').reduce((a, c) => a + Number(c), 0));
+    }
+    num = next;
+  }
+  return num;
 }`,
     typescript: `function calculateDigitSum(num: string, k: number): string {
-  // your code here
+  while (num.length > k) {
+    let next = '';
+    for (let i = 0; i < num.length; i += k) {
+      const g = num.slice(i, i + k);
+      next += String(g.split('').reduce((a, c) => a + Number(c), 0));
+    }
+    num = next;
+  }
+  return num;
 }`,
     python: `def calculateDigitSum(num, k):
-    # your code here
-    pass`,
+    while len(num) > k:
+        groups = [num[i:i+k] for i in range(0, len(num), k)]
+        num = ''.join(str(sum(int(c) for c in g)) for g in groups)
+    return num`,
   },
   visibleTests: [
     { args: ['11111222223', 3], expected: '135' },

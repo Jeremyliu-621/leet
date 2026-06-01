@@ -38,12 +38,16 @@ An array contains n consecutive integers if its values, when sorted, form an unb
   params: ['nums'],
   starterCode: {
     javascript: `function isConsecutive(nums) {
-  // your code here
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return mx - mn + 1 === nums.length && new Set(nums).size === nums.length;
 }`,
-    typescript: 'function isConsecutive(nums: number[]): boolean {\n  // your code here\n}',
+    typescript: `function isConsecutive(nums: number[]): boolean {
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return mx - mn + 1 === nums.length && new Set(nums).size === nums.length;
+}`,
     python: `def isConsecutive(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return max(nums) - min(nums) + 1 == len(nums) == len(set(nums))`,
   },
   visibleTests: [
     { args: [[1, 3, 4, 2, 5]], expected: true },

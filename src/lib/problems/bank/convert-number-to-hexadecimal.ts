@@ -25,14 +25,23 @@ Leading zeros are not allowed except for the number 0 itself.`,
   params: ['num'],
   starterCode: {
     javascript: `function toHex(num) {
-  // your code here
+  if (num === 0) return '0';
+  const hex = '0123456789abcdef';
+  let n = num >>> 0, result = '';
+  while (n > 0) { result = hex[n & 15] + result; n >>>= 4; }
+  return result;
 }`,
     typescript: `function toHex(num: number): string {
-  // your code here
+  if (num === 0) return '0';
+  const hex = '0123456789abcdef';
+  let n = num >>> 0, result = '';
+  while (n > 0) { result = hex[n & 15]! + result; n >>>= 4; }
+  return result;
 }`,
-    python: `def toHex(num):
-    # your code here
-    pass`,
+    python: `def toHex(num: int) -> str:
+    if num == 0: return '0'
+    n = num & 0xffffffff
+    return hex(n)[2:]`,
   },
   visibleTests: [
     { args: [26], expected: '1a' },

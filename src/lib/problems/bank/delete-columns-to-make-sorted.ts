@@ -47,14 +47,28 @@ Return the *number of columns you will delete*.`,
   params: ['strs'],
   starterCode: {
     javascript: `function minDeletionSize(strs) {
-  // your code here
+  let count = 0;
+  for (let c = 0; c < strs[0].length; c++)
+    for (let r = 1; r < strs.length; r++)
+      if (strs[r][c] < strs[r-1][c]) { count++; break; }
+  return count;
 }`,
     typescript: `function minDeletionSize(strs: string[]): number {
-  // your code here
+  let count = 0;
+  for (let c = 0; c < strs[0]!.length; c++)
+    for (let r = 1; r < strs.length; r++)
+      if (strs[r]![c]! < strs[r-1]![c]!) { count++; break; }
+  return count;
 }`,
     python: `def minDeletionSize(strs):
-    # your code here
-    pass`,
+    strs = list(strs.to_py()) if hasattr(strs, 'to_py') else list(strs)
+    count = 0
+    for c in range(len(strs[0])):
+        for r in range(1, len(strs)):
+            if strs[r][c] < strs[r-1][c]:
+                count += 1
+                break
+    return count`,
   },
   visibleTests: [
     { args: [['cba', 'daf', 'ghi']], expected: 1 },
