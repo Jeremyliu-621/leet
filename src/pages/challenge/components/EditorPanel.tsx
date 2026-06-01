@@ -48,7 +48,7 @@ import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import type { JudgeResult } from '../../../lib/judge';
-import { LANGUAGE_LABEL, LANGUAGE_SHORT } from '../../../lib/types';
+import { LANGUAGE_LABEL } from '../../../lib/types';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { TerminalPanel } from './TerminalPanel';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
@@ -990,30 +990,12 @@ export function EditorPanel({
   const [cursorPos, setCursorPos] = useState<{ line: number; col: number }>({ line: 1, col: 1 });
   const setCursorPosRef = useRef(setCursorPos);
 
-  const langContainerRef = useRef<HTMLDivElement>(null);
-  const handleLangKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLButtonElement>) => {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      e.preventDefault();
-      const container = langContainerRef.current;
-      if (!container) return;
-      const buttons = Array.from(
-        container.querySelectorAll<HTMLButtonElement>('button[role="radio"]'),
-      );
-      const idx = buttons.indexOf(e.currentTarget);
-      if (idx === -1) return;
-      const next =
-        e.key === 'ArrowRight'
-          ? buttons[(idx + 1) % buttons.length]
-          : buttons[(idx - 1 + buttons.length) % buttons.length];
-      if (!next) return;
-      const nextLang = availableLanguages[buttons.indexOf(next)];
-      if (nextLang) {
-        handleLangClick(nextLang);
-        next.focus();
-      }
+  const handleLangSelect = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const lang = e.target.value as SupportedLanguage;
+      handleLangClick(lang);
     },
-    [availableLanguages, handleLangClick],
+    [handleLangClick],
   );
 
   // Terminal collapse state — persisted in-session only.
@@ -1133,37 +1115,18 @@ export function EditorPanel({
       {/* Language label / selector + fullscreen toggle */}
       <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-1.5">
         {showLanguageSelector ? (
-          <div
-            ref={langContainerRef}
-            role="radiogroup"
+          <select
+            value={language}
+            onChange={handleLangSelect}
             aria-label="Select programming language"
-            className="flex items-center gap-0.5 overflow-x-auto scrollbar-none"
+            className="rounded-sm border border-border bg-surface px-2 py-0.5 font-mono text-[11px] text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
           >
-            {availableLanguages.map((lang) => {
-              const selected = lang === language;
-              return (
-                <button
-                  key={lang}
-                  type="button"
-                  role="radio"
-                  aria-checked={selected}
-                  aria-label={`Switch to ${LANGUAGE_LABEL[lang]}`}
-                  tabIndex={selected ? 0 : -1}
-                  onClick={() => {
-                    if (!selected) handleLangClick(lang);
-                  }}
-                  onKeyDown={handleLangKeyDown}
-                  className={
-                    selected
-                      ? 'whitespace-nowrap rounded-sm border border-border-strong bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
-                      : 'whitespace-nowrap rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent'
-                  }
-                >
-                  {LANGUAGE_SHORT[lang]}
-                </button>
-              );
-            })}
-          </div>
+            {availableLanguages.map((lang) => (
+              <option key={lang} value={lang}>
+                {LANGUAGE_LABEL[lang]}
+              </option>
+            ))}
+          </select>
         ) : (
           <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
             {LANGUAGE_LABEL[language]}
