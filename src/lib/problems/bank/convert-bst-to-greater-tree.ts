@@ -131,10 +131,10 @@ return root;\`\`\``
     python: PY_PREAMBLE,
   },
   starterCode: {
-    javascript: 'function convertBST(root) {\n  \n}\n',
-    typescript: "function convertBSTRunner(root: (number | null)[]): (number | null)[] {\n  \n}",
+    javascript: 'function convertBST(root) {\n  let acc = 0;\n  function dfs(node) {\n    if (!node) return;\n    dfs(node.r);\n    acc += node.v;\n    node.v = acc;\n    dfs(node.l);\n  }\n  dfs(root);\n  return root;\n}\n',
+    typescript: "function convertBSTRunner(root: (number | null)[]): (number | null)[] {\n  class TreeNode {\n    v: number; l: TreeNode | null; r: TreeNode | null;\n    constructor(val: number, left: TreeNode | null = null, right: TreeNode | null = null) {\n      this.v = val; this.l = left; this.r = right;\n    }\n  }\n  function fromArray(arr: (number | null)[]): TreeNode | null {\n    if (!arr.length || arr[0] == null) return null;\n    const tree = new TreeNode(arr[0]!);\n    const q: TreeNode[] = [tree]; let i = 1;\n    while (i < arr.length) {\n      const n = q.shift()!;\n      if (i < arr.length && arr[i] != null) { n.l = new TreeNode(arr[i]!); q.push(n.l); } i++;\n      if (i < arr.length && arr[i] != null) { n.r = new TreeNode(arr[i]!); q.push(n.r); } i++;\n    }\n    return tree;\n  }\n  function toArray(node: TreeNode | null): (number | null)[] {\n    if (!node) return [];\n    const result: (number | null)[] = [], q: (TreeNode | null)[] = [node];\n    while (q.length) {\n      const n = q.shift()!;\n      if (!n) { result.push(null); continue; }\n      result.push(n.v); q.push(n.l); q.push(n.r);\n    }\n    while (result.length && result[result.length - 1] === null) result.pop();\n    return result;\n  }\n  let acc = 0;\n  function dfs(node: TreeNode | null): void {\n    if (!node) return;\n    dfs(node.r); acc += node.v; node.v = acc; dfs(node.l);\n  }\n  const tree = fromArray(root);\n  dfs(tree);\n  return toArray(tree);\n}",
 
-    python: 'def convertBST(root):\n    pass\n',
+    python: 'def convertBST(root):\n    acc = [0]\n    def dfs(node):\n        if not node:\n            return\n        dfs(node.right)\n        acc[0] += node.val\n        node.val = acc[0]\n        dfs(node.left)\n    dfs(root)\n    return root\n',
   },
   visibleTests: [
     { args: [[4, 1, 6, 0, 2, 5, 7, null, null, null, 3, null, null, null, 8]], expected: [30, 36, 21, 36, 35, 26, 15, null, null, null, 33, null, null, null, 8] },
