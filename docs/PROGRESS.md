@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2651** problems; 8247 tests green. Batches 102–239 complete (incl. 238b).
+**Current focus:** Bank at **2647** problems; 8235 tests green. All 2647 problems have TypeScript typed starters.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 240+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): backfill TypeScript starters for all 151 problems (2026-06-01)
+All 2647 problems now have `starterCode.typescript` with parameter and return types inferred from visible test cases. Users selecting TypeScript get proper annotations (`number[]`, `string[]`, `number[][]`, `boolean`, etc.) instead of falling back to untyped JS stubs. Design-pattern problems (classes: StockSpanner, ParkingSystem, MyHashSet, MyStack) got properly typed class starters.
 
 ### feat(bank): batch 239 — find-nth-value-after-k-seconds, check-word-in-crossword, brightest-position-on-street, count-k-free-subsets (2026-06-01)
 Four new problems: `find-the-n-th-value-after-k-seconds` (medium/arrays+math, LC 3179 — a[n-1] after k prefix-sum steps = C(n+k, k+1) mod 10^9+7), `check-if-word-can-be-placed-in-crossword` (medium/arrays+strings, LC 2018 — scan row/col slots, check word forward/backward), `brightest-position-on-street` (medium/arrays+binary-search, LC 2021 — sweep line: +1 at start, -1 at end+1; max brightness), `count-the-number-of-k-free-subsets` (medium/arrays+dp, LC 2638 — group by mod k, Fibonacci-like dp per chain). Bank at **2646**; 8232 tests.
