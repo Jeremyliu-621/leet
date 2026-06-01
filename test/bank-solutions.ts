@@ -45277,6 +45277,108 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return backtrack(0);
   },
 
+  'apply-operations-to-make-two-strings-equal': (...args: unknown[]) => {
+    const s1 = args[0] as string;
+    const s2 = args[1] as string;
+    const x = args[2] as number;
+    const diffs: number[] = [];
+    for (let i = 0; i < s1.length; i++) if (s1[i] !== s2[i]) diffs.push(i);
+    if (diffs.length === 0) return 0;
+    const n = diffs.length;
+    const dp = new Array(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      dp[i + 1] = Math.min(dp[i + 1], dp[i]! + x);
+      if (i + 1 < n) dp[i + 2] = Math.min(dp[i + 2]!, dp[i]! + Math.min(diffs[i + 1]! - diffs[i]!, 2 * x));
+    }
+    return dp[n]!;
+  },
+
+  'apply-operations-on-array-to-maximize-sum-of-squares': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const bits = 30;
+    const cnt = new Array(bits).fill(0);
+    for (const n of nums) for (let b = 0; b < bits; b++) if ((n >> b) & 1) cnt[b]!++;
+    let ans = 0n;
+    for (let r = 1; r <= k; r++) {
+      let val = 0n;
+      for (let b = 0; b < bits; b++) if (cnt[b]! >= r) val |= (1n << BigInt(b));
+      ans = (ans + val * val) % MOD;
+    }
+    return Number(ans);
+  },
+
+  'maximum-linear-stock-score': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const map = new Map<number, number>();
+    for (let i = 0; i < prices.length; i++) {
+      const key = prices[i]! - i;
+      map.set(key, (map.get(key) ?? 0) + prices[i]!);
+    }
+    return Math.max(...map.values());
+  },
+
+  'subarrays-distinct-element-sum-of-squares-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007;
+    let ans = 0;
+    for (let l = 0; l < nums.length; l++) {
+      const seen = new Set<number>();
+      for (let r = l; r < nums.length; r++) {
+        seen.add(nums[r]!);
+        ans = (ans + seen.size * seen.size) % MOD;
+      }
+    }
+    return ans;
+  },
+
+  'total-characters-in-string-after-transformations-ii': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as number;
+    const nums = args[2] as number[];
+    const MOD = 1_000_000_007n;
+    const N = 26;
+    type Mat = bigint[][];
+    const buildMat = (): Mat => {
+      const M: Mat = Array.from({length: N}, () => new Array(N).fill(0n));
+      for (let i = 0; i < N; i++)
+        for (let k = 1; k <= nums[i]!; k++)
+          M[(i + k) % N]![i] = (M[(i + k) % N]![i]! + 1n) % MOD;
+      return M;
+    };
+    const matMul = (A: Mat, B: Mat): Mat => {
+      const C: Mat = Array.from({length: N}, () => new Array(N).fill(0n));
+      for (let i = 0; i < N; i++)
+        for (let k = 0; k < N; k++) if (A[i]![k])
+          for (let j = 0; j < N; j++)
+            C[i]![j] = (C[i]![j]! + A[i]![k]! * B[k]![j]!) % MOD;
+      return C;
+    };
+    const matPow = (M: Mat, p: number): Mat => {
+      let result: Mat = Array.from({length: N}, (_, i) => {
+        const row = new Array(N).fill(0n); row[i] = 1n; return row;
+      });
+      let base = M;
+      let exp = p;
+      while (exp > 0) {
+        if (exp & 1) result = matMul(result, base);
+        base = matMul(base, base);
+        exp >>= 1;
+      }
+      return result;
+    };
+    const Mt = matPow(buildMat(), t);
+    const freq = new Array(N).fill(0n);
+    for (const ch of s) freq[ch.charCodeAt(0) - 97] = (freq[ch.charCodeAt(0) - 97]! as bigint + 1n);
+    let total = 0n;
+    for (let j = 0; j < N; j++)
+      for (let i = 0; i < N; i++)
+        total = (total + Mt[j]![i]! * (freq[i] as bigint)) % MOD;
+    return Number(total);
+  },
+
   'count-substrings-that-can-be-rearranged-to-contain-a-string-ii': (...args: unknown[]) => {
     const word1 = args[0] as string;
     const word2 = args[1] as string;

@@ -3100,6 +3100,12 @@ import { problem as maxSumSubseqNonAdjacent } from './maximum-sum-of-subsequence
 import { problem as countSubstringsRearrangedII } from './count-substrings-that-can-be-rearranged-to-contain-a-string-ii';
 import { problem as findIndexOfPermutation } from './find-the-index-of-permutation';
 import { problem as minimizeManhattanDistances } from './minimize-manhattan-distances';
+// batch 253
+import { problem as applyOpsTwoStringsEqual } from './apply-operations-to-make-two-strings-equal';
+import { problem as applyOpsMaximizeSumSquares } from './apply-operations-on-array-to-maximize-sum-of-squares';
+import { problem as maximumLinearStockScore } from './maximum-linear-stock-score';
+import { problem as subarraysDistinctSumSquaresI } from './subarrays-distinct-element-sum-of-squares-i';
+import { problem as totalCharsAfterTransformationsII } from './total-characters-in-string-after-transformations-ii';
 // batch 252
 import { problem as maximumSizeOfSetAfterRemovals } from './maximum-size-of-a-set-after-removals';
 import { problem as minimumOpsToMakeXYEqual } from './minimum-number-of-operations-to-make-x-and-y-equal';
@@ -6329,6 +6335,12 @@ export const problems: readonly Problem[] = [
   countSubstringsRearrangedII,
   findIndexOfPermutation,
   minimizeManhattanDistances,
+  // batch 253
+  applyOpsTwoStringsEqual,
+  applyOpsMaximizeSumSquares,
+  maximumLinearStockScore,
+  subarraysDistinctSumSquaresI,
+  totalCharsAfterTransformationsII,
   // batch 252
   maximumSizeOfSetAfterRemovals,
   minimumOpsToMakeXYEqual,

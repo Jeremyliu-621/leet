@@ -44544,6 +44544,97 @@ def minTransfers(transactions):
     return backtrack(0)
 `,
 
+  'apply-operations-to-make-two-strings-equal': `
+def minOperations(s1, s2, x):
+    diffs = [i for i in range(len(s1)) if s1[i] != s2[i]]
+    if not diffs:
+        return 0
+    n = len(diffs)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(n):
+        dp[i + 1] = min(dp[i + 1], dp[i] + x)
+        if i + 1 < n:
+            dp[i + 2] = min(dp[i + 2], dp[i] + min(diffs[i + 1] - diffs[i], 2 * x))
+    return dp[n]
+`,
+
+  'apply-operations-on-array-to-maximize-sum-of-squares': `
+def maxSum(nums, k):
+    MOD = 10**9 + 7
+    bits = 30
+    cnt = [0] * bits
+    for n in nums:
+        for b in range(bits):
+            if (n >> b) & 1:
+                cnt[b] += 1
+    ans = 0
+    for r in range(1, k + 1):
+        val = 0
+        for b in range(bits):
+            if cnt[b] >= r:
+                val |= (1 << b)
+        ans = (ans + val * val) % MOD
+    return ans
+`,
+
+  'maximum-linear-stock-score': `
+def maxScore(prices):
+    from collections import defaultdict
+    groups = defaultdict(int)
+    for i, p in enumerate(prices):
+        groups[p - i] += p
+    return max(groups.values())
+`,
+
+  'subarrays-distinct-element-sum-of-squares-i': `
+def sumCounts(nums):
+    MOD = 10**9 + 7
+    ans = 0
+    for l in range(len(nums)):
+        seen = set()
+        for r in range(l, len(nums)):
+            seen.add(nums[r])
+            ans = (ans + len(seen) ** 2) % MOD
+    return ans
+`,
+
+  'total-characters-in-string-after-transformations-ii': `
+def lengthAfterTransformations(s, t, nums):
+    MOD = 10**9 + 7
+    N = 26
+    def mat_mul(A, B):
+        C = [[0]*N for _ in range(N)]
+        for i in range(N):
+            for k in range(N):
+                if A[i][k]:
+                    for j in range(N):
+                        C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD
+        return C
+    def mat_pow(M, p):
+        result = [[int(i == j) for j in range(N)] for i in range(N)]
+        base = [row[:] for row in M]
+        while p > 0:
+            if p & 1:
+                result = mat_mul(result, base)
+            base = mat_mul(base, base)
+            p >>= 1
+        return result
+    M = [[0]*N for _ in range(N)]
+    for i in range(N):
+        for k in range(1, nums[i] + 1):
+            M[(i + k) % N][i] = (M[(i + k) % N][i] + 1) % MOD
+    Mt = mat_pow(M, t)
+    freq = [0] * N
+    for ch in s:
+        freq[ord(ch) - ord('a')] += 1
+    total = 0
+    for j in range(N):
+        for i in range(N):
+            total = (total + Mt[j][i] * freq[i]) % MOD
+    return total
+`,
+
   'count-substrings-that-can-be-rearranged-to-contain-a-string-ii': `
 def countSubstrings(word1, word2):
     from collections import Counter
