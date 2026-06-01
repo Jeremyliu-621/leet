@@ -43,11 +43,35 @@ Return the lexicographically largest string that could be in the box after all r
   functionName: 'answerString',
   params: ['word', 'numFriends'],
   starterCode: {
-    javascript: 'function answerString(word, numFriends) {\n  // your code here\n}\n',
-    typescript: `function answerString(word: string, numFriends: number): string {
-
+    javascript: `function answerString(word, numFriends) {
+  if (numFriends === 1) return word;
+  const maxLen = word.length - numFriends + 1;
+  let best = '';
+  for (let i = 0; i < word.length; i++) {
+    const sub = word.slice(i, i + maxLen);
+    if (sub > best) best = sub;
+  }
+  return best;
 }`,
-    python: 'def answerString(word, numFriends):\n    # your code here\n    pass\n',
+    typescript: `function answerString(word: string, numFriends: number): string {
+  if (numFriends === 1) return word;
+  const maxLen = word.length - numFriends + 1;
+  let best = '';
+  for (let i = 0; i < word.length; i++) {
+    const sub = word.slice(i, i + maxLen);
+    if (sub > best) best = sub;
+  }
+  return best;
+}`,
+    python: `def answerString(word, numFriends):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    if numFriends == 1: return word
+    max_len = len(word) - numFriends + 1
+    best = ''
+    for i in range(len(word)):
+        sub = word[i:i + max_len]
+        if sub > best: best = sub
+    return best`,
   },
   visibleTests: [
     { args: ['dbca', 2], expected: 'dbc' },

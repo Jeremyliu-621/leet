@@ -42,14 +42,49 @@ Return the **maximum** factor score of \`nums\` after removing **at most one** e
   params: ['nums'],
   starterCode: {
     javascript: `function maxFactorScore(nums) {
-  // your code here
+  function gcd(a, b) { while (b) { [a, b] = [b, a % b]; } return a; }
+  function lcm(a, b) { return a / gcd(a, b) * b; }
+  function score(arr) {
+    if (arr.length === 0) return 0;
+    const g = arr.reduce(gcd);
+    const l = arr.reduce(lcm);
+    return g * l;
+  }
+  let best = score(nums);
+  for (let i = 0; i < nums.length; i++) {
+    best = Math.max(best, score([...nums.slice(0, i), ...nums.slice(i + 1)]));
+  }
+  return best;
 }`,
     typescript: `function maxFactorScore(nums: number[]): number {
-  // your code here
+  function gcd(a: number, b: number): number { while (b) { [a, b] = [b, a % b]; } return a; }
+  function lcm(a: number, b: number): number { return a / gcd(a, b) * b; }
+  function score(arr: number[]): number {
+    if (arr.length === 0) return 0;
+    const g = arr.reduce(gcd);
+    const l = arr.reduce(lcm);
+    return g * l;
+  }
+  let best = score(nums);
+  for (let i = 0; i < nums.length; i++) {
+    best = Math.max(best, score([...nums.slice(0, i), ...nums.slice(i + 1)]));
+  }
+  return best;
 }`,
     python: `def maxFactorScore(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from math import gcd, lcm
+    def score(arr):
+        if not arr: return 0
+        g = arr[0]
+        for x in arr[1:]: g = gcd(g, x)
+        l = arr[0]
+        for x in arr[1:]: l = lcm(l, x)
+        return g * l
+    best = score(nums)
+    for i in range(len(nums)):
+        best = max(best, score(nums[:i] + nums[i+1:]))
+    return best`,
   },
   visibleTests: [
     { args: [[2, 4, 8, 16]], expected: 64 },

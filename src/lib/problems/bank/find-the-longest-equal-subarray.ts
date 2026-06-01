@@ -42,10 +42,52 @@ Explanation: Delete elements at indices 2, 3 to get [1,1,1,1].
   functionName: 'longestEqualSubarray',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function longestEqualSubarray(nums, k) {\n  // your code here\n}\n',
-    typescript: "function longestEqualSubarray(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def longestEqualSubarray(nums, k):\n    pass\n',
+    javascript: `function longestEqualSubarray(nums, k) {
+  const pos = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const arr = pos.get(nums[i]) ?? [];
+    arr.push(i);
+    pos.set(nums[i], arr);
+  }
+  let best = 0;
+  for (const positions of pos.values()) {
+    let l = 0;
+    for (let r = 0; r < positions.length; r++) {
+      while ((positions[r] - positions[l] + 1) - (r - l + 1) > k) l++;
+      best = Math.max(best, r - l + 1);
+    }
+  }
+  return best;
+}`,
+    typescript: `function longestEqualSubarray(nums: number[], k: number): number {
+  const pos = new Map<number, number[]>();
+  for (let i = 0; i < nums.length; i++) {
+    const arr = pos.get(nums[i]!) ?? [];
+    arr.push(i);
+    pos.set(nums[i]!, arr);
+  }
+  let best = 0;
+  for (const positions of pos.values()) {
+    let l = 0;
+    for (let r = 0; r < positions.length; r++) {
+      while ((positions[r]! - positions[l]! + 1) - (r - l + 1) > k) l++;
+      best = Math.max(best, r - l + 1);
+    }
+  }
+  return best;
+}`,
+    python: `def longestEqualSubarray(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import defaultdict
+    pos = defaultdict(list)
+    for i, v in enumerate(nums): pos[v].append(i)
+    best = 0
+    for positions in pos.values():
+        l = 0
+        for r in range(len(positions)):
+            while (positions[r] - positions[l] + 1) - (r - l + 1) > k: l += 1
+            best = max(best, r - l + 1)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 3, 1, 3], 3], expected: 3 },

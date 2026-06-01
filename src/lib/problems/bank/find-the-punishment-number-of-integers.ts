@@ -35,10 +35,47 @@ The punishment number of \`n\` is defined as the sum of the squares of all integ
   functionName: 'punishmentNumber',
   params: ['n'],
   starterCode: {
-    javascript: 'function punishmentNumber(n) {\n  // your code here\n}\n',
-    typescript: "function punishmentNumber(n: number): number {\n  // your code here\n}",
-
-    python: 'def punishmentNumber(n):\n    # your code here\n    pass\n',
+    javascript: `function punishmentNumber(n) {
+  function canPartition(s, target) {
+    if (s === '') return target === 0;
+    for (let len = 1; len <= s.length; len++) {
+      const val = parseInt(s.slice(0, len));
+      if (val > target) break;
+      if (canPartition(s.slice(len), target - val)) return true;
+    }
+    return false;
+  }
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    if (canPartition(String(i * i), i)) sum += i * i;
+  }
+  return sum;
+}`,
+    typescript: `function punishmentNumber(n: number): number {
+  function canPartition(s: string, target: number): boolean {
+    if (s === '') return target === 0;
+    for (let len = 1; len <= s.length; len++) {
+      const val = parseInt(s.slice(0, len));
+      if (val > target) break;
+      if (canPartition(s.slice(len), target - val)) return true;
+    }
+    return false;
+  }
+  let sum = 0;
+  for (let i = 1; i <= n; i++) {
+    if (canPartition(String(i * i), i)) sum += i * i;
+  }
+  return sum;
+}`,
+    python: `def punishmentNumber(n):
+    def can_partition(s, target):
+        if not s: return target == 0
+        for length in range(1, len(s) + 1):
+            val = int(s[:length])
+            if val > target: break
+            if can_partition(s[length:], target - val): return True
+        return False
+    return sum(i * i for i in range(1, n + 1) if can_partition(str(i * i), i))`,
   },
   visibleTests: [
     { args: [10], expected: 182 },

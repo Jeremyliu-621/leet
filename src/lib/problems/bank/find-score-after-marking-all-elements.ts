@@ -40,14 +40,46 @@ Return the score you get after applying the above algorithm.`,
   params: ['nums'],
   starterCode: {
     javascript: `function findScore(nums) {
-  // your code here
+  const n = nums.length;
+  const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => nums[a] !== nums[b] ? nums[a] - nums[b] : a - b);
+  const marked = new Array(n).fill(false);
+  let score = 0;
+  for (const i of order) {
+    if (marked[i]) continue;
+    score += nums[i];
+    marked[i] = true;
+    if (i > 0) marked[i - 1] = true;
+    if (i < n - 1) marked[i + 1] = true;
+  }
+  return score;
 }`,
     typescript: `function findScore(nums: number[]): number {
-  // your code here
+  const n = nums.length;
+  const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => nums[a]! !== nums[b]! ? nums[a]! - nums[b]! : a - b);
+  const marked = new Array(n).fill(false) as boolean[];
+  let score = 0;
+  for (const i of order) {
+    if (marked[i]!) continue;
+    score += nums[i]!;
+    marked[i]! = true;
+    if (i > 0) marked[i - 1]! = true;
+    if (i < n - 1) marked[i + 1]! = true;
+  }
+  return score;
 }`,
     python: `def findScore(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    order = sorted(range(n), key=lambda i: (nums[i], i))
+    marked = [False] * n
+    score = 0
+    for i in order:
+        if marked[i]: continue
+        score += nums[i]
+        marked[i] = True
+        if i > 0: marked[i - 1] = True
+        if i < n - 1: marked[i + 1] = True
+    return score`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 4, 5, 2]], expected: 7 },
