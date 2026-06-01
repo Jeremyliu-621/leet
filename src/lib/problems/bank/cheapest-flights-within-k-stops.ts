@@ -37,10 +37,45 @@ export const problem: Problem = {
   functionName: 'findCheapestPrice',
   params: ['n', 'flights', 'src', 'dst', 'k'],
   starterCode: {
-    javascript: `function findCheapestPrice(n, flights, src, dst, k) {\n  // your code here\n}\n`,
-    typescript: "function findCheapestPrice(n: number, flights: number[][], src: number, dst: number, k: number): number {\n  // your code here\n}",
-
-    python: `def findCheapestPrice(n, flights, src, dst, k):\n    # your code here\n    pass\n`,
+    javascript: `function findCheapestPrice(n, flights, src, dst, k) {
+  let prices = new Array(n).fill(Infinity);
+  prices[src] = 0;
+  for (let i = 0; i <= k; i++) {
+    const copy = [...prices];
+    for (const [from, to, price] of flights) {
+      if (prices[from] !== Infinity && prices[from] + price < copy[to])
+        copy[to] = prices[from] + price;
+    }
+    prices = copy;
+  }
+  return prices[dst] === Infinity ? -1 : prices[dst];
+}`,
+    typescript: `function findCheapestPrice(n: number, flights: number[][], src: number, dst: number, k: number): number {
+  let prices = new Array<number>(n).fill(Infinity);
+  prices[src] = 0;
+  for (let i = 0; i <= k; i++) {
+    const copy = [...prices];
+    for (const flight of flights) {
+      const [from, to, price] = flight as [number, number, number];
+      if (prices[from]! !== Infinity && prices[from]! + price < copy[to]!)
+        copy[to] = prices[from]! + price;
+    }
+    prices = copy;
+  }
+  return prices[dst]! === Infinity ? -1 : prices[dst]!;
+}`,
+    python: `def findCheapestPrice(n, flights, src, dst, k):
+    flights = list(flights.to_py()) if hasattr(flights, 'to_py') else list(flights)
+    flights = [list(f.to_py()) if hasattr(f, 'to_py') else list(f) for f in flights]
+    prices = [float('inf')] * n
+    prices[src] = 0
+    for _ in range(k + 1):
+        copy = prices[:]
+        for fr, to, price in flights:
+            if prices[fr] != float('inf') and prices[fr] + price < copy[to]:
+                copy[to] = prices[fr] + price
+        prices = copy
+    return -1 if prices[dst] == float('inf') else prices[dst]`,
   },
   visibleTests: [
     {

@@ -35,10 +35,23 @@ export const problem: Problem = {
   functionName: 'areOccurrencesEqual',
   params: ['s'],
   starterCode: {
-    javascript: 'function areOccurrencesEqual(s) {\n  // your code here\n}\n',
-    typescript: "function areOccurrencesEqual(s: string): boolean {\n  // your code here\n}",
-
-    python: 'def areOccurrencesEqual(s: str) -> bool:\n    # your code here\n    pass\n',
+    javascript: `function areOccurrencesEqual(s) {
+  const freq = new Map();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  const vals = [...freq.values()];
+  return vals.every(v => v === vals[0]);
+}`,
+    typescript: `function areOccurrencesEqual(s: string): boolean {
+  const freq = new Map<string, number>();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  const vals = [...freq.values()];
+  return vals.every(v => v === vals[0]);
+}`,
+    python: `def areOccurrencesEqual(s: str) -> bool:
+    if hasattr(s, 'to_py'): s = s.to_py()
+    from collections import Counter
+    cnt = Counter(s)
+    return len(set(cnt.values())) <= 1`,
   },
   visibleTests: [
     { args: ['abacbc'], expected: true },

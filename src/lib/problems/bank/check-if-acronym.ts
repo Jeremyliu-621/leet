@@ -38,10 +38,16 @@ The string \`s\` is considered an acronym of \`words\` if it can be formed by co
   functionName: 'isAcronym',
   params: ['words', 's'],
   starterCode: {
-    javascript: 'function isAcronym(words, s) {\n  // your code here\n}\n',
-    typescript: "function isAcronym(words: string[], s: string): boolean {\n  // your code here\n}",
-
-    python: 'def isAcronym(words, s):\n    # your code here\n    pass\n',
+    javascript: `function isAcronym(words, s) {
+  return words.map(w => w[0]).join('') === s;
+}`,
+    typescript: `function isAcronym(words: string[], s: string): boolean {
+  return words.map(w => w[0]!).join('') === s;
+}`,
+    python: `def isAcronym(words, s):
+    words = list(words.to_py()) if hasattr(words, 'to_py') else list(words)
+    if hasattr(s, 'to_py'): s = s.to_py()
+    return ''.join(w[0] for w in words) == s`,
   },
   visibleTests: [
     { args: [['alice', 'bob', 'charlie'], 'abc'], expected: true },

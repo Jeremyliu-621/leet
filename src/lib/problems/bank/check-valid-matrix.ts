@@ -33,10 +33,22 @@ Given an \`n x n\` integer matrix \`matrix\`, return \`true\` if the matrix is v
   functionName: 'checkValid',
   params: ['matrix'],
   starterCode: {
-    javascript: 'function checkValid(matrix) {\n  // your code here\n}\n',
-    typescript: "function checkValid(matrix: number[][]): boolean {\n  // your code here\n}",
-
-    python: 'def checkValid(matrix):\n    # your code here\n    pass\n',
+    javascript: `function checkValid(matrix) {
+  const n = matrix.length;
+  const ok = arr => new Set(arr).size === n && arr.every(v => v >= 1 && v <= n);
+  return matrix.every(ok) && Array.from({length:n}, (_, j) => matrix.map(r => r[j])).every(ok);
+}`,
+    typescript: `function checkValid(matrix: number[][]): boolean {
+  const n = matrix.length;
+  const ok = (arr: number[]) => new Set(arr).size === n && arr.every(v => v >= 1 && v <= n);
+  return matrix.every(ok) && Array.from({length:n}, (_, j) => matrix.map(r => r[j]!)).every(ok);
+}`,
+    python: `def checkValid(matrix):
+    matrix = list(matrix.to_py()) if hasattr(matrix, 'to_py') else list(matrix)
+    matrix = [[v for v in (row.to_py() if hasattr(row, 'to_py') else row)] for row in matrix]
+    n = len(matrix)
+    def ok(arr): return len(set(arr)) == n and all(1 <= v <= n for v in arr)
+    return all(ok(row) for row in matrix) and all(ok([matrix[r][c] for r in range(n)]) for c in range(n))`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [3, 1, 2], [2, 3, 1]]], expected: true },

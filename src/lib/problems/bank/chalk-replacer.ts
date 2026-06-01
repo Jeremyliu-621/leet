@@ -36,10 +36,31 @@ Return the **index** of the student that will replace the chalk pieces.`,
   functionName: 'chalkReplacer',
   params: ['chalk', 'k'],
   starterCode: {
-    javascript: 'function chalkReplacer(chalk, k) {\n  // your code here\n}\n',
-    typescript: "function chalkReplacer(chalk: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def chalkReplacer(chalk, k):\n    # your code here\n    pass\n',
+    javascript: `function chalkReplacer(chalk, k) {
+  const sum = chalk.reduce((a, b) => a + b, 0);
+  k %= sum;
+  for (let i = 0; i < chalk.length; i++) {
+    if (k < chalk[i]) return i;
+    k -= chalk[i];
+  }
+  return 0;
+}`,
+    typescript: `function chalkReplacer(chalk: number[], k: number): number {
+  const sum = chalk.reduce((a, b) => a + b, 0);
+  k %= sum;
+  for (let i = 0; i < chalk.length; i++) {
+    if (k < chalk[i]!) return i;
+    k -= chalk[i]!;
+  }
+  return 0;
+}`,
+    python: `def chalkReplacer(chalk, k):
+    chalk = list(chalk.to_py()) if hasattr(chalk, 'to_py') else list(chalk)
+    k %= sum(chalk)
+    for i, c in enumerate(chalk):
+        if k < c: return i
+        k -= c
+    return 0`,
   },
   visibleTests: [
     { args: [[5, 1, 5], 22], expected: 0 },

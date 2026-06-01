@@ -38,10 +38,43 @@ Given \`poured\` cups poured at the top, and the 0-indexed \`query_row\` and \`q
   functionName: 'champagneTower',
   params: ['poured', 'query_row', 'query_glass'],
   starterCode: {
-    javascript: 'function champagneTower(poured, query_row, query_glass) {\n  // your code here\n}\n',
-    typescript: "function champagneTower(poured: number, query_row: number, query_glass: number): number {\n  // your code here\n}",
-
-    python: 'def champagneTower(poured, query_row, query_glass):\n    # your code here\n    pass\n',
+    javascript: `function champagneTower(poured, query_row, query_glass) {
+  const tower = Array.from({length: 101}, () => new Array(101).fill(0));
+  tower[0][0] = poured;
+  for (let r = 0; r < query_row; r++)
+    for (let g = 0; g <= r; g++)
+      if (tower[r][g] > 1) {
+        const e = (tower[r][g] - 1) / 2;
+        tower[r][g] = 1;
+        tower[r+1][g] += e;
+        tower[r+1][g+1] += e;
+      }
+  return Math.min(1, tower[query_row][query_glass]);
+}`,
+    typescript: `function champagneTower(poured: number, query_row: number, query_glass: number): number {
+  const tower: number[][] = Array.from({length: 101}, () => new Array<number>(101).fill(0));
+  tower[0]![0] = poured;
+  for (let r = 0; r < query_row; r++)
+    for (let g = 0; g <= r; g++)
+      if (tower[r]![g]! > 1) {
+        const e = (tower[r]![g]! - 1) / 2;
+        tower[r]![g] = 1;
+        tower[r+1]![g] = tower[r+1]![g]! + e;
+        tower[r+1]![g+1] = tower[r+1]![g+1]! + e;
+      }
+  return Math.min(1, tower[query_row]![query_glass]!);
+}`,
+    python: `def champagneTower(poured, query_row, query_glass):
+    tower = [[0.0]*101 for _ in range(101)]
+    tower[0][0] = poured
+    for r in range(query_row):
+        for g in range(r+1):
+            if tower[r][g] > 1:
+                e = (tower[r][g] - 1) / 2
+                tower[r][g] = 1
+                tower[r+1][g] += e
+                tower[r+1][g+1] += e
+    return min(1.0, tower[query_row][query_glass])`,
   },
   visibleTests: [
     { args: [1, 1, 1], expected: 0.0 },

@@ -31,10 +31,15 @@ Given a string \`sentence\` containing only lowercase English letters, return \`
   functionName: 'checkIfPangram',
   params: ['sentence'],
   starterCode: {
-    javascript: 'function checkIfPangram(sentence) {\n  // your code here\n}\n',
-    typescript: "function checkIfPangram(sentence: string): boolean {\n  // your code here\n}",
-
-    python: 'def checkIfPangram(sentence):\n    # your code here\n    pass\n',
+    javascript: `function checkIfPangram(sentence) {
+  return new Set(sentence).size === 26;
+}`,
+    typescript: `function checkIfPangram(sentence: string): boolean {
+  return new Set(sentence).size === 26;
+}`,
+    python: `def checkIfPangram(sentence):
+    if hasattr(sentence, 'to_py'): sentence = sentence.to_py()
+    return len(set(sentence)) == 26`,
   },
   visibleTests: [
     { args: ['thequickbrownfoxjumpsoverthelazydog'], expected: true },

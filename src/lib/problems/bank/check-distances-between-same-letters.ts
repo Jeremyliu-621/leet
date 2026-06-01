@@ -37,10 +37,33 @@ In a **well-spaced** string, the number of letters between the two occurrences o
   functionName: 'checkDistances',
   params: ['s', 'distance'],
   starterCode: {
-    javascript: 'function checkDistances(s, distance) {\n  // your code here\n}\n',
-    typescript: "function checkDistances(s: string, distance: number[]): boolean {\n  // your code here\n}",
-
-    python: 'def checkDistances(s, distance):\n    # your code here\n    pass\n',
+    javascript: `function checkDistances(s, distance) {
+  const first = new Array(26).fill(-1);
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i) - 97;
+    if (first[c] === -1) first[c] = i;
+    else if (i - first[c] - 1 !== distance[c]) return false;
+  }
+  return true;
+}`,
+    typescript: `function checkDistances(s: string, distance: number[]): boolean {
+  const first = new Array<number>(26).fill(-1);
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i) - 97;
+    if (first[c]! === -1) first[c] = i;
+    else if (i - first[c]! - 1 !== distance[c]!) return false;
+  }
+  return true;
+}`,
+    python: `def checkDistances(s, distance):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    distance = list(distance.to_py()) if hasattr(distance, 'to_py') else list(distance)
+    first = [-1] * 26
+    for i, ch in enumerate(s):
+        c = ord(ch) - 97
+        if first[c] == -1: first[c] = i
+        elif i - first[c] - 1 != distance[c]: return False
+    return True`,
   },
   visibleTests: [
     { args: ['abaccb', [1, 3, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], expected: true },

@@ -34,10 +34,20 @@ Given three strings \`firstWord\`, \`secondWord\`, and \`targetWord\`, return \`
   functionName: 'isSumEqual',
   params: ['firstWord', 'secondWord', 'targetWord'],
   starterCode: {
-    javascript: 'function isSumEqual(firstWord, secondWord, targetWord) {\n  // your code here\n}\n',
-    typescript: "function isSumEqual(firstWord: string, secondWord: string, targetWord: string): boolean {\n  // your code here\n}",
-
-    python: 'def isSumEqual(firstWord, secondWord, targetWord):\n    # your code here\n    pass\n',
+    javascript: `function isSumEqual(firstWord, secondWord, targetWord) {
+  const toNum = w => parseInt(w.split('').map(c => c.charCodeAt(0) - 97).join('') || '0');
+  return toNum(firstWord) + toNum(secondWord) === toNum(targetWord);
+}`,
+    typescript: `function isSumEqual(firstWord: string, secondWord: string, targetWord: string): boolean {
+  const toNum = (w: string) => parseInt(w.split('').map(c => c.charCodeAt(0) - 97).join('') || '0');
+  return toNum(firstWord) + toNum(secondWord) === toNum(targetWord);
+}`,
+    python: `def isSumEqual(firstWord, secondWord, targetWord):
+    if hasattr(firstWord, 'to_py'): firstWord = firstWord.to_py()
+    if hasattr(secondWord, 'to_py'): secondWord = secondWord.to_py()
+    if hasattr(targetWord, 'to_py'): targetWord = targetWord.to_py()
+    def to_num(w): return int(''.join(str(ord(c)-97) for c in w)) if w else 0
+    return to_num(firstWord) + to_num(secondWord) == to_num(targetWord)`,
   },
   visibleTests: [
     { args: ['acb', 'cba', 'cdb'], expected: true },
