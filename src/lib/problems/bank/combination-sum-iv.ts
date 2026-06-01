@@ -43,10 +43,30 @@ You can use each number in \`nums\` an unlimited number of times.`,
   functionName: 'combinationSum4',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function combinationSum4(nums, target) {\n  // your code here\n}\n',
-    typescript: "function combinationSum4(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def combinationSum4(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function combinationSum4(nums, target) {
+  const dp = new Array(target + 1).fill(0);
+  dp[0] = 1;
+  for (let i = 1; i <= target; i++)
+    for (const n of nums)
+      if (n <= i) dp[i] += dp[i - n];
+  return dp[target];
+}`,
+    typescript: `function combinationSum4(nums: number[], target: number): number {
+  const dp = new Array<number>(target + 1).fill(0);
+  dp[0] = 1;
+  for (let i = 1; i <= target; i++)
+    for (const n of nums)
+      if (n <= i) dp[i] = (dp[i] ?? 0) + (dp[i - n] ?? 0);
+  return dp[target] ?? 0;
+}`,
+    python: `def combinationSum4(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for i in range(1, target + 1):
+        for n in nums:
+            if n <= i: dp[i] += dp[i - n]
+    return dp[target]`,
   },
   visibleTests: [
     { args: [[1, 2, 3], 4], expected: 7 },

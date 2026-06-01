@@ -41,10 +41,21 @@ Return an array \`[L, W]\` where \`L\` and \`W\` are the length and width of the
   functionName: 'constructRectangle',
   params: ['area'],
   starterCode: {
-    javascript: 'function constructRectangle(area) {\n  // your code here\n}\n',
-    typescript: "function constructRectangle(area: number): number[] {\n  // your code here\n}",
-
-    python: 'def constructRectangle(area):\n    # your code here\n    pass\n',
+    javascript: `function constructRectangle(area) {
+  let w = Math.floor(Math.sqrt(area));
+  while (area % w !== 0) w--;
+  return [area / w, w];
+}`,
+    typescript: `function constructRectangle(area: number): number[] {
+  let w = Math.floor(Math.sqrt(area));
+  while (area % w !== 0) w--;
+  return [area / w, w];
+}`,
+    python: `def constructRectangle(area):
+    import math
+    w = int(math.sqrt(area))
+    while area % w != 0: w -= 1
+    return [area // w, w]`,
   },
   visibleTests: [
     { args: [4], expected: [2, 2] },

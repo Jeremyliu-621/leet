@@ -28,10 +28,37 @@ Return \`-1\` if \`version1 < version2\`, \`1\` if \`version1 > version2\`, and 
   functionName: 'compareVersion',
   params: ['version1', 'version2'],
   starterCode: {
-    javascript: 'function compareVersion(version1, version2) {\n  // your code here\n}\n',
-    typescript: "function compareVersion(version1: string, version2: string): number {\n  // your code here\n}",
-
-    python: 'def compareVersion(version1, version2):\n    # your code here\n    pass\n',
+    javascript: `function compareVersion(version1, version2) {
+  const a = version1.split('.'), b = version2.split('.');
+  const n = Math.max(a.length, b.length);
+  for (let i = 0; i < n; i++) {
+    const x = +(a[i] ?? 0), y = +(b[i] ?? 0);
+    if (x < y) return -1;
+    if (x > y) return 1;
+  }
+  return 0;
+}`,
+    typescript: `function compareVersion(version1: string, version2: string): number {
+  const a = version1.split('.'), b = version2.split('.');
+  const n = Math.max(a.length, b.length);
+  for (let i = 0; i < n; i++) {
+    const x = +(a[i] ?? 0), y = +(b[i] ?? 0);
+    if (x < y) return -1;
+    if (x > y) return 1;
+  }
+  return 0;
+}`,
+    python: `def compareVersion(version1, version2):
+    if hasattr(version1, 'to_py'): version1 = version1.to_py()
+    if hasattr(version2, 'to_py'): version2 = version2.to_py()
+    a, b = version1.split('.'), version2.split('.')
+    n = max(len(a), len(b))
+    for i in range(n):
+        x = int(a[i]) if i < len(a) else 0
+        y = int(b[i]) if i < len(b) else 0
+        if x < y: return -1
+        if x > y: return 1
+    return 0`,
   },
   visibleTests: [
     { args: ['1.2', '1.10'], expected: -1 },

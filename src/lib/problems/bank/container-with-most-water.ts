@@ -39,10 +39,30 @@ The container cannot be tilted. Water is bounded by the shorter of the two chose
   functionName: 'containerWithMostWater',
   params: ['height'],
   starterCode: {
-    javascript: 'function containerWithMostWater(height) {\n  // your code here\n}\n',
-    typescript: "function containerWithMostWater(height: number[]): number {\n  // your code here\n}",
-
-    python: 'def containerWithMostWater(height):\n    # your code here\n    pass\n',
+    javascript: `function containerWithMostWater(height) {
+  let left = 0, right = height.length - 1, max = 0;
+  while (left < right) {
+    max = Math.max(max, Math.min(height[left], height[right]) * (right - left));
+    if (height[left] < height[right]) left++; else right--;
+  }
+  return max;
+}`,
+    typescript: `function containerWithMostWater(height: number[]): number {
+  let left = 0, right = height.length - 1, max = 0;
+  while (left < right) {
+    max = Math.max(max, Math.min(height[left]!, height[right]!) * (right - left));
+    if (height[left]! < height[right]!) left++; else right--;
+  }
+  return max;
+}`,
+    python: `def containerWithMostWater(height):
+    height = list(height.to_py()) if hasattr(height, 'to_py') else list(height)
+    left, right, mx = 0, len(height)-1, 0
+    while left < right:
+        mx = max(mx, min(height[left], height[right]) * (right - left))
+        if height[left] < height[right]: left += 1
+        else: right -= 1
+    return mx`,
   },
   visibleTests: [
     { args: [[1, 8, 6, 2, 5, 4, 8, 3, 7]], expected: 49 },

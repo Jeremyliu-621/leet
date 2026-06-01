@@ -37,9 +37,45 @@ The trucks do not have to stop at every house; they only stop at houses where th
   functionName: 'garbageCollection',
   params: ['garbage', 'travel'],
   starterCode: {
-    javascript: 'function garbageCollection(garbage, travel) {\n  // your code here\n}\n',
-    typescript: 'function garbageCollection(garbage: string[], travel: number[]): number {\n  // your code here\n}',
-    python: 'def garbageCollection(garbage, travel):\n    # your code here\n    pass\n',
+    javascript: `function garbageCollection(garbage, travel) {
+  let total = 0;
+  for (const g of garbage) total += g.length;
+  const prefix = [0];
+  for (const t of travel) prefix.push(prefix[prefix.length-1] + t);
+  for (const type of ['M', 'P', 'G']) {
+    let last = -1;
+    for (let i = 0; i < garbage.length; i++)
+      if (garbage[i].includes(type)) last = i;
+    if (last > 0) total += prefix[last];
+  }
+  return total;
+}`,
+    typescript: `function garbageCollection(garbage: string[], travel: number[]): number {
+  let total = 0;
+  for (const g of garbage) total += g.length;
+  const prefix = [0];
+  for (const t of travel) prefix.push(prefix[prefix.length-1]! + t);
+  for (const type of ['M', 'P', 'G'] as const) {
+    let last = -1;
+    for (let i = 0; i < garbage.length; i++)
+      if (garbage[i]!.includes(type)) last = i;
+    if (last > 0) total += prefix[last]!;
+  }
+  return total;
+}`,
+    python: `def garbageCollection(garbage, travel):
+    garbage = list(garbage.to_py()) if hasattr(garbage, 'to_py') else list(garbage)
+    garbage = [str(g.to_py() if hasattr(g, 'to_py') else g) for g in garbage]
+    travel = list(travel.to_py()) if hasattr(travel, 'to_py') else list(travel)
+    total = sum(len(g) for g in garbage)
+    prefix = [0]
+    for t in travel: prefix.append(prefix[-1] + t)
+    for t in 'MPG':
+        last = -1
+        for i, g in enumerate(garbage):
+            if t in g: last = i
+        if last > 0: total += prefix[last]
+    return total`,
   },
   visibleTests: [
     { args: [['G', 'P', 'GP', 'GG'], [2, 4, 3]], expected: 21 },

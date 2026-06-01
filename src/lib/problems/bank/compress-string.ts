@@ -39,10 +39,36 @@ An empty string encodes to an empty string.`,
   functionName: 'compressString',
   params: ['s'],
   starterCode: {
-    javascript: 'function compressString(s) {\n  // your code here\n}\n',
-    typescript: "function compressString(s: string): string {\n  // your code here\n}",
-
-    python: 'def compressString(s):\n    # your code here\n    pass\n',
+    javascript: `function compressString(s) {
+  let out = '', i = 0;
+  while (i < s.length) {
+    let j = i;
+    while (j < s.length && s[j] === s[i]) j++;
+    out += s[i] + (j - i);
+    i = j;
+  }
+  return out;
+}`,
+    typescript: `function compressString(s: string): string {
+  let out = '', i = 0;
+  while (i < s.length) {
+    let j = i;
+    while (j < s.length && s[j] === s[i]) j++;
+    out += s[i]! + (j - i);
+    i = j;
+  }
+  return out;
+}`,
+    python: `def compressString(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if not s: return ''
+    out, i = '', 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]: j += 1
+        out += s[i] + str(j - i)
+        i = j
+    return out`,
   },
   visibleTests: [
     { args: ['aaabbc'], expected: 'a3b2c1' },

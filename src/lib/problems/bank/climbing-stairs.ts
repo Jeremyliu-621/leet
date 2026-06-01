@@ -38,9 +38,23 @@ Notice the pattern: the number of ways to reach step \`n\` equals the number of 
   functionName: 'climbStairs',
   params: ['n'],
   starterCode: {
-    javascript: 'function climbStairs(n) {\n  // your code here\n}\n',
-    typescript: 'function climbStairs(n: number): number {\n  // your code here\n}\n',
-    python: 'def climbStairs(n):\n    # your code here\n    pass\n',
+    javascript: `function climbStairs(n) {
+  if (n <= 2) return n;
+  let a = 1, b = 2;
+  for (let i = 3; i <= n; i++) [a, b] = [b, a + b];
+  return b;
+}`,
+    typescript: `function climbStairs(n: number): number {
+  if (n <= 2) return n;
+  let a = 1, b = 2;
+  for (let i = 3; i <= n; i++) [a, b] = [b, a + b];
+  return b;
+}`,
+    python: `def climbStairs(n):
+    if n <= 2: return n
+    a, b = 1, 2
+    for _ in range(3, n+1): a, b = b, a+b
+    return b`,
   },
   visibleTests: [
     { args: [2], expected: 2 },

@@ -37,9 +37,19 @@ The brute-force double loop works in O(n²). A more efficient approach trades a 
   functionName: 'containsDuplicate',
   params: ['nums'],
   starterCode: {
-    javascript: 'function containsDuplicate(nums) {\n  // your code here\n}\n',
-    typescript: 'function containsDuplicate(nums: number[]): boolean {\n  // your code here\n}\n',
-    python: 'def containsDuplicate(nums):\n    # your code here\n    pass\n',
+    javascript: `function containsDuplicate(nums) {
+  const seen = new Set();
+  for (const n of nums) { if (seen.has(n)) return true; seen.add(n); }
+  return false;
+}`,
+    typescript: `function containsDuplicate(nums: number[]): boolean {
+  const seen = new Set<number>();
+  for (const n of nums) { if (seen.has(n)) return true; seen.add(n); }
+  return false;
+}`,
+    python: `def containsDuplicate(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    return len(set(nums)) < len(nums)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 1]], expected: true },
