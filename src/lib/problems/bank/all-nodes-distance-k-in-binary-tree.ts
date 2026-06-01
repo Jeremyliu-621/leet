@@ -111,20 +111,90 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
     },
   ],
   hints: [
-    'Build a parent map (DFS/BFS), so you can traverse upward as well as downward.',
-    'BFS from the target node treating the tree as an undirected graph (parent + left + right edges).',
-    'Track visited nodes to avoid revisiting. After k steps, collect all nodes in the BFS frontier.',
+    'Level 1: A binary tree only has downward edges. To move upward, first DFS the entire tree to build a parent map (node → parent).',
+    'Level 2: Once you have parent pointers, treat the tree as an undirected graph and BFS/DFS from the target node, exploring left child, right child, and parent at each step.',
+    'Level 3: Track visited nodes in a Set to avoid revisiting. Collect node values when distance equals k. Stop exploring a branch once distance exceeds k.',
   ],
   functionName: 'distanceKRunner',
   params: ['root', 'target', 'k'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript:
-      '// TreeNode class and distanceKRunner wrapper are pre-defined.\n// Implement the function below:\nfunction distanceK(root, target, k) {\n  \n}\n',
-    typescript: "function distanceKRunner(root: (number | null)[], target: number, k: number): number[] {\n  \n}",
+    javascript: `// TreeNode class and distanceKRunner wrapper are pre-defined.
+// Implement distanceK below — it receives (root, targetNode, k).
+function distanceK(root, target, k) {
+  const parent = new Map();
+  function buildParents(node, par) {
+    if (!node) return;
+    parent.set(node, par);
+    buildParents(node.left, node);
+    buildParents(node.right, node);
+  }
+  buildParents(root, null);
 
-    python:
-      '# TreeNode class and distanceKRunner wrapper are pre-defined.\n# Implement the function below:\ndef distanceK(root, target, k):\n    pass\n',
+  const result = [];
+  const visited = new Set();
+  function bfs(node, dist) {
+    if (!node || visited.has(node)) return;
+    visited.add(node);
+    if (dist === k) { result.push(node.val); return; }
+    bfs(node.left, dist + 1);
+    bfs(node.right, dist + 1);
+    bfs(parent.get(node), dist + 1);
+  }
+  bfs(target, 0);
+  return result;
+}`,
+    typescript: `// TreeNode class and distanceKRunner wrapper are pre-defined.
+// Implement distanceK below — it receives (root, targetNode, k).
+function distanceK(root: TreeNode | null, target: TreeNode | null, k: number): number[] {
+  const parent = new Map<TreeNode, TreeNode | null>();
+  function buildParents(node: TreeNode | null, par: TreeNode | null): void {
+    if (!node) return;
+    parent.set(node, par);
+    buildParents(node.left, node);
+    buildParents(node.right, node);
+  }
+  buildParents(root, null);
+
+  const result: number[] = [];
+  const visited = new Set<TreeNode>();
+  function bfs(node: TreeNode | null, dist: number): void {
+    if (!node || visited.has(node)) return;
+    visited.add(node);
+    if (dist === k) { result.push(node.val); return; }
+    bfs(node.left, dist + 1);
+    bfs(node.right, dist + 1);
+    bfs(parent.get(node) ?? null, dist + 1);
+  }
+  bfs(target, 0);
+  return result;
+}`,
+    python: `# TreeNode class and distanceKRunner wrapper are pre-defined.
+# Implement distanceK below — it receives (root, target_node, k).
+def distanceK(root, target, k):
+    parent = {}
+    def build_parents(node, par):
+        if not node:
+            return
+        parent[node] = par
+        build_parents(node.left, node)
+        build_parents(node.right, node)
+    build_parents(root, None)
+
+    result = []
+    visited = set()
+    def dfs(node, dist):
+        if node is None or node in visited:
+            return
+        visited.add(node)
+        if dist == k:
+            result.append(node.val)
+            return
+        dfs(node.left, dist + 1)
+        dfs(node.right, dist + 1)
+        dfs(parent.get(node), dist + 1)
+    dfs(target, 0)
+    return result`,
   },
   visibleTests: [
     { args: [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 5, 2], expected: [1, 4, 7] },
@@ -136,5 +206,7 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
     { args: [[1, 2, 3, 4], 1, 0], expected: [1] },
     { args: [[1, 2, 3, 4, 5], 3, 1], expected: [1] },
     { args: [[0, 1, null, 3, 2], 1, 1], expected: [0, 2, 3] },
+    { args: [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 1, 3], expected: [2, 6] },
+    { args: [[3, 5, 1, 6, 2, 0, 8, null, null, 7, 4], 3, 0], expected: [3] },
   ],
 };

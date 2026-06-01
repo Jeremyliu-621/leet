@@ -3098,6 +3098,7 @@ import { problem as markElementsArrayQueries } from './mark-elements-on-array-by
 import { problem as maxStrengthKDisjointSubarrays } from './maximum-strength-of-k-disjoint-subarrays';
 import { problem as shortestUncommonSubstringArr } from './shortest-uncommon-substring-in-an-array';
 import { problem as longestCommonSuffixQueries } from './longest-common-suffix-queries';
+import { problem as findScoreMarkingElements } from './find-score-of-array-after-marking-all-elements';
 // batch 255
 import { problem as countUniqueGoodSubseqs } from './count-unique-good-subsequences';
 import { problem as sumKMirrorNumbers } from './sum-of-k-mirror-numbers';
@@ -6347,6 +6348,7 @@ export const problems: readonly Problem[] = [
   maxStrengthKDisjointSubarrays,
   shortestUncommonSubstringArr,
   longestCommonSuffixQueries,
+  findScoreMarkingElements,
   // batch 255
   countUniqueGoodSubseqs,
   sumKMirrorNumbers,

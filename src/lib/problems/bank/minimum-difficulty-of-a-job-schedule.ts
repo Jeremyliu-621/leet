@@ -33,17 +33,68 @@ Given an integer array \`jobDifficulty\` and an integer \`d\`, return the **mini
     },
   ],
   hints: [
-    'If n < d, return -1 immediately.',
-    'Let dp[i][j] = min difficulty to schedule first j jobs over i days.',
-    'dp[day][j] = min over k from day to j of (dp[day-1][k-1] + max(jobs[k-1..j-1])).',
-    'Inner loop: iterate k from j down to day, keeping a running max.',
+    'Level 1: If n < d, it is impossible — return -1 immediately. Otherwise, define dp[day][j] = minimum total difficulty to schedule the first j jobs over exactly day days.',
+    'Level 2: Transition: dp[day][j] = min over all k (day <= k < j) of dp[day-1][k-1] + max(jobDifficulty[k..j-1]). Iterate k from j-1 down to day-1, maintaining a running max to avoid O(n^3).',
+    'Level 3: Base case: dp[1][j] = max(jobDifficulty[0..j-1]). Fill table for day 2..d. Answer is dp[d][n]. Use Infinity as initial values and only update when predecessor state is reachable.',
   ],
   functionName: 'minDifficulty',
   params: ['jobDifficulty', 'd'],
   starterCode: {
-    javascript: 'function minDifficulty(jobDifficulty, d) {\n  \n}\n',
-    typescript: 'function minDifficulty(jobDifficulty: number[], d: number): number {\n  \n}\n',
-    python: 'def minDifficulty(jobDifficulty, d):\n    pass\n',
+    javascript: `function minDifficulty(jobDifficulty, d) {
+  const n = jobDifficulty.length;
+  if (n < d) return -1;
+  // dp[i][j] = min difficulty for first j jobs in i days
+  const INF = Infinity;
+  const dp = Array.from({ length: d + 1 }, () => new Array(n + 1).fill(INF));
+  dp[0][0] = 0;
+  for (let day = 1; day <= d; day++) {
+    for (let j = day; j <= n; j++) {
+      let maxD = 0;
+      for (let k = j; k >= day; k--) {
+        maxD = Math.max(maxD, jobDifficulty[k - 1]);
+        if (dp[day - 1][k - 1] < INF) {
+          dp[day][j] = Math.min(dp[day][j], dp[day - 1][k - 1] + maxD);
+        }
+      }
+    }
+  }
+  return dp[d][n] === INF ? -1 : dp[d][n];
+}`,
+    typescript: `function minDifficulty(jobDifficulty: number[], d: number): number {
+  const n = jobDifficulty.length;
+  if (n < d) return -1;
+  const INF = Infinity;
+  const dp: number[][] = Array.from({ length: d + 1 }, () => new Array(n + 1).fill(INF));
+  dp[0][0] = 0;
+  for (let day = 1; day <= d; day++) {
+    for (let j = day; j <= n; j++) {
+      let maxD = 0;
+      for (let k = j; k >= day; k--) {
+        maxD = Math.max(maxD, jobDifficulty[k - 1]);
+        if (dp[day - 1][k - 1] < INF) {
+          dp[day][j] = Math.min(dp[day][j], dp[day - 1][k - 1] + maxD);
+        }
+      }
+    }
+  }
+  return dp[d][n] === INF ? -1 : dp[d][n];
+}`,
+    python: `def minDifficulty(jobDifficulty, d):
+    n = len(jobDifficulty)
+    if n < d:
+        return -1
+    INF = float('inf')
+    # dp[i][j] = min difficulty for first j jobs in i days
+    dp = [[INF] * (n + 1) for _ in range(d + 1)]
+    dp[0][0] = 0
+    for day in range(1, d + 1):
+        for j in range(day, n + 1):
+            max_d = 0
+            for k in range(j, day - 1, -1):
+                max_d = max(max_d, jobDifficulty[k - 1])
+                if dp[day - 1][k - 1] < INF:
+                    dp[day][j] = min(dp[day][j], dp[day - 1][k - 1] + max_d)
+    return -1 if dp[d][n] == INF else dp[d][n]`,
   },
   visibleTests: [
     { args: [[6, 5, 4, 3, 2, 1], 2], expected: 7 },
@@ -55,6 +106,7 @@ Given an integer array \`jobDifficulty\` and an integer \`d\`, return the **mini
     { args: [[11, 111, 22, 222, 33, 333, 44, 444], 6], expected: 843 },
     { args: [[1], 1], expected: 1 },
     { args: [[1, 2, 3, 4, 5], 5], expected: 15 },
+    { args: [[5, 3, 1], 2], expected: 6 },
     { args: [[380, 302, 102, 681, 863, 676, 243, 671, 651, 612, 162, 561, 394, 909, 335, 701, 903, 820, 540, 560, 468, 781, 32, 838, 482, 644, 350, 944, 407, 981], 16], expected: 7914 },
   ],
 };

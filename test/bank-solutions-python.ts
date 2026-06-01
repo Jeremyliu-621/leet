@@ -45002,6 +45002,23 @@ def getBiggestThree(grid):
     return sorted(seen, reverse=True)[:3]
 `,
 
+  'find-score-of-array-after-marking-all-elements': `
+def findScore(nums):
+    n = len(nums)
+    pairs = sorted((v, i) for i, v in enumerate(nums))
+    marked = [False] * n
+    score = 0
+    for v, i in pairs:
+        if not marked[i]:
+            score += v
+            marked[i] = True
+            if i > 0:
+                marked[i - 1] = True
+            if i < n - 1:
+                marked[i + 1] = True
+    return score
+`,
+
   'maximum-number-of-elements-in-two-arrays': `
 def maxElements(nums1, nums2):
     s1, s2 = set(nums1), set(nums2)

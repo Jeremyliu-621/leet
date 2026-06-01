@@ -45903,6 +45903,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [...top3].sort((a, b) => b - a);
   },
 
+  'find-score-of-array-after-marking-all-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const pairs = nums.map((v, i) => [v, i] as [number, number]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const marked = new Uint8Array(n);
+    let score = 0;
+    for (const [v, i] of pairs) {
+      if (!marked[i]) {
+        score += v;
+        marked[i] = 1;
+        if (i > 0) marked[i - 1] = 1;
+        if (i < n - 1) marked[i + 1] = 1;
+      }
+    }
+    return score;
+  },
+
   'maximum-number-of-elements-in-two-arrays': (...args: unknown[]) => {
     const nums1 = args[0] as number[];
     const nums2 = args[1] as number[];
