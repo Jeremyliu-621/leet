@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2758** problems; 8568 tests green. Batches 102–254 complete.
+**Current focus:** Bank at **2761** problems; 8577 tests green. Batches 102–253 (local) + 254 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 255+; continued UX polish.
+
+### feat(bank): batch 253 — apply-ops-two-strings-equal, maximize-sum-squares, max-linear-stock, subarrays-distinct-squares-i, total-chars-transformations-ii (2026-06-01)
+Five new problems: `apply-operations-to-make-two-strings-equal` (medium/strings+dp, LC 2896 — collect mismatch positions; DP pairs adjacent diffs at cost min(distance, 2x) or single diffs at cost x), `apply-operations-on-array-to-maximize-sum-of-squares` (hard/arrays+bit-manipulation, LC 2897 — AND/OR preserves per-bit total count; for each bit give it to the top k elements; reconstruct and sum squares), `maximum-linear-stock-score` (medium/arrays+hash-map, LC 2898 — group by prices[i]-i; max group sum), `subarrays-distinct-element-sum-of-squares-i` (easy/arrays+hash-map, LC 2913 — O(n²) brute force with set; sum of distinct_count² mod 10^9+7), `total-characters-in-string-after-transformations-ii` (hard/strings+math, LC 3337 — 26×26 transition matrix; character i expands to next nums[i] chars cyclically; matrix exponentiation mod 10^9+7). Bank at **2761**; 8577 tests.
 
 ### feat(bank): batch 254 — count-unique-good-subsequences, sum-of-k-mirror-numbers, number-of-ways-to-build-sturdy-brick-wall, count-of-sub-multisets-with-bounded-sum, get-biggest-three-rhombus-sums (2026-06-01)
 Five new problems: `count-unique-good-subsequences` (hard/strings+dp, LC 1987 — dp[0]/dp[1] track distinct good subseqs ending in '0'/'1'; +1 for lone "0" if present; O(n) DP), `sum-of-k-mirror-numbers` (hard/math+strings, LC 2081 — enumerate base-10 palindromes by mirrored half in increasing order; check if base-k representation is also a palindrome; collect first n), `number-of-ways-to-build-sturdy-brick-wall` (medium/dp+bit-manipulation, LC 2184 — enumerate valid row bitmasks (no two adjacent rows share internal crack); DP with compatibility matrix; O(R²×height) where R = valid rows), `count-of-sub-multisets-with-bounded-sum` (hard/arrays+hash-map+dp, LC 2902 — bounded knapsack with sliding window prefix sums per distinct value; zeros factored out as multiplier), `get-biggest-three-rhombus-sums-in-a-grid` (medium/arrays+simulation, LC 1878 — for each center (r,c) and radius k, sum the 4k border cells; maintain top-3 distinct set). Bank at **2758**; 8568 tests.
