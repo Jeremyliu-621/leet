@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2720** problems; 8454 tests green. Batches 102–247 complete.
+**Current focus:** Bank at **2724** problems; 8466 tests green. Batches 102–248 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 248+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 249+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 248 — valid-palindrome-iii, palindrome-partitioning-iv, construct-distanced-sequence, longest-happy-string (2026-06-01)
+Four new problems: `valid-palindrome-iii` (hard/dp+strings, LC 1216 — dp[i][j]=min deletions to make s[i..j] palindrome; answer: dp[0][n-1]<=k), `palindrome-partitioning-iv` (hard/dp+strings, LC 1745 — precompute O(n²) isPalin table; try all split pairs (i,j) for 3-palindrome partition), `construct-the-lexicographically-largest-valid-sequence` (medium/backtracking, LC 1718 — backtrack left-to-right, try n→1 greedily; place num at idx and idx+num simultaneously), `find-the-longest-happy-string` (medium/heap, LC 1405 — greedy max-heap: always pick most frequent that won't create 3 consecutive; preamble validator checks validity and returns length). Bank at **2724**; 8466 tests.
 
 ### feat(bank): batch 247 — sort-tree-by-level, subseq-widths, diff-subseq-gcds, smallest-range-k-lists (2026-06-01)
 Four new problems: `minimum-operations-to-sort-binary-tree-by-level` (medium/tree, LC 2471 — BFS level-by-level; min swaps per level = n − cycles in value→sorted-position permutation), `sum-of-subsequence-widths` (hard/arrays+math, LC 891 — sort array; contribution of sorted[i] as max = 2^i subsequences, as min = 2^(n-1-i) subsequences; sum (sorted[i] * (2^i − 2^(n-1-i))) mod 10^9+7), `number-of-different-subsequences-gcds` (hard/arrays+math, LC 1819 — sieve approach: for each g from 1 to max, compute GCD of all multiples of g present in nums; if equals g, count it), `smallest-range-covering-elements-from-k-lists` (hard/arrays+heap, LC 632 — min-heap of (value, listIdx, elemIdx) one from each list; track curMax; pop min and check/update range; advance that list). Bank at **2717**; 8445 tests.
