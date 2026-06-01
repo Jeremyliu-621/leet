@@ -35,10 +35,36 @@ Return the **earliest** year with the **maximum population**.`,
   functionName: 'maximumPopulation',
   params: ['logs'],
   starterCode: {
-    javascript: 'function maximumPopulation(logs) {\n  // your code here\n}\n',
-    typescript: "function maximumPopulation(logs: number[][]): number {\n  // your code here\n}",
-
-    python: 'def maximumPopulation(logs):\n    # your code here\n    pass\n',
+    javascript: `function maximumPopulation(logs) {
+  const d = new Array(101).fill(0);
+  for (const [b, e] of logs) { d[b - 1950]++; d[e - 1950]--; }
+  let mx = 0, yr = 1950, cur = 0;
+  for (let i = 0; i < 101; i++) {
+    cur += d[i];
+    if (cur > mx) { mx = cur; yr = i + 1950; }
+  }
+  return yr;
+}`,
+    typescript: `function maximumPopulation(logs: number[][]): number {
+  const d = new Array<number>(101).fill(0);
+  for (const log of logs) { d[log[0]! - 1950]!++; d[log[1]! - 1950]!--; }
+  let mx = 0, yr = 1950, cur = 0;
+  for (let i = 0; i < 101; i++) {
+    cur += d[i]!;
+    if (cur > mx) { mx = cur; yr = i + 1950; }
+  }
+  return yr;
+}`,
+    python: `def maximumPopulation(logs):
+    logs = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (logs.to_py() if hasattr(logs, 'to_py') else logs)]
+    d = [0] * 101
+    for b, e in logs:
+        d[b - 1950] += 1; d[e - 1950] -= 1
+    mx, yr, cur = 0, 1950, 0
+    for i in range(101):
+        cur += d[i]
+        if cur > mx: mx = cur; yr = i + 1950
+    return yr`,
   },
   visibleTests: [
     { args: [[[1993, 1999], [2000, 2010]]], expected: 1993 },

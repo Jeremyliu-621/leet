@@ -30,10 +30,25 @@ export const problem: Problem = {
   functionName: 'minCostClimbingStairs',
   params: ['cost'],
   starterCode: {
-    javascript: 'function minCostClimbingStairs(cost) {\n  // your code here\n}\n',
-    typescript: "function minCostClimbingStairs(cost: number[]): number {\n  // your code here\n}",
-
-    python: 'def minCostClimbingStairs(cost: list) -> int:\n    # your code here\n    pass\n',
+    javascript: `function minCostClimbingStairs(cost) {
+  const n = cost.length;
+  const dp = [...cost];
+  for (let i = 2; i < n; i++) dp[i] = cost[i] + Math.min(dp[i - 1], dp[i - 2]);
+  return Math.min(dp[n - 1], dp[n - 2]);
+}`,
+    typescript: `function minCostClimbingStairs(cost: number[]): number {
+  const n = cost.length;
+  const dp = [...cost];
+  for (let i = 2; i < n; i++) dp[i] = cost[i]! + Math.min(dp[i - 1]!, dp[i - 2]!);
+  return Math.min(dp[n - 1]!, dp[n - 2]!);
+}`,
+    python: `def minCostClimbingStairs(cost):
+    cost = list(cost.to_py()) if hasattr(cost, 'to_py') else list(cost)
+    n = len(cost)
+    dp = cost[:]
+    for i in range(2, n):
+        dp[i] = cost[i] + min(dp[i - 1], dp[i - 2])
+    return min(dp[n - 1], dp[n - 2])`,
   },
   visibleTests: [
     { args: [[10, 15, 20]], expected: 15 },

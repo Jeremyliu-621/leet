@@ -36,11 +36,33 @@ You may use an O(n log n) approach using binary search on a \`tails\` array (pat
   functionName: 'minDeletionsToSort',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minDeletionsToSort(nums) {\n  // your code here\n}\n',
-    typescript: `function minDeletionsToSort(nums: number[]): number {
-
+    javascript: `function minDeletionsToSort(nums) {
+  const tails = [];
+  for (const num of nums) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (tails[mid] < num) lo = mid + 1; else hi = mid; }
+    tails[lo] = num;
+  }
+  return nums.length - tails.length;
 }`,
-    python: 'def minDeletionsToSort(nums):\n    # your code here\n    pass\n',
+    typescript: `function minDeletionsToSort(nums: number[]): number {
+  const tails: number[] = [];
+  for (const num of nums) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (tails[mid]! < num) lo = mid + 1; else hi = mid; }
+    tails[lo] = num;
+  }
+  return nums.length - tails.length;
+}`,
+    python: `def minDeletionsToSort(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import bisect
+    tails = []
+    for num in nums:
+        pos = bisect.bisect_left(tails, num)
+        if pos == len(tails): tails.append(num)
+        else: tails[pos] = num
+    return len(nums) - len(tails)`,
   },
   visibleTests: [
     { args: [[3, 1, 2, 4]], expected: 1 },

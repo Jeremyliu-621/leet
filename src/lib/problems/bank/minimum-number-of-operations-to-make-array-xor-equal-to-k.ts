@@ -43,13 +43,22 @@ Return the **minimum number of operations** required to make the bitwise XOR of 
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function minOperations(nums, k) {
-  // your code here
+  const xorAll = nums.reduce((a, b) => a ^ b, 0);
+  let diff = xorAll ^ k, count = 0;
+  while (diff) { count += diff & 1; diff >>= 1; }
+  return count;
 }`,
-    typescript: "function minOperations(nums: number[], k: number): number {\n  // your code here\n}",
-
+    typescript: `function minOperations(nums: number[], k: number): number {
+  const xorAll = nums.reduce((a, b) => a ^ b, 0);
+  let diff = xorAll ^ k, count = 0;
+  while (diff) { count += diff & 1; diff >>= 1; }
+  return count;
+}`,
     python: `def minOperations(nums, k):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from functools import reduce
+    xor_all = reduce(lambda a, b: a ^ b, nums, 0)
+    return bin(xor_all ^ k).count('1')`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 4], 1], expected: 2 },

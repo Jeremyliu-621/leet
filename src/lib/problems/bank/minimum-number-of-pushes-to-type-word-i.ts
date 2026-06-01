@@ -38,10 +38,19 @@ Return the **minimum** number of total pushes to type \`word\`.`,
   functionName: 'minimumPushes',
   params: ['word'],
   starterCode: {
-    javascript: 'function minimumPushes(word) {\n  // your code here\n}\n',
-    typescript: "function minimumPushes(word: string): number {\n  // your code here\n}",
-
-    python: 'def minimumPushes(word):\n    # your code here\n    pass\n',
+    javascript: `function minimumPushes(word) {
+  let total = 0;
+  for (let i = 0; i < word.length; i++) total += Math.floor(i / 8) + 1;
+  return total;
+}`,
+    typescript: `function minimumPushes(word: string): number {
+  let total = 0;
+  for (let i = 0; i < word.length; i++) total += Math.floor(i / 8) + 1;
+  return total;
+}`,
+    python: `def minimumPushes(word):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    return sum(i // 8 + 1 for i in range(len(word)))`,
   },
   visibleTests: [
     { args: ['abcde'], expected: 5 },

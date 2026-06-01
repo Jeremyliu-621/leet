@@ -42,10 +42,41 @@ It is guaranteed that:
   functionName: 'minimumBuckets',
   params: ['street'],
   starterCode: {
-    javascript: 'function minimumBuckets(street) {\n  // your code here\n}\n',
-    typescript: "function minimumBuckets(street: string): number {\n  // your code here\n}",
-
-    python: 'def minimumBuckets(street):\n    # your code here\n    pass\n',
+    javascript: `function minimumBuckets(street) {
+  let count = 0;
+  for (let i = 0; i < street.length; i++) {
+    if (street[i] !== 'H') continue;
+    if (i + 1 < street.length && street[i + 1] === '.') { count++; i += 2; }
+    else if (i > 0 && street[i - 1] === '.') count++;
+    else return -1;
+  }
+  return count;
+}`,
+    typescript: `function minimumBuckets(street: string): number {
+  let count = 0;
+  for (let i = 0; i < street.length; i++) {
+    if (street[i] !== 'H') continue;
+    if (i + 1 < street.length && street[i + 1] === '.') { count++; i += 2; }
+    else if (i > 0 && street[i - 1] === '.') count++;
+    else return -1;
+  }
+  return count;
+}`,
+    python: `def minimumBuckets(street):
+    if hasattr(street, 'to_py'): street = street.to_py()
+    s = list(street)
+    count = 0
+    i = 0
+    while i < len(s):
+        if s[i] == 'H':
+            if i + 1 < len(s) and s[i + 1] == '.':
+                count += 1; i += 2
+            elif i > 0 and s[i - 1] == '.':
+                count += 1
+            else:
+                return -1
+        i += 1
+    return count`,
   },
   visibleTests: [
     { args: ['H..H'], expected: 2 },

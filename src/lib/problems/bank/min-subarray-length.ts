@@ -39,10 +39,38 @@ A variable-size sliding window expands when the sum is too small and shrinks whe
   functionName: 'minSubarrayLength',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function minSubarrayLength(nums, target) {\n  // your code here\n}\n',
-    typescript: "function minSubarrayLength(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def minSubarrayLength(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function minSubarrayLength(nums, target) {
+  let left = 0, sum = 0, best = Infinity;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (sum >= target) {
+      best = Math.min(best, right - left + 1);
+      sum -= nums[left++];
+    }
+  }
+  return best === Infinity ? 0 : best;
+}`,
+    typescript: `function minSubarrayLength(nums: number[], target: number): number {
+  let left = 0, sum = 0, best = Infinity;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right]!;
+    while (sum >= target) {
+      best = Math.min(best, right - left + 1);
+      sum -= nums[left++]!;
+    }
+  }
+  return best === Infinity ? 0 : best;
+}`,
+    python: `def minSubarrayLength(nums, target):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    left = s = 0
+    best = float('inf')
+    for right in range(len(nums)):
+        s += nums[right]
+        while s >= target:
+            best = min(best, right - left + 1)
+            s -= nums[left]; left += 1
+    return 0 if best == float('inf') else best`,
   },
   visibleTests: [
     { args: [[2, 3, 1, 2, 4, 3], 7], expected: 2 },

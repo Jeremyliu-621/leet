@@ -39,10 +39,27 @@ You can insert any character at any position.`,
   functionName: 'addMinimum',
   params: ['word'],
   starterCode: {
-    javascript: 'function addMinimum(word) {\n  // your code here\n}\n',
-    typescript: "function addMinimum(word: string): number {\n  // your code here\n}",
-
-    python: 'def addMinimum(word):\n    # your code here\n    pass\n',
+    javascript: `function addMinimum(word) {
+  let groups = 1;
+  for (let i = 1; i < word.length; i++) {
+    if (word.charCodeAt(i) <= word.charCodeAt(i - 1)) groups++;
+  }
+  return groups * 3 - word.length;
+}`,
+    typescript: `function addMinimum(word: string): number {
+  let groups = 1;
+  for (let i = 1; i < word.length; i++) {
+    if (word.charCodeAt(i) <= word.charCodeAt(i - 1)) groups++;
+  }
+  return groups * 3 - word.length;
+}`,
+    python: `def addMinimum(word):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    groups = 1
+    for i in range(1, len(word)):
+        if ord(word[i]) <= ord(word[i - 1]):
+            groups += 1
+    return groups * 3 - len(word)`,
   },
   visibleTests: [
     { args: ['b'], expected: 2 },
