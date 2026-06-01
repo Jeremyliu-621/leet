@@ -42799,6 +42799,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ops;
   },
+  // batch 236
+  'row-with-maximum-ones': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    let bestIdx = 0, bestCount = 0;
+    for (let i = 0; i < mat.length; i++) {
+      const c = mat[i]!.reduce((a, b) => a + b, 0);
+      if (c > bestCount) { bestCount = c; bestIdx = i; }
+    }
+    return [bestIdx, bestCount];
+  },
+  'distinct-prime-factors-of-product-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const primes = new Set<number>();
+    for (const n of nums) {
+      let x = n;
+      for (let p = 2; p * p <= x; p++) {
+        if (x % p === 0) { primes.add(p); while (x % p === 0) x = Math.floor(x / p); }
+      }
+      if (x > 1) primes.add(x);
+    }
+    return primes.size;
+  },
+  'distribute-candies-among-children-ii': (...args: unknown[]) => {
+    const [n, limit] = args as [number, number];
+    const f = (x: number) => x < 0 ? 0 : (x + 1) * (x + 2) / 2;
+    return f(n) - 3 * f(n - limit - 1) + 3 * f(n - 2 * (limit + 1)) - f(n - 3 * (limit + 1));
+  },
   // batch 235
   'apple-redistribution-into-boxes': (...args: unknown[]) => {
     const [packages, capacity] = args as [number[], number[]];

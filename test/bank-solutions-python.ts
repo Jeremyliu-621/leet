@@ -41962,6 +41962,40 @@ def removeAlmostEqualCharacters(word):
             i += 1
     return ops
 `,
+  // batch 236
+  'row-with-maximum-ones': `
+def rowAndMaximumOnes(mat):
+    best_idx = 0
+    best_count = 0
+    for i, row in enumerate(mat):
+        c = sum(row)
+        if c > best_count:
+            best_count = c
+            best_idx = i
+    return [best_idx, best_count]
+`,
+  'distinct-prime-factors-of-product-of-array': `
+def distinctPrimeFactors(nums):
+    primes = set()
+    for n in nums:
+        x = n
+        p = 2
+        while p * p <= x:
+            if x % p == 0:
+                primes.add(p)
+                while x % p == 0:
+                    x //= p
+            p += 1
+        if x > 1:
+            primes.add(x)
+    return len(primes)
+`,
+  'distribute-candies-among-children-ii': `
+def distributeCandies(n, limit):
+    def f(x):
+        return (x + 1) * (x + 2) // 2 if x >= 0 else 0
+    return f(n) - 3 * f(n - limit - 1) + 3 * f(n - 2 * (limit + 1)) - f(n - 3 * (limit + 1))
+`,
   'apple-redistribution-into-boxes': `
 def minimumBoxes(packages, capacity):
     total = sum(packages)

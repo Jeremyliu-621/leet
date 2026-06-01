@@ -3009,6 +3009,10 @@ import { problem as shortestDistRoadQueriesII } from './shortest-distance-after-
 // batch 234
 import { problem as matrixSimilarityCyclicShifts } from './matrix-similarity-after-cyclic-shifts';
 import { problem as removeAdjacentAlmostEqual } from './remove-adjacent-almost-equal-characters';
+// batch 236
+import { problem as rowWithMaximumOnes } from './row-with-maximum-ones';
+import { problem as distinctPrimeFactorsProductArray } from './distinct-prime-factors-of-product-of-array';
+import { problem as distributeCandiesChildrenII } from './distribute-candies-among-children-ii';
 // batch 235
 import { problem as appleRedistributionIntoBoxes } from './apple-redistribution-into-boxes';
 import { problem as maximumValueStringArray } from './maximum-value-of-a-string-in-array';
@@ -6058,6 +6062,10 @@ export const problems: readonly Problem[] = [
   // batch 234
   matrixSimilarityCyclicShifts,
   removeAdjacentAlmostEqual,
+  // batch 236
+  rowWithMaximumOnes,
+  distinctPrimeFactorsProductArray,
+  distributeCandiesChildrenII,
   // batch 235
   appleRedistributionIntoBoxes,
   maximumValueStringArray,
