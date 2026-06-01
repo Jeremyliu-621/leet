@@ -36,9 +36,33 @@ In other words, find the largest value in every contiguous \`3 x 3\` matrix in \
   functionName: 'largestLocal',
   params: ['grid'],
   starterCode: {
-    javascript: 'function largestLocal(grid) {\n  // your code here\n}\n',
-    typescript: 'function largestLocal(grid: number[][]): number[][] {\n  // your code here\n}',
-    python: 'def largestLocal(grid):\n    # your code here\n    pass\n',
+    javascript: `function largestLocal(grid) {
+  const n = grid.length;
+  return Array.from({ length: n - 2 }, (_, i) =>
+    Array.from({ length: n - 2 }, (_, j) => {
+      let max = 0;
+      for (let di = 0; di < 3; di++) for (let dj = 0; dj < 3; dj++)
+        max = Math.max(max, grid[i + di][j + dj]);
+      return max;
+    })
+  );
+}`,
+    typescript: `function largestLocal(grid: number[][]): number[][] {
+  const n = grid.length;
+  return Array.from({ length: n - 2 }, (_, i) =>
+    Array.from({ length: n - 2 }, (_, j) => {
+      let max = 0;
+      for (let di = 0; di < 3; di++) for (let dj = 0; dj < 3; dj++)
+        max = Math.max(max, grid[i + di]![j + dj]!);
+      return max;
+    })
+  );
+}`,
+    python: `def largestLocal(grid):
+    grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    return [[max(grid[i+di][j+dj] for di in range(3) for dj in range(3))
+             for j in range(n - 2)] for i in range(n - 2)]`,
   },
   visibleTests: [
     { args: [[[9, 9, 8, 1], [5, 6, 2, 6], [8, 2, 6, 4], [6, 2, 2, 2]]], expected: [[9, 9], [8, 6]] },

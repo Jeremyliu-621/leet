@@ -41,10 +41,16 @@ Return \`true\` if you can make \`arr\` equal to \`target\`, or \`false\` otherw
   functionName: 'canBeEqual',
   params: ['target', 'arr'],
   starterCode: {
-    javascript: 'function canBeEqual(target, arr) {\n  // your code here\n}\n',
-    typescript: "function canBeEqual(target: number[], arr: number[]): boolean {\n  // your code here\n}",
-
-    python: 'def canBeEqual(target, arr):\n    # your code here\n    pass\n',
+    javascript: `function canBeEqual(target, arr) {
+  return target.sort((a, b) => a - b).join() === arr.sort((a, b) => a - b).join();
+}`,
+    typescript: `function canBeEqual(target: number[], arr: number[]): boolean {
+  return [...target].sort((a, b) => a - b).join() === [...arr].sort((a, b) => a - b).join();
+}`,
+    python: `def canBeEqual(target, arr):
+    target = list(target.to_py()) if hasattr(target, 'to_py') else list(target)
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    return sorted(target) == sorted(arr)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], [2, 4, 1, 3]], expected: true },

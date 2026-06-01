@@ -32,11 +32,34 @@ A subarray is a contiguous part of the array. You must consider every possible w
   functionName: 'maxSumFixedWindow',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function maxSumFixedWindow(nums, k) {\n  // your code here\n}\n',
-    typescript: `function maxSumFixedWindow(nums: number[], k: number): number {
-
+    javascript: `function maxSumFixedWindow(nums, k) {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i];
+  let best = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i] - nums[i - k];
+    if (sum > best) best = sum;
+  }
+  return best;
 }`,
-    python: 'def maxSumFixedWindow(nums, k):\n    # your code here\n    pass\n',
+    typescript: `function maxSumFixedWindow(nums: number[], k: number): number {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i]!;
+  let best = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i]! - nums[i - k]!;
+    if (sum > best) best = sum;
+  }
+  return best;
+}`,
+    python: `def maxSumFixedWindow(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = sum(nums[:k])
+    best = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        if s > best: best = s
+    return best`,
   },
   visibleTests: [
     { args: [[2, 1, 5, 1, 3, 2], 3], expected: 9 },

@@ -40,9 +40,29 @@ A single element counts as a valid subarray, so the answer is at least the large
   functionName: 'maxSubarraySum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxSubarraySum(nums) {\n  // your code here\n}\n',
-    typescript: 'function maxSubarraySum(nums: number[]): number {\n  // your code here\n}\n',
-    python: 'def maxSubarraySum(nums):\n    # your code here\n    pass\n',
+    javascript: `function maxSubarraySum(nums) {
+  let cur = nums[0], best = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    cur = Math.max(nums[i], cur + nums[i]);
+    best = Math.max(best, cur);
+  }
+  return best;
+}`,
+    typescript: `function maxSubarraySum(nums: number[]): number {
+  let cur = nums[0]!, best = nums[0]!;
+  for (let i = 1; i < nums.length; i++) {
+    cur = Math.max(nums[i]!, cur + nums[i]!);
+    best = Math.max(best, cur);
+  }
+  return best;
+}`,
+    python: `def maxSubarraySum(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    cur = best = nums[0]
+    for n in nums[1:]:
+        cur = max(n, cur + n)
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: [[-2, 1, -3, 4, -1, 2, 1, -5, 4]], expected: 6 },

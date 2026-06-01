@@ -36,14 +36,29 @@ Only include the sum of all the elements on the primary diagonal and all the ele
   params: ['mat'],
   starterCode: {
     javascript: `function diagonalSum(mat) {
-  // your code here
+  const n = mat.length;
+  let sum = 0;
+  for (let i = 0; i < n; i++) {
+    sum += mat[i][i] + mat[i][n - 1 - i];
+  }
+  if (n % 2 === 1) sum -= mat[Math.floor(n / 2)][Math.floor(n / 2)];
+  return sum;
 }`,
     typescript: `function diagonalSum(mat: number[][]): number {
-  // your code here
+  const n = mat.length;
+  let sum = 0;
+  for (let i = 0; i < n; i++) {
+    sum += mat[i]![i]! + mat[i]![n - 1 - i]!;
+  }
+  if (n % 2 === 1) sum -= mat[Math.floor(n / 2)]![Math.floor(n / 2)]!;
+  return sum;
 }`,
     python: `def diagonalSum(mat):
-    # your code here
-    pass`,
+    mat = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (mat.to_py() if hasattr(mat, 'to_py') else mat)]
+    n = len(mat)
+    s = sum(mat[i][i] + mat[i][n - 1 - i] for i in range(n))
+    if n % 2 == 1: s -= mat[n // 2][n // 2]
+    return s`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]], expected: 25 },

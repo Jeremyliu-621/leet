@@ -37,10 +37,29 @@ A **consecutive run** of \`1\`s is a maximal sequence of adjacent \`1\` values.`
   functionName: 'maxConsecutiveOnes',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxConsecutiveOnes(nums) {\n  // your code here\n}\n',
-    typescript: "function maxConsecutiveOnes(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def maxConsecutiveOnes(nums):\n    # your code here\n    pass\n',
+    javascript: `function maxConsecutiveOnes(nums) {
+  let best = 0, cur = 0;
+  for (const n of nums) {
+    cur = n === 1 ? cur + 1 : 0;
+    if (cur > best) best = cur;
+  }
+  return best;
+}`,
+    typescript: `function maxConsecutiveOnes(nums: number[]): number {
+  let best = 0, cur = 0;
+  for (const n of nums) {
+    cur = n === 1 ? cur + 1 : 0;
+    if (cur > best) best = cur;
+  }
+  return best;
+}`,
+    python: `def maxConsecutiveOnes(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    best = cur = 0
+    for n in nums:
+        cur = cur + 1 if n == 1 else 0
+        if cur > best: best = cur
+    return best`,
   },
   visibleTests: [
     { args: [[1, 1, 0, 1, 1, 1]], expected: 3 },

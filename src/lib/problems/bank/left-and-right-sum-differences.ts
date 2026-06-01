@@ -40,12 +40,37 @@ Return the array \`answer\`.`,
   functionName: 'leftRigthDifference',
   params: ['nums'],
   starterCode: {
-    javascript:
-      'function leftRigthDifference(nums) {\n  // your code here\n}\n',
-    typescript: "function leftRigthDifference(nums: number[]): number[] {\n  // your code here\n}",
-
-    python:
-      'def leftRigthDifference(nums):\n    # your code here\n    pass\n',
+    javascript: `function leftRigthDifference(nums) {
+  const total = nums.reduce((a, b) => a + b, 0);
+  const ans = [];
+  let left = 0;
+  for (const n of nums) {
+    const right = total - left - n;
+    ans.push(Math.abs(left - right));
+    left += n;
+  }
+  return ans;
+}`,
+    typescript: `function leftRigthDifference(nums: number[]): number[] {
+  const total = nums.reduce((a, b) => a + b, 0);
+  const ans: number[] = [];
+  let left = 0;
+  for (const n of nums) {
+    const right = total - left - n;
+    ans.push(Math.abs(left - right));
+    left += n;
+  }
+  return ans;
+}`,
+    python: `def leftRigthDifference(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    total = sum(nums)
+    ans, left = [], 0
+    for n in nums:
+        right = total - left - n
+        ans.append(abs(left - right))
+        left += n
+    return ans`,
   },
   visibleTests: [
     { args: [[10, 4, 8, 3]], expected: [15, 1, 11, 22] },
