@@ -43435,4 +43435,114 @@ def countTotalSetBits(n: int) -> int:
         b += 1
     return total
 `,
+
+  'largest-local-values-in-matrix': `
+def largestLocal(grid):
+    n = len(grid)
+    res = []
+    for i in range(1, n - 1):
+        row = []
+        for j in range(1, n - 1):
+            mx = 0
+            for di in range(-1, 2):
+                for dj in range(-1, 2):
+                    mx = max(mx, grid[i+di][j+dj])
+            row.append(mx)
+        res.append(row)
+    return res
+`,
+
+  'maximum-employees-to-be-invited': `
+def maximumInvitations(favorite):
+    from collections import deque
+    n = len(favorite)
+    in_deg = [0] * n
+    for f in favorite:
+        in_deg[f] += 1
+    chain_len = [0] * n
+    q = deque(i for i in range(n) if in_deg[i] == 0)
+    while q:
+        u = q.popleft()
+        v = favorite[u]
+        chain_len[v] = max(chain_len[v], chain_len[u] + 1)
+        in_deg[v] -= 1
+        if in_deg[v] == 0:
+            q.append(v)
+    max_cycle = 0
+    total_2_cycle = 0
+    visited = [False] * n
+    for i in range(n):
+        if in_deg[i] == 0 or visited[i]:
+            continue
+        cur, length = i, 0
+        while not visited[cur]:
+            visited[cur] = True
+            cur = favorite[cur]
+            length += 1
+        if length == 2:
+            total_2_cycle += 2 + chain_len[i] + chain_len[favorite[i]]
+        else:
+            max_cycle = max(max_cycle, length)
+    return max(max_cycle, total_2_cycle)
+`,
+
+  'count-the-number-of-ideal-arrays': `
+import math
+def idealArrays(n, maxValue):
+    MOD = 10**9 + 7
+    max_len = int(math.log2(maxValue)) + 1 if maxValue > 0 else 1
+    # Precompute C(n-1, k) for k up to max_len
+    binom = [[0] * (max_len + 1) for _ in range(n)]
+    for i in range(n):
+        binom[i][0] = 1
+        for j in range(1, min(i + 1, max_len + 1)):
+            binom[i][j] = (binom[i-1][j-1] + binom[i-1][j]) % MOD
+    # f[v][l] = # divisibility chains of length l ending at v
+    f = [[0] * (max_len + 1) for _ in range(maxValue + 1)]
+    for v in range(1, maxValue + 1):
+        f[v][1] = 1
+    for l in range(2, max_len + 1):
+        for v in range(1, maxValue + 1):
+            d = 1
+            while d * d <= v:
+                if v % d == 0:
+                    if d < v:
+                        f[v][l] = (f[v][l] + f[d][l-1]) % MOD
+                    if d != v // d and v // d < v:
+                        f[v][l] = (f[v][l] + f[v // d][l-1]) % MOD
+                d += 1
+    ans = 0
+    for v in range(1, maxValue + 1):
+        for l in range(1, max_len + 1):
+            if f[v][l] == 0:
+                continue
+            ans = (ans + f[v][l] * binom[n-1][l-1]) % MOD
+    return ans
+`,
+
+  'shortest-path-in-a-grid-with-obstacles-elimination': `
+from collections import deque
+def shortestPath(grid, k):
+    m, n = len(grid), len(grid[0])
+    if m == 1 and n == 1:
+        return 0
+    visited = [[[False] * (k + 1) for _ in range(n)] for _ in range(m)]
+    q = deque([(0, 0, k, 0)])
+    visited[0][0][k] = True
+    while q:
+        r, c, kr, steps = q.popleft()
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r + dr, c + dc
+            if not (0 <= nr < m and 0 <= nc < n):
+                continue
+            nk = kr - grid[nr][nc]
+            if nk < 0:
+                continue
+            if nr == m - 1 and nc == n - 1:
+                return steps + 1
+            if not visited[nr][nc][nk]:
+                visited[nr][nc][nk] = True
+                q.append((nr, nc, nk, steps + 1))
+    return -1
+`,
 };

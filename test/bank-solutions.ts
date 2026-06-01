@@ -44217,4 +44217,111 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return total;
   },
+
+  'largest-local-values-in-matrix': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const n = grid.length;
+    const res: number[][] = [];
+    for (let i = 1; i < n - 1; i++) {
+      const row: number[] = [];
+      for (let j = 1; j < n - 1; j++) {
+        let mx = 0;
+        for (let di = -1; di <= 1; di++)
+          for (let dj = -1; dj <= 1; dj++)
+            mx = Math.max(mx, grid[i + di]![j + dj]!);
+        row.push(mx);
+      }
+      res.push(row);
+    }
+    return res;
+  },
+
+  'maximum-employees-to-be-invited': (...args: unknown[]) => {
+    const [favorite] = args as [number[]];
+    const n = favorite.length;
+    const inDeg = new Array<number>(n).fill(0);
+    for (const f of favorite) inDeg[f]!++;
+    const chainLen = new Array<number>(n).fill(0);
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
+    while (queue.length > 0) {
+      const u = queue.shift()!;
+      const v = favorite[u]!;
+      chainLen[v] = Math.max(chainLen[v]!, chainLen[u]! + 1);
+      inDeg[v]!--;
+      if (inDeg[v] === 0) queue.push(v);
+    }
+    let maxCycle = 0, total2Cycle = 0;
+    const visited = new Array<boolean>(n).fill(false);
+    for (let i = 0; i < n; i++) {
+      if (inDeg[i] === 0 || visited[i]) continue;
+      let cur = i, len = 0;
+      while (!visited[cur]) { visited[cur] = true; cur = favorite[cur]!; len++; }
+      if (len === 2) {
+        total2Cycle += 2 + chainLen[i]! + chainLen[favorite[i]!]!;
+      } else {
+        maxCycle = Math.max(maxCycle, len);
+      }
+    }
+    return Math.max(maxCycle, total2Cycle);
+  },
+
+  'count-the-number-of-ideal-arrays': (...args: unknown[]) => {
+    const [n, maxValue] = args as [number, number];
+    const MOD = 1_000_000_007n;
+    const maxLen = Math.floor(Math.log2(maxValue)) + 1;
+    const binom: bigint[][] = [];
+    for (let i = 0; i <= n; i++) {
+      binom.push(new Array(maxLen + 1).fill(0n));
+      binom[i]![0] = 1n;
+      for (let j = 1; j <= Math.min(i, maxLen); j++) {
+        binom[i]![j] = ((binom[i - 1]![j - 1] ?? 0n) + (binom[i - 1]![j] ?? 0n)) % MOD;
+      }
+    }
+    const f: bigint[][] = Array.from({ length: maxValue + 1 }, () => new Array(maxLen + 1).fill(0n));
+    for (let v = 1; v <= maxValue; v++) f[v]![1] = 1n;
+    for (let l = 2; l <= maxLen; l++) {
+      for (let v = 1; v <= maxValue; v++) {
+        for (let d = 1; d * d <= v; d++) {
+          if (v % d === 0) {
+            if (d < v) f[v]![l] = ((f[v]![l] ?? 0n) + (f[d]![l - 1] ?? 0n)) % MOD;
+            if (d !== v / d && v / d < v) f[v]![l] = ((f[v]![l] ?? 0n) + (f[v / d]![l - 1] ?? 0n)) % MOD;
+          }
+        }
+      }
+    }
+    let ans = 0n;
+    for (let v = 1; v <= maxValue; v++) {
+      for (let l = 1; l <= maxLen; l++) {
+        if ((f[v]![l] ?? 0n) === 0n) continue;
+        ans = (ans + (f[v]![l] ?? 0n) * (binom[n - 1]![l - 1] ?? 0n)) % MOD;
+      }
+    }
+    return Number(ans);
+  },
+
+  'shortest-path-in-a-grid-with-obstacles-elimination': (...args: unknown[]) => {
+    const [grid, k] = args as [number[][], number];
+    const m = grid.length, n = grid[0]!.length;
+    if (m === 1 && n === 1) return 0;
+    const visited: boolean[][][] = Array.from({ length: m }, () =>
+      Array.from({ length: n }, () => new Array(k + 1).fill(false)));
+    const q: [number, number, number, number][] = [[0, 0, k, 0]];
+    visited[0]![0]![k] = true;
+    while (q.length > 0) {
+      const [r, c, kr, steps] = q.shift()!;
+      for (const [dr, dc] of [[-1, 0], [1, 0], [0, -1], [0, 1]] as [number, number][]) {
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+        const nk = kr - grid[nr]![nc]!;
+        if (nk < 0) continue;
+        if (nr === m - 1 && nc === n - 1) return steps + 1;
+        if (!visited[nr]![nc]![nk]) {
+          visited[nr]![nc]![nk] = true;
+          q.push([nr, nc, nk, steps + 1]);
+        }
+      }
+    }
+    return -1;
+  },
 };

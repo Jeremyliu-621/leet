@@ -3082,6 +3082,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 244
+import { problem as largestLocalValuesMatrix } from './largest-local-values-in-matrix';
+import { problem as maximumInvitations } from './maximum-employees-to-be-invited';
+import { problem as idealArraysCount } from './count-the-number-of-ideal-arrays';
+import { problem as shortestPathGridObstacles } from './shortest-path-in-a-grid-with-obstacles-elimination';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6213,9 +6218,15 @@ export const problems: readonly Problem[] = [
   minimumTimeJobsII,
   minOpsSubarrayEqual,
   countSubseqEqualGCD,
+  // batch 243 (remote)
   quickselectKthSmallest,
   tarjanSCC,
   kmpSearch,
   findBridges,
   countTotalSetBits,
+  // batch 244
+  largestLocalValuesMatrix,
+  maximumInvitations,
+  idealArraysCount,
+  shortestPathGridObstacles,
 ];

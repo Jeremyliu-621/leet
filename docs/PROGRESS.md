@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2696** problems; 8382 tests green. Batches 102–243 complete.
+**Current focus:** Bank at **2700** problems; 8394 tests green. Batches 102–244 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 244+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 245+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 244 — largest-local-matrix, max-employees-invited, ideal-arrays, shortest-path-obstacles (2026-06-01)
+Four new problems: `largest-local-values-in-matrix` (easy/simulation, LC 2373 — 3x3 window max scan for each interior cell), `maximum-employees-to-be-invited` (hard/graph, LC 2127 — functional graph topological peel for chain lengths; cycle decomposition separates large cycles from extended 2-cycles), `count-the-number-of-ideal-arrays` (hard/dp+math, LC 2338 — divisibility chain DP f[v][l] + C(n-1,l-1) stars-and-bars placement), `shortest-path-in-a-grid-with-obstacles-elimination` (hard/shortest-path, LC 1293 — BFS with (r,c,k_remaining) state avoiding re-visiting same cell with same k). Bank at **2700**; 8394 tests.
 
 ### feat(bank): batch 243 (local) — quickselect, tarjan-scc, kmp, bridges, total-set-bits (2026-06-01)
 Five new algorithm problems: `quickselect-kth-smallest` (medium/arrays+binary-search — Quickselect O(n) average kth smallest via Lomuto partition with middle pivot), `tarjan-strongly-connected` (hard/graph+stack — Tarjan's SCC DFS with disc/low/onStack; SCCs sorted by min node), `kmp-string-search` (medium/strings — KMP failure function + scan for all occurrence indices including overlapping), `bridge-finding-undirected` (hard/graph — DFS low-link bridge detection; edge (u,v) is bridge if low[v]>disc[u]; normalized [min,max] output), `count-total-set-bits` (medium/math+bit-manipulation — O(log n) period-based formula: sum full periods + remainder per bit position). Bank at **2696**; 8382 tests.
