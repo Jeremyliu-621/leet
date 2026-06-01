@@ -37,11 +37,41 @@ Simulate with arrays of operations and arguments. Return results (\`null\` for v
   params: ['ops', 'args'],
   starterCode: {
     javascript: `function peekingIterator(ops, args) {
-
+  let arr = [], idx = 0;
+  return ops.map((op, i) => {
+    if (op === 'PeekingIterator') { arr = args[i][0]; idx = 0; return null; }
+    if (op === 'next') return arr[idx++];
+    if (op === 'peek') return arr[idx];
+    return idx < arr.length; // hasNext
+  });
 }`,
-    typescript: 'function peekingIterator(ops: string[], args: (number[] | [])[]): (number | boolean | null)[] {\n\n}',
+    typescript: `function peekingIterator(ops: string[], args: (number[] | [])[]): (number | boolean | null)[] {
+  let arr: number[] = [], idx = 0;
+  return ops.map((op, i) => {
+    if (op === 'PeekingIterator') { arr = (args[i] as number[][])[0]!; idx = 0; return null; }
+    if (op === 'next') return arr[idx++]!;
+    if (op === 'peek') return arr[idx]!;
+    return idx < arr.length; // hasNext
+  });
+}`,
     python: `def peekingIterator(ops, args):
-    pass`,
+    arr, idx = [], 0
+    ops_list = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args_list = list(args.to_py() if hasattr(args, 'to_py') else args)
+    result = []
+    for op, arg in zip(ops_list, args_list):
+        if op == 'PeekingIterator':
+            arr = list(arg[0])
+            idx = 0
+            result.append(None)
+        elif op == 'next':
+            result.append(arr[idx])
+            idx += 1
+        elif op == 'peek':
+            result.append(arr[idx])
+        else:  # hasNext
+            result.append(idx < len(arr))
+    return result`,
   },
   visibleTests: [
     {

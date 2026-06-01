@@ -86,13 +86,38 @@ return 1 + countNodes(root.left) + countNodes(root.right);\`\`\``
   starterCode: {
     javascript: `${JS_PREAMBLE}
 function countNodes(root) {
-
+  if (!root) return 0;
+  let lo = root, hi = root, lh = 0, rh = 0;
+  while (lo) { lh++; lo = lo.left; }
+  while (hi) { rh++; hi = hi.right; }
+  if (lh === rh) return (1 << lh) - 1;
+  return 1 + countNodes(root.left) + countNodes(root.right);
 }`,
-    typescript: "function countNodesRunner(arr: number[]): number {\n  constructor(val, left = null, right = null) { this.val = val; this.left = left; this.right = right; }\n}\nfunction __fromBFS__(arr) {\n  if (!arr || arr.length === 0 || arr[0] === null) return null;\n  const root = new TreeNode(arr[0]);\n  const q = [root]; let i = 1;\n  while (q.length && i < arr.length) {\n    const node = q.shift();\n    if (i < arr.length && arr[i] !== null) { node.left = new TreeNode(arr[i]); q.push(node.left); } i++;\n    if (i < arr.length && arr[i] !== null) { node.right = new TreeNode(arr[i]); q.push(node.right); } i++;\n  }\n  return root;\n}\nfunction countNodesRunner(arr) { return countNodes(__fromBFS__(arr)); }\n\nfunction countNodes(root) {\n\n}",
+    typescript: `// TreeNode class, __fromBFS__, and countNodesRunner wrapper are pre-defined.
+// Implement the function below:
+function countNodes(root: any): number {
+  if (!root) return 0;
+  let lo = root, hi = root, lh = 0, rh = 0;
+  while (lo) { lh++; lo = lo.left; }
+  while (hi) { rh++; hi = hi.right; }
+  if (lh === rh) return (1 << lh) - 1;
+  return 1 + countNodes(root.left) + countNodes(root.right);
+}`,
 
     python: `${PY_PREAMBLE}
 def countNodes(root):
-    pass`,
+    if not root:
+        return 0
+    lo, hi, lh, rh = root, root, 0, 0
+    while lo:
+        lh += 1
+        lo = lo.left
+    while hi:
+        rh += 1
+        hi = hi.right
+    if lh == rh:
+        return (1 << lh) - 1
+    return 1 + countNodes(root.left) + countNodes(root.right)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6]], expected: 6 },

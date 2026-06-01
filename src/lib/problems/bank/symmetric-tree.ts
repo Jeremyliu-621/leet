@@ -96,11 +96,11 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and isSymmetricRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isSymmetric(root) {\n  \n}\n',
-    typescript: "function isSymmetricRunner(root: number[]): boolean {\n  \n}",
+      '// TreeNode class and isSymmetricRunner wrapper are pre-defined.\n// Implement the function below:\nfunction isSymmetric(root) {\n  function mirror(a, b) {\n    if (!a && !b) return true;\n    if (!a || !b || a.val !== b.val) return false;\n    return mirror(a.left, b.right) && mirror(a.right, b.left);\n  }\n  return !root || mirror(root.left, root.right);\n}\n',
+    typescript: "function isSymmetricRunner(root: number[]): boolean {\n  // Note: the runner converts the array to a tree and calls isSymmetric.\n  // Implement isSymmetric using the TreeNode class provided in the preamble.\n  function isSymmetric(root: any): boolean {\n    function mirror(a: any, b: any): boolean {\n      if (!a && !b) return true;\n      if (!a || !b || a.val !== b.val) return false;\n      return mirror(a.left, b.right) && mirror(a.right, b.left);\n    }\n    return !root || mirror(root.left, root.right);\n  }\n  return isSymmetric(root);\n}",
 
     python:
-      '# TreeNode class and isSymmetricRunner wrapper are pre-defined.\n# Implement the function below:\ndef isSymmetric(root):\n    pass\n',
+      '# TreeNode class and isSymmetricRunner wrapper are pre-defined.\n# Implement the function below:\ndef isSymmetric(root):\n    def mirror(a, b):\n        if not a and not b:\n            return True\n        if not a or not b or a.val != b.val:\n            return False\n        return mirror(a.left, b.right) and mirror(a.right, b.left)\n    return not root or mirror(root.left, root.right)\n',
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 4, 4, 3]], expected: true },

@@ -127,11 +127,11 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and invertTreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction invertTree(root) {\n  \n}\n',
-    typescript: "function invertTreeRunner(root: number[]): number[] {\n  \n}",
+      '// TreeNode class and invertTreeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction invertTree(root) {\n  if (!root) return null;\n  const left = invertTree(root.left);\n  const right = invertTree(root.right);\n  root.left = right;\n  root.right = left;\n  return root;\n}\n',
+    typescript: "function invertTreeRunner(root: number[]): number[] {\n  // The runner converts the array to a tree and calls invertTree.\n  // Implement invertTree using the TreeNode class provided in the preamble.\n  function invertTree(root: any): any {\n    if (!root) return null;\n    const left = invertTree(root.left);\n    const right = invertTree(root.right);\n    root.left = right;\n    root.right = left;\n    return root;\n  }\n  return invertTree(root);\n}",
 
     python:
-      '# TreeNode class and invertTreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef invertTree(root):\n    pass\n',
+      '# TreeNode class and invertTreeRunner wrapper are pre-defined.\n# Implement the function below:\ndef invertTree(root):\n    if not root:\n        return None\n    root.left, root.right = invertTree(root.right), invertTree(root.left)\n    return root\n',
   },
   visibleTests: [
     { args: [[4, 2, 7, 1, 3, 6, 9]], expected: [4, 7, 2, 9, 6, 3, 1] },

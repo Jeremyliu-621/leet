@@ -39,11 +39,11 @@ The total area equals the sum of the two individual areas **minus the overlap** 
   params: ['ax1', 'ay1', 'ax2', 'ay2', 'bx1', 'by1', 'bx2', 'by2'],
   starterCode: {
     javascript:
-      'function computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {\n  // your code here\n}\n',
-    typescript: "function computeArea(ax1: number, ay1: number, ax2: number, ay2: number, bx1: number, by1: number, bx2: number, by2: number): number {\n  // your code here\n}",
+      'function computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {\n  const areaA = (ax2 - ax1) * (ay2 - ay1);\n  const areaB = (bx2 - bx1) * (by2 - by1);\n  const overlapW = Math.max(0, Math.min(ax2, bx2) - Math.max(ax1, bx1));\n  const overlapH = Math.max(0, Math.min(ay2, by2) - Math.max(ay1, by1));\n  return areaA + areaB - overlapW * overlapH;\n}\n',
+    typescript: "function computeArea(ax1: number, ay1: number, ax2: number, ay2: number, bx1: number, by1: number, bx2: number, by2: number): number {\n  const areaA = (ax2 - ax1) * (ay2 - ay1);\n  const areaB = (bx2 - bx1) * (by2 - by1);\n  const overlapW = Math.max(0, Math.min(ax2, bx2) - Math.max(ax1, bx1));\n  const overlapH = Math.max(0, Math.min(ay2, by2) - Math.max(ay1, by1));\n  return areaA + areaB - overlapW * overlapH;\n}",
 
     python:
-      'def computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2):\n    # your code here\n    pass\n',
+      'def computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2):\n    area_a = (ax2 - ax1) * (ay2 - ay1)\n    area_b = (bx2 - bx1) * (by2 - by1)\n    overlap_w = max(0, min(ax2, bx2) - max(ax1, bx1))\n    overlap_h = max(0, min(ay2, by2) - max(ay1, by1))\n    return area_a + area_b - overlap_w * overlap_h\n',
   },
   visibleTests: [
     { args: [-3, 0, 3, 4, 0, -1, 9, 2], expected: 45 },

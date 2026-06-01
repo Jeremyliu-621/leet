@@ -35,13 +35,56 @@ Return \`true\` if you can finish all courses, or \`false\` if it is impossible 
   functionName: 'canFinish',
   starterCode: {
     javascript: `function canFinish(numCourses, prerequisites) {
-  // Return true if no cycle exists in the prerequisite graph
+  const adj = Array.from({ length: numCourses }, () => []);
+  for (const [a, b] of prerequisites) adj[b].push(a);
+  // state: 0 = unvisited, 1 = in-progress, 2 = done
+  const state = new Array(numCourses).fill(0);
+  function dfs(node) {
+    if (state[node] === 1) return false; // cycle found
+    if (state[node] === 2) return true;
+    state[node] = 1;
+    for (const nb of adj[node]) { if (!dfs(nb)) return false; }
+    state[node] = 2;
+    return true;
+  }
+  for (let i = 0; i < numCourses; i++) { if (!dfs(i)) return false; }
+  return true;
 }`,
-    typescript: "function canFinish(numCourses: number, prerequisites: number[][]): boolean {\n  // Return true if no cycle exists in the prerequisite graph\n}",
+    typescript: `function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+  const adj: number[][] = Array.from({ length: numCourses }, () => []);
+  for (const [a, b] of prerequisites) adj[b!]!.push(a!);
+  // state: 0 = unvisited, 1 = in-progress, 2 = done
+  const state = new Array<number>(numCourses).fill(0);
+  function dfs(node: number): boolean {
+    if (state[node] === 1) return false; // cycle found
+    if (state[node] === 2) return true;
+    state[node] = 1;
+    for (const nb of adj[node]!) { if (!dfs(nb)) return false; }
+    state[node] = 2;
+    return true;
+  }
+  for (let i = 0; i < numCourses; i++) { if (!dfs(i)) return false; }
+  return true;
+}`,
 
     python: `def canFinish(numCourses, prerequisites):
-    # Return True if no cycle exists in the prerequisite graph
-    pass`,
+    adj = [[] for _ in range(numCourses)]
+    for a, b in prerequisites:
+        adj[b].append(a)
+    # state: 0 = unvisited, 1 = in-progress, 2 = done
+    state = [0] * numCourses
+    def dfs(node):
+        if state[node] == 1:
+            return False  # cycle found
+        if state[node] == 2:
+            return True
+        state[node] = 1
+        for nb in adj[node]:
+            if not dfs(nb):
+                return False
+        state[node] = 2
+        return True
+    return all(dfs(i) for i in range(numCourses))`,
   },
   hints: [
     'Model courses as nodes and prerequisites as directed edges (b → a). The problem reduces to: "does this directed graph contain a cycle?"',

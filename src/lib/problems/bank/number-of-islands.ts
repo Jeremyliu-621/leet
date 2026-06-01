@@ -28,13 +28,50 @@ An **island** is surrounded by water and is formed by connecting adjacent land c
   functionName: 'numIslands',
   starterCode: {
     javascript: `function numIslands(grid) {
-  // DFS/BFS: count distinct connected components of "1"s
+  let count = 0;
+  const rows = grid.length, cols = grid[0].length;
+  function dfs(r, c) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r][c] !== '1') return;
+    grid[r][c] = '0'; // mark visited
+    dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1);
+  }
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === '1') { count++; dfs(r, c); }
+    }
+  }
+  return count;
 }`,
-    typescript: "function numIslands(grid: string[][]): number {\n  // DFS/BFS: count distinct connected components of \"1\"s\n}",
+    typescript: `function numIslands(grid: string[][]): number {
+  let count = 0;
+  const rows = grid.length, cols = grid[0]!.length;
+  function dfs(r: number, c: number): void {
+    if (r < 0 || r >= rows || c < 0 || c >= cols || grid[r]![c] !== '1') return;
+    grid[r]![c] = '0'; // mark visited
+    dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1);
+  }
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r]![c] === '1') { count++; dfs(r, c); }
+    }
+  }
+  return count;
+}`,
 
     python: `def numIslands(grid):
-    # DFS/BFS: count distinct connected components of "1"s
-    pass`,
+    rows, cols = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':
+            return
+        grid[r][c] = '0'  # mark visited
+        dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1)
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '1':
+                count += 1
+                dfs(r, c)
+    return count`,
   },
   hints: [
     'Iterate every cell. When you find a "1", increment the island count and immediately flood-fill the entire island to mark it as visited.',

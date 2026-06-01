@@ -32,13 +32,44 @@ Perform a **flood fill**: starting from \`image[sr][sc]\`, change the color of t
   functionName: 'floodFill',
   starterCode: {
     javascript: `function floodFill(image, sr, sc, color) {
-  // DFS/BFS from (sr, sc), painting connected same-color pixels
+  const orig = image[sr][sc];
+  if (orig === color) return image;
+  function dfs(r, c) {
+    if (r < 0 || r >= image.length || c < 0 || c >= image[0].length) return;
+    if (image[r][c] !== orig) return;
+    image[r][c] = color;
+    dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1);
+  }
+  dfs(sr, sc);
+  return image;
 }`,
-    typescript: "function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {\n  // DFS/BFS from (sr, sc), painting connected same-color pixels\n}",
+    typescript: `function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {
+  const orig = image[sr]![sc]!;
+  if (orig === color) return image;
+  function dfs(r: number, c: number): void {
+    if (r < 0 || r >= image.length || c < 0 || c >= image[0]!.length) return;
+    if (image[r]![c] !== orig) return;
+    image[r]![c] = color;
+    dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1);
+  }
+  dfs(sr, sc);
+  return image;
+}`,
 
     python: `def floodFill(image, sr, sc, color):
-    # DFS/BFS from (sr, sc), painting connected same-color pixels
-    pass`,
+    orig = image[sr][sc]
+    if orig == color:
+        return image
+    rows, cols = len(image), len(image[0])
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols:
+            return
+        if image[r][c] != orig:
+            return
+        image[r][c] = color
+        dfs(r - 1, c); dfs(r + 1, c); dfs(r, c - 1); dfs(r, c + 1)
+    dfs(sr, sc)
+    return image`,
   },
   hints: [
     'If the starting pixel already has the target color, return the image unchanged — otherwise you get infinite recursion.',

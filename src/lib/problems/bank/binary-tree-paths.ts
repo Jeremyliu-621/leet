@@ -98,11 +98,11 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and binaryTreePathsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction binaryTreePaths(root) {\n  \n}\n',
-    typescript: "function binaryTreePathsRunner(root: (number | null)[]): string[] {\n  \n}",
+      '// TreeNode class and binaryTreePathsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction binaryTreePaths(root) {\n  const paths = [];\n  function dfs(node, path) {\n    if (!node) return;\n    const curr = path ? path + \'->\' + node.val : String(node.val);\n    if (!node.left && !node.right) { paths.push(curr); return; }\n    dfs(node.left, curr);\n    dfs(node.right, curr);\n  }\n  dfs(root, \'\');\n  return paths;\n}\n',
+    typescript: "// TreeNode class and binaryTreePathsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction binaryTreePaths(root: any): string[] {\n  const paths: string[] = [];\n  function dfs(node: any, path: string): void {\n    if (!node) return;\n    const curr = path ? path + '->' + node.val : String(node.val);\n    if (!node.left && !node.right) { paths.push(curr); return; }\n    dfs(node.left, curr);\n    dfs(node.right, curr);\n  }\n  dfs(root, '');\n  return paths;\n}",
 
     python:
-      '# TreeNode class and binaryTreePathsRunner wrapper are pre-defined.\n# Implement the function below:\ndef binaryTreePaths(root):\n    pass\n',
+      '# TreeNode class and binaryTreePathsRunner wrapper are pre-defined.\n# Implement the function below:\ndef binaryTreePaths(root):\n    paths = []\n    def dfs(node, path):\n        if not node:\n            return\n        curr = path + \'->\' + str(node.val) if path else str(node.val)\n        if not node.left and not node.right:\n            paths.append(curr)\n            return\n        dfs(node.left, curr)\n        dfs(node.right, curr)\n    dfs(root, \'\')\n    return paths\n',
   },
   visibleTests: [
     { args: [[1, 2, 3, null, 5]], expected: ['1->2->5', '1->3'] },

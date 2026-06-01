@@ -43,10 +43,10 @@ Return the result as an integer.
   functionName: 'calculate',
   params: ['s'],
   starterCode: {
-    javascript: 'function calculate(s) {\n  // your code here\n}\n',
-    typescript: "function calculate(s: string): number {\n  // your code here\n}",
+    javascript: 'function calculate(s) {\n  let result = 0, num = 0, sign = 1;\n  const stack = [];\n  for (const ch of s) {\n    if (ch >= \'0\' && ch <= \'9\') {\n      num = num * 10 + Number(ch);\n    } else if (ch === \'+\') {\n      result += sign * num; num = 0; sign = 1;\n    } else if (ch === \'-\') {\n      result += sign * num; num = 0; sign = -1;\n    } else if (ch === \'(\') {\n      stack.push(result, sign); result = 0; sign = 1;\n    } else if (ch === \')\') {\n      result += sign * num; num = 0;\n      const savedSign = stack.pop();\n      const savedResult = stack.pop();\n      result = savedResult + savedSign * result;\n    }\n  }\n  return result + sign * num;\n}\n',
+    typescript: "function calculate(s: string): number {\n  let result = 0, num = 0, sign = 1;\n  const stack: number[] = [];\n  for (const ch of s) {\n    if (ch >= '0' && ch <= '9') {\n      num = num * 10 + Number(ch);\n    } else if (ch === '+') {\n      result += sign * num; num = 0; sign = 1;\n    } else if (ch === '-') {\n      result += sign * num; num = 0; sign = -1;\n    } else if (ch === '(') {\n      stack.push(result, sign); result = 0; sign = 1;\n    } else if (ch === ')') {\n      result += sign * num; num = 0;\n      const savedSign = stack.pop()!;\n      const savedResult = stack.pop()!;\n      result = savedResult + savedSign * result;\n    }\n  }\n  return result + sign * num;\n}",
 
-    python: 'def calculate(s):\n    # your code here\n    pass\n',
+    python: 'def calculate(s):\n    result, num, sign = 0, 0, 1\n    stack = []\n    for ch in s:\n        if ch.isdigit():\n            num = num * 10 + int(ch)\n        elif ch == \'+\':\n            result += sign * num; num = 0; sign = 1\n        elif ch == \'-\':\n            result += sign * num; num = 0; sign = -1\n        elif ch == \'(\':\n            stack.append(result); stack.append(sign); result = 0; sign = 1\n        elif ch == \')\':\n            result += sign * num; num = 0\n            saved_sign = stack.pop()\n            saved_result = stack.pop()\n            result = saved_result + saved_sign * result\n    return result + sign * num\n',
   },
   visibleTests: [
     { args: ['1 + 1'], expected: 2 },

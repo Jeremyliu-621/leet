@@ -94,11 +94,11 @@ function maxDepth(root) {
   },
   starterCode: {
     javascript:
-      '// TreeNode class and maxDepthRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxDepth(root) {\n  \n}\n',
-    typescript: "function maxDepthRunner(root: (number | null)[]): number {\n  \n}",
+      '// TreeNode class and maxDepthRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxDepth(root) {\n  if (!root) return 0;\n  return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));\n}\n',
+    typescript: "function maxDepthRunner(root: (number | null)[]): number {\n  // The runner converts the array to a tree and calls maxDepth.\n  // Implement maxDepth using the TreeNode class provided in the preamble.\n  function maxDepth(root: any): number {\n    if (!root) return 0;\n    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));\n  }\n  return maxDepth(root);\n}",
 
     python:
-      '# TreeNode class and maxDepthRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxDepth(root):\n    pass\n',
+      '# TreeNode class and maxDepthRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxDepth(root):\n    if not root:\n        return 0\n    return 1 + max(maxDepth(root.left), maxDepth(root.right))\n',
   },
   visibleTests: [
     { args: [[3, 9, 20, null, null, 15, 7]], expected: 3 },
