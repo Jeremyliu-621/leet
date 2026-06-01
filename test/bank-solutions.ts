@@ -45322,6 +45322,92 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(result);
   },
 
+  'global-and-local-inversions': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let maxSoFar = -Infinity;
+    for (let i = 2; i < nums.length; i++) {
+      maxSoFar = Math.max(maxSoFar, nums[i - 2]!);
+      if (maxSoFar > nums[i]!) return false;
+    }
+    return true;
+  },
+
+  'minimize-the-total-price-of-the-trips': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const price = args[2] as number[];
+    const trips = args[3] as number[][];
+    const adj: number[][] = Array.from({length: n}, () => []);
+    for (const edge of edges) { adj[edge[0]!]!.push(edge[1]!); adj[edge[1]!]!.push(edge[0]!); }
+    const count = new Array(n).fill(0);
+    const dfs = (node: number, parent: number, target: number, path: number[]): boolean => {
+      path.push(node);
+      if (node === target) { for (const p of path) count[p]++; return true; }
+      for (const nb of adj[node]!) {
+        if (nb !== parent && dfs(nb, node, target, path)) return true;
+      }
+      path.pop();
+      return false;
+    };
+    for (const [s, e] of trips) dfs(s!, -1, e!, []);
+    const dp = (node: number, parent: number): [number, number] => {
+      const full = count[node]! * price[node]!;
+      const half = count[node]! * Math.floor(price[node]! / 2);
+      let resF = full, resH = half;
+      for (const nb of adj[node]!) {
+        if (nb === parent) continue;
+        const [f, h] = dp(nb, node);
+        resF += Math.min(f, h);
+        resH += f;
+      }
+      return [resF, resH];
+    };
+    const [f, h] = dp(0, -1);
+    return Math.min(f, h);
+  },
+
+  'maximum-sum-of-subsequence-with-non-adjacent-elements': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])];
+    const queries = args[1] as number[][];
+    const MOD = 1000000007n;
+    const n = nums.length;
+    const NEG = -BigInt(1e15);
+    const tree: bigint[][] = Array.from({length: 4 * n}, () => [NEG, NEG, NEG, NEG]);
+    const make = (v: number): bigint[] => [0n, NEG, NEG, BigInt(v)];
+    const merge = ([a00, a01, a10, a11]: bigint[], [b00, b01, b10, b11]: bigint[]): bigint[] => {
+      const mx = (...xs: bigint[]) => xs.reduce((a, b) => a > b ? a : b);
+      return [
+        mx(a00!+b00!, a00!+b10!, a01!+b00!),
+        mx(a00!+b01!, a00!+b11!, a01!+b01!),
+        mx(a10!+b00!, a10!+b10!, a11!+b00!),
+        mx(a10!+b01!, a10!+b11!, a11!+b01!),
+      ];
+    };
+    const build = (nd: number, l: number, r: number): void => {
+      if (l === r) { tree[nd] = make(nums[l]!); return; }
+      const mid = (l + r) >> 1;
+      build(2*nd, l, mid);
+      build(2*nd+1, mid+1, r);
+      tree[nd] = merge(tree[2*nd]!, tree[2*nd+1]!);
+    };
+    const update = (nd: number, l: number, r: number, idx: number, val: number): void => {
+      if (l === r) { tree[nd] = make(val); return; }
+      const mid = (l + r) >> 1;
+      if (idx <= mid) update(2*nd, l, mid, idx, val);
+      else update(2*nd+1, mid+1, r, idx, val);
+      tree[nd] = merge(tree[2*nd]!, tree[2*nd+1]!);
+    };
+    build(1, 0, n - 1);
+    let ans = 0n;
+    for (const [pos, val] of queries) {
+      nums[pos!] = val!;
+      update(1, 0, n - 1, pos!, val!);
+      const best = tree[1]!.reduce((a, b) => a! > b! ? a : b)!;
+      ans = (ans + (best > 0n ? best : 0n)) % MOD;
+    }
+    return Number(ans);
+  },
+
   'minimize-manhattan-distances': (...args: unknown[]) => {
     const points = args[0] as number[][];
     const computeMax = (exclude: number): number => {

@@ -44599,6 +44599,106 @@ def getPermutationIndex(perm):
     return result
 `,
 
+  'global-and-local-inversions': `
+def isIdealPermutation(nums):
+    max_so_far = float('-inf')
+    for i in range(2, len(nums)):
+        max_so_far = max(max_so_far, nums[i - 2])
+        if max_so_far > nums[i]:
+            return False
+    return True
+`,
+
+  'minimize-the-total-price-of-the-trips': `
+def minimumTotalPrice(n, edges, price, trips):
+    adj = [[] for _ in range(n)]
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+
+    count = [0] * n
+    def dfs_path(node, parent, target, path):
+        path.append(node)
+        if node == target:
+            for p in path:
+                count[p] += 1
+            return True
+        for nb in adj[node]:
+            if nb != parent and dfs_path(nb, node, target, path):
+                return True
+        path.pop()
+        return False
+
+    for s, e in trips:
+        dfs_path(s, -1, e, [])
+
+    def dp(node, parent):
+        full = count[node] * price[node]
+        half = count[node] * (price[node] // 2)
+        res_f, res_h = full, half
+        for nb in adj[node]:
+            if nb == parent:
+                continue
+            f, h = dp(nb, node)
+            res_f += min(f, h)
+            res_h += f
+        return res_f, res_h
+
+    f, h = dp(0, -1)
+    return min(f, h)
+`,
+
+  'maximum-sum-of-subsequence-with-non-adjacent-elements': `
+def maximumSumSubsequence(nums, queries):
+    MOD = 10**9 + 7
+    n = len(nums)
+    NEG = float('-inf')
+
+    def make(v):
+        return [0, NEG, NEG, v]
+
+    def merge(a, b):
+        a00, a01, a10, a11 = a
+        b00, b01, b10, b11 = b
+        return [
+            max(a00+b00, a00+b10, a01+b00),
+            max(a00+b01, a00+b11, a01+b01),
+            max(a10+b00, a10+b10, a11+b00),
+            max(a10+b01, a10+b11, a11+b01),
+        ]
+
+    tree = [[NEG]*4 for _ in range(4 * n)]
+
+    def build(nd, l, r):
+        if l == r:
+            tree[nd] = make(nums[l])
+            return
+        mid = (l + r) // 2
+        build(2*nd, l, mid)
+        build(2*nd+1, mid+1, r)
+        tree[nd] = merge(tree[2*nd], tree[2*nd+1])
+
+    def update(nd, l, r, idx, val):
+        if l == r:
+            tree[nd] = make(val)
+            return
+        mid = (l + r) // 2
+        if idx <= mid:
+            update(2*nd, l, mid, idx, val)
+        else:
+            update(2*nd+1, mid+1, r, idx, val)
+        tree[nd] = merge(tree[2*nd], tree[2*nd+1])
+
+    build(1, 0, n - 1)
+    ans = 0
+    for pos, val in queries:
+        nums[pos] = val
+        update(1, 0, n - 1, pos, val)
+        best = max(tree[1])
+        ans = (ans + max(0, best)) % MOD
+    return ans
+`,
+
   'minimize-manhattan-distances': `
 def minimumDistance(points):
     def compute_max(exclude):

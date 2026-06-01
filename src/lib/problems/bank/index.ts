@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 254
+import { problem as globalAndLocalInversions } from './global-and-local-inversions';
+import { problem as minimizeTotalPriceTrips } from './minimize-the-total-price-of-the-trips';
+import { problem as maxSumSubseqNonAdjacent } from './maximum-sum-of-subsequence-with-non-adjacent-elements';
 // batch 253
 import { problem as countSubstringsRearrangedII } from './count-substrings-that-can-be-rearranged-to-contain-a-string-ii';
 import { problem as findIndexOfPermutation } from './find-the-index-of-permutation';
@@ -6317,6 +6321,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 254
+  globalAndLocalInversions,
+  minimizeTotalPriceTrips,
+  maxSumSubseqNonAdjacent,
   // batch 253
   countSubstringsRearrangedII,
   findIndexOfPermutation,

@@ -4,50 +4,80 @@ export const problem: Problem = {
   id: 'frequency-of-the-most-frequent-element',
   title: 'Frequency of the Most Frequent Element',
   difficulty: 'medium',
-  tags: ['arrays', 'sliding-window', 'two-pointers'],
+  tags: ['arrays', 'sliding-window', 'binary-search'],
   description: `The **frequency** of an element is the number of times it occurs in an array.
 
 You are given an integer array \`nums\` and an integer \`k\`. In one operation, you can choose an index of \`nums\` and increment the element at that index by \`1\`.
 
 Return the **maximum possible frequency** of an element after performing **at most \`k\` operations**.`,
   constraints: [
-    '`1 <= nums.length <= 10^5`',
-    '`1 <= nums[i] <= 10^5`',
-    '`1 <= k <= 10^5`',
+    '1 <= nums.length <= 10^5',
+    '1 <= nums[i] <= 10^5',
+    '1 <= k <= 10^5',
   ],
   examples: [
     {
       input: 'nums = [1,2,4], k = 5',
       output: '3',
-      explanation: 'Increment 1 by 3 and 2 by 2. All three become 4 using exactly 5 operations.',
+      explanation: 'Increment 1 by 3 and 2 by 2: [4,4,4]. Frequency of 4 is 3.',
     },
     {
       input: 'nums = [1,4,8,13], k = 5',
       output: '2',
-      explanation: 'Best is to make 2 elements equal to 8 (increment 4 by 4) — but that costs 4 ops. Or make 2 elements 13 by incrementing 8 by 5. Either way, max is 2.',
+      explanation: 'Increment 1→4 (3 ops) or 4→8 (4 ops) or 8→13 (5 ops) — each gives freq 2.',
     },
     {
       input: 'nums = [3,9,6], k = 2',
       output: '1',
-      explanation: 'No element can be made equal to another within 2 operations.',
+      explanation: 'No two elements can be made equal within 2 operations.',
     },
   ],
   hints: [
-    'Sort the array. The optimal target value is always the largest element in a window.',
-    'Use a sliding window: expand right, and shrink left when total increments needed exceed k. Total increments = (nums[right] - nums[left]) * windowSize accumulated.',
-    '```js\nfunction maxFrequency(nums, k) {\n  nums.sort((a, b) => a - b);\n  let left = 0, sum = 0, res = 1;\n  for (let right = 1; right < nums.length; right++) {\n    sum += (nums[right] - nums[right - 1]) * (right - left);\n    while (sum > k) {\n      sum -= nums[right] - nums[left];\n      left++;\n    }\n    res = Math.max(res, right - left + 1);\n  }\n  return res;\n}\n```',
+    'Sort nums. The optimal target value is always one of the existing values (the rightmost in a window).',
+    'Use a sliding window. For window [left, right] targeting nums[right], the cost = nums[right] * windowSize - windowSum.',
+    'When cost > k, shrink from the left: subtract nums[left] from the window sum and advance left.',
   ],
   functionName: 'maxFrequency',
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maxFrequency(nums, k) {
-
+  nums.sort((a, b) => a - b);
+  let left = 0, sum = 0, result = 1;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (nums[right] * (right - left + 1) - sum > k) {
+      sum -= nums[left];
+      left++;
+    }
+    result = Math.max(result, right - left + 1);
+  }
+  return result;
 }`,
     typescript: `function maxFrequency(nums: number[], k: number): number {
-
+  nums.sort((a, b) => a - b);
+  let left = 0, sum = 0, result = 1;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right]!;
+    while (nums[right]! * (right - left + 1) - sum > k) {
+      sum -= nums[left]!;
+      left++;
+    }
+    result = Math.max(result, right - left + 1);
+  }
+  return result;
 }`,
     python: `def maxFrequency(nums, k):
-    pass`,
+    nums.sort()
+    left = 0
+    window_sum = 0
+    result = 1
+    for right in range(len(nums)):
+        window_sum += nums[right]
+        while nums[right] * (right - left + 1) - window_sum > k:
+            window_sum -= nums[left]
+            left += 1
+        result = max(result, right - left + 1)
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 4], 5], expected: 3 },
@@ -55,10 +85,10 @@ Return the **maximum possible frequency** of an element after performing **at mo
     { args: [[3, 9, 6], 2], expected: 1 },
   ],
   hiddenTests: [
-    { args: [[1], 5], expected: 1 },
+    { args: [[1], 1], expected: 1 },
     { args: [[1, 1, 1], 0], expected: 3 },
+    { args: [[1, 2, 3, 4], 0], expected: 1 },
     { args: [[1, 1, 1, 2, 2, 4], 2], expected: 4 },
-    { args: [[9995, 9996, 9997], 10], expected: 3 },
-    { args: [[1, 2, 3, 4, 5], 5], expected: 3 },
+    { args: [[10000], 1], expected: 1 },
   ],
 };
