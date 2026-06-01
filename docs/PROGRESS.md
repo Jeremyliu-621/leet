@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2631** problems; 8187 tests green. Batches 102–235 complete.
+**Current focus:** Bank at **2634** problems; 8196 tests green. Batches 102–236 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 236+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 237+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 236 — row-with-maximum-ones, distinct-prime-factors-product-array, distribute-candies-children-ii (2026-06-01)
+Three new problems: `row-with-maximum-ones` (easy/arrays+math, LC 2643 — count 1s per row, return [bestIdx, count]), `distinct-prime-factors-of-product-of-array` (easy/arrays+math+hash-map, LC 2521 — factorize each element, union all prime factors, return set size), `distribute-candies-among-children-ii` (medium/math, LC 2927 — inclusion-exclusion: f(n) - 3f(n-limit-1) + 3f(n-2(limit+1)) - f(n-3(limit+1)) where f(x)=C(x+2,2)). Bank at **2634**; 8196 tests.
 
 ### feat(bank): batch 235 — apple-redistribution-into-boxes, maximum-value-string-array, check-if-string-prefix-array, reformat-phone-number (2026-06-01)
 Four new problems: `apple-redistribution-into-boxes` (easy/arrays+math, LC 3074 — sum packages, sort capacity desc, greedily pick largest boxes until sum ≥ total), `maximum-value-of-a-string-in-array` (easy/arrays+strings, LC 2496 — all-digits string → int value, else length), `check-if-string-is-prefix-of-array` (easy/arrays+strings+two-pointers, LC 1961 — concatenate words, check equals s), `reformat-phone-number` (easy/strings+two-pointers, LC 1694 — strip non-digits, group into 3-2-2 blocks). Bank at **2631**; 8187 tests.
