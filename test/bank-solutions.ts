@@ -43274,4 +43274,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+
+  // --- batch 239b -----------------------------------------------------------
+  'find-the-longest-valid-subsequence-i': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    // Valid if all consecutive sums have same parity (mod 2).
+    // Option A: all same parity (all-even or all-odd)
+    // Option B: alternating parity (elements alternate odd/even)
+    let evenCount = 0, oddCount = 0;
+    for (const n of nums) { if (n % 2 === 0) evenCount++; else oddCount++; }
+    // Alternating: dp[0]=longest ending with even, dp[1]=longest ending with odd
+    const dp: [number, number] = [0, 0];
+    for (const n of nums) {
+      if (n % 2 === 0) dp[0] = dp[1] + 1;
+      else dp[1] = dp[0] + 1;
+    }
+    return Math.max(evenCount, oddCount, dp[0], dp[1]);
+  },
+
+  'find-the-longest-valid-subsequence-ii': (...args: unknown[]) => {
+    const [nums, k] = args as [number[], number];
+    // dp[r][v] = longest valid subseq with target sum-remainder r and last element remainder v
+    const dp: number[][] = Array.from({ length: k }, () => new Array<number>(k).fill(0));
+    let ans = 1;
+    for (const num of nums) {
+      const m = ((num % k) + k) % k;
+      for (let r = 0; r < k; r++) {
+        const prev = (r - m + k) % k;
+        const newLen = dp[r]![prev]! + 1;
+        if (newLen > dp[r]![m]!) dp[r]![m] = newLen;
+        if (newLen > ans) ans = newLen;
+      }
+    }
+    return ans;
+  },
+
+  'count-the-number-of-incremovable-subarrays-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    // Find end of strictly increasing prefix
+    let pre = 0;
+    while (pre + 1 < n && nums[pre]! < nums[pre + 1]!) pre++;
+    // If entire array is strictly increasing
+    if (pre === n - 1) return (n * (n + 1)) / 2;
+    // Find start of strictly increasing suffix
+    let suf = n - 1;
+    while (suf - 1 >= 0 && nums[suf - 1]! < nums[suf]!) suf--;
+    // l=0: remove nums[0..r]; remaining is nums[r+1..n-1] which must be strictly increasing
+    // i.e. r+1 >= suf. So r >= suf-1. Count: n - (suf-1) = n - suf + 1.
+    let count = n - suf + 1;
+    // l=1..pre+1: remove nums[l..r]; left part nums[0..l-1] is strictly increasing.
+    // Right part nums[r+1..n-1] must be strictly increasing AND nums[r+1] > nums[l-1].
+    // So r+1 >= suf AND (r+1 >= n OR nums[r+1] > nums[l-1]).
+    // Binary search for smallest valid r in [suf-1, n-1].
+    for (let l = 1; l <= pre + 1; l++) {
+      const leftVal = nums[l - 1]!;
+      let lo = suf - 1, hi = n;
+      // Find smallest r such that r+1 >= suf and (r === n-1 OR nums[r+1] > leftVal)
+      // Equivalently, find smallest r >= suf-1 where r+1 >= n or nums[r+1] > leftVal
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (mid + 1 < n && nums[mid + 1]! <= leftVal) lo = mid + 1;
+        else hi = mid;
+      }
+      count += n - lo;
+    }
+    return count;
+  },
+
+  'minimum-adjacent-swaps-to-make-a-valid-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const minVal = Math.min(...nums);
+    const maxVal = Math.max(...nums);
+    // First occurrence of min, last occurrence of max
+    const minIdx = nums.indexOf(minVal);
+    let maxIdx = n - 1;
+    while (maxIdx >= 0 && nums[maxIdx] !== maxVal) maxIdx--;
+    // Swaps to bring min to front + swaps to bring max to end
+    // If minIdx > maxIdx, moving min leftward shifts max one step right (saves 1 swap)
+    return minIdx + (n - 1 - maxIdx) - (minIdx > maxIdx ? 1 : 0);
+  },
 };

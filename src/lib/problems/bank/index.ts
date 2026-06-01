@@ -3028,6 +3028,11 @@ import { problem as findNthValueAfterKSeconds } from './find-the-n-th-value-afte
 import { problem as checkWordInCrossword } from './check-if-word-can-be-placed-in-crossword';
 import { problem as brightestPositionStreet } from './brightest-position-on-street';
 import { problem as countKFreeSubsets } from './count-the-number-of-k-free-subsets';
+// batch 239b
+import { problem as findLongestValidSubseqI } from './find-the-longest-valid-subsequence-i';
+import { problem as findLongestValidSubseqII } from './find-the-longest-valid-subsequence-ii';
+import { problem as countIncremovableSubarraysII } from './count-the-number-of-incremovable-subarrays-ii';
+import { problem as minAdjacentSwapsValidArray } from './minimum-adjacent-swaps-to-make-a-valid-array';
 // batch 238
 import { problem as countSubmatricesTopLeft } from './count-submatrices-with-top-left-element-and-sum-less-than-k';
 import { problem as mostFrequentPrime } from './most-frequent-prime';
@@ -6113,4 +6118,9 @@ export const problems: readonly Problem[] = [
   checkWordInCrossword,
   brightestPositionStreet,
   countKFreeSubsets,
+  // batch 239b
+  findLongestValidSubseqI,
+  findLongestValidSubseqII,
+  countIncremovableSubarraysII,
+  minAdjacentSwapsValidArray,
 ];

@@ -42462,4 +42462,83 @@ def countKFreeSubsets(nums, k):
         ans = ans * prev1 % MOD
     return ans
 `,
+
+  // --- batch 239b -----------------------------------------------------------
+  'find-the-longest-valid-subsequence-i': `
+def maximumLength(nums):
+    even_count = sum(1 for x in nums if x % 2 == 0)
+    odd_count = len(nums) - even_count
+    # Alternating: dp[0] = longest ending with even, dp[1] = longest ending with odd
+    dp = [0, 0]
+    for x in nums:
+        if x % 2 == 0:
+            dp[0] = dp[1] + 1
+        else:
+            dp[1] = dp[0] + 1
+    return max(even_count, odd_count, dp[0], dp[1])
+`,
+
+  'find-the-longest-valid-subsequence-ii': `
+def maximumLength(nums, k):
+    # dp[r][v] = longest valid subseq with target sum-remainder r and last element remainder v
+    dp = [[0] * k for _ in range(k)]
+    ans = 1
+    for num in nums:
+        m = num % k
+        for r in range(k):
+            prev = (r - m + k) % k
+            new_len = dp[r][prev] + 1
+            if new_len > dp[r][m]:
+                dp[r][m] = new_len
+            if new_len > ans:
+                ans = new_len
+    return ans
+`,
+
+  'count-the-number-of-incremovable-subarrays-ii': `
+def incremovableSubarrayCount(nums):
+    import bisect
+    n = len(nums)
+    # Find end of strictly increasing prefix
+    pre = 0
+    while pre + 1 < n and nums[pre] < nums[pre + 1]:
+        pre += 1
+    # If entire array is strictly increasing
+    if pre == n - 1:
+        return n * (n + 1) // 2
+    # Find start of strictly increasing suffix
+    suf = n - 1
+    while suf - 1 >= 0 and nums[suf - 1] < nums[suf]:
+        suf -= 1
+    # l=0: remove nums[0..r]; r must satisfy r+1 >= suf
+    count = n - suf + 1
+    # l=1..pre+1
+    for l in range(1, pre + 2):
+        left_val = nums[l - 1]
+        # Find smallest r >= suf-1 where nums[r+1] > left_val or r = n-1
+        lo, hi = suf - 1, n
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if mid + 1 < n and nums[mid + 1] <= left_val:
+                lo = mid + 1
+            else:
+                hi = mid
+        count += n - lo
+    return count
+`,
+
+  'minimum-adjacent-swaps-to-make-a-valid-array': `
+def minimumSwaps(nums):
+    n = len(nums)
+    min_val = min(nums)
+    max_val = max(nums)
+    min_idx = nums.index(min_val)
+    max_idx = n - 1
+    while max_idx >= 0 and nums[max_idx] != max_val:
+        max_idx -= 1
+    swaps = min_idx + (n - 1 - max_idx)
+    if min_idx > max_idx:
+        swaps -= 1
+    return swaps
+`,
 };
