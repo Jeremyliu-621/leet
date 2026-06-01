@@ -38,13 +38,32 @@ Return the **minimum total cost** to go from \`startPos\` to \`homePos\`.`,
   params: ['startPos', 'homePos', 'rowCosts', 'colCosts'],
   starterCode: {
     javascript: `function minCost(startPos, homePos, rowCosts, colCosts) {
-
+  let [r, c] = startPos;
+  const [hr, hc] = homePos;
+  let cost = 0;
+  while (r !== hr) { r += r < hr ? 1 : -1; cost += rowCosts[r]; }
+  while (c !== hc) { c += c < hc ? 1 : -1; cost += colCosts[c]; }
+  return cost;
 }`,
     typescript: `function minCost(startPos: number[], homePos: number[], rowCosts: number[], colCosts: number[]): number {
-
+  let [r, c] = startPos as [number, number];
+  const [hr, hc] = homePos as [number, number];
+  let cost = 0;
+  while (r !== hr) { r += r < hr ? 1 : -1; cost += rowCosts[r]!; }
+  while (c !== hc) { c += c < hc ? 1 : -1; cost += colCosts[c]!; }
+  return cost;
 }`,
     python: `def minCost(startPos, homePos, rowCosts, colCosts):
-    pass`,
+    r, c = startPos
+    hr, hc = homePos
+    cost = 0
+    while r != hr:
+        r += 1 if r < hr else -1
+        cost += rowCosts[r]
+    while c != hc:
+        c += 1 if c < hc else -1
+        cost += colCosts[c]
+    return cost`,
   },
   visibleTests: [
     { args: [[1, 0], [2, 3], [5, 4, 3], [8, 2, 6, 7]], expected: 18 },

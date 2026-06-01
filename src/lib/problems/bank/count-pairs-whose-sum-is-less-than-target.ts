@@ -37,13 +37,33 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function countPairs(nums, target) {
-
+  nums.sort((a, b) => a - b);
+  let count = 0, lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    if (nums[lo] + nums[hi] < target) { count += hi - lo; lo++; }
+    else hi--;
+  }
+  return count;
 }`,
     typescript: `function countPairs(nums: number[], target: number): number {
-
+  nums.sort((a, b) => a - b);
+  let count = 0, lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    if (nums[lo]! + nums[hi]! < target) { count += hi - lo; lo++; }
+    else hi--;
+  }
+  return count;
 }`,
     python: `def countPairs(nums, target):
-    pass`,
+    nums.sort()
+    count, lo, hi = 0, 0, len(nums) - 1
+    while lo < hi:
+        if nums[lo] + nums[hi] < target:
+            count += hi - lo
+            lo += 1
+        else:
+            hi -= 1
+    return count`,
   },
   visibleTests: [
     { args: [[-1, 1, 2, 3, 1], 2], expected: 3 },

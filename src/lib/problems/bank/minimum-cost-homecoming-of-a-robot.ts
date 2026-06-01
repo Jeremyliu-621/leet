@@ -32,16 +32,40 @@ The robot can move **up, down, left, or right** one step at a time. Return the *
     },
   ],
   hints: [
-    'Any detour (moving away from the target and back) adds extra cost, so the optimal path moves exclusively toward homePos.',
-    'The minimum cost path traverses each row between startRow and homeRow exactly once, and each column between startCol and homeCol exactly once.',
-    'Sum rowCosts for rows strictly between startRow and homeRow (inclusive of homeRow, exclusive of startRow), and colCosts similarly.',
+    'Level 1: Any detour (moving away from the target and back) adds extra cost since costs are non-negative, so the optimal path moves exclusively toward homePos.',
+    'Level 2: The minimum cost path traverses each row between startRow and homeRow exactly once, and each column between startCol and homeCol exactly once — sum those costs.',
+    'Level 3: Walk from r to homeRow step-by-step adding rowCosts[r], then from c to homeCol adding colCosts[c]. O(|Δr| + |Δc|) time.',
   ],
   functionName: 'minCostHomecoming',
   params: ['startPos', 'homePos', 'rowCosts', 'colCosts'],
   starterCode: {
-    javascript: 'function minCostHomecoming(startPos, homePos, rowCosts, colCosts) {\n  \n}\n',
-    typescript: 'function minCostHomecoming(startPos: number[], homePos: number[], rowCosts: number[], colCosts: number[]): number {\n  \n}',
-    python: 'def minCostHomecoming(startPos, homePos, rowCosts, colCosts):\n    pass\n',
+    javascript: `function minCostHomecoming(startPos, homePos, rowCosts, colCosts) {
+  let [r, c] = startPos;
+  const [hr, hc] = homePos;
+  let cost = 0;
+  while (r !== hr) { r += r < hr ? 1 : -1; cost += rowCosts[r]; }
+  while (c !== hc) { c += c < hc ? 1 : -1; cost += colCosts[c]; }
+  return cost;
+}`,
+    typescript: `function minCostHomecoming(startPos: number[], homePos: number[], rowCosts: number[], colCosts: number[]): number {
+  let [r, c] = startPos as [number, number];
+  const [hr, hc] = homePos as [number, number];
+  let cost = 0;
+  while (r !== hr) { r += r < hr ? 1 : -1; cost += rowCosts[r]!; }
+  while (c !== hc) { c += c < hc ? 1 : -1; cost += colCosts[c]!; }
+  return cost;
+}`,
+    python: `def minCostHomecoming(startPos, homePos, rowCosts, colCosts):
+    r, c = startPos
+    hr, hc = homePos
+    cost = 0
+    while r != hr:
+        r += 1 if r < hr else -1
+        cost += rowCosts[r]
+    while c != hc:
+        c += 1 if c < hc else -1
+        cost += colCosts[c]
+    return cost`,
   },
   visibleTests: [
     { args: [[1, 0], [2, 3], [5, 4, 3], [8, 2, 6, 7]], expected: 18 },

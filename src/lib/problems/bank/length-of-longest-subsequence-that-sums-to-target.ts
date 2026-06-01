@@ -42,13 +42,34 @@ A **subsequence** is an array that can be derived from another array by deleting
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function lengthOfLongestSubsequence(nums, target) {
-
+  const dp = new Array(target + 1).fill(-Infinity);
+  dp[0] = 0;
+  for (const num of nums) {
+    for (let s = target; s >= num; s--) {
+      if (dp[s - num] !== -Infinity) dp[s] = Math.max(dp[s], dp[s - num] + 1);
+    }
+  }
+  return dp[target] === -Infinity ? -1 : dp[target];
 }`,
     typescript: `function lengthOfLongestSubsequence(nums: number[], target: number): number {
-
+  const dp = new Array(target + 1).fill(-Infinity) as number[];
+  dp[0] = 0;
+  for (const num of nums) {
+    for (let s = target; s >= num; s--) {
+      if (dp[s - num]! !== -Infinity) dp[s] = Math.max(dp[s]!, dp[s - num]! + 1);
+    }
+  }
+  return dp[target]! === -Infinity ? -1 : dp[target]!;
 }`,
     python: `def lengthOfLongestSubsequence(nums, target):
-    pass`,
+    NEG_INF = float('-inf')
+    dp = [NEG_INF] * (target + 1)
+    dp[0] = 0
+    for num in nums:
+        for s in range(target, num - 1, -1):
+            if dp[s - num] != NEG_INF:
+                dp[s] = max(dp[s], dp[s - num] + 1)
+    return dp[target] if dp[target] != NEG_INF else -1`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 9], expected: 3 },
