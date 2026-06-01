@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2732** problems; 8490 tests green. Batches 102–250 complete.
+**Current focus:** Bank at **2737** problems; 8505 tests green. Batches 102–250 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 251+; continued UX polish.
+
+### feat(bank): batch 250b — count-complete-components, diagonal-distinct, integer-zero, decremental-concat, good-subarrays (2026-06-01)
+Five new problems extending batch 250: `count-complete-components` (medium/graph+union-find, LC 2685 — DSU to find components; complete iff edge_count == k*(k-1)/2), `difference-of-number-of-distinct-values-on-diagonals` (medium/arrays+hash-map, LC 2711 — scan top-left and bottom-right diagonals with Sets; answer is absolute difference of sizes), `minimum-operations-to-make-the-integer-zero` (medium/bit-manipulation, LC 2749 — iterate k=1..; check val=num1-k*num2 >= k and popcount(val) <= k), `decremental-string-concatenation` (medium/strings+dp, LC 2746 — DP on (firstChar, lastChar) state; at each step choose prepend or append, saving 1 if chars match at junction), `ways-to-split-array-into-good-subarrays` (medium/arrays+math, LC 2750 — count 1s positions; multiply gaps between consecutive 1s mod 10^9+7). Bank at **2737**; 8505 tests.
 
 ### refactor+feat: shared LANGUAGE_LABEL/SHORT, language in submissions, batch 250 (2026-06-01)
 Three polish improvements: (1) `LANGUAGE_LABEL` and `LANGUAGE_SHORT` moved from EditorPanel (local) to `src/lib/types.ts` — fixes SolvedStandaloneScreen showing raw identifiers like `java` / `cpp` instead of `Java` / `C++`; (2) `SubmissionRecord` gains an optional `language` field, populated on every submit; `SubmissionsPanel` shows a new "Lang" column (JS/TS/Py/Java/C++/…) with "—" for legacy records; (3) Batch 250 adds three problems: `magic-squares-in-grid` (medium/simulation — check all 3×3 subgrids for distinct 1–9 and sums of 15), `k-empty-slots` (hard/arrays — ordered-set immediate-neighbor check for earliest day with exactly k off-bulbs between two on-bulbs), `optimal-account-balancing` (hard/backtracking — net-balance reduction + recursive settle-first-debtor). Bank at **2732**; 8490 tests.
