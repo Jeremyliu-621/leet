@@ -179,6 +179,16 @@ const JS_SNIPPETS = [
     detail: 'sort ascending',
     type: 'keyword',
   }),
+  snippetCompletion('const MOD = 1_000_000_007n;\n${}', {
+    label: 'mod',
+    detail: 'BigInt modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('const INF = Infinity;\n${}', {
+    label: 'inf',
+    detail: 'Infinity constant',
+    type: 'keyword',
+  }),
 ];
 
 const TS_SNIPPETS = [
@@ -232,6 +242,16 @@ const TS_SNIPPETS = [
     detail: 'sort ascending',
     type: 'keyword',
   }),
+  snippetCompletion('const MOD = 1_000_000_007n;\n${}', {
+    label: 'mod',
+    detail: 'BigInt modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('const INF = Infinity;\n${}', {
+    label: 'inf',
+    detail: 'Infinity constant',
+    type: 'keyword',
+  }),
 ];
 
 const PYTHON_SNIPPETS = [
@@ -273,6 +293,46 @@ const PYTHON_SNIPPETS = [
   snippetCompletion('from heapq import heappush, heappop\n${heap} = []\n${}', {
     label: 'heap',
     detail: 'heap setup',
+    type: 'keyword',
+  }),
+  snippetCompletion('from heapq import heappush, heappop\n${heap} = []\nheappush(${heap}, ${val})\n${result} = heappop(${heap})\n${}', {
+    label: 'pq',
+    detail: 'priority queue (min-heap)',
+    type: 'keyword',
+  }),
+  snippetCompletion('from collections import deque\n${dq} = deque()\n${}', {
+    label: 'deque',
+    detail: 'deque (double-ended queue)',
+    type: 'keyword',
+  }),
+  snippetCompletion('from collections import Counter\n${cnt} = Counter(${arr})\n${}', {
+    label: 'counter',
+    detail: 'Counter frequency map',
+    type: 'keyword',
+  }),
+  snippetCompletion('import bisect\n${idx} = bisect.bisect_left(${arr}, ${x})\n${}', {
+    label: 'bisect',
+    detail: 'binary search (bisect_left)',
+    type: 'keyword',
+  }),
+  snippetCompletion('from functools import cache\n\n@cache\ndef ${fn}(${args}):\n\t${}', {
+    label: 'cache',
+    detail: '@cache memoization decorator',
+    type: 'keyword',
+  }),
+  snippetCompletion('INF = float(\'inf\')\n${}', {
+    label: 'inf',
+    detail: 'float infinity',
+    type: 'keyword',
+  }),
+  snippetCompletion('MOD = 10**9 + 7\n${}', {
+    label: 'mod',
+    detail: 'modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('${result} = sorted(${arr}, key=lambda ${x}: ${x})\n${}', {
+    label: 'sortkey',
+    detail: 'sorted with key function',
     type: 'keyword',
   }),
 ];
@@ -338,6 +398,41 @@ const JAVA_SNIPPETS = [
     detail: 'PriorityQueue (min-heap)',
     type: 'keyword',
   }),
+  snippetCompletion('PriorityQueue<${T}> ${pq} = new PriorityQueue<>(Collections.reverseOrder());\n${}', {
+    label: 'pqmax',
+    detail: 'PriorityQueue (max-heap)',
+    type: 'keyword',
+  }),
+  snippetCompletion('Queue<${T}> ${q} = new LinkedList<>();\n${}', {
+    label: 'queue',
+    detail: 'Queue (LinkedList)',
+    type: 'keyword',
+  }),
+  snippetCompletion('Deque<${T}> ${dq} = new ArrayDeque<>();\n${}', {
+    label: 'dq',
+    detail: 'Deque (ArrayDeque)',
+    type: 'keyword',
+  }),
+  snippetCompletion('Deque<${T}> ${stk} = new ArrayDeque<>();\n${}', {
+    label: 'stk',
+    detail: 'Stack via Deque (ArrayDeque)',
+    type: 'keyword',
+  }),
+  snippetCompletion('TreeMap<${K}, ${V}> ${tm} = new TreeMap<>();\n${}', {
+    label: 'tmap',
+    detail: 'TreeMap (sorted)',
+    type: 'keyword',
+  }),
+  snippetCompletion('TreeSet<${T}> ${ts} = new TreeSet<>();\n${}', {
+    label: 'tset',
+    detail: 'TreeSet (sorted)',
+    type: 'keyword',
+  }),
+  snippetCompletion('int MOD = 1_000_000_007;\n${}', {
+    label: 'mod',
+    detail: 'modulo constant 1e9+7',
+    type: 'keyword',
+  }),
 ];
 
 const CPP_SNIPPETS = [
@@ -399,6 +494,41 @@ const CPP_SNIPPETS = [
   snippetCompletion('priority_queue<${T}, vector<${T}>, greater<${T}>> ${pq};\n${}', {
     label: 'pq',
     detail: 'min-heap priority_queue',
+    type: 'keyword',
+  }),
+  snippetCompletion('priority_queue<${T}> ${pq};\n${}', {
+    label: 'pqmax',
+    detail: 'max-heap priority_queue',
+    type: 'keyword',
+  }),
+  snippetCompletion('stack<${T}> ${stk};\n${}', {
+    label: 'stk',
+    detail: 'stack declaration',
+    type: 'keyword',
+  }),
+  snippetCompletion('queue<${T}> ${q};\n${}', {
+    label: 'queue',
+    detail: 'queue declaration',
+    type: 'keyword',
+  }),
+  snippetCompletion('deque<${T}> ${dq};\n${}', {
+    label: 'dq',
+    detail: 'deque declaration',
+    type: 'keyword',
+  }),
+  snippetCompletion('map<${K}, ${V}> ${tm};\n${}', {
+    label: 'tmap',
+    detail: 'sorted map (tree map)',
+    type: 'keyword',
+  }),
+  snippetCompletion('const int MOD = 1e9 + 7;\n${}', {
+    label: 'mod',
+    detail: 'modulo constant 1e9+7',
+    type: 'keyword',
+  }),
+  snippetCompletion('const long long INF = 1e18;\n${}', {
+    label: 'inf',
+    detail: 'large infinity constant',
     type: 'keyword',
   }),
 ];

@@ -771,42 +771,53 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
               <TestDotMatrix verdicts={result.verdicts} scrollContainerRef={scrollRef} />
 
               {/* Summary */}
-              <div className="flex items-center gap-3 pb-2 border-b border-border">
-                <span
-                  className={`font-mono text-xs font-semibold uppercase ${
-                    result.outcome === 'accepted' ? 'text-accent' : 'text-text'
-                  }`}
-                >
-                  {outcomeLabel(result.outcome, mode)}
-                </span>
-                <span className="font-mono text-xs text-muted">
-                  {result.passed}/{result.total} passed
-                </span>
-                {result.totalDurationMs !== undefined && (
-                  <span className="font-mono text-xs text-faint tabular-nums">
-                    {result.totalDurationMs}ms
-                  </span>
-                )}
-                {result.outcome === 'accepted' && mode === 'run' ? (
-                  <span className="font-mono text-[10px] text-faint ml-auto">
-                    submit to run all tests
-                  </span>
-                ) : result.outcome !== 'accepted' && result.passed < result.total ? (
-                  <button
-                    type="button"
-                    onClick={() => setShowFailuresOnly((v) => !v)}
-                    aria-pressed={showFailuresOnly}
-                    className={[
-                      'ml-auto font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-accent',
-                      showFailuresOnly
-                        ? 'border-text text-text bg-surface-2'
-                        : 'border-border text-faint hover:text-muted hover:border-muted',
-                    ].join(' ')}
-                  >
-                    {showFailuresOnly ? 'show all' : 'failures only'}
-                  </button>
-                ) : null}
-              </div>
+              {(() => {
+                const errorCount = result.verdicts.filter((v) => v.status === 'error').length;
+                const failCount = result.verdicts.filter((v) => v.status === 'fail').length;
+                return (
+                  <div className="flex items-center gap-3 pb-2 border-b border-border">
+                    <span
+                      className={`font-mono text-xs font-semibold uppercase ${
+                        result.outcome === 'accepted' ? 'text-accent' : 'text-text'
+                      }`}
+                    >
+                      {outcomeLabel(result.outcome, mode)}
+                    </span>
+                    <span className="font-mono text-xs text-muted">
+                      {result.passed}/{result.total} passed
+                    </span>
+                    {errorCount > 0 && failCount > 0 && (
+                      <span className="font-mono text-[10px] text-faint tabular-nums">
+                        {failCount} wrong · {errorCount} errors
+                      </span>
+                    )}
+                    {result.totalDurationMs !== undefined && (
+                      <span className="font-mono text-xs text-faint tabular-nums">
+                        {result.totalDurationMs}ms
+                      </span>
+                    )}
+                    {result.outcome === 'accepted' && mode === 'run' ? (
+                      <span className="font-mono text-[10px] text-faint ml-auto">
+                        submit to run all tests
+                      </span>
+                    ) : result.outcome !== 'accepted' && result.passed < result.total ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowFailuresOnly((v) => !v)}
+                        aria-pressed={showFailuresOnly}
+                        className={[
+                          'ml-auto font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded border transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-accent',
+                          showFailuresOnly
+                            ? 'border-text text-text bg-surface-2'
+                            : 'border-border text-faint hover:text-muted hover:border-muted',
+                        ].join(' ')}
+                      >
+                        {showFailuresOnly ? 'show all' : 'failures only'}
+                      </button>
+                    ) : null}
+                  </div>
+                );
+              })()}
 
               {/* Individual test results — key includes passed count so cards
                   reset their expand state when a new result arrives.
