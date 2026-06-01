@@ -44465,6 +44465,36 @@ def kEmptySlots(bulbs, k):
     return -1
 `,
 
+  'maximum-size-of-a-set-after-removals': `
+def maximumSetSize(nums1, nums2):
+    set1, set2 = set(nums1), set(nums2)
+    unique1 = sum(1 for v in set1 if v not in set2)
+    unique2 = sum(1 for v in set2 if v not in set1)
+    shared = len(set1) - unique1
+    half = len(nums1) // 2
+    keep1 = min(unique1, half)
+    keep2 = min(unique2, half)
+    return keep1 + keep2 + min(shared, len(nums1) - keep1 - keep2)
+`,
+
+  'minimum-number-of-operations-to-make-x-and-y-equal': `
+def minimumOperationsToMakeEqual(x, y):
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(x):
+        if x <= y:
+            return y - x
+        best = x - y
+        lo5, hi5 = (x // 5) * 5, (x // 5) * 5 + 5
+        best = min(best, x - lo5 + 1 + dp(lo5 // 5))
+        best = min(best, hi5 - x + 1 + dp(hi5 // 5))
+        lo11, hi11 = (x // 11) * 11, (x // 11) * 11 + 11
+        best = min(best, x - lo11 + 1 + dp(lo11 // 11))
+        best = min(best, hi11 - x + 1 + dp(hi11 // 11))
+        return best
+    return dp(x)
+`,
+
   'maximum-xor-of-two-numbers-in-array': `
 def findMaximumXOR(nums):
     trie = {}

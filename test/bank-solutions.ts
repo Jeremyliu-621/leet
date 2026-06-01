@@ -45193,6 +45193,40 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return -1;
   },
 
+  'maximum-size-of-a-set-after-removals': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const set1 = new Set(nums1);
+    const set2 = new Set(nums2);
+    let unique1 = 0, unique2 = 0, shared = 0;
+    for (const v of set1) { if (set2.has(v)) shared++; else unique1++; }
+    for (const v of set2) { if (!set1.has(v)) unique2++; }
+    const half = nums1.length / 2;
+    const keep1 = Math.min(unique1, half);
+    const keep2 = Math.min(unique2, half);
+    return keep1 + keep2 + Math.min(shared, nums1.length - keep1 - keep2);
+  },
+
+  'minimum-number-of-operations-to-make-x-and-y-equal': (...args: unknown[]) => {
+    const x = args[0] as number;
+    const y = args[1] as number;
+    const memo = new Map<number, number>();
+    const dp = (x: number): number => {
+      if (x <= y) return y - x;
+      if (memo.has(x)) return memo.get(x)!;
+      let best = x - y;
+      const lo5 = Math.floor(x / 5) * 5, hi5 = lo5 + 5;
+      best = Math.min(best, x - lo5 + 1 + dp(lo5 / 5));
+      best = Math.min(best, hi5 - x + 1 + dp(hi5 / 5));
+      const lo11 = Math.floor(x / 11) * 11, hi11 = lo11 + 11;
+      best = Math.min(best, x - lo11 + 1 + dp(lo11 / 11));
+      best = Math.min(best, hi11 - x + 1 + dp(hi11 / 11));
+      memo.set(x, best);
+      return best;
+    };
+    return dp(x);
+  },
+
   'maximum-xor-of-two-numbers-in-array': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const trie: Record<number, unknown> = {};

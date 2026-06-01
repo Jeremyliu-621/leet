@@ -3092,6 +3092,9 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 252
+import { problem as maximumSizeOfSetAfterRemovals } from './maximum-size-of-a-set-after-removals';
+import { problem as minimumOpsToMakeXYEqual } from './minimum-number-of-operations-to-make-x-and-y-equal';
 // batch 251
 import { problem as maximumXorOfTwoNumbers } from './maximum-xor-of-two-numbers-in-array';
 import { problem as lexSmallestStringSubstringOp } from './lexicographically-smallest-string-after-substring-operation';
@@ -6305,6 +6308,9 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 252
+  maximumSizeOfSetAfterRemovals,
+  minimumOpsToMakeXYEqual,
   // batch 251
   maximumXorOfTwoNumbers,
   lexSmallestStringSubstringOp,
