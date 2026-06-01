@@ -8,15 +8,21 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2832** problems; 8825 tests green. Batch 266 complete.
+**Current focus:** Bank at **2836** problems; 8837 tests green. Go/Rust snippets + batch 265 added.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 267+; continued UX polish.
 
 ### feat(bank): batch 266 — find-maximum-marked-elements, longest-path-adjacent-chars, maximize-score-removing-substrings, maximum-points-archery (2026-06-01)
 Four new problems: `find-maximum-number-of-marked-elements` (medium/arrays+binary-search, LC 2576 — binary search on k pairs; check sorted[i]*2≤sorted[n-k+i] for i∈[0,k); return 2k), `longest-path-with-different-adjacent-characters` (hard/tree+dp, LC 2246 — DFS from root; at each node collect depths of children with s[c]≠s[u]; path through u = 1+top1+top2; track global max), `maximize-score-after-removing-substrings` (medium/strings+stack, LC 2124 — greedy: remove higher-value pair first via stack; push chars, pop when top+curr form target pair), `maximum-points-in-an-archery-competition` (medium/arrays+bit-manipulation, LC 2212 — 2^12=4096 bitmask enumeration; for each subset check cost≤numArrows and track max score; preamble-based validation). Bank at **2832**; 8825 tests.
 
+### feat(bank): batch 265 (local) — rows-with-most-ones, adding-spaces-to-a-string, check-if-move-is-legal, stamping-the-grid (2026-06-01)
+Four new problems: `rows-with-most-ones` (easy/arrays — find all row indices tied for max 1s; O(m*n)), `adding-spaces-to-a-string` (medium/strings+two-pointers, LC 2109 — two-pointer insert-before pass; O(n+m)), `check-if-move-is-legal` (medium/arrays+simulation, LC 2133 — 8-direction reversi "good line" check; run of opposite-color then same-color endpoint; fixed 8×8 board), `stamping-the-grid` (hard/arrays+binary-indexed-tree, LC 2132 — double 2D prefix sum: first pass finds valid stamp positions; second pass checks coverage of every empty cell; O(m*n)). Also improves hints and starter code for `maximum-number-of-words-found-in-sentences`. Bank at **2836**; 8837 tests.
+
+### feat(editor): Go and Rust missing snippets — newset, mod, inf, deque, pq (2026-06-01)
+Go gains: `newset` (map[K]struct{}), `mod` (1_000_000_007), `inf` (math.MaxInt). Rust gains: `deque` (VecDeque), `pq` (BinaryHeap max-heap), `mod`, `inf` (i64::MAX). KeyboardShortcutsModal updated to document Go/Rust coverage for inf, pq, deque, newset.
+
 ### feat(bank): batch 265 — chessboard-color, equal-divisible-pairs, work-sessions, abs-val-expr, uni-value-grid (2026-06-01)
-Five new problems added by remote session. Bank at **2828**; 8813 tests.
+Five new problems added by remote session. Bank at **2832**; 8825 tests.
 
 ### feat(editor): Kotlin, C#, and Swift native snippet completions (2026-06-01)
 Added dedicated, language-idiomatic snippet tables for Kotlin, C#, and Swift (previously they shared Java/C++ tables giving wrong completions). Kotlin: `for (i in 0 until n)`, `downTo`, `withIndex`, `mutableMapOf/SetOf`, `PriorityQueue`, `compareByDescending`, `ArrayDeque`, `sortedMapOf`, `Long.MAX_VALUE`. C#: `for`/`foreach`, `Dictionary<K,V>`, `HashSet<T>`, `List<T>`, `PriorityQueue<T,int>` (.NET 6+), `Stack<T>`, `Queue<T>`, `SortedDictionary`, `SortedSet`, `long.MaxValue`. Swift: `for i in 0..<n`, `stride(from:through:by:)`, `enumerated()`, `[K:V]`, `Set<T>`, `sorted(by:)`, `Int.max`. `KeyboardShortcutsModal` updated to document coverage for all three languages.
