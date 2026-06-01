@@ -39,10 +39,18 @@ An empty string is an anagram of itself but not of any non-empty string.`,
   functionName: 'areAnagrams',
   params: ['s', 't'],
   starterCode: {
-    javascript: 'function areAnagrams(s, t) {\n  // your code here\n}\n',
-    typescript: "function areAnagrams(s: string, t: string): boolean {\n  // your code here\n}",
-
-    python: 'def areAnagrams(s, t):\n    # your code here\n    pass\n',
+    javascript: `function areAnagrams(s, t) {
+  if (s.length !== t.length) return false;
+  return s.split('').sort().join('') === t.split('').sort().join('');
+}`,
+    typescript: `function areAnagrams(s: string, t: string): boolean {
+  if (s.length !== t.length) return false;
+  return s.split('').sort().join('') === t.split('').sort().join('');
+}`,
+    python: `def areAnagrams(s, t):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    return sorted(s) == sorted(t)`,
   },
   visibleTests: [
     { args: ['anagram', 'nagaram'], expected: true },

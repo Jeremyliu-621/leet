@@ -23,10 +23,22 @@ export const problem: Problem = {
   functionName: 'arrayPairSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function arrayPairSum(nums) {\n  // your code here\n}\n',
-    typescript: "function arrayPairSum(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def arrayPairSum(nums):\n    # your code here\n    pass\n',
+    javascript: `function arrayPairSum(nums) {
+  nums.sort((a, b) => a - b);
+  let sum = 0;
+  for (let i = 0; i < nums.length; i += 2) sum += nums[i];
+  return sum;
+}`,
+    typescript: `function arrayPairSum(nums: number[]): number {
+  nums.sort((a, b) => a - b);
+  let sum = 0;
+  for (let i = 0; i < nums.length; i += 2) sum += nums[i]!;
+  return sum;
+}`,
+    python: `def arrayPairSum(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort()
+    return sum(nums[i] for i in range(0, len(nums), 2))`,
   },
   visibleTests: [
     { args: [[1, 4, 3, 2]], expected: 4 },

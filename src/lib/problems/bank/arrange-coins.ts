@@ -21,10 +21,15 @@ Given the integer \`n\`, return the **number of complete rows** of the staircase
   functionName: 'arrangeCoins',
   params: ['n'],
   starterCode: {
-    javascript: 'function arrangeCoins(n) {\n  // your code here\n}\n',
-    typescript: "function arrangeCoins(n: number): number {\n  // your code here\n}",
-
-    python: 'def arrangeCoins(n):\n    # your code here\n    pass\n',
+    javascript: `function arrangeCoins(n) {
+  return Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
+}`,
+    typescript: `function arrangeCoins(n: number): number {
+  return Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
+}`,
+    python: `def arrangeCoins(n):
+    import math
+    return int((-1 + math.sqrt(1 + 8*n)) / 2)`,
   },
   visibleTests: [
     { args: [5], expected: 2 },

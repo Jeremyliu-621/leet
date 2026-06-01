@@ -31,10 +31,30 @@ Return \`true\` if the string is balanced, otherwise return \`false\`. An empty 
   functionName: 'balancedBrackets',
   params: ['text'],
   starterCode: {
-    javascript: 'function balancedBrackets(text) {\n  // your code here\n}\n',
-    typescript: "function balancedBrackets(text: string): boolean {\n  // your code here\n}",
-
-    python: 'def balancedBrackets(text):\n    # your code here\n    pass\n',
+    javascript: `function balancedBrackets(text) {
+  const stack = [], match = { ')': '(', ']': '[', '}': '{' };
+  for (const c of text) {
+    if ('([{'.includes(c)) stack.push(c);
+    else if (stack.pop() !== match[c]) return false;
+  }
+  return stack.length === 0;
+}`,
+    typescript: `function balancedBrackets(text: string): boolean {
+  const stack: string[] = [];
+  const match: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+  for (const c of text) {
+    if ('([{'.includes(c)) stack.push(c);
+    else if (stack.pop() !== match[c]) return false;
+  }
+  return stack.length === 0;
+}`,
+    python: `def balancedBrackets(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    stack, match = [], {')': '(', ']': '[', '}': '{'}
+    for c in text:
+        if c in '([{': stack.append(c)
+        elif not stack or stack.pop() != match[c]: return False
+    return len(stack) == 0`,
   },
   visibleTests: [
     { args: ['([])'], expected: true },

@@ -34,11 +34,47 @@ You may remove any single element, or remove nothing at all. An array with zero 
   functionName: 'canBeStrictlyIncreasing',
   params: ['nums'],
   starterCode: {
-    javascript: 'function canBeStrictlyIncreasing(nums) {\n  // your code here\n}\n',
-    typescript: `function canBeStrictlyIncreasing(nums: number[]): boolean {
-
+    javascript: `function canBeStrictlyIncreasing(nums) {
+  function check(skip) {
+    let prev = -Infinity;
+    for (let i = 0; i < nums.length; i++) {
+      if (i === skip) continue;
+      if (nums[i] <= prev) return false;
+      prev = nums[i];
+    }
+    return true;
+  }
+  for (let i = 0; i < nums.length - 1; i++)
+    if (nums[i] >= nums[i+1]) return check(i) || check(i+1);
+  return true;
 }`,
-    python: 'def canBeStrictlyIncreasing(nums):\n    # your code here\n    pass\n',
+    typescript: `function canBeStrictlyIncreasing(nums: number[]): boolean {
+  function check(skip: number): boolean {
+    let prev = -Infinity;
+    for (let i = 0; i < nums.length; i++) {
+      if (i === skip) continue;
+      if (nums[i]! <= prev) return false;
+      prev = nums[i]!;
+    }
+    return true;
+  }
+  for (let i = 0; i < nums.length - 1; i++)
+    if (nums[i]! >= nums[i+1]!) return check(i) || check(i+1);
+  return true;
+}`,
+    python: `def canBeStrictlyIncreasing(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    def check(skip):
+        prev = float('-inf')
+        for i, v in enumerate(nums):
+            if i == skip: continue
+            if v <= prev: return False
+            prev = v
+        return True
+    for i in range(len(nums) - 1):
+        if nums[i] >= nums[i+1]:
+            return check(i) or check(i+1)
+    return True`,
   },
   visibleTests: [
     { args: [[1, 2, 10, 3, 5]], expected: true },

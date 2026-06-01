@@ -39,10 +39,35 @@ Return the sum of all the scores on the record after applying all the operations
   functionName: 'calPoints',
   params: ['ops'],
   starterCode: {
-    javascript: 'function calPoints(ops) {\n  // your code here\n}\n',
-    typescript: "function calPoints(ops: string[]): number {\n  // your code here\n}",
-
-    python: 'def calPoints(ops):\n    # your code here\n    pass\n',
+    javascript: `function calPoints(ops) {
+  const s = [];
+  for (const o of ops) {
+    if (o === '+') s.push(s[s.length-1] + s[s.length-2]);
+    else if (o === 'D') s.push(s[s.length-1] * 2);
+    else if (o === 'C') s.pop();
+    else s.push(+o);
+  }
+  return s.reduce((a, b) => a + b, 0);
+}`,
+    typescript: `function calPoints(ops: string[]): number {
+  const s: number[] = [];
+  for (const o of ops) {
+    if (o === '+') s.push(s[s.length-1]! + s[s.length-2]!);
+    else if (o === 'D') s.push(s[s.length-1]! * 2);
+    else if (o === 'C') s.pop();
+    else s.push(+o);
+  }
+  return s.reduce((a, b) => a + b, 0);
+}`,
+    python: `def calPoints(ops):
+    ops = list(ops.to_py()) if hasattr(ops, 'to_py') else list(ops)
+    s = []
+    for o in ops:
+        if o == '+': s.append(s[-1] + s[-2])
+        elif o == 'D': s.append(s[-1] * 2)
+        elif o == 'C': s.pop()
+        else: s.append(int(o))
+    return sum(s)`,
   },
   visibleTests: [
     { args: [['5', '2', 'C', 'D', '+']], expected: 30 },

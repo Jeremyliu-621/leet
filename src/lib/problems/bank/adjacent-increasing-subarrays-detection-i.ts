@@ -40,11 +40,31 @@ A subarray is **strictly increasing** if each element is strictly greater than t
   functionName: 'hasIncreasingSubarrays',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function hasIncreasingSubarrays(nums, k) {\n  // your code here\n}\n',
-    typescript: `function hasIncreasingSubarrays(nums: number[], k: number): boolean {
-
+    javascript: `function hasIncreasingSubarrays(nums, k) {
+  function isInc(start) {
+    for (let i = start; i < start + k - 1; i++)
+      if (nums[i] >= nums[i+1]) return false;
+    return true;
+  }
+  for (let i = 0; i <= nums.length - 2*k; i++)
+    if (isInc(i) && isInc(i+k)) return true;
+  return false;
 }`,
-    python: 'def hasIncreasingSubarrays(nums, k):\n    # your code here\n    pass\n',
+    typescript: `function hasIncreasingSubarrays(nums: number[], k: number): boolean {
+  function isInc(start: number): boolean {
+    for (let i = start; i < start + k - 1; i++)
+      if (nums[i]! >= nums[i+1]!) return false;
+    return true;
+  }
+  for (let i = 0; i <= nums.length - 2*k; i++)
+    if (isInc(i) && isInc(i+k)) return true;
+  return false;
+}`,
+    python: `def hasIncreasingSubarrays(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    def is_inc(start):
+        return all(nums[i] < nums[i+1] for i in range(start, start+k-1))
+    return any(is_inc(i) and is_inc(i+k) for i in range(len(nums) - 2*k + 1))`,
   },
   visibleTests: [
     { args: [[2, 5, 7, 8, 9, 2, 3, 4, 3, 1], 3], expected: true },

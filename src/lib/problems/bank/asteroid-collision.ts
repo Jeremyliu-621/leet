@@ -46,10 +46,46 @@ export const problem: Problem = {
   functionName: 'asteroidCollision',
   params: ['asteroids'],
   starterCode: {
-    javascript: 'function asteroidCollision(asteroids) {\n  // your code here\n}\n',
-    typescript: "function asteroidCollision(asteroids: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def asteroidCollision(asteroids):\n    # your code here\n    pass\n',
+    javascript: `function asteroidCollision(asteroids) {
+  const stack = [];
+  for (const a of asteroids) {
+    let survived = true;
+    while (survived && a < 0 && stack.length && stack[stack.length-1] > 0) {
+      const top = stack[stack.length-1];
+      if (top < -a) stack.pop();
+      else if (top === -a) { stack.pop(); survived = false; }
+      else survived = false;
+    }
+    if (survived) stack.push(a);
+  }
+  return stack;
+}`,
+    typescript: `function asteroidCollision(asteroids: number[]): number[] {
+  const stack: number[] = [];
+  for (const a of asteroids) {
+    let survived = true;
+    while (survived && a < 0 && stack.length && stack[stack.length-1]! > 0) {
+      const top = stack[stack.length-1]!;
+      if (top < -a) stack.pop();
+      else if (top === -a) { stack.pop(); survived = false; }
+      else survived = false;
+    }
+    if (survived) stack.push(a);
+  }
+  return stack;
+}`,
+    python: `def asteroidCollision(asteroids):
+    asteroids = list(asteroids.to_py()) if hasattr(asteroids, 'to_py') else list(asteroids)
+    stack = []
+    for a in asteroids:
+        survived = True
+        while survived and a < 0 and stack and stack[-1] > 0:
+            top = stack[-1]
+            if top < -a: stack.pop()
+            elif top == -a: stack.pop(); survived = False
+            else: survived = False
+        if survived: stack.append(a)
+    return stack`,
   },
   visibleTests: [
     { args: [[5, 10, -5]], expected: [5, 10] },

@@ -34,9 +34,20 @@ If there are no such elements, return \`0\`.`,
   functionName: 'averageValue',
   params: ['nums'],
   starterCode: {
-    javascript: 'function averageValue(nums) {\n  // your code here\n}\n',
-    typescript: 'function averageValue(nums: number[]): number {\n  // your code here\n}\n',
-    python: 'def averageValue(nums):\n    # your code here\n    pass\n',
+    javascript: `function averageValue(nums) {
+  let sum = 0, cnt = 0;
+  for (const v of nums) if (v % 6 === 0) { sum += v; cnt++; }
+  return cnt ? Math.floor(sum / cnt) : 0;
+}`,
+    typescript: `function averageValue(nums: number[]): number {
+  let sum = 0, cnt = 0;
+  for (const v of nums) if (v % 6 === 0) { sum += v; cnt++; }
+  return cnt ? Math.floor(sum / cnt) : 0;
+}`,
+    python: `def averageValue(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    vals = [v for v in nums if v % 6 == 0]
+    return sum(vals) // len(vals) if vals else 0`,
   },
   visibleTests: [
     {

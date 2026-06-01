@@ -48,10 +48,31 @@ Return the bill with these discounts applied. The answer is the sum of the disco
   functionName: 'discountPrices',
   params: ['prices', 'n', 'discount'],
   starterCode: {
-    javascript: 'function discountPrices(prices, n, discount) {\n  // your code here\n}\n',
-    typescript: "function discountPrices(prices: number[], n: number, discount: number): number {\n  // your code here\n}",
-
-    python: 'def discountPrices(prices, n, discount):\n    # your code here\n    pass\n',
+    javascript: `function discountPrices(prices, n, discount) {
+  let total = 0;
+  for (let i = 0; i < prices.length; i++) {
+    if ((i + 1) % n === 0) total += Math.floor(prices[i] * (100 - discount) / 100);
+    else total += prices[i];
+  }
+  return total;
+}`,
+    typescript: `function discountPrices(prices: number[], n: number, discount: number): number {
+  let total = 0;
+  for (let i = 0; i < prices.length; i++) {
+    if ((i + 1) % n === 0) total += Math.floor(prices[i]! * (100 - discount) / 100);
+    else total += prices[i]!;
+  }
+  return total;
+}`,
+    python: `def discountPrices(prices, n, discount):
+    prices = list(prices.to_py()) if hasattr(prices, 'to_py') else list(prices)
+    total = 0
+    for i, p in enumerate(prices):
+        if (i + 1) % n == 0:
+            total += (p * (100 - discount)) // 100
+        else:
+            total += p
+    return total`,
   },
   visibleTests: [
     { args: [[100, 200, 300], 1, 0], expected: 600 },
