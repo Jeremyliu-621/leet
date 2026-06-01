@@ -40,9 +40,91 @@ Since the answer may be very large, return it modulo \`10^9 + 7\`.`,
   functionName: 'subarraysWithMoreZerosThanOnes',
   params: ['nums'],
   starterCode: {
-    javascript: `function subarraysWithMoreZerosThanOnes(nums) {\n  \n}`,
-    typescript: `function subarraysWithMoreZerosThanOnes(nums: number[]): number {\n  \n}`,
-    python: `def subarraysWithMoreZerosThanOnes(nums):\n    `,
+    javascript: `function subarraysWithMoreZerosThanOnes(nums) {
+  const MOD = 1e9 + 7;
+  const n = nums.length;
+  // Map balance to [0, 2n] by offset n; balance ranges [-n, n]
+  const offset = n;
+  const bit = new Array(2 * n + 2).fill(0);
+
+  function update(i) {
+    for (i++; i < bit.length; i += i & (-i)) bit[i]++;
+  }
+  function query(i) {
+    let s = 0;
+    for (i++; i > 0; i -= i & (-i)) s += bit[i];
+    return s;
+  }
+
+  let count = 0, balance = 0;
+  update(offset); // prefix[0] = 0
+  for (const num of nums) {
+    balance += num === 1 ? 1 : -1;
+    // Count previous prefixes strictly less than current balance
+    // i.e., query [0, balance-1] in BIT
+    if (balance - 1 + offset >= 0) {
+      count = (count + query(balance - 1 + offset)) % MOD;
+    }
+    update(balance + offset);
+  }
+  return count;
+}`,
+    typescript: `function subarraysWithMoreZerosThanOnes(nums: number[]): number {
+  const MOD = 1e9 + 7;
+  const n = nums.length;
+  const offset = n;
+  const bit = new Array(2 * n + 2).fill(0);
+
+  function update(i: number): void {
+    for (i++; i < bit.length; i += i & (-i)) bit[i]++;
+  }
+  function query(i: number): number {
+    let s = 0;
+    for (i++; i > 0; i -= i & (-i)) s += bit[i];
+    return s;
+  }
+
+  let count = 0, balance = 0;
+  update(offset);
+  for (const num of nums) {
+    balance += num === 1 ? 1 : -1;
+    if (balance - 1 + offset >= 0) {
+      count = (count + query(balance - 1 + offset)) % MOD;
+    }
+    update(balance + offset);
+  }
+  return count;
+}`,
+    python: `def subarraysWithMoreZerosThanOnes(nums):
+    MOD = 10**9 + 7
+    n = len(nums)
+    offset = n
+    bit = [0] * (2 * n + 2)
+
+    def update(i):
+        i += 1
+        while i < len(bit):
+            bit[i] += 1
+            i += i & (-i)
+
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & (-i)
+        return s
+
+    count = 0
+    balance = 0
+    update(offset)
+    for num in nums:
+        balance += 1 if num == 1 else -1
+        if balance - 1 + offset >= 0:
+            count = (count + query(balance - 1 + offset)) % MOD
+        update(balance + offset)
+    return count
+`,
   },
   visibleTests: [
     { args: [[0, 1, 1, 0, 1]], expected: 9 },

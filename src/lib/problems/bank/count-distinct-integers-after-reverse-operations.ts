@@ -34,9 +34,26 @@ Return the number of **distinct** integers in the final array.`,
   functionName: 'countDistinctIntegers',
   params: ['nums'],
   starterCode: {
-    javascript: `function countDistinctIntegers(nums) {\n  \n}`,
-    typescript: `function countDistinctIntegers(nums: number[]): number {\n  \n}`,
-    python: `def countDistinctIntegers(nums):\n    `,
+    javascript: `function countDistinctIntegers(nums) {
+  const seen = new Set(nums);
+  for (const n of nums) {
+    seen.add(parseInt(String(n).split('').reverse().join(''), 10));
+  }
+  return seen.size;
+}`,
+    typescript: `function countDistinctIntegers(nums: number[]): number {
+  const seen = new Set(nums);
+  for (const n of nums) {
+    seen.add(parseInt(String(n).split('').reverse().join(''), 10));
+  }
+  return seen.size;
+}`,
+    python: `def countDistinctIntegers(nums):
+    seen = set(nums)
+    for n in nums:
+        seen.add(int(str(n)[::-1]))
+    return len(seen)
+`,
   },
   visibleTests: [
     { args: [[1, 13, 10, 12, 31]], expected: 6 },

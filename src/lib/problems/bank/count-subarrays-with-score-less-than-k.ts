@@ -38,10 +38,42 @@ A **subarray** is a contiguous sequence of elements within an array.`,
   functionName: 'countSubarrays',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function countSubarrays(nums, k) {\n\n}',
-    typescript: "function countSubarrays(nums: number[], k: number): number {\n\n}",
-
-    python: 'def countSubarrays(nums, k):\n    pass',
+    javascript: `function countSubarrays(nums, k) {
+  let count = 0, sum = 0, left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (sum * (right - left + 1) >= k) {
+      sum -= nums[left];
+      left++;
+    }
+    count += right - left + 1;
+  }
+  return count;
+}`,
+    typescript: `function countSubarrays(nums: number[], k: number): number {
+  let count = 0, sum = 0, left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right]!;
+    while (sum * (right - left + 1) >= k) {
+      sum -= nums[left]!;
+      left++;
+    }
+    count += right - left + 1;
+  }
+  return count;
+}`,
+    python: `def countSubarrays(nums, k):
+    count = 0
+    total = 0
+    left = 0
+    for right, num in enumerate(nums):
+        total += num
+        while total * (right - left + 1) >= k:
+            total -= nums[left]
+            left += 1
+        count += right - left + 1
+    return count
+`,
   },
   visibleTests: [
     { args: [[2, 1, 4, 3, 5], 10], expected: 6 },

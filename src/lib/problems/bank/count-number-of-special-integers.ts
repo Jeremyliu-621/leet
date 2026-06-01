@@ -36,10 +36,102 @@ Given a **positive** integer \`n\`, return *the number of special integers that 
   functionName: 'countSpecialNumbers',
   params: ['n'],
   starterCode: {
-    javascript: 'function countSpecialNumbers(n) {\n\n}',
-    typescript: "function countSpecialNumbers(n: number): number {\n\n}",
+    javascript: `function countSpecialNumbers(n) {
+  const digits = String(n).split('').map(Number);
+  const len = digits.length;
 
-    python: 'def countSpecialNumbers(n):\n    pass',
+  // P(available, places) = number of permutations
+  function perm(avail, places) {
+    let result = 1;
+    for (let i = 0; i < places; i++) result *= (avail - i);
+    return result;
+  }
+
+  let count = 0;
+  // Count all special numbers with fewer digits than n
+  for (let d = 1; d < len; d++) {
+    // d-digit numbers: first digit 1-9, rest from remaining 9 digits
+    count += 9 * perm(9, d - 1);
+  }
+
+  // Count special numbers with same digit length as n, digit by digit
+  const used = new Set();
+  for (let i = 0; i < len; i++) {
+    const lo = i === 0 ? 1 : 0;
+    const hi = digits[i];
+    // Count numbers where position i has a digit in [lo, hi-1] and rest freely
+    for (let d = lo; d < hi; d++) {
+      if (!used.has(d)) {
+        count += perm(10 - i - 1, len - i - 1);
+      }
+    }
+    // Tight: must use digits[i] at position i
+    if (used.has(hi)) break;
+    used.add(hi);
+    if (i === len - 1) count++; // n itself is special
+  }
+
+  return count;
+}`,
+    typescript: `function countSpecialNumbers(n: number): number {
+  const digits = String(n).split('').map(Number);
+  const len = digits.length;
+
+  function perm(avail: number, places: number): number {
+    let result = 1;
+    for (let i = 0; i < places; i++) result *= (avail - i);
+    return result;
+  }
+
+  let count = 0;
+  for (let d = 1; d < len; d++) {
+    count += 9 * perm(9, d - 1);
+  }
+
+  const used = new Set<number>();
+  for (let i = 0; i < len; i++) {
+    const lo = i === 0 ? 1 : 0;
+    const hi = digits[i]!;
+    for (let d = lo; d < hi; d++) {
+      if (!used.has(d)) {
+        count += perm(10 - i - 1, len - i - 1);
+      }
+    }
+    if (used.has(hi)) break;
+    used.add(hi);
+    if (i === len - 1) count++;
+  }
+
+  return count;
+}`,
+    python: `def countSpecialNumbers(n):
+    digits = [int(d) for d in str(n)]
+    length = len(digits)
+
+    def perm(avail, places):
+        result = 1
+        for i in range(places):
+            result *= (avail - i)
+        return result
+
+    count = 0
+    for d in range(1, length):
+        count += 9 * perm(9, d - 1)
+
+    used = set()
+    for i, hi in enumerate(digits):
+        lo = 1 if i == 0 else 0
+        for d in range(lo, hi):
+            if d not in used:
+                count += perm(10 - i - 1, length - i - 1)
+        if hi in used:
+            break
+        used.add(hi)
+        if i == length - 1:
+            count += 1
+
+    return count
+`,
   },
   visibleTests: [
     { args: [20], expected: 19 },

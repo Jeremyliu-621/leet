@@ -36,11 +36,35 @@ export const problem: Problem = {
   functionName: 'countPairs',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: `function countPairs(nums, k) {\n\n}`,
-    typescript: `function countPairs(nums: number[], k: number): number {
-
+    javascript: `function countPairs(nums, k) {
+  const freq = new Array(k).fill(0);
+  let count = 0;
+  for (const num of nums) {
+    const r = num % k;
+    count += freq[(k - r) % k];
+    freq[r]++;
+  }
+  return count;
 }`,
-    python: `def countPairs(nums: list[int], k: int) -> int:\n    pass`,
+    typescript: `function countPairs(nums: number[], k: number): number {
+  const freq = new Array(k).fill(0);
+  let count = 0;
+  for (const num of nums) {
+    const r = num % k;
+    count += freq[(k - r) % k];
+    freq[r]++;
+  }
+  return count;
+}`,
+    python: `def countPairs(nums: list[int], k: int) -> int:
+    freq = [0] * k
+    count = 0
+    for num in nums:
+        r = num % k
+        count += freq[(k - r) % k]
+        freq[r] += 1
+    return count
+`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6], 2], expected: 6 },

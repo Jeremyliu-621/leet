@@ -38,9 +38,44 @@ Return an integer denoting the number of **substrings** of \`s\` that satisfy th
   functionName: 'countKConstraintSubstrings',
   params: ['s', 'k'],
   starterCode: {
-    javascript: `function countKConstraintSubstrings(s, k) {\n  \n}`,
-    typescript: `function countKConstraintSubstrings(s: string, k: number): number {\n  \n}`,
-    python: `def countKConstraintSubstrings(s, k):\n    `,
+    javascript: `function countKConstraintSubstrings(s, k) {
+  let count = 0;
+  const n = s.length;
+  for (let i = 0; i < n; i++) {
+    let zeros = 0, ones = 0;
+    for (let j = i; j < n; j++) {
+      if (s[j] === '0') zeros++; else ones++;
+      if (zeros <= k || ones <= k) count++;
+    }
+  }
+  return count;
+}`,
+    typescript: `function countKConstraintSubstrings(s: string, k: number): number {
+  let count = 0;
+  const n = s.length;
+  for (let i = 0; i < n; i++) {
+    let zeros = 0, ones = 0;
+    for (let j = i; j < n; j++) {
+      if (s[j] === '0') zeros++; else ones++;
+      if (zeros <= k || ones <= k) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def countKConstraintSubstrings(s, k):
+    count = 0
+    n = len(s)
+    for i in range(n):
+        zeros = ones = 0
+        for j in range(i, n):
+            if s[j] == '0':
+                zeros += 1
+            else:
+                ones += 1
+            if zeros <= k or ones <= k:
+                count += 1
+    return count
+`,
   },
   visibleTests: [
     { args: ['10101', 1], expected: 12 },

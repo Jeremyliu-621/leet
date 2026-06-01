@@ -43,13 +43,113 @@ Return an integer array \`answer\` where \`answer[i]\` is the answer to the \`i\
   params: ['s', 'k', 'queries'],
   starterCode: {
     javascript: `function countKConstraintSubstrings(s, k, queries) {
-
+  const n = s.length;
+  // minLeft[i] = smallest left boundary such that s[minLeft[i]..i] satisfies k-constraint
+  const minLeft = new Array(n).fill(0);
+  let zeros = 0, ones = 0, left = 0;
+  for (let i = 0; i < n; i++) {
+    if (s[i] === '0') zeros++; else ones++;
+    while (zeros > k && ones > k) {
+      if (s[left] === '0') zeros--; else ones--;
+      left++;
+    }
+    minLeft[i] = left;
+  }
+  // prefA[i] = sum of (j - minLeft[j] + 1) for j in [0, i-1]
+  const prefA = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) {
+    prefA[i + 1] = prefA[i] + (i - minLeft[i] + 1);
+  }
+  // For query [l, r]: find first p where minLeft[p] >= l (binary search)
+  // Substrings ending at i in [l, p-1]: clipped window, each contributes (i - l + 1)
+  // Sum = 1 + 2 + ... + (p - l) = (p - l) * (p - l + 1) / 2
+  // Substrings ending at i in [p, r]: contribute (i - minLeft[i] + 1) = prefA[r+1] - prefA[p]
+  const result = [];
+  for (const [l, r] of queries) {
+    // Binary search for first p in [l, r] where minLeft[p] >= l
+    let lo = l, hi = r + 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (minLeft[mid] >= l) hi = mid; else lo = mid + 1;
+    }
+    const p = lo; // first index where minLeft[p] >= l
+    const clip = p - l; // number of elements in [l, p-1]
+    const clipSum = clip * (clip + 1) / 2;
+    const freeSum = prefA[r + 1] - prefA[p];
+    result.push(clipSum + freeSum);
+  }
+  return result;
 }`,
     typescript: `function countKConstraintSubstrings(s: string, k: number, queries: number[][]): number[] {
-
+  const n = s.length;
+  const minLeft = new Array(n).fill(0);
+  let zeros = 0, ones = 0, left = 0;
+  for (let i = 0; i < n; i++) {
+    if (s[i] === '0') zeros++; else ones++;
+    while (zeros > k && ones > k) {
+      if (s[left] === '0') zeros--; else ones--;
+      left++;
+    }
+    minLeft[i] = left;
+  }
+  const prefA = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) {
+    prefA[i + 1] = prefA[i] + (i - minLeft[i] + 1);
+  }
+  const result: number[] = [];
+  for (const [l, r] of queries) {
+    let lo = l!, hi = r! + 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (minLeft[mid]! >= l!) hi = mid; else lo = mid + 1;
+    }
+    const p = lo;
+    const clip = p - l!;
+    const clipSum = clip * (clip + 1) / 2;
+    const freeSum = prefA[r! + 1]! - prefA[p]!;
+    result.push(clipSum + freeSum);
+  }
+  return result;
 }`,
     python: `def countKConstraintSubstrings(s, k, queries):
-    pass`,
+    n = len(s)
+    min_left = [0] * n
+    zeros = ones = left = 0
+    for i in range(n):
+        if s[i] == '0':
+            zeros += 1
+        else:
+            ones += 1
+        while zeros > k and ones > k:
+            if s[left] == '0':
+                zeros -= 1
+            else:
+                ones -= 1
+            left += 1
+        min_left[i] = left
+
+    pref = [0] * (n + 1)
+    for i in range(n):
+        pref[i + 1] = pref[i] + (i - min_left[i] + 1)
+
+    import bisect
+    result = []
+    for l, r in queries:
+        # Binary search for first p in [l, r+1] where min_left[p] >= l
+        lo, hi = l, r + 1
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if min_left[mid] >= l:
+                hi = mid
+            else:
+                lo = mid + 1
+        p = lo
+        clip = p - l
+        clip_sum = clip * (clip + 1) // 2
+        free_sum = pref[r + 1] - pref[p]
+        result.append(clip_sum + free_sum)
+    return result
+`,
   },
   visibleTests: [
     { args: ['0001111', 2, [[0, 6]]], expected: [26] },

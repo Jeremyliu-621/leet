@@ -48,23 +48,21 @@ Return *the **minimum** cost needed to make the strings equal*, or \`-1\` if it 
   }
   const n = diffs.length;
   if (n === 0) return 0;
-  // If odd number of diffs, one op2 is unavoidable (cost x/2 per flip counted separately)
-  // dp[i] = min cost to resolve diffs[i..n-1]
-  // dp[i] = min(
-  //   x/2 + dp[i+1],           // use op2 on diffs[i] alone (half of x since one flip)
-  //   min(dist, x) + dp[i+2]   // pair diffs[i] with diffs[i+1]
-  // )
-  // Use 2*dp to avoid fractions: multiply all costs by 2
+  // op1 (adjacent swap, cost 1 per step): pairing diffs[i] and diffs[i+1] costs diffs[i+1]-diffs[i]
+  // op2 (single flip, cost x): fixes one position at cost x
+  // dp[i] = min cost to fix diffs[i..n-1]
   const dp = new Array(n + 1).fill(Infinity);
   dp[n] = 0;
   for (let i = n - 1; i >= 0; i--) {
-    dp[i] = x + dp[i + 1]; // op2 costs x (= x/2 * 2)
+    // Option 1: use op2 to fix diffs[i] alone
+    dp[i] = x + dp[i + 1];
+    // Option 2: pair diffs[i] with diffs[i+1] using adjacent ops (or two op2s if cheaper)
     if (i + 1 < n) {
-      const pairCost = 2 * Math.min(diffs[i + 1] - diffs[i], x); // dist or x, doubled
-      dp[i] = Math.min(dp[i], pairCost + dp[i + 2]);
+      const dist = diffs[i + 1] - diffs[i];
+      dp[i] = Math.min(dp[i], Math.min(dist, 2 * x) + dp[i + 2]);
     }
   }
-  return dp[0] / 2;
+  return dp[0];
 }`,
     typescript: `function minOperations(s1: string, s2: string, x: number): number {
   const diffs: number[] = [];
@@ -78,11 +76,11 @@ Return *the **minimum** cost needed to make the strings equal*, or \`-1\` if it 
   for (let i = n - 1; i >= 0; i--) {
     dp[i] = x + dp[i + 1];
     if (i + 1 < n) {
-      const pairCost = 2 * Math.min(diffs[i + 1] - diffs[i], x);
-      dp[i] = Math.min(dp[i], pairCost + dp[i + 2]);
+      const dist = diffs[i + 1] - diffs[i];
+      dp[i] = Math.min(dp[i], Math.min(dist, 2 * x) + dp[i + 2]);
     }
   }
-  return dp[0] / 2;
+  return dp[0];
 }`,
     python: `def minOperations(s1, s2, x):
     diffs = [i for i in range(len(s1)) if s1[i] != s2[i]]
@@ -94,9 +92,9 @@ Return *the **minimum** cost needed to make the strings equal*, or \`-1\` if it 
     for i in range(n - 1, -1, -1):
         dp[i] = x + dp[i + 1]
         if i + 1 < n:
-            pair_cost = 2 * min(diffs[i + 1] - diffs[i], x)
-            dp[i] = min(dp[i], pair_cost + dp[i + 2])
-    return dp[0] // 2
+            dist = diffs[i + 1] - diffs[i]
+            dp[i] = min(dp[i], min(dist, 2 * x) + dp[i + 2])
+    return dp[0]
 `,
   },
   visibleTests: [

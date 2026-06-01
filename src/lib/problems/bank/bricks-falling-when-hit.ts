@@ -44,10 +44,169 @@ Return an array \`result\`, where \`result[i]\` is the number of bricks that **f
   functionName: 'hitBricks',
   params: ['grid', 'hits'],
   starterCode: {
-    javascript: 'function hitBricks(grid, hits) {\n  \n}\n',
-    typescript: "function hitBricks(grid: number[][], hits: number[][]): number[] {\n  \n}",
+    javascript: `function hitBricks(grid, hits) {
+  const m = grid.length, n = grid[0].length;
+  // Work on a copy; erase all hit bricks first
+  const g = grid.map(r => [...r]);
+  for (const [r, c] of hits) g[r][c] = 0;
 
-    python: 'def hitBricks(grid, hits):\n    pass\n',
+  const TOP = m * n;
+  const parent = Array.from({length: m * n + 1}, (_, i) => i);
+  const size = new Array(m * n + 1).fill(1);
+
+  function find(x) {
+    while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; }
+    return x;
+  }
+  function union(x, y) {
+    x = find(x); y = find(y);
+    if (x === y) return;
+    if (size[x] < size[y]) { const t = x; x = y; y = t; }
+    parent[y] = x;
+    size[x] += size[y];
+  }
+  function idx(r, c) { return r * n + c; }
+
+  // Build initial union-find for the grid after all hits
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!g[r][c]) continue;
+      if (r === 0) union(idx(r, c), TOP);
+      if (r > 0 && g[r - 1][c]) union(idx(r, c), idx(r - 1, c));
+      if (c > 0 && g[r][c - 1]) union(idx(r, c), idx(r, c - 1));
+    }
+  }
+
+  const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  const result = new Array(hits.length).fill(0);
+
+  for (let i = hits.length - 1; i >= 0; i--) {
+    const [r, c] = hits[i];
+    if (!grid[r][c]) continue; // was already empty
+    const prevTopSize = size[find(TOP)];
+    g[r][c] = 1;
+    if (r === 0) union(idx(r, c), TOP);
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && g[nr][nc]) {
+        union(idx(r, c), idx(nr, nc));
+      }
+    }
+    const newTopSize = size[find(TOP)];
+    result[i] = Math.max(0, newTopSize - prevTopSize - 1);
+  }
+  return result;
+}`,
+    typescript: `function hitBricks(grid: number[][], hits: number[][]): number[] {
+  const m = grid.length, n = grid[0].length;
+  const g = grid.map(r => [...r]);
+  for (const [r, c] of hits) g[r][c] = 0;
+
+  const TOP = m * n;
+  const parent = Array.from({length: m * n + 1}, (_, i) => i);
+  const size = new Array(m * n + 1).fill(1);
+
+  function find(x: number): number {
+    while (parent[x] !== x) { parent[x] = parent[parent[x]]!; x = parent[x]!; }
+    return x;
+  }
+  function union(x: number, y: number): void {
+    x = find(x); y = find(y);
+    if (x === y) return;
+    if (size[x]! < size[y]!) { const t = x; x = y; y = t; }
+    parent[y] = x;
+    size[x]! += size[y]!;
+  }
+  function idx(r: number, c: number): number { return r * n + c; }
+
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!g[r][c]) continue;
+      if (r === 0) union(idx(r, c), TOP);
+      if (r > 0 && g[r - 1][c]) union(idx(r, c), idx(r - 1, c));
+      if (c > 0 && g[r][c - 1]) union(idx(r, c), idx(r, c - 1));
+    }
+  }
+
+  const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+  const result = new Array(hits.length).fill(0);
+
+  for (let i = hits.length - 1; i >= 0; i--) {
+    const [r, c] = hits[i]!;
+    if (!grid[r!][c!]) continue;
+    const prevTopSize = size[find(TOP)]!;
+    g[r!][c!] = 1;
+    if (r === 0) union(idx(r!, c!), TOP);
+    for (const [dr, dc] of dirs) {
+      const nr = r! + dr!, nc = c! + dc!;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && g[nr][nc]) {
+        union(idx(r!, c!), idx(nr, nc));
+      }
+    }
+    const newTopSize = size[find(TOP)]!;
+    result[i] = Math.max(0, newTopSize - prevTopSize - 1);
+  }
+  return result;
+}`,
+    python: `def hitBricks(grid, hits):
+    m, n = len(grid), len(grid[0])
+    g = [row[:] for row in grid]
+    for r, c in hits:
+        g[r][c] = 0
+
+    TOP = m * n
+    parent = list(range(m * n + 1))
+    size = [1] * (m * n + 1)
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    def union(x, y):
+        x, y = find(x), find(y)
+        if x == y:
+            return
+        if size[x] < size[y]:
+            x, y = y, x
+        parent[y] = x
+        size[x] += size[y]
+
+    def idx(r, c):
+        return r * n + c
+
+    for r in range(m):
+        for c in range(n):
+            if not g[r][c]:
+                continue
+            if r == 0:
+                union(idx(r, c), TOP)
+            if r > 0 and g[r - 1][c]:
+                union(idx(r, c), idx(r - 1, c))
+            if c > 0 and g[r][c - 1]:
+                union(idx(r, c), idx(r, c - 1))
+
+    dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    result = [0] * len(hits)
+
+    for i in range(len(hits) - 1, -1, -1):
+        r, c = hits[i]
+        if not grid[r][c]:
+            continue
+        prev_top = size[find(TOP)]
+        g[r][c] = 1
+        if r == 0:
+            union(idx(r, c), TOP)
+        for dr, dc in dirs:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and g[nr][nc]:
+                union(idx(r, c), idx(nr, nc))
+        new_top = size[find(TOP)]
+        result[i] = max(0, new_top - prev_top - 1)
+
+    return result
+`,
   },
   visibleTests: [
     {
