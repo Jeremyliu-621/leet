@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2819** problems; 8783 tests green. Stub backfill in progress (~1130 empty starters remaining).
+**Current focus:** Bank at **2824** problems; 8798 tests green. Batch 264 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue stub backfill; Batch 264+; continued UX polish.
+**Next up:** Batch 265+; continued UX polish.
+
+### feat(bank): batch 264 — mirror-score-string, manhattan-k-changes, beautiful-string, multiply-found, divide-sets-k (2026-06-01)
+Five new problems: `find-mirror-score-of-a-string` (medium/strings+stack, LC 3445 — per-char stack of unmatched positions; match closest previous same char for score; O(n)), `maximum-manhattan-distance-after-k-changes` (medium/math+strings, LC 3443 — 4-quadrant greedy: base + 2*min(k, opposing_count); each opposing step flipped gains +2 to Manhattan distance), `shortest-and-lexicographically-smallest-beautiful-string` (medium/strings+sliding-window, LC 2904 — collect positions of 1s; slide k-consecutive window; shortest then lex-min substring), `keep-multiplying-found-values-by-two` (easy/arrays+hash-map, LC 2154 — HashSet lookup, keep doubling original; O(n+log(max_val))), `divide-array-in-sets-of-k-consecutive-numbers` (medium/arrays+hash-map, LC 1296 — freq map + sorted unique values; greedy consecutive group deduction; O(n log n)). Bank at **2824**; 8798 tests.
 
 ### feat(bank): batch 262 additions — min-seconds-mountain-height-zero, max-multiplication-score, max-divisibility-score, k-items-max-sum (2026-06-01)
 Four more batch 262 problems: `minimum-number-of-seconds-to-make-mountain-height-zero` (medium/arrays+binary-search, LC 3296 — binary search on time; inner binary search for each worker's max reductions; O(n log(max_t) log(h))), `maximum-multiplication-score` (medium/arrays+dp, LC 3290 — pick 4 indices from a in order; 1D DP from right j=4..1; O(n)), `find-maximum-divisibility-score` (easy/arrays+math, LC 2644 — brute force count divisible elements per divisor; return max-count divisor, ties broken by smallest; O(n*m)), `k-items-with-maximum-sum` (easy/arrays+math, LC 2600 — greedy: min(k,ones) - max(0,k-ones-zeros); O(1)). Bank at **2819**; 8783 tests.
