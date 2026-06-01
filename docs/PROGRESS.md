@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2729** problems; 8481 tests green. Batches 102–249 complete.
+**Current focus:** Bank at **2732** problems; 8490 tests green. Batches 102–250 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 250+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 251+; continued UX polish.
+
+### refactor+feat: shared LANGUAGE_LABEL/SHORT, language in submissions, batch 250 (2026-06-01)
+Three polish improvements: (1) `LANGUAGE_LABEL` and `LANGUAGE_SHORT` moved from EditorPanel (local) to `src/lib/types.ts` — fixes SolvedStandaloneScreen showing raw identifiers like `java` / `cpp` instead of `Java` / `C++`; (2) `SubmissionRecord` gains an optional `language` field, populated on every submit; `SubmissionsPanel` shows a new "Lang" column (JS/TS/Py/Java/C++/…) with "—" for legacy records; (3) Batch 250 adds three problems: `magic-squares-in-grid` (medium/simulation — check all 3×3 subgrids for distinct 1–9 and sums of 15), `k-empty-slots` (hard/arrays — ordered-set immediate-neighbor check for earliest day with exactly k off-bulbs between two on-bulbs), `optimal-account-balancing` (hard/backtracking — net-balance reduction + recursive settle-first-debtor). Bank at **2732**; 8490 tests.
 
 ### feat(bank): batch 249 — monkeys-polygon, square-free-subsets, distinct-board, bowling-winner, sum-of-distances (2026-06-01)
 Five new problems: `count-collisions-of-monkeys-on-a-polygon` (medium/math, LC 2550 — (2^n − 2) mod 10^9+7; only all-CW or all-CCW arrangements are collision-free; BigInt fast exponentiation), `count-the-number-of-square-free-subsets` (medium/math+dp+bit-manipulation, LC 2572 — bitmask DP over 10 primes ≤ 30; 0/1-knapsack backward pass per element; answer = sum(dp) − 1), `count-distinct-numbers-on-board` (easy/math, LC 2549 — n=1→1; n>1→n−1; n mod (n−1)=1 chains all values 2..n onto the board), `determine-the-winner-of-a-bowling-game` (easy/arrays+simulation, LC 2660 — double pin count when either of last 2 turns was a strike; compare totals), `sum-of-distances` (medium/arrays+math, LC 2615 — group same-value indices; prefix+suffix running sum computes Σ|i−j| in O(n)). Bank at **2729**; 8481 tests.
