@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2651** problems; 8247 tests green. All 2651 problems have TypeScript typed starters.
+**Current focus:** Bank at **2655** problems; 8259 tests green. Batches 102–239b complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 240+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 239b — find-longest-valid-subsequence-i/ii, count-incremovable-subarrays-ii, min-adjacent-swaps-valid-array (2026-06-01)
+Four new problems: `find-the-longest-valid-subsequence-i` (medium/arrays+dp, LC 3105 — case-split all-same-parity vs alternating; dp[0/1] for longest alternating subsequence), `find-the-longest-valid-subsequence-ii` (medium/arrays+dp, LC 3176 — generalization mod k; dp[r][v]=length ending with remainder v for target sum-remainder r), `count-the-number-of-incremovable-subarrays-ii` (hard/arrays+binary-search, LC 2972 — find strictly-increasing prefix/suffix; binary search per left boundary for valid r, O(n log n)), `minimum-adjacent-swaps-to-make-a-valid-array` (medium/arrays, LC 2340 — move first-min to front + last-max to back; deduct 1 when minIdx>maxIdx). Bank at **2655**; 8259 tests.
 
 ### feat(bank): backfill TypeScript starters for all 151 problems (2026-06-01)
 All 2647 problems now have `starterCode.typescript` with parameter and return types inferred from visible test cases. Users selecting TypeScript get proper annotations (`number[]`, `string[]`, `number[][]`, `boolean`, etc.) instead of falling back to untyped JS stubs. Design-pattern problems (classes: StockSpanner, ParkingSystem, MyHashSet, MyStack) got properly typed class starters.
