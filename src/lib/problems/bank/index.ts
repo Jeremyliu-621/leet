@@ -3102,6 +3102,11 @@ import { problem as findFirstLastPosition } from './find-first-and-last-position
 import { problem as punishmentNumberOfInt } from './find-the-punishment-number-of-an-integer';
 import { problem as cycleLengthQueriesTree } from './cycle-length-queries-in-a-tree';
 import { problem as minHoursTraining } from './minimum-hours-of-training-to-win-a-competition';
+// batch 269b
+import { problem as intersectionMultipleArrays } from './intersection-of-multiple-arrays';
+import { problem as countValidWordsForEachPuzzle } from './count-valid-words-for-each-puzzle';
+import { problem as closestRoomProblem } from './closest-room';
+import { problem as maximizeTotalRewardI } from './maximize-total-reward-using-operations-i';
 // batch 269
 import { problem as takeGiftsRichestPile } from './take-gifts-from-richest-pile';
 import { problem as minCoinsForFruitsI } from './minimum-number-of-coins-for-fruits-i';
@@ -6469,6 +6474,11 @@ export const problems: readonly Problem[] = [
   punishmentNumberOfInt,
   cycleLengthQueriesTree,
   minHoursTraining,
+  // batch 269b
+  intersectionMultipleArrays,
+  countValidWordsForEachPuzzle,
+  closestRoomProblem,
+  maximizeTotalRewardI,
   // batch 269
   takeGiftsRichestPile,
   minCoinsForFruitsI,

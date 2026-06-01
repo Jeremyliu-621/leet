@@ -46703,4 +46703,79 @@ def placedCoins(edges, cost):
     candidates.sort(reverse=True)
     return sum(candidates[:k])
 `,
+  'intersection-of-multiple-arrays': `
+def intersection(nums):
+    from collections import Counter
+    freq = Counter()
+    n = len(nums)
+    for row in nums:
+        for x in row:
+            freq[x] += 1
+    return sorted(x for x, cnt in freq.items() if cnt == n)
+`,
+  'count-valid-words-for-each-puzzle': `
+def findNumOfValidWords(words, puzzles):
+    from collections import defaultdict
+    word_count = defaultdict(int)
+    for word in words:
+        mask = 0
+        for c in word:
+            mask |= 1 << (ord(c) - ord('a'))
+        word_count[mask] += 1
+    result = []
+    for puzzle in puzzles:
+        first = 1 << (ord(puzzle[0]) - ord('a'))
+        puzzle_mask = 0
+        for c in puzzle:
+            puzzle_mask |= 1 << (ord(c) - ord('a'))
+        count, sub = 0, puzzle_mask
+        while sub:
+            if sub & first:
+                count += word_count[sub]
+            sub = (sub - 1) & puzzle_mask
+        result.append(count)
+    return result
+`,
+  'closest-room': `
+def closestRoom(rooms, queries):
+    import bisect
+    rooms = [list(r) for r in rooms]
+    queries = [list(q) for q in queries]
+    rooms.sort(key=lambda x: -x[1])
+    sorted_q = sorted(enumerate(queries), key=lambda x: -x[1][1])
+    ans = [-1] * len(queries)
+    ids = []
+    ri = 0
+    for qi, (pref, min_size) in sorted_q:
+        while ri < len(rooms) and rooms[ri][1] >= min_size:
+            bisect.insort(ids, rooms[ri][0])
+            ri += 1
+        if not ids:
+            continue
+        lo = bisect.bisect_left(ids, pref)
+        best = -1
+        if lo < len(ids):
+            best = ids[lo]
+        if lo > 0:
+            cand = ids[lo - 1]
+            if best == -1 or abs(cand - pref) <= abs(best - pref):
+                best = cand
+        ans[qi] = best
+    return ans
+`,
+  'maximize-total-reward-using-operations-i': `
+def maxTotalReward(rewardValues):
+    rewardValues.sort()
+    max_val = rewardValues[-1]
+    dp = [False] * (2 * max_val + 1)
+    dp[0] = True
+    for r in rewardValues:
+        for j in range(r - 1, -1, -1):
+            if dp[j]:
+                dp[j + r] = True
+    for j in range(len(dp) - 1, -1, -1):
+        if dp[j]:
+            return j
+    return 0
+`,
 };
