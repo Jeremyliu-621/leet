@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2809** problems; 8747 tests green. Batches 102–261 complete.
+**Current focus:** Bank at **2812** problems; 8762 tests green. Batches 102–262 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 262+; continued UX polish.
+**Next up:** Batch 263+; continued UX polish.
+
+### feat(bank): batch 262 — rearranging-fruits, time-to-cross-a-bridge, find-number-of-coins-to-place-in-tree-nodes (2026-06-01)
+Three new hard problems: `rearranging-fruits` (hard/arrays+hash-map+math, LC 2561 — parity check on combined fruit frequencies; build surplus lists sorted ascending; greedy pairing with indirect-swap optimization via 2×globalMin), `time-to-cross-a-bridge` (hard/arrays+heap+simulation, LC 2532 — event-driven 4-queue simulation; left-bank workers have bridge priority; lowest-efficiency dispatched first; stop committing r→l once k rocks in flight), `find-number-of-coins-to-place-in-tree-nodes` (hard/tree+heap+math, LC 2973 — DFS collecting top-3/bottom-2 per subtree; max(0, top[0]*top[1]*top[2]) from 5-candidate set at each node). Also improves `count-pairs-in-two-arrays` (better examples + Level 1/2/3 hints) and `minimum-time-to-complete-all-tasks` (Level 1/2/3 hints + better tags). Bank at **2812**; 8762 tests.
+
+### feat(editor): expand snippet library + terminal verdict breakdown (2026-06-01)
+Expanded CodeMirror snippet completions: Python adds `pq` (heapq min-heap), `pqmax` (heapq max via negation), `deque` (collections.deque), `counter` (Counter), `bisect` (bisect_left/right), `cache` (@functools.cache), `inf` (float('inf')), `mod` (10**9+7), `sortkey` (sorted with lambda). Java adds `pqmax` (reverseOrder), `queue` (LinkedList), `dq` (ArrayDeque), `stk` (ArrayDeque stack), `tmap` (TreeMap), `tset` (TreeSet), `mod`. C++ adds `pqmax` (no comparator), `stk`, `queue`, `dq` (deque), `tmap` (std::map), `mod`, `inf`. JS/TS adds `mod` (BigInt 1_000_000_007n), `inf` (Infinity). `KeyboardShortcutsModal` updated to document all new snippets. Terminal `Test Results` tab now shows a failure-type breakdown ("N wrong · M errors") alongside the pass/fail ratio when both error types are present.
 
 ### feat(bank): batch 261 — hash-divided-string, min-array-changes-diffs-equal, find-subarray-bitwise-and-closest-k, occurrence-first-almost-equal-substring (2026-06-01)
 Four new problems: `hash-divided-string` (easy/strings+math, LC 3271 — split into k-char groups, sum char values mod p, map to chars; O(n)), `minimum-array-changes-to-make-differences-equal` (medium/arrays+hash-map, LC 3224 — difference array + freq map; maximize pairs with zero or one change cost), `find-subarray-with-bitwise-and-closest-to-k` (medium/arrays+bit-manipulation, LC 3171 — sliding set of distinct AND values; at most O(log max_val) per step), `find-the-occurrence-of-first-almost-equal-substring` (hard/strings, LC 3298 — Z-array prefix+suffix match lengths; almost equal iff prefix+suffix >= m-1). Bank at **2809**; 8747 tests.
