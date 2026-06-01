@@ -27,17 +27,40 @@ Return the \`k\`th positive integer that is **missing** from this array.`,
     },
   ],
   hints: [
-    'Scan linearly: track how many positive integers are missing so far. When the count of missing equals k, return that number.',
-    'Using binary search: at index i (0-indexed), arr[i] should equal i+1 if no numbers were missing. The count of missing numbers up to arr[i] is arr[i] - (i+1). Binary search for the leftmost index where the missing count ≥ k.',
-    'After binary search with result lo: the answer is lo + k. This works because there are exactly lo elements in arr that are ≤ the answer.',
+    'Level 1: Linearly scan positive integers 1, 2, 3, ... using a pointer into arr. Decrement k each time you find a missing number. When k reaches 0, return the current number.',
+    'Level 2 (O(log n)): Binary search on arr. The number of missing positives before index i is arr[i] - (i+1). Find the leftmost index where this count >= k.',
+    'Level 3: After binary search, lo = first index where arr[lo] - (lo+1) >= k. Answer = lo + k (there are exactly lo array elements ≤ the answer).',
   ],
   functionName: 'findKthPositive',
   params: ['arr', 'k'],
   starterCode: {
-    javascript: `function findKthPositive(arr, k) {\n\n}`,
-    typescript: "function findKthPositive(arr: number[], k: number): number {\n\n}",
-
-    python: `def findKthPositive(arr, k):\n    pass`,
+    javascript: `function findKthPositive(arr, k) {
+  let lo = 0, hi = arr.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (arr[mid] - (mid + 1) >= k) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo + k;
+}`,
+    typescript: `function findKthPositive(arr: number[], k: number): number {
+  let lo = 0, hi = arr.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (arr[mid]! - (mid + 1) >= k) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo + k;
+}`,
+    python: `def findKthPositive(arr, k):
+    lo, hi = 0, len(arr)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] - (mid + 1) >= k:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo + k`,
   },
   visibleTests: [
     { args: [[2, 3, 4, 7, 11], 5], expected: 9 },

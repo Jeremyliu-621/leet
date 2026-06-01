@@ -3231,6 +3231,11 @@ import { problem as countSquareFreeSubsets } from './count-the-number-of-square-
 import { problem as countDistinctNumbersOnBoard } from './count-distinct-numbers-on-board';
 import { problem as determineBowlingWinner } from './determine-the-winner-of-a-bowling-game';
 import { problem as sumOfDistances } from './sum-of-distances';
+// batch 267
+import { problem as cellsInRangeOnSpreadsheet } from './cells-in-a-range-on-a-spreadsheet';
+import { problem as diffOnesZerosRowCol } from './difference-between-ones-and-zeros-in-row-and-column';
+import { problem as makeArrayZeroSubtracting } from './make-the-array-zero-by-subtracting-equal-amounts';
+import { problem as sumNumbersUnitsDigitK } from './sum-of-numbers-with-units-digit-k';
 // batch 265
 import { problem as rowsWithMostOnes } from './rows-with-most-ones';
 import { problem as addingSpacesToAString } from './adding-spaces-to-a-string';
@@ -6571,6 +6576,11 @@ export const problems: readonly Problem[] = [
   palindromePartitioningIv,
   constructDistancedSequence,
   findTheLongestHappyString,
+  // batch 267
+  cellsInRangeOnSpreadsheet,
+  diffOnesZerosRowCol,
+  makeArrayZeroSubtracting,
+  sumNumbersUnitsDigitK,
   // batch 265
   rowsWithMostOnes,
   addingSpacesToAString,

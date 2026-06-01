@@ -47284,6 +47284,39 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       }
     return true;
   },
+  // batch 267
+  'cells-in-a-range-on-a-spreadsheet': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const [c1, r1, , c2, r2] = s;
+    const res: string[] = [];
+    for (let c = c1!.charCodeAt(0); c <= c2!.charCodeAt(0); c++)
+      for (let r = Number(r1); r <= Number(r2); r++)
+        res.push(String.fromCharCode(c) + r);
+    return res;
+  },
+  'difference-between-ones-and-zeros-in-row-and-column': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const onesRow = grid.map(row => row.reduce((a, b) => a + b, 0));
+    const onesCol = new Array<number>(n).fill(0);
+    for (let j = 0; j < n; j++) for (let i = 0; i < m; i++) onesCol[j]! += grid[i]![j]!;
+    return grid.map((row, i) =>
+      row.map((_, j) => onesRow[i]! + onesCol[j]! - (n - onesRow[i]!) - (m - onesCol[j]!))
+    );
+  },
+  'make-the-array-zero-by-subtracting-equal-amounts': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return new Set(nums.filter(x => x > 0)).size;
+  },
+  'sum-of-numbers-with-units-digit-k': (...args: unknown[]) => {
+    const num = args[0] as number;
+    const k = args[1] as number;
+    if (num === 0) return k === 0 ? 1 : -1;
+    for (let cnt = 1; cnt <= 10; cnt++) {
+      if ((cnt * k) % 10 === num % 10 && cnt * k <= num) return cnt;
+    }
+    return -1;
+  },
   // batch 263
   'count-subarrays-fixed-bounds': (...args: unknown[]) => {
     const nums = args[0] as number[];

@@ -46277,6 +46277,34 @@ def placedCoins(edges, cost):
     bob[0] += remaining
     return bob
 `,
+  // batch 267
+  'cells-in-a-range-on-a-spreadsheet': `def cellsInRange(s):
+    c1, r1, c2, r2 = s[0], int(s[1]), s[3], int(s[4])
+    return [chr(c) + str(r)
+            for c in range(ord(c1), ord(c2) + 1)
+            for r in range(r1, r2 + 1)]
+`,
+  'difference-between-ones-and-zeros-in-row-and-column': `def onesMinusZeros(grid):
+    m, n = len(grid), len(grid[0])
+    ones_row = [sum(row) for row in grid]
+    ones_col = [sum(grid[i][j] for i in range(m)) for j in range(n)]
+    return [
+        [ones_row[i] + ones_col[j] - (n - ones_row[i]) - (m - ones_col[j])
+         for j in range(n)]
+        for i in range(m)
+    ]
+`,
+  'make-the-array-zero-by-subtracting-equal-amounts': `def minimumOperations(nums):
+    return len(set(x for x in nums if x > 0))
+`,
+  'sum-of-numbers-with-units-digit-k': `def minimumNumbers(num, k):
+    if num == 0:
+        return 1 if k == 0 else -1
+    for cnt in range(1, 11):
+        if (cnt * k) % 10 == num % 10 and cnt * k <= num:
+            return cnt
+    return -1
+`,
   // batch 265
   'rows-with-most-ones': `def rowsWithMostOnes(mat):
     counts = [sum(row) for row in mat]
