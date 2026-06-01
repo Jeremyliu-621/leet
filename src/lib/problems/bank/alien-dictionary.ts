@@ -38,10 +38,90 @@ Your function receives the array of sorted words and must return a string of the
   functionName: 'alienOrder',
   params: ['words'],
   starterCode: {
-    javascript: 'function alienOrder(words) {\n  \n}\n',
-    typescript: "function alienOrder(words: string[]): string {\n  \n}",
-
-    python: 'def alienOrder(words):\n    pass\n',
+    javascript: `function alienOrder(words) {
+  const chars = new Set(words.flatMap(w => [...w]));
+  const adj = new Map([...chars].map(c => [c, new Set()]));
+  const indegree = new Map([...chars].map(c => [c, 0]));
+  for (let i = 0; i < words.length - 1; i++) {
+    const a = words[i], b = words[i + 1];
+    if (a.length > b.length && a.startsWith(b)) return '';
+    for (let j = 0; j < Math.min(a.length, b.length); j++) {
+      if (a[j] !== b[j]) {
+        if (!adj.get(a[j]).has(b[j])) {
+          adj.get(a[j]).add(b[j]);
+          indegree.set(b[j], indegree.get(b[j]) + 1);
+        }
+        break;
+      }
+    }
+  }
+  const queue = [...chars].filter(c => indegree.get(c) === 0);
+  let result = '';
+  while (queue.length > 0) {
+    const c = queue.shift();
+    result += c;
+    for (const next of adj.get(c)) {
+      indegree.set(next, indegree.get(next) - 1);
+      if (indegree.get(next) === 0) queue.push(next);
+    }
+  }
+  return result.length === chars.size ? result : '';
+}`,
+    typescript: `function alienOrder(words: string[]): string {
+  const chars = new Set(words.flatMap(w => [...w]));
+  const adj = new Map<string, Set<string>>([...chars].map(c => [c, new Set()]));
+  const indegree = new Map<string, number>([...chars].map(c => [c, 0]));
+  for (let i = 0; i < words.length - 1; i++) {
+    const a = words[i], b = words[i + 1];
+    if (a.length > b.length && a.startsWith(b)) return '';
+    for (let j = 0; j < Math.min(a.length, b.length); j++) {
+      if (a[j] !== b[j]) {
+        if (!adj.get(a[j])!.has(b[j])) {
+          adj.get(a[j])!.add(b[j]);
+          indegree.set(b[j], indegree.get(b[j])! + 1);
+        }
+        break;
+      }
+    }
+  }
+  const queue = [...chars].filter(c => indegree.get(c) === 0);
+  let result = '';
+  while (queue.length > 0) {
+    const c = queue.shift()!;
+    result += c;
+    for (const next of adj.get(c)!) {
+      indegree.set(next, indegree.get(next)! - 1);
+      if (indegree.get(next) === 0) queue.push(next);
+    }
+  }
+  return result.length === chars.size ? result : '';
+}`,
+    python: `def alienOrder(words):
+    from collections import deque, defaultdict
+    chars = set(c for w in words for c in w)
+    adj = defaultdict(set)
+    indegree = {c: 0 for c in chars}
+    for i in range(len(words) - 1):
+        a, b = words[i], words[i + 1]
+        if len(a) > len(b) and a.startswith(b):
+            return ''
+        for j in range(min(len(a), len(b))):
+            if a[j] != b[j]:
+                if b[j] not in adj[a[j]]:
+                    adj[a[j]].add(b[j])
+                    indegree[b[j]] += 1
+                break
+    queue = deque(c for c in chars if indegree[c] == 0)
+    result = []
+    while queue:
+        c = queue.popleft()
+        result.append(c)
+        for nxt in adj[c]:
+            indegree[nxt] -= 1
+            if indegree[nxt] == 0:
+                queue.append(nxt)
+    return ''.join(result) if len(result) == len(chars) else ''
+`,
   },
   visibleTests: [
     { args: [['wrt', 'wrf', 'er', 'ett', 'rftt']], expected: 'wertf' },

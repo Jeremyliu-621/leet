@@ -59,10 +59,99 @@ Merge accounts that belong to the same person. Two accounts are in the same pers
   params: ['accounts'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: 'function accountsMerge(accounts) {\n  \n}\n',
-    typescript: "function accountsMergeRunner(accounts: string[][]): string[][] {\n  \n}",
-
-    python: 'def accountsMerge(accounts):\n    pass\n',
+    javascript: `function accountsMerge(accounts) {
+  const parent = new Map();
+  function find(x) {
+    if (!parent.has(x)) parent.set(x, x);
+    if (parent.get(x) !== x) parent.set(x, find(parent.get(x)));
+    return parent.get(x);
+  }
+  function union(x, y) {
+    parent.set(find(x), find(y));
+  }
+  const emailToName = new Map();
+  for (const account of accounts) {
+    const name = account[0];
+    for (let i = 1; i < account.length; i++) {
+      if (!emailToName.has(account[i])) emailToName.set(account[i], name);
+      union(account[1], account[i]);
+    }
+  }
+  const groups = new Map();
+  for (const email of emailToName.keys()) {
+    const root = find(email);
+    if (!groups.has(root)) groups.set(root, []);
+    groups.get(root).push(email);
+  }
+  const result = [];
+  for (const [root, emails] of groups) {
+    emails.sort();
+    result.push([emailToName.get(root), ...emails]);
+  }
+  return result;
+}`,
+    typescript: `function accountsMergeRunner(accounts: string[][]): string[][] {
+  const parent = new Map<string, string>();
+  function find(x: string): string {
+    if (!parent.has(x)) parent.set(x, x);
+    if (parent.get(x) !== x) parent.set(x, find(parent.get(x)!));
+    return parent.get(x)!;
+  }
+  function union(x: string, y: string): void {
+    parent.set(find(x), find(y));
+  }
+  const emailToName = new Map<string, string>();
+  for (const account of accounts) {
+    const name = account[0];
+    for (let i = 1; i < account.length; i++) {
+      if (!emailToName.has(account[i])) emailToName.set(account[i], name);
+      union(account[1], account[i]);
+    }
+  }
+  const groups = new Map<string, string[]>();
+  for (const email of emailToName.keys()) {
+    const root = find(email);
+    if (!groups.has(root)) groups.set(root, []);
+    groups.get(root)!.push(email);
+  }
+  const result: string[][] = [];
+  for (const [root, emails] of groups) {
+    emails.sort();
+    result.push([emailToName.get(root)!, ...emails]);
+  }
+  return result.map(a => [a[0], ...a.slice(1).sort()]).sort((a, b) => {
+    if (a[0] !== b[0]) return a[0] < b[0] ? -1 : 1;
+    if (a[1] !== b[1]) return a[1] < b[1] ? -1 : 1;
+    return 0;
+  });
+}`,
+    python: `def accountsMerge(accounts):
+    parent = {}
+    def find(x):
+        if x not in parent:
+            parent[x] = x
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+    def union(x, y):
+        parent[find(x)] = find(y)
+    email_to_name = {}
+    for account in accounts:
+        name = account[0]
+        for i in range(1, len(account)):
+            if account[i] not in email_to_name:
+                email_to_name[account[i]] = name
+            union(account[1], account[i])
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for email in email_to_name:
+        groups[find(email)].append(email)
+    result = []
+    for root, emails in groups.items():
+        emails.sort()
+        result.append([email_to_name[root]] + emails)
+    return result
+`,
   },
   visibleTests: [
     {
