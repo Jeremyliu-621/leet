@@ -33,10 +33,34 @@ Find a contiguous subarray whose **length is equal to** \`k\` that has the maxim
   functionName: 'findMaxAverage',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function findMaxAverage(nums, k) {\n  // your code here\n}\n',
-    typescript: "function findMaxAverage(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def findMaxAverage(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function findMaxAverage(nums, k) {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i];
+  let max = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i] - nums[i - k];
+    if (sum > max) max = sum;
+  }
+  return max / k;
+}`,
+    typescript: `function findMaxAverage(nums: number[], k: number): number {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i]!;
+  let max = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i]! - nums[i - k]!;
+    if (sum > max) max = sum;
+  }
+  return max / k;
+}`,
+    python: `def findMaxAverage(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = sum(nums[:k])
+    mx = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        if s > mx: mx = s
+    return mx / k`,
   },
   visibleTests: [
     { args: [[1, 12, -5, -6, 50, 3], 4], expected: 12.75 },

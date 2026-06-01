@@ -34,10 +34,34 @@ You may assume \`k\` is at least \`1\` and never larger than \`nums.length\`.`,
   functionName: 'maxWindowSum',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function maxWindowSum(nums, k) {\n  // your code here\n}\n',
-    typescript: "function maxWindowSum(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def maxWindowSum(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function maxWindowSum(nums, k) {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i];
+  let best = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i] - nums[i - k];
+    if (sum > best) best = sum;
+  }
+  return best;
+}`,
+    typescript: `function maxWindowSum(nums: number[], k: number): number {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i]!;
+  let best = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i]! - nums[i - k]!;
+    if (sum > best) best = sum;
+  }
+  return best;
+}`,
+    python: `def maxWindowSum(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = sum(nums[:k])
+    best = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i - k]
+        if s > best: best = s
+    return best`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 2], expected: 7 },

@@ -35,10 +35,31 @@ Output: 6
   functionName: 'findMaxConsecutiveOnes',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findMaxConsecutiveOnes(nums) {\n  // your code here\n}\n',
-    typescript: "function findMaxConsecutiveOnes(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def findMaxConsecutiveOnes(nums):\n    pass\n',
+    javascript: `function findMaxConsecutiveOnes(nums) {
+  let l = 0, lastZero = -1, best = 0;
+  for (let r = 0; r < nums.length; r++) {
+    if (nums[r] === 0) { l = lastZero + 1; lastZero = r; }
+    best = Math.max(best, r - l + 1);
+  }
+  return best;
+}`,
+    typescript: `function findMaxConsecutiveOnes(nums: number[]): number {
+  let l = 0, lastZero = -1, best = 0;
+  for (let r = 0; r < nums.length; r++) {
+    if (nums[r] === 0) { l = lastZero + 1; lastZero = r; }
+    best = Math.max(best, r - l + 1);
+  }
+  return best;
+}`,
+    python: `def findMaxConsecutiveOnes(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    l, last_zero, best = 0, -1, 0
+    for r, v in enumerate(nums):
+        if v == 0:
+            l = last_zero + 1
+            last_zero = r
+        best = max(best, r - l + 1)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 0, 1, 1, 0]], expected: 4 },

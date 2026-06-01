@@ -38,10 +38,35 @@ Unlike the maximum sum subarray, a **negative number can become a maximum** when
   functionName: 'maxProductSubarray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxProductSubarray(nums) {\n  // your code here\n}\n',
-    typescript: "function maxProductSubarray(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def maxProductSubarray(nums):\n    # your code here\n    pass\n',
+    javascript: `function maxProductSubarray(nums) {
+  let curMax = nums[0], curMin = nums[0], best = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    const v = nums[i];
+    const newMax = Math.max(v, curMax * v, curMin * v);
+    curMin = Math.min(v, curMax * v, curMin * v);
+    curMax = newMax;
+    if (curMax > best) best = curMax;
+  }
+  return best;
+}`,
+    typescript: `function maxProductSubarray(nums: number[]): number {
+  let curMax = nums[0]!, curMin = nums[0]!, best = nums[0]!;
+  for (let i = 1; i < nums.length; i++) {
+    const v = nums[i]!;
+    const newMax = Math.max(v, curMax * v, curMin * v);
+    curMin = Math.min(v, curMax * v, curMin * v);
+    curMax = newMax;
+    if (curMax > best) best = curMax;
+  }
+  return best;
+}`,
+    python: `def maxProductSubarray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    cur_max = cur_min = best = nums[0]
+    for v in nums[1:]:
+        cur_max, cur_min = max(v, cur_max * v, cur_min * v), min(v, cur_max * v, cur_min * v)
+        best = max(best, cur_max)
+    return best`,
   },
   visibleTests: [
     { args: [[2, 3, -2, 4]], expected: 6 },

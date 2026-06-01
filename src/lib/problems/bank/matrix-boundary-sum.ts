@@ -40,11 +40,31 @@ Boundary sum = 1+2+3+4+6+7+8+9 = **40**.`,
   functionName: 'matrixBoundarySum',
   params: ['grid'],
   starterCode: {
-    javascript: 'function matrixBoundarySum(grid) {\n  // your code here\n}\n',
-    typescript: `function matrixBoundarySum(grid: number[][]): number {
-
+    javascript: `function matrixBoundarySum(grid) {
+  const m = grid.length, n = grid[0].length;
+  let sum = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i === 0 || i === m - 1 || j === 0 || j === n - 1) sum += grid[i][j];
+    }
+  }
+  return sum;
 }`,
-    python: 'def matrixBoundarySum(grid):\n    # your code here\n    pass\n',
+    typescript: `function matrixBoundarySum(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  let sum = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i === 0 || i === m - 1 || j === 0 || j === n - 1) sum += grid[i]![j]!;
+    }
+  }
+  return sum;
+}`,
+    python: `def matrixBoundarySum(grid):
+    grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    return sum(grid[i][j] for i in range(m) for j in range(n)
+               if i == 0 or i == m - 1 or j == 0 or j == n - 1)`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]], expected: 40 },
