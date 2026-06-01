@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2797** problems; 8711 tests green. Batches 102–259 complete.
+**Current focus:** Bank at **2800** problems; 8720 tests green. Batches 102–260 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 260+; continued UX polish.
+**Next up:** Batch 261+; continued UX polish.
+
+### feat(bank): batch 260 — xor-queries-subarray, average-salary-excl-min-max, prefix-aligned (2026-06-01)
+Three new problems: `xor-queries-of-a-subarray` (medium/arrays+bit-manipulation, LC 1310 — prefix XOR array; O(n+q)), `average-salary-excluding-the-minimum-and-maximum-salary` (easy/arrays, LC 1491 — (sum−min−max)/(n−2)), `number-of-times-binary-string-is-prefix-aligned` (medium/arrays, LC 1375 — running max equals step index). Bank at **2800**; 8720 tests.
 
 ### feat(bank): batch 259 — subarray-varying-threshold, maximize-total-cost-alternating (2026-06-01)
 Two new problems: `subarray-with-elements-greater-than-varying-threshold` (hard/arrays+stack, LC 2334 — monotonic stack left/right bounds; for each element as min, check min*len > threshold), `maximize-total-cost-of-alternating-subarrays` (medium/arrays+dp, LC 3196 — O(n) DP with pos/neg states; pos=max(pos,neg)+num, neg=prev_pos−num). Bank at **2797**; 8711 tests.
