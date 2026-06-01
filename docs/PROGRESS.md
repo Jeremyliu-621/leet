@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2836** problems; 8837 tests green. Go/Rust snippets + batch 265 added.
+**Current focus:** Bank at **2836** problems; 8837 tests green. Stub backfill in progress (~358 empty starters remaining).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 267+; continued UX polish.
+**Next up:** Continue stub backfill; batch 267+; continued UX polish.
 
 ### feat(bank): batch 266 — find-maximum-marked-elements, longest-path-adjacent-chars, maximize-score-removing-substrings, maximum-points-archery (2026-06-01)
 Four new problems: `find-maximum-number-of-marked-elements` (medium/arrays+binary-search, LC 2576 — binary search on k pairs; check sorted[i]*2≤sorted[n-k+i] for i∈[0,k); return 2k), `longest-path-with-different-adjacent-characters` (hard/tree+dp, LC 2246 — DFS from root; at each node collect depths of children with s[c]≠s[u]; path through u = 1+top1+top2; track global max), `maximize-score-after-removing-substrings` (medium/strings+stack, LC 2124 — greedy: remove higher-value pair first via stack; push chars, pop when top+curr form target pair), `maximum-points-in-an-archery-competition` (medium/arrays+bit-manipulation, LC 2212 — 2^12=4096 bitmask enumeration; for each subset check cost≤numArrows and track max score; preamble-based validation). Bank at **2832**; 8825 tests.
