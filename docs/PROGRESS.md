@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2647** problems; 8235 tests green. All 2647 problems have TypeScript typed starters.
+**Current focus:** Bank at **2651** problems; 8247 tests green. All 2651 problems have TypeScript typed starters.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Batch 240+; UX polish per LEETCODE_PARITY.md.
 
