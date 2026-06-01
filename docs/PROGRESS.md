@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2845** problems; 8864 tests green. Batch 267 complete.
+**Current focus:** Bank at **2852** problems; 8876 tests green. Batch 268 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 268+; continued UX polish.
+**Next up:** Batch 269+; continued UX polish.
+
+### feat(bank): batch 268 — count-submatrices-equal-freq-xy, k-th-smallest-prime-fraction, min-valid-strings-to-form-target-ii, max-xor-score-subarray-queries (2026-06-01)
+Four new problems: `count-submatrices-with-equal-frequency-of-x-and-y` (medium/arrays+simulation, 2D prefix sums; check freq(x)≥1 and freq(x)==freq(y) per top-left submatrix; O(m*n)), `k-th-smallest-prime-fraction` (medium/arrays+binary-search, binary search on fraction value with O(n) two-pointer count per iteration; converges in 200 iterations), `minimum-number-of-valid-strings-to-form-target-ii` (hard/strings+dp, rolling hash set of all word prefixes; binary search max valid prefix length per position; greedy jump game for min concatenations; O(n log n)), `maximum-xor-score-subarray-queries` (hard/arrays+dp+bit-manipulation, O(n^2) DP dp[i][j]=dp[i][j-1]^dp[i+1][j]; suf[j][i] suffix max over starting points; mx[j][i] cumulative 2D max; O(1) per query). Also bumps marketing site to 2,840+. Bank at **2852**; 8876 tests.
 
 ### feat(bank): batch 267 — cells-in-spreadsheet-range, diff-ones-zeros-row-col, make-array-zero, sum-numbers-units-digit-k (2026-06-01)
 Four new problems: `cells-in-a-range-on-a-spreadsheet` (easy/strings, LC 2194 — nested column×row loops; column-first ordering), `difference-between-ones-and-zeros-in-row-and-column` (medium/arrays, LC 2482 — precompute row/col ones; apply formula per cell; O(m*n)), `make-the-array-zero-by-subtracting-equal-amounts` (easy/arrays+hash-map, LC 2357 — distinct non-zero values = number of ops; O(n)), `sum-of-numbers-with-units-digit-k` (medium/math, LC 2190 — try cnt=1..10 checking units digit match and feasibility; O(1)). Also improves `kth-missing-positive-number` with Level 1/2/3 hints and binary-search starter code. Bank at **2845**; 8864 tests.
