@@ -47035,6 +47035,90 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 264
+  'find-maximum-number-of-marked-elements': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    const n = nums.length;
+    let lo = 0, hi = Math.floor(n / 2);
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      let ok = true;
+      for (let i = 0; i < mid; i++) {
+        if (nums[i]! * 2 > nums[n - mid + i]!) { ok = false; break; }
+      }
+      if (ok) lo = mid; else hi = mid - 1;
+    }
+    return lo * 2;
+  },
+
+  'longest-path-different-adjacent-characters': (...args: unknown[]) => {
+    const parent = args[0] as number[];
+    const s = args[1] as string;
+    const n = parent.length;
+    const children: number[][] = Array.from({ length: n }, () => []);
+    for (let i = 1; i < n; i++) children[parent[i]!]!.push(i);
+    let ans = 1;
+    function dfs(u: number): number {
+      let top1 = 0, top2 = 0;
+      for (const c of children[u]!) {
+        const d = dfs(c);
+        if (s[c] === s[u]) continue;
+        if (d > top1) { top2 = top1; top1 = d; }
+        else if (d > top2) top2 = d;
+      }
+      ans = Math.max(ans, 1 + top1 + top2);
+      return 1 + top1;
+    }
+    dfs(0);
+    return ans;
+  },
+
+  'maximize-score-removing-substrings': (...args: unknown[]) => {
+    let s = args[0] as string;
+    const x = args[1] as number;
+    const y = args[2] as number;
+    function removeAll(str: string, c1: string, c2: string, pts: number): [string, number] {
+      const stk: string[] = [];
+      let score = 0;
+      for (const ch of str) {
+        if (stk.length > 0 && stk[stk.length - 1] === c1 && ch === c2) {
+          stk.pop();
+          score += pts;
+        } else {
+          stk.push(ch);
+        }
+      }
+      return [stk.join(''), score];
+    }
+    let total = 0;
+    if (x >= y) {
+      let sc: number;
+      [s, sc] = removeAll(s, 'a', 'b', x); total += sc;
+      [s, sc] = removeAll(s, 'b', 'a', y); total += sc;
+    } else {
+      let sc: number;
+      [s, sc] = removeAll(s, 'b', 'a', y); total += sc;
+      [s, sc] = removeAll(s, 'a', 'b', x); total += sc;
+    }
+    return total;
+  },
+
+  'maximum-points-in-an-archery-competition': (...args: unknown[]) => {
+    const numArrows = args[0] as number;
+    const aliceArrows = args[1] as number[];
+    let bestScore = 0;
+    for (let mask = 0; mask < (1 << 12); mask++) {
+      let cost = 0, score = 0;
+      for (let i = 0; i < 12; i++) {
+        if (mask & (1 << i)) { cost += aliceArrows[i]! + 1; score += i; }
+      }
+      if (cost <= numArrows && score > bestScore) bestScore = score;
+    }
+    // The preamble validates the returned array and returns the achieved score.
+    // Reference solution mirrors the preamble logic and returns the score directly.
+    return bestScore;
+  },
+
   // batch 263
   'count-subarrays-fixed-bounds': (...args: unknown[]) => {
     const nums = args[0] as number[];

@@ -46110,6 +46110,85 @@ def placedCoins(edges, cost):
     dfs(0, -1)
     return ans
 `,
+  // batch 264
+  'find-maximum-number-of-marked-elements': `def maxNumOfMarkedElements(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    lo, hi = 0, n // 2
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        ok = all(nums[i] * 2 <= nums[n - mid + i] for i in range(mid))
+        if ok:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo * 2
+`,
+  'longest-path-different-adjacent-characters': `def longestPath(parent, s):
+    from collections import defaultdict
+    n = len(parent)
+    children = defaultdict(list)
+    for i in range(1, n):
+        children[parent[i]].append(i)
+    ans = [1]
+    def dfs(u):
+        top1 = top2 = 0
+        for c in children[u]:
+            d = dfs(c)
+            if s[c] == s[u]:
+                continue
+            if d > top1:
+                top1, top2 = d, top1
+            elif d > top2:
+                top2 = d
+        ans[0] = max(ans[0], 1 + top1 + top2)
+        return 1 + top1
+    dfs(0)
+    return ans[0]
+`,
+  'maximize-score-removing-substrings': `def maximumGain(s, x, y):
+    def remove_all(t, c1, c2, pts):
+        stk = []
+        score = 0
+        for ch in t:
+            if stk and stk[-1] == c1 and ch == c2:
+                stk.pop()
+                score += pts
+            else:
+                stk.append(ch)
+        return ''.join(stk), score
+    total = 0
+    if x >= y:
+        s, sc = remove_all(s, 'a', 'b', x); total += sc
+        s, sc = remove_all(s, 'b', 'a', y); total += sc
+    else:
+        s, sc = remove_all(s, 'b', 'a', y); total += sc
+        s, sc = remove_all(s, 'a', 'b', x); total += sc
+    return total
+`,
+  'maximum-points-in-an-archery-competition': `def maximumBobPoints(numArrows, aliceArrows):
+    alice = list(aliceArrows)
+    best_mask = 0
+    best_score = 0
+    for mask in range(1 << 12):
+        cost = 0
+        score = 0
+        for i in range(12):
+            if mask & (1 << i):
+                cost += alice[i] + 1
+                score += i
+        if cost <= numArrows and score > best_score:
+            best_score = score
+            best_mask = mask
+    bob = [0] * 12
+    remaining = numArrows
+    for i in range(12):
+        if best_mask & (1 << i):
+            bob[i] = alice[i] + 1
+            remaining -= bob[i]
+    bob[0] += remaining
+    return bob
+`,
   // batch 263
   'count-subarrays-fixed-bounds': `def countSubarrays(nums, minK, maxK):
     ans = 0

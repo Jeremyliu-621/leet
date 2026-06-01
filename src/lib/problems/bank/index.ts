@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 266
+import { problem as findMaximumMarkedElements } from './find-maximum-number-of-marked-elements';
+import { problem as longestPathDifferentAdjacentChars } from './longest-path-different-adjacent-characters';
+import { problem as maximizeScoreRemovingSubstrings } from './maximize-score-removing-substrings';
+import { problem as maximumPointsArcheryCompetition } from './maximum-points-in-an-archery-competition';
 // batch 265
 import { problem as checkTwoChessboardSameColor } from './check-if-two-chessboard-squares-have-the-same-color';
 import { problem as countEqualDivisiblePairs } from './count-equal-divisible-pairs';
@@ -6418,6 +6423,11 @@ export const problems: readonly Problem[] = [
   minWorkSessions,
   maxAbsoluteValueExpression,
   minOpsUniValueGrid,
+  // batch 266
+  findMaximumMarkedElements,
+  longestPathDifferentAdjacentChars,
+  maximizeScoreRemovingSubstrings,
+  maximumPointsArcheryCompetition,
   // batch 264
   findMirrorScoreString,
   maxManhattanDistanceKChanges,
