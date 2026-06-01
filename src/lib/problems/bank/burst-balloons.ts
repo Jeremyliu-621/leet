@@ -34,10 +34,44 @@ Return the **maximum coins** you can collect by bursting the balloons wisely.`,
   functionName: 'maxCoins',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxCoins(nums) {\n  \n}\n',
-    typescript: "function maxCoins(nums: number[]): number {\n  \n}",
-
-    python: 'def maxCoins(nums: list[int]) -> int:\n    pass\n',
+    javascript: `function maxCoins(nums) {
+  const a = [1, ...nums, 1];
+  const n = a.length;
+  const dp = Array.from({ length: n }, () => new Array(n).fill(0));
+  for (let len = 2; len < n; len++) {
+    for (let i = 0; i + len < n; i++) {
+      const j = i + len;
+      for (let k = i + 1; k < j; k++) {
+        dp[i][j] = Math.max(dp[i][j], dp[i][k] + a[i] * a[k] * a[j] + dp[k][j]);
+      }
+    }
+  }
+  return dp[0][n - 1];
+}`,
+    typescript: `function maxCoins(nums: number[]): number {
+  const a = [1, ...nums, 1];
+  const n = a.length;
+  const dp = Array.from({ length: n }, () => new Array(n).fill(0));
+  for (let len = 2; len < n; len++) {
+    for (let i = 0; i + len < n; i++) {
+      const j = i + len;
+      for (let k = i + 1; k < j; k++) {
+        dp[i][j] = Math.max(dp[i][j]!, dp[i][k]! + a[i]! * a[k]! * a[j]! + dp[k][j]!);
+      }
+    }
+  }
+  return dp[0]![n - 1]!;
+}`,
+    python: `def maxCoins(nums):
+    a = [1] + nums + [1]
+    n = len(a)
+    dp = [[0] * n for _ in range(n)]
+    for length in range(2, n):
+        for i in range(n - length):
+            j = i + length
+            for k in range(i + 1, j):
+                dp[i][j] = max(dp[i][j], dp[i][k] + a[i] * a[k] * a[j] + dp[k][j])
+    return dp[0][n - 1]`,
   },
   visibleTests: [
     { args: [[3, 1, 5, 8]], expected: 167 },

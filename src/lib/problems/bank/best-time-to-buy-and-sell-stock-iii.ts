@@ -39,10 +39,35 @@ Find the maximum profit you can achieve. You may complete **at most two transact
   functionName: 'maxProfit',
   params: ['prices'],
   starterCode: {
-    javascript: 'function maxProfit(prices) {\n\n}',
-    typescript: "function maxProfit(prices: number[]): number {\n\n}",
-
-    python: 'def maxProfit(prices):\n    pass',
+    javascript: `function maxProfit(prices) {
+  let buy1 = -Infinity, sell1 = 0, buy2 = -Infinity, sell2 = 0;
+  for (const p of prices) {
+    buy1 = Math.max(buy1, -p);
+    sell1 = Math.max(sell1, buy1 + p);
+    buy2 = Math.max(buy2, sell1 - p);
+    sell2 = Math.max(sell2, buy2 + p);
+  }
+  return sell2;
+}`,
+    typescript: `function maxProfit(prices: number[]): number {
+  let buy1 = -Infinity, sell1 = 0, buy2 = -Infinity, sell2 = 0;
+  for (const p of prices) {
+    buy1 = Math.max(buy1, -p);
+    sell1 = Math.max(sell1, buy1 + p);
+    buy2 = Math.max(buy2, sell1 - p);
+    sell2 = Math.max(sell2, buy2 + p);
+  }
+  return sell2;
+}`,
+    python: `def maxProfit(prices):
+    buy1 = buy2 = float('-inf')
+    sell1 = sell2 = 0
+    for p in prices:
+        buy1 = max(buy1, -p)
+        sell1 = max(sell1, buy1 + p)
+        buy2 = max(buy2, sell1 - p)
+        sell2 = max(sell2, buy2 + p)
+    return sell2`,
   },
   visibleTests: [
     { args: [[3, 3, 5, 0, 0, 3, 1, 4]], expected: 6 },

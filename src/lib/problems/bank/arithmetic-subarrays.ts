@@ -37,10 +37,30 @@ Return a list of boolean answers to each query.`,
   functionName: 'checkArithmeticSubarrays',
   params: ['nums', 'l', 'r'],
   starterCode: {
-    javascript: 'function checkArithmeticSubarrays(nums, l, r) {\n\n}\n',
-    typescript: "function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {\n\n}",
-
-    python: 'def checkArithmeticSubarrays(nums, l, r):\n    pass\n',
+    javascript: `function checkArithmeticSubarrays(nums, l, r) {
+  function isArith(sub) {
+    sub = [...sub].sort((a, b) => a - b);
+    const d = sub[1] - sub[0];
+    for (let i = 2; i < sub.length; i++) if (sub[i] - sub[i - 1] !== d) return false;
+    return true;
+  }
+  return l.map((li, i) => isArith(nums.slice(li, r[i] + 1)));
+}`,
+    typescript: `function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {
+  function isArith(sub: number[]): boolean {
+    sub = [...sub].sort((a, b) => a - b);
+    const d = sub[1]! - sub[0]!;
+    for (let i = 2; i < sub.length; i++) if (sub[i]! - sub[i - 1]! !== d) return false;
+    return true;
+  }
+  return l.map((li, i) => isArith(nums.slice(li, r[i]! + 1)));
+}`,
+    python: `def checkArithmeticSubarrays(nums, l, r):
+    def is_arith(sub):
+        sub = sorted(sub)
+        d = sub[1] - sub[0]
+        return all(sub[i] - sub[i-1] == d for i in range(2, len(sub)))
+    return [is_arith(nums[l[i]:r[i]+1]) for i in range(len(l))]`,
   },
   visibleTests: [
     { args: [[4, 6, 5, 9, 3, 7], [0, 0, 2], [2, 3, 5]], expected: [true, false, true] },

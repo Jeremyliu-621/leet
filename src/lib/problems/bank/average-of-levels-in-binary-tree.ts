@@ -99,9 +99,56 @@ Trees are represented as level-order arrays where \`null\` indicates a missing c
   params: ['root'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// TreeNode class and averageOfLevelsRunner wrapper are pre-defined.\n// Implement the function below:\nfunction averageOfLevels(root) {\n  \n}\n',
-    typescript: 'function averageOfLevelsRunner(root: (number | null)[]): number[] {\n  \n}',
-    python: '# TreeNode class and averageOfLevelsRunner wrapper are pre-defined.\n# Implement the function below:\ndef averageOfLevels(root):\n    pass\n',
+    javascript: `// TreeNode class and averageOfLevelsRunner wrapper are pre-defined.
+// Implement the function below:
+function averageOfLevels(root) {
+  const res = [];
+  const queue = [root];
+  while (queue.length) {
+    const size = queue.length;
+    let sum = 0;
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      sum += node.val;
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    res.push(sum / size);
+  }
+  return res;
+}`,
+    typescript: `// TreeNode class and averageOfLevelsRunner wrapper are pre-defined.
+// Implement the function below:
+function averageOfLevels(root: any): number[] {
+  const res: number[] = [];
+  const queue: any[] = [root];
+  while (queue.length) {
+    const size = queue.length;
+    let sum = 0;
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      sum += node.val;
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    res.push(sum / size);
+  }
+  return res;
+}`,
+    python: `# TreeNode class and averageOfLevelsRunner wrapper are pre-defined.
+# Implement the function below:
+def averageOfLevels(root):
+    from collections import deque
+    res, q = [], deque([root])
+    while q:
+        size, total = len(q), 0
+        for _ in range(size):
+            node = q.popleft()
+            total += node.val
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)
+        res.append(total / size)
+    return res`,
   },
   visibleTests: [
     { args: [[3, 9, 20, null, null, 15, 7]], expected: [3, 14.5, 11] },
