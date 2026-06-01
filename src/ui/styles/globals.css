@@ -96,35 +96,73 @@ body {
   color: var(--ll-on-accent);
 }
 
-/* Grayscale overrides for highlight.js token classes.
-   No colour — emphasis is entirely contrast and weight, matching the
-   LeetLock design language. Both dark and light themes share this
-   because the tokens reference CSS variables that adapt per-theme. */
+/* Syntax highlighting for highlight.js (problem description code blocks).
+   Uses VS Code-inspired colours that work on both dark and light themes
+   via CSS variables. Matches the CodeMirror editor colouring for a
+   consistent look across the app. */
+
+/* --- Dark theme highlight colours --- */
+:root,
+:root[data-theme='dark'],
+:root[data-theme='system-dark'] {
+  --ll-hljs-keyword: #C586C0;
+  --ll-hljs-function: #DCDCAA;
+  --ll-hljs-string: #CE9178;
+  --ll-hljs-number: #B5CEA8;
+  --ll-hljs-comment: #6A9955;
+  --ll-hljs-variable: #9CDCFE;
+  --ll-hljs-type: #4EC9B0;
+  --ll-hljs-operator: #D4D4D4;
+}
+
+/* --- Light theme highlight colours --- */
+:root[data-theme='light'],
+:root[data-theme='system-light'] {
+  --ll-hljs-keyword: #AF00DB;
+  --ll-hljs-function: #795E26;
+  --ll-hljs-string: #A31515;
+  --ll-hljs-number: #098658;
+  --ll-hljs-comment: #008000;
+  --ll-hljs-variable: #001080;
+  --ll-hljs-type: #267f99;
+  --ll-hljs-operator: #383838;
+}
+
 .hljs-keyword,
 .hljs-built_in,
-.hljs-type,
-.hljs-selector-tag,
-.hljs-title,
-.hljs-title.class_,
-.hljs-title.function_ {
-  color: var(--ll-text);
+.hljs-selector-tag {
+  color: var(--ll-hljs-keyword);
   font-weight: 500;
 }
 
+.hljs-type {
+  color: var(--ll-hljs-type);
+  font-weight: 500;
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_ {
+  color: var(--ll-hljs-function);
+}
+
 .hljs-string,
-.hljs-number,
-.hljs-literal,
-.hljs-symbol,
 .hljs-regexp,
 .hljs-template-variable,
 .hljs-template-tag {
-  color: var(--ll-muted);
+  color: var(--ll-hljs-string);
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-symbol {
+  color: var(--ll-hljs-number);
 }
 
 .hljs-comment,
 .hljs-meta,
 .hljs-quote {
-  color: var(--ll-faint);
+  color: var(--ll-hljs-comment);
   font-style: italic;
 }
 
@@ -132,12 +170,12 @@ body {
 .hljs-attr,
 .hljs-params,
 .hljs-property {
-  color: var(--ll-text);
+  color: var(--ll-hljs-variable);
 }
 
 .hljs-operator,
 .hljs-punctuation {
-  color: var(--ll-muted);
+  color: var(--ll-hljs-operator);
 }
 
 /* KaTeX math rendering — force all math text to inherit our design tokens so
