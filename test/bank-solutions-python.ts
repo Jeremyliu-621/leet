@@ -45509,6 +45509,28 @@ def getFinalState(nums, k, multiplier):
     return ans
 `,
 
+  // batch 260
+  'xor-queries-of-a-subarray': `
+def xorQueries(arr, queries):
+    n = len(arr)
+    pre = [0] * (n + 1)
+    for i in range(n):
+        pre[i + 1] = pre[i] ^ arr[i]
+    return [pre[r + 1] ^ pre[l] for l, r in queries]
+`,
+  'average-salary-excluding-the-minimum-and-maximum-salary': `
+def average(salary):
+    return (sum(salary) - min(salary) - max(salary)) / (len(salary) - 2)
+`,
+  'number-of-times-binary-string-is-prefix-aligned': `
+def numTimesAllBlue(flips):
+    count = max_so_far = 0
+    for i, f in enumerate(flips):
+        max_so_far = max(max_so_far, f)
+        if max_so_far == i + 1:
+            count += 1
+    return count
+`,
   // batch 259
   'subarray-with-elements-greater-than-varying-threshold': `
 def validSubarraySize(nums, threshold):

@@ -46373,6 +46373,28 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result;
   },
 
+  // batch 260
+  'xor-queries-of-a-subarray': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const queries = args[1] as number[][];
+    const pre = new Array(arr.length + 1).fill(0);
+    for (let i = 0; i < arr.length; i++) pre[i + 1] = pre[i]! ^ arr[i]!;
+    return queries.map((q) => pre[q[1]! + 1]! ^ pre[q[0]!]!);
+  },
+  'average-salary-excluding-the-minimum-and-maximum-salary': (...args: unknown[]) => {
+    const salary = args[0] as number[];
+    const sum = salary.reduce((a, b) => a + b, 0);
+    return (sum - Math.min(...salary) - Math.max(...salary)) / (salary.length - 2);
+  },
+  'number-of-times-binary-string-is-prefix-aligned': (...args: unknown[]) => {
+    const flips = args[0] as number[];
+    let count = 0, max = 0;
+    for (let i = 0; i < flips.length; i++) {
+      max = Math.max(max, flips[i]!);
+      if (max === i + 1) count++;
+    }
+    return count;
+  },
   // batch 259
   'subarray-with-elements-greater-than-varying-threshold': (...args: unknown[]) => {
     const nums = args[0] as number[];

@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 260
+import { problem as xorQueries } from './xor-queries-of-a-subarray';
+import { problem as averageSalary } from './average-salary-excluding-the-minimum-and-maximum-salary';
+import { problem as numTimesAllBlue } from './number-of-times-binary-string-is-prefix-aligned';
 // batch 259
 import { problem as validSubarraySize } from './subarray-with-elements-greater-than-varying-threshold';
 import { problem as maximizeTotalCost } from './maximize-total-cost-of-alternating-subarrays';
@@ -6371,6 +6375,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 260
+  xorQueries,
+  averageSalary,
+  numTimesAllBlue,
   // batch 259
   validSubarraySize,
   maximizeTotalCost,
