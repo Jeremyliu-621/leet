@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2863** problems; 8906 tests green. Batch 270 complete.
+**Current focus:** Bank at **2866** problems; 8918 tests green. Batch 271 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 271+; continued UX polish.
+**Next up:** Batch 272+; continued UX polish.
+
+### feat(bank): batch 271 — find-xor-all-subarrays, sort-matrix-diagonally, max-min-sums-k-subarrays, max-sum-k-elements (2026-06-01)
+Four new problems: `find-the-xor-of-all-subarrays` (easy/arrays+math+bit-manipulation — element at index i appears in (i+1)*(n-i) subarrays; XOR is nonzero iff n is odd; result = XOR of even-indexed elements when n is odd; O(n)), `sort-the-matrix-diagonally` (medium/arrays+simulation — group cells by key r-c; sort each diagonal ascending; fill back top-to-bottom per diagonal; O(m*n*log(min(m,n)))), `maximum-and-minimum-sums-of-at-most-k-size-subarrays` (hard/arrays+stack+math — brute O(n*k); optimal O(n) via monotone stacks counting each element's min/max contribution; mod 10^9+7), `maximum-sum-with-at-most-k-elements` (medium/arrays+heap — from each row i take top limits[i] candidates; merge + sort all desc; take top k; O(m*n log n)). Bank at **2866**; 8918 tests.
 
 ### feat(bank): batch 270 — find-first-last-position, punishment-number, cycle-length-tree, min-hours-training (2026-06-01)
 Four new problems: `find-first-and-last-position-of-element-in-sorted-array` (medium/binary-search, LC 34 — two separate binary searches: leftmost (keep hi=mid-1 on match) and rightmost (keep lo=mid+1 on match); O(log n)), `find-the-punishment-number-of-an-integer` (medium/math+backtracking, LC 2698 — for each i, backtracking canPartition(str(i²), pos, rem): try all prefix substrings; O(n·10^d)), `cycle-length-queries-in-a-tree` (medium/tree+math, LC 2509 — LCA via halving: move larger of (a,b) up (divide by 2) until a==b; count steps=distance; cycle length=steps+1; O(n) per query), `minimum-hours-of-training-to-win-a-competition` (easy/simulation, LC 2383 — greedy per-fight check: if curEnergy≤enemy or curExp≤enemy, train minimum needed; after fight: E-=enemy, X+=enemy; O(n)). Bank at **2863**; 8906 tests.
