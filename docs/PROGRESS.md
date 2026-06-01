@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2753** problems; 8553 tests green. Batches 102–252 (full) complete.
+**Current focus:** Bank at **2758** problems; 8568 tests green. Batches 102–254 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 253+; continued UX polish.
+**Next up:** Batch 255+; continued UX polish.
+
+### feat(bank): batch 254 — count-unique-good-subsequences, sum-of-k-mirror-numbers, number-of-ways-to-build-sturdy-brick-wall, count-of-sub-multisets-with-bounded-sum, get-biggest-three-rhombus-sums (2026-06-01)
+Five new problems: `count-unique-good-subsequences` (hard/strings+dp, LC 1987 — dp[0]/dp[1] track distinct good subseqs ending in '0'/'1'; +1 for lone "0" if present; O(n) DP), `sum-of-k-mirror-numbers` (hard/math+strings, LC 2081 — enumerate base-10 palindromes by mirrored half in increasing order; check if base-k representation is also a palindrome; collect first n), `number-of-ways-to-build-sturdy-brick-wall` (medium/dp+bit-manipulation, LC 2184 — enumerate valid row bitmasks (no two adjacent rows share internal crack); DP with compatibility matrix; O(R²×height) where R = valid rows), `count-of-sub-multisets-with-bounded-sum` (hard/arrays+hash-map+dp, LC 2902 — bounded knapsack with sliding window prefix sums per distinct value; zeros factored out as multiplier), `get-biggest-three-rhombus-sums-in-a-grid` (medium/arrays+simulation, LC 1878 — for each center (r,c) and radius k, sum the 4k border cells; maintain top-3 distinct set). Bank at **2758**; 8568 tests.
 
 ### feat(bank): batch 252 (part 2) — maximal-range, total-chars-transformations-i, count-k-subseq-beauty, smallest-digit-product, max-semi-decreasing (2026-06-01)
 Five new problems completing batch 252: `maximal-range-that-each-element-is-maximum-in-it` (easy/arrays+stack, LC 2832 — monotone stack left/right boundaries; ranges[i]=right-left-1), `total-characters-in-string-after-transformations-i` (medium/strings+math, LC 2837 — freq array[26] simulation; z splits into a+b; sum mod 10^9+7), `count-k-subsequences-of-a-string-with-maximum-beauty` (medium/strings+math+hash-map, LC 2842 — sort freqs descending; formula C(tied,need)*prod_above*min_freq^need mod p), `smallest-number-with-given-digit-product` (medium/math, LC 2847 — greedy factor 9→2; if n>1 return -1; sort ascending), `maximum-length-of-semi-decreasing-subarrays` (medium/arrays+stack+binary-search, LC 2863 — suffix-minima positions have monotone values; binary search per left endpoint). Bank at **2753**; 8553 tests.
