@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-01
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2705** problems; 8409 tests green. Batches 102–244 complete.
+**Current focus:** Bank at **2709** problems; 8421 tests green. Batches 102–245 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 245+; UX polish per LEETCODE_PARITY.md.
+**Next up:** Batch 246+; UX polish per LEETCODE_PARITY.md.
+
+### feat(bank): batch 245 — min-cost-walk-graph, grid-region-average, flip-grid-palindrome, min-abs-diff-constraint (2026-06-01)
+Four new problems: `minimum-cost-walk-in-weighted-graph` (hard/graph+union-find+bit-manipulation, LC 3108 — DSU tracking AND of all edge weights per component; min walk cost = component AND), `find-the-grid-of-region-average` (medium/arrays+simulation, LC 2900 — 3x3 region qualifies if all adjacent pixel diffs ≤ threshold; average qualifying regions per cell), `minimum-number-of-flips-to-make-binary-grid-palindrome` (medium/arrays, LC 3239 — 4-corner group cost + middle row/col pair checks), `minimum-absolute-difference-between-elements-with-constraint` (medium/arrays+binary-search, LC 2817 — sweep with sorted insertion array; binary search for closest element in valid index range). Bank at **2704**; 8406 tests.
 
 ### feat(bank): batch 244 (local) — euler-path, convex-hull, aho-corasick, max-flow, lca (2026-06-01)
 Five new algorithm problems: `euler-path-circuit` (hard/graph — Hierholzer's O(V+E) directed Euler path/circuit; degree balance check + pointer-based DFS), `convex-hull-graham` (hard/math — Graham scan O(n log n); pivot = min-y-then-x; CCW sort by cross product; strict left turn stack; no collinear hull points), `aho-corasick-multi-pattern` (hard/strings+trie — BFS failure-link construction; output chaining via fail links; sorted [pattern, startIndex] result), `max-flow-edmonds-karp` (hard/graph+shortest-path — BFS augmenting paths; O(VE²) adjacency-matrix residual graph; min-cut = max-flow), `lca-binary-lifting` (hard/tree+binary-search — O(n log n) up[k][u] table; O(log n) LCA via depth equalization + simultaneous lifting). Bank at **2705**; 8409 tests.

@@ -3088,6 +3088,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 245
+import { problem as minimumCostWalkGraph } from './minimum-cost-walk-in-weighted-graph';
+import { problem as findGridRegionAverage } from './find-the-grid-of-region-average';
+import { problem as minFlipsBinaryGridPalindrome } from './minimum-number-of-flips-to-make-binary-grid-palindrome';
+import { problem as minAbsDiffConstraint } from './minimum-absolute-difference-between-elements-with-constraint';
 // batch 244
 import { problem as largestLocalValuesMatrix } from './largest-local-values-in-matrix';
 import { problem as maximumInvitations } from './maximum-employees-to-be-invited';
@@ -6235,9 +6240,15 @@ export const problems: readonly Problem[] = [
   maximumInvitations,
   idealArraysCount,
   shortestPathGridObstacles,
+  // batch 244 (remote)
   eulerPathCircuit,
   convexHullGraham,
   ahoCorasick,
   maxFlowEdmondsKarp,
   lcaBinaryLifting,
+  // batch 245
+  minimumCostWalkGraph,
+  findGridRegionAverage,
+  minFlipsBinaryGridPalindrome,
+  minAbsDiffConstraint,
 ];

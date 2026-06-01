@@ -44300,6 +44300,104 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans);
   },
 
+  'minimum-cost-walk-in-weighted-graph': (...args: unknown[]) => {
+    const [n, edges, query] = args as [number, number[][], number[][]];
+    const parent = Array.from({ length: n }, (_, i) => i);
+    const andVal = new Array<number>(n).fill((1 << 17) - 1);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    for (const edge of edges) {
+      const u = edge[0]!, v = edge[1]!, w = edge[2]!;
+      const pu = find(u), pv = find(v);
+      if (pu !== pv) {
+        const newAnd = andVal[pu]! & andVal[pv]! & w;
+        parent[pu] = pv;
+        andVal[pv] = newAnd;
+      } else {
+        andVal[pu] = andVal[pu]! & w;
+      }
+    }
+    return query.map(q => {
+      const s = q[0]!, t = q[1]!;
+      if (s === t) return 0;
+      const ps = find(s), pt = find(t);
+      if (ps !== pt) return -1;
+      return andVal[ps]!;
+    });
+  },
+
+  'find-the-grid-of-region-average': (...args: unknown[]) => {
+    const [image, threshold] = args as [number[][], number];
+    const m = image.length, n = image[0]!.length;
+    const sumGrid = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    const cntGrid = Array.from({ length: m }, () => new Array<number>(n).fill(0));
+    function qualifies(r: number, c: number): boolean {
+      for (let dr = 0; dr < 3; dr++)
+        for (let dc = 0; dc < 3; dc++) {
+          if (dc < 2 && Math.abs(image[r + dr]![c + dc]! - image[r + dr]![c + dc + 1]!) > threshold) return false;
+          if (dr < 2 && Math.abs(image[r + dr]![c + dc]! - image[r + dr + 1]![c + dc]!) > threshold) return false;
+        }
+      return true;
+    }
+    for (let r = 0; r <= m - 3; r++) {
+      for (let c = 0; c <= n - 3; c++) {
+        if (!qualifies(r, c)) continue;
+        let tot = 0;
+        for (let dr = 0; dr < 3; dr++) for (let dc = 0; dc < 3; dc++) tot += image[r + dr]![c + dc]!;
+        const avg = Math.floor(tot / 9);
+        for (let dr = 0; dr < 3; dr++) for (let dc = 0; dc < 3; dc++) {
+          sumGrid[r + dr]![c + dc]! += avg; cntGrid[r + dr]![c + dc]!++;
+        }
+      }
+    }
+    return image.map((row, r) => row.map((v, c) => cntGrid[r]![c]! > 0 ? Math.floor(sumGrid[r]![c]! / cntGrid[r]![c]!) : v));
+  },
+
+  'minimum-number-of-flips-to-make-binary-grid-palindrome': (...args: unknown[]) => {
+    const [grid] = args as [number[][]];
+    const n = grid.length, m = grid[0]!.length;
+    let ans = 0;
+    for (let r = 0; r < Math.floor(n / 2); r++)
+      for (let c = 0; c < Math.floor(m / 2); c++) {
+        const ones = grid[r]![c]! + grid[r]![m - 1 - c]! + grid[n - 1 - r]![c]! + grid[n - 1 - r]![m - 1 - c]!;
+        ans += Math.min(ones, 4 - ones);
+      }
+    if (n % 2 === 1) {
+      const mid = Math.floor(n / 2);
+      for (let c = 0; c < Math.floor(m / 2); c++)
+        if (grid[mid]![c] !== grid[mid]![m - 1 - c]) ans++;
+    }
+    if (m % 2 === 1) {
+      const mid = Math.floor(m / 2);
+      for (let r = 0; r < Math.floor(n / 2); r++)
+        if (grid[r]![mid] !== grid[n - 1 - r]![mid]) ans++;
+    }
+    return ans;
+  },
+
+  'minimum-absolute-difference-between-elements-with-constraint': (...args: unknown[]) => {
+    const [nums, x] = args as [number[], number];
+    const sorted: number[] = [];
+    function insertSorted(val: number) {
+      let lo = 0, hi = sorted.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid]! < val) lo = mid + 1; else hi = mid; }
+      sorted.splice(lo, 0, val);
+    }
+    function lowerBound(val: number): number {
+      let lo = 0, hi = sorted.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid]! < val) lo = mid + 1; else hi = mid; }
+      return lo;
+    }
+    let ans = Infinity;
+    for (let i = x; i < nums.length; i++) {
+      insertSorted(nums[i - x]!);
+      const pos = lowerBound(nums[i]!);
+      if (pos < sorted.length) ans = Math.min(ans, Math.abs(sorted[pos]! - nums[i]!));
+      if (pos > 0) ans = Math.min(ans, Math.abs(sorted[pos - 1]! - nums[i]!));
+      if (ans === 0) return 0;
+    }
+    return ans;
+  },
+
   'shortest-path-in-a-grid-with-obstacles-elimination': (...args: unknown[]) => {
     const [grid, k] = args as [number[][], number];
     const m = grid.length, n = grid[0]!.length;

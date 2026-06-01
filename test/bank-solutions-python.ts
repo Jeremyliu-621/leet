@@ -43520,6 +43520,99 @@ def idealArrays(n, maxValue):
     return ans
 `,
 
+  'minimum-cost-walk-in-weighted-graph': `
+def minimumCostWalk(n, edges, query):
+    parent = list(range(n))
+    and_val = [(1 << 17) - 1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for u, v, w in edges:
+        pu, pv = find(u), find(v)
+        if pu != pv:
+            new_and = and_val[pu] & and_val[pv] & w
+            parent[pu] = pv
+            and_val[pv] = new_and
+        else:
+            and_val[pu] &= w
+    result = []
+    for s, t in query:
+        if s == t:
+            result.append(0)
+        elif find(s) != find(t):
+            result.append(-1)
+        else:
+            result.append(and_val[find(s)])
+    return result
+`,
+
+  'find-the-grid-of-region-average': `
+def resultGrid(image, threshold):
+    m, n = len(image), len(image[0])
+    sum_grid = [[0]*n for _ in range(m)]
+    cnt_grid = [[0]*n for _ in range(m)]
+    def qualifies(r, c):
+        for dr in range(3):
+            for dc in range(3):
+                if dc < 2 and abs(image[r+dr][c+dc] - image[r+dr][c+dc+1]) > threshold:
+                    return False
+                if dr < 2 and abs(image[r+dr][c+dc] - image[r+dr+1][c+dc]) > threshold:
+                    return False
+        return True
+    for r in range(m - 2):
+        for c in range(n - 2):
+            if not qualifies(r, c):
+                continue
+            tot = sum(image[r+dr][c+dc] for dr in range(3) for dc in range(3))
+            avg = tot // 9
+            for dr in range(3):
+                for dc in range(3):
+                    sum_grid[r+dr][c+dc] += avg
+                    cnt_grid[r+dr][c+dc] += 1
+    return [[sum_grid[r][c] // cnt_grid[r][c] if cnt_grid[r][c] > 0 else image[r][c]
+             for c in range(n)] for r in range(m)]
+`,
+
+  'minimum-number-of-flips-to-make-binary-grid-palindrome': `
+def minFlips(grid):
+    n, m = len(grid), len(grid[0])
+    ans = 0
+    for r in range(n // 2):
+        for c in range(m // 2):
+            ones = grid[r][c] + grid[r][m-1-c] + grid[n-1-r][c] + grid[n-1-r][m-1-c]
+            ans += min(ones, 4 - ones)
+    if n % 2 == 1:
+        mid = n // 2
+        for c in range(m // 2):
+            if grid[mid][c] != grid[mid][m-1-c]:
+                ans += 1
+    if m % 2 == 1:
+        mid = m // 2
+        for r in range(n // 2):
+            if grid[r][mid] != grid[n-1-r][mid]:
+                ans += 1
+    return ans
+`,
+
+  'minimum-absolute-difference-between-elements-with-constraint': `
+import bisect
+def minAbsoluteDifference(nums, x):
+    sorted_arr = []
+    ans = float('inf')
+    for i in range(x, len(nums)):
+        bisect.insort(sorted_arr, nums[i - x])
+        pos = bisect.bisect_left(sorted_arr, nums[i])
+        if pos < len(sorted_arr):
+            ans = min(ans, abs(sorted_arr[pos] - nums[i]))
+        if pos > 0:
+            ans = min(ans, abs(sorted_arr[pos - 1] - nums[i]))
+        if ans == 0:
+            return 0
+    return ans
+`,
+
   'shortest-path-in-a-grid-with-obstacles-elimination': `
 from collections import deque
 def shortestPath(grid, k):
