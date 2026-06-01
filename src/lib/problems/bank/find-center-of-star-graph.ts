@@ -36,9 +36,19 @@ You are given a 2D integer array \`edges\` where each \`edges[i] = [u_i, v_i]\` 
   functionName: 'findCenter',
   params: ['edges'],
   starterCode: {
-    javascript: 'function findCenter(edges) {\n  // your code here\n}\n',
-    typescript: 'function findCenter(edges: number[][]): number {\n  // your code here\n}\n',
-    python: 'def findCenter(edges):\n    # your code here\n    pass\n',
+    javascript: `function findCenter(edges) {
+  const [a, b] = edges[0], [c, d] = edges[1];
+  return a === c || a === d ? a : b;
+}`,
+    typescript: `function findCenter(edges: number[][]): number {
+  const [a, b] = edges[0]!, [c, d] = edges[1]!;
+  return a === c || a === d ? a! : b!;
+}`,
+    python: `def findCenter(edges):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    a, b = edges[0]
+    c, d = edges[1]
+    return a if a == c or a == d else b`,
   },
   visibleTests: [
     {

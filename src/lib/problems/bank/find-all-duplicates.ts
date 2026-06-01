@@ -42,10 +42,34 @@ You should aim for O(n) time and O(1) extra space (beyond the output).`,
   functionName: 'findAllDuplicates',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findAllDuplicates(nums) {\n  // your code here\n}\n',
-    typescript: "function findAllDuplicates(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def findAllDuplicates(nums):\n    # your code here\n    pass\n',
+    javascript: `function findAllDuplicates(nums) {
+  const res = [];
+  for (let i = 0; i < nums.length; i++) {
+    const idx = Math.abs(nums[i]) - 1;
+    if (nums[idx] < 0) res.push(idx + 1);
+    else nums[idx] = -nums[idx];
+  }
+  return res.sort((a, b) => a - b);
+}`,
+    typescript: `function findAllDuplicates(nums: number[]): number[] {
+  const res: number[] = [];
+  for (let i = 0; i < nums.length; i++) {
+    const idx = Math.abs(nums[i]!) - 1;
+    if (nums[idx]! < 0) res.push(idx + 1);
+    else nums[idx] = -nums[idx]!;
+  }
+  return res.sort((a, b) => a - b);
+}`,
+    python: `def findAllDuplicates(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    res = []
+    for i in range(len(nums)):
+        idx = abs(nums[i]) - 1
+        if nums[idx] < 0:
+            res.append(idx + 1)
+        else:
+            nums[idx] = -nums[idx]
+    return sorted(res)`,
   },
   visibleTests: [
     { args: [[4, 3, 2, 7, 8, 2, 3, 1]], expected: [2, 3] },

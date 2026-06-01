@@ -44,10 +44,36 @@ Return a 2D array containing all the subarrays. If it is impossible to satisfy t
   functionName: 'divideArray',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function divideArray(nums, k) {\n  // your code here\n}\n',
-    typescript: "function divideArray(nums: number[], k: number): number[][] {\n  // your code here\n}",
-
-    python: 'def divideArray(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function divideArray(nums, k) {
+  nums.sort((a, b) => a - b);
+  const result = [];
+  for (let i = 0; i < nums.length; i += k) {
+    const group = nums.slice(i, i + k);
+    for (let j = 0; j < k - 1; j++) if (group[j] === group[j + 1]) return [];
+    result.push(group);
+  }
+  return result;
+}`,
+    typescript: `function divideArray(nums: number[], k: number): number[][] {
+  nums.sort((a, b) => a - b);
+  const result: number[][] = [];
+  for (let i = 0; i < nums.length; i += k) {
+    const group = nums.slice(i, i + k);
+    for (let j = 0; j < k - 1; j++) if (group[j]! === group[j + 1]!) return [];
+    result.push(group);
+  }
+  return result;
+}`,
+    python: `def divideArray(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort()
+    result = []
+    for i in range(0, len(nums), k):
+        group = nums[i:i + k]
+        for j in range(k - 1):
+            if group[j] == group[j + 1]: return []
+        result.append(group)
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 2], expected: [[1, 2], [3, 4]] },

@@ -42,10 +42,24 @@ A naive recursive solution works but is exponential. An iterative approach solve
   functionName: 'fibonacci',
   params: ['n'],
   starterCode: {
-    javascript: 'function fibonacci(n) {\n  // your code here\n}\n',
-    typescript: "function fibonacci(n: number): number {\n  // your code here\n}",
-
-    python: 'def fibonacci(n):\n    # your code here\n    pass\n',
+    javascript: `function fibonacci(n) {
+  if (n <= 1) return n;
+  let a = 0, b = 1;
+  for (let i = 2; i <= n; i++) [a, b] = [b, a + b];
+  return b;
+}`,
+    typescript: `function fibonacci(n: number): number {
+  if (n <= 1) return n;
+  let a = 0, b = 1;
+  for (let i = 2; i <= n; i++) [a, b] = [b, a + b];
+  return b;
+}`,
+    python: `def fibonacci(n):
+    if n <= 1: return n
+    a, b = 0, 1
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+    return b`,
   },
   visibleTests: [
     { args: [0], expected: 0 },

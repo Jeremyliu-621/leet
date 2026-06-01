@@ -37,9 +37,49 @@ An **anagram** is a rearrangement of all characters in a string — same charact
   functionName: 'findAnagrams',
   params: ['s', 'p'],
   starterCode: {
-    javascript: 'function findAnagrams(s, p) {\n  // your code here\n}\n',
-    typescript: 'function findAnagrams(s: string, p: string): number[] {\n  // your code here\n}',
-    python: 'def findAnagrams(s, p):\n    # your code here\n    pass\n',
+    javascript: `function findAnagrams(s, p) {
+  const n = s.length, m = p.length;
+  if (m > n) return [];
+  const pFreq = new Array(26).fill(0);
+  const wFreq = new Array(26).fill(0);
+  for (const c of p) pFreq[c.charCodeAt(0) - 97]++;
+  const result = [];
+  for (let r = 0; r < n; r++) {
+    wFreq[s.charCodeAt(r) - 97]++;
+    if (r >= m) wFreq[s.charCodeAt(r - m) - 97]--;
+    if (r >= m - 1 && pFreq.every((v, i) => v === wFreq[i])) result.push(r - m + 1);
+  }
+  return result;
+}`,
+    typescript: `function findAnagrams(s: string, p: string): number[] {
+  const n = s.length, m = p.length;
+  if (m > n) return [];
+  const pFreq: number[] = new Array(26).fill(0);
+  const wFreq: number[] = new Array(26).fill(0);
+  for (const c of p) pFreq[c.charCodeAt(0) - 97]!++;
+  const result: number[] = [];
+  for (let r = 0; r < n; r++) {
+    wFreq[s.charCodeAt(r) - 97]!++;
+    if (r >= m) wFreq[s.charCodeAt(r - m) - 97]!--;
+    if (r >= m - 1 && pFreq.every((v, i) => v === wFreq[i]!)) result.push(r - m + 1);
+  }
+  return result;
+}`,
+    python: `def findAnagrams(s, p):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(p, 'to_py'): p = p.to_py()
+    n, m = len(s), len(p)
+    if m > n: return []
+    from collections import Counter
+    p_freq = Counter(p)
+    w_freq = Counter(s[:m])
+    result = [0] if w_freq == p_freq else []
+    for r in range(m, n):
+        w_freq[s[r]] += 1
+        w_freq[s[r - m]] -= 1
+        if w_freq[s[r - m]] == 0: del w_freq[s[r - m]]
+        if w_freq == p_freq: result.append(r - m + 1)
+    return result`,
   },
   visibleTests: [
     { args: ['cbaebabacd', 'abc'], expected: [0, 6] },

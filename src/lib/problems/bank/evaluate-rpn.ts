@@ -42,10 +42,45 @@ In RPN, operands appear before their operator: \`["2","3","+"]\` means \`2 + 3 =
   functionName: 'evalRPN',
   params: ['tokens'],
   starterCode: {
-    javascript: 'function evalRPN(tokens) {\n  // your code here\n}\n',
-    typescript: "function evalRPN(tokens: string[]): number {\n  // your code here\n}",
-
-    python: 'def evalRPN(tokens):\n    # your code here\n    pass\n',
+    javascript: `function evalRPN(tokens) {
+  const stack = [];
+  for (const t of tokens) {
+    if ('+-*/'.includes(t)) {
+      const b = stack.pop(), a = stack.pop();
+      if (t === '+') stack.push(a + b);
+      else if (t === '-') stack.push(a - b);
+      else if (t === '*') stack.push(a * b);
+      else stack.push(Math.trunc(a / b));
+    } else stack.push(Number(t));
+  }
+  return stack[0];
+}`,
+    typescript: `function evalRPN(tokens: string[]): number {
+  const stack: number[] = [];
+  for (const t of tokens) {
+    if ('+-*/'.includes(t)) {
+      const b = stack.pop()!, a = stack.pop()!;
+      if (t === '+') stack.push(a + b);
+      else if (t === '-') stack.push(a - b);
+      else if (t === '*') stack.push(a * b);
+      else stack.push(Math.trunc(a / b));
+    } else stack.push(Number(t));
+  }
+  return stack[0]!;
+}`,
+    python: `def evalRPN(tokens):
+    tokens = list(tokens.to_py()) if hasattr(tokens, 'to_py') else list(tokens)
+    stack = []
+    for t in tokens:
+        if t in '+-*/':
+            b, a = stack.pop(), stack.pop()
+            if t == '+': stack.append(a + b)
+            elif t == '-': stack.append(a - b)
+            elif t == '*': stack.append(a * b)
+            else: stack.append(int(a / b))
+        else:
+            stack.append(int(t))
+    return stack[0]`,
   },
   visibleTests: [
     { args: [['2', '1', '+', '3', '*']], expected: 9 },

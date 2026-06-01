@@ -42,10 +42,42 @@ This is the classic **Levenshtein distance** problem, solved efficiently with dy
   functionName: 'editDistance',
   params: ['word1', 'word2'],
   starterCode: {
-    javascript: 'function editDistance(word1, word2) {\n  // your code here\n}\n',
-    typescript: "function editDistance(word1: string, word2: string): number {\n  // your code here\n}",
-
-    python: 'def editDistance(word1, word2):\n    # your code here\n    pass\n',
+    javascript: `function editDistance(word1, word2) {
+  const m = word1.length, n = word2.length;
+  const dp = Array.from({ length: m + 1 }, (_, i) =>
+    Array.from({ length: n + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+  );
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = word1[i - 1] === word2[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+  return dp[m][n];
+}`,
+    typescript: `function editDistance(word1: string, word2: string): number {
+  const m = word1.length, n = word2.length;
+  const dp = Array.from({ length: m + 1 }, (_, i) =>
+    Array.from({ length: n + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+  );
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i]![j] = word1[i - 1] === word2[j - 1]
+        ? dp[i - 1]![j - 1]!
+        : 1 + Math.min(dp[i - 1]![j]!, dp[i]![j - 1]!, dp[i - 1]![j - 1]!);
+  return dp[m]![n]!;
+}`,
+    python: `def editDistance(word1, word2):
+    if hasattr(word1, 'to_py'): word1 = word1.to_py()
+    if hasattr(word2, 'to_py'): word2 = word2.to_py()
+    m, n = len(word1), len(word2)
+    dp = [[i if j == 0 else j if i == 0 else 0 for j in range(n + 1)] for i in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if word1[i - 1] == word2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+    return dp[m][n]`,
   },
   visibleTests: [
     { args: ['horse', 'ros'], expected: 3 },

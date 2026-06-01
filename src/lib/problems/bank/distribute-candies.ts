@@ -41,10 +41,15 @@ Given an integer array \`candyType\` representing the type of each candy, return
   functionName: 'distributeCandies',
   params: ['candyType'],
   starterCode: {
-    javascript: 'function distributeCandies(candyType) {\n  // your code here\n}\n',
-    typescript: "function distributeCandies(candyType: number[]): number {\n  // your code here\n}",
-
-    python: 'def distributeCandies(candyType):\n    # your code here\n    pass\n',
+    javascript: `function distributeCandies(candyType) {
+  return Math.min(new Set(candyType).size, candyType.length / 2);
+}`,
+    typescript: `function distributeCandies(candyType: number[]): number {
+  return Math.min(new Set(candyType).size, candyType.length / 2);
+}`,
+    python: `def distributeCandies(candyType):
+    candyType = list(candyType.to_py()) if hasattr(candyType, 'to_py') else list(candyType)
+    return min(len(set(candyType)), len(candyType) // 2)`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 2, 3, 3]], expected: 3 },
