@@ -42,6 +42,9 @@ A **substring** is a contiguous sequence of characters within a string.`,
     javascript: `function countSubstrings(s, t) {
 
 }`,
+    typescript: `function countSubstrings(s: string, t: string): number {
+
+}`,
     python: `def countSubstrings(s, t):
     pass`,
   },

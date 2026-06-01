@@ -43,6 +43,9 @@ Return \`true\` if the grid satisfies all the conditions. Otherwise, return \`fa
     javascript: `function satisfiesConditions(grid) {
 
 }`,
+    typescript: `function satisfiesConditions(grid: number[][]): boolean {
+
+}`,
     python: `def satisfiesConditions(grid):
     pass`,
   },

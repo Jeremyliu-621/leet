@@ -40,6 +40,9 @@ Return the **maximum** total coins the robot can collect.`,
   params: ['coins'],
   starterCode: {
     javascript: `function maximumAmount(coins) {\n\n}`,
+    typescript: `function maximumAmount(coins: number[][]): number {
+
+}`,
     python: `def maximumAmount(coins: list[list[int]]) -> int:\n    pass`,
   },
   visibleTests: [

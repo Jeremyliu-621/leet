@@ -49,6 +49,9 @@ export const problem: Problem = {
   // return sorted array of all valid sentences
 }
 `,
+    typescript: `function wordBreak(s: string, wordDict: string[]): string[] {
+
+}`,
     python: `def wordBreak(s, wordDict):
     wordDict = list(wordDict.to_py() if hasattr(wordDict, 'to_py') else wordDict)
     # return sorted list of all valid sentences

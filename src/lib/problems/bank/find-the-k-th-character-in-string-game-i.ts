@@ -47,6 +47,9 @@ Return the value of the **k**-th character in \`word\`, after enough operations 
     javascript: `function kthCharacter(k) {
 
 }`,
+    typescript: `function kthCharacter(k: number): string {
+
+}`,
     python: `def kthCharacter(k):
     pass`,
   },

@@ -40,6 +40,9 @@ You are given an array of integers \`nums\`. Return \`true\` if \`nums\` is **sp
     javascript: `function isArraySpecial(nums) {
 
 }`,
+    typescript: `function isArraySpecial(nums: number[]): boolean {
+
+}`,
     python: `def isArraySpecial(nums):
     pass`,
   },

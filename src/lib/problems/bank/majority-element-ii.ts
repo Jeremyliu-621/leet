@@ -45,6 +45,9 @@ export const problem: Problem = {
     javascript: `function majorityElementII(nums) {
   // Return all elements appearing more than n/3 times
 }`,
+    typescript: `function majorityElementII(nums: number[]): number[] {
+  // Return all elements appearing more than n/3 times
+}`,
     python: `def majorityElementII(nums):
     # Return all elements appearing more than n/3 times
     pass`,

@@ -43,6 +43,9 @@ Return the **minimum number of seconds** required to break all \`n\` locks.`,
   params: ['strength'],
   starterCode: {
     javascript: 'function findMinimumTime(strength) {\n  // your code here\n}\n',
+    typescript: `function findMinimumTime(strength: number[]): number {
+
+}`,
     python: 'def findMinimumTime(strength):\n    # your code here\n    pass\n',
   },
   visibleTests: [

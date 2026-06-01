@@ -39,6 +39,9 @@ In one step, if the current number is even, you have to divide it by 2, otherwis
     javascript: `function numberOfSteps(num) {
 
 }`,
+    typescript: `function numberOfSteps(num: number): number {
+
+}`,
     python: `def numberOfSteps(num):
     pass`,
   },

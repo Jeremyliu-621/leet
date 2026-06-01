@@ -39,6 +39,9 @@ export const problem: Problem = {
     javascript: `function numberOfSubstrings(s, k) {
 
 }`,
+    typescript: `function numberOfSubstrings(s: string, k: number): number {
+
+}`,
     python: `def numberOfSubstrings(s, k):
     pass`,
   },

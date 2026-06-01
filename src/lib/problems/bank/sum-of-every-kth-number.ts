@@ -39,6 +39,9 @@ If no multiple of \`k\` is ≤ \`n\`, return \`0\`.`,
   params: ['n', 'k'],
   starterCode: {
     javascript: 'function sumEveryKth(n, k) {\n  // your code here\n}\n',
+    typescript: `function sumEveryKth(n: number, k: number): number {
+
+}`,
     python: 'def sumEveryKth(n, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

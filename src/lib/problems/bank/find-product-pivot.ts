@@ -49,6 +49,9 @@ Return the **leftmost** such index, or \`-1\` if none exists.
     javascript: `function findProductPivot(nums) {
 
 }`,
+    typescript: `function findProductPivot(nums: number[]): number {
+
+}`,
     python: `def findProductPivot(nums):
     pass`,
   },

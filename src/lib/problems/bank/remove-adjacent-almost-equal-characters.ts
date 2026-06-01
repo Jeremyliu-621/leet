@@ -44,6 +44,9 @@ Return the **minimum** number of steps needed to make \`word\` such that no two 
     javascript: `function removeAlmostEqualCharacters(word) {
 
 }`,
+    typescript: `function removeAlmostEqualCharacters(word: string): number {
+
+}`,
     python: `def removeAlmostEqualCharacters(word: str) -> int:
     `,
   },

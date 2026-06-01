@@ -41,6 +41,9 @@ A **consonant** is any letter that is not a vowel.`,
   params: ['s', 'k'],
   starterCode: {
     javascript: `function countOfSubstrings(s, k) {\n\n}`,
+    typescript: `function countOfSubstrings(s: string, k: number): number {
+
+}`,
     python: `def countOfSubstrings(s: str, k: int) -> int:\n    pass`,
   },
   visibleTests: [

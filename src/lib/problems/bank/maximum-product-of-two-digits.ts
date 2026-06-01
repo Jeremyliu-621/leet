@@ -41,6 +41,9 @@ Return the **maximum** product of any two digits in \`n\`.
     javascript: `function maxProduct(n) {
 
 }`,
+    typescript: `function maxProduct(n: number): number {
+
+}`,
     python: `def maxProduct(n):
     pass`,
   },

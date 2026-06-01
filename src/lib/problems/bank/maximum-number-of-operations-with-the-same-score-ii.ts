@@ -50,6 +50,9 @@ Return the **maximum** number of operations you can perform.`,
 function maxOperations(nums) {
 
 }`,
+    typescript: `function maxOperations(nums: number[]): number {
+
+}`,
     python: `def maxOperations(nums: list[int]) -> int:
     `,
   },

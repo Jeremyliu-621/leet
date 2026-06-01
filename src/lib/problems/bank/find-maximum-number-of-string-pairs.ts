@@ -43,6 +43,9 @@ Return the **maximum number** of such pairs. A word can be part of **at most one
     javascript: `function maximumNumberOfStringPairs(words) {
 
 }`,
+    typescript: `function maximumNumberOfStringPairs(words: string[]): number {
+
+}`,
     python: `def maximumNumberOfStringPairs(words):
     pass`,
   },

@@ -42,6 +42,9 @@ The **median** of an array of length \`n\` is the element at index \`⌊n / 2⌋
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function minOperationsToMakeMedianEqualK(nums, k) {\n\n}`,
+    typescript: `function minOperationsToMakeMedianEqualK(nums: number[], k: number): number {
+
+}`,
     python: `def minOperationsToMakeMedianEqualK(nums: list[int], k: int) -> int:\n    pass`,
   },
   visibleTests: [

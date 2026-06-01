@@ -45,6 +45,9 @@ Return the number of players who win.`,
     javascript: `function winningPlayerCount(n, pick) {
 
 }`,
+    typescript: `function winningPlayerCount(n: number, pick: number[][]): number {
+
+}`,
     python: `def winningPlayerCount(n, pick):
     pass`,
   },

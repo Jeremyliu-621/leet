@@ -45,6 +45,9 @@ Return the **maximum** number of books you can take from all the shelves.`,
     javascript: `function maximumBooks(books) {
   // your code here
 }`,
+    typescript: `function maximumBooks(books: number[]): number {
+
+}`,
     python: `def maximumBooks(books):
     # your code here
     pass`,

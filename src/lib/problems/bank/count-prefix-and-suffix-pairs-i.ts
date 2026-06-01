@@ -45,6 +45,9 @@ Return an integer denoting the **number of pairs** \`(i, j)\` such that \`i < j\
     javascript: `function countPrefixSuffixPairs(words) {
 
 }`,
+    typescript: `function countPrefixSuffixPairs(words: string[]): number {
+
+}`,
     python: `def countPrefixSuffixPairs(words):
     pass`,
   },

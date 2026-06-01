@@ -36,6 +36,7 @@ Return the sum of lengths of all good strings in \`words\`.`,
   params: ['words', 'chars'],
   starterCode: {
     javascript: 'function countCharacters(words, chars) {\n  \n}\n',
+    typescript: 'function countCharacters(words: string[], chars: string): number {\n  \n}\n',
     python: 'def countCharacters(words, chars):\n    pass\n',
   },
   visibleTests: [

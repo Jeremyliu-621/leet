@@ -45,6 +45,9 @@ A subarray of length 1 trivially qualifies (any constant difference works). A su
     javascript: `function longestArithmeticSubarray(nums) {
 
 }`,
+    typescript: `function longestArithmeticSubarray(nums: number[]): number {
+
+}`,
     python: `def longestArithmeticSubarray(nums):
     pass`,
   },

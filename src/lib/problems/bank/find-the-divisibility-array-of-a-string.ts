@@ -42,6 +42,9 @@ Return the divisibility array of \`word\`.`,
     javascript: `function findDivisibilityArray(word, m) {
 
 }`,
+    typescript: `function findDivisibilityArray(word: string, m: number): number[] {
+
+}`,
     python: `def findDivisibilityArray(word, m):
     pass`,
   },

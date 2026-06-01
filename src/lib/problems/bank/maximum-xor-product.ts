@@ -42,6 +42,9 @@ Note that \`XOR\` is the bitwise XOR operation.`,
     javascript: `function maximumXorProduct(a, b, n) {
 
 }`,
+    typescript: `function maximumXorProduct(a: number, b: number, n: number): number {
+
+}`,
     python: `def maximumXorProduct(a: int, b: int, n: int) -> int:
     pass`,
   },

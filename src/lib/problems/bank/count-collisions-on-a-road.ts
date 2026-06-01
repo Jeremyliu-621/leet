@@ -44,6 +44,9 @@ Return the total number of collisions.`,
     javascript: `function countCollisions(directions) {
 
 }`,
+    typescript: `function countCollisions(directions: string): number {
+
+}`,
     python: `def countCollisions(directions):
     pass`,
   },

@@ -44,6 +44,9 @@ Return the number of **possible** hidden sequences there are. If there are no po
   params: ['differences', 'lower', 'upper'],
   starterCode: {
     javascript: `function countHiddenSequences(differences, lower, upper) {\n\n}`,
+    typescript: `function countHiddenSequences(differences: number[], lower: number, upper: number): number {
+
+}`,
     python: `def countHiddenSequences(differences: list[int], lower: int, upper: int) -> int:\n    pass`,
   },
   visibleTests: [

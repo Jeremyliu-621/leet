@@ -37,6 +37,9 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countPairs(nums, k) {\n\n}`,
+    typescript: `function countPairs(nums: number[], k: number): number {
+
+}`,
     python: `def countPairs(nums: list[int], k: int) -> int:\n    pass`,
   },
   visibleTests: [

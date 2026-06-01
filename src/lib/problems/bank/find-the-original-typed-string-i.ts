@@ -42,6 +42,9 @@ Given a string \`word\`, which represents the **final** output displayed on Alic
     javascript: `function possibleStringCount(word) {
 
 }`,
+    typescript: `function possibleStringCount(word: string): number {
+
+}`,
     python: `def possibleStringCount(word):
     pass`,
   },

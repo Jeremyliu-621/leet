@@ -46,6 +46,9 @@ Return the **minimum possible sum** \`nums[i] + nums[j] + nums[k]\` for a mounta
     javascript: `function minimumSumOfMountainTripletsII(nums) {
 
 }`,
+    typescript: `function minimumSumOfMountainTripletsII(nums: number[]): number {
+
+}`,
     python: `def minimumSumOfMountainTripletsII(nums):
     pass`,
   },

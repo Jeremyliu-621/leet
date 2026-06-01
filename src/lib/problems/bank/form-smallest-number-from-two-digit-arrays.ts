@@ -40,6 +40,9 @@ export const problem: Problem = {
     javascript: `function minNumber(nums1, nums2) {
 
 }`,
+    typescript: `function minNumber(nums1: number[], nums2: number[]): number {
+
+}`,
     python: `def minNumber(nums1, nums2):
     pass`,
   },

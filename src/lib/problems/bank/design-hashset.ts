@@ -17,6 +17,23 @@ class MyHashSet {
 }
 `;
 
+const TS_PREAMBLE = `
+class MyHashSet {
+  constructor() {
+    // Your code here
+  }
+  add(key: number): void {
+    // Your code here
+  }
+  remove(key: number): void {
+    // Your code here
+  }
+  contains(key: number): boolean {
+    // Your code here
+  }
+}
+`;
+
 const PYTHON_PREAMBLE = `
 class MyHashSet:
     def __init__(self):
@@ -70,6 +87,7 @@ const set = new Array(1000001).fill(false);
   ],
   starterCode: {
     javascript: JS_PREAMBLE.trim(),
+    typescript: TS_PREAMBLE.trim(),
     python: PYTHON_PREAMBLE.trim(),
   },
   functionName: 'myHashSetRunner',

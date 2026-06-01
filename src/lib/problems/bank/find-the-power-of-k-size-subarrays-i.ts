@@ -43,6 +43,9 @@ Return an integer array \`results\` of size \`n - k + 1\`, where \`results[i]\` 
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function resultsArray(nums, k) {\n\n}`,
+    typescript: `function resultsArray(nums: number[], k: number): number[] {
+
+}`,
     python: `def resultsArray(nums: list[int], k: int) -> list[int]:\n    pass`,
   },
   visibleTests: [

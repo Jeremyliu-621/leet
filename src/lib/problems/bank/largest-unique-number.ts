@@ -36,6 +36,9 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: 'function largestUniqueNumber(nums) {\n  // your code here\n}\n',
+    typescript: `function largestUniqueNumber(nums: number[]): number {
+
+}`,
     python: 'def largestUniqueNumber(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

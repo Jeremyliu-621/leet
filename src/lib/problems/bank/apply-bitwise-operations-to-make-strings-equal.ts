@@ -45,6 +45,9 @@ Return \`true\` if you can make the string \`s\` equal to \`target\`, or \`false
 function makeStringsEqual(s, target) {
 
 }`,
+    typescript: `function makeStringsEqual(s: string, target: string): boolean {
+
+}`,
     python: `def makeStringsEqual(s: str, target: str) -> bool:
     pass
 `,

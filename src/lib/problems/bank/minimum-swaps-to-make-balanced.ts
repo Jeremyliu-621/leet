@@ -55,6 +55,9 @@ Return the **minimum** number of swaps to make \`s\` balanced.`,
 function minSwaps(s) {
 
 }`,
+    typescript: `function minSwaps(s: string): number {
+
+}`,
     python: `def minSwaps(s: str) -> int:
     `,
   },

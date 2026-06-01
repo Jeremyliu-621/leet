@@ -41,6 +41,9 @@ Return the **maximum** number of balls any one box contains.`,
     javascript: `function countBalls(lowLimit, highLimit) {
 
 }`,
+    typescript: `function countBalls(lowLimit: number, highLimit: number): number {
+
+}`,
     python: `def countBalls(lowLimit, highLimit):
     pass`,
   },

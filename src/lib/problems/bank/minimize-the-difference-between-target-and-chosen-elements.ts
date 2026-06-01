@@ -51,6 +51,9 @@ Return the **minimum absolute difference**.`,
 function minimizeTheDifference(mat, target) {
 
 }`,
+    typescript: `function minimizeTheDifference(mat: number[][], target: number): number {
+
+}`,
     python: `def minimizeTheDifference(mat: list[list[int]], target: int) -> int:
     `,
   },

@@ -44,6 +44,9 @@ A **submatrix** is any contiguous rectangular region of the matrix (at least 1×
     javascript: `function sumSubmatrixSums(matrix) {
   // your code here
 }`,
+    typescript: `function sumSubmatrixSums(matrix: number[][]): number {
+
+}`,
     python: `def sumSubmatrixSums(matrix):
     # your code here
     pass`,

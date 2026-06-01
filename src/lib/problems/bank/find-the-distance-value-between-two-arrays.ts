@@ -41,6 +41,9 @@ The **distance value** is the count of elements \`arr1[i]\` such that there is *
     javascript: `function findTheDistanceValue(arr1, arr2, d) {
 
 }`,
+    typescript: `function findTheDistanceValue(arr1: number[], arr2: number[], d: number): number {
+
+}`,
     python: `def findTheDistanceValue(arr1, arr2, d):
     pass`,
   },

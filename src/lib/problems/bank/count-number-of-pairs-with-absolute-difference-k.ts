@@ -41,6 +41,9 @@ export const problem: Problem = {
     javascript: `function countKDifference(nums, k) {
 
 }`,
+    typescript: `function countKDifference(nums: number[], k: number): number {
+
+}`,
     python: `def countKDifference(nums, k):
     pass`,
   },

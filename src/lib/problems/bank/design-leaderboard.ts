@@ -37,6 +37,9 @@ params = [[],[1,73],[2,56],[3,39],[4,51],[5,4],[1],[1],[2],[2,51],[3]]`,
     javascript: `function leaderboard(ops, params) {
 
 }`,
+    typescript: `function leaderboard(ops: string[], params: unknown[][]): unknown[] {
+
+}`,
     python: `def leaderboard(ops, params):
     pass`,
   },

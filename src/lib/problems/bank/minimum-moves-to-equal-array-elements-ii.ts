@@ -43,6 +43,9 @@ The test cases are designed so that the answer will fit in a **32-bit** integer.
 function minMoves2(nums) {
 
 }`,
+    typescript: `function minMoves2(nums: number[]): number {
+
+}`,
     python: `def minMoves2(nums: list[int]) -> int:
     `,
   },

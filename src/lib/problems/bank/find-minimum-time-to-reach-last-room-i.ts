@@ -43,6 +43,9 @@ Return the **minimum** time to reach the room \`(n - 1, m - 1)\`.
     javascript: `function minTimeToReach(moveTime) {
 
 }`,
+    typescript: `function minTimeToReach(moveTime: number[][]): number {
+
+}`,
     python: `def minTimeToReach(moveTime):
     pass`,
   },

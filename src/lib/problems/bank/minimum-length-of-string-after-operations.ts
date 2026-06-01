@@ -43,6 +43,9 @@ Return the **minimum possible length** of the resulting string after any number 
   params: ['s'],
   starterCode: {
     javascript: `function minimumLength(s) {\n\n}`,
+    typescript: `function minimumLength(s: string): number {
+
+}`,
     python: `def minimumLength(s: str) -> int:\n    pass`,
   },
   visibleTests: [

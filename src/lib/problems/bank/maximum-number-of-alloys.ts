@@ -48,6 +48,9 @@ You can only use **one machine** at a time. Return the **maximum number of alloy
     javascript: `function maxNumberOfAlloys(n, k, budget, composition, stock, cost) {
 
 }`,
+    typescript: `function maxNumberOfAlloys(n: number, k: number, budget: number, composition: number[][], stock: number[], cost: number[]): number {
+
+}`,
     python: `def maxNumberOfAlloys(n, k, budget, composition, stock, cost):
     pass`,
   },

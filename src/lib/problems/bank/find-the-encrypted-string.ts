@@ -35,6 +35,9 @@ Return the **encrypted string** by replacing each character \`word[i]\` with the
     javascript: `function getEncryptedString(word, k) {
 
 }`,
+    typescript: `function getEncryptedString(word: string, k: number): string {
+
+}`,
     python: `def getEncryptedString(word, k):
     pass`,
   },

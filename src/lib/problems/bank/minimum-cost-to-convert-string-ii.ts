@@ -48,6 +48,9 @@ Your goal is to convert \`source\` to \`target\`. Return the **minimum total cos
     javascript: `function minimumCost(source, target, original, changed, cost) {
 
 }`,
+    typescript: `function minimumCost(source: string, target: string, original: string[], changed: string[], cost: number[]): number {
+
+}`,
     python: `def minimumCost(source, target, original, changed, cost):
     pass`,
   },

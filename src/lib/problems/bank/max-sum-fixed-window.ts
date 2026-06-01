@@ -33,6 +33,9 @@ A subarray is a contiguous part of the array. You must consider every possible w
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function maxSumFixedWindow(nums, k) {\n  // your code here\n}\n',
+    typescript: `function maxSumFixedWindow(nums: number[], k: number): number {
+
+}`,
     python: 'def maxSumFixedWindow(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

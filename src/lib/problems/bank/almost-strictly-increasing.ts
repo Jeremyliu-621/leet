@@ -35,6 +35,9 @@ You may remove any single element, or remove nothing at all. An array with zero 
   params: ['nums'],
   starterCode: {
     javascript: 'function canBeStrictlyIncreasing(nums) {\n  // your code here\n}\n',
+    typescript: `function canBeStrictlyIncreasing(nums: number[]): boolean {
+
+}`,
     python: 'def canBeStrictlyIncreasing(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

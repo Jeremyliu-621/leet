@@ -45,6 +45,9 @@ The starting gene is assumed to be valid and need not be in the bank.`,
   const bankSet = new Set(Array.from(bank));
 }
 `,
+    typescript: `function minMutation(startGene: string, endGene: string, bank: string[]): number {
+
+}`,
     python: `def minMutation(startGene, endGene, bank):
     bank = list(bank.to_py() if hasattr(bank, 'to_py') else bank)
     # Return minimum mutations to reach endGene, or -1 if impossible

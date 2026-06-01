@@ -66,6 +66,9 @@ args = [[],[1,5],[1],[1,2],[2,6],[1],[1,2],[1]]`,
   return results;
 }
 `,
+    typescript: `function twitterRunner(ops: string[], args: unknown[][]): unknown[] {
+
+}`,
     python: `def twitterRunner(ops, args):
     results = [None]
     time = 0

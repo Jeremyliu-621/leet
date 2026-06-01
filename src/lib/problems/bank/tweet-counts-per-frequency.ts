@@ -91,6 +91,9 @@ class TweetCounts {
 
   }
 }`,
+    typescript: `function tweetCountsRunner(ops: string[], vals: string[][]): unknown[] {
+
+}`,
     python: `# tweetCountsRunner is pre-defined and calls your class below.
 class TweetCounts:
     def __init__(self):

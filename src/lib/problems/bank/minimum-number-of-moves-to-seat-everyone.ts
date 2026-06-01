@@ -43,6 +43,9 @@ Return the **minimum number of moves** required to move each student to a seat s
     javascript: `function minMovesToSeat(seats, students) {
 
 }`,
+    typescript: `function minMovesToSeat(seats: number[], students: number[]): number {
+
+}`,
     python: `def minMovesToSeat(seats, students):
     pass`,
   },

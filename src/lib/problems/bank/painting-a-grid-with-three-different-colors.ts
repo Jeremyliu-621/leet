@@ -41,6 +41,9 @@ Return the number of ways to paint the grid modulo \`10^9 + 7\`.`,
     javascript: `function colorTheGrid(m, n) {
 
 }`,
+    typescript: `function colorTheGrid(m: number, n: number): number {
+
+}`,
     python: `def colorTheGrid(m: int, n: int) -> int:
     pass`,
   },

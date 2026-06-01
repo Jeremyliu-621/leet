@@ -42,6 +42,9 @@ Return the **permutation difference** between \`s\` and \`t\`.`,
   params: ['s', 't'],
   starterCode: {
     javascript: `function findPermutationDifference(s, t) {\n\n}`,
+    typescript: `function findPermutationDifference(s: string, t: string): number {
+
+}`,
     python: `def findPermutationDifference(s: str, t: str) -> int:\n    pass`,
   },
   visibleTests: [

@@ -39,6 +39,9 @@ Given an integer \`num\`, return \`true\` if \`num\` equals the result of revers
     javascript: `function isSameAfterReversals(num) {
 
 }`,
+    typescript: `function isSameAfterReversals(num: number): boolean {
+
+}`,
     python: `def isSameAfterReversals(num):
     pass`,
   },

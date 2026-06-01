@@ -50,6 +50,9 @@ Find the \`k\`th **largest** value (1-indexed) of all the \`(a, b)\` coordinates
 function kthLargestValue(matrix, k) {
 
 }`,
+    typescript: `function kthLargestValue(matrix: number[][], k: number): number {
+
+}`,
     python: `def kthLargestValue(matrix: list[list[int]], k: int) -> int:
     `,
   },

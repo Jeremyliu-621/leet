@@ -46,6 +46,9 @@ Return \`true\` if it is possible to build the pyramid all the way to the apex, 
     javascript: `function pyramidTransition(bottom, allowed) {
 
 }`,
+    typescript: `function pyramidTransition(bottom: string, allowed: string[]): boolean {
+
+}`,
     python: `def pyramidTransition(bottom: str, allowed: list[str]) -> bool:
     pass`,
   },

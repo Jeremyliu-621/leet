@@ -35,6 +35,9 @@ You must write an algorithm with \`O(log n)\` runtime complexity.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function search(nums, target) {\n\n}`,
+    typescript: `function search(nums: number[], target: number): number {
+
+}`,
     python: `def search(nums: list[int], target: int) -> int:\n    pass`,
   },
   visibleTests: [

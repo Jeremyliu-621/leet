@@ -47,6 +47,9 @@ Return a list of all high-access employees in any order.`,
   params: ['accessTimes'],
   starterCode: {
     javascript: 'function findHighAccessEmployees(accessTimes) {\n  // your code here\n}\n',
+    typescript: `function findHighAccessEmployees(accessTimes: string[][]): string[] {
+
+}`,
     python: 'def findHighAccessEmployees(accessTimes):\n    # your code here\n    pass\n',
   },
   visibleTests: [

@@ -40,6 +40,9 @@ Return the **minimum** sum of the areas of these three rectangles. Each rectangl
     javascript: `function minimumSumOfAreas(grid) {
   // your code here
 }`,
+    typescript: `function minimumSumOfAreas(grid: number[][]): number {
+
+}`,
     python: `def minimumSumOfAreas(grid):
     # your code here
     pass`,

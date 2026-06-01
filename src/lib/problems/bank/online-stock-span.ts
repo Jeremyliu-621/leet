@@ -55,6 +55,16 @@ class StockSpanner {
 
   }
 }`,
+    typescript: `// stockSpannerRunner is pre-defined and calls your class below.
+class StockSpanner {
+  constructor() {
+
+  }
+
+  next(price: number): number {
+
+  }
+}`,
     python: `# stockSpannerRunner is pre-defined and calls your class below.
 class StockSpanner:
     def __init__(self):

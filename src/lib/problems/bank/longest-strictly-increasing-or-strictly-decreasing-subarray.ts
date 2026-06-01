@@ -38,6 +38,9 @@ export const problem: Problem = {
     javascript: `function longestMonotonicSubarray(nums) {
 
 }`,
+    typescript: `function longestMonotonicSubarray(nums: number[]): number {
+
+}`,
     python: `def longestMonotonicSubarray(nums):
     pass`,
   },

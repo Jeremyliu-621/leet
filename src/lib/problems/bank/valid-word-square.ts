@@ -49,6 +49,9 @@ The 0th row and 0th column both read \`"abcd"\`, the 1st row and 1st column both
   params: ['words'],
   starterCode: {
     javascript: `function validWordSquare(words) {\n\n}`,
+    typescript: `function validWordSquare(words: string[]): boolean {
+
+}`,
     python: `def validWordSquare(words: list[str]) -> bool:\n    pass`,
   },
   visibleTests: [

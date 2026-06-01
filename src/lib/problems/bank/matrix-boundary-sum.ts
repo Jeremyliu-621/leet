@@ -41,6 +41,9 @@ Boundary sum = 1+2+3+4+6+7+8+9 = **40**.`,
   params: ['grid'],
   starterCode: {
     javascript: 'function matrixBoundarySum(grid) {\n  // your code here\n}\n',
+    typescript: `function matrixBoundarySum(grid: number[][]): number {
+
+}`,
     python: 'def matrixBoundarySum(grid):\n    # your code here\n    pass\n',
   },
   visibleTests: [

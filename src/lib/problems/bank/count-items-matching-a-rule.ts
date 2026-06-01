@@ -41,6 +41,9 @@ Return *the number of items that match the given rule*.`,
   params: ['items', 'ruleKey', 'ruleValue'],
   starterCode: {
     javascript: `function countMatches(items, ruleKey, ruleValue) {\n\n}`,
+    typescript: `function countMatches(items: string[][], ruleKey: string, ruleValue: string): number {
+
+}`,
     python: `def countMatches(items, ruleKey: str, ruleValue: str) -> int:\n    pass`,
   },
   visibleTests: [

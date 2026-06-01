@@ -46,6 +46,9 @@ Return the friends who **never** received the ball (in ascending order).`,
     javascript: `function circularGameLosers(n, k) {
 
 }`,
+    typescript: `function circularGameLosers(n: number, k: number): number[] {
+
+}`,
     python: `def circularGameLosers(n, k):
     pass`,
   },

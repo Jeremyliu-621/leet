@@ -41,6 +41,9 @@ Return an array of the collected values in order.`,
   params: ['grid'],
   starterCode: {
     javascript: `function zigzagTraversal(grid) {\n\n}`,
+    typescript: `function zigzagTraversal(grid: number[][]): number[] {
+
+}`,
     python: `def zigzagTraversal(grid: list[list[int]]) -> list[int]:\n    pass`,
   },
   visibleTests: [

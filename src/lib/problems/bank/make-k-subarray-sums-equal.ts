@@ -44,6 +44,9 @@ Return the **minimum** number of operations to make the sum of every **subarray*
     javascript: `function makeSubKSumEqual(arr, k) {
 
 }`,
+    typescript: `function makeSubKSumEqual(arr: number[], k: number): number {
+
+}`,
     python: `def makeSubKSumEqual(arr, k):
     pass`,
   },

@@ -44,6 +44,9 @@ Return the **minimum** number of flips required to make **either** all rows pali
     javascript: `function minFlips(grid) {
 
 }`,
+    typescript: `function minFlips(grid: number[][]): number {
+
+}`,
     python: `def minFlips(grid):
     pass`,
   },

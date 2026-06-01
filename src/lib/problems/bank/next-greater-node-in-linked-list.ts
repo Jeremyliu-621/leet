@@ -53,6 +53,9 @@ return res;\`\`\``,
     javascript: `function nextLargerNodes(head) {
 
 }`,
+    typescript: `function nextLargerNodes(head: number[]): number[] {
+
+}`,
     python: `def nextLargerNodes(head):
     pass`,
   },

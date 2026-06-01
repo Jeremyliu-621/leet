@@ -51,6 +51,9 @@ args = [[],[10],[2,10],[1,10],[3,10],[5,10],[10],[1],[2],[3]]`,
   }
   return results;
 }`,
+    typescript: `function numberContainers(operations: string[], args: unknown[][]): unknown[] {
+
+}`,
     python: `def numberContainers(operations, args):
     import bisect
     results = [None]

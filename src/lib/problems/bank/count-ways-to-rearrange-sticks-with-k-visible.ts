@@ -46,6 +46,9 @@ Given the two integers \`n\` and \`k\`, return the **number of such arrangements
 function rearrangeSticks(n, k) {
 
 }`,
+    typescript: `function rearrangeSticks(n: number, k: number): number {
+
+}`,
     python: `def rearrangeSticks(n: int, k: int) -> int:
     `,
   },

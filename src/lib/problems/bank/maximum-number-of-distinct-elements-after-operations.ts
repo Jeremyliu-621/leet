@@ -43,6 +43,9 @@ Return the **maximum** number of **distinct** values in \`nums\` after performin
     javascript: `function maxDistinctElements(nums, k) {
 
 }`,
+    typescript: `function maxDistinctElements(nums: number[], k: number): number {
+
+}`,
     python: `def maxDistinctElements(nums, k):
     pass`,
   },

@@ -43,6 +43,9 @@ next(2): only 1 five remains, can\\'t exhaust 2 → returns -1.`,
     javascript: `function rleIterator(ops, params) {
 
 }`,
+    typescript: `function rleIterator(ops: string[], params: number[][][]): unknown[] {
+
+}`,
     python: `def rleIterator(ops, params):
     pass`,
   },

@@ -37,6 +37,9 @@ For example, \`s = "abcdef"\` and \`t = "bcdf"\` share the substring \`"bcd"\` (
   params: ['s', 't'],
   starterCode: {
     javascript: 'function longestCommonSubstring(s, t) {\n  // your code here\n}\n',
+    typescript: `function longestCommonSubstring(s: string, t: string): number {
+
+}`,
     python: 'def longestCommonSubstring(s, t):\n    # your code here\n    pass\n',
   },
   visibleTests: [

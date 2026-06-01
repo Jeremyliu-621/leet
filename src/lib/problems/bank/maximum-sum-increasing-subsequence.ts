@@ -41,6 +41,9 @@ Every single element by itself is a valid subsequence.`,
   params: ['nums'],
   starterCode: {
     javascript: 'function maxSumIncreasingSubseq(nums) {\n  // your code here\n}\n',
+    typescript: `function maxSumIncreasingSubseq(nums: number[]): number {
+
+}`,
     python: 'def maxSumIncreasingSubseq(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

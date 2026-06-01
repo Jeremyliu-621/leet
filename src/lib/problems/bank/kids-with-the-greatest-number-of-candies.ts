@@ -42,6 +42,9 @@ Note that **multiple** kids can have the **greatest** number of candies.`,
   params: ['candies', 'extraCandies'],
   starterCode: {
     javascript: `function kidsWithCandies(candies, extraCandies) {\n\n}`,
+    typescript: `function kidsWithCandies(candies: number[], extraCandies: number): boolean[] {
+
+}`,
     python: `def kidsWithCandies(candies, extraCandies: int):\n    pass`,
   },
   visibleTests: [

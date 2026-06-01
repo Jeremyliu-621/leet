@@ -44,6 +44,9 @@ The **Manhattan distance** from the origin is \`|x| + |y|\`.`,
     javascript: `function maxDistance(s) {
 
 }`,
+    typescript: `function maxDistance(s: string): number {
+
+}`,
     python: `def maxDistance(s):
     pass`,
   },

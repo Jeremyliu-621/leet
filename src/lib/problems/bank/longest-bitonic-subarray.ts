@@ -41,6 +41,9 @@ The bitonic length centered at index \`i\` is \`inc[i] + dec[i] - 1\`. Return th
   params: ['nums'],
   starterCode: {
     javascript: 'function longestBitonicSubarray(nums) {\n  // your code here\n}\n',
+    typescript: `function longestBitonicSubarray(nums: number[]): number {
+
+}`,
     python: 'def longestBitonicSubarray(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [

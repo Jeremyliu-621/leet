@@ -44,6 +44,9 @@ Return the total number of such subarrays.`,
     javascript: `function countBalancedSubarrays(nums) {
 
 }`,
+    typescript: `function countBalancedSubarrays(nums: number[]): number {
+
+}`,
     python: `def countBalancedSubarrays(nums):
     pass`,
   },

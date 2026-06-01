@@ -42,6 +42,9 @@ The string \`s\` is considered an acronym of \`words\` if it can be formed by co
     javascript: `function isAcronym(words, s) {
 
 }`,
+    typescript: `function isAcronym(words: string[], s: string): boolean {
+
+}`,
     python: `def isAcronym(words, s):
     pass`,
   },

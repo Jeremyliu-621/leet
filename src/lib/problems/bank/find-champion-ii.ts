@@ -46,6 +46,9 @@ Return the team that will be the **champion** of the tournament if there is a **
     javascript: `function findChampion(n, edges) {
 
 }`,
+    typescript: `function findChampion(n: number, edges: number[][]): number {
+
+}`,
     python: `def findChampion(n, edges):
     pass`,
   },

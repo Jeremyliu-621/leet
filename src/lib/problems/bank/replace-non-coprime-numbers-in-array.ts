@@ -41,6 +41,9 @@ Return the final array after **all** such replacements. The final array is guara
     javascript: `function replaceNonCoprimes(nums) {
   // your code here
 }`,
+    typescript: `function replaceNonCoprimes(nums: number[]): number[] {
+
+}`,
     python: `def replaceNonCoprimes(nums):
     # your code here
     pass`,

@@ -44,6 +44,9 @@ Return the lexicographically largest string that could be in the box after all r
   params: ['word', 'numFriends'],
   starterCode: {
     javascript: 'function answerString(word, numFriends) {\n  // your code here\n}\n',
+    typescript: `function answerString(word: string, numFriends: number): string {
+
+}`,
     python: 'def answerString(word, numFriends):\n    # your code here\n    pass\n',
   },
   visibleTests: [

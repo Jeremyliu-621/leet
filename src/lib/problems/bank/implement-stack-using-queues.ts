@@ -92,6 +92,27 @@ def myStackRunner(ops, vals):
     // Returns whether the stack is empty
   }
 }`,
+    typescript: `class MyStack {
+  constructor() {
+    // Initialize your data structure here
+  }
+
+  push(x: number): void {
+    // Push element x onto stack
+  }
+
+  pop(): number {
+    // Removes the element on top of the stack and returns it
+  }
+
+  top(): number {
+    // Get the top element
+  }
+
+  empty(): boolean {
+    // Returns whether the stack is empty
+  }
+}`,
     python: `class MyStack:
     def __init__(self):
         # Initialize your data structure here

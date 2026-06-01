@@ -48,6 +48,9 @@ Given an integer array \`machines\` representing the number of dresses in each w
 function findMinMoves(machines) {
 
 }`,
+    typescript: `function findMinMoves(machines: number[]): number {
+
+}`,
     python: `def findMinMoves(machines: list[int]) -> int:
     `,
   },

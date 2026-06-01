@@ -131,6 +131,9 @@ Trees are represented as BFS level-order arrays where \`null\` marks a missing c
 function removeLeafNodes(root, target) {
 
 }`,
+    typescript: `function removeLeafNodesRunner(root: number[], target: number): number[] {
+
+}`,
     python: `# TreeNode is pre-defined. removeLeafNodesRunner wraps your function.
 def removeLeafNodes(root, target):
     pass`,

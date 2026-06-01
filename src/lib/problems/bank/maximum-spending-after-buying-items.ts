@@ -47,6 +47,9 @@ You must buy every item across all shops. Return the **maximum** total spending 
     javascript: `function maxSpending(values) {
 
 }`,
+    typescript: `function maxSpending(values: number[][]): number {
+
+}`,
     python: `def maxSpending(values: list[list[int]]) -> int:
     pass`,
   },

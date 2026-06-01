@@ -43,6 +43,9 @@ Return \`true\` if such cuts exist, \`false\` otherwise.`,
   params: ['n', 'rectangles'],
   starterCode: {
     javascript: `function checkValidCuts(n, rectangles) {\n\n}`,
+    typescript: `function checkValidCuts(n: number, rectangles: number[][]): boolean {
+
+}`,
     python: `def checkValidCuts(n: int, rectangles: list[list[int]]) -> bool:\n    pass`,
   },
   visibleTests: [

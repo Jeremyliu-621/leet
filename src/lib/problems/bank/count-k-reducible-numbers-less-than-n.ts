@@ -51,6 +51,9 @@ Return the number of positive integers **strictly less than** \`N\` that are k-r
     javascript: `function countKReducibleNumbers(s, k) {
   // your code here
 }`,
+    typescript: `function countKReducibleNumbers(s: string, k: number): number {
+
+}`,
     python: `def countKReducibleNumbers(s, k):
     # your code here
     pass`,

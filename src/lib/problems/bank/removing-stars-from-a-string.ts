@@ -45,6 +45,9 @@ It is guaranteed that the operation is always possible, and the result will alwa
     javascript: `function removeStars(s) {
 
 }`,
+    typescript: `function removeStars(s: string): string {
+
+}`,
     python: `def removeStars(s):
     pass`,
   },

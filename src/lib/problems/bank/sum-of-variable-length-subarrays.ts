@@ -37,6 +37,9 @@ Return the **total sum** of all elements in every subarray defined this way.`,
   params: ['nums'],
   starterCode: {
     javascript: `function subarraySum(nums) {\n\n}`,
+    typescript: `function subarraySum(nums: number[]): number {
+
+}`,
     python: `def subarraySum(nums: list[int]) -> int:\n    pass`,
   },
   visibleTests: [

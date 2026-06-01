@@ -39,6 +39,9 @@ export const problem: Problem = {
     javascript: `function countPairs(nums, target) {
 
 }`,
+    typescript: `function countPairs(nums: number[], target: number): number {
+
+}`,
     python: `def countPairs(nums, target):
     pass`,
   },

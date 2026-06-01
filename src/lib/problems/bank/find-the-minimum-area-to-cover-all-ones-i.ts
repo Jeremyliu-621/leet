@@ -40,6 +40,9 @@ Return the **minimum** possible area of the rectangle.`,
 function minimumArea(grid) {
 
 }`,
+    typescript: `function minimumArea(grid: number[][]): number {
+
+}`,
     python: `def minimumArea(grid: list[list[int]]) -> int:
     pass
 `,

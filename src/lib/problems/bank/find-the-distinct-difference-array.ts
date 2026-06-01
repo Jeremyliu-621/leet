@@ -38,6 +38,9 @@ Return the **distinct difference** array of \`nums\`.
   params: ['nums'],
   starterCode: {
     javascript: `function distinctDifferenceArray(nums) {\n\n}`,
+    typescript: `function distinctDifferenceArray(nums: number[]): number[] {
+
+}`,
     python: `def distinctDifferenceArray(nums: list[int]) -> list[int]:\n    pass`,
   },
   visibleTests: [

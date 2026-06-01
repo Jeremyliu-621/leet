@@ -43,6 +43,9 @@ Return the **maximum** score after exactly \`k\` operations.`,
     javascript: `function maximizeSum(nums, k) {
 
 }`,
+    typescript: `function maximizeSum(nums: number[], k: number): number {
+
+}`,
     python: `def maximizeSum(nums, k):
     pass`,
   },

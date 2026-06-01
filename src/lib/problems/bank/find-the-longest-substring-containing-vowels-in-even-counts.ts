@@ -43,6 +43,9 @@ export const problem: Problem = {
 function findTheLongestSubstring(s) {
 
 }`,
+    typescript: `function findTheLongestSubstring(s: string): number {
+
+}`,
     python: `def findTheLongestSubstring(s: str) -> int:
     `,
   },

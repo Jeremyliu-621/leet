@@ -50,6 +50,9 @@ For example, \`"2"\`, \`"0089"\`, \`"-0.1"\`, \`"+3.14"\`, \`"4."\`, \`"-.9"\`, 
 function isNumber(s) {
 
 }`,
+    typescript: `function isNumber(s: string): boolean {
+
+}`,
     python: `def isNumber(s: str) -> bool:
     `,
   },

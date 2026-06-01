@@ -43,6 +43,9 @@ Return the **binary representation** of \`date\`.`,
     javascript: `function convertDateToBinary(date) {
 
 }`,
+    typescript: `function convertDateToBinary(date: string): string {
+
+}`,
     python: `def convertDateToBinary(date):
     pass`,
   },

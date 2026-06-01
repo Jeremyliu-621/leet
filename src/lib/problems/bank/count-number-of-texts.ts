@@ -44,6 +44,9 @@ Given a string \`pressedKeys\` representing Alice's key presses, return the **to
     javascript: `function countTexts(pressedKeys) {
 
 }`,
+    typescript: `function countTexts(pressedKeys: string): number {
+
+}`,
     python: `def countTexts(pressedKeys):
     pass`,
   },

@@ -41,6 +41,9 @@ Return the **lexicographically smallest** string you can make after applying the
 function orderlyQueue(s, k) {
 
 }`,
+    typescript: `function orderlyQueue(s: string, k: number): string {
+
+}`,
     python: `def orderlyQueue(s: str, k: int) -> str:
     `,
   },

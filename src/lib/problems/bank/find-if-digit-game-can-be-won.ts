@@ -42,6 +42,9 @@ Return \`true\` if Alice can win, and \`false\` otherwise.`,
     javascript: `function canAliceWin(nums) {
 
 }`,
+    typescript: `function canAliceWin(nums: number[]): boolean {
+
+}`,
     python: `def canAliceWin(nums):
     pass`,
   },

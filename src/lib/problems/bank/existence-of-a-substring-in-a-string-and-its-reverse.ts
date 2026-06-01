@@ -38,6 +38,9 @@ A **substring** is a contiguous non-empty sequence of characters within a string
   params: ['s'],
   starterCode: {
     javascript: `function isSubstringPresent(s) {\n\n}`,
+    typescript: `function isSubstringPresent(s: string): boolean {
+
+}`,
     python: `def isSubstringPresent(s: str) -> bool:\n    pass`,
   },
   visibleTests: [

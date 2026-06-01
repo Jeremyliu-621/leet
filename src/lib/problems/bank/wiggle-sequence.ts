@@ -43,6 +43,9 @@ Given an integer array \`nums\`, return the length of the **longest wiggle subse
   params: ['nums'],
   starterCode: {
     javascript: `function wiggleMaxLength(nums) {\n\n}`,
+    typescript: `function wiggleMaxLength(nums: number[]): number {
+
+}`,
     python: `def wiggleMaxLength(nums: list[int]) -> int:\n    pass`,
   },
   visibleTests: [

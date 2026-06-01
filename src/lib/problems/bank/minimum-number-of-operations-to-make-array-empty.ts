@@ -40,6 +40,9 @@ Return the **minimum** number of operations to empty the array, or \`-1\` if it 
     javascript: `function minOperations(nums) {
 
 }`,
+    typescript: `function minOperations(nums: number[]): number {
+
+}`,
     python: `def minOperations(nums):
     pass`,
   },

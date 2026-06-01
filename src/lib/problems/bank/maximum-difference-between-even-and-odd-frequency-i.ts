@@ -46,6 +46,9 @@ Return this **maximum** difference. It is guaranteed that there exists at least 
     javascript: `function maxDifference(s) {
 
 }`,
+    typescript: `function maxDifference(s: string): number {
+
+}`,
     python: `def maxDifference(s):
     pass`,
   },

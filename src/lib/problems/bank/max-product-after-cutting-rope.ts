@@ -41,6 +41,9 @@ You must make at least one cut, so you cannot keep the rope whole.
     javascript: `function cuttingRope(n) {
 
 }`,
+    typescript: `function cuttingRope(n: number): number {
+
+}`,
     python: `def cuttingRope(n):
     pass`,
   },

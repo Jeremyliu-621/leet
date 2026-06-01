@@ -48,6 +48,9 @@ Two submatrices are different if they have some coordinate that is different.`,
 function numSubmatrixSumTarget(matrix, target) {
 
 }`,
+    typescript: `function numSubmatrixSumTarget(matrix: number[][], target: number): number {
+
+}`,
     python: `def numSubmatrixSumTarget(matrix: list[list[int]], target: int) -> int:
     `,
   },

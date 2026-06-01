@@ -38,6 +38,9 @@ If no such substring exists, return \`-1\`.`,
   params: ['s'],
   starterCode: {
     javascript: 'function minWindowAllVowels(s) {\n  // your code here\n}\n',
+    typescript: `function minWindowAllVowels(s: string): number {
+
+}`,
     python: 'def minWindowAllVowels(s):\n    # your code here\n    pass\n',
   },
   visibleTests: [

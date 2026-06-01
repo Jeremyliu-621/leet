@@ -49,6 +49,9 @@ Return all element counts as a single string: element names in **sorted alphabet
 
 }
 `,
+    typescript: `function countOfAtoms(formula: string): string {
+
+}`,
     python: `def countOfAtoms(formula):
     pass
 `,

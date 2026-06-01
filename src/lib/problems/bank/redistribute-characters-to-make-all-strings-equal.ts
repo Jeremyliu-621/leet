@@ -34,6 +34,9 @@ export const problem: Problem = {
     javascript: `function makeEqual(words) {
 
 }`,
+    typescript: `function makeEqual(words: string[]): boolean {
+
+}`,
     python: `def makeEqual(words):
     pass`,
   },

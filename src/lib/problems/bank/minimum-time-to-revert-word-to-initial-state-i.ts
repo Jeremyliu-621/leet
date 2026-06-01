@@ -48,6 +48,9 @@ Return the **minimum** time greater than zero required for \`word\` to revert to
     javascript: `function minimumTimeToInitialState(word, k) {
 
 }`,
+    typescript: `function minimumTimeToInitialState(word: string, k: number): number {
+
+}`,
     python: `def minimumTimeToInitialState(word, k):
     pass`,
   },

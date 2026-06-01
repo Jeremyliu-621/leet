@@ -41,6 +41,9 @@ A subarray is **strictly increasing** if each element is strictly greater than t
   params: ['nums', 'k'],
   starterCode: {
     javascript: 'function hasIncreasingSubarrays(nums, k) {\n  // your code here\n}\n',
+    typescript: `function hasIncreasingSubarrays(nums: number[], k: number): boolean {
+
+}`,
     python: 'def hasIncreasingSubarrays(nums, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

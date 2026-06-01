@@ -43,6 +43,9 @@ It is guaranteed that a valid answer exists.`,
     javascript: `function findDifferentBinaryString(nums) {
 
 }`,
+    typescript: `function findDifferentBinaryString(nums: string[]): string {
+
+}`,
     python: `def findDifferentBinaryString(nums):
     pass`,
   },

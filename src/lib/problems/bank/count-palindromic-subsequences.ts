@@ -39,6 +39,9 @@ A string is **palindromic** if it reads the same forward and backward.`,
     javascript: `function countPalindromes(s) {
 
 }`,
+    typescript: `function countPalindromes(s: string): number {
+
+}`,
     python: `def countPalindromes(s):
     pass`,
   },

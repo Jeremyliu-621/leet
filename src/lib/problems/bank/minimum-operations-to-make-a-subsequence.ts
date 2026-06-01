@@ -40,6 +40,9 @@ A subsequence of an array is a new array generated from the original array by de
     javascript: `function minOperations(target, arr) {
   // your code here
 }`,
+    typescript: `function minOperations(target: number[], arr: number[]): number {
+
+}`,
     python: `def minOperations(target, arr):
     # your code here
     pass`,

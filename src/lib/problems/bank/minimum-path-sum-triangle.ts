@@ -43,6 +43,9 @@ At each step you may move to an **adjacent number** on the row below — i.e., f
     javascript: `function minimumTotal(triangle) {
 
 }`,
+    typescript: `function minimumTotal(triangle: number[][]): number {
+
+}`,
     python: `def minimumTotal(triangle):
     pass`,
   },

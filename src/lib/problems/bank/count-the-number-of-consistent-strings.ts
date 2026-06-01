@@ -43,6 +43,9 @@ Return the number of **consistent** strings in the array \`words\`.`,
     javascript: `function countConsistentStrings(allowed, words) {
 
 }`,
+    typescript: `function countConsistentStrings(allowed: string, words: string[]): number {
+
+}`,
     python: `def countConsistentStrings(allowed, words):
     pass`,
   },

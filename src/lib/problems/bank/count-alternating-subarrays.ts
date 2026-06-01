@@ -42,6 +42,9 @@ Return the number of alternating subarrays in \`nums\`.`,
     javascript: `function countAlternatingSubarrays(nums) {
 
 }`,
+    typescript: `function countAlternatingSubarrays(nums: number[]): number {
+
+}`,
     python: `def countAlternatingSubarrays(nums):
     pass`,
   },

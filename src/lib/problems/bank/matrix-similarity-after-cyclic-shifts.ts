@@ -42,6 +42,9 @@ Return \`true\` if the final matrix equals the initial matrix, \`false\` otherwi
     javascript: `function areSimilar(mat, k) {
 
 }`,
+    typescript: `function areSimilar(mat: number[][], k: number): boolean {
+
+}`,
     python: `def areSimilar(mat: list[list[int]], k: int) -> bool:
     `,
   },

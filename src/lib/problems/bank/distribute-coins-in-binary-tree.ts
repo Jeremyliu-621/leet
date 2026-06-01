@@ -114,6 +114,9 @@ function distributeCoinsBT(root) {
 
 }
 `,
+    typescript: `function distributeCoinsRunner(vals: number[]): number {
+
+}`,
     python: `# TreeNode class and distributeCoinsRunner wrapper are pre-defined.
 # Implement the function below:
 def distribute_coins_bt(root):

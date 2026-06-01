@@ -45,6 +45,9 @@ Return the number of good binary strings modulo \`10^9 + 7\`.`,
     javascript: `function countGoodStrings(low, high, zero, one) {
 
 }`,
+    typescript: `function countGoodStrings(low: number, high: number, zero: number, one: number): number {
+
+}`,
     python: `def countGoodStrings(low: int, high: int, zero: int, one: int) -> int:
     pass`,
   },

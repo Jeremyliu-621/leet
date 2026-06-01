@@ -45,6 +45,9 @@ Return \`true\` if it is possible to rearrange the substrings of \`s\` such that
   params: ['s', 't', 'k'],
   starterCode: {
     javascript: 'function isPossibleToRearrange(s, t, k) {\n  // your code here\n}\n',
+    typescript: `function isPossibleToRearrange(s: string, t: string, k: number): boolean {
+
+}`,
     python: 'def isPossibleToRearrange(s, t, k):\n    # your code here\n    pass\n',
   },
   visibleTests: [

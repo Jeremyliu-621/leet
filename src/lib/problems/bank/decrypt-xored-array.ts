@@ -39,6 +39,9 @@ Return *the original array* \`arr\`. It can be proved that the answer exists and
   params: ['encoded', 'first'],
   starterCode: {
     javascript: `function decode(encoded, first) {\n\n}`,
+    typescript: `function decode(encoded: number[], first: number): number[] {
+
+}`,
     python: `def decode(encoded, first):\n    pass`,
   },
   visibleTests: [

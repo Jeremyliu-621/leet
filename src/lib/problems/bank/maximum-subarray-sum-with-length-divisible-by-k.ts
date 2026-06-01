@@ -39,6 +39,9 @@ export const problem: Problem = {
     javascript: `function maximumSubarraySum(nums, k) {
 
 }`,
+    typescript: `function maximumSubarraySum(nums: number[], k: number): number {
+
+}`,
     python: `def maximumSubarraySum(nums, k):
     pass`,
   },

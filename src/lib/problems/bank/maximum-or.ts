@@ -41,6 +41,9 @@ Return the **maximum** possible value of \`nums[0] OR nums[1] OR ... OR nums[n -
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximumOr(nums, k) {\n\n}`,
+    typescript: `function maximumOr(nums: number[], k: number): number {
+
+}`,
     python: `def maximumOr(nums, k):\n    pass`,
   },
   visibleTests: [

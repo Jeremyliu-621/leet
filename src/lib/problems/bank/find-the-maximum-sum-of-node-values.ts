@@ -47,6 +47,9 @@ Return the **maximum possible sum** of the values \`nums\` after performing any 
     javascript: `function maximumValueSum(nums, k, edges) {
 
 }`,
+    typescript: `function maximumValueSum(nums: number[], k: number, edges: number[][]): number {
+
+}`,
     python: `def maximumValueSum(nums, k, edges):
     pass`,
   },

@@ -39,6 +39,9 @@ That is, return \`l XOR (l+1) XOR ... XOR r\`.`,
     javascript: `function xorQuery(l, r) {
 
 }`,
+    typescript: `function xorQuery(l: number, r: number): number {
+
+}`,
     python: `def xorQuery(l, r):
     pass`,
   },

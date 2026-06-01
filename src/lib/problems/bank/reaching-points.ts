@@ -47,6 +47,9 @@ The allowed operation is: from some point \`(x, y)\`, you can move to either \`(
 function reachingPoints(sx, sy, tx, ty) {
 
 }`,
+    typescript: `function reachingPoints(sx: number, sy: number, tx: number, ty: number): boolean {
+
+}`,
     python: `def reachingPoints(sx: int, sy: int, tx: int, ty: int) -> bool:
     `,
   },

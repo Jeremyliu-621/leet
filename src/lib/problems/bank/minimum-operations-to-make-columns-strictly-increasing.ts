@@ -43,6 +43,9 @@ Return the **minimum** number of operations needed to make **all columns** of \`
     javascript: `function minimumOperations(grid) {
 
 }`,
+    typescript: `function minimumOperations(grid: number[][]): number {
+
+}`,
     python: `def minimumOperations(grid):
     pass`,
   },

@@ -45,6 +45,9 @@ Return any **valid alternating subsequence** from \`words\`. It can be shown tha
     javascript: `function getLongestSubsequence(words, groups) {
 
 }`,
+    typescript: `function getLongestSubsequence(words: string[], groups: number[]): string[] {
+
+}`,
     python: `def getLongestSubsequence(words, groups):
     pass`,
   },

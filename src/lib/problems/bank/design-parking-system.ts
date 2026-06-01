@@ -12,6 +12,18 @@ class ParkingSystem {
 }
 `;
 
+const TS_PREAMBLE = `
+class ParkingSystem {
+  constructor(big: number, medium: number, small: number) {
+    // Your code here
+  }
+  addCar(carType: number): boolean {
+    // carType: 1 = big, 2 = medium, 3 = small
+    // Return true if there is space; false otherwise
+  }
+}
+`;
+
 const PYTHON_PREAMBLE = `
 class ParkingSystem:
     def __init__(self, big: int, medium: int, small: int):
@@ -56,6 +68,7 @@ const spots = [0, big, medium, small];
   ],
   starterCode: {
     javascript: JS_PREAMBLE.trim(),
+    typescript: TS_PREAMBLE.trim(),
     python: PYTHON_PREAMBLE.trim(),
   },
   functionName: 'parkingSystemRunner',

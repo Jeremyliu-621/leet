@@ -35,6 +35,9 @@ Formally, \`result[i] = sum(|i - j|)\` for all \`j\` such that \`arr[i] == arr[j
   params: ['arr'],
   starterCode: {
     javascript: `function distance(arr) {\n\n}`,
+    typescript: `function distance(arr: number[]): number[] {
+
+}`,
     python: `def distance(arr):\n    pass`,
   },
   visibleTests: [

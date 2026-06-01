@@ -46,6 +46,9 @@ Return the length of the **longest** common prefix among all pairs. If no common
     javascript: `function longestCommonPrefix(arr1, arr2) {
 
 }`,
+    typescript: `function longestCommonPrefix(arr1: number[], arr2: number[]): number {
+
+}`,
     python: `def longestCommonPrefix(arr1, arr2):
     pass`,
   },

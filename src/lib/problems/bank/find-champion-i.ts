@@ -45,6 +45,9 @@ Return the champion of the tournament. It is guaranteed that there is **exactly 
     javascript: `function findChampion(grid) {
 
 }`,
+    typescript: `function findChampion(grid: number[][]): number {
+
+}`,
     python: `def findChampion(grid):
     pass`,
   },

@@ -47,6 +47,9 @@ Return the **maximum total cost** achievable.`,
 function maximumTotalCost(nums) {
 
 }`,
+    typescript: `function maximumTotalCost(nums: number[]): number {
+
+}`,
     python: `def maximumTotalCost(nums: list[int]) -> int:
     pass
 `,

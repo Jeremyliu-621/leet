@@ -43,6 +43,9 @@ Return the \`k\` values sorted by strength descending (ties broken by larger val
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function getStrongest(nums, k) {\n\n}`,
+    typescript: `function getStrongest(nums: number[], k: number): number[] {
+
+}`,
     python: `def getStrongest(nums: list[int], k: int) -> list[int]:\n    pass`,
   },
   visibleTests: [

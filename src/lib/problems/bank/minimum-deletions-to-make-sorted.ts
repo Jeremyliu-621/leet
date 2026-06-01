@@ -37,6 +37,9 @@ You may use an O(n log n) approach using binary search on a \`tails\` array (pat
   params: ['nums'],
   starterCode: {
     javascript: 'function minDeletionsToSort(nums) {\n  // your code here\n}\n',
+    typescript: `function minDeletionsToSort(nums: number[]): number {
+
+}`,
     python: 'def minDeletionsToSort(nums):\n    # your code here\n    pass\n',
   },
   visibleTests: [
