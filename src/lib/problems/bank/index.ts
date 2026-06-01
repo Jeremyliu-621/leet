@@ -3094,6 +3094,11 @@ import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-sub
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
 // batch 251
 import { problem as maximumXorOfTwoNumbers } from './maximum-xor-of-two-numbers-in-array';
+import { problem as lexSmallestStringSubstringOp } from './lexicographically-smallest-string-after-substring-operation';
+import { problem as relocateMarbles } from './relocate-marbles';
+import { problem as partitionMinBeautifulSubstrings } from './partition-string-into-minimum-beautiful-substrings';
+import { problem as applyOpsAllZero } from './apply-operations-to-make-all-array-elements-equal-to-zero';
+import { problem as checkSplitArray } from './check-if-it-is-possible-to-split-array';
 // batch 250
 import { problem as magicSquaresInGrid } from './magic-squares-in-grid';
 import { problem as kEmptySlots } from './k-empty-slots';
@@ -6302,6 +6307,11 @@ export const problems: readonly Problem[] = [
   smallestRangeKLists,
   // batch 251
   maximumXorOfTwoNumbers,
+  lexSmallestStringSubstringOp,
+  relocateMarbles,
+  partitionMinBeautifulSubstrings,
+  applyOpsAllZero,
+  checkSplitArray,
   // batch 250
   magicSquaresInGrid,
   kEmptySlots,

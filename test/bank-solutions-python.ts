@@ -44193,6 +44193,79 @@ def longestDiverseString(a, b, c):
     return ''.join(res)
 `,
 
+  'lexicographically-smallest-string-after-substring-operation': `
+def smallestString(s):
+    chars = list(s)
+    n = len(chars)
+    i = 0
+    while i < n and chars[i] == 'a':
+        i += 1
+    if i == n:
+        chars[-1] = 'z'
+        return ''.join(chars)
+    while i < n and chars[i] != 'a':
+        chars[i] = chr(ord(chars[i]) - 1)
+        i += 1
+    return ''.join(chars)
+`,
+
+  'relocate-marbles': `
+def relocateMarbles(nums, moveFrom, moveTo):
+    pos = set(nums)
+    for f, t in zip(moveFrom, moveTo):
+        if f != t:
+            pos.discard(f)
+            pos.add(t)
+    return sorted(pos)
+`,
+
+  'partition-string-into-minimum-beautiful-substrings': `
+def minimumBeautifulSubstrings(s):
+    beautiful = set()
+    p = 1
+    while p < (1 << 15):
+        beautiful.add(bin(p)[2:])
+        p *= 5
+    n = len(s)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        for j in range(i):
+            sub = s[j:i]
+            if dp[j] < float('inf') and sub in beautiful:
+                dp[i] = min(dp[i], dp[j] + 1)
+    return -1 if dp[n] == float('inf') else dp[n]
+`,
+
+  'apply-operations-to-make-all-array-elements-equal-to-zero': `
+def checkArray(nums, k):
+    n = len(nums)
+    expire = [0] * (n + 1)
+    active = 0
+    for i in range(n):
+        active -= expire[i]
+        rem = nums[i] - active
+        if rem < 0:
+            return False
+        if rem > 0:
+            if i + k > n:
+                return False
+            expire[i + k] += rem
+            active += rem
+    return True
+`,
+
+  'check-if-it-is-possible-to-split-array': `
+def canSplitArray(nums, m):
+    n = len(nums)
+    if n == 1:
+        return True
+    for i in range(n - 1):
+        if nums[i] + nums[i + 1] >= m:
+            return True
+    return False
+`,
+
   'count-complete-components': `
 def countCompleteComponents(n, edges):
     parent = list(range(n))

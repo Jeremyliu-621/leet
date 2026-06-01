@@ -44893,6 +44893,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return usedP + q! + r!;
   },
 
+  'lexicographically-smallest-string-after-substring-operation': (...args: unknown[]) => {
+    const chars = (args[0] as string).split('');
+    const n = chars.length;
+    let i = 0;
+    while (i < n && chars[i] === 'a') i++;
+    if (i === n) { chars[n - 1] = 'z'; return chars.join(''); }
+    while (i < n && chars[i] !== 'a') { chars[i] = String.fromCharCode(chars[i]!.charCodeAt(0) - 1); i++; }
+    return chars.join('');
+  },
+
+  'relocate-marbles': (...args: unknown[]) => {
+    const pos = new Set(args[0] as number[]);
+    const from = args[1] as number[], to = args[2] as number[];
+    for (let i = 0; i < from.length; i++) {
+      if (from[i] !== to[i]) { pos.delete(from[i]!); pos.add(to[i]!); }
+    }
+    return [...pos].sort((a, b) => a - b);
+  },
+
+  'partition-string-into-minimum-beautiful-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const beautiful = new Set<string>();
+    let p = 1;
+    while (p < (1 << 15)) { beautiful.add(p.toString(2)); p *= 5; }
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let i = 1; i <= n; i++) {
+      for (let j = 0; j < i; j++) {
+        const sub = s.slice(j, i);
+        if (dp[j]! < Infinity && beautiful.has(sub)) dp[i] = Math.min(dp[i]!, dp[j]! + 1);
+      }
+    }
+    return dp[n] === Infinity ? -1 : dp[n]!;
+  },
+
+  'apply-operations-to-make-all-array-elements-equal-to-zero': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    const expire = new Array<number>(n + 1).fill(0);
+    let active = 0;
+    for (let i = 0; i < n; i++) {
+      active -= expire[i]!;
+      const rem = nums[i]! - active;
+      if (rem < 0) return false;
+      if (rem > 0) {
+        if (i + k > n) return false;
+        expire[i + k] = (expire[i + k] ?? 0) + rem;
+        active += rem;
+      }
+    }
+    return true;
+  },
+
+  'check-if-it-is-possible-to-split-array': (...args: unknown[]) => {
+    const nums = args[0] as number[], m = args[1] as number;
+    const n = nums.length;
+    if (n === 1) return true;
+    for (let i = 0; i < n - 1; i++) {
+      if (nums[i]! + nums[i + 1]! >= m) return true;
+    }
+    return false;
+  },
+
   'count-complete-components': (...args: unknown[]) => {
     const n = args[0] as number;
     const edges = args[1] as number[][];
