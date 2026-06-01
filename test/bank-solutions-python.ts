@@ -45918,4 +45918,20 @@ def placedCoins(edges, cost):
     dfs(0, -1)
     return ans
 `,
+  // batch 263
+  'count-subarrays-fixed-bounds': `def countSubarrays(nums, minK, maxK):
+    ans = 0
+    last_bad = -1
+    last_min = -1
+    last_max = -1
+    for i, v in enumerate(nums):
+        if v < minK or v > maxK:
+            last_bad = i
+        if v == minK:
+            last_min = i
+        if v == maxK:
+            last_max = i
+        ans += max(0, min(last_min, last_max) - last_bad)
+    return ans
+`,
 };

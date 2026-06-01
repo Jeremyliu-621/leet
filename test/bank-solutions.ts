@@ -46816,4 +46816,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     dfs(0, -1);
     return ans;
   },
+
+  // batch 263
+  'count-subarrays-fixed-bounds': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const minK = args[1] as number;
+    const maxK = args[2] as number;
+    let ans = 0;
+    let lastBad = -1;
+    let lastMin = -1;
+    let lastMax = -1;
+    for (let i = 0; i < nums.length; i++) {
+      const v = nums[i]!;
+      if (v < minK || v > maxK) lastBad = i;
+      if (v === minK) lastMin = i;
+      if (v === maxK) lastMax = i;
+      ans += Math.max(0, Math.min(lastMin, lastMax) - lastBad);
+    }
+    return ans;
+  },
 };

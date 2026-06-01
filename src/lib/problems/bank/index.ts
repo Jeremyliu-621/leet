@@ -3092,6 +3092,8 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 263
+import { problem as countSubarraysFixedBounds } from './count-subarrays-fixed-bounds';
 // batch 262
 import { problem as rearrangingFruits } from './rearranging-fruits';
 import { problem as timeToCrossABridge } from './time-to-cross-a-bridge';
@@ -6392,6 +6394,8 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 263
+  countSubarraysFixedBounds,
   // batch 262
   rearrangingFruits,
   timeToCrossABridge,

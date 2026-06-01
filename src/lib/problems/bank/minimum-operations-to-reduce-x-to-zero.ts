@@ -4,7 +4,7 @@ export const problem: Problem = {
   id: 'minimum-operations-to-reduce-x-to-zero',
   title: 'Minimum Operations to Reduce X to Zero',
   difficulty: 'medium',
-  tags: ['sliding-window', 'arrays', 'hash-map'],
+  tags: ['arrays', 'sliding-window', 'hash-map'],
   description: `You are given an integer array \`nums\` and an integer \`x\`. In one operation, you can either remove the leftmost or the rightmost element from the array \`nums\` and subtract its value from \`x\`. Note that this **modifies** the array for future operations.
 
 Return the **minimum number of operations** to reduce \`x\` to **exactly** 0 if it is possible, otherwise, return \`-1\`.`,
@@ -32,21 +32,20 @@ Return the **minimum number of operations** to reduce \`x\` to **exactly** 0 if 
     },
   ],
   hints: [
-    'Instead of minimizing operations (removing elements), maximize the middle subarray.',
-    'The middle subarray has sum = total - x. Use a sliding window to find the longest such subarray.',
-    'Answer = nums.length - max_window_length. If no window with sum = total - x exists, return -1.',
-    'If total - x < 0, return -1 immediately. If total - x = 0, return nums.length.',
+    'Level 1: Removing elements from both ends until they sum to x is equivalent to finding the longest subarray whose sum equals sum(nums) - x. Use a sliding window for the longest subarray sum equal to target.',
+    'Level 2: Compute target = sum(nums) - x. If target < 0, return -1. If target == 0, return nums.length. Use a two-pointer sliding window to find the longest subarray with sum exactly equal to target.',
+    'Level 3: Use left pointer and running window sum. Expand right; when sum > target, shrink from left. When sum == target, update max_len. Answer = nums.length - max_len (or -1 if no valid subarray found).',
   ],
   functionName: 'minOperations',
   params: ['nums', 'x'],
   starterCode: {
     javascript: `function minOperations(nums, x) {
-  // Return minimum ops to reduce x to 0, or -1 if impossible
-}`,
-    typescript: "function minOperations(nums: number[], x: number): number {\n  // Return minimum ops to reduce x to 0, or -1 if impossible\n}",
 
-    python: `def minOperations(nums: list[int], x: int) -> int:
-    # Your code here
+}`,
+    typescript: `function minOperations(nums: number[], x: number): number {
+
+}`,
+    python: `def minOperations(nums, x):
     pass`,
   },
   visibleTests: [
@@ -62,5 +61,6 @@ Return the **minimum number of operations** to reduce \`x\` to **exactly** 0 if 
     { args: [[1], 1], expected: 1 },
     { args: [[10, 2, 3, 10], 15], expected: 3 },
     { args: [[1, 2, 3], 6], expected: 3 },
+    { args: [[3, 2, 20, 1, 1, 3], 10], expected: 5 },
   ],
 };
