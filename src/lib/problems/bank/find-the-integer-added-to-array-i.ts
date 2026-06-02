@@ -41,11 +41,13 @@ Return the integer \`x\`.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function addedInteger(nums1, nums2) {
-
+  return Math.min(...nums2) - Math.min(...nums1);
 }`,
-    typescript: 'function addedInteger(nums1: number[], nums2: number[]): number {\n\n}',
+    typescript: `function addedInteger(nums1: number[], nums2: number[]): number {
+  return Math.min(...nums2) - Math.min(...nums1);
+}`,
     python: `def addedInteger(nums1, nums2):
-    pass`,
+    return min(nums2) - min(nums1)`,
   },
   visibleTests: [
     { args: [[2, 3], [0, 1]], expected: -2 },

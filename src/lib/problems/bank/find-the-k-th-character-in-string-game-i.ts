@@ -45,13 +45,15 @@ Return the value of the **k**-th character in \`word\`, after enough operations 
   params: ['k'],
   starterCode: {
     javascript: `function kthCharacter(k) {
-
+  const bits = (k - 1).toString(2).split('').filter(b => b === '1').length;
+  return String.fromCharCode(97 + bits);
 }`,
     typescript: `function kthCharacter(k: number): string {
-
+  const bits = (k - 1).toString(2).split('').filter(b => b === '1').length;
+  return String.fromCharCode(97 + bits);
 }`,
     python: `def kthCharacter(k):
-    pass`,
+    return chr(97 + bin(k - 1).count('1'))`,
   },
   visibleTests: [
     { args: [5], expected: 'b' },

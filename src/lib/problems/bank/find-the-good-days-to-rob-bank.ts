@@ -46,12 +46,31 @@ Return a list of all days (0-indexed) that are good days to rob the bank. The an
   params: ['security', 'time'],
   starterCode: {
     javascript: `function goodDaysToRobBank(security, time) {
-
+  const n = security.length;
+  const dec = new Array(n).fill(0), inc = new Array(n).fill(0);
+  for (let i = 1; i < n; i++) if (security[i] <= security[i - 1]) dec[i] = dec[i - 1] + 1;
+  for (let i = n - 2; i >= 0; i--) if (security[i] <= security[i + 1]) inc[i] = inc[i + 1] + 1;
+  const result = [];
+  for (let i = 0; i < n; i++) if (dec[i] >= time && inc[i] >= time) result.push(i);
+  return result;
 }`,
-    typescript: "function goodDaysToRobBank(security: number[], time: number): number[] {\n\n}",
-
+    typescript: `function goodDaysToRobBank(security: number[], time: number): number[] {
+  const n = security.length;
+  const dec = new Array<number>(n).fill(0), inc = new Array<number>(n).fill(0);
+  for (let i = 1; i < n; i++) if (security[i]! <= security[i - 1]!) dec[i] = dec[i - 1]! + 1;
+  for (let i = n - 2; i >= 0; i--) if (security[i]! <= security[i + 1]!) inc[i] = inc[i + 1]! + 1;
+  const result: number[] = [];
+  for (let i = 0; i < n; i++) if (dec[i]! >= time && inc[i]! >= time) result.push(i);
+  return result;
+}`,
     python: `def goodDaysToRobBank(security: list[int], time: int) -> list[int]:
-    pass`,
+    n = len(security)
+    dec, inc = [0] * n, [0] * n
+    for i in range(1, n):
+        if security[i] <= security[i-1]: dec[i] = dec[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if security[i] <= security[i+1]: inc[i] = inc[i+1] + 1
+    return [i for i in range(n) if dec[i] >= time and inc[i] >= time]`,
   },
   visibleTests: [
     { args: [[5, 4, 3, 3, 4, 5, 5], 2], expected: [2, 3] },

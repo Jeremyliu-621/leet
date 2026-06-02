@@ -50,12 +50,29 @@ function divisorSubstrings(num, k) {
   params: ['num', 'k'],
   starterCode: {
     javascript: `function divisorSubstrings(num, k) {
-
+  const s = String(num);
+  let count = 0;
+  for (let i = 0; i <= s.length - k; i++) {
+    const sub = Number(s.slice(i, i + k));
+    if (sub !== 0 && num % sub === 0) count++;
+  }
+  return count;
 }`,
-    typescript: "function divisorSubstrings(num: number, k: number): number {\n\n}",
-
+    typescript: `function divisorSubstrings(num: number, k: number): number {
+  const s = String(num);
+  let count = 0;
+  for (let i = 0; i <= s.length - k; i++) {
+    const sub = Number(s.slice(i, i + k));
+    if (sub !== 0 && num % sub === 0) count++;
+  }
+  return count;
+}`,
     python: `def divisorSubstrings(num, k):
-    pass`,
+    s, count = str(num), 0
+    for i in range(len(s) - k + 1):
+        sub = int(s[i:i+k])
+        if sub != 0 and num % sub == 0: count += 1
+    return count`,
   },
   visibleTests: [
     { args: [240, 2], expected: 2 },

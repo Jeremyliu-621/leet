@@ -33,13 +33,16 @@ Return the **encrypted string** by replacing each character \`word[i]\` with the
   params: ['word', 'k'],
   starterCode: {
     javascript: `function getEncryptedString(word, k) {
-
+  const n = word.length;
+  return word.split('').map((_, i) => word[(i + k) % n]).join('');
 }`,
     typescript: `function getEncryptedString(word: string, k: number): string {
-
+  const n = word.length;
+  return word.split('').map((_, i) => word[(i + k) % n]!).join('');
 }`,
     python: `def getEncryptedString(word, k):
-    pass`,
+    n = len(word)
+    return ''.join(word[(i + k) % n] for i in range(n))`,
   },
   visibleTests: [
     { args: ['dart', 3], expected: 'tdar' },

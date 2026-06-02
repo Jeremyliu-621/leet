@@ -47,11 +47,31 @@ Return the **index** of the first player to win \`k\` consecutive games.
   params: ['skills', 'k'],
   starterCode: {
     javascript: `function findWinningPlayer(skills, k) {
-
+  let cur = 0, wins = 0;
+  for (let i = 1; i < skills.length; i++) {
+    if (skills[cur] > skills[i]) { if (++wins >= k) return cur; }
+    else { cur = i; wins = 1; if (wins >= k) return cur; }
+  }
+  return cur;
 }`,
-    typescript: 'function findWinningPlayer(skills: number[], k: number): number {\n\n}',
+    typescript: `function findWinningPlayer(skills: number[], k: number): number {
+  let cur = 0, wins = 0;
+  for (let i = 1; i < skills.length; i++) {
+    if (skills[cur]! > skills[i]!) { if (++wins >= k) return cur; }
+    else { cur = i; wins = 1; if (wins >= k) return cur; }
+  }
+  return cur;
+}`,
     python: `def findWinningPlayer(skills, k):
-    pass`,
+    cur, wins = 0, 0
+    for i in range(1, len(skills)):
+        if skills[cur] > skills[i]:
+            wins += 1
+            if wins >= k: return cur
+        else:
+            cur, wins = i, 1
+            if wins >= k: return cur
+    return cur`,
   },
   visibleTests: [
     { args: [[4, 2, 6, 3, 9], 2], expected: 2 },
