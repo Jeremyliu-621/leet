@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2979** problems; 9297 tests green. Starter backfill batch 41p (15 maximize-* stubs) complete.
+**Current focus:** Bank at **2983** problems; 9309 tests green. Batch 290 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Starter backfill continues (maximum-* range); bank growth (batch 290+); UX polish.
+**Next up:** Bank growth (batch 291+); starter backfill; UX polish.
+
+### feat(bank): batch 290 — check-valid-partition, max-area-cake-cuts, min-ops-write-y-grid, max-sum-heights-mountain (2026-06-02)
+Four new problems: `check-if-there-is-valid-partition-for-the-array` (medium/dp — dp[i]=can partition first i elements; check last 2/3 elements for: 2 equal, 3 equal, 3 consecutive; O(n)), `maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts` (medium/arrays+math — sort cuts; max horizontal gap × max vertical gap mod 10^9+7; BigInt to avoid overflow; O(n log n)), `minimum-operations-to-write-the-letter-y-on-a-grid` (medium/arrays+math — Y-cells: top-left diag + top-right diag + vertical stem; try all 6 (v1,v2) pairs (v1≠v2); cost = non-matching Y-cells + non-matching non-Y-cells; O(n²)), `maximum-sum-of-heights-of-a-mountain` (medium/arrays+stack — monotonic stack to compute left[i]/right[i] (non-increasing contribution from each side); ans = max(left[i]+right[i]-heights[i]); O(n)). Bank at **2983**; 9309 tests.
 
 ### feat: starter-fill batch 41p — 15 maximize-* stubs (2026-06-02)
 Filled starter code (JS/TS/Python) for 15 problems in the maximize-* range: `maximize-area-of-square-hole-in-grid` (consecutive-run → side²), `maximize-consecutive-elements-in-an-array-after-modification` (sort + DP map keep/inc), `maximize-distance-to-closest-person` (gap scan, leading/trailing edges), `maximize-greatness-of-an-array` (sorted two-pointer greedy), `maximize-happiness-of-selected-children` (sort desc, subtract index i), `maximize-minimum-powered-city` (binary search + diff-array greedy), `maximize-number-of-nice-divisors` (split-into-3s + modpow), `maximize-number-of-subsequences-in-a-string` (prefix count c0/c1), `maximize-number-of-tasks-you-can-assign` (binary search + sorted worker slice), `maximize-score-after-n-operations` (bitmask DP + GCD table), `maximize-score-of-numbers-in-ranges` (binary search + greedy), `maximize-score-removing-substrings` (greedy stack removal, higher-value first), `maximize-sum-of-array-after-k-negations` (sort-by-abs + negate negatives), `maximize-the-profit-as-the-salesman` (interval DP grouped by end index), `maximize-total-cost-of-alternating-subarrays` (DP pos/neg sign tracking). 9297 tests green.
