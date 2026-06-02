@@ -41,10 +41,34 @@ If the entire array is \`1\`s, you must still delete one — so the answer is \`
   functionName: 'longestSubarrayOfOnes',
   params: ['nums'],
   starterCode: {
-    javascript: 'function longestSubarrayOfOnes(nums) {\n  // your code here\n}\n',
-    typescript: "function longestSubarrayOfOnes(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def longestSubarrayOfOnes(nums):\n    # your code here\n    pass\n',
+    javascript: `function longestSubarrayOfOnes(nums) {
+  let left = 0, zeros = 0, best = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] === 0) zeros++;
+    while (zeros > 1) { if (nums[left] === 0) zeros--; left++; }
+    best = Math.max(best, right - left);
+  }
+  return best;
+}`,
+    typescript: `function longestSubarrayOfOnes(nums: number[]): number {
+  let left = 0, zeros = 0, best = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right]! === 0) zeros++;
+    while (zeros > 1) { if (nums[left]! === 0) zeros--; left++; }
+    best = Math.max(best, right - left);
+  }
+  return best;
+}`,
+    python: `def longestSubarrayOfOnes(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    left = zeros = best = 0
+    for right in range(len(nums)):
+        if nums[right] == 0: zeros += 1
+        while zeros > 1:
+            if nums[left] == 0: zeros -= 1
+            left += 1
+        best = max(best, right - left)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 1, 0, 1]], expected: 3 },

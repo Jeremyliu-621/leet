@@ -37,10 +37,43 @@ export const problem: Problem = {
   functionName: 'longestPalindrome',
   params: ['s'],
   starterCode: {
-    javascript: 'function longestPalindrome(s) {\n  // your code here\n}\n',
-    typescript: "function longestPalindrome(s: string): string {\n  // your code here\n}",
-
-    python: 'def longestPalindrome(s):\n    # your code here\n    pass\n',
+    javascript: `function longestPalindrome(s) {
+  function expand(l, r) {
+    while (l >= 0 && r < s.length && s[l] === s[r]) { l--; r++; }
+    return s.slice(l + 1, r);
+  }
+  let best = '';
+  for (let i = 0; i < s.length; i++) {
+    const a = expand(i, i), b = expand(i, i + 1);
+    if (a.length > best.length) best = a;
+    if (b.length > best.length) best = b;
+  }
+  return best;
+}`,
+    typescript: `function longestPalindrome(s: string): string {
+  function expand(l: number, r: number): string {
+    while (l >= 0 && r < s.length && s[l] === s[r]) { l--; r++; }
+    return s.slice(l + 1, r);
+  }
+  let best = '';
+  for (let i = 0; i < s.length; i++) {
+    const a = expand(i, i), b = expand(i, i + 1);
+    if (a.length > best.length) best = a;
+    if (b.length > best.length) best = b;
+  }
+  return best;
+}`,
+    python: `def longestPalindrome(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    def expand(l, r):
+        while l >= 0 and r < len(s) and s[l] == s[r]: l -= 1; r += 1
+        return s[l + 1:r]
+    best = ''
+    for i in range(len(s)):
+        a, b = expand(i, i), expand(i, i + 1)
+        if len(a) > len(best): best = a
+        if len(b) > len(best): best = b
+    return best`,
   },
   visibleTests: [
     { args: ['babad'], expected: 'bab' },

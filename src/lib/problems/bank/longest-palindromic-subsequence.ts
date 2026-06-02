@@ -44,10 +44,45 @@ Fill the table by increasing substring length.`,
   functionName: 'longestPalindromeSubseq',
   params: ['s'] as readonly string[],
   starterCode: {
-    javascript: 'function longestPalindromeSubseq(s) {\n  // your code here\n}\n',
-    typescript: "function longestPalindromeSubseq(s: string): number {\n  // your code here\n}",
-
-    python: 'def longestPalindromeSubseq(s: str) -> int:\n    # your code here\n    pass\n',
+    javascript: `function longestPalindromeSubseq(s) {
+  const n = s.length;
+  const dp = Array.from({ length: n }, () => new Array(n).fill(0));
+  for (let i = 0; i < n; i++) dp[i][i] = 1;
+  for (let len = 2; len <= n; len++) {
+    for (let i = 0; i <= n - len; i++) {
+      const j = i + len - 1;
+      dp[i][j] = s[i] === s[j]
+        ? (len === 2 ? 2 : dp[i + 1][j - 1] + 2)
+        : Math.max(dp[i + 1][j], dp[i][j - 1]);
+    }
+  }
+  return dp[0][n - 1];
+}`,
+    typescript: `function longestPalindromeSubseq(s: string): number {
+  const n = s.length;
+  const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+  for (let i = 0; i < n; i++) dp[i]![i] = 1;
+  for (let len = 2; len <= n; len++) {
+    for (let i = 0; i <= n - len; i++) {
+      const j = i + len - 1;
+      dp[i]![j] = s[i] === s[j]
+        ? (len === 2 ? 2 : dp[i + 1]![j - 1]! + 2)
+        : Math.max(dp[i + 1]![j]!, dp[i]![j - 1]!);
+    }
+  }
+  return dp[0]![n - 1]!;
+}`,
+    python: `def longestPalindromeSubseq(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n): dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            if s[i] == s[j]: dp[i][j] = (2 if length == 2 else dp[i + 1][j - 1] + 2)
+            else: dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+    return dp[0][n - 1]`,
   },
   visibleTests: [
     { args: ['bbbab'], expected: 4 },

@@ -39,10 +39,36 @@ Use a sliding window: expand the right edge and, whenever a duplicate enters, sh
   functionName: 'longestUniqueWindow',
   params: ['s'],
   starterCode: {
-    javascript: 'function longestUniqueWindow(s) {\n  // your code here\n}\n',
-    typescript: "function longestUniqueWindow(s: string): number {\n  // your code here\n}",
-
-    python: 'def longestUniqueWindow(s):\n    # your code here\n    pass\n',
+    javascript: `function longestUniqueWindow(s) {
+  const seen = new Set();
+  let left = 0, best = 0;
+  for (let right = 0; right < s.length; right++) {
+    while (seen.has(s[right])) seen.delete(s[left++]);
+    seen.add(s[right]);
+    best = Math.max(best, right - left + 1);
+  }
+  return best;
+}`,
+    typescript: `function longestUniqueWindow(s: string): number {
+  const seen = new Set<string>();
+  let left = 0, best = 0;
+  for (let right = 0; right < s.length; right++) {
+    while (seen.has(s[right]!)) seen.delete(s[left++]!);
+    seen.add(s[right]!);
+    best = Math.max(best, right - left + 1);
+  }
+  return best;
+}`,
+    python: `def longestUniqueWindow(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    seen = set()
+    left = best = 0
+    for right in range(len(s)):
+        while s[right] in seen:
+            seen.discard(s[left]); left += 1
+        seen.add(s[right])
+        best = max(best, right - left + 1)
+    return best`,
   },
   visibleTests: [
     { args: ['abcabcbb'], expected: 3 },

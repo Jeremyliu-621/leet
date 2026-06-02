@@ -39,10 +39,45 @@ A valid parentheses substring is one where every opening parenthesis has a match
   functionName: 'longestValidParentheses',
   params: ['s'],
   starterCode: {
-    javascript: 'function longestValidParentheses(s) {\n  // your code here\n}\n',
-    typescript: "function longestValidParentheses(s: string): number {\n  // your code here\n}",
-
-    python: 'def longestValidParentheses(s):\n    # your code here\n    pass\n',
+    javascript: `function longestValidParentheses(s) {
+  const stack = [-1];
+  let maxLen = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') {
+      stack.push(i);
+    } else {
+      stack.pop();
+      if (stack.length === 0) stack.push(i);
+      else maxLen = Math.max(maxLen, i - stack[stack.length - 1]);
+    }
+  }
+  return maxLen;
+}`,
+    typescript: `function longestValidParentheses(s: string): number {
+  const stack: number[] = [-1];
+  let maxLen = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') {
+      stack.push(i);
+    } else {
+      stack.pop();
+      if (stack.length === 0) stack.push(i);
+      else maxLen = Math.max(maxLen, i - stack[stack.length - 1]!);
+    }
+  }
+  return maxLen;
+}`,
+    python: `def longestValidParentheses(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    stack = [-1]
+    max_len = 0
+    for i, c in enumerate(s):
+        if c == '(': stack.append(i)
+        else:
+            stack.pop()
+            if not stack: stack.append(i)
+            else: max_len = max(max_len, i - stack[-1])
+    return max_len`,
   },
   visibleTests: [
     { args: ['(()'], expected: 2 },
