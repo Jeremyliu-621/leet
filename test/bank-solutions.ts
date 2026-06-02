@@ -51263,4 +51263,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  // batch 303
+  'number-of-strings-can-be-formed-using-characters': (...args: unknown[]): unknown => {
+    const words = args[0] as string[];
+    const chars = args[1] as string;
+    const freq: Record<string, number> = {};
+    for (const c of chars) freq[c] = (freq[c] ?? 0) + 1;
+    let ans = 0;
+    for (const word of words) {
+      const wf: Record<string, number> = {};
+      for (const c of word) wf[c] = (wf[c] ?? 0) + 1;
+      let good = true;
+      for (const c of Object.keys(wf)) {
+        if ((freq[c] ?? 0) < wf[c]!) { good = false; break; }
+      }
+      if (good) ans += word.length;
+    }
+    return ans;
+  },
+
+  'meeting-scheduler': (...args: unknown[]): unknown => {
+    const slots1 = (args[0] as number[][]).map(s => [...s]);
+    const slots2 = (args[1] as number[][]).map(s => [...s]);
+    const duration = args[2] as number;
+    slots1.sort((a, b) => a[0]! - b[0]!);
+    slots2.sort((a, b) => a[0]! - b[0]!);
+    let i = 0, j = 0;
+    while (i < slots1.length && j < slots2.length) {
+      const start = Math.max(slots1[i]![0]!, slots2[j]![0]!);
+      const end   = Math.min(slots1[i]![1]!, slots2[j]![1]!);
+      if (end - start >= duration) return [start, start + duration];
+      if (slots1[i]![1]! < slots2[j]![1]!) i++;
+      else j++;
+    }
+    return [];
+  },
+
+  'removing-boxes': (...args: unknown[]): unknown => {
+    const boxes = args[0] as number[];
+    const n = boxes.length;
+    const dp: number[][][] = Array.from({length: n}, () =>
+      Array.from({length: n}, () => new Array(n).fill(-1)));
+    function solve(l: number, r: number, k: number): number {
+      if (l > r) return 0;
+      if (dp[l]![r]![k] !== -1) return dp[l]![r]![k]!;
+      let res = (k + 1) * (k + 1) + solve(l + 1, r, 0);
+      for (let m = l + 1; m <= r; m++) {
+        if (boxes[m] === boxes[l]) {
+          res = Math.max(res, solve(l + 1, m - 1, 0) + solve(m, r, k + 1));
+        }
+      }
+      return dp[l]![r]![k] = res;
+    }
+    return solve(0, n - 1, 0);
+  },
+
 };

@@ -3504,6 +3504,10 @@ import { problem as maximumNumberOfVisiblePoints } from './maximum-number-of-vis
 import { problem as minimumDeviationInArray } from './minimum-deviation-in-array';
 import { problem as minimumSwapsGroupOnes } from './minimum-swaps-to-group-all-ones-together';
 import { problem as threeSumClosestProblem } from './3sum-closest';
+// batch 303
+import { problem as countCharactersStrings } from './number-of-strings-can-be-formed-using-characters';
+import { problem as meetingScheduler } from './meeting-scheduler';
+import { problem as removingBoxes } from './removing-boxes';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7047,4 +7051,8 @@ export const problems: readonly Problem[] = [
   minimumDeviationInArray,
   minimumSwapsGroupOnes,
   threeSumClosestProblem,
+  // batch 303
+  countCharactersStrings,
+  meetingScheduler,
+  removingBoxes,
 ];

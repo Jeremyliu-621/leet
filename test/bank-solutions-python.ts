@@ -50067,4 +50067,54 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return best
 `,
 
+  // batch 303
+  'number-of-strings-can-be-formed-using-characters': `def countCharacters(words, chars):
+    words = [str(w) for w in (words.to_py() if hasattr(words, 'to_py') else words)]
+    chars = str(chars)
+    from collections import Counter
+    char_freq = Counter(chars)
+    ans = 0
+    for word in words:
+        wf = Counter(word)
+        if all(wf[c] <= char_freq[c] for c in wf):
+            ans += len(word)
+    return ans
+`,
+
+  'meeting-scheduler': `def minAvailableDuration(slots1, slots2, duration):
+    slots1 = [list(s.to_py() if hasattr(s, 'to_py') else s) for s in (slots1.to_py() if hasattr(slots1, 'to_py') else slots1)]
+    slots2 = [list(s.to_py() if hasattr(s, 'to_py') else s) for s in (slots2.to_py() if hasattr(slots2, 'to_py') else slots2)]
+    duration = int(duration)
+    slots1.sort(key=lambda x: x[0])
+    slots2.sort(key=lambda x: x[0])
+    i = j = 0
+    while i < len(slots1) and j < len(slots2):
+        start = max(slots1[i][0], slots2[j][0])
+        end   = min(slots1[i][1], slots2[j][1])
+        if end - start >= duration:
+            return [start, start + duration]
+        if slots1[i][1] < slots2[j][1]:
+            i += 1
+        else:
+            j += 1
+    return []
+`,
+
+  'removing-boxes': `def removeBoxes(boxes):
+    boxes = [int(x) for x in (boxes.to_py() if hasattr(boxes, 'to_py') else boxes)]
+    n = len(boxes)
+    from functools import lru_cache
+
+    @lru_cache(maxsize=None)
+    def dp(l, r, k):
+        if l > r: return 0
+        res = (k + 1) * (k + 1) + dp(l + 1, r, 0)
+        for m in range(l + 1, r + 1):
+            if boxes[m] == boxes[l]:
+                res = max(res, dp(l + 1, m - 1, 0) + dp(m, r, k + 1))
+        return res
+
+    return dp(0, n - 1, 0)
+`,
+
 };
