@@ -3107,6 +3107,10 @@ import { problem as findNumberOfGoodWaysToSplitString } from './find-number-of-g
 import { problem as countNumberOfGoodSubarrays } from './count-number-of-good-subarrays';
 import { problem as minimumCostToChangeFinalValueOfExpression } from './minimum-cost-to-change-final-value-of-expression';
 import { problem as findGoodIndices } from './find-good-indices';
+import { problem as minimizeMaxTwoArrays } from './minimize-the-maximum-of-two-arrays';
+import { problem as minimumTimeKillAllMonsters } from './minimum-time-to-kill-all-monsters';
+import { problem as minimumCostBuyApples } from './minimum-cost-to-buy-apples';
+import { problem as minimumFunctionCallsTargetArray } from './minimum-number-of-function-calls-to-make-target-array';
 // batch 283
 import { problem as doubleModularExponentiation } from './double-modular-exponentiation';
 import { problem as maximumScoreNodeSequence } from './maximum-score-node-sequence';
@@ -6576,6 +6580,10 @@ export const problems: readonly Problem[] = [
   countNumberOfGoodSubarrays,
   minimumCostToChangeFinalValueOfExpression,
   findGoodIndices,
+  minimizeMaxTwoArrays,
+  minimumTimeKillAllMonsters,
+  minimumCostBuyApples,
+  minimumFunctionCallsTargetArray,
   // batch 283
   doubleModularExponentiation,
   maximumScoreNodeSequence,

@@ -47897,6 +47897,85 @@ def findXSum(nums, k, x):
     return prefix
 `,
 
+  // batch 284
+  'minimize-the-maximum-of-two-arrays': `
+from math import gcd
+def minimizeTheMaximum(divisor1, divisor2, uniqueCnt1, uniqueCnt2):
+    lcm = divisor1 * divisor2 // gcd(divisor1, divisor2)
+    lo, hi = 1, 4000000000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        div1 = mid // divisor1
+        div2 = mid // divisor2
+        both = mid // lcm
+        only_arr1 = div2 - both
+        only_arr2 = div1 - both
+        flexible = mid - div1 - div2 + both
+        need1 = max(0, uniqueCnt1 - only_arr1)
+        need2 = max(0, uniqueCnt2 - only_arr2)
+        if need1 + need2 <= flexible:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+  'minimum-time-to-kill-all-monsters': `
+import math
+def minimumTime(power):
+    n = len(power)
+    dp = [float('inf')] * (1 << n)
+    dp[0] = 0
+    for mask in range(1 << n):
+        if dp[mask] == float('inf'):
+            continue
+        gain = 1 + bin(mask).count('1')
+        for i in range(n):
+            if mask & (1 << i):
+                continue
+            new_mask = mask | (1 << i)
+            days = math.ceil(power[i] / gain)
+            if dp[mask] + days < dp[new_mask]:
+                dp[new_mask] = dp[mask] + days
+    return dp[(1 << n) - 1]
+`,
+  'minimum-cost-to-buy-apples': `
+import heapq
+def minCost(n, roads, appleCost, k):
+    adj = [[] for _ in range(n + 1)]
+    for u, v, c in roads:
+        adj[u].append((v, c * k))
+        adj[v].append((u, c * k))
+    dist = [float('inf')] * (n + 1)
+    heap = []
+    for i in range(1, n + 1):
+        dist[i] = appleCost[i - 1]
+        heapq.heappush(heap, (dist[i], i))
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            nd = dist[u] + w
+            if nd < dist[v]:
+                dist[v] = nd
+                heapq.heappush(heap, (nd, v))
+    return dist[1:]
+`,
+  'minimum-number-of-function-calls-to-make-target-array': `
+def minOperations(nums):
+    total_inc = 0
+    max_bit = 0
+    for num in nums:
+        n = num
+        bits = 0
+        while n > 0:
+            total_inc += n & 1
+            bits += 1
+            n >>= 1
+        if bits > max_bit:
+            max_bit = bits
+    return total_inc + max(0, max_bit - 1)
+`,
   // batch 283
   'double-modular-exponentiation': `
 def doubleModularExponentiation(variables):

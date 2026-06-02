@@ -49025,6 +49025,83 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return prefix;
   },
 
+  // batch 284
+  'minimize-the-maximum-of-two-arrays': (...args: unknown[]) => {
+    const divisor1 = args[0] as number;
+    const divisor2 = args[1] as number;
+    const uniqueCnt1 = args[2] as number;
+    const uniqueCnt2 = args[3] as number;
+    function gcd(a: bigint, b: bigint): bigint { return b === 0n ? a : gcd(b, a % b); }
+    const d1 = BigInt(divisor1), d2 = BigInt(divisor2);
+    const lcm = d1 / gcd(d1, d2) * d2;
+    const u1 = BigInt(uniqueCnt1), u2 = BigInt(uniqueCnt2);
+    let lo = 1n, hi = 4000000000n;
+    while (lo < hi) {
+      const mid = (lo + hi) / 2n;
+      const div1 = mid / d1, div2 = mid / d2, both = mid / lcm;
+      const onlyArr1 = div2 - both;
+      const onlyArr2 = div1 - both;
+      const flexible = mid - div1 - div2 + both;
+      const need1 = u1 > onlyArr1 ? u1 - onlyArr1 : 0n;
+      const need2 = u2 > onlyArr2 ? u2 - onlyArr2 : 0n;
+      if (need1 + need2 <= flexible) hi = mid;
+      else lo = mid + 1n;
+    }
+    return Number(lo);
+  },
+  'minimum-time-to-kill-all-monsters': (...args: unknown[]) => {
+    const power = args[0] as number[];
+    const n = power.length;
+    const pcnt = (x: number) => { let c = 0; let v = x; while (v) { c += v & 1; v >>= 1; } return c; };
+    const dp = new Array<number>(1 << n).fill(Infinity);
+    dp[0] = 0;
+    for (let mask = 0; mask < (1 << n); mask++) {
+      if (!isFinite(dp[mask]!)) continue;
+      const gain = 1 + pcnt(mask);
+      for (let i = 0; i < n; i++) {
+        if (mask & (1 << i)) continue;
+        const newMask = mask | (1 << i);
+        const days = Math.ceil(power[i]! / gain);
+        if (dp[mask]! + days < dp[newMask]!) dp[newMask] = dp[mask]! + days;
+      }
+    }
+    return dp[(1 << n) - 1]!;
+  },
+  'minimum-cost-to-buy-apples': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const roads = args[1] as number[][];
+    const appleCost = args[2] as number[];
+    const k = args[3] as number;
+    const adj: [number, number][][] = Array.from({ length: n + 1 }, () => []);
+    for (const [u, v, c] of roads) { adj[u!]!.push([v!, c! * k]); adj[v!]!.push([u!, c! * k]); }
+    const dist = new Array<number>(n + 1).fill(Infinity);
+    const heap: [number, number][] = [];
+    for (let i = 1; i <= n; i++) { dist[i] = appleCost[i - 1]!; heap.push([dist[i]!, i]); }
+    const heapPush = (h: [number,number][], v: [number,number]) => { h.push(v); let i = h.length-1; while (i>0) { const p=(i-1)>>1; if (h[p]![0]<=h[i]![0]) break; [h[p],h[i]]=[h[i]!,h[p]!]; i=p; } };
+    const heapPop = (h: [number,number][]) => { const top=h[0]; h[0]=h[h.length-1]!; h.pop(); let i=0; while (true) { const l=2*i+1,r=2*i+2; let m=i; if (l<h.length&&h[l]![0]<h[m]![0]) m=l; if (r<h.length&&h[r]![0]<h[m]![0]) m=r; if (m===i) break; [h[i],h[m]]=[h[m]!,h[i]!]; i=m; } return top; };
+    heap.sort((a, b) => a[0]! - b[0]!);
+    while (heap.length > 0) {
+      const [d, u] = heapPop(heap)!;
+      if (d! > dist[u!]!) continue;
+      for (const [v, w] of adj[u!]!) {
+        const nd = dist[u!]! + w;
+        if (nd < dist[v]!) { dist[v] = nd; heapPush(heap, [nd, v]); }
+      }
+    }
+    return dist.slice(1);
+  },
+  'minimum-number-of-function-calls-to-make-target-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let totalInc = 0;
+    let maxBit = 0;
+    for (const num of nums) {
+      let n = num;
+      let bits = 0;
+      while (n > 0) { totalInc += n & 1; bits++; n >>= 1; }
+      if (bits > maxBit) maxBit = bits;
+    }
+    return totalInc + Math.max(0, maxBit - 1);
+  },
   // batch 283
   'double-modular-exponentiation': (...args: unknown[]) => {
     const variables = args[0] as number[][];
