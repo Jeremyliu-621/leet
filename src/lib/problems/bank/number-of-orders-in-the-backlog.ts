@@ -42,9 +42,113 @@ Return the **total number of unmatched orders** in the backlog after processing 
   functionName: 'getNumberOfBacklogOrders',
   params: ['orders'],
   starterCode: {
-    javascript: `function getNumberOfBacklogOrders(orders) {\n\n}`,
-    python: `def getNumberOfBacklogOrders(orders) -> int:\n    pass`,
-    typescript: `function getNumberOfBacklogOrders(orders: number[][]): number {\n\n}`,
+    javascript: `function getNumberOfBacklogOrders(orders) {
+  const MOD = 1e9 + 7;
+  class Heap {
+    constructor(cmp) { this._h = []; this._cmp = cmp; }
+    push(x) { this._h.push(x); this._up(this._h.length - 1); }
+    pop() { const top = this._h[0]; const last = this._h.pop(); if (this._h.length) { this._h[0] = last; this._down(0); } return top; }
+    peek() { return this._h[0]; }
+    size() { return this._h.length; }
+    _up(i) { while (i > 0) { const p = (i - 1) >> 1; if (this._cmp(this._h[i], this._h[p]) < 0) { [this._h[i], this._h[p]] = [this._h[p], this._h[i]]; i = p; } else break; } }
+    _down(i) { const n = this._h.length; while (true) { let s = i, l = 2*i+1, r = 2*i+2; if (l < n && this._cmp(this._h[l], this._h[s]) < 0) s = l; if (r < n && this._cmp(this._h[r], this._h[s]) < 0) s = r; if (s === i) break; [this._h[i], this._h[s]] = [this._h[s], this._h[i]]; i = s; } }
+  }
+  const sells = new Heap((a, b) => a[0] - b[0]);
+  const buys = new Heap((a, b) => b[0] - a[0]);
+  for (let [price, amount, type] of orders) {
+    if (type === 0) {
+      while (amount > 0 && sells.size() && sells.peek()[0] <= price) {
+        const [sp, sa] = sells.pop();
+        const take = Math.min(amount, sa);
+        amount -= take;
+        if (sa > take) sells.push([sp, sa - take]);
+      }
+      if (amount > 0) buys.push([price, amount]);
+    } else {
+      while (amount > 0 && buys.size() && buys.peek()[0] >= price) {
+        const [bp, ba] = buys.pop();
+        const take = Math.min(amount, ba);
+        amount -= take;
+        if (ba > take) buys.push([bp, ba - take]);
+      }
+      if (amount > 0) sells.push([price, amount]);
+    }
+  }
+  let total = 0;
+  for (const [, a] of buys._h) total = (total + a) % MOD;
+  for (const [, a] of sells._h) total = (total + a) % MOD;
+  return total;
+}`,
+    typescript: `function getNumberOfBacklogOrders(orders: number[][]): number {
+  const MOD = 1e9 + 7;
+  class Heap {
+    _h: number[][] = [];
+    _cmp: (a: number[], b: number[]) => number;
+    constructor(cmp: (a: number[], b: number[]) => number) { this._cmp = cmp; }
+    push(x: number[]) { this._h.push(x); this._up(this._h.length - 1); }
+    pop(): number[] { const top = this._h[0]!; const last = this._h.pop()!; if (this._h.length) { this._h[0] = last; this._down(0); } return top; }
+    peek(): number[] { return this._h[0]!; }
+    size() { return this._h.length; }
+    _up(i: number) { while (i > 0) { const p = (i - 1) >> 1; if (this._cmp(this._h[i]!, this._h[p]!) < 0) { [this._h[i], this._h[p]] = [this._h[p]!, this._h[i]!]; i = p; } else break; } }
+    _down(i: number) { const n = this._h.length; while (true) { let s = i, l = 2*i+1, r = 2*i+2; if (l < n && this._cmp(this._h[l]!, this._h[s]!) < 0) s = l; if (r < n && this._cmp(this._h[r]!, this._h[s]!) < 0) s = r; if (s === i) break; [this._h[i], this._h[s]] = [this._h[s]!, this._h[i]!]; i = s; } }
+  }
+  const sells = new Heap((a, b) => a[0]! - b[0]!);
+  const buys = new Heap((a, b) => b[0]! - a[0]!);
+  for (let [price, amount, type] of orders) {
+    price = price!; amount = amount!; type = type!;
+    if (type === 0) {
+      while (amount > 0 && sells.size() && sells.peek()[0]! <= price) {
+        const [sp, sa] = sells.pop() as [number, number];
+        const take = Math.min(amount, sa);
+        amount -= take;
+        if (sa > take) sells.push([sp, sa - take]);
+      }
+      if (amount > 0) buys.push([price, amount]);
+    } else {
+      while (amount > 0 && buys.size() && buys.peek()[0]! >= price) {
+        const [bp, ba] = buys.pop() as [number, number];
+        const take = Math.min(amount, ba);
+        amount -= take;
+        if (ba > take) buys.push([bp, ba - take]);
+      }
+      if (amount > 0) sells.push([price, amount]);
+    }
+  }
+  let total = 0;
+  for (const [, a] of buys._h) total = (total + a!) % MOD;
+  for (const [, a] of sells._h) total = (total + a!) % MOD;
+  return total;
+}`,
+    python: `def getNumberOfBacklogOrders(orders):
+    import heapq
+    MOD = 10**9 + 7
+    orders_list = [list(o) for o in (orders.to_py() if hasattr(orders, 'to_py') else orders)]
+    sells = []
+    buys = []
+    for price, amount, typ in orders_list:
+        price, amount, typ = int(price), int(amount), int(typ)
+        if typ == 0:
+            while amount > 0 and sells and sells[0][0] <= price:
+                sp, sa = heapq.heappop(sells)
+                take = min(amount, sa)
+                amount -= take
+                if sa > take:
+                    heapq.heappush(sells, [sp, sa - take])
+            if amount > 0:
+                heapq.heappush(buys, [-price, amount])
+        else:
+            while amount > 0 and buys and -buys[0][0] >= price:
+                bp, ba = heapq.heappop(buys)
+                take = min(amount, ba)
+                amount -= take
+                if ba > take:
+                    heapq.heappush(buys, [bp, ba - take])
+            if amount > 0:
+                heapq.heappush(sells, [price, amount])
+    total = 0
+    for _, a in buys: total = (total + a) % MOD
+    for _, a in sells: total = (total + a) % MOD
+    return total`,
   },
   visibleTests: [
     { args: [[[10, 5, 0], [15, 2, 1], [25, 1, 1], [30, 4, 0]]], expected: 6 },

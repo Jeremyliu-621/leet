@@ -49927,4 +49927,29 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return to_arr(insert(build(a)))
 `,
 
+  // batch 300
+  'minimum-cost-to-fill-cups': `def fillCups(amount):
+    total = sum(int(x) for x in amount)
+    return max(max(int(x) for x in amount), -(-total // 2))
+`,
+
+  'path-sum-iv': `def pathSum(nums):
+    nums = [int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums)]
+    tree = {}
+    for n in nums:
+        d, p, v = n // 100, (n // 10) % 10, n % 10
+        tree[d * 10 + p] = v
+    total = [0]
+    def dfs(d, p, s):
+        key = d * 10 + p
+        if key not in tree: return
+        s += tree[key]
+        lk, rk = (d+1)*10 + 2*p-1, (d+1)*10 + 2*p
+        if lk not in tree and rk not in tree:
+            total[0] += s; return
+        dfs(d+1, 2*p-1, s); dfs(d+1, 2*p, s)
+    dfs(1, 1, 0)
+    return total[0]
+`,
+
 };

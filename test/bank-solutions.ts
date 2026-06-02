@@ -51114,4 +51114,33 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return edges.length - used;
   },
 
+  // batch 300
+  'minimum-cost-to-fill-cups': (...args: unknown[]) => {
+    const amount = args[0] as number[];
+    const sum = (amount as number[]).reduce((a, b) => a + b, 0);
+    return Math.max(Math.max(...(amount as number[])), Math.ceil(sum / 2));
+  },
+
+  'path-sum-iv': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const map = new Map<number, number>();
+    for (const n of nums) {
+      const d = Math.floor(n / 100), p = Math.floor(n / 10) % 10, v = n % 10;
+      map.set(d * 10 + p, v);
+    }
+    let total = 0;
+    const dfs = (d: number, p: number, sum: number) => {
+      const val = map.get(d * 10 + p);
+      if (val === undefined) return;
+      sum += val;
+      const lKey = (d + 1) * 10 + 2 * p - 1;
+      const rKey = (d + 1) * 10 + 2 * p;
+      if (!map.has(lKey) && !map.has(rKey)) { total += sum; return; }
+      dfs(d + 1, 2 * p - 1, sum);
+      dfs(d + 1, 2 * p, sum);
+    };
+    dfs(1, 1, 0);
+    return total;
+  },
+
 };

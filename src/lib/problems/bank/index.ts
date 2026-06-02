@@ -3493,6 +3493,9 @@ import { problem as maximumBinaryTreeII } from './maximum-binary-tree-ii';
 import { problem as deleteNodesFromLinkedListPresentInArray } from './delete-nodes-from-linked-list-present-in-array';
 import { problem as countPathsThatCanFormAPalindromeInATree } from './count-paths-that-can-form-a-palindrome-in-a-tree';
 import { problem as maximumNumberOfEdgesToRemove } from './maximum-number-of-edges-to-remove-to-keep-graph-fully-traversable';
+// batch 300
+import { problem as minimumCostToFillCups } from './minimum-cost-to-fill-cups';
+import { problem as pathSumIV } from './path-sum-iv';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7025,4 +7028,7 @@ export const problems: readonly Problem[] = [
   deleteNodesFromLinkedListPresentInArray,
   countPathsThatCanFormAPalindromeInATree,
   maximumNumberOfEdgesToRemove,
+  // batch 300
+  minimumCostToFillCups,
+  pathSumIV,
 ];
