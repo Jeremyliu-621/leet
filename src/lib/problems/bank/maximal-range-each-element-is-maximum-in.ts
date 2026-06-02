@@ -45,9 +45,56 @@ Return the array \`ranges\`.`,
   functionName: 'maximumSizeSubarray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maximumSizeSubarray(nums) {\n  // your code here\n}\n',
-    typescript: 'function maximumSizeSubarray(nums: number[]): number[] {\n  // your code here\n}',
-    python: 'def maximumSizeSubarray(nums):\n    # your code here\n    pass\n',
+    javascript: `function maximumSizeSubarray(nums) {
+  const n = nums.length;
+  const left = new Array(n).fill(-1);
+  const right = new Array(n).fill(n);
+  const stack = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && nums[stack[stack.length - 1]] < nums[i]) stack.pop();
+    left[i] = stack.length ? stack[stack.length - 1] : -1;
+    stack.push(i);
+  }
+  stack.length = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    while (stack.length && nums[stack[stack.length - 1]] < nums[i]) stack.pop();
+    right[i] = stack.length ? stack[stack.length - 1] : n;
+    stack.push(i);
+  }
+  return nums.map((_, i) => right[i] - left[i] - 1);
+}`,
+    typescript: `function maximumSizeSubarray(nums: number[]): number[] {
+  const n = nums.length;
+  const left = new Array<number>(n).fill(-1);
+  const right = new Array<number>(n).fill(n);
+  const stack: number[] = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && nums[stack[stack.length - 1]!]! < nums[i]!) stack.pop();
+    left[i] = stack.length ? stack[stack.length - 1]! : -1;
+    stack.push(i);
+  }
+  stack.length = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    while (stack.length && nums[stack[stack.length - 1]!]! < nums[i]!) stack.pop();
+    right[i] = stack.length ? stack[stack.length - 1]! : n;
+    stack.push(i);
+  }
+  return nums.map((_, i) => right[i]! - left[i]! - 1);
+}`,
+    python: `def maximumSizeSubarray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    left, right, stack = [-1]*n, [n]*n, []
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]: stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack.clear()
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] < nums[i]: stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    return [right[i] - left[i] - 1 for i in range(n)]`,
   },
   visibleTests: [
     { args: [[1, 5, 2, 3]], expected: [1, 4, 1, 2] },

@@ -36,10 +36,32 @@ Return the length of the **longest** nice subarray.
   functionName: 'longestNiceSubarray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function longestNiceSubarray(nums) {\n  // your code here\n}\n',
-    typescript: "function longestNiceSubarray(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def longestNiceSubarray(nums):\n    # your code here\n    pass\n',
+    javascript: `function longestNiceSubarray(nums) {
+  let l = 0, used = 0, ans = 1;
+  for (let r = 0; r < nums.length; r++) {
+    while (used & nums[r]) used ^= nums[l++];
+    used |= nums[r];
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    typescript: `function longestNiceSubarray(nums: number[]): number {
+  let l = 0, used = 0, ans = 1;
+  for (let r = 0; r < nums.length; r++) {
+    while (used & nums[r]!) used ^= nums[l++]!;
+    used |= nums[r]!;
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    python: `def longestNiceSubarray(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    l = used = 0; ans = 1
+    for r in range(len(nums)):
+        while used & nums[r]: used ^= nums[l]; l += 1
+        used |= nums[r]
+        ans = max(ans, r - l + 1)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 8, 48, 10]], expected: 3 },

@@ -48,10 +48,51 @@ Output: 5
   functionName: 'maximalNetworkRank',
   params: ['n', 'roads'],
   starterCode: {
-    javascript: 'function maximalNetworkRank(n, roads) {\n  // your code here\n}\n',
-    typescript: "function maximalNetworkRank(n: number, roads: number[][]): number {\n  // your code here\n}",
-
-    python: 'def maximalNetworkRank(n, roads):\n    pass\n',
+    javascript: `function maximalNetworkRank(n, roads) {
+  const deg = new Array(n).fill(0);
+  const connected = new Set();
+  for (const [a, b] of roads) {
+    deg[a]++; deg[b]++;
+    connected.add(a < b ? a * 200 + b : b * 200 + a);
+  }
+  let best = 0;
+  for (let i = 0; i < n; i++)
+    for (let j = i + 1; j < n; j++) {
+      const rank = deg[i] + deg[j] - (connected.has(i * 200 + j) ? 1 : 0);
+      best = Math.max(best, rank);
+    }
+  return best;
+}`,
+    typescript: `function maximalNetworkRank(n: number, roads: number[][]): number {
+  const deg = new Array<number>(n).fill(0);
+  const connected = new Set<number>();
+  for (const edge of roads) {
+    const a = edge[0]!, b = edge[1]!;
+    deg[a]!++; deg[b]!++;
+    connected.add(a < b ? a * 200 + b : b * 200 + a);
+  }
+  let best = 0;
+  for (let i = 0; i < n; i++)
+    for (let j = i + 1; j < n; j++) {
+      const rank = deg[i]! + deg[j]! - (connected.has(i * 200 + j) ? 1 : 0);
+      best = Math.max(best, rank);
+    }
+  return best;
+}`,
+    python: `def maximalNetworkRank(n, roads):
+    if hasattr(roads, 'to_py'): roads = roads.to_py()
+    roads = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in roads]
+    deg = [0] * n
+    connected = set()
+    for a, b in roads:
+        deg[a] += 1; deg[b] += 1
+        connected.add((min(a,b), max(a,b)))
+    best = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            rank = deg[i] + deg[j] - (1 if (i, j) in connected else 0)
+            best = max(best, rank)
+    return best`,
   },
   visibleTests: [
     { args: [4, [[0,1],[0,3],[1,2],[1,3]]], expected: 4 },

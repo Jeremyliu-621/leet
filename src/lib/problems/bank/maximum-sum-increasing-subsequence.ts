@@ -40,11 +40,27 @@ Every single element by itself is a valid subsequence.`,
   functionName: 'maxSumIncreasingSubseq',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxSumIncreasingSubseq(nums) {\n  // your code here\n}\n',
-    typescript: `function maxSumIncreasingSubseq(nums: number[]): number {
-
+    javascript: `function maxSumIncreasingSubseq(nums) {
+  const dp = [...nums];
+  for (let i = 1; i < nums.length; i++)
+    for (let j = 0; j < i; j++)
+      if (nums[j] < nums[i]) dp[i] = Math.max(dp[i], dp[j] + nums[i]);
+  return Math.max(...dp);
 }`,
-    python: 'def maxSumIncreasingSubseq(nums):\n    # your code here\n    pass\n',
+    typescript: `function maxSumIncreasingSubseq(nums: number[]): number {
+  const dp = [...nums];
+  for (let i = 1; i < nums.length; i++)
+    for (let j = 0; j < i; j++)
+      if (nums[j]! < nums[i]!) dp[i] = Math.max(dp[i]!, dp[j]! + nums[i]!);
+  return Math.max(...dp);
+}`,
+    python: `def maxSumIncreasingSubseq(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    dp = nums[:]
+    for i in range(1, len(nums)):
+        for j in range(i):
+            if nums[j] < nums[i]: dp[i] = max(dp[i], dp[j] + nums[i])
+    return max(dp)`,
   },
   visibleTests: [
     { args: [[1, 101, 2, 3, 100, 4, 5]], expected: 106 },
