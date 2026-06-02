@@ -36,11 +36,47 @@ The graph is given as follows: \`graph[i]\` is a list of all nodes you can visit
   params: ['graph'],
   starterCode: {
     javascript: `function allPathsSourceTarget(graph) {
-
+  const n = graph.length, target = n - 1;
+  const results = [];
+  function dfs(node, path) {
+    if (node === target) { results.push([...path]); return; }
+    for (const next of graph[node]) {
+      path.push(next);
+      dfs(next, path);
+      path.pop();
+    }
+  }
+  dfs(0, [0]);
+  return results;
 }`,
-    typescript: 'function allPathsSourceTarget(graph: number[][]): number[][] {\n\n}',
+    typescript: `function allPathsSourceTarget(graph: number[][]): number[][] {
+  const n = graph.length, target = n - 1;
+  const results: number[][] = [];
+  function dfs(node: number, path: number[]): void {
+    if (node === target) { results.push([...path]); return; }
+    for (const next of graph[node]!) {
+      path.push(next);
+      dfs(next, path);
+      path.pop();
+    }
+  }
+  dfs(0, [0]);
+  return results;
+}`,
     python: `def allPathsSourceTarget(graph):
-    pass`,
+    n = len(graph)
+    target = n - 1
+    results = []
+    def dfs(node, path):
+        if node == target:
+            results.append(path[:])
+            return
+        for nxt in graph[node]:
+            path.append(nxt)
+            dfs(nxt, path)
+            path.pop()
+    dfs(0, [0])
+    return results`,
   },
   visibleTests: [
     { args: [[[1, 2], [3], [3], []]], expected: [[0, 1, 3], [0, 2, 3]] },

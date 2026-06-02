@@ -50,13 +50,49 @@ Return \`true\` if you can make \`s\` a valid parentheses string. Otherwise, ret
   params: ['s', 'locked'],
   starterCode: {
     javascript: `function canBeValid(s, locked) {
-
+  if (s.length % 2 !== 0) return false;
+  let lo = 0, hi = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (locked[i] === '1') {
+      const delta = s[i] === '(' ? 1 : -1;
+      lo += delta; hi += delta;
+    } else {
+      lo--; hi++;
+    }
+    lo = Math.max(lo, 0);
+    if (hi < 0) return false;
+  }
+  return lo === 0;
 }`,
     typescript: `function canBeValid(s: string, locked: string): boolean {
-
+  if (s.length % 2 !== 0) return false;
+  let lo = 0, hi = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (locked[i] === '1') {
+      const delta = s[i] === '(' ? 1 : -1;
+      lo += delta; hi += delta;
+    } else {
+      lo--; hi++;
+    }
+    lo = Math.max(lo, 0);
+    if (hi < 0) return false;
+  }
+  return lo === 0;
 }`,
-    python: `def canBeValid(s: str, locked: str) -> bool:
-    pass`,
+    python: `def canBeValid(s, locked):
+    if len(s) % 2 != 0:
+        return False
+    lo, hi = 0, 0
+    for i in range(len(s)):
+        if locked[i] == '1':
+            delta = 1 if s[i] == '(' else -1
+            lo += delta; hi += delta
+        else:
+            lo -= 1; hi += 1
+        lo = max(lo, 0)
+        if hi < 0:
+            return False
+    return lo == 0`,
   },
   visibleTests: [
     { args: ['))()))', '010100'], expected: true },

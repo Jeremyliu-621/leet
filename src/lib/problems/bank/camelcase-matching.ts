@@ -36,13 +36,41 @@ Equivalently: the pattern must be a **subsequence** of the query, and every uppe
   params: ['queries', 'pattern'],
   starterCode: {
     javascript: `function camelMatch(queries, pattern) {
-
+  return queries.map(query => {
+    let pi = 0;
+    for (let qi = 0; qi < query.length; qi++) {
+      if (pi < pattern.length && query[qi] === pattern[pi]) {
+        pi++;
+      } else if (query[qi] >= 'A' && query[qi] <= 'Z') {
+        return false;
+      }
+    }
+    return pi === pattern.length;
+  });
 }`,
     typescript: `function camelMatch(queries: string[], pattern: string): boolean[] {
-
+  return queries.map(query => {
+    let pi = 0;
+    for (let qi = 0; qi < query.length; qi++) {
+      if (pi < pattern.length && query[qi] === pattern[pi]) {
+        pi++;
+      } else if (query[qi]! >= 'A' && query[qi]! <= 'Z') {
+        return false;
+      }
+    }
+    return pi === pattern.length;
+  });
 }`,
-    python: `def camelMatch(queries: list[str], pattern: str) -> list[bool]:
-    pass`,
+    python: `def camelMatch(queries, pattern):
+    def matches(query):
+        pi = 0
+        for ch in query:
+            if pi < len(pattern) and ch == pattern[pi]:
+                pi += 1
+            elif ch.isupper():
+                return False
+        return pi == len(pattern)
+    return [matches(q) for q in queries]`,
   },
   visibleTests: [
     {

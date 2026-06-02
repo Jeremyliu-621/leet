@@ -45,13 +45,35 @@ Note that you can eat **different** types of candies on the same day, provided t
   params: ['candiesCount', 'queries'],
   starterCode: {
     javascript: `function canEat(candiesCount, queries) {
-
+  const n = candiesCount.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + candiesCount[i];
+  return queries.map(([type, day, cap]) => {
+    // earliest: eat cap/day -> must have eaten cap*(day+1) > prefix[type] candies
+    // latest: eat 1/day -> need day+1 <= prefix[type+1] total candies
+    return (day + 1) * cap > prefix[type] && day + 1 <= prefix[type + 1];
+  });
 }`,
     typescript: `function canEat(candiesCount: number[], queries: number[][]): boolean[] {
-
+  const n = candiesCount.length;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + candiesCount[i]!;
+  return queries.map(q => {
+    const [type, day, cap] = [q[0]!, q[1]!, q[2]!];
+    return (day + 1) * cap > prefix[type]! && day + 1 <= prefix[type + 1]!;
+  });
 }`,
-    python: `def canEat(candiesCount: list[int], queries: list[list[int]]) -> list[bool]:
-    pass`,
+    python: `def canEat(candiesCount, queries):
+    n = len(candiesCount)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + candiesCount[i]
+    result = []
+    for fav_type, fav_day, daily_cap in queries:
+        earliest = (fav_day + 1) * daily_cap > prefix[fav_type]
+        latest = fav_day + 1 <= prefix[fav_type + 1]
+        result.append(earliest and latest)
+    return result`,
   },
   visibleTests: [
     {

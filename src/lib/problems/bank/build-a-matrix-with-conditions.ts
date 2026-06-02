@@ -41,13 +41,81 @@ Build a \`k × k\` matrix containing each integer from \`1\` to \`k\` **exactly 
   params: ['k', 'rowConditions', 'colConditions'],
   starterCode: {
     javascript: `function buildMatrix(k, rowConditions, colConditions) {
-
+  function topo(edges) {
+    const adj = Array.from({ length: k + 1 }, () => []);
+    const deg = new Array(k + 1).fill(0);
+    for (const [a, b] of edges) { adj[a].push(b); deg[b]++; }
+    const q = [];
+    for (let i = 1; i <= k; i++) if (!deg[i]) q.push(i);
+    const order = [];
+    let qi = 0;
+    while (qi < q.length) {
+      const u = q[qi++];
+      order.push(u);
+      for (const v of adj[u]) if (!--deg[v]) q.push(v);
+    }
+    return order.length === k ? order : null;
+  }
+  const ro = topo(rowConditions), co = topo(colConditions);
+  if (!ro || !co) return [];
+  const rp = new Array(k + 1), cp = new Array(k + 1);
+  for (let i = 0; i < k; i++) { rp[ro[i]] = i; cp[co[i]] = i; }
+  const mat = Array.from({ length: k }, () => new Array(k).fill(0));
+  for (let n = 1; n <= k; n++) mat[rp[n]][cp[n]] = n;
+  return mat;
 }`,
     typescript: `function buildMatrix(k: number, rowConditions: number[][], colConditions: number[][]): number[][] {
-
+  function topo(edges: number[][]): number[] | null {
+    const adj: number[][] = Array.from({ length: k + 1 }, () => []);
+    const deg = new Array<number>(k + 1).fill(0);
+    for (const e of edges) { adj[e[0]!]!.push(e[1]!); deg[e[1]!]!++; }
+    const q: number[] = [];
+    for (let i = 1; i <= k; i++) if (!deg[i]) q.push(i);
+    const order: number[] = [];
+    let qi = 0;
+    while (qi < q.length) {
+      const u = q[qi++]!;
+      order.push(u);
+      for (const v of adj[u]!) if (!--deg[v]!) q.push(v);
+    }
+    return order.length === k ? order : null;
+  }
+  const ro = topo(rowConditions), co = topo(colConditions);
+  if (!ro || !co) return [];
+  const rp = new Array<number>(k + 1), cp = new Array<number>(k + 1);
+  for (let i = 0; i < k; i++) { rp[ro[i]!] = i; cp[co[i]!] = i; }
+  const mat = Array.from({ length: k }, () => new Array<number>(k).fill(0));
+  for (let n = 1; n <= k; n++) mat[rp[n]!]![cp[n]!] = n;
+  return mat;
 }`,
-    python: `def buildMatrix(k: int, rowConditions: list[list[int]], colConditions: list[list[int]]) -> list[list[int]]:
-    pass`,
+    python: `def buildMatrix(k, rowConditions, colConditions):
+    from collections import deque
+    def topo(edges):
+        adj = [[] for _ in range(k + 1)]
+        deg = [0] * (k + 1)
+        for a, b in edges:
+            adj[a].append(b)
+            deg[b] += 1
+        q = deque(i for i in range(1, k + 1) if deg[i] == 0)
+        order = []
+        while q:
+            u = q.popleft()
+            order.append(u)
+            for v in adj[u]:
+                deg[v] -= 1
+                if deg[v] == 0:
+                    q.append(v)
+        return order if len(order) == k else None
+    ro, co = topo(rowConditions), topo(colConditions)
+    if ro is None or co is None:
+        return []
+    rp, cp = [0] * (k + 1), [0] * (k + 1)
+    for i, v in enumerate(ro): rp[v] = i
+    for i, v in enumerate(co): cp[v] = i
+    mat = [[0] * k for _ in range(k)]
+    for n in range(1, k + 1):
+        mat[rp[n]][cp[n]] = n
+    return mat`,
   },
   visibleTests: [
     {
