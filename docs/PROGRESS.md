@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2950** problems; 9198 tests green. Batch 285 complete.
+**Current focus:** Bank at **2956** problems; 9192 tests green. Batch 285+275 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Bank growth (batch 286+); starter backfill; UX polish.
+
+### fix(bank): batch 275 reference solutions + expected-value corrections (2026-06-02)
+Added JS/TS/Python reference solutions for 6 batch-275 problems (k-th-ancestor, count-houses-distance, max-of-min-window, count-ways-product, wear-different-hats, circular-permutation). Fixed 6 incorrect expected values: 5 in count-number-of-houses-at-a-certain-distance (BFS always gives correct results; test cases generated with buggy algorithm had wrong values for shortcuts that change path structure) and 1 in k-th-ancestor-of-a-tree-node (expected was computed for a different tree structure). All 9192 tests green.
 
 ### feat(bank): batch 285 — min-ops-all-equal-one, query-kth-trimmed, min-deletions-divisible, finding-visible-mountains (2026-06-02)
 Four new problems: `minimum-number-of-operations-to-make-all-array-elements-equal-to-one` (medium/arrays+math — if any 1 exists: n-count(1s); else find shortest subarray with GCD=1 (length L): L+n-2 ops total; if impossible -1; O(n²)), `query-kth-smallest-trimmed-number` (medium/arrays+strings — for each query, build (trimmed, idx) pairs, sort lex by trimmed then by idx, return k-th idx; O(q·n log n)), `minimum-deletions-to-make-array-divisible` (hard/arrays+math — compute g=GCD(numsDivide); sort nums; first i with g%nums[i]==0 gives i deletions; else -1; O(n log n + |d| log |d|)), `finding-the-number-of-visible-mountains` (medium/arrays+stack — convert peak [x,y] to interval [x-y,x+y]; sort by l asc/r desc; track maxR; duplicates (same [l,r]) hide each other; count intervals with r>maxR and freq=1; O(n log n)). Bank at **2950**; 9198 tests.
