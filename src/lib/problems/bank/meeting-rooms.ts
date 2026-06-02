@@ -31,12 +31,25 @@ export const problem: Problem = {
   params: ['intervals'],
   starterCode: {
     javascript: `function canAttendMeetings(intervals) {
-
+  intervals.sort((a, b) => a[0] - b[0]);
+  for (let i = 1; i < intervals.length; i++) {
+    if (intervals[i][0] < intervals[i - 1][1]) return false;
+  }
+  return true;
 }`,
-    typescript: "function canAttendMeetings(intervals: number[][]): boolean {\n\n}",
-
+    typescript: `function canAttendMeetings(intervals: number[][]): boolean {
+  intervals.sort((a, b) => a[0]! - b[0]!);
+  for (let i = 1; i < intervals.length; i++) {
+    if (intervals[i]![0]! < intervals[i - 1]![1]!) return false;
+  }
+  return true;
+}`,
     python: `def canAttendMeetings(intervals):
-    pass`,
+    if hasattr(intervals, 'to_py'): intervals = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in intervals.to_py()]
+    intervals.sort(key=lambda x: x[0])
+    for i in range(1, len(intervals)):
+        if intervals[i][0] < intervals[i-1][1]: return False
+    return True`,
   },
   visibleTests: [
     { args: [[[0, 30], [5, 10], [15, 20]]], expected: false },

@@ -62,13 +62,34 @@ The final sorted array should not be returned by the function, but instead be **
   starterCode: {
     javascript: `// mergeSortedRunner is pre-defined and calls your function below.
 function merge(nums1, m, nums2, n) {
-
+  let i = m - 1, j = n - 1, k = m + n - 1;
+  while (i >= 0 && j >= 0) {
+    if (nums1[i] >= nums2[j]) nums1[k--] = nums1[i--];
+    else nums1[k--] = nums2[j--];
+  }
+  while (j >= 0) nums1[k--] = nums2[j--];
 }`,
-    typescript: "function mergeSortedRunner(nums1: number[], m: number, nums2: number[], n: number): number[] {\n\n}",
-
+    typescript: `function mergeSortedRunner(nums1: number[], m: number, nums2: number[], n: number): number[] {
+  const a = [...nums1.slice(0, m), ...new Array<number>(n).fill(0)];
+  const b = nums2.slice(0, n);
+  let i = m - 1, j = n - 1, k = m + n - 1;
+  while (i >= 0 && j >= 0) {
+    if (a[i]! >= b[j]!) a[k--] = a[i--]!;
+    else a[k--] = b[j--]!;
+  }
+  while (j >= 0) a[k--] = b[j--]!;
+  return a;
+}`,
     python: `# mergeSortedRunner is pre-defined and calls your function below.
 def merge(nums1, m, nums2, n):
-    pass`,
+    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
+    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
+    i, j, k = m - 1, n - 1, m + n - 1
+    while i >= 0 and j >= 0:
+        if nums1[i] >= nums2[j]: nums1[k] = nums1[i]; i -= 1
+        else: nums1[k] = nums2[j]; j -= 1
+        k -= 1
+    while j >= 0: nums1[k] = nums2[j]; k -= 1; j -= 1`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3], expected: [1, 2, 2, 3, 5, 6] },

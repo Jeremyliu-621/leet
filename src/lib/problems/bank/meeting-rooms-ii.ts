@@ -43,12 +43,34 @@ function minMeetingRooms(intervals) {
   params: ['intervals'],
   starterCode: {
     javascript: `function minMeetingRooms(intervals) {
-
+  const starts = intervals.map(i => i[0]).sort((a, b) => a - b);
+  const ends = intervals.map(i => i[1]).sort((a, b) => a - b);
+  let rooms = 0, endPtr = 0;
+  for (let i = 0; i < starts.length; i++) {
+    if (starts[i] < ends[endPtr]) rooms++;
+    else endPtr++;
+  }
+  return rooms;
 }`,
-    typescript: "function minMeetingRooms(intervals: number[][]): number {\n\n}",
-
+    typescript: `function minMeetingRooms(intervals: number[][]): number {
+  const starts = intervals.map(i => i[0]!).sort((a, b) => a - b);
+  const ends = intervals.map(i => i[1]!).sort((a, b) => a - b);
+  let rooms = 0, endPtr = 0;
+  for (let i = 0; i < starts.length; i++) {
+    if (starts[i]! < ends[endPtr]!) rooms++;
+    else endPtr++;
+  }
+  return rooms;
+}`,
     python: `def minMeetingRooms(intervals):
-    pass`,
+    if hasattr(intervals, 'to_py'): intervals = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in intervals.to_py()]
+    starts = sorted(i[0] for i in intervals)
+    ends = sorted(i[1] for i in intervals)
+    rooms = end_ptr = 0
+    for s in starts:
+        if s < ends[end_ptr]: rooms += 1
+        else: end_ptr += 1
+    return rooms`,
   },
   visibleTests: [
     { args: [[[0, 30], [5, 10], [15, 20]]], expected: 2 },

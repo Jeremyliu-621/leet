@@ -47,13 +47,43 @@ Return the resulting array. The returned array must be sorted in ascending order
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function mergeArrays(nums1, nums2) {
-
+  const result = [];
+  let i = 0, j = 0;
+  while (i < nums1.length && j < nums2.length) {
+    const [id1, v1] = nums1[i], [id2, v2] = nums2[j];
+    if (id1 === id2) { result.push([id1, v1 + v2]); i++; j++; }
+    else if (id1 < id2) { result.push([id1, v1]); i++; }
+    else { result.push([id2, v2]); j++; }
+  }
+  while (i < nums1.length) result.push(nums1[i++]);
+  while (j < nums2.length) result.push(nums2[j++]);
+  return result;
 }`,
     typescript: `function mergeArrays(nums1: number[][], nums2: number[][]): number[][] {
-
+  const result: number[][] = [];
+  let i = 0, j = 0;
+  while (i < nums1.length && j < nums2.length) {
+    const [id1, v1] = nums1[i]!, [id2, v2] = nums2[j]!;
+    if (id1 === id2) { result.push([id1!, v1! + v2!]); i++; j++; }
+    else if (id1! < id2!) { result.push([id1!, v1!]); i++; }
+    else { result.push([id2!, v2!]); j++; }
+  }
+  while (i < nums1.length) result.push(nums1[i++]!);
+  while (j < nums2.length) result.push(nums2[j++]!);
+  return result;
 }`,
     python: `def mergeArrays(nums1, nums2):
-    pass`,
+    if hasattr(nums1, 'to_py'): nums1 = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in nums1.to_py()]
+    if hasattr(nums2, 'to_py'): nums2 = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in nums2.to_py()]
+    result = []
+    i = j = 0
+    while i < len(nums1) and j < len(nums2):
+        id1, v1 = nums1[i]; id2, v2 = nums2[j]
+        if id1 == id2: result.append([id1, v1 + v2]); i += 1; j += 1
+        elif id1 < id2: result.append([id1, v1]); i += 1
+        else: result.append([id2, v2]); j += 1
+    result.extend(nums1[i:]); result.extend(nums2[j:])
+    return result`,
   },
   visibleTests: [
     { args: [[[1, 2], [2, 3], [4, 5]], [[1, 4], [3, 2], [4, 1]]], expected: [[1, 6], [2, 3], [3, 2], [4, 6]] },

@@ -48,12 +48,26 @@ function mergeTriplets(triplets, target) {
   params: ['triplets', 'target'],
   starterCode: {
     javascript: `function mergeTriplets(triplets, target) {
-
+  const [a, b, c] = target;
+  const valid = triplets.filter(([x, y, z]) => x <= a && y <= b && z <= c);
+  const merged = valid.reduce(([mx, my, mz], [x, y, z]) => [Math.max(mx, x), Math.max(my, y), Math.max(mz, z)], [0, 0, 0]);
+  return merged[0] === a && merged[1] === b && merged[2] === c;
 }`,
-    typescript: "function mergeTriplets(triplets: number[][], target: number[]): boolean {\n\n}",
-
+    typescript: `function mergeTriplets(triplets: number[][], target: number[]): boolean {
+  const [a, b, c] = target as [number, number, number];
+  const valid = triplets.filter(t => t[0]! <= a && t[1]! <= b && t[2]! <= c);
+  const merged = valid.reduce<[number, number, number]>((acc, t) => [Math.max(acc[0], t[0]!), Math.max(acc[1], t[1]!), Math.max(acc[2], t[2]!)], [0, 0, 0]);
+  return merged[0] === a && merged[1] === b && merged[2] === c;
+}`,
     python: `def mergeTriplets(triplets, target):
-    pass`,
+    if hasattr(triplets, 'to_py'): triplets = [[int(x) for x in (t.to_py() if hasattr(t, 'to_py') else t)] for t in triplets.to_py()]
+    if hasattr(target, 'to_py'): target = list(target.to_py())
+    a, b, c = target
+    mx, my, mz = 0, 0, 0
+    for x, y, z in triplets:
+        if x <= a and y <= b and z <= c:
+            mx, my, mz = max(mx, x), max(my, y), max(mz, z)
+    return mx == a and my == b and mz == c`,
   },
   visibleTests: [
     { args: [[[2, 5, 3], [1, 8, 4], [1, 7, 5]], [2, 7, 5]], expected: true },

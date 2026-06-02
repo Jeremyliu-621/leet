@@ -128,13 +128,49 @@ Return the **merged tree**.
   starterCode: {
     javascript: `// TreeNode is pre-defined. Implement the function below:
 function mergeTrees(root1, root2) {
-
+  if (!root1) return root2;
+  if (!root2) return root1;
+  root1.val += root2.val;
+  root1.left = mergeTrees(root1.left, root2.left);
+  root1.right = mergeTrees(root1.right, root2.right);
+  return root1;
 }`,
-    typescript: "function mergeTreesRunner(root1: number[], root2: (number | null)[]): (number | null)[] {\n\n}",
-
+    typescript: `function mergeTreesRunner(root1: (number | null)[], root2: (number | null)[]): (number | null)[] {
+  type N = {val: number; left: N | null; right: N | null} | null;
+  const fromArr = (arr: (number | null)[]): N => {
+    if (!arr.length || arr[0] == null) return null;
+    const root: N = {val: arr[0], left: null, right: null};
+    const q: NonNullable<N>[] = [root]; let i = 1;
+    while (q.length && i < arr.length) {
+      const n = q.shift()!;
+      if (i < arr.length && arr[i] != null) { n.left = {val: arr[i]!, left: null, right: null}; q.push(n.left!); }
+      i++;
+      if (i < arr.length && arr[i] != null) { n.right = {val: arr[i]!, left: null, right: null}; q.push(n.right!); }
+      i++;
+    }
+    return root;
+  };
+  const toArr = (r: N): (number | null)[] => {
+    if (!r) return [];
+    const res: (number | null)[] = []; const q: N[] = [r];
+    while (q.length) { const n = q.shift()!; if (!n) { res.push(null); continue; } res.push(n.val); q.push(n.left); q.push(n.right); }
+    while (res.length && res[res.length - 1] == null) res.pop();
+    return res;
+  };
+  const merge = (a: N, b: N): N => {
+    if (!a) return b; if (!b) return a;
+    a.val += b.val; a.left = merge(a.left, b.left); a.right = merge(a.right, b.right); return a;
+  };
+  return toArr(merge(fromArr(root1), fromArr(root2)));
+}`,
     python: `# TreeNode is pre-defined. Implement the function below:
 def mergeTrees(root1, root2):
-    pass`,
+    if not root1: return root2
+    if not root2: return root1
+    root1.val += root2.val
+    root1.left = mergeTrees(root1.left, root2.left)
+    root1.right = mergeTrees(root1.right, root2.right)
+    return root1`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 5], [2, 1, 3, null, 4, null, 7]], expected: [3, 4, 5, 5, 4, null, 7] },

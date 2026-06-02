@@ -35,12 +35,93 @@ All meetings must be held. Assign each meeting to the **lowest-numbered availabl
   params: ['n', 'meetings'],
   starterCode: {
     javascript: `function mostBooked(n, meetings) {
-
+  meetings.sort((a, b) => a[0] - b[0]);
+  const counts = new Array(n).fill(0);
+  const avail = Array.from({length: n}, (_, i) => i);
+  const busy = []; // [endTime, roomIdx], sorted
+  const insertBusy = (end, room) => {
+    let p = 0;
+    while (p < busy.length && (busy[p][0] < end || (busy[p][0] === end && busy[p][1] < room))) p++;
+    busy.splice(p, 0, [end, room]);
+  };
+  const insertAvail = (room) => {
+    let p = 0;
+    while (p < avail.length && avail[p] < room) p++;
+    avail.splice(p, 0, room);
+  };
+  for (const [start, end] of meetings) {
+    let f = 0;
+    while (f < busy.length && busy[f][0] <= start) f++;
+    busy.splice(0, f).map(([, r]) => r).sort((a, b) => a - b).forEach(insertAvail);
+    if (avail.length) {
+      const room = avail.shift();
+      counts[room]++;
+      insertBusy(end, room);
+    } else {
+      const [earliest, room] = busy.shift();
+      counts[room]++;
+      insertBusy(earliest + (end - start), room);
+    }
+  }
+  let best = 0;
+  for (let i = 1; i < n; i++) if (counts[i] > counts[best]) best = i;
+  return best;
 }`,
-    typescript: "function mostBooked(n: number, meetings: number[][]): number {\n\n}",
-
+    typescript: `function mostBooked(n: number, meetings: number[][]): number {
+  meetings.sort((a, b) => a[0]! - b[0]!);
+  const counts = new Array<number>(n).fill(0);
+  const avail: number[] = Array.from({length: n}, (_, i) => i);
+  const busy: [number, number][] = [];
+  const insertBusy = (end: number, room: number) => {
+    let p = 0;
+    while (p < busy.length && (busy[p]![0]! < end || (busy[p]![0]! === end && busy[p]![1]! < room))) p++;
+    busy.splice(p, 0, [end, room]);
+  };
+  const insertAvail = (room: number) => {
+    let p = 0;
+    while (p < avail.length && avail[p]! < room) p++;
+    avail.splice(p, 0, room);
+  };
+  for (const m of meetings) {
+    const start = m[0]!, end = m[1]!;
+    let f = 0;
+    while (f < busy.length && busy[f]![0]! <= start) f++;
+    busy.splice(0, f).map(([, r]) => r!).sort((a, b) => a - b).forEach(insertAvail);
+    if (avail.length) {
+      const room = avail.shift()!;
+      counts[room]!++;
+      insertBusy(end, room);
+    } else {
+      const [earliest, room] = busy.shift()!;
+      counts[room!]!++;
+      insertBusy(earliest! + (end - start), room!);
+    }
+  }
+  let best = 0;
+  for (let i = 1; i < n; i++) if (counts[i]! > counts[best]!) best = i;
+  return best;
+}`,
     python: `def mostBooked(n, meetings):
-    pass`,
+    if hasattr(meetings, 'to_py'): meetings = [[int(x) for x in (m.to_py() if hasattr(m, 'to_py') else m)] for m in meetings.to_py()]
+    import heapq
+    meetings.sort()
+    counts = [0] * n
+    avail = list(range(n))
+    heapq.heapify(avail)
+    busy = []  # (end_time, room_idx)
+    for start, end in meetings:
+        while busy and busy[0][0] <= start:
+            _, room = heapq.heappop(busy)
+            heapq.heappush(avail, room)
+        if avail:
+            room = heapq.heappop(avail)
+            counts[room] += 1
+            heapq.heappush(busy, (end, room))
+        else:
+            earliest, room = heapq.heappop(busy)
+            counts[room] += 1
+            heapq.heappush(busy, (earliest + end - start, room))
+    return counts.index(max(counts))`,
   },
   visibleTests: [
     { args: [2, [[0,10],[1,5],[2,7],[3,4]]], expected: 0 },
