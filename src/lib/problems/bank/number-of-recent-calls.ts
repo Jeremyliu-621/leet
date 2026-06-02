@@ -51,14 +51,36 @@ It is **guaranteed** that every call to \`ping\` uses a strictly larger value of
 
 class RecentCounter {
   constructor() {
-
+    this.q = [];
   }
   ping(t) {
-
+    this.q.push(t);
+    while (this.q.length > 0 && this.q[0] < t - 3000) this.q.shift();
+    return this.q.length;
   }
 }`,
-    typescript: "function recentCounterOps(ops: ((string | unknown[])[] | (string | number[])[])[]): (null | number)[] {\n  const results = [];\n  let counter;\n  for (const [method, args] of ops) {\n    if (method === 'RecentCounter') {\n      counter = new RecentCounter();\n      results.push(null);\n    } else {\n      results.push(counter[method](...args));\n    }\n  }\n  return results;\n}\n\nclass RecentCounter {\n  constructor() {\n\n  }\n  ping(t) {\n\n  }\n}",
+    typescript: `function recentCounterOps(ops: ((string | unknown[])[] | (string | number[])[])[]): (null | number)[] {
+  const results: (null | number)[] = [];
+  let counter: RecentCounter | undefined;
+  for (const [method, args] of ops) {
+    if (method === 'RecentCounter') {
+      counter = new RecentCounter();
+      results.push(null);
+    } else if (method === 'ping' && counter) {
+      results.push(counter.ping((args as number[])[0]!));
+    }
+  }
+  return results;
+}
 
+class RecentCounter {
+  private q: number[] = [];
+  ping(t: number): number {
+    this.q.push(t);
+    while (this.q.length > 0 && this.q[0]! < t - 3000) this.q.shift();
+    return this.q.length;
+  }
+}`,
     python: `def recentCounterOps(ops):
     ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
     results = []
@@ -76,9 +98,12 @@ class RecentCounter {
 
 class RecentCounter:
     def __init__(self):
-        pass
+        self.q = []
     def ping(self, t):
-        pass`,
+        self.q.append(t)
+        while self.q and self.q[0] < t - 3000:
+            self.q.pop(0)
+        return len(self.q)`,
   },
   visibleTests: [
     {

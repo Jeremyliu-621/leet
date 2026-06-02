@@ -41,15 +41,19 @@ Return *the **number** of rectangles from which you can make a square of side le
   params: ['rectangles'],
   starterCode: {
     javascript: `function countGoodRectangles(rectangles) {
-  // return count of rectangles forming the largest square
-
+  const mins = rectangles.map(([l, w]) => Math.min(l, w));
+  const maxLen = Math.max(...mins);
+  return mins.filter(m => m === maxLen).length;
 }`,
-    typescript: "function countGoodRectangles(rectangles: number[][]): number {\n  // return count of rectangles forming the largest square\n\n}",
-
+    typescript: `function countGoodRectangles(rectangles: number[][]): number {
+  const mins = rectangles.map(r => Math.min(r[0]!, r[1]!));
+  const maxLen = Math.max(...mins);
+  return mins.filter(m => m === maxLen).length;
+}`,
     python: `def countGoodRectangles(rectangles: list) -> int:
-    # return count of rectangles forming the largest square
-    pass
-`,
+    mins = [min(l, w) for l, w in rectangles]
+    max_len = max(mins)
+    return sum(1 for m in mins if m == max_len)`,
   },
   visibleTests: [
     { args: [[[5, 8], [3, 9], [5, 12], [16, 5]]], expected: 3 },

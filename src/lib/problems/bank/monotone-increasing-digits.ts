@@ -37,15 +37,33 @@ Given an integer \`n\`, return the **largest** number less than or equal to \`n\
   params: ['n'],
   starterCode: {
     javascript: `function monotoneIncreasingDigits(n) {
-  // return largest number <= n with monotone increasing digits
-
+  const d = n.toString().split('').map(Number);
+  let mark = d.length;
+  for (let i = d.length - 1; i > 0; i--) {
+    if (d[i - 1] > d[i]) { mark = i; d[i - 1]--; }
+  }
+  for (let i = mark; i < d.length; i++) d[i] = 9;
+  return parseInt(d.join(''));
 }`,
-    typescript: "function monotoneIncreasingDigits(n: number): number {\n  // return largest number <= n with monotone increasing digits\n\n}",
-
+    typescript: `function monotoneIncreasingDigits(n: number): number {
+  const d = n.toString().split('').map(Number);
+  let mark = d.length;
+  for (let i = d.length - 1; i > 0; i--) {
+    if (d[i - 1]! > d[i]!) { mark = i; d[i - 1]!--; }
+  }
+  for (let i = mark; i < d.length; i++) d[i] = 9;
+  return parseInt(d.join(''));
+}`,
     python: `def monotoneIncreasingDigits(n: int) -> int:
-    # return largest number <= n with monotone increasing digits
-    pass
-`,
+    d = list(str(n))
+    mark = len(d)
+    for i in range(len(d) - 1, 0, -1):
+        if d[i - 1] > d[i]:
+            mark = i
+            d[i - 1] = str(int(d[i - 1]) - 1)
+    for i in range(mark, len(d)):
+        d[i] = '9'
+    return int(''.join(d))`,
   },
   visibleTests: [
     { args: [332], expected: 299 },

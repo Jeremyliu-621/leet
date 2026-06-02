@@ -47,13 +47,26 @@ Most common non-banned word: \`"ball"\` (appears 2 times).`,
   params: ['paragraph', 'banned'],
   starterCode: {
     javascript: `function mostCommonWord(paragraph, banned) {
-
+  const bannedSet = new Set(banned);
+  const words = paragraph.toLowerCase().replace(/[^a-z]/g, ' ').split(/\s+/).filter(w => w);
+  const freq = new Map();
+  for (const w of words) if (!bannedSet.has(w)) freq.set(w, (freq.get(w) ?? 0) + 1);
+  return [...freq.entries()].reduce((a, b) => b[1] > a[1] ? b : a)[0];
 }`,
-    typescript: "function mostCommonWord(paragraph: string, banned: string[]): string {\n\n}",
-
+    typescript: `function mostCommonWord(paragraph: string, banned: string[]): string {
+  const bannedSet = new Set(banned);
+  const words = paragraph.toLowerCase().replace(/[^a-z]/g, ' ').split(/\s+/).filter(w => w);
+  const freq = new Map<string, number>();
+  for (const w of words) if (!bannedSet.has(w)) freq.set(w, (freq.get(w) ?? 0) + 1);
+  return [...freq.entries()].reduce((a, b) => b[1] > a[1] ? b : a)[0];
+}`,
     python: `def mostCommonWord(paragraph, banned):
-    pass
-`,
+    import re
+    from collections import Counter
+    banned_set = set(banned)
+    words = re.findall(r'[a-z]+', paragraph.lower())
+    freq = Counter(w for w in words if w not in banned_set)
+    return freq.most_common(1)[0][0]`,
   },
   visibleTests: [
     { args: ['Bob hit a ball, the hit BALL flew far after it was hit.', ['hit']], expected: 'ball' },

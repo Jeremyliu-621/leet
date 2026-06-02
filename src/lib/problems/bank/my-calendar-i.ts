@@ -37,17 +37,35 @@ Given a list of \`[start, end)\` bookings (half-open intervals), determine which
   params: ['bookings'],
   starterCode: {
     javascript: `function myCalendarI(bookings) {
-  // bookings: array of [start, end) intervals
-  // return boolean array: true if booking accepted, false if rejected
-
+  const accepted = [];
+  const result = [];
+  for (const [start, end] of bookings) {
+    const ok = accepted.every(([s, e]) => start >= e || end <= s);
+    if (ok) accepted.push([start, end]);
+    result.push(ok);
+  }
+  return result;
 }`,
-    typescript: "function myCalendarI(bookings: number[][]): boolean[] {\n  // bookings: array of [start, end) intervals\n  // return boolean array: true if booking accepted, false if rejected\n\n}",
-
+    typescript: `function myCalendarI(bookings: number[][]): boolean[] {
+  const accepted: number[][] = [];
+  const result: boolean[] = [];
+  for (const b of bookings) {
+    const start = b[0]!, end = b[1]!;
+    const ok = accepted.every(a => start >= a[1]! || end <= a[0]!);
+    if (ok) accepted.push(b);
+    result.push(ok);
+  }
+  return result;
+}`,
     python: `def myCalendarI(bookings: list) -> list:
-    # bookings: list of [start, end) intervals
-    # return boolean list: True if accepted, False if rejected
-    pass
-`,
+    accepted = []
+    result = []
+    for start, end in bookings:
+        ok = all(start >= e or end <= s for s, e in accepted)
+        if ok:
+            accepted.append((start, end))
+        result.append(ok)
+    return result`,
   },
   visibleTests: [
     { args: [[[10, 20], [15, 25], [20, 30]]], expected: [true, false, true] },

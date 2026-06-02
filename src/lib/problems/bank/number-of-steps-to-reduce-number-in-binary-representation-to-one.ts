@@ -43,13 +43,34 @@ It is guaranteed that you can always reach one for all test cases.`,
   params: ['s'],
   starterCode: {
     javascript: `function numSteps(s) {
-
+  let steps = 0, carry = 0;
+  for (let i = s.length - 1; i > 0; i--) {
+    const bit = Number(s[i]) + carry;
+    if (bit % 2 === 1) { steps += 2; carry = 1; }
+    else { steps += 1; carry = bit >> 1; }
+  }
+  return steps + carry;
 }`,
-    typescript: "function numSteps(s: string): number {\n\n}",
-
+    typescript: `function numSteps(s: string): number {
+  let steps = 0, carry = 0;
+  for (let i = s.length - 1; i > 0; i--) {
+    const bit = Number(s[i]) + carry;
+    if (bit % 2 === 1) { steps += 2; carry = 1; }
+    else { steps += 1; carry = bit >> 1; }
+  }
+  return steps + carry;
+}`,
     python: `def numSteps(s):
-    pass
-`,
+    steps, carry = 0, 0
+    for i in range(len(s) - 1, 0, -1):
+        bit = int(s[i]) + carry
+        if bit % 2 == 1:
+            steps += 2
+            carry = 1
+        else:
+            steps += 1
+            carry = bit >> 1
+    return steps + carry`,
   },
   visibleTests: [
     { args: ['1101'], expected: 6 },

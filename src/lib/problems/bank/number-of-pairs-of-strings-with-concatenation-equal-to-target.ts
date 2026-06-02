@@ -42,15 +42,26 @@ function numOfPairs(nums, target) {
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function numOfPairs(nums, target) {
-  // return count of pairs
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = 0; j < nums.length; j++)
+      if (i !== j && nums[i] + nums[j] === target) count++;
+  return count;
 }`,
-    typescript: "function numOfPairs(nums: string[], target: string): number {\n  // return count of pairs\n\n}",
-
+    typescript: `function numOfPairs(nums: string[], target: string): number {
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = 0; j < nums.length; j++)
+      if (i !== j && nums[i]! + nums[j]! === target) count++;
+  return count;
+}`,
     python: `def numOfPairs(nums: list, target: str) -> int:
-    # return count of pairs
-    pass
-`,
+    count = 0
+    for i in range(len(nums)):
+        for j in range(len(nums)):
+            if i != j and nums[i] + nums[j] == target:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [['777', '7', '77', '77'], '7777'], expected: 4 },

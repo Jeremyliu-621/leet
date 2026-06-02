@@ -56,13 +56,53 @@ Best total: \`5+4+3+2 + 5+4 = ...\`  → Actually: sorted by count descending, a
   params: ['nums', 'requests'],
   starterCode: {
     javascript: `function maxSumRangeQuery(nums, requests) {
-
+  const MOD = 1_000_000_007n;
+  const n = nums.length;
+  const diff = new Array(n + 1).fill(0);
+  for (const [l, r] of requests) { diff[l]++; if (r + 1 <= n) diff[r + 1]--; }
+  let cnt = 0;
+  const counts = [];
+  for (let i = 0; i < n; i++) { cnt += diff[i]; counts.push(cnt); }
+  counts.sort((a, b) => b - a);
+  nums.sort((a, b) => b - a);
+  let ans = 0n;
+  for (let i = 0; i < n && counts[i] > 0; i++) ans = (ans + BigInt(nums[i]) * BigInt(counts[i])) % MOD;
+  return Number(ans);
 }`,
-    typescript: "function maxSumRangeQuery(nums: number[], requests: number[][]): number {\n\n}",
-
+    typescript: `function maxSumRangeQuery(nums: number[], requests: number[][]): number {
+  const MOD = 1_000_000_007n;
+  const n = nums.length;
+  const diff = new Array(n + 1).fill(0) as number[];
+  for (const [l, r] of requests) { diff[l!]!++; if (r! + 1 <= n) diff[r! + 1]!--; }
+  let cnt = 0;
+  const counts: number[] = [];
+  for (let i = 0; i < n; i++) { cnt += diff[i]!; counts.push(cnt); }
+  counts.sort((a, b) => b - a);
+  nums.sort((a, b) => b - a);
+  let ans = 0n;
+  for (let i = 0; i < n && counts[i]! > 0; i++) ans = (ans + BigInt(nums[i]!) * BigInt(counts[i]!)) % MOD;
+  return Number(ans);
+}`,
     python: `def maxSumRangeQuery(nums, requests):
-    pass
-`,
+    MOD = 10**9 + 7
+    n = len(nums)
+    diff = [0] * (n + 1)
+    for l, r in requests:
+        diff[l] += 1
+        if r + 1 <= n:
+            diff[r + 1] -= 1
+    cnt, counts = 0, []
+    for i in range(n):
+        cnt += diff[i]
+        counts.append(cnt)
+    counts.sort(reverse=True)
+    nums.sort(reverse=True)
+    ans = 0
+    for i in range(n):
+        if counts[i] == 0:
+            break
+        ans = (ans + nums[i] * counts[i]) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], [[1, 3], [0, 1]]], expected: 19 },

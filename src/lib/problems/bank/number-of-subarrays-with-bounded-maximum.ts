@@ -37,15 +37,29 @@ export const problem: Problem = {
   params: ['nums', 'left', 'right'],
   starterCode: {
     javascript: `function numSubarrayBoundedMax(nums, left, right) {
-  // return count of subarrays with max in [left, right]
-
+  function atMost(b) {
+    let count = 0, cur = 0;
+    for (const v of nums) { cur = v <= b ? cur + 1 : 0; count += cur; }
+    return count;
+  }
+  return atMost(right) - atMost(left - 1);
 }`,
-    typescript: "function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {\n  // return count of subarrays with max in [left, right]\n\n}",
-
+    typescript: `function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {
+  const atMost = (b: number) => {
+    let count = 0, cur = 0;
+    for (const v of nums) { cur = v <= b ? cur + 1 : 0; count += cur; }
+    return count;
+  };
+  return atMost(right) - atMost(left - 1);
+}`,
     python: `def numSubarrayBoundedMax(nums: list, left: int, right: int) -> int:
-    # return count of subarrays with max in [left, right]
-    pass
-`,
+    def at_most(b):
+        count = cur = 0
+        for v in nums:
+            cur = cur + 1 if v <= b else 0
+            count += cur
+        return count
+    return at_most(right) - at_most(left - 1)`,
   },
   visibleTests: [
     { args: [[2,1,4,3], 2, 3], expected: 3 },

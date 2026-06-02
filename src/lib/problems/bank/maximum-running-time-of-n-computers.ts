@@ -40,13 +40,33 @@ Return the **maximum number of minutes** you can run all \`n\` computers simulta
   params: ['n', 'batteries'],
   starterCode: {
     javascript: `function maxRunTime(n, batteries) {
-
+  let lo = 0n, hi = batteries.reduce((a, b) => a + BigInt(b), 0n) / BigInt(n);
+  while (lo < hi) {
+    const mid = (lo + hi + 1n) / 2n;
+    const total = batteries.reduce((a, b) => a + (BigInt(b) < mid ? BigInt(b) : mid), 0n);
+    if (total >= BigInt(n) * mid) lo = mid; else hi = mid - 1n;
+  }
+  return Number(lo);
 }`,
-    typescript: "function maxRunTime(n: number, batteries: number[]): number {\n\n}",
-
+    typescript: `function maxRunTime(n: number, batteries: number[]): number {
+  let lo = 0n, hi = batteries.reduce((a, b) => a + BigInt(b), 0n) / BigInt(n);
+  while (lo < hi) {
+    const mid = (lo + hi + 1n) / 2n;
+    const total = batteries.reduce((a, b) => a + (BigInt(b) < mid ? BigInt(b) : mid), 0n);
+    if (total >= BigInt(n) * mid) lo = mid; else hi = mid - 1n;
+  }
+  return Number(lo);
+}`,
     python: `def maxRunTime(n, batteries):
-    pass
-`,
+    lo, hi = 0, sum(batteries) // n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        total = sum(min(b, mid) for b in batteries)
+        if total >= n * mid:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [2, [3,3,3]], expected: 4 },
