@@ -40,14 +40,24 @@ Return the rearranged sentence with the **first word capitalized** and all other
   params: ['text'],
   starterCode: {
     javascript: `function arrangeWords(text) {
-  // your code here
+  const words = text.toLowerCase().split(' ');
+  words.sort((a, b) => a.length - b.length);
+  words[0] = words[0][0].toUpperCase() + words[0].slice(1);
+  return words.join(' ');
 }`,
     typescript: `function arrangeWords(text: string): string {
-  // your code here
+  const words = text.toLowerCase().split(' ');
+  words.sort((a, b) => a.length - b.length);
+  words[0] = words[0]![0]!.toUpperCase() + words[0]!.slice(1);
+  return words.join(' ');
 }`,
     python: `def arrangeWords(text):
-    # your code here
-    pass`,
+    if hasattr(text, 'to_py'): text = text.to_py()
+    text = str(text)
+    words = text.lower().split()
+    words.sort(key=len)
+    words[0] = words[0][0].upper() + words[0][1:]
+    return ' '.join(words)`,
   },
   visibleTests: [
     { args: ['Leetcode is cool'], expected: 'Is cool leetcode' },

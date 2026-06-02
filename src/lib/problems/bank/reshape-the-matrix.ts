@@ -39,10 +39,29 @@ If the reshape operation with given parameters is possible and legal, output the
   functionName: 'matrixReshape',
   params: ['mat', 'r', 'c'],
   starterCode: {
-    javascript: 'function matrixReshape(mat, r, c) {\n  // your code here\n}\n',
-    typescript: "function matrixReshape(mat: number[][], r: number, c: number): number[][] {\n  // your code here\n}",
-
-    python: 'def matrixReshape(mat, r, c):\n    # your code here\n    pass\n',
+    javascript: `function matrixReshape(mat, r, c) {
+  const flat = mat.flat();
+  if (flat.length !== r * c) return mat;
+  const res = [];
+  for (let i = 0; i < r; i++) res.push(flat.slice(i * c, (i + 1) * c));
+  return res;
+}`,
+    typescript: `function matrixReshape(mat: number[][], r: number, c: number): number[][] {
+  const flat = mat.flat();
+  if (flat.length !== r * c) return mat;
+  const res: number[][] = [];
+  for (let i = 0; i < r; i++) res.push(flat.slice(i * c, (i + 1) * c));
+  return res;
+}`,
+    python: `def matrixReshape(mat, r, c):
+    if hasattr(mat, 'to_py'): mat = mat.to_py()
+    if hasattr(r, 'to_py'): r = r.to_py()
+    if hasattr(c, 'to_py'): c = c.to_py()
+    r = int(r); c = int(c)
+    mat = [[int(v) for v in (row.to_py() if hasattr(row,'to_py') else row)] for row in mat]
+    flat = [v for row in mat for v in row]
+    if len(flat) != r*c: return mat
+    return [flat[i*c:(i+1)*c] for i in range(r)]`,
   },
   visibleTests: [
     { args: [[[1, 2], [3, 4]], 1, 4], expected: [[1, 2, 3, 4]] },

@@ -35,10 +35,16 @@ export const problem: Problem = {
   functionName: 'reverseArray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function reverseArray(nums) {\n  // your code here\n}\n',
-    typescript: "function reverseArray(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def reverseArray(nums):\n    # your code here\n    pass\n',
+    javascript: `function reverseArray(nums) {
+  return [...nums].reverse();
+}`,
+    typescript: `function reverseArray(nums: number[]): number[] {
+  return [...nums].reverse();
+}`,
+    python: `def reverseArray(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    return nums[::-1]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [4, 3, 2, 1] },

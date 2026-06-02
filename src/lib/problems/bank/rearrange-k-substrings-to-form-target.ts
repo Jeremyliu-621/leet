@@ -44,11 +44,29 @@ Return \`true\` if it is possible to rearrange the substrings of \`s\` such that
   functionName: 'isPossibleToRearrange',
   params: ['s', 't', 'k'],
   starterCode: {
-    javascript: 'function isPossibleToRearrange(s, t, k) {\n  // your code here\n}\n',
-    typescript: `function isPossibleToRearrange(s: string, t: string, k: number): boolean {
-
+    javascript: `function isPossibleToRearrange(s, t, k) {
+  const len = s.length / k;
+  const sC = [], tC = [];
+  for (let i = 0; i < k; i++) { sC.push(s.slice(i*len,(i+1)*len)); tC.push(t.slice(i*len,(i+1)*len)); }
+  sC.sort(); tC.sort();
+  return sC.join('') === tC.join('');
 }`,
-    python: 'def isPossibleToRearrange(s, t, k):\n    # your code here\n    pass\n',
+    typescript: `function isPossibleToRearrange(s: string, t: string, k: number): boolean {
+  const len = s.length / k;
+  const sC: string[] = [], tC: string[] = [];
+  for (let i = 0; i < k; i++) { sC.push(s.slice(i*len,(i+1)*len)); tC.push(t.slice(i*len,(i+1)*len)); }
+  sC.sort(); tC.sort();
+  return sC.join('') === tC.join('');
+}`,
+    python: `def isPossibleToRearrange(s, t, k):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    s = str(s); t = str(t); k = int(k)
+    n = len(s); chunk = n // k
+    sc = sorted(s[i*chunk:(i+1)*chunk] for i in range(k))
+    tc = sorted(t[i*chunk:(i+1)*chunk] for i in range(k))
+    return sc == tc`,
   },
   visibleTests: [
     { args: ['abcd', 'cdab', 2], expected: true },

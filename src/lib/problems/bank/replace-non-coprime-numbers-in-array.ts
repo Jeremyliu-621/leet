@@ -39,14 +39,46 @@ Return the final array after **all** such replacements. The final array is guara
   params: ['nums'],
   starterCode: {
     javascript: `function replaceNonCoprimes(nums) {
-  // your code here
+  function gcd(a, b) { while (b) { [a, b] = [b, a % b]; } return a; }
+  const stack = [];
+  for (const v of nums) {
+    stack.push(v);
+    while (stack.length >= 2) {
+      const top = stack[stack.length - 1], prev = stack[stack.length - 2];
+      const g = gcd(top, prev);
+      if (g === 1) break;
+      stack.pop(); stack.pop(); stack.push(prev / g * top);
+    }
+  }
+  return stack;
 }`,
     typescript: `function replaceNonCoprimes(nums: number[]): number[] {
-
+  function gcd(a: number, b: number): number { while (b) { [a, b] = [b, a % b]; } return a; }
+  const stack: number[] = [];
+  for (const v of nums) {
+    stack.push(v);
+    while (stack.length >= 2) {
+      const top = stack[stack.length - 1]!, prev = stack[stack.length - 2]!;
+      const g = gcd(top, prev);
+      if (g === 1) break;
+      stack.pop(); stack.pop(); stack.push(prev / g * top);
+    }
+  }
+  return stack;
 }`,
     python: `def replaceNonCoprimes(nums):
-    # your code here
-    pass`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    from math import gcd
+    stack = []
+    for v in nums:
+        stack.append(v)
+        while len(stack) >= 2:
+            g = gcd(stack[-1], stack[-2])
+            if g == 1: break
+            top = stack.pop(); prev = stack.pop()
+            stack.append(prev // g * top)
+    return stack`,
   },
   visibleTests: [
     { args: [[6, 4, 3, 2, 7, 6, 2]], expected: [12, 7, 6] },

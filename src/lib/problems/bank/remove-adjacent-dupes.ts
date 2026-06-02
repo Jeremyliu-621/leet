@@ -35,10 +35,30 @@ export const problem: Problem = {
   functionName: 'collapseAdjacentDuplicates',
   params: ['text'],
   starterCode: {
-    javascript: 'function collapseAdjacentDuplicates(text) {\n  // your code here\n}\n',
-    typescript: "function collapseAdjacentDuplicates(text: string): string {\n  // your code here\n}",
-
-    python: 'def collapseAdjacentDuplicates(text):\n    # your code here\n    pass\n',
+    javascript: `function collapseAdjacentDuplicates(text) {
+  const stack = [];
+  for (const ch of text) {
+    if (stack.length && stack[stack.length - 1] === ch) stack.pop();
+    else stack.push(ch);
+  }
+  return stack.join('');
+}`,
+    typescript: `function collapseAdjacentDuplicates(text: string): string {
+  const stack: string[] = [];
+  for (const ch of text) {
+    if (stack.length && stack[stack.length - 1]! === ch) stack.pop();
+    else stack.push(ch);
+  }
+  return stack.join('');
+}`,
+    python: `def collapseAdjacentDuplicates(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    text = str(text)
+    stack = []
+    for ch in text:
+        if stack and stack[-1] == ch: stack.pop()
+        else: stack.append(ch)
+    return ''.join(stack)`,
   },
   visibleTests: [
     { args: ['abbaca'], expected: 'ca' },
