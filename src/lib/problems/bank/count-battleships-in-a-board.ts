@@ -33,10 +33,37 @@ export const problem: Problem = {
   functionName: 'countBattleships',
   params: ['board'],
   starterCode: {
-    javascript: 'function countBattleships(board) {\n  \n}\n',
-    typescript: "function countBattleships(board: string[][]): number {\n  \n}",
-
-    python: 'def countBattleships(board):\n    pass\n',
+    javascript: `function countBattleships(board) {
+  let count = 0;
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[0].length; j++) {
+      if (board[i][j] === 'X' &&
+          (i === 0 || board[i-1][j] !== 'X') &&
+          (j === 0 || board[i][j-1] !== 'X')) count++;
+    }
+  }
+  return count;
+}`,
+    typescript: `function countBattleships(board: string[][]): number {
+  let count = 0;
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[0]!.length; j++) {
+      if (board[i]![j] === 'X' &&
+          (i === 0 || board[i-1]![j] !== 'X') &&
+          (j === 0 || board[i]![j-1] !== 'X')) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def countBattleships(board):
+    count = 0
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if (board[i][j] == 'X' and
+                    (i == 0 or board[i-1][j] != 'X') and
+                    (j == 0 or board[i][j-1] != 'X')):
+                count += 1
+    return count`,
   },
   visibleTests: [
     {

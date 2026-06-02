@@ -37,9 +37,52 @@ Return the number of beautiful splits.`,
   functionName: 'beautifulSplits',
   params: ['nums'],
   starterCode: {
-    javascript: 'function beautifulSplits(nums) {\n  // your code here\n}\n',
-    typescript: 'function beautifulSplits(nums: number[]): number {\n  // your code here\n}\n',
-    python: 'def beautifulSplits(nums):\n    # your code here\n    pass\n',
+    javascript: `function beautifulSplits(nums) {
+  const n = nums.length;
+  const lcp = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = n - 1; j >= 0; j--)
+      lcp[i][j] = nums[i] === nums[j] ? lcp[i+1][j+1] + 1 : 0;
+  let count = 0;
+  for (let i = 1; i < n - 1; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const cond1 = i <= j - i && lcp[0][i] >= i;
+      const cond2 = j - i <= n - j && lcp[i][j] >= j - i;
+      if (cond1 || cond2) count++;
+    }
+  }
+  return count;
+}`,
+    typescript: `function beautifulSplits(nums: number[]): number {
+  const n = nums.length;
+  const lcp: number[][] = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--)
+    for (let j = n - 1; j >= 0; j--)
+      lcp[i]![j] = nums[i] === nums[j] ? lcp[i+1]![j+1]! + 1 : 0;
+  let count = 0;
+  for (let i = 1; i < n - 1; i++) {
+    for (let j = i + 1; j < n; j++) {
+      const cond1 = i <= j - i && lcp[0]![i]! >= i;
+      const cond2 = j - i <= n - j && lcp[i]![j]! >= j - i;
+      if (cond1 || cond2) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def beautifulSplits(nums):
+    n = len(nums)
+    lcp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(n - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            lcp[i][j] = lcp[i+1][j+1] + 1 if nums[i] == nums[j] else 0
+    count = 0
+    for i in range(1, n - 1):
+        for j in range(i + 1, n):
+            cond1 = i <= j - i and lcp[0][i] >= i
+            cond2 = j - i <= n - j and lcp[i][j] >= j - i
+            if cond1 or cond2:
+                count += 1
+    return count`,
   },
   visibleTests: [
     {

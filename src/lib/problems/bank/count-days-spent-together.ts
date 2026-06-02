@@ -34,11 +34,34 @@ Return the total number of days that Alice and Bob are in Rome **together**.`,
   functionName: 'countDaysTogether',
   params: ['arriveAlice', 'leaveAlice', 'arriveBob', 'leaveBob'],
   starterCode: {
-    javascript:
-      'function countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob) {\n  \n}\n',
-    typescript: "function countDaysTogether(arriveAlice: string, leaveAlice: string, arriveBob: string, leaveBob: string): number {\n  \n}",
-
-    python: 'def countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob):\n    pass\n',
+    javascript: `function countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob) {
+  const days = [31,28,31,30,31,30,31,31,30,31,30,31];
+  function toDay(s) {
+    const m = parseInt(s.slice(0, 2)), d = parseInt(s.slice(3));
+    return days.slice(0, m - 1).reduce((a, b) => a + b, 0) + d;
+  }
+  const start = Math.max(toDay(arriveAlice), toDay(arriveBob));
+  const end = Math.min(toDay(leaveAlice), toDay(leaveBob));
+  return Math.max(0, end - start + 1);
+}`,
+    typescript: `function countDaysTogether(arriveAlice: string, leaveAlice: string, arriveBob: string, leaveBob: string): number {
+  const days = [31,28,31,30,31,30,31,31,30,31,30,31];
+  function toDay(s: string): number {
+    const m = parseInt(s.slice(0, 2)), d = parseInt(s.slice(3));
+    return days.slice(0, m - 1).reduce((a, b) => a + b, 0) + d;
+  }
+  const start = Math.max(toDay(arriveAlice), toDay(arriveBob));
+  const end = Math.min(toDay(leaveAlice), toDay(leaveBob));
+  return Math.max(0, end - start + 1);
+}`,
+    python: `def countDaysTogether(arriveAlice, leaveAlice, arriveBob, leaveBob):
+    days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    def to_day(s):
+        m, d = int(s[:2]), int(s[3:])
+        return sum(days[:m-1]) + d
+    start = max(to_day(arriveAlice), to_day(arriveBob))
+    end = min(to_day(leaveAlice), to_day(leaveBob))
+    return max(0, end - start + 1)`,
   },
   visibleTests: [
     { args: ['08-15', '08-18', '08-16', '08-19'], expected: 3 },

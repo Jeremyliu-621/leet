@@ -42,9 +42,72 @@ A connected component is said to be **complete** if there exists an edge between
   functionName: 'countCompleteComponents',
   params: ['n', 'edges'],
   starterCode: {
-    javascript: 'function countCompleteComponents(n, edges) {\n\n}\n',
-    typescript: 'function countCompleteComponents(n: number, edges: number[][]): number {\n\n}\n',
-    python: 'def countCompleteComponents(n, edges):\n    pass\n',
+    javascript: `function countCompleteComponents(n, edges) {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const size = new Array(n).fill(1);
+  const edgeCnt = new Array(n).fill(0);
+  const find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
+  for (const [a, b] of edges) {
+    const pa = find(a), pb = find(b);
+    if (pa !== pb) {
+      parent[pa] = pb;
+      size[pb] += size[pa];
+      edgeCnt[pb] += edgeCnt[pa];
+    }
+    edgeCnt[find(b)]++;
+  }
+  let count = 0;
+  for (let i = 0; i < n; i++) {
+    if (find(i) === i) {
+      const k = size[i];
+      if (edgeCnt[i] === k * (k - 1) / 2) count++;
+    }
+  }
+  return count;
+}`,
+    typescript: `function countCompleteComponents(n: number, edges: number[][]): number {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const size = new Array(n).fill(1);
+  const edgeCnt = new Array(n).fill(0);
+  const find = (x: number): number => parent[x] === x ? x : (parent[x] = find(parent[x]!));
+  for (const [a, b] of edges) {
+    const pa = find(a!), pb = find(b!);
+    if (pa !== pb) {
+      parent[pa] = pb;
+      size[pb]! += size[pa]!;
+      edgeCnt[pb]! += edgeCnt[pa]!;
+    }
+    edgeCnt[find(b!)]!++;
+  }
+  let count = 0;
+  for (let i = 0; i < n; i++) {
+    if (find(i) === i) {
+      const k = size[i]!;
+      if (edgeCnt[i] === k * (k - 1) / 2) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def countCompleteComponents(n, edges):
+    parent = list(range(n))
+    size = [1] * n
+    edge_cnt = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            size[pb] += size[pa]
+            edge_cnt[pb] += edge_cnt[pa]
+        edge_cnt[find(b)] += 1
+    return sum(
+        1 for i in range(n)
+        if find(i) == i and edge_cnt[i] == size[i] * (size[i] - 1) // 2
+    )`,
   },
   visibleTests: [
     { args: [6, [[0,1],[0,2],[1,2],[3,4]]], expected: 3 },

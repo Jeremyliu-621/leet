@@ -34,9 +34,31 @@ Return *the number of ways the monkeys can be placed such that at least one coll
   functionName: 'monkeyMove',
   params: ['n'],
   starterCode: {
-    javascript: 'function monkeyMove(n) {\n\n}\n',
-    typescript: 'function monkeyMove(n: number): number {\n\n}\n',
-    python: 'def monkeyMove(n):\n    pass\n',
+    javascript: `function monkeyMove(n) {
+  const MOD = 1_000_000_007n;
+  let base = 2n, exp = BigInt(n), result = 1n;
+  base %= MOD;
+  while (exp > 0n) {
+    if (exp % 2n === 1n) result = result * base % MOD;
+    base = base * base % MOD;
+    exp /= 2n;
+  }
+  return Number((result - 2n + MOD) % MOD);
+}`,
+    typescript: `function monkeyMove(n: number): number {
+  const MOD = 1_000_000_007n;
+  let base = 2n, exp = BigInt(n), result = 1n;
+  base %= MOD;
+  while (exp > 0n) {
+    if (exp % 2n === 1n) result = result * base % MOD;
+    base = base * base % MOD;
+    exp /= 2n;
+  }
+  return Number((result - 2n + MOD) % MOD);
+}`,
+    python: `def monkeyMove(n):
+    MOD = 10**9 + 7
+    return (pow(2, n, MOD) - 2) % MOD`,
   },
   visibleTests: [
     { args: [3], expected: 6 },
