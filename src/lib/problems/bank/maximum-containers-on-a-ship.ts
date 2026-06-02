@@ -34,13 +34,20 @@ Return the **maximum** number of containers you can load.`,
   params: ['n'],
   starterCode: {
     javascript: `function maxContainers(n) {
-
+  let k = Math.floor((-1 + Math.sqrt(1 + 8 * n * n)) / 2);
+  while ((k + 1) * (k + 2) / 2 <= n * n) k++;
+  return k;
 }`,
     typescript: `function maxContainers(n: number): number {
-
+  let k = Math.floor((-1 + Math.sqrt(1 + 8 * n * n)) / 2);
+  while ((k + 1) * (k + 2) / 2 <= n * n) k++;
+  return k;
 }`,
     python: `def maxContainers(n):
-    pass`,
+    import math
+    k = int((-1 + math.sqrt(1 + 8 * n * n)) / 2)
+    while (k + 1) * (k + 2) // 2 <= n * n: k += 1
+    return k`,
   },
   visibleTests: [
     { args: [3], expected: 3 },

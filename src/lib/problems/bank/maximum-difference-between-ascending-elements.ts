@@ -39,13 +39,27 @@ Return the **maximum difference**. If no such \`i\` and \`j\` exists, return \`-
   params: ['nums'],
   starterCode: {
     javascript: `function maximumDifference(nums) {
-
+  let minSeen = nums[0], ans = -1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > minSeen) ans = Math.max(ans, nums[i] - minSeen);
+    minSeen = Math.min(minSeen, nums[i]);
+  }
+  return ans;
 }`,
     typescript: `function maximumDifference(nums: number[]): number {
-
+  let minSeen = nums[0]!, ans = -1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i]! > minSeen) ans = Math.max(ans, nums[i]! - minSeen);
+    minSeen = Math.min(minSeen, nums[i]!);
+  }
+  return ans;
 }`,
     python: `def maximumDifference(nums):
-    pass`,
+    min_seen, ans = nums[0], -1
+    for x in nums[1:]:
+        if x > min_seen: ans = max(ans, x - min_seen)
+        min_seen = min(min_seen, x)
+    return ans`,
   },
   visibleTests: [
     { args: [[7, 1, 5, 4]], expected: 4 },

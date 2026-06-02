@@ -46,13 +46,40 @@ Return the total sum **modulo** \`10^9 + 7\`.
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function minMaxSums(nums, k) {
-
+  const MOD = 1000000007n;
+  const n = nums.length;
+  let ans = 0n;
+  for (let i = 0; i < n; i++) {
+    let mn = nums[i], mx = nums[i];
+    for (let j = i; j < Math.min(i + k, n); j++) {
+      mn = Math.min(mn, nums[j]); mx = Math.max(mx, nums[j]);
+      ans = (ans + BigInt(mn + mx)) % MOD;
+    }
+  }
+  return Number(ans);
 }`,
     typescript: `function minMaxSums(nums: number[], k: number): number {
-
+  const MOD = 1000000007n;
+  const n = nums.length;
+  let ans = 0n;
+  for (let i = 0; i < n; i++) {
+    let mn = nums[i]!, mx = nums[i]!;
+    for (let j = i; j < Math.min(i + k, n); j++) {
+      mn = Math.min(mn, nums[j]!); mx = Math.max(mx, nums[j]!);
+      ans = (ans + BigInt(mn + mx)) % MOD;
+    }
+  }
+  return Number(ans);
 }`,
     python: `def minMaxSums(nums, k):
-    pass`,
+    MOD = 10**9 + 7
+    n = len(nums); ans = 0
+    for i in range(n):
+        mn = mx = nums[i]
+        for j in range(i, min(i + k, n)):
+            mn = min(mn, nums[j]); mx = max(mx, nums[j])
+            ans = (ans + mn + mx) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3], 2], expected: 20 },

@@ -38,14 +38,41 @@ Return the **maximum** number of operations you can perform on \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: `function deleteString(s) {
-  // Precompute LCP table, then DP on positions
+  const n = s.length;
+  const lcp = Array.from({length: n+1}, () => new Array(n+1).fill(0));
+  for (let i = n-1; i >= 0; i--)
+    for (let j = n-1; j >= 0; j--)
+      lcp[i][j] = s[i] === s[j] ? 1 + lcp[i+1][j+1] : 0;
+  const dp = new Array(n+1).fill(0);
+  for (let i = n-1; i >= 0; i--)
+    for (let k = 1; k <= (n-i)>>1; k++)
+      if (lcp[i][i+k] >= k) dp[i] = Math.max(dp[i], 1 + dp[i+k]);
+  return dp[0];
 }`,
     typescript: `function deleteString(s: string): number {
-  // Precompute LCP table, then DP on positions
+  const n = s.length;
+  const lcp = Array.from({length: n+1}, () => new Array<number>(n+1).fill(0));
+  for (let i = n-1; i >= 0; i--)
+    for (let j = n-1; j >= 0; j--)
+      lcp[i]![j] = s[i] === s[j] ? 1 + lcp[i+1]![j+1]! : 0;
+  const dp = new Array<number>(n+1).fill(0);
+  for (let i = n-1; i >= 0; i--)
+    for (let k = 1; k <= (n-i)>>1; k++)
+      if (lcp[i]![i+k]! >= k) dp[i] = Math.max(dp[i]!, 1 + dp[i+k]!);
+  return dp[0]!;
 }`,
     python: `def deleteString(s):
-    # Precompute LCP table, then DP on positions
-    pass`,
+    n = len(s)
+    lcp = [[0]*(n+1) for _ in range(n+1)]
+    for i in range(n-1, -1, -1):
+        for j in range(n-1, -1, -1):
+            lcp[i][j] = 1 + lcp[i+1][j+1] if s[i] == s[j] else 0
+    dp = [0] * (n+1)
+    for i in range(n-1, -1, -1):
+        for k in range(1, (n-i)//2 + 1):
+            if lcp[i][i+k] >= k:
+                dp[i] = max(dp[i], 1 + dp[i+k])
+    return dp[0]`,
   },
   visibleTests: [
     { args: ['abcabcabc'], expected: 2 },

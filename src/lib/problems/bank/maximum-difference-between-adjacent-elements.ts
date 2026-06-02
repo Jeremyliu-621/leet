@@ -38,13 +38,17 @@ More formally, return \`max(|nums[i] - nums[i+1]|)\` for all valid \`i\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function maximumDifferenceBetweenAdjacentElements(nums) {
-
+  let ans = 0;
+  for (let i = 0; i < nums.length - 1; i++) ans = Math.max(ans, Math.abs(nums[i] - nums[i+1]));
+  return ans;
 }`,
     typescript: `function maximumDifferenceBetweenAdjacentElements(nums: number[]): number {
-
+  let ans = 0;
+  for (let i = 0; i < nums.length - 1; i++) ans = Math.max(ans, Math.abs(nums[i]! - nums[i+1]!));
+  return ans;
 }`,
     python: `def maximumDifferenceBetweenAdjacentElements(nums: list[int]) -> int:
-    pass`,
+    return max(abs(nums[i] - nums[i+1]) for i in range(len(nums)-1))`,
   },
   visibleTests: [
     { args: [[1, 5, 2, 8, 3]], expected: 6 },

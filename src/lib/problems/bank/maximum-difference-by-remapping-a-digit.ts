@@ -44,11 +44,25 @@ function minMaxDifference(num) {
   params: ['num'],
   starterCode: {
     javascript: `function minMaxDifference(num) {
-
+  const s = String(num);
+  const maxC = s.split('').find(c => c !== '9') ?? '9';
+  const max = parseInt(s.replaceAll(maxC, '9'));
+  const min = parseInt(s.replaceAll(s[0], '0') || '0');
+  return max - min;
 }`,
-    typescript: 'function minMaxDifference(num: number): number {\n\n}',
+    typescript: `function minMaxDifference(num: number): number {
+  const s = String(num);
+  const maxC = s.split('').find(c => c !== '9') ?? '9';
+  const max = parseInt(s.replaceAll(maxC, '9'));
+  const min = parseInt(s.replaceAll(s[0]!, '0') || '0');
+  return max - min;
+}`,
     python: `def minMaxDifference(num):
-    pass`,
+    s = str(num)
+    max_c = next((c for c in s if c != '9'), '9')
+    big = int(s.replace(max_c, '9'))
+    small = int(s.replace(s[0], '0') or '0')
+    return big - small`,
   },
   visibleTests: [
     { args: [11891], expected: 99009 },

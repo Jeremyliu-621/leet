@@ -41,13 +41,49 @@ You can make **any** number of moves before stopping. The total score of a **pat
   params: ['grid'],
   starterCode: {
     javascript: `function maxScore(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  const mn = Array.from({length: m}, () => new Array(n).fill(Infinity));
+  mn[0][0] = grid[0][0];
+  for (let i = 1; i < m; i++) mn[i][0] = Math.min(mn[i-1][0], grid[i][0]);
+  for (let j = 1; j < n; j++) mn[0][j] = Math.min(mn[0][j-1], grid[0][j]);
+  for (let i = 1; i < m; i++)
+    for (let j = 1; j < n; j++)
+      mn[i][j] = Math.min(mn[i-1][j], mn[i][j-1], grid[i][j]);
+  let ans = -Infinity;
+  for (let i = 1; i < m; i++)
+    for (let j = 1; j < n; j++)
+      ans = Math.max(ans, grid[i][j] - mn[i-1][j-1]);
+  return ans;
 }`,
     typescript: `function maxScore(grid: number[][]): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  const mn: number[][] = Array.from({length: m}, () => new Array(n).fill(Infinity));
+  mn[0]![0] = grid[0]![0]!;
+  for (let i = 1; i < m; i++) mn[i]![0] = Math.min(mn[i-1]![0]!, grid[i]![0]!);
+  for (let j = 1; j < n; j++) mn[0]![j] = Math.min(mn[0]![j-1]!, grid[0]![j]!);
+  for (let i = 1; i < m; i++)
+    for (let j = 1; j < n; j++)
+      mn[i]![j] = Math.min(mn[i-1]![j]!, mn[i]![j-1]!, grid[i]![j]!);
+  let ans = -Infinity;
+  for (let i = 1; i < m; i++)
+    for (let j = 1; j < n; j++)
+      ans = Math.max(ans, grid[i]![j]! - mn[i-1]![j-1]!);
+  return ans;
 }`,
     python: `def maxScore(grid: list[list[int]]) -> int:
-    pass`,
+    m, n = len(grid), len(grid[0])
+    mn = [[float('inf')]*n for _ in range(m)]
+    mn[0][0] = grid[0][0]
+    for i in range(1, m): mn[i][0] = min(mn[i-1][0], grid[i][0])
+    for j in range(1, n): mn[0][j] = min(mn[0][j-1], grid[0][j])
+    for i in range(1, m):
+        for j in range(1, n):
+            mn[i][j] = min(mn[i-1][j], mn[i][j-1], grid[i][j])
+    ans = float('-inf')
+    for i in range(1, m):
+        for j in range(1, n):
+            ans = max(ans, grid[i][j] - mn[i-1][j-1])
+    return ans`,
   },
   visibleTests: [
     { args: [[[9, 5, 7, 3], [8, 9, 6, 1], [6, 7, 14, 3], [2, 5, 3, 1]]], expected: 9 },

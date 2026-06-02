@@ -46,12 +46,30 @@ Return the maximum area of a piece of cake after you cut at each horizontal and 
   params: ['h', 'w', 'horizontalCuts', 'verticalCuts'],
   starterCode: {
     javascript: `function maxArea(h, w, horizontalCuts, verticalCuts) {
-
+  const MOD = 1000000007n;
+  const hs = [0, ...horizontalCuts, h].sort((a,b) => a-b);
+  const vs = [0, ...verticalCuts, w].sort((a,b) => a-b);
+  let maxH = 0, maxV = 0;
+  for (let i = 1; i < hs.length; i++) maxH = Math.max(maxH, hs[i] - hs[i-1]);
+  for (let i = 1; i < vs.length; i++) maxV = Math.max(maxV, vs[i] - vs[i-1]);
+  return Number(BigInt(maxH) * BigInt(maxV) % MOD);
 }`,
-    typescript: "function maxArea(h: number, w: number, horizontalCuts: number[], verticalCuts: number[]): number {\n\n}",
-
+    typescript: `function maxArea(h: number, w: number, horizontalCuts: number[], verticalCuts: number[]): number {
+  const MOD = 1000000007n;
+  const hs = [0, ...horizontalCuts, h].sort((a,b) => a-b);
+  const vs = [0, ...verticalCuts, w].sort((a,b) => a-b);
+  let maxH = 0, maxV = 0;
+  for (let i = 1; i < hs.length; i++) maxH = Math.max(maxH, hs[i]! - hs[i-1]!);
+  for (let i = 1; i < vs.length; i++) maxV = Math.max(maxV, vs[i]! - vs[i-1]!);
+  return Number(BigInt(maxH) * BigInt(maxV) % MOD);
+}`,
     python: `def maxArea(h, w, horizontalCuts, verticalCuts):
-    pass`,
+    MOD = 10**9 + 7
+    hs = sorted([0] + list(horizontalCuts) + [h])
+    vs = sorted([0] + list(verticalCuts) + [w])
+    max_h = max(hs[i] - hs[i-1] for i in range(1, len(hs)))
+    max_v = max(vs[i] - vs[i-1] for i in range(1, len(vs)))
+    return max_h * max_v % MOD`,
   },
   visibleTests: [
     { args: [5, 4, [1,2,4], [1,3]], expected: 4 },
