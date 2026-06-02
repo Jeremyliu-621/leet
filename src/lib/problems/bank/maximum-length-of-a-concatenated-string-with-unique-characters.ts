@@ -33,10 +33,69 @@ Return the **maximum** possible length of \`s\`.`,
   functionName: 'maxLength',
   params: ['arr'],
   starterCode: {
-    javascript: 'function maxLength(arr) {\n\n}\n',
-    typescript: "function maxLength(arr: string[]): number {\n\n}",
-
-    python: 'def maxLength(arr):\n    pass\n',
+    javascript: `function maxLength(arr) {
+  let dp = [[0, 0]]; // [mask, length]
+  let ans = 0;
+  for (const s of arr) {
+    let sm = 0, valid = true;
+    for (const c of s) {
+      const b = 1 << (c.charCodeAt(0) - 97);
+      if (sm & b) { valid = false; break; }
+      sm |= b;
+    }
+    if (!valid) continue;
+    const next = [];
+    for (const [m, l] of dp) {
+      if ((m & sm) === 0) {
+        next.push([m | sm, l + s.length]);
+        ans = Math.max(ans, l + s.length);
+      }
+    }
+    dp = [...dp, ...next];
+  }
+  return ans;
+}`,
+    typescript: `function maxLength(arr: string[]): number {
+  let dp: [number, number][] = [[0, 0]];
+  let ans = 0;
+  for (const s of arr) {
+    let sm = 0, valid = true;
+    for (const c of s) {
+      const b = 1 << (c.charCodeAt(0) - 97);
+      if (sm & b) { valid = false; break; }
+      sm |= b;
+    }
+    if (!valid) continue;
+    const next: [number, number][] = [];
+    for (const [m, l] of dp) {
+      if ((m & sm) === 0) {
+        next.push([m | sm, l + s.length]);
+        ans = Math.max(ans, l + s.length);
+      }
+    }
+    dp = [...dp, ...next];
+  }
+  return ans;
+}`,
+    python: `def maxLength(arr):
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr = [str(s) for s in arr]
+    dp = [(0, 0)]
+    ans = 0
+    for s in arr:
+        sm, valid = 0, True
+        for c in s:
+            b = 1 << (ord(c) - 97)
+            if sm & b: valid = False; break
+            sm |= b
+        if not valid: continue
+        nxt = []
+        for m, l in dp:
+            if not (m & sm):
+                nxt.append((m | sm, l + len(s)))
+                ans = max(ans, l + len(s))
+        dp += nxt
+    return ans`,
   },
   visibleTests: [
     { args: [['un', 'iq', 'ue']], expected: 4 },

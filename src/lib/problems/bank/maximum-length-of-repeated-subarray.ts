@@ -40,13 +40,45 @@ Note: The subarray must appear as a contiguous block in both arrays (not merely 
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function findLength(nums1, nums2) {
-  // Return the maximum length of a subarray in both nums1 and nums2
+  const m = nums1.length, n = nums2.length;
+  let ans = 0;
+  const dp = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (nums1[i-1] === nums2[j-1]) {
+        dp[i][j] = dp[i-1][j-1] + 1;
+        ans = Math.max(ans, dp[i][j]);
+      }
+    }
+  }
+  return ans;
 }`,
-    typescript: "function findLength(nums1: number[], nums2: number[]): number {\n  // Return the maximum length of a subarray in both nums1 and nums2\n}",
-
-    python: `def findLength(nums1: list[int], nums2: list[int]) -> int:
-    # Return the maximum length of a subarray in both nums1 and nums2
-    pass`,
+    typescript: `function findLength(nums1: number[], nums2: number[]): number {
+  const m = nums1.length, n = nums2.length;
+  let ans = 0;
+  const dp: number[][] = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (nums1[i-1]! === nums2[j-1]!) {
+        dp[i]![j] = dp[i-1]![j-1]! + 1;
+        ans = Math.max(ans, dp[i]![j]!);
+      }
+    }
+  }
+  return ans;
+}`,
+    python: `def findLength(nums1, nums2):
+    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
+    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
+    m, n = len(nums1), len(nums2)
+    ans = 0
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if nums1[i-1] == nums2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+                ans = max(ans, dp[i][j])
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 2, 1], [3, 2, 1, 4, 7]], expected: 3 },

@@ -37,10 +37,31 @@ You do not need to use every pair. You can select pairs in any order.`,
   functionName: 'findLongestChain',
   params: ['pairs'],
   starterCode: {
-    javascript: 'function findLongestChain(pairs) {\n\n}\n',
-    typescript: "function findLongestChain(pairs: number[][]): number {\n\n}",
-
-    python: 'def findLongestChain(pairs):\n    pass\n',
+    javascript: `function findLongestChain(pairs) {
+  pairs.sort((a, b) => a[1] - b[1]);
+  let chain = 0, curEnd = -Infinity;
+  for (const [l, r] of pairs) {
+    if (l > curEnd) { chain++; curEnd = r; }
+  }
+  return chain;
+}`,
+    typescript: `function findLongestChain(pairs: number[][]): number {
+  pairs.sort((a, b) => a[1]! - b[1]!);
+  let chain = 0, curEnd = -Infinity;
+  for (const [l, r] of pairs) {
+    if (l! > curEnd) { chain++; curEnd = r!; }
+  }
+  return chain;
+}`,
+    python: `def findLongestChain(pairs):
+    if hasattr(pairs, 'to_py'): pairs = pairs.to_py()
+    pairs = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in pairs]
+    pairs.sort(key=lambda p: p[1])
+    chain, cur_end = 0, float('-inf')
+    for l, r in pairs:
+        if l > cur_end:
+            chain += 1; cur_end = r
+    return chain`,
   },
   visibleTests: [
     { args: [[[1, 2], [2, 3], [3, 4]]], expected: 2 },

@@ -48,13 +48,35 @@ function matchPlayersAndTrainers(players, trainers) {
   params: ['players', 'trainers'],
   starterCode: {
     javascript: `function matchPlayersAndTrainers(players, trainers) {
-
+  players.sort((a, b) => a - b);
+  trainers.sort((a, b) => a - b);
+  let i = 0, j = 0, count = 0;
+  while (i < players.length && j < trainers.length) {
+    if (players[i] <= trainers[j]) { count++; i++; }
+    j++;
+  }
+  return count;
 }`,
     typescript: `function matchPlayersAndTrainers(players: number[], trainers: number[]): number {
-
+  players.sort((a, b) => a - b);
+  trainers.sort((a, b) => a - b);
+  let i = 0, j = 0, count = 0;
+  while (i < players.length && j < trainers.length) {
+    if (players[i]! <= trainers[j]!) { count++; i++; }
+    j++;
+  }
+  return count;
 }`,
     python: `def matchPlayersAndTrainers(players, trainers):
-    pass`,
+    if hasattr(players, 'to_py'): players = list(players.to_py())
+    if hasattr(trainers, 'to_py'): trainers = list(trainers.to_py())
+    players = sorted(int(x) for x in players)
+    trainers = sorted(int(x) for x in trainers)
+    i = j = count = 0
+    while i < len(players) and j < len(trainers):
+        if players[i] <= trainers[j]: count += 1; i += 1
+        j += 1
+    return count`,
   },
   visibleTests: [
     { args: [[4, 7, 9], [8, 2, 5, 8]], expected: 2 },

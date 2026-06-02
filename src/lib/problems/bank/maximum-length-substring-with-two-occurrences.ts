@@ -36,9 +36,37 @@ export const problem: Problem = {
   functionName: 'maximumLengthSubstring',
   params: ['s'],
   starterCode: {
-    javascript: `function maximumLengthSubstring(s) {\n  \n}`,
-    typescript: `function maximumLengthSubstring(s: string): number {\n  \n}`,
-    python: `def maximumLengthSubstring(s):\n    `,
+    javascript: `function maximumLengthSubstring(s) {
+  const freq = {};
+  let l = 0, ans = 0;
+  for (let r = 0; r < s.length; r++) {
+    freq[s[r]] = (freq[s[r]] || 0) + 1;
+    while (freq[s[r]] > 2) { freq[s[l]]--; l++; }
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    typescript: `function maximumLengthSubstring(s: string): number {
+  const freq: Record<string, number> = {};
+  let l = 0, ans = 0;
+  for (let r = 0; r < s.length; r++) {
+    freq[s[r]!] = (freq[s[r]!] ?? 0) + 1;
+    while (freq[s[r]!]! > 2) { freq[s[l]!]!--; l++; }
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    python: `def maximumLengthSubstring(s):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    l, ans = 0, 0
+    for r, c in enumerate(s):
+        freq[c] += 1
+        while freq[c] > 2:
+            freq[s[l]] -= 1
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans`,
   },
   visibleTests: [
     { args: ['bcbbbcba'], expected: 4 },

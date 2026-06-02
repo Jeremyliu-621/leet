@@ -40,13 +40,56 @@ Return the **maximum length** of a semi-decreasing subarray of \`nums\`, or \`0\
   params: ['nums'],
   starterCode: {
     javascript: `function maxSubarrayLength(nums) {
-
+  const n = nums.length;
+  const pmVals = [nums[0]], pmIdx = [0];
+  for (let i = 1; i < n; i++) {
+    if (nums[i] > pmVals[pmVals.length - 1]) { pmVals.push(nums[i]); pmIdx.push(i); }
+  }
+  let ans = 0;
+  for (let j = 0; j < n; j++) {
+    let lo = 0, hi = pmVals.length - 1, k = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (pmVals[mid] > nums[j]) { k = mid; hi = mid - 1; }
+      else lo = mid + 1;
+    }
+    if (k !== -1 && pmIdx[k] < j) ans = Math.max(ans, j - pmIdx[k] + 1);
+  }
+  return ans;
 }`,
     typescript: `function maxSubarrayLength(nums: number[]): number {
-
+  const n = nums.length;
+  const pmVals = [nums[0]!], pmIdx = [0];
+  for (let i = 1; i < n; i++) {
+    if (nums[i]! > pmVals[pmVals.length - 1]!) { pmVals.push(nums[i]!); pmIdx.push(i); }
+  }
+  let ans = 0;
+  for (let j = 0; j < n; j++) {
+    let lo = 0, hi = pmVals.length - 1, k = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (pmVals[mid]! > nums[j]!) { k = mid; hi = mid - 1; }
+      else lo = mid + 1;
+    }
+    if (k !== -1 && pmIdx[k]! < j) ans = Math.max(ans, j - pmIdx[k]! + 1);
+  }
+  return ans;
 }`,
     python: `def maxSubarrayLength(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = [int(x) for x in nums]
+    import bisect
+    n = len(nums)
+    pm_vals, pm_idx = [nums[0]], [0]
+    for i in range(1, n):
+        if nums[i] > pm_vals[-1]:
+            pm_vals.append(nums[i]); pm_idx.append(i)
+    ans = 0
+    for j in range(n):
+        k = bisect.bisect_right(pm_vals, nums[j])
+        if k < len(pm_idx) and pm_idx[k] < j:
+            ans = max(ans, j - pm_idx[k] + 1)
+    return ans`,
   },
   visibleTests: [
     { args: [[7, 6, 5, 4, 3, 2, 1]], expected: 7 },

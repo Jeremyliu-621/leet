@@ -39,10 +39,55 @@ Return the maximum length of a subarray with positive product.`,
   functionName: 'getMaxLen',
   params: ['nums'],
   starterCode: {
-    javascript: 'function getMaxLen(nums) {\n  \n}\n',
-    typescript: "function getMaxLen(nums: number[]): number {\n  \n}",
-
-    python: 'def getMaxLen(nums):\n    pass\n',
+    javascript: `function getMaxLen(nums) {
+  let pos = 0, neg = 0, ans = 0;
+  for (const n of nums) {
+    if (n > 0) {
+      pos++;
+      neg = neg > 0 ? neg + 1 : 0;
+    } else if (n < 0) {
+      const newPos = neg > 0 ? neg + 1 : 0;
+      neg = pos + 1;
+      pos = newPos;
+    } else {
+      pos = 0; neg = 0;
+    }
+    ans = Math.max(ans, pos);
+  }
+  return ans;
+}`,
+    typescript: `function getMaxLen(nums: number[]): number {
+  let pos = 0, neg = 0, ans = 0;
+  for (const n of nums) {
+    if (n > 0) {
+      pos++;
+      neg = neg > 0 ? neg + 1 : 0;
+    } else if (n < 0) {
+      const newPos = neg > 0 ? neg + 1 : 0;
+      neg = pos + 1;
+      pos = newPos;
+    } else {
+      pos = 0; neg = 0;
+    }
+    ans = Math.max(ans, pos);
+  }
+  return ans;
+}`,
+    python: `def getMaxLen(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    pos, neg, ans = 0, 0, 0
+    for n in nums:
+        if n > 0:
+            pos += 1
+            neg = neg + 1 if neg > 0 else 0
+        elif n < 0:
+            new_pos = neg + 1 if neg > 0 else 0
+            neg = pos + 1
+            pos = new_pos
+        else:
+            pos = neg = 0
+        ans = max(ans, pos)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, -2, -3, 4]], expected: 4 },
