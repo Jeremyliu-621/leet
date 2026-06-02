@@ -11,7 +11,6 @@ import type {
   EditorKeymap,
   ProblemTag,
   SolvedProblemRecord,
-  StreakDay,
   StreakSummary,
   SupportedLanguage,
   ThemePreference,
@@ -24,10 +23,6 @@ import type { SolvedStats } from './popup-helpers';
 
 const ALL_PROBLEMS = getAllProblems();
 const BANK_SIZE = ALL_PROBLEMS.length;
-
-const PROBLEM_TITLE_BY_ID: ReadonlyMap<string, { title: string; difficulty: Difficulty }> = new Map(
-  ALL_PROBLEMS.map((p) => [p.id, { title: p.title, difficulty: p.difficulty }]),
-);
 
 const BANK_SIZE_BY_DIFF: Readonly<Record<Difficulty, number>> = {
   easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy').length,
@@ -73,21 +68,12 @@ const FIRST_RUN_SUGGESTIONS: readonly string[] = [
   'tiktok.com',
 ];
 
-interface RecentSolve {
-  problemId: string;
-  title: string;
-  difficulty: Difficulty;
-  solvedAt: number;
-}
-
 interface PopupData {
   streak: StreakSummary;
-  streakHistory: readonly StreakDay[];
   activeUnlocks: UnlockToken[];
   solvedToday: number;
   solvedStats: SolvedStats;
   totalSolvedMs: number;
-  recentSolves: readonly RecentSolve[];
   currentDomain: string | null;
   alreadyBlocked: boolean;
   blockedDomains: ReadonlySet<string>;
@@ -184,9 +170,8 @@ export function Popup() {
     let cancelled = false;
 
     async function init() {
-      const [streak, streakHistory, tokens, solved, blockedRules, prefs, tabs] = await Promise.all([
+      const [streak, tokens, solved, blockedRules, prefs, tabs] = await Promise.all([
         safeGet('streakSummary'),
-        safeGet('streakHistory'),
         safeGet('unlockTokens'),
         safeGet('solvedProblems'),
         safeGet('blockedRules'),
@@ -207,23 +192,6 @@ export function Popup() {
         (record: SolvedProblemRecord) => localDateString(new Date(record.solvedAt)) === today,
       ).length;
 
-      // Last 5 unique solves (most recent first, deduplicated by problemId).
-      const seenIds = new Set<string>();
-      const recentSolves: RecentSolve[] = [];
-      for (const record of [...solved].reverse()) {
-        if (seenIds.has(record.problemId)) continue;
-        seenIds.add(record.problemId);
-        const meta = PROBLEM_TITLE_BY_ID.get(record.problemId);
-        if (meta)
-          recentSolves.push({
-            problemId: record.problemId,
-            title: meta.title,
-            difficulty: meta.difficulty,
-            solvedAt: record.solvedAt,
-          });
-        if (recentSolves.length >= 5) break;
-      }
-
       const blockedDomains = new Set(
         blockedRules
           .filter((rule) => rule.kind === 'domain')
@@ -238,12 +206,10 @@ export function Popup() {
       if (cancelled) return;
       setData({
         streak,
-        streakHistory,
         activeUnlocks: pruneTokens(tokens),
         solvedToday,
         solvedStats: computeSolvedStats(solved),
         totalSolvedMs,
-        recentSolves,
         currentDomain,
         alreadyBlocked,
         blockedDomains,
@@ -431,9 +397,7 @@ export function Popup() {
           </p>
         )}
 
-      <StreakHeatmap history={data.streakHistory} />
       <SolveBreakdown stats={data.solvedStats} totalSolvedMs={data.totalSolvedMs} />
-      <RecentSolvesList solves={data.recentSolves} />
 
       {data.blockedDomains.size === 0 && (
         <section className="mt-4" aria-label="Quick start">
@@ -580,92 +544,6 @@ export function Popup() {
   );
 }
 
-const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-/** Grayscale contribution grid — last 12 weeks of solve activity. */
-function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
-  const WEEKS = 12;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  // Build a lookup from date string → solved count.
-  const lookup = new Map<string, number>(history.map((d) => [d.date, d.solved]));
-
-  // Collect WEEKS × 7 days ending today, starting from the most recent Monday.
-  const cells: Array<{ date: string; count: number; month: number; day: number }> = [];
-  const start = new Date(today);
-  start.setDate(today.getDate() - (WEEKS * 7 - 1));
-
-  for (let i = 0; i < WEEKS * 7; i++) {
-    const d = new Date(start);
-    d.setDate(start.getDate() + i);
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    cells.push({ date: key, count: lookup.get(key) ?? 0, month: d.getMonth(), day: d.getDate() });
-  }
-
-  // Split into columns of 7 days.
-  const columns: Array<Array<{ date: string; count: number; month: number; day: number }>> = [];
-  for (let w = 0; w < WEEKS; w++) {
-    columns.push(cells.slice(w * 7, w * 7 + 7));
-  }
-
-  // Compute month label for each column: show abbreviated month name when the
-  // first day of a new month falls within this column.
-  const monthLabels: (string | null)[] = columns.map((col) => {
-    for (const cell of col) {
-      if (cell.day === 1) return MONTH_ABBR[cell.month] ?? null;
-    }
-    return null;
-  });
-  // Always show the first column's month.
-  if (monthLabels[0] === null) {
-    monthLabels[0] = MONTH_ABBR[columns[0]?.[0]?.month ?? 0] ?? null;
-  }
-
-  function cellClass(count: number): string {
-    if (count === 0) return 'bg-surface';
-    if (count === 1) return 'bg-border-strong';
-    if (count === 2) return 'bg-muted';
-    return 'bg-text';
-  }
-
-  return (
-    <section className="mt-4" aria-label="Solve activity heatmap">
-      <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Activity</h2>
-      <div className="mt-2 overflow-x-auto">
-        {/* Month labels row */}
-        <div className="flex gap-0.5 mb-0.5" aria-hidden="true">
-          {columns.map((_, wi) => (
-            <div key={wi} className="w-2 shrink-0">
-              {monthLabels[wi] ? (
-                <span className="font-mono text-[7px] leading-none text-faint">{monthLabels[wi]}</span>
-              ) : null}
-            </div>
-          ))}
-        </div>
-        {/* Cell grid */}
-        <div className="flex gap-0.5" aria-label="Last 12 weeks of solve activity">
-          {columns.map((col, wi) => (
-            <div key={wi} className="flex flex-col gap-0.5" aria-hidden="true">
-              {col.map(({ date, count }) => (
-                <div
-                  key={date}
-                  title={`${date}: ${count} solve${count !== 1 ? 's' : ''}`}
-                  className={`h-2 w-2 rounded-[1px] ${cellClass(count)}`}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-      {/* Screen-reader summary of activity range */}
-      <p className="sr-only">
-        {cells.filter((c) => c.count > 0).length} active days in the last 12 weeks.{' '}
-        Total solves: {cells.reduce((s, c) => s + c.count, 0)}.
-      </p>
-    </section>
-  );
-}
-
 function Stat({ label, value, sub }: { label: string; value: number; sub: string }) {
   return (
     <div className="flex-1 px-3 py-2">
@@ -763,59 +641,6 @@ function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSol
 }
 
 /** Last 5 recently-solved problems, shown below the breakdown stats. */
-function RecentSolvesList({ solves }: { solves: readonly RecentSolve[] }) {
-  if (solves.length === 0) return null;
-
-  function timeAgo(ts: number): string {
-    const diff = Date.now() - ts;
-    const mins = Math.floor(diff / 60_000);
-    if (mins < 1) return 'just now';
-    if (mins < 60) return `${mins}m ago`;
-    const hrs = Math.floor(diff / 3_600_000);
-    if (hrs < 24) return `${hrs}h ago`;
-    return `${Math.floor(diff / 86_400_000)}d ago`;
-  }
-
-  function openProblem(problemId: string): void {
-    try {
-      const base = chrome.runtime.getURL('src/pages/challenge/index.html');
-      void chrome.tabs.create({ url: `${base}?problem=${encodeURIComponent(problemId)}` });
-    } catch {
-      // Outside extension context — silently ignore.
-    }
-  }
-
-  const DIFF_ABBR: Record<Difficulty, string> = { easy: 'E', medium: 'M', hard: 'H' };
-
-  return (
-    <section className="mt-4 border-t border-border pt-4" aria-label="Recent solves">
-      <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">Recent</h2>
-      <ul className="mt-2 space-y-0.5">
-        {solves.map((s) => (
-          <li key={s.problemId}>
-            <button
-              type="button"
-              onClick={() => openProblem(s.problemId)}
-              aria-label={`Practice ${s.title} again`}
-              className="group flex w-full items-center gap-2 rounded-sm px-1 py-0.5 text-left transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-            >
-              <span className="shrink-0 font-mono text-[9px] text-faint w-3">
-                {DIFF_ABBR[s.difficulty]}
-              </span>
-              <span className="flex-1 truncate font-mono text-[10px] text-muted group-hover:text-text transition-colors">
-                {s.title}
-              </span>
-              <span className="shrink-0 font-mono text-[9px] text-faint tabular-nums">
-                {timeAgo(s.solvedAt)}
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 function minutesLeft(token: UnlockToken, now: number = Date.now()): number {
   return Math.max(0, Math.ceil((token.expiresAt - now) / 60_000));
 }
