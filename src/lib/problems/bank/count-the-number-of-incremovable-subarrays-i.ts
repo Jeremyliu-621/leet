@@ -36,13 +36,44 @@ Return the number of **incremovable** subarrays of \`nums\`.
   params: ['nums'],
   starterCode: {
     javascript: `function incremovableSubarrayCount(nums) {
-
+  const n = nums.length;
+  let count = 0;
+  for (let l = 0; l < n; l++) {
+    for (let r = l; r < n; r++) {
+      const remaining = [...nums.slice(0, l), ...nums.slice(r + 1)];
+      let ok = true;
+      for (let i = 1; i < remaining.length; i++) {
+        if (remaining[i] <= remaining[i - 1]) { ok = false; break; }
+      }
+      if (ok) count++;
+    }
+  }
+  return count;
 }`,
     typescript: `function incremovableSubarrayCount(nums: number[]): number {
-
+  const n = nums.length;
+  let count = 0;
+  for (let l = 0; l < n; l++) {
+    for (let r = l; r < n; r++) {
+      const remaining = [...nums.slice(0, l), ...nums.slice(r + 1)];
+      let ok = true;
+      for (let i = 1; i < remaining.length; i++) {
+        if (remaining[i]! <= remaining[i - 1]!) { ok = false; break; }
+      }
+      if (ok) count++;
+    }
+  }
+  return count;
 }`,
     python: `def incremovableSubarrayCount(nums):
-    pass`,
+    n = len(nums)
+    count = 0
+    for l in range(n):
+        for r in range(l, n):
+            remaining = nums[:l] + nums[r+1:]
+            if all(remaining[i] > remaining[i-1] for i in range(1, len(remaining))):
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 10, 5]], expected: 9 },

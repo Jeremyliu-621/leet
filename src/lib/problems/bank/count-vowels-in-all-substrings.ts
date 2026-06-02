@@ -40,13 +40,30 @@ Note: Due to the large number of possible answers, return the answer modulo \`10
   params: ['word'],
   starterCode: {
     javascript: `function countVowels(word) {
-
+  const MOD = 1_000_000_007n;
+  const n = word.length;
+  const vowels = new Set('aeiou');
+  let ans = 0n;
+  for (let i = 0; i < n; i++) {
+    if (vowels.has(word[i])) ans = (ans + BigInt(i + 1) * BigInt(n - i)) % MOD;
+  }
+  return Number(ans);
 }`,
     typescript: `function countVowels(word: string): number {
-
+  const MOD = 1_000_000_007n;
+  const n = word.length;
+  const vowels = new Set('aeiou');
+  let ans = 0n;
+  for (let i = 0; i < n; i++) {
+    if (vowels.has(word[i]!)) ans = (ans + BigInt(i + 1) * BigInt(n - i)) % MOD;
+  }
+  return Number(ans);
 }`,
     python: `def countVowels(word):
-    pass`,
+    MOD = 10**9 + 7
+    n = len(word)
+    vowels = set('aeiou')
+    return sum((i + 1) * (n - i) for i in range(n) if word[i] in vowels) % MOD`,
   },
   visibleTests: [
     { args: ['aba'], expected: 6 },

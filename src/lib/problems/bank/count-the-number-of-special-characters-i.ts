@@ -48,11 +48,29 @@ function numberOfSpecialChars(word) {
   params: ['word'],
   starterCode: {
     javascript: `function numberOfSpecialChars(word) {
-
+  const lower = new Set(), upper = new Set();
+  for (const c of word) {
+    if (c === c.toLowerCase()) lower.add(c);
+    else upper.add(c.toLowerCase());
+  }
+  let count = 0;
+  for (const c of lower) if (upper.has(c)) count++;
+  return count;
 }`,
-    typescript: 'function numberOfSpecialChars(word: string): number {\n\n}',
+    typescript: `function numberOfSpecialChars(word: string): number {
+  const lower = new Set<string>(), upper = new Set<string>();
+  for (const c of word) {
+    if (c === c.toLowerCase()) lower.add(c);
+    else upper.add(c.toLowerCase());
+  }
+  let count = 0;
+  for (const c of lower) if (upper.has(c)) count++;
+  return count;
+}`,
     python: `def numberOfSpecialChars(word):
-    pass`,
+    lower = set(c for c in word if c.islower())
+    upper = set(c.lower() for c in word if c.isupper())
+    return len(lower & upper)`,
   },
   visibleTests: [
     { args: ['aaAbcBC'], expected: 3 },

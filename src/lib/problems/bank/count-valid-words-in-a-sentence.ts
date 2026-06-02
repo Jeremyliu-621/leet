@@ -48,13 +48,64 @@ Given a string \`sentence\`, return the **number of valid words** in \`sentence\
   params: ['sentence'],
   starterCode: {
     javascript: `function countValidWords(sentence) {
-
+  function isValid(token) {
+    let hyphens = 0, puncts = 0;
+    for (let i = 0; i < token.length; i++) {
+      const c = token[i];
+      if (c >= '0' && c <= '9') return false;
+      if (c === '-') {
+        if (++hyphens > 1 || i === 0 || i === token.length - 1) return false;
+        if (!/[a-z]/.test(token[i - 1]) || !/[a-z]/.test(token[i + 1])) return false;
+      }
+      if ('!.,'.includes(c)) {
+        if (++puncts > 1 || i !== token.length - 1) return false;
+      }
+    }
+    return true;
+  }
+  return sentence.split(' ').filter(t => t.length > 0 && isValid(t)).length;
 }`,
     typescript: `function countValidWords(sentence: string): number {
-
+  function isValid(token: string): boolean {
+    let hyphens = 0, puncts = 0;
+    for (let i = 0; i < token.length; i++) {
+      const c = token[i]!;
+      if (c >= '0' && c <= '9') return false;
+      if (c === '-') {
+        if (++hyphens > 1 || i === 0 || i === token.length - 1) return false;
+        if (!/[a-z]/.test(token[i - 1]!) || !/[a-z]/.test(token[i + 1]!)) return false;
+      }
+      if ('!.,'.includes(c)) {
+        if (++puncts > 1 || i !== token.length - 1) return false;
+      }
+    }
+    return true;
+  }
+  return sentence.split(' ').filter(t => t.length > 0 && isValid(t)).length;
 }`,
     python: `def countValidWords(sentence):
-    pass`,
+    import re
+    def is_valid(token):
+        if not token:
+            return False
+        if any(c.isdigit() for c in token):
+            return False
+        hyphens = token.count('-')
+        if hyphens > 1:
+            return False
+        if hyphens == 1:
+            idx = token.index('-')
+            if idx == 0 or idx == len(token) - 1:
+                return False
+            if not token[idx-1].isalpha() or not token[idx+1].isalpha():
+                return False
+        puncts = sum(1 for c in token if c in '!.,')
+        if puncts > 1:
+            return False
+        if puncts == 1 and token[-1] not in '!.,':
+            return False
+        return True
+    return sum(1 for t in sentence.split(' ') if is_valid(t))`,
   },
   visibleTests: [
     { args: ['cat and  dog'], expected: 3 },

@@ -37,13 +37,26 @@ Return the number of vowel strings \`words[i]\` where \`i\` belongs to the inclu
   params: ['words', 'left', 'right'],
   starterCode: {
     javascript: `function vowelStrings(words, left, right) {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  let count = 0;
+  for (let i = left; i <= right; i++) {
+    const w = words[i];
+    if (vowels.has(w[0]) && vowels.has(w[w.length - 1])) count++;
+  }
+  return count;
 }`,
     typescript: `function vowelStrings(words: string[], left: number, right: number): number {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  let count = 0;
+  for (let i = left; i <= right; i++) {
+    const w = words[i]!;
+    if (vowels.has(w[0]!) && vowels.has(w[w.length - 1]!)) count++;
+  }
+  return count;
 }`,
     python: `def vowelStrings(words: list[str], left: int, right: int) -> int:
-    pass`,
+    vowels = set('aeiou')
+    return sum(1 for i in range(left, right + 1) if words[i][0] in vowels and words[i][-1] in vowels)`,
   },
   visibleTests: [
     { args: [['are', 'amy', 'u'], 0, 2], expected: 2 },

@@ -37,13 +37,16 @@ export const problem: Problem = {
   params: ['words'],
   starterCode: {
     javascript: `function countWordsStartingWithVowel(words) {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  return words.filter(w => vowels.has(w[0])).length;
 }`,
     typescript: `function countWordsStartingWithVowel(words: string[]): number {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  return words.filter(w => vowels.has(w[0]!)).length;
 }`,
     python: `def countWordsStartingWithVowel(words: list[str]) -> int:
-    pass`,
+    vowels = set('aeiou')
+    return sum(1 for w in words if w[0] in vowels)`,
   },
   visibleTests: [
     { args: [['apple', 'banana', 'orange', 'grape', 'umbrella']], expected: 3 },

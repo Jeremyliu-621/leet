@@ -40,12 +40,13 @@ function prefixCount(words, pref) {
   params: ['words', 'pref'],
   starterCode: {
     javascript: `function prefixCount(words, pref) {
-
+  return words.filter(w => w.startsWith(pref)).length;
 }`,
-    typescript: "function prefixCount(words: string[], pref: string): number {\n\n}",
-
+    typescript: `function prefixCount(words: string[], pref: string): number {
+  return words.filter(w => w.startsWith(pref)).length;
+}`,
     python: `def prefixCount(words, pref):
-    pass`,
+    return sum(1 for w in words if w.startswith(pref))`,
   },
   visibleTests: [
     { args: [['pay', 'attention', 'practice', 'attend'], 'at'], expected: 2 },

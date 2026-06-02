@@ -38,13 +38,13 @@ export const problem: Problem = {
   params: ['words', 'k'],
   starterCode: {
     javascript: `function countWordsLongerThanK(words, k) {
-
+  return words.filter(w => w.length > k).length;
 }`,
     typescript: `function countWordsLongerThanK(words: string[], k: number): number {
-
+  return words.filter(w => w.length > k).length;
 }`,
     python: `def countWordsLongerThanK(words: list[str], k: int) -> int:
-    pass`,
+    return sum(1 for w in words if len(w) > k)`,
   },
   visibleTests: [
     { args: [['apple', 'pie', 'banana', 'fig'], 4], expected: 2 },

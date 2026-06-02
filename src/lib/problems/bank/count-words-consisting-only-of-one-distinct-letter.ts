@@ -36,13 +36,13 @@ A word has all same characters if it consists of only one distinct letter.`,
   params: ['words'],
   starterCode: {
     javascript: `function countWords(words) {
-
+  return words.filter(w => new Set(w).size === 1).length;
 }`,
     typescript: `function countWords(words: string[]): number {
-
+  return words.filter(w => new Set(w).size === 1).length;
 }`,
     python: `def countWords(words):
-    pass`,
+    return sum(1 for w in words if len(set(w)) == 1)`,
   },
   visibleTests: [
     { args: [['aaa', 'bbb', 'ccc', 'ddd', 'eee', 'aab']], expected: 5 },
