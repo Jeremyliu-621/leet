@@ -49,12 +49,51 @@ Each letter in \`letters\` can only be used **once**. A word can only be include
   params: ['words', 'letters', 'score'],
   starterCode: {
     javascript: `function maxScoreWords(words, letters, score) {
-
+  const avail = new Array(26).fill(0);
+  for (const l of letters) avail[l.charCodeAt(0) - 97]++;
+  const n = words.length;
+  let ans = 0;
+  for (let mask = 0; mask < (1 << n); mask++) {
+    const cnt = new Array(26).fill(0);
+    let sc = 0;
+    for (let i = 0; i < n; i++) {
+      if ((mask >> i) & 1) for (const c of words[i]) { cnt[c.charCodeAt(0) - 97]++; sc += score[c.charCodeAt(0) - 97]; }
+    }
+    if (cnt.every((c, i) => c <= avail[i]) && sc > ans) ans = sc;
+  }
+  return ans;
 }`,
-    typescript: "function maxScoreWords(words: string[], letters: string[], score: number[]): number {\n\n}",
-
+    typescript: `function maxScoreWords(words: string[], letters: string[], score: number[]): number {
+  const avail = new Array<number>(26).fill(0);
+  for (const l of letters) avail[l.charCodeAt(0) - 97]!++;
+  const n = words.length;
+  let ans = 0;
+  for (let mask = 0; mask < (1 << n); mask++) {
+    const cnt = new Array<number>(26).fill(0);
+    let sc = 0;
+    for (let i = 0; i < n; i++) {
+      if ((mask >> i) & 1) for (const c of words[i]!) { cnt[c.charCodeAt(0) - 97]!++; sc += score[c.charCodeAt(0) - 97]!; }
+    }
+    if (cnt.every((c, i) => c <= avail[i]!) && sc > ans) ans = sc;
+  }
+  return ans;
+}`,
     python: `def maxScoreWords(words: list[str], letters: list[str], score: list[int]) -> int:
-    pass`,
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    if hasattr(letters, 'to_py'): letters = list(letters.to_py())
+    if hasattr(score, 'to_py'): score = list(score.to_py())
+    avail = [0] * 26
+    for l in letters: avail[ord(l) - 97] += 1
+    n = len(words)
+    ans = 0
+    for mask in range(1 << n):
+        cnt = [0] * 26
+        sc = 0
+        for i in range(n):
+            if (mask >> i) & 1:
+                for c in words[i]: cnt[ord(c) - 97] += 1; sc += score[ord(c) - 97]
+        if all(cnt[i] <= avail[i] for i in range(26)) and sc > ans: ans = sc
+    return ans`,
   },
   visibleTests: [
     {

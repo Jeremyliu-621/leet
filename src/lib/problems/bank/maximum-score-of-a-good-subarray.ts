@@ -32,18 +32,45 @@ Return the **maximum possible score** of a good subarray.`,
   functionName: 'maximumScore',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: `/**
- * @param {number[]} nums
- * @param {number} k
- * @return {number}
- */
-function maximumScore(nums, k) {
-
+    javascript: `function maximumScore(nums, k) {
+  const n = nums.length;
+  let l = k, r = k, minVal = nums[k], score = nums[k];
+  while (l > 0 || r < n - 1) {
+    if (l === 0) r++;
+    else if (r === n - 1) l--;
+    else if (nums[l - 1] >= nums[r + 1]) l--;
+    else r++;
+    minVal = Math.min(minVal, nums[l], nums[r]);
+    score = Math.max(score, minVal * (r - l + 1));
+  }
+  return score;
 }`,
-    typescript: "function maximumScore(nums: number[], k: number): number {number[]} nums\n * @param {number} k\n * @return {number}\n */\nfunction maximumScore(nums, k) {\n\n}",
-
+    typescript: `function maximumScore(nums: number[], k: number): number {
+  const n = nums.length;
+  let l = k, r = k, minVal = nums[k]!, score = nums[k]!;
+  while (l > 0 || r < n - 1) {
+    if (l === 0) r++;
+    else if (r === n - 1) l--;
+    else if (nums[l - 1]! >= nums[r + 1]!) l--;
+    else r++;
+    minVal = Math.min(minVal, nums[l]!, nums[r]!);
+    score = Math.max(score, minVal * (r - l + 1));
+  }
+  return score;
+}`,
     python: `def maximumScore(nums: list[int], k: int) -> int:
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    l = r = k
+    min_val = score = nums[k]
+    while l > 0 or r < n - 1:
+        if l == 0: r += 1
+        elif r == n - 1: l -= 1
+        elif nums[l - 1] >= nums[r + 1]: l -= 1
+        else: r += 1
+        min_val = min(min_val, nums[l], nums[r])
+        score = max(score, min_val * (r - l + 1))
+    return score`,
   },
   hints: [
     'The answer subarray must include index k. Start with l = r = k and expand outward.',

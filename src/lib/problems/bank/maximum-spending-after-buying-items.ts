@@ -45,13 +45,25 @@ You must buy every item across all shops. Return the **maximum** total spending 
   params: ['values'],
   starterCode: {
     javascript: `function maxSpending(values) {
-
+  const items = [];
+  for (const row of values) for (const v of row) items.push(v);
+  items.sort((a, b) => a - b);
+  let total = 0;
+  for (let i = 0; i < items.length; i++) total += items[i] * (i + 1);
+  return total;
 }`,
     typescript: `function maxSpending(values: number[][]): number {
-
+  const items: number[] = [];
+  for (const row of values) for (const v of row) items.push(v);
+  items.sort((a, b) => a - b);
+  let total = 0;
+  for (let i = 0; i < items.length; i++) total += items[i]! * (i + 1);
+  return total;
 }`,
     python: `def maxSpending(values: list[list[int]]) -> int:
-    pass`,
+    if hasattr(values, 'to_py'): values = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in values.to_py()]
+    items = sorted(v for row in values for v in row)
+    return sum(v * (i + 1) for i, v in enumerate(items))`,
   },
   visibleTests: [
     { args: [[[8, 5, 2], [6, 4, 1], [9, 7, 3]]], expected: 285 },

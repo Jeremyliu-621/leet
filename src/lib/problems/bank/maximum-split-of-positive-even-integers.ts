@@ -41,13 +41,39 @@ Return a list of integers that represent a valid split with the **maximum** numb
   params: ['finalSum'],
   starterCode: {
     javascript: `function maximumEvenSplit(finalSum) {
-
+  if (finalSum % 2 !== 0) return [];
+  const result = [];
+  let cur = 2;
+  while (finalSum >= 2 * cur + 2) {
+    result.push(cur);
+    finalSum -= cur;
+    cur += 2;
+  }
+  result.push(finalSum);
+  return result;
 }`,
     typescript: `function maximumEvenSplit(finalSum: number): number[] {
-
+  if (finalSum % 2 !== 0) return [];
+  const result: number[] = [];
+  let cur = 2;
+  while (finalSum >= 2 * cur + 2) {
+    result.push(cur);
+    finalSum -= cur;
+    cur += 2;
+  }
+  result.push(finalSum);
+  return result;
 }`,
     python: `def maximumEvenSplit(finalSum):
-    pass`,
+    if finalSum % 2 != 0: return []
+    result = []
+    cur = 2
+    while finalSum >= 2 * cur + 2:
+        result.append(cur)
+        finalSum -= cur
+        cur += 2
+    result.append(finalSum)
+    return result`,
   },
   visibleTests: [
     { args: [12], expected: [2, 4, 6] },

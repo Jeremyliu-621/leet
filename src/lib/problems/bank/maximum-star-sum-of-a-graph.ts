@@ -49,13 +49,51 @@ Given an integer \`k\`, return the **maximum star sum** possible. You may pick o
   params: ['vals', 'edges', 'k'],
   starterCode: {
     javascript: `function maxStarSum(vals, edges, k) {
-
+  const n = vals.length;
+  const neighbors = Array.from({length: n}, () => []);
+  for (const [a, b] of edges) {
+    if (vals[b] > 0) neighbors[a].push(vals[b]);
+    if (vals[a] > 0) neighbors[b].push(vals[a]);
+  }
+  let ans = -Infinity;
+  for (let i = 0; i < n; i++) {
+    neighbors[i].sort((a, b) => b - a);
+    let sum = vals[i];
+    for (let j = 0; j < Math.min(k, neighbors[i].length); j++) sum += neighbors[i][j];
+    if (sum > ans) ans = sum;
+  }
+  return ans;
 }`,
     typescript: `function maxStarSum(vals: number[], edges: number[][], k: number): number {
-
+  const n = vals.length;
+  const neighbors: number[][] = Array.from({length: n}, () => []);
+  for (const e of edges) {
+    if (vals[e[1]!]! > 0) neighbors[e[0]!]!.push(vals[e[1]!]!);
+    if (vals[e[0]!]! > 0) neighbors[e[1]!]!.push(vals[e[0]!]!);
+  }
+  let ans = -Infinity;
+  for (let i = 0; i < n; i++) {
+    neighbors[i]!.sort((a, b) => b - a);
+    let sum = vals[i]!;
+    for (let j = 0; j < Math.min(k, neighbors[i]!.length); j++) sum += neighbors[i]![j]!;
+    if (sum > ans) ans = sum;
+  }
+  return ans;
 }`,
     python: `def maxStarSum(vals, edges, k):
-    pass`,
+    if hasattr(vals, 'to_py'): vals = list(vals.to_py())
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    n = len(vals)
+    neighbors = [[] for _ in range(n)]
+    for a, b in edges:
+        if vals[b] > 0: neighbors[a].append(vals[b])
+        if vals[a] > 0: neighbors[b].append(vals[a])
+    ans = -float('inf')
+    for i in range(n):
+        neighbors[i].sort(reverse=True)
+        s = vals[i] + sum(neighbors[i][:k])
+        if s > ans: ans = s
+    return ans`,
   },
   visibleTests: [
     {

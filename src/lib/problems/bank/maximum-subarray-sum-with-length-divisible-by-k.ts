@@ -37,13 +37,59 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximumSubarraySum(nums, k) {
-
+  const n = nums.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + nums[i];
+  const minPre = new Array(k).fill(Infinity);
+  let ans = -Infinity;
+  for (let r = 1; r <= n; r++) {
+    const l = r - k;
+    if (l >= 0) {
+      const m = l % k;
+      if (prefix[l] < minPre[m]) minPre[m] = prefix[l];
+    }
+    if (minPre[r % k] < Infinity) {
+      const cand = prefix[r] - minPre[r % k];
+      if (cand > ans) ans = cand;
+    }
+  }
+  return ans;
 }`,
     typescript: `function maximumSubarraySum(nums: number[], k: number): number {
-
+  const n = nums.length;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+  const minPre = new Array<number>(k).fill(Infinity);
+  let ans = -Infinity;
+  for (let r = 1; r <= n; r++) {
+    const l = r - k;
+    if (l >= 0) {
+      const m = l % k;
+      if (prefix[l]! < minPre[m]!) minPre[m] = prefix[l]!;
+    }
+    if (minPre[r % k]! < Infinity) {
+      const cand = prefix[r]! - minPre[r % k]!;
+      if (cand > ans) ans = cand;
+    }
+  }
+  return ans;
 }`,
     python: `def maximumSubarraySum(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i + 1] = prefix[i] + nums[i]
+    min_pre = [float('inf')] * k
+    ans = -float('inf')
+    for r in range(1, n + 1):
+        l = r - k
+        if l >= 0:
+            m = l % k
+            if prefix[l] < min_pre[m]: min_pre[m] = prefix[l]
+        if min_pre[r % k] < float('inf'):
+            cand = prefix[r] - min_pre[r % k]
+            if cand > ans: ans = cand
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 2], expected: 14 },
