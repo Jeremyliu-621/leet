@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2929** problems; 9147 tests green. Batch 283 (4 new problems) pushed.
+**Current focus:** Bank at **2937** problems; 9159 tests green. Batch 283 (8 new problems) pushed.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue starter backfill (batch 39s+); continued bank growth (batch 284+); UX polish.
+**Next up:** Continued bank growth (batch 284+); starter backfill (batch 40+); UX polish.
+
+### feat(bank): batch 283 (local) — min-score-removals-tree, verbal-arithmetic, palindrome-removal, valid-words-puzzle (2026-06-02)
+Four new problems: `minimum-score-after-removals-on-a-tree` (hard/tree+bit-manipulation — DFS subtree XOR precomputation; ancestor check via in/out DFS timestamps; O(n²) pair enumeration; three-component scores for ancestor vs. sibling edge pairs), `verbal-arithmetic-puzzle` (hard/backtracking — column-by-column digit assignment with carry propagation; assigns result digit deterministically from column sum; Python solution uses column-wise pruning for speed), `palindrome-removal` (hard/dp — interval DP: dp[i][j]=1+dp[i][j-1]; if arr[i]==arr[j] then dp[i+1][j-1]; for k where arr[k]==arr[j]: dp[i][k]+dp[k+1][j-1]; O(n³)), `number-of-valid-words-for-each-puzzle` (hard/bit-manipulation+hash-map — word bitmask frequency map; enumerate all 2^7=128 submasks of puzzle bitmask containing first letter bit; O(128) per puzzle). Bank at **2937**; 9159 tests.
 
 ### feat(bank): batch 283 — double-modular-exp, max-score-node-seq, min-increment-unique, min-ops-string-sort (2026-06-02)
 Four new problems: `double-modular-exponentiation` (medium/math — compute ((a^b%10)^c)%m per variable; return indices where result=0; BigInt modpow), `maximum-score-node-sequence` (hard/graph — top-3 neighbors per node; for each edge (b,c) try all 9 (a,d) neighbor pairs; O(|E|) after preprocessing), `minimum-increment-to-make-array-unique` (medium/arrays — sort then greedily push duplicates to prev+1; O(n log n)), `minimum-number-of-operations-to-make-string-sorted` (hard/math — lexicographic rank of string among all permutations of its chars; multinomial coefficient with modular inverse via Fermat; O(n·26)). Bank at **2929**; 9147 tests.
