@@ -44,13 +44,42 @@ Return the length of the **longest** common prefix among all pairs. If no common
   params: ['arr1', 'arr2'],
   starterCode: {
     javascript: `function longestCommonPrefix(arr1, arr2) {
-
+  const prefixes = new Set();
+  for (const n of arr1) {
+    const s = String(n);
+    for (let i = 1; i <= s.length; i++) prefixes.add(s.slice(0, i));
+  }
+  let ans = 0;
+  for (const n of arr2) {
+    const s = String(n);
+    for (let i = 1; i <= s.length; i++) if (prefixes.has(s.slice(0, i))) ans = Math.max(ans, i);
+  }
+  return ans;
 }`,
     typescript: `function longestCommonPrefix(arr1: number[], arr2: number[]): number {
-
+  const prefixes = new Set<string>();
+  for (const n of arr1) {
+    const s = String(n);
+    for (let i = 1; i <= s.length; i++) prefixes.add(s.slice(0, i));
+  }
+  let ans = 0;
+  for (const n of arr2) {
+    const s = String(n);
+    for (let i = 1; i <= s.length; i++) if (prefixes.has(s.slice(0, i))) ans = Math.max(ans, i);
+  }
+  return ans;
 }`,
     python: `def longestCommonPrefix(arr1, arr2):
-    pass`,
+    prefixes = set()
+    for n in arr1:
+        s = str(n)
+        for i in range(1, len(s) + 1): prefixes.add(s[:i])
+    ans = 0
+    for n in arr2:
+        s = str(n)
+        for i in range(1, len(s) + 1):
+            if s[:i] in prefixes: ans = max(ans, i)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 10, 100], [1000]], expected: 3 },

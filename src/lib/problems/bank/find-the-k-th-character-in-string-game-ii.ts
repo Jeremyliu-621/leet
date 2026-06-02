@@ -46,13 +46,32 @@ Return the value of the **k**-th character in \`word\` after all operations, **1
   params: ['k', 'operations'],
   starterCode: {
     javascript: `function kthCharacter(k, operations) {
-
+  let offset = 0, kBig = BigInt(k);
+  let len = 1n << BigInt(operations.length);
+  for (let i = operations.length - 1; i >= 0; i--) {
+    len >>= 1n;
+    if (kBig > len) { kBig -= len; if (operations[i] === 1) offset++; }
+  }
+  return String.fromCharCode(97 + offset % 26);
 }`,
     typescript: `function kthCharacter(k: number, operations: number[]): string {
-
+  let offset = 0, kBig = BigInt(k);
+  let len = 1n << BigInt(operations.length);
+  for (let i = operations.length - 1; i >= 0; i--) {
+    len >>= 1n;
+    if (kBig > len) { kBig -= len; if (operations[i] === 1) offset++; }
+  }
+  return String.fromCharCode(97 + offset % 26);
 }`,
     python: `def kthCharacter(k, operations):
-    pass`,
+    offset, k_val = 0, k
+    length = 1 << len(operations)
+    for i in range(len(operations) - 1, -1, -1):
+        length >>= 1
+        if k_val > length:
+            k_val -= length
+            if operations[i] == 1: offset += 1
+    return chr(97 + offset % 26)`,
   },
   visibleTests: [
     { args: [5, [0, 0, 0]], expected: 'a' },

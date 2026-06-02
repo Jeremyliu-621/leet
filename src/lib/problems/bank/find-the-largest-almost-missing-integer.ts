@@ -40,13 +40,24 @@ Return the **largest** almost-missing integer from \`nums\`. If no such integer 
   params: ['nums'],
   starterCode: {
     javascript: `function largestAlmostMissingInteger(nums) {
-
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = -1;
+  for (const [n, c] of freq) if (c === 1 && n > ans) ans = n;
+  return ans;
 }`,
     typescript: `function largestAlmostMissingInteger(nums: number[]): number {
-
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = -1;
+  for (const [n, c] of freq) if (c === 1 && n > ans) ans = n;
+  return ans;
 }`,
     python: `def largestAlmostMissingInteger(nums):
-    pass`,
+    from collections import Counter
+    freq = Counter(nums)
+    ones = [n for n, c in freq.items() if c == 1]
+    return max(ones) if ones else -1`,
   },
   visibleTests: [
     { args: [[3, 2, 1, 4, 3]], expected: 4 },

@@ -48,12 +48,33 @@ Output: 0
   params: ['s'],
   starterCode: {
     javascript: `function findTheLongestBalancedSubstring(s) {
-
+  let ans = 0, i = 0;
+  while (i < s.length) {
+    let zeros = 0, ones = 0;
+    while (i < s.length && s[i] === '0') { zeros++; i++; }
+    while (i < s.length && s[i] === '1') { ones++; i++; }
+    ans = Math.max(ans, 2 * Math.min(zeros, ones));
+  }
+  return ans;
 }`,
-    typescript: "function findTheLongestBalancedSubstring(s: string): number {\n\n}",
-
+    typescript: `function findTheLongestBalancedSubstring(s: string): number {
+  let ans = 0, i = 0;
+  while (i < s.length) {
+    let zeros = 0, ones = 0;
+    while (i < s.length && s[i] === '0') { zeros++; i++; }
+    while (i < s.length && s[i] === '1') { ones++; i++; }
+    ans = Math.max(ans, 2 * Math.min(zeros, ones));
+  }
+  return ans;
+}`,
     python: `def findTheLongestBalancedSubstring(s):
-    `,
+    ans, i = 0, 0
+    while i < len(s):
+        zeros = ones = 0
+        while i < len(s) and s[i] == '0': zeros += 1; i += 1
+        while i < len(s) and s[i] == '1': ones += 1; i += 1
+        ans = max(ans, 2 * min(zeros, ones))
+    return ans`,
   },
   visibleTests: [
     { args: ['01000111'], expected: 6 },

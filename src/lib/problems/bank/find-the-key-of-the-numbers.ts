@@ -45,13 +45,27 @@ Return the **key** of the three numbers **without** leading zeros (if any).`,
   params: ['num1', 'num2', 'num3'],
   starterCode: {
     javascript: `function generateKey(num1, num2, num3) {
-
+  let key = 0;
+  for (let p = 0; p < 4; p++) {
+    const pw = 10 ** p;
+    key += Math.min(Math.floor(num1 / pw) % 10, Math.floor(num2 / pw) % 10, Math.floor(num3 / pw) % 10) * pw;
+  }
+  return key;
 }`,
     typescript: `function generateKey(num1: number, num2: number, num3: number): number {
-
+  let key = 0;
+  for (let p = 0; p < 4; p++) {
+    const pw = 10 ** p;
+    key += Math.min(Math.floor(num1 / pw) % 10, Math.floor(num2 / pw) % 10, Math.floor(num3 / pw) % 10) * pw;
+  }
+  return key;
 }`,
     python: `def generateKey(num1: int, num2: int, num3: int) -> int:
-    pass`,
+    key = 0
+    for p in range(4):
+        pw = 10 ** p
+        key += min(num1 // pw % 10, num2 // pw % 10, num3 // pw % 10) * pw
+    return key`,
   },
   visibleTests: [
     { args: [1, 10, 1000], expected: 0 },
