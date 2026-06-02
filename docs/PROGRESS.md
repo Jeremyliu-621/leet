@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2990** problems; 9309 tests green. Batch 41s starter backfill complete.
+**Current focus:** Bank at **2993** problems; 9339 tests green. Batch 292 complete (3 new problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue starter backfill (maximum-* stubs); bank growth (batch 292+); UX polish.
+**Next up:** Bank growth (batch 293+); starter backfill; UX polish.
+
+### feat(bank): batch 292 — max-sum-score-array, house-placements, max-jumps-last-index (2026-06-02)
+Three new problems: `maximum-sum-score-of-array` (medium/arrays — O(n) prefix scan; score(i)=max(prefix[i+1], suffix[i]); suffix[i]=total-prefix[i]+nums[i]; O(n)), `count-the-number-of-house-placements-on-a-street` (medium/dp+math — each side independent; f(n)=Fibonacci-like, f(0)=1,f(1)=2; answer=f(n)²%MOD; O(n)), `maximum-number-of-jumps-to-reach-last-index` (medium/arrays+dp — dp[j]=max over valid i<j: dp[i]+1 if |nums[j]-nums[i]|≤target; O(n²); return dp[n-1] or -1 if unreachable). Bank at **2993**; 9339 tests.
 
 ### feat: starter backfill batch 41s — maximum-elegance, energy-boost, taxi-earnings, employees-meeting (2026-06-02)
 Four stubs filled: `maximum-elegance-of-a-k-length-subsequence` (hard/heap — greedy sort desc by profit, take top-k, swap duplicate-category for new-category using stack of replaceable profits), `maximum-energy-boost-from-two-drinks` (medium/dp — rolling dpA/dpB with 2-turn switch gap), `maximum-earnings-from-taxi` (medium/dp — interval DP grouped by ride end point), `maximum-employees-invited-to-meeting` (hard/graph — functional graph topological sort for chain depths; max of longest ≥3 cycle vs sum of mutual-pair contributions). 9309 tests.
