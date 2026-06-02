@@ -47,10 +47,61 @@ return Number(res);\`\`\``,
   functionName: 'countPairs',
   params: ['n', 'edges'],
   starterCode: {
-    javascript: 'function countPairs(n, edges) {\n\n}\n',
-    typescript: "function countPairs(n: number, edges: number[][]): number {\n\n}",
-
-    python: 'def countPairs(n, edges):\n    pass\n',
+    javascript: `function countPairs(n, edges) {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const size = new Array(n).fill(1);
+  function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
+  for (const [a, b] of edges) {
+    const pa = find(a), pb = find(b);
+    if (pa !== pb) { parent[pa] = pb; size[pb] += size[pa]; }
+  }
+  let ans = 0n, rem = BigInt(n);
+  const seen = new Set();
+  for (let i = 0; i < n; i++) {
+    const root = find(i);
+    if (!seen.has(root)) { seen.add(root); rem -= BigInt(size[root]); ans += BigInt(size[root]) * rem; }
+  }
+  return Number(ans);
+}`,
+    typescript: `function countPairs(n: number, edges: number[][]): number {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const size = new Array<number>(n).fill(1);
+  function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+  for (const [a, b] of edges) {
+    const pa = find(a!), pb = find(b!);
+    if (pa !== pb) { parent[pa] = pb; size[pb]! += size[pa]!; }
+  }
+  let ans = 0n, rem = BigInt(n);
+  const seen = new Set<number>();
+  for (let i = 0; i < n; i++) {
+    const root = find(i);
+    if (!seen.has(root)) { seen.add(root); rem -= BigInt(size[root]!); ans += BigInt(size[root]!) * rem; }
+  }
+  return Number(ans);
+}`,
+    python: `def countPairs(n, edges):
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            size[pb] += size[pa]
+    ans = rem = 0
+    rem = n
+    seen = set()
+    for i in range(n):
+        root = find(i)
+        if root not in seen:
+            seen.add(root)
+            rem -= size[root]
+            ans += size[root] * rem
+    return ans`,
   },
   visibleTests: [
     { args: [3, [[0,1]]], expected: 2 },

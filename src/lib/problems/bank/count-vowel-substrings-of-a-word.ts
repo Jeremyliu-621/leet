@@ -45,13 +45,47 @@ Given a string \`word\`, return the number of **vowel substrings** in \`word\`.
   params: ['word'],
   starterCode: {
     javascript: `function countVowelSubstringsOfAWord(word) {
-  // Count substrings that contain only vowels AND all 5 vowels
+  const vowels = new Set('aeiou');
+  let count = 0;
+  for (let i = 0; i < word.length; i++) {
+    if (!vowels.has(word[i])) continue;
+    const seen = new Set();
+    for (let j = i; j < word.length; j++) {
+      if (!vowels.has(word[j])) break;
+      seen.add(word[j]);
+      if (seen.size === 5) count++;
+    }
+  }
+  return count;
 }`,
-    typescript: "function countVowelSubstringsOfAWord(word: string): number {\n  // Count substrings that contain only vowels AND all 5 vowels\n}",
-
-    python: `def countVowelSubstringsOfAWord(word: str) -> int:
-    # Count substrings that contain only vowels AND all 5 vowels
-    pass`,
+    typescript: `function countVowelSubstringsOfAWord(word: string): number {
+  const vowels = new Set('aeiou');
+  let count = 0;
+  for (let i = 0; i < word.length; i++) {
+    if (!vowels.has(word[i]!)) continue;
+    const seen = new Set<string>();
+    for (let j = i; j < word.length; j++) {
+      if (!vowels.has(word[j]!)) break;
+      seen.add(word[j]!);
+      if (seen.size === 5) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def countVowelSubstringsOfAWord(word):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(word)):
+        if word[i] not in vowels:
+            continue
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in vowels:
+                break
+            seen.add(word[j])
+            if len(seen) == 5:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: ['aeiouu'], expected: 2 },

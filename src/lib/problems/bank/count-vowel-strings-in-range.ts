@@ -31,10 +31,27 @@ return queries.map(([l, r]) => words.slice(l, r+1).filter(check).length);\`\`\``
   functionName: 'vowelStringsInRange',
   params: ['words', 'left', 'right'],
   starterCode: {
-    javascript: 'function vowelStringsInRange(words, left, right) {\n  \n}\n',
-    typescript: "function vowelStringsInRange(words: string[], left: number, right: number): number {\n  \n}",
-
-    python: 'def vowelStringsInRange(words, left, right):\n    pass\n',
+    javascript: `function vowelStringsInRange(words, left, right) {
+  const v = new Set('aeiou');
+  let count = 0;
+  for (let i = left; i <= right; i++) {
+    const w = words[i];
+    if (v.has(w[0]) && v.has(w[w.length - 1])) count++;
+  }
+  return count;
+}`,
+    typescript: `function vowelStringsInRange(words: string[], left: number, right: number): number {
+  const v = new Set('aeiou');
+  let count = 0;
+  for (let i = left; i <= right; i++) {
+    const w = words[i]!;
+    if (v.has(w[0]!) && v.has(w[w.length - 1]!)) count++;
+  }
+  return count;
+}`,
+    python: `def vowelStringsInRange(words, left, right):
+    v = set('aeiou')
+    return sum(1 for w in words[left:right+1] if w[0] in v and w[-1] in v)`,
   },
   visibleTests: [
     { args: [['are','amy','u'], 0, 2], expected: 2 },

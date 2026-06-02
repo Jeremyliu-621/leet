@@ -37,12 +37,52 @@ Given a string \`s\`, return the sum of \`countUniqueChars(t)\` where \`t\` is a
   params: ['s'],
   starterCode: {
     javascript: `function uniqueLetterString(s) {
-
+  const MOD = 1000000007;
+  const positions = new Map();
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (!positions.has(c)) positions.set(c, [-1]);
+    positions.get(c).push(i);
+  }
+  let total = 0;
+  for (const pos of positions.values()) {
+    pos.push(s.length);
+    for (let i = 1; i < pos.length - 1; i++) {
+      total = (total + (pos[i] - pos[i-1]) * (pos[i+1] - pos[i])) % MOD;
+    }
+  }
+  return total;
 }`,
-    typescript: "function uniqueLetterString(s: string): number {\n\n}",
-
+    typescript: `function uniqueLetterString(s: string): number {
+  const MOD = 1000000007;
+  const positions = new Map<string, number[]>();
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]!;
+    if (!positions.has(c)) positions.set(c, [-1]);
+    positions.get(c)!.push(i);
+  }
+  let total = 0;
+  for (const pos of positions.values()) {
+    pos.push(s.length);
+    for (let i = 1; i < pos.length - 1; i++) {
+      total = (total + (pos[i]! - pos[i-1]!) * (pos[i+1]! - pos[i]!)) % MOD;
+    }
+  }
+  return total;
+}`,
     python: `def uniqueLetterString(s):
-    pass`,
+    MOD = 10**9 + 7
+    from collections import defaultdict
+    positions = defaultdict(lambda: [-1])
+    for i, c in enumerate(s):
+        positions[c].append(i)
+    total = 0
+    n = len(s)
+    for pos in positions.values():
+        pos.append(n)
+        for i in range(1, len(pos) - 1):
+            total = (total + (pos[i] - pos[i-1]) * (pos[i+1] - pos[i])) % MOD
+    return total`,
   },
   visibleTests: [
     { args: ['ABC'], expected: 10 },

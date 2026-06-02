@@ -33,10 +33,27 @@ Note that houses on **opposite sides** of the street are not considered adjacent
   functionName: 'countWays',
   params: ['n'],
   starterCode: {
-    javascript: 'function countWays(n) {\n\n}\n',
-    typescript: "function countWays(n: number): number {\n\n}",
-
-    python: 'def countWays(n):\n    pass\n',
+    javascript: `function countWays(n) {
+  const MOD = 1000000007;
+  let a = 1, b = 0;
+  for (let i = 0; i < n; i++) [a, b] = [(a + b) % MOD, a % MOD];
+  const side = (a + b) % MOD;
+  return side * side % MOD;
+}`,
+    typescript: `function countWays(n: number): number {
+  const MOD = 1000000007;
+  let a = 1, b = 0;
+  for (let i = 0; i < n; i++) [a, b] = [(a + b) % MOD, a % MOD];
+  const side = (a + b) % MOD;
+  return side * side % MOD;
+}`,
+    python: `def countWays(n):
+    MOD = 10**9 + 7
+    a, b = 1, 0
+    for _ in range(n):
+        a, b = (a + b) % MOD, a % MOD
+    side = (a + b) % MOD
+    return side * side % MOD`,
   },
   visibleTests: [
     { args: [1], expected: 4 },
