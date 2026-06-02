@@ -41,13 +41,57 @@ Return the total number of such paths.`,
   params: ['grid', 'k'],
   starterCode: {
     javascript: `function countPathsWithXorValue(grid, k) {
-
+  const m = grid.length, n = grid[0].length;
+  const dp = Array.from({length: m}, () =>
+    Array.from({length: n}, () => new Array(16).fill(0)));
+  dp[0][0][grid[0][0]] = 1;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i === 0 && j === 0) continue;
+      const val = grid[i][j];
+      for (let x = 0; x < 16; x++) {
+        const prev = x ^ val;
+        if (i > 0) dp[i][j][x] += dp[i-1][j][prev];
+        if (j > 0) dp[i][j][x] += dp[i][j-1][prev];
+      }
+    }
+  }
+  return dp[m-1][n-1][k] || 0;
 }`,
     typescript: `function countPathsWithXorValue(grid: number[][], k: number): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  const dp: number[][][] = Array.from({length: m}, () =>
+    Array.from({length: n}, () => new Array(16).fill(0)));
+  dp[0]![0]![grid[0]![0]!] = 1;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i === 0 && j === 0) continue;
+      const val = grid[i]![j]!;
+      for (let x = 0; x < 16; x++) {
+        const prev = x ^ val;
+        if (i > 0) dp[i]![j]![x]! += dp[i-1]![j]![prev]!;
+        if (j > 0) dp[i]![j]![x]! += dp[i]![j-1]![prev]!;
+      }
+    }
+  }
+  return dp[m-1]![n-1]![k] ?? 0;
 }`,
     python: `def countPathsWithXorValue(grid, k):
-    pass`,
+    m, n = len(grid), len(grid[0])
+    dp = [[[0] * 16 for _ in range(n)] for _ in range(m)]
+    dp[0][0][grid[0][0]] = 1
+    for i in range(m):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            val = grid[i][j]
+            for x in range(16):
+                prev = x ^ val
+                if i > 0:
+                    dp[i][j][x] += dp[i-1][j][prev]
+                if j > 0:
+                    dp[i][j][x] += dp[i][j-1][prev]
+    return dp[m-1][n-1][k]`,
   },
   visibleTests: [
     { args: [[[2, 1, 5], [7, 10, 0], [12, 6, 4]], 11], expected: 3 },

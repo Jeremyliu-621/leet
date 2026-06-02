@@ -32,13 +32,33 @@ export const problem: Problem = {
   params: ['grid'],
   starterCode: {
     javascript: `function countNegatives(grid) {
-  // Return count of negative numbers in the sorted matrix
+  const m = grid.length, n = grid[0].length;
+  let r = 0, c = n - 1, count = 0;
+  while (r < m && c >= 0) {
+    if (grid[r][c] < 0) { count += m - r; c--; }
+    else r++;
+  }
+  return count;
 }`,
-    typescript: "function countNegatives(grid: number[][]): number {\n  // Return count of negative numbers in the sorted matrix\n}",
-
+    typescript: `function countNegatives(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  let r = 0, c = n - 1, count = 0;
+  while (r < m && c >= 0) {
+    if (grid[r]![c]! < 0) { count += m - r; c--; }
+    else r++;
+  }
+  return count;
+}`,
     python: `def countNegatives(grid):
-    # Return count of negative numbers in the sorted matrix
-    pass`,
+    m, n = len(grid), len(grid[0])
+    r, c, count = 0, n - 1, 0
+    while r < m and c >= 0:
+        if grid[r][c] < 0:
+            count += m - r
+            c -= 1
+        else:
+            r += 1
+    return count`,
   },
   visibleTests: [
     { args: [[[4,3,2,-1],[3,2,1,-1],[1,1,-1,-2],[-1,-1,-2,-3]]], expected: 8 },

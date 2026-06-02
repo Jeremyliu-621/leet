@@ -37,13 +37,41 @@ Return the number of pairs \`(i, j)\` such that \`i < j\` and the distance betwe
   params: ['coordinates', 'k'],
   starterCode: {
     javascript: `function countPairs(coordinates, k) {
-
+  const seen = new Map();
+  let count = 0;
+  for (const [x, y] of coordinates) {
+    for (let xorX = 0; xorX <= k; xorX++) {
+      const key = (x ^ xorX) + ',' + (y ^ (k - xorX));
+      count += seen.get(key) || 0;
+    }
+    const key = x + ',' + y;
+    seen.set(key, (seen.get(key) || 0) + 1);
+  }
+  return count;
 }`,
     typescript: `function countPairs(coordinates: number[][], k: number): number {
-
+  const seen = new Map<string, number>();
+  let count = 0;
+  for (const [x, y] of coordinates) {
+    for (let xorX = 0; xorX <= k; xorX++) {
+      const key = (x! ^ xorX) + ',' + (y! ^ (k - xorX));
+      count += seen.get(key) ?? 0;
+    }
+    const key = x! + ',' + y!;
+    seen.set(key, (seen.get(key) ?? 0) + 1);
+  }
+  return count;
 }`,
     python: `def countPairs(coordinates: list[list[int]], k: int) -> int:
-    pass`,
+    seen = {}
+    count = 0
+    for x, y in coordinates:
+        for xor_x in range(k + 1):
+            key = (x ^ xor_x, y ^ (k - xor_x))
+            count += seen.get(key, 0)
+        key = (x, y)
+        seen[key] = seen.get(key, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[[1, 2], [4, 2], [1, 3], [5, 2]], 5], expected: 2 },

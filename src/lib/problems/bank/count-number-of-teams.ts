@@ -40,12 +40,49 @@ Return the number of teams you can form given the conditions. (Soldiers can be p
   params: ['rating'],
   starterCode: {
     javascript: `function numTeams(rating) {
-
+  let count = 0;
+  const n = rating.length;
+  for (let j = 1; j < n - 1; j++) {
+    let leftSmall = 0, leftLarge = 0, rightSmall = 0, rightLarge = 0;
+    for (let i = 0; i < j; i++) {
+      if (rating[i] < rating[j]) leftSmall++;
+      else if (rating[i] > rating[j]) leftLarge++;
+    }
+    for (let k = j + 1; k < n; k++) {
+      if (rating[k] < rating[j]) rightSmall++;
+      else if (rating[k] > rating[j]) rightLarge++;
+    }
+    count += leftSmall * rightLarge + leftLarge * rightSmall;
+  }
+  return count;
 }`,
-    typescript: "function numTeams(rating: number[]): number {\n\n}",
-
+    typescript: `function numTeams(rating: number[]): number {
+  let count = 0;
+  const n = rating.length;
+  for (let j = 1; j < n - 1; j++) {
+    let leftSmall = 0, leftLarge = 0, rightSmall = 0, rightLarge = 0;
+    for (let i = 0; i < j; i++) {
+      if (rating[i]! < rating[j]!) leftSmall++;
+      else if (rating[i]! > rating[j]!) leftLarge++;
+    }
+    for (let k = j + 1; k < n; k++) {
+      if (rating[k]! < rating[j]!) rightSmall++;
+      else if (rating[k]! > rating[j]!) rightLarge++;
+    }
+    count += leftSmall * rightLarge + leftLarge * rightSmall;
+  }
+  return count;
+}`,
     python: `def numTeams(rating):
-    pass`,
+    n = len(rating)
+    count = 0
+    for j in range(1, n - 1):
+        left_small = sum(1 for i in range(j) if rating[i] < rating[j])
+        left_large = sum(1 for i in range(j) if rating[i] > rating[j])
+        right_small = sum(1 for k in range(j + 1, n) if rating[k] < rating[j])
+        right_large = sum(1 for k in range(j + 1, n) if rating[k] > rating[j])
+        count += left_small * right_large + left_large * right_small
+    return count`,
   },
   visibleTests: [
     { args: [[2, 5, 3, 4, 1]], expected: 3 },

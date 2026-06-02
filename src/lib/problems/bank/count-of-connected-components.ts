@@ -43,12 +43,39 @@ Return the **number of connected components** in the graph.`,
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function countComponents(n, edges) {
-
+  const parent = Array.from({length: n}, (_, i) => i);
+  const find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
+  let count = n;
+  for (const [a, b] of edges) {
+    const pa = find(a), pb = find(b);
+    if (pa !== pb) { parent[pa] = pb; count--; }
+  }
+  return count;
 }`,
-    typescript: "function countComponents(n: number, edges: number[][]): number {\n\n}",
-
+    typescript: `function countComponents(n: number, edges: number[][]): number {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const find = (x: number): number => parent[x] === x ? x : (parent[x] = find(parent[x]!));
+  let count = n;
+  for (const [a, b] of edges) {
+    const pa = find(a!), pb = find(b!);
+    if (pa !== pb) { parent[pa] = pb; count--; }
+  }
+  return count;
+}`,
     python: `def countComponents(n, edges):
-    pass`,
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    count = n
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa != pb:
+            parent[pa] = pb
+            count -= 1
+    return count`,
   },
   visibleTests: [
     { args: [5, [[0, 1], [1, 2], [3, 4]]], expected: 2 },

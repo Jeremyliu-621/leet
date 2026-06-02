@@ -40,13 +40,38 @@ The bitwise OR of an array is the OR of all its elements.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countMaxOrSubsets(nums) {
-
+  const maxOr = nums.reduce((a, b) => a | b, 0);
+  let count = 0;
+  for (let mask = 1; mask < (1 << nums.length); mask++) {
+    let or = 0;
+    for (let i = 0; i < nums.length; i++) if ((mask >> i) & 1) or |= nums[i];
+    if (or === maxOr) count++;
+  }
+  return count;
 }`,
     typescript: `function countMaxOrSubsets(nums: number[]): number {
-
+  const maxOr = nums.reduce((a, b) => a | b, 0);
+  let count = 0;
+  for (let mask = 1; mask < (1 << nums.length); mask++) {
+    let or = 0;
+    for (let i = 0; i < nums.length; i++) if ((mask >> i) & 1) or |= nums[i]!;
+    if (or === maxOr) count++;
+  }
+  return count;
 }`,
     python: `def countMaxOrSubsets(nums: list[int]) -> int:
-    pass`,
+    max_or = 0
+    for n in nums:
+        max_or |= n
+    count = 0
+    for mask in range(1, 1 << len(nums)):
+        cur = 0
+        for i, n in enumerate(nums):
+            if (mask >> i) & 1:
+                cur |= n
+        if cur == max_or:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[3, 1]], expected: 2 },
