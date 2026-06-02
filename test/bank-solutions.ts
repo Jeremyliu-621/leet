@@ -47404,6 +47404,63 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 286
+  'construct-the-minimum-bitwise-array-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    return nums.map(p => {
+      if (p === 2) return -1;
+      const lsb = (p + 1) & -(p + 1);
+      return p ^ (lsb >> 1);
+    });
+  },
+
+  'find-valid-pair-of-adjacent-digits-in-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const freq: Record<string, number> = {};
+    for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+    for (let i = 0; i + 1 < s.length; i++) {
+      if (freq[s[i]!]! === +s[i]! && freq[s[i + 1]!]! === +s[i + 1]!) return s[i]! + s[i + 1]!;
+    }
+    return '';
+  },
+
+  'maximize-total-reward-using-operations-ii': (...args: unknown[]) => {
+    const rewardValues = args[0] as number[];
+    const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+    let dp = 1n;
+    for (const r of sorted) {
+      const rb = BigInt(r);
+      dp |= (dp & ((1n << rb) - 1n)) << rb;
+    }
+    return dp.toString(2).length - 1;
+  },
+
+  'divide-an-array-into-subarrays-with-minimum-cost-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const dist = args[2] as number;
+    const n = nums.length;
+    if (k === 1) return nums[0]!;
+    let prev = new Array<number>(n).fill(Infinity);
+    let runMin = Infinity;
+    for (let j = 1; j < n; j++) {
+      runMin = Math.min(runMin, nums[j]!);
+      prev[j] = runMin;
+    }
+    for (let t = 2; t <= k - 1; t++) {
+      const curr = new Array<number>(n).fill(Infinity);
+      let bestPrev = Infinity;
+      for (let j = 1; j < n; j++) {
+        const avail = j - dist - 1;
+        if (avail >= 1) bestPrev = Math.min(bestPrev, prev[avail]!);
+        if (bestPrev !== Infinity) curr[j] = bestPrev + nums[j]!;
+        if (j > 1 && curr[j - 1]! < curr[j]!) curr[j] = curr[j - 1]!;
+      }
+      prev = curr;
+    }
+    return nums[0]! + prev[n - 1]!;
+  },
+
   // batch 285
   'minimum-number-of-operations-to-make-all-array-elements-equal-to-one': (...args: unknown[]) => {
     const nums = args[0] as number[];

@@ -46429,6 +46429,60 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 286
+  'construct-the-minimum-bitwise-array-ii': `def minBitwiseArray(nums):
+    result = []
+    for p in nums:
+        if p == 2:
+            result.append(-1)
+        else:
+            lsb = (p + 1) & -(p + 1)
+            result.append(p ^ (lsb >> 1))
+    return result
+`,
+
+  'find-valid-pair-of-adjacent-digits-in-string': `def findValidPair(s):
+    from collections import Counter
+    freq = Counter(s)
+    for i in range(len(s) - 1):
+        if freq[s[i]] == int(s[i]) and freq[s[i+1]] == int(s[i+1]):
+            return s[i] + s[i+1]
+    return ""
+`,
+
+  'maximize-total-reward-using-operations-ii': `def maxTotalReward(rewardValues):
+    unique = sorted(set(rewardValues))
+    dp = 1
+    for r in unique:
+        dp |= (dp & ((1 << r) - 1)) << r
+    return dp.bit_length() - 1
+`,
+
+  'divide-an-array-into-subarrays-with-minimum-cost-ii': `def minimumCost(nums, k, dist):
+    n = len(nums)
+    if k == 1:
+        return nums[0]
+    INF = float('inf')
+    prev = [INF] * n
+    run_min = INF
+    for j in range(1, n):
+        run_min = min(run_min, nums[j])
+        prev[j] = run_min
+    for t in range(2, k):
+        curr = [INF] * n
+        best_prev = INF
+        for j in range(1, n):
+            avail = j - dist - 1
+            if avail >= 1:
+                best_prev = min(best_prev, prev[avail])
+            if best_prev != INF:
+                curr[j] = best_prev + nums[j]
+            if j > 1 and curr[j - 1] < curr[j]:
+                curr[j] = curr[j - 1]
+        prev = curr
+    return nums[0] + prev[n - 1]
+`,
+
   // batch 285
   'minimum-number-of-operations-to-make-all-array-elements-equal-to-one': `def minOperations(nums):
     from math import gcd
