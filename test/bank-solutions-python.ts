@@ -50016,4 +50016,55 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return best + same
 `,
 
+  // batch 302
+  'minimum-deviation-in-array': `def minimumDeviation(nums):
+    import heapq
+    nums = [int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums)]
+    heap = []
+    min_val = float('inf')
+    for x in nums:
+        if x % 2 == 1: x *= 2
+        heapq.heappush(heap, -x)
+        min_val = min(min_val, x)
+    ans = -heap[0] - min_val
+    while -heap[0] % 2 == 0:
+        max_val = -heapq.heappop(heap)
+        min_val = min(min_val, max_val // 2)
+        heapq.heappush(heap, -(max_val // 2))
+        ans = min(ans, -heap[0] - min_val)
+    return ans
+`,
+
+  'minimum-swaps-to-group-all-ones-together': `def minSwaps(data):
+    data = [int(x) for x in (data.to_py() if hasattr(data, 'to_py') else data)]
+    k = sum(data)
+    if k <= 1: return 0
+    ones = sum(data[:k])
+    max_ones = ones
+    for i in range(k, len(data)):
+        ones += data[i] - data[i - k]
+        max_ones = max(max_ones, ones)
+    return k - max_ones
+`,
+
+  '3sum-closest': `def threeSumClosest(nums, target):
+    nums = sorted(int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums))
+    target = int(target)
+    n = len(nums)
+    best = nums[0] + nums[1] + nums[2]
+    for i in range(n - 2):
+        l, r = i + 1, n - 1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            if abs(s - target) < abs(best - target):
+                best = s
+            if s == target:
+                return s
+            elif s < target:
+                l += 1
+            else:
+                r -= 1
+    return best
+`,
+
 };

@@ -51207,4 +51207,60 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best + same;
   },
 
+  // batch 302
+  'minimum-deviation-in-array': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[];
+    let minVal = Infinity;
+    const heap: number[] = [];
+    for (let x of nums) {
+      if (x % 2 === 1) x *= 2;
+      heap.push(-x);
+      minVal = Math.min(minVal, x);
+    }
+    heap.sort((a, b) => a - b);
+    let ans = -heap[0]! - minVal;
+    while (-heap[0]! % 2 === 0) {
+      const maxVal = -heap.shift()!;
+      const half = maxVal / 2;
+      minVal = Math.min(minVal, half);
+      heap.push(-half);
+      heap.sort((a, b) => a - b);
+      ans = Math.min(ans, -heap[0]! - minVal);
+    }
+    return ans;
+  },
+
+  'minimum-swaps-to-group-all-ones-together': (...args: unknown[]): unknown => {
+    const data = args[0] as number[];
+    const k = data.reduce((s, x) => s + x, 0);
+    if (k <= 1) return 0;
+    let ones = 0;
+    for (let i = 0; i < k; i++) ones += data[i]!;
+    let maxOnes = ones;
+    for (let i = k; i < data.length; i++) {
+      ones += data[i]! - data[i - k]!;
+      maxOnes = Math.max(maxOnes, ones);
+    }
+    return k - maxOnes;
+  },
+
+  '3sum-closest': (...args: unknown[]): unknown => {
+    const nums = (args[0] as number[]).slice();
+    const target = args[1] as number;
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    let best = nums[0]! + nums[1]! + nums[2]!;
+    for (let i = 0; i < n - 2; i++) {
+      let l = i + 1, r = n - 1;
+      while (l < r) {
+        const sum = nums[i]! + nums[l]! + nums[r]!;
+        if (Math.abs(sum - target) < Math.abs(best - target)) best = sum;
+        if (sum === target) return sum;
+        if (sum < target) l++;
+        else r--;
+      }
+    }
+    return best;
+  },
+
 };

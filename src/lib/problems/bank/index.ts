@@ -3500,6 +3500,10 @@ import { problem as pathSumIV } from './path-sum-iv';
 import { problem as shortestPathBinaryMatrix } from './shortest-path-binary-matrix';
 import { problem as findScoreByMarkingElements } from './find-score-by-marking-elements';
 import { problem as maximumNumberOfVisiblePoints } from './maximum-number-of-visible-points';
+// batch 302
+import { problem as minimumDeviationInArray } from './minimum-deviation-in-array';
+import { problem as minimumSwapsGroupOnes } from './minimum-swaps-to-group-all-ones-together';
+import { problem as threeSumClosestProblem } from './3sum-closest';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7039,4 +7043,8 @@ export const problems: readonly Problem[] = [
   shortestPathBinaryMatrix,
   findScoreByMarkingElements,
   maximumNumberOfVisiblePoints,
+  // batch 302
+  minimumDeviationInArray,
+  minimumSwapsGroupOnes,
+  threeSumClosestProblem,
 ];
