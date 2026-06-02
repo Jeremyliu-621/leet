@@ -33,14 +33,74 @@ If no such substring exists, return \`0\`.`,
   functionName: 'longestSubstring',
   params: ['s', 'k'],
   starterCode: {
-    javascript: 'function longestSubstring(s, k) {\n  \n}\n',
-    typescript: "function longestSubstring(s: string, k: number): number {\n  \n}",
-
-    python: 'def longestSubstring(s, k):\n    pass\n',
+    javascript: `function longestSubstring(s, k) {
+  function solve(str) {
+    if (str.length === 0) return 0;
+    const freq = new Array(26).fill(0);
+    for (const c of str) freq[c.charCodeAt(0) - 97]++;
+    // If all chars appear >= k times, entire string is valid
+    let allValid = true;
+    for (let i = 0; i < 26; i++) {
+      if (freq[i] > 0 && freq[i] < k) { allValid = false; break; }
+    }
+    if (allValid) return str.length;
+    // Split at chars that appear fewer than k times
+    let best = 0, start = 0;
+    for (let i = 0; i <= str.length; i++) {
+      const idx = i < str.length ? str.charCodeAt(i) - 97 : -1;
+      if (i === str.length || (freq[idx] > 0 && freq[idx] < k)) {
+        best = Math.max(best, solve(str.slice(start, i)));
+        start = i + 1;
+      }
+    }
+    return best;
+  }
+  return solve(s);
+}`,
+    typescript: `function longestSubstring(s: string, k: number): number {
+  function solve(str: string): number {
+    if (str.length === 0) return 0;
+    const freq = new Array<number>(26).fill(0);
+    for (const c of str) freq[c.charCodeAt(0) - 97]!++;
+    let allValid = true;
+    for (let i = 0; i < 26; i++) {
+      if (freq[i]! > 0 && freq[i]! < k) { allValid = false; break; }
+    }
+    if (allValid) return str.length;
+    let best = 0, start = 0;
+    for (let i = 0; i <= str.length; i++) {
+      const idx = i < str.length ? str.charCodeAt(i) - 97 : -1;
+      if (i === str.length || (idx >= 0 && freq[idx]! > 0 && freq[idx]! < k)) {
+        best = Math.max(best, solve(str.slice(start, i)));
+        start = i + 1;
+      }
+    }
+    return best;
+  }
+  return solve(s);
+}`,
+    python: `def longestSubstring(s: str, k: int) -> int:
+    def solve(sub: str) -> int:
+        if not sub:
+            return 0
+        freq = [0] * 26
+        for c in sub:
+            freq[ord(c) - 97] += 1
+        if all(f == 0 or f >= k for f in freq):
+            return len(sub)
+        best = 0
+        start = 0
+        for i in range(len(sub) + 1):
+            if i == len(sub) or (freq[ord(sub[i]) - 97] > 0 and freq[ord(sub[i]) - 97] < k):
+                best = max(best, solve(sub[start:i]))
+                start = i + 1
+        return best
+    return solve(s)`,
   },
   visibleTests: [
     { args: ['aaabb', 3], expected: 3 },
     { args: ['ababbc', 2], expected: 5 },
+    { args: ['aaabbb', 3], expected: 6 },
   ],
   hiddenTests: [
     { args: ['a', 1], expected: 1 },
@@ -48,5 +108,10 @@ If no such substring exists, return \`0\`.`,
     { args: ['aababc', 2], expected: 5 },
     { args: ['weitong', 2], expected: 0 },
     { args: ['bbaaacbd', 3], expected: 3 },
+    { args: ['aacbbbdc', 2], expected: 3 },
+    { args: ['ababacb', 3], expected: 0 },
+    { args: ['aaaaaaa', 4], expected: 7 },
+    { args: ['abcabc', 1], expected: 6 },
+    { args: ['', 1], expected: 0 },
   ],
 };

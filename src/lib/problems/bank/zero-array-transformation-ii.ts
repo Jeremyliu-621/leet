@@ -66,11 +66,76 @@ function minZeroArray(nums, queries) {
   params: ['nums', 'queries'],
   starterCode: {
     javascript: `function minZeroArray(nums, queries) {
-
+  const n = nums.length;
+  const check = (k) => {
+    const diff = new Array(n + 1).fill(0);
+    for (let i = 0; i < k; i++) {
+      const [l, r, val] = queries[i];
+      diff[l] += val;
+      if (r + 1 <= n) diff[r + 1] -= val;
+    }
+    let cap = 0;
+    for (let i = 0; i < n; i++) {
+      cap += diff[i];
+      if (cap < nums[i]) return false;
+    }
+    return true;
+  };
+  if (check(0)) return 0;
+  let lo = 1, hi = queries.length;
+  if (!check(hi)) return -1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (check(mid)) hi = mid; else lo = mid + 1;
+  }
+  return lo;
 }`,
-    typescript: 'function minZeroArray(nums: number[], queries: number[][]): number {\n\n}',
+    typescript: `function minZeroArray(nums: number[], queries: number[][]): number {
+  const n = nums.length;
+  const check = (k: number): boolean => {
+    const diff = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < k; i++) {
+      const [l, r, val] = queries[i]!;
+      diff[l!]! += val!;
+      if (r! + 1 <= n) diff[r! + 1]! -= val!;
+    }
+    let cap = 0;
+    for (let i = 0; i < n; i++) {
+      cap += diff[i]!;
+      if (cap < nums[i]!) return false;
+    }
+    return true;
+  };
+  if (check(0)) return 0;
+  let lo = 1, hi = queries.length;
+  if (!check(hi)) return -1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (check(mid)) hi = mid; else lo = mid + 1;
+  }
+  return lo;
+}`,
     python: `def minZeroArray(nums, queries):
-    pass`,
+    n = len(nums)
+    def check(k):
+        diff = [0] * (n + 1)
+        for i in range(k):
+            l, r, val = queries[i]
+            diff[l] += val
+            if r + 1 <= n: diff[r + 1] -= val
+        cap = 0
+        for i in range(n):
+            cap += diff[i]
+            if cap < nums[i]: return False
+        return True
+    if check(0): return 0
+    lo, hi = 1, len(queries)
+    if not check(hi): return -1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if check(mid): hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[2, 0, 2], [[0, 2, 1], [0, 2, 1], [1, 1, 3]]], expected: 2 },
