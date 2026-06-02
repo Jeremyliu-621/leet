@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3045** problems; 9474 tests green. Batch 304 complete.
+**Current focus:** Bank at **3054** problems; 9483 tests green. Batch 305 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 305+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+**Next up:** Bank growth (batch 306+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+
+### feat(bank): batch 305 — connect-groups, pairs-divisible-k, zigzag-path (2026-06-02)
+Three new problems: `minimum-cost-to-connect-two-groups-of-points` (hard/dp+bitmask — DP over group2 coverage mask; for each group1 point try connecting to each group2 point; after all group1 done add min remaining group2 costs; O(n·m·2^m)), `count-array-pairs-divisible-by-k` (hard/math — gcd(nums[i],k) grouping; pair (d1,d2) valid iff (d1*d2)%k==0; O(n+D²) where D=divisor count of k), `path-in-zigzag-labelled-binary-tree` (medium/math — mirror label within level (min+max-label), then halve to get parent; alternate directions cancel out; O(log n)). Bank at **3054**; 9483 tests.
 
 ### feat(bank): batch 304 — single-element-sorted, equal-01-path, write-Y-grid (2026-06-02)
 Three new problems: `single-element-in-a-sorted-array` (medium/binary-search — force mid to even index; if nums[mid]==nums[mid+1] single is right else left or mid; O(log n)), `check-if-there-is-a-path-with-equal-number-of-0s-and-1s` (medium/dp — path length m+n-1; if odd return false; track min/max ones reachable at each cell; check if target=(m+n-1)/2 is achievable at (m-1,n-1); O(mn)), `minimum-operations-to-write-the-letter-y-on-a-grid` (medium/simulation — identify Y cells via 3 conditions; count 0/1/2 freq in Y and non-Y; try all 6 ordered pairs (v1,v2); return minimum ops; O(n²)). Bank at **3045**; 9474 tests.
