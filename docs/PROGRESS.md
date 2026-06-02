@@ -8,9 +8,20 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2890** problems; 8990 tests green. Starter backfill ongoing (~600 stubs filled so far).
+**Current focus:** Bank at **2890** problems; 8996 tests green. Starter backfill ongoing (~167 stubs remaining of ~370 filled this session).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 275+; continued starter backfill; UX polish.
+**Next up:** Continued starter backfill (batches 27–33+); UX polish.
+
+### feat(bank): batches 26–33 — starter backfill (2026-06-02)
+Filled starters (JS/TS/Python) for 40 stub problems across 8 batches:
+- Batch 26: jump-game-vi (monotone deque DP), longest-equal-run, LIS (patience sort), longest-mountain (expand from peak), longest-consecutive (Set-based O(n))
+- Batch 27: longest-palindromic-string (expand-around-center), longest-palindromic-subsequence (interval DP), longest-subarray-of-ones, longest-unique-window, longest-valid-parentheses
+- Batch 28: maximal-square, maximum-average-subarray, maximum-erasure-value, make-prefix-sum-non-negative (min-heap greedy), max-chunks-to-make-sorted
+- Batch 29: maximize-confusion-exam, maximize-win-two-segments, maximum-alternating-subarray-sum (DP pos/neg), maximum-depth-n-ary-tree, maximum-gap
+- Batch 30: longest-nice-subarray (bitmask window), longest-subarray-max-bitwise-and, maximal-network-rank, maximal-range-each-element-is-maximum-in (monotone stack), maximum-sum-increasing-subsequence
+- Batch 31: maximum-swap, maximum-width-ramp, maximum-product-of-word-lengths (bitmask), maximum-events-can-attend (min-heap), maximum-good-people (2^n bitmask)
+- Batch 32: maximize-topmost-element-k-moves (parity), maximum-product-cutting (integer-break DP), maximum-rows-covered-by-columns, merge-sorted-lists, min-window-average
+- Batch 33: minimum-cost-for-tickets (365-day DP), minimum-coins-to-add (greedy reach), minimum-deletions-beautiful, minimum-difference-k-removals, minimum-cost-connect-points (Prim's O(n²))
 
 ### feat(bank): batch 274 — min-swaps-balance, score-removing-substrings, count-words-one-letter, count-homogeneous-substrings (2026-06-02)
 Four new problems: `minimum-swaps-to-balance` (medium/stack, LC 1963 — stack open-count: unmatched ']' triggers swap+open++; O(n)), `score-by-removing-substrings` (medium/stack, LC 1717 — greedy two-pass: remove higher-value pair first with stack; O(n)), `count-words-consisting-only-of-one-distinct-letter` (easy/strings, LC 2262 — set size = 1 check per word; O(n)), `count-number-of-homogeneous-substrings` (easy/strings+math, LC 1759 — run-length scan: run of k gives k*(k+1)/2; mod 10^9+7; O(n)). Bank at **2890**; 8990 tests.
