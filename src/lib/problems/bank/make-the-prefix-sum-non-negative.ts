@@ -42,14 +42,58 @@ It is guaranteed that an answer always exists.`,
   params: ['nums'],
   starterCode: {
     javascript: `function makePrefSumNonNegative(nums) {
-  // your code here
+  const h = [];
+  function push(v) {
+    h.push(v); let i = h.length - 1;
+    while (i > 0) { const p = (i - 1) >> 1; if (h[p] <= h[i]) break; [h[p], h[i]] = [h[i], h[p]]; i = p; }
+  }
+  function pop() {
+    const top = h[0], last = h.pop();
+    if (h.length) {
+      h[0] = last; let i = 0;
+      while (true) { const l = 2*i+1, r = 2*i+2; let m = i;
+        if (l < h.length && h[l] < h[m]) m = l;
+        if (r < h.length && h[r] < h[m]) m = r;
+        if (m === i) break; [h[m], h[i]] = [h[i], h[m]]; i = m; }
+    }
+    return top;
+  }
+  let sum = 0, ops = 0;
+  for (const n of nums) { push(n); sum += n; if (sum < 0) { sum -= pop(); ops++; } }
+  return ops;
 }`,
     typescript: `function makePrefSumNonNegative(nums: number[]): number {
-  // your code here
+  const h: number[] = [];
+  function push(v: number) {
+    h.push(v); let i = h.length - 1;
+    while (i > 0) { const p = (i - 1) >> 1; if (h[p]! <= h[i]!) break; [h[p], h[i]] = [h[i]!, h[p]!]; i = p; }
+  }
+  function pop(): number {
+    const top = h[0]!, last = h.pop()!;
+    if (h.length) {
+      h[0] = last; let i = 0;
+      while (true) { const l = 2*i+1, r = 2*i+2; let m = i;
+        if (l < h.length && h[l]! < h[m]!) m = l;
+        if (r < h.length && h[r]! < h[m]!) m = r;
+        if (m === i) break; [h[m], h[i]] = [h[i]!, h[m]!]; i = m; }
+    }
+    return top;
+  }
+  let sum = 0, ops = 0;
+  for (const n of nums) { push(n); sum += n; if (sum < 0) { sum -= pop(); ops++; } }
+  return ops;
 }`,
     python: `def makePrefSumNonNegative(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import heapq
+    h, total, ops = [], 0, 0
+    for n in nums:
+        heapq.heappush(h, n)
+        total += n
+        if total < 0:
+            total -= heapq.heappop(h)
+            ops += 1
+    return ops`,
   },
   visibleTests: [
     { args: [[2, -3, 1]], expected: 1 },

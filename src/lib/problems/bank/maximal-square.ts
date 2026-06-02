@@ -43,10 +43,46 @@ The answer is \`max(dp[i][j])²\`.`,
   functionName: 'maximalSquare',
   params: ['matrix'] as readonly string[],
   starterCode: {
-    javascript: 'function maximalSquare(matrix) {\n  // your code here\n}\n',
-    typescript: "function maximalSquare(matrix: string[][]): number {\n  // your code here\n}",
-
-    python: 'def maximalSquare(matrix: list[list[str]]) -> int:\n    # your code here\n    pass\n',
+    javascript: `function maximalSquare(matrix) {
+  const m = matrix.length, n = matrix[0].length;
+  const dp = Array.from({ length: m }, () => new Array(n).fill(0));
+  let best = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (matrix[i][j] === '1') {
+        dp[i][j] = i > 0 && j > 0 ? Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1 : 1;
+        best = Math.max(best, dp[i][j]);
+      }
+    }
+  }
+  return best * best;
+}`,
+    typescript: `function maximalSquare(matrix: string[][]): number {
+  const m = matrix.length, n = matrix[0]!.length;
+  const dp: number[][] = Array.from({ length: m }, () => new Array(n).fill(0));
+  let best = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (matrix[i]![j] === '1') {
+        dp[i]![j] = i > 0 && j > 0 ? Math.min(dp[i - 1]![j]!, dp[i]![j - 1]!, dp[i - 1]![j - 1]!) + 1 : 1;
+        best = Math.max(best, dp[i]![j]!);
+      }
+    }
+  }
+  return best * best;
+}`,
+    python: `def maximalSquare(matrix):
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[str(c) for c in (row.to_py() if hasattr(row, 'to_py') else row)] for row in matrix]
+    m, n = len(matrix), len(matrix[0])
+    dp = [[0] * n for _ in range(m)]
+    best = 0
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] == '1':
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1 if i > 0 and j > 0 else 1
+                best = max(best, dp[i][j])
+    return best * best`,
   },
   visibleTests: [
     { args: [[['1','0','1','0','0'],['1','0','1','1','1'],['1','1','1','1','1'],['1','0','0','1','0']]], expected: 4 },

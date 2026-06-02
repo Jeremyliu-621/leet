@@ -39,10 +39,38 @@ You must choose a contiguous subarray; you may not skip elements.
   functionName: 'maximumUniqueSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maximumUniqueSum(nums) {\n  // your code here\n}\n',
-    typescript: "function maximumUniqueSum(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def maximumUniqueSum(nums):\n    # your code here\n    pass\n',
+    javascript: `function maximumUniqueSum(nums) {
+  let left = 0, sum = 0, best = 0;
+  const seen = new Set();
+  for (let right = 0; right < nums.length; right++) {
+    while (seen.has(nums[right])) { seen.delete(nums[left]); sum -= nums[left]; left++; }
+    seen.add(nums[right]);
+    sum += nums[right];
+    best = Math.max(best, sum);
+  }
+  return best;
+}`,
+    typescript: `function maximumUniqueSum(nums: number[]): number {
+  let left = 0, sum = 0, best = 0;
+  const seen = new Set<number>();
+  for (let right = 0; right < nums.length; right++) {
+    while (seen.has(nums[right]!)) { seen.delete(nums[left]!); sum -= nums[left]!; left++; }
+    seen.add(nums[right]!);
+    sum += nums[right]!;
+    best = Math.max(best, sum);
+  }
+  return best;
+}`,
+    python: `def maximumUniqueSum(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    left = total = best = 0
+    seen = set()
+    for right in range(len(nums)):
+        while nums[right] in seen:
+            seen.discard(nums[left]); total -= nums[left]; left += 1
+        seen.add(nums[right]); total += nums[right]
+        best = max(best, total)
+    return best`,
   },
   visibleTests: [
     { args: [[4, 2, 4, 5, 6]], expected: 17 },
