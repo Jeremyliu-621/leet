@@ -36,13 +36,30 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function countSubarraysWithEqualEnds(nums) {
-
+  const freq = new Map();
+  let count = 0;
+  for (const n of nums) {
+    count += freq.get(n) || 0;
+    freq.set(n, (freq.get(n) || 0) + 1);
+  }
+  return count;
 }`,
     typescript: `function countSubarraysWithEqualEnds(nums: number[]): number {
-
+  const freq = new Map<number, number>();
+  let count = 0;
+  for (const n of nums) {
+    count += freq.get(n) ?? 0;
+    freq.set(n, (freq.get(n) ?? 0) + 1);
+  }
+  return count;
 }`,
     python: `def countSubarraysWithEqualEnds(nums):
-    pass`,
+    freq = {}
+    count = 0
+    for n in nums:
+        count += freq.get(n, 0)
+        freq[n] = freq.get(n, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 1]], expected: 1 },

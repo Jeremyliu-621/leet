@@ -40,10 +40,28 @@ Return the number of strings of length \`n\`. Since the answer may be too large,
   functionName: 'countVowelPermutation',
   params: ['n'],
   starterCode: {
-    javascript: 'function countVowelPermutation(n) {\n\n}\n',
-    typescript: "function countVowelPermutation(n: number): number {\n\n}",
-
-    python: 'def countVowelPermutation(n):\n    pass\n',
+    javascript: `function countVowelPermutation(n) {
+  const MOD = 1000000007;
+  let a = 1, e = 1, i = 1, o = 1, u = 1;
+  for (let step = 1; step < n; step++) {
+    [a, e, i, o, u] = [(e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD];
+  }
+  return (a + e + i + o + u) % MOD;
+}`,
+    typescript: `function countVowelPermutation(n: number): number {
+  const MOD = 1000000007;
+  let a = 1, e = 1, i = 1, o = 1, u = 1;
+  for (let step = 1; step < n; step++) {
+    [a, e, i, o, u] = [(e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD];
+  }
+  return (a + e + i + o + u) % MOD;
+}`,
+    python: `def countVowelPermutation(n):
+    MOD = 10**9 + 7
+    a = e = i = o = u = 1
+    for _ in range(n - 1):
+        a, e, i, o, u = (e + i + u) % MOD, (a + i) % MOD, (e + o) % MOD, i % MOD, (i + o) % MOD
+    return (a + e + i + o + u) % MOD`,
   },
   visibleTests: [
     { args: [1], expected: 5 },

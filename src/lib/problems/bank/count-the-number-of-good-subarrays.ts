@@ -35,11 +35,48 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countGoodSubarrays(nums, k) {
-
+  const freq = new Map();
+  let left = 0, pairs = 0, ans = 0;
+  for (const n of nums) {
+    pairs += freq.get(n) || 0;
+    freq.set(n, (freq.get(n) || 0) + 1);
+    while (pairs >= k) {
+      const lv = nums[left++];
+      freq.set(lv, freq.get(lv) - 1);
+      pairs -= freq.get(lv);
+    }
+    ans += left;
+  }
+  return ans;
 }`,
-    typescript: 'function countGoodSubarrays(nums: number[], k: number): number {\n\n}',
+    typescript: `function countGoodSubarrays(nums: number[], k: number): number {
+  const freq = new Map<number, number>();
+  let left = 0, pairs = 0, ans = 0;
+  for (const n of nums) {
+    pairs += freq.get(n) ?? 0;
+    freq.set(n, (freq.get(n) ?? 0) + 1);
+    while (pairs >= k) {
+      const lv = nums[left++]!;
+      freq.set(lv, freq.get(lv)! - 1);
+      pairs -= freq.get(lv)!;
+    }
+    ans += left;
+  }
+  return ans;
+}`,
     python: `def countGoodSubarrays(nums, k):
-    pass`,
+    freq = {}
+    left = pairs = ans = 0
+    for n in nums:
+        pairs += freq.get(n, 0)
+        freq[n] = freq.get(n, 0) + 1
+        while pairs >= k:
+            lv = nums[left]
+            left += 1
+            freq[lv] -= 1
+            pairs -= freq[lv]
+        ans += left
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 1, 1, 1, 1], 10], expected: 1 },

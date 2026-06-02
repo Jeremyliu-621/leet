@@ -41,12 +41,44 @@ Return the number of unoccupied cells that are **not guarded**.`,
   params: ['m', 'n', 'guards', 'walls'],
   starterCode: {
     javascript: `function countUnguarded(m, n, guards, walls) {
-
+  const g = Array.from({length: m}, () => new Array(n).fill(0));
+  for (const [r, c] of guards) g[r][c] = 2;
+  for (const [r, c] of walls) g[r][c] = 3;
+  for (const [gr, gc] of guards) {
+    for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+      let r = gr + dr, c = gc + dc;
+      while (r >= 0 && r < m && c >= 0 && c < n && g[r][c] < 2) { g[r][c] = 1; r += dr; c += dc; }
+    }
+  }
+  let count = 0;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (g[r][c] === 0) count++;
+  return count;
 }`,
-    typescript: "function countUnguarded(m: number, n: number, guards: number[][], walls: number[][]): number {\n\n}",
-
+    typescript: `function countUnguarded(m: number, n: number, guards: number[][], walls: number[][]): number {
+  const g: number[][] = Array.from({length: m}, () => new Array<number>(n).fill(0));
+  for (const [r, c] of guards) g[r]![c!] = 2;
+  for (const [r, c] of walls) g[r]![c!] = 3;
+  for (const [gr, gc] of guards) {
+    for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+      let r = gr! + dr!, c = gc! + dc!;
+      while (r >= 0 && r < m && c >= 0 && c < n && g[r]![c]! < 2) { g[r]![c] = 1; r += dr!; c += dc!; }
+    }
+  }
+  let count = 0;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) if (g[r]![c] === 0) count++;
+  return count;
+}`,
     python: `def countUnguarded(m, n, guards, walls):
-    pass`,
+    g = [[0] * n for _ in range(m)]
+    for r, c in guards: g[r][c] = 2
+    for r, c in walls: g[r][c] = 3
+    for gr, gc in guards:
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            r, c = gr + dr, gc + dc
+            while 0 <= r < m and 0 <= c < n and g[r][c] < 2:
+                g[r][c] = 1
+                r += dr; c += dc
+    return sum(g[r][c] == 0 for r in range(m) for c in range(n))`,
   },
   visibleTests: [
     { args: [4, 6, [[0, 0], [1, 1], [2, 3]], [[0, 1], [2, 2], [1, 4]]], expected: 7 },

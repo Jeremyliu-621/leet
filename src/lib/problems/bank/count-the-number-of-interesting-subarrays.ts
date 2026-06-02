@@ -44,13 +44,34 @@ Return an integer denoting the count of interesting subarrays.
   params: ['nums', 'modulo', 'k'],
   starterCode: {
     javascript: `function countInterestingSubarrays(nums, modulo, k) {
-
+  const freq = new Map([[0, 1]]);
+  let prefix = 0, count = 0;
+  for (const n of nums) {
+    if (n % modulo === k) prefix++;
+    count += freq.get((prefix - k + modulo) % modulo) || 0;
+    freq.set(prefix % modulo, (freq.get(prefix % modulo) || 0) + 1);
+  }
+  return count;
 }`,
     typescript: `function countInterestingSubarrays(nums: number[], modulo: number, k: number): number {
-
+  const freq = new Map<number, number>([[0, 1]]);
+  let prefix = 0, count = 0;
+  for (const n of nums) {
+    if (n % modulo === k) prefix++;
+    count += freq.get((prefix - k + modulo) % modulo) ?? 0;
+    freq.set(prefix % modulo, (freq.get(prefix % modulo) ?? 0) + 1);
+  }
+  return count;
 }`,
     python: `def countInterestingSubarrays(nums, modulo, k):
-    pass`,
+    freq = {0: 1}
+    prefix = count = 0
+    for n in nums:
+        if n % modulo == k:
+            prefix += 1
+        count += freq.get((prefix - k + modulo) % modulo, 0)
+        freq[prefix % modulo] = freq.get(prefix % modulo, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[3, 2, 4], 2, 1], expected: 3 },

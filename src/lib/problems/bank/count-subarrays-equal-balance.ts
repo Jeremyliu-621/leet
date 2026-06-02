@@ -42,13 +42,33 @@ Return the total number of such subarrays.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countBalancedSubarrays(nums) {
-
+  const freq = new Map([[0, 1]]);
+  let prefix = 0, count = 0;
+  for (const n of nums) {
+    prefix += n > 0 ? 1 : n < 0 ? -1 : 0;
+    count += freq.get(prefix) || 0;
+    freq.set(prefix, (freq.get(prefix) || 0) + 1);
+  }
+  return count;
 }`,
     typescript: `function countBalancedSubarrays(nums: number[]): number {
-
+  const freq = new Map<number, number>([[0, 1]]);
+  let prefix = 0, count = 0;
+  for (const n of nums) {
+    prefix += n > 0 ? 1 : n < 0 ? -1 : 0;
+    count += freq.get(prefix) ?? 0;
+    freq.set(prefix, (freq.get(prefix) ?? 0) + 1);
+  }
+  return count;
 }`,
     python: `def countBalancedSubarrays(nums):
-    pass`,
+    freq = {0: 1}
+    prefix = count = 0
+    for n in nums:
+        prefix += 1 if n > 0 else -1 if n < 0 else 0
+        count += freq.get(prefix, 0)
+        freq[prefix] = freq.get(prefix, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, -1, 2, -2]], expected: 4 },
