@@ -50,15 +50,36 @@ Return an array of the times when each car **finishes** clearing the intersectio
   params: ['arrivals', 'g', 'r'],
   starterCode: {
     javascript: `function simulateTrafficLights(arrivals, g, r) {
-
-}
-`,
+  const cycle = g + r;
+  let clearTime = 0;
+  return arrivals.map(arrival => {
+    let t = Math.max(arrival, clearTime);
+    if (t % cycle >= g) t = (Math.floor(t / cycle) + 1) * cycle;
+    clearTime = t + 1;
+    return clearTime;
+  });
+}`,
     typescript: `function simulateTrafficLights(arrivals: number[], g: number, r: number): number[] {
-
-  return [];
+  const cycle = g + r;
+  let clearTime = 0;
+  return arrivals.map(arrival => {
+    let t = Math.max(arrival, clearTime);
+    if (t % cycle >= g) t = (Math.floor(t / cycle) + 1) * cycle;
+    clearTime = t + 1;
+    return clearTime;
+  });
 }`,
     python: `def simulateTrafficLights(arrivals, g, r):
-    pass
+    cycle = g + r
+    clear_time = 0
+    result = []
+    for arrival in arrivals:
+        t = max(arrival, clear_time)
+        if t % cycle >= g:
+            t = (t // cycle + 1) * cycle
+        clear_time = t + 1
+        result.append(clear_time)
+    return result
 `,
   },
   visibleTests: [

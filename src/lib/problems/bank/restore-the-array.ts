@@ -49,16 +49,54 @@ Possible arrays: [1,3,1,7], [1,3,17], [1,31,7], [1,317], [13,1,7], [13,17], [131
   starterCode: {
     javascript: `function numberOfArrays(s, k) {
   const MOD = 1_000_000_007;
-  // dp[i] = ways to form valid array using s[0..i-1]
+  const n = s.length;
+  const maxLen = String(k).length;
+  const dp = new Array(n + 1).fill(0);
+  dp[n] = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    if (s[i] === '0') continue;
+    let num = 0;
+    for (let j = i; j < Math.min(i + maxLen, n); j++) {
+      num = num * 10 + parseInt(s[j]);
+      if (num > k) break;
+      dp[i] = (dp[i] + dp[j + 1]) % MOD;
+    }
+  }
+  return dp[0];
 }`,
     typescript: `function numberOfArrays(s: string, k: number): number {
   const MOD = 1_000_000_007;
-  // dp[i] = ways to form valid array using s[0..i-1]
+  const n = s.length;
+  const maxLen = String(k).length;
+  const dp = new Array<number>(n + 1).fill(0);
+  dp[n] = 1;
+  for (let i = n - 1; i >= 0; i--) {
+    if (s[i] === '0') continue;
+    let num = 0;
+    for (let j = i; j < Math.min(i + maxLen, n); j++) {
+      num = num * 10 + parseInt(s[j]!);
+      if (num > k) break;
+      dp[i] = (dp[i]! + dp[j + 1]!) % MOD;
+    }
+  }
+  return dp[0]!;
 }`,
     python: `def numberOfArrays(s, k):
     MOD = 10**9 + 7
-    # dp[i] = ways to form valid array using s[0..i-1]
-    pass
+    n = len(s)
+    max_len = len(str(k))
+    dp = [0] * (n + 1)
+    dp[n] = 1
+    for i in range(n - 1, -1, -1):
+        if s[i] == '0':
+            continue
+        num = 0
+        for j in range(i, min(i + max_len, n)):
+            num = num * 10 + int(s[j])
+            if num > k:
+                break
+            dp[i] = (dp[i] + dp[j + 1]) % MOD
+    return dp[0]
 `,
   },
   visibleTests: [

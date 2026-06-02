@@ -48,16 +48,51 @@ Return the number of ways to form \`target\` modulo \`10^9 + 7\`.`,
   starterCode: {
     javascript: `function numWays(words, target) {
   const MOD = 1_000_000_007;
-  // Precompute column character frequencies, then 1D DP over target.
+  const m = words[0].length, t = target.length;
+  const freq = Array.from({length: m}, () => new Array(26).fill(0));
+  for (const w of words) for (let j = 0; j < m; j++) freq[j][w.charCodeAt(j) - 97]++;
+  const dp = new Array(t + 1).fill(0);
+  dp[0] = 1;
+  for (let j = 0; j < m; j++) {
+    const c = freq[j];
+    for (let i = t; i >= 1; i--) {
+      const ch = target.charCodeAt(i - 1) - 97;
+      if (c[ch] > 0) dp[i] = (dp[i] + dp[i - 1] * c[ch]) % MOD;
+    }
+  }
+  return dp[t];
 }`,
     typescript: `function numWays(words: string[], target: string): number {
   const MOD = 1_000_000_007;
-  // Precompute column character frequencies, then 1D DP over target.
+  const m = words[0]!.length, t = target.length;
+  const freq = Array.from({length: m}, () => new Array<number>(26).fill(0));
+  for (const w of words) for (let j = 0; j < m; j++) freq[j]![w.charCodeAt(j) - 97]!++;
+  const dp = new Array<number>(t + 1).fill(0);
+  dp[0] = 1;
+  for (let j = 0; j < m; j++) {
+    const c = freq[j]!;
+    for (let i = t; i >= 1; i--) {
+      const ch = target.charCodeAt(i - 1) - 97;
+      if (c[ch]! > 0) dp[i] = (dp[i]! + dp[i - 1]! * c[ch]!) % MOD;
+    }
+  }
+  return dp[t]!;
 }`,
     python: `def numWays(words, target):
     MOD = 10**9 + 7
-    # Precompute column character frequencies, then 1D DP over target.
-    pass
+    m, t = len(words[0]), len(target)
+    freq = [[0] * 26 for _ in range(m)]
+    for w in words:
+        for j, ch in enumerate(w):
+            freq[j][ord(ch) - 97] += 1
+    dp = [0] * (t + 1)
+    dp[0] = 1
+    for j in range(m):
+        for i in range(t, 0, -1):
+            c = freq[j][ord(target[i - 1]) - 97]
+            if c:
+                dp[i] = (dp[i] + dp[i - 1] * c) % MOD
+    return dp[t]
 `,
   },
   visibleTests: [

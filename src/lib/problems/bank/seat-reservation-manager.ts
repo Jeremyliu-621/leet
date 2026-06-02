@@ -42,12 +42,83 @@ Given \`n\` seats and a sequence of operations, return the result for each \`res
   params: ['n', 'operations', 'operandArgs'],
   starterCode: {
     javascript: `function seatReservationManager(n, operations, operandArgs) {
-
+  const heap = Array.from({length: n}, (_, i) => i + 1);
+  const push = (x) => {
+    heap.push(x);
+    let i = heap.length - 1;
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (heap[p] > heap[i]) { const t = heap[p]; heap[p] = heap[i]; heap[i] = t; i = p; }
+      else break;
+    }
+  };
+  const pop = () => {
+    const top = heap[0];
+    const last = heap.pop();
+    if (heap.length > 0) {
+      heap[0] = last;
+      let i = 0;
+      while (true) {
+        const l = 2*i+1, r = 2*i+2;
+        let s = i;
+        if (l < heap.length && heap[l] < heap[s]) s = l;
+        if (r < heap.length && heap[r] < heap[s]) s = r;
+        if (s !== i) { const t = heap[s]; heap[s] = heap[i]; heap[i] = t; i = s; } else break;
+      }
+    }
+    return top;
+  };
+  const result = [];
+  for (let i = 0; i < operations.length; i++) {
+    if (operations[i] === 'reserve') result.push(pop());
+    else push(operandArgs[i]);
+  }
+  return result;
 }`,
-    typescript: "function seatReservationManager(n: number, operations: string[], operandArgs: (null | number)[]): number[] {\n\n}",
-
+    typescript: `function seatReservationManager(n: number, operations: string[], operandArgs: (null | number)[]): number[] {
+  const heap: number[] = Array.from({length: n}, (_, i) => i + 1);
+  const push = (x: number) => {
+    heap.push(x);
+    let i = heap.length - 1;
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (heap[p]! > heap[i]!) { const t = heap[p]!; heap[p] = heap[i]!; heap[i] = t; i = p; }
+      else break;
+    }
+  };
+  const pop = (): number => {
+    const top = heap[0]!;
+    const last = heap.pop()!;
+    if (heap.length > 0) {
+      heap[0] = last;
+      let i = 0;
+      while (true) {
+        const l = 2*i+1, r = 2*i+2;
+        let s = i;
+        if (l < heap.length && heap[l]! < heap[s]!) s = l;
+        if (r < heap.length && heap[r]! < heap[s]!) s = r;
+        if (s !== i) { const t = heap[s]!; heap[s] = heap[i]!; heap[i] = t; i = s; } else break;
+      }
+    }
+    return top;
+  };
+  const result: number[] = [];
+  for (let i = 0; i < operations.length; i++) {
+    if (operations[i] === 'reserve') result.push(pop());
+    else push(operandArgs[i] as number);
+  }
+  return result;
+}`,
     python: `def seatReservationManager(n, operations, operandArgs):
-    pass
+    import heapq
+    heap = list(range(1, n + 1))
+    result = []
+    for op, arg in zip(operations, operandArgs):
+        if op == 'reserve':
+            result.append(heapq.heappop(heap))
+        else:
+            heapq.heappush(heap, int(arg))
+    return result
 `,
   },
   visibleTests: [

@@ -139,20 +139,125 @@ The runner will call \`serialize\`, then \`deserialize\`, and verify the result 
   starterCode: {
     javascript: `// TreeNode is pre-defined. The runner calls serialize then deserialize and checks round-trip.
 function serialize(root) {
-
+  if (!root) return '#';
+  const res = [];
+  const q = [root];
+  while (q.length) {
+    const node = q.shift();
+    if (!node) { res.push('#'); continue; }
+    res.push(node.val);
+    q.push(node.left ?? null);
+    q.push(node.right ?? null);
+  }
+  while (res[res.length - 1] === '#') res.pop();
+  return res.join(',');
 }
 
 function deserialize(data) {
-
+  if (!data || data === '#') return null;
+  const tokens = data.split(',');
+  const root = new TreeNode(+tokens[0]);
+  const q = [root];
+  let i = 1;
+  while (q.length && i < tokens.length) {
+    const node = q.shift();
+    if (tokens[i] !== '#') { node.left = new TreeNode(+tokens[i]); q.push(node.left); }
+    i++;
+    if (i < tokens.length && tokens[i] !== '#') { node.right = new TreeNode(+tokens[i]); q.push(node.right); }
+    i++;
+  }
+  return root;
 }`,
-    typescript: "function serDeserRunner(root: (number | null)[]): (number | null)[] {\n\n}\n\nfunction deserialize(data) {\n\n}",
-
+    typescript: `function serDeserRunner(root: (number | null)[]): (number | null)[] {
+  type N = { val: number; left: N | null; right: N | null };
+  const build = (arr: (number | null)[]): N | null => {
+    if (!arr.length || arr[0] == null) return null;
+    const r: N = { val: arr[0], left: null, right: null };
+    const q: N[] = [r];
+    let i = 1;
+    while (q.length && i < arr.length) {
+      const nd = q.shift()!;
+      if (arr[i] != null) { nd.left = { val: arr[i]!, left: null, right: null }; q.push(nd.left); }
+      i++;
+      if (i < arr.length && arr[i] != null) { nd.right = { val: arr[i]!, left: null, right: null }; q.push(nd.right); }
+      i++;
+    }
+    return r;
+  };
+  const serialize = (nd: N | null): string => {
+    if (!nd) return '#';
+    const res: string[] = [];
+    const q: (N | null)[] = [nd];
+    while (q.length) {
+      const cur = q.shift()!;
+      if (!cur) { res.push('#'); continue; }
+      res.push(String(cur.val));
+      q.push(cur.left); q.push(cur.right);
+    }
+    while (res[res.length - 1] === '#') res.pop();
+    return res.join(',');
+  };
+  const deserialize = (data: string): N | null => {
+    if (!data || data === '#') return null;
+    const tokens = data.split(',');
+    const r: N = { val: Number(tokens[0]), left: null, right: null };
+    const q: N[] = [r];
+    let i = 1;
+    while (q.length && i < tokens.length) {
+      const nd = q.shift()!;
+      if (tokens[i] !== '#') { nd.left = { val: Number(tokens[i]), left: null, right: null }; q.push(nd.left); }
+      i++;
+      if (i < tokens.length && tokens[i] !== '#') { nd.right = { val: Number(tokens[i]), left: null, right: null }; q.push(nd.right); }
+      i++;
+    }
+    return r;
+  };
+  const toArr = (nd: N | null): (number | null)[] => {
+    if (!nd) return [];
+    const res: (number | null)[] = [];
+    const q: (N | null)[] = [nd];
+    while (q.length) {
+      const cur = q.shift()!;
+      if (!cur) { res.push(null); continue; }
+      res.push(cur.val); q.push(cur.left); q.push(cur.right);
+    }
+    while (res.length && res[res.length - 1] === null) res.pop();
+    return res;
+  };
+  return toArr(deserialize(serialize(build(root))));
+}`,
     python: `# TreeNode is pre-defined. The runner calls serialize then deserialize and checks round-trip.
 def serialize(root):
-    pass
+    if not root:
+        return '#'
+    result, queue = [], [root]
+    while queue:
+        node = queue.pop(0)
+        if node is None:
+            result.append('#')
+        else:
+            result.append(str(node.val))
+            queue.append(node.left)
+            queue.append(node.right)
+    while result and result[-1] == '#':
+        result.pop()
+    return ','.join(result)
 
 def deserialize(data):
-    pass`,
+    if not data or data == '#':
+        return None
+    tokens = data.split(',')
+    root = TreeNode(int(tokens[0]))
+    queue, i = [root], 1
+    while queue and i < len(tokens):
+        node = queue.pop(0)
+        if tokens[i] != '#':
+            node.left = TreeNode(int(tokens[i])); queue.append(node.left)
+        i += 1
+        if i < len(tokens) and tokens[i] != '#':
+            node.right = TreeNode(int(tokens[i])); queue.append(node.right)
+        i += 1
+    return root`,
   },
   visibleTests: [
     { args: [[1, 2, 3, null, null, 4, 5]], expected: [1, 2, 3, null, null, 4, 5] },

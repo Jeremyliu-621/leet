@@ -39,16 +39,64 @@ Return the **second minimum time** to reach node \`n\` (there must be a path, an
   params: ['n', 'edges', 'time', 'change'],
   starterCode: {
     javascript: `function secondMinimum(n, edges, time, change) {
-  // Build adjacency list, then BFS tracking the two smallest arrival times
-  // at each node. Apply traffic-light waits at each departure.
-
+  const adj = Array.from({length: n + 1}, () => []);
+  for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); }
+  const dist1 = new Array(n + 1).fill(Infinity);
+  const dist2 = new Array(n + 1).fill(Infinity);
+  dist1[1] = 0;
+  const queue = [[1, 0]]; // [node, arrival_time]
+  while (queue.length) {
+    const [node, t] = queue.shift();
+    let dep = t;
+    if (Math.floor(dep / change) % 2 === 1) dep = (Math.floor(dep / change) + 1) * change;
+    const arr = dep + time;
+    for (const next of adj[node]) {
+      if (arr < dist1[next]) { dist2[next] = dist1[next]; dist1[next] = arr; queue.push([next, arr]); }
+      else if (arr > dist1[next] && arr < dist2[next]) { dist2[next] = arr; queue.push([next, arr]); }
+    }
+  }
+  return dist2[n];
 }`,
-    typescript: "function secondMinimum(n: number, edges: number[][], time: number, change: number): number {\n  // Build adjacency list, then BFS tracking the two smallest arrival times\n  // at each node. Apply traffic-light waits at each departure.\n\n}",
-
+    typescript: `function secondMinimum(n: number, edges: number[][], time: number, change: number): number {
+  const adj: number[][] = Array.from({length: n + 1}, () => []);
+  for (const [u, v] of edges) { adj[u]!.push(v!); adj[v]!.push(u!); }
+  const dist1 = new Array<number>(n + 1).fill(Infinity);
+  const dist2 = new Array<number>(n + 1).fill(Infinity);
+  dist1[1] = 0;
+  const queue: [number, number][] = [[1, 0]];
+  while (queue.length) {
+    const [node, t] = queue.shift()!;
+    let dep = t;
+    if (Math.floor(dep / change) % 2 === 1) dep = (Math.floor(dep / change) + 1) * change;
+    const arr = dep + time;
+    for (const next of adj[node]!) {
+      if (arr < dist1[next]!) { dist2[next] = dist1[next]!; dist1[next] = arr; queue.push([next, arr]); }
+      else if (arr > dist1[next]! && arr < dist2[next]!) { dist2[next] = arr; queue.push([next, arr]); }
+    }
+  }
+  return dist2[n]!;
+}`,
     python: `def secondMinimum(n: int, edges: list, time: int, change: int) -> int:
-    # Build adjacency list, then BFS tracking the two smallest arrival times
-    # at each node. Apply traffic-light waits at each departure.
-    pass
+    from collections import deque
+    adj = [[] for _ in range(n + 1)]
+    for u, v in edges:
+        adj[u].append(v); adj[v].append(u)
+    dist1 = [float('inf')] * (n + 1)
+    dist2 = [float('inf')] * (n + 1)
+    dist1[1] = 0
+    queue = deque([(1, 0)])
+    while queue:
+        node, t = queue.popleft()
+        dep = t
+        if (dep // change) % 2 == 1:
+            dep = (dep // change + 1) * change
+        arr = dep + time
+        for nxt in adj[node]:
+            if arr < dist1[nxt]:
+                dist2[nxt] = dist1[nxt]; dist1[nxt] = arr; queue.append((nxt, arr))
+            elif dist1[nxt] < arr < dist2[nxt]:
+                dist2[nxt] = arr; queue.append((nxt, arr))
+    return dist2[n]
 `,
   },
   visibleTests: [

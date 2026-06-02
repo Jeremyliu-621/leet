@@ -40,14 +40,84 @@ Return an array \`answer\` of length \`n\` where \`answer[i]\` is the length of 
   params: ['n', 'redEdges', 'blueEdges'],
   starterCode: {
     javascript: `function shortestAlternatingColors(n, redEdges, blueEdges) {
-  // return shortest alternating-color path from node 0 to each node
-
+  const adj = Array.from({length: n}, () => [[], []]); // adj[u][0]=red neighbors, adj[u][1]=blue
+  for (const [u, v] of redEdges) adj[u][0].push(v);
+  for (const [u, v] of blueEdges) adj[u][1].push(v);
+  const dist = new Array(n).fill(-1);
+  dist[0] = 0;
+  const visited = Array.from({length: n}, () => [false, false]);
+  visited[0][0] = visited[0][1] = true;
+  const queue = [[0, 0], [0, 1]]; // [node, lastColor]
+  let step = 1;
+  while (queue.length) {
+    const size = queue.length;
+    for (let i = 0; i < size; i++) {
+      const [node, color] = queue.shift();
+      const nc = 1 - color;
+      for (const next of adj[node][nc]) {
+        if (!visited[next][nc]) {
+          visited[next][nc] = true;
+          if (dist[next] === -1) dist[next] = step;
+          queue.push([next, nc]);
+        }
+      }
+    }
+    step++;
+  }
+  return dist;
 }`,
-    typescript: "function shortestAlternatingColors(n: number, redEdges: number[][], blueEdges: unknown[]): number[] {\n  // return shortest alternating-color path from node 0 to each node\n\n}",
-
+    typescript: `function shortestAlternatingColors(n: number, redEdges: number[][], blueEdges: number[][]): number[] {
+  const adj: number[][][] = Array.from({length: n}, () => [[], []]);
+  for (const [u, v] of redEdges) adj[u]![0]!.push(v!);
+  for (const [u, v] of blueEdges) adj[u]![1]!.push(v!);
+  const dist = new Array<number>(n).fill(-1);
+  dist[0] = 0;
+  const visited: boolean[][] = Array.from({length: n}, () => [false, false]);
+  visited[0]![0] = visited[0]![1] = true;
+  const queue: [number, number][] = [[0, 0], [0, 1]];
+  let step = 1;
+  while (queue.length) {
+    const size = queue.length;
+    for (let i = 0; i < size; i++) {
+      const [node, color] = queue.shift()!;
+      const nc = 1 - color;
+      for (const next of adj[node]![nc]!) {
+        if (!visited[next]![nc]) {
+          visited[next]![nc] = true;
+          if (dist[next] === -1) dist[next] = step;
+          queue.push([next, nc]);
+        }
+      }
+    }
+    step++;
+  }
+  return dist;
+}`,
     python: `def shortestAlternatingColors(n: int, redEdges: list, blueEdges: list) -> list:
-    # return shortest alternating-color path from node 0 to each node
-    pass
+    from collections import deque
+    adj = [[[], []] for _ in range(n)]  # adj[u][0]=red, adj[u][1]=blue
+    for u, v in redEdges:
+        adj[u][0].append(v)
+    for u, v in blueEdges:
+        adj[u][1].append(v)
+    dist = [-1] * n
+    dist[0] = 0
+    visited = [[False, False] for _ in range(n)]
+    visited[0][0] = visited[0][1] = True
+    queue = deque([(0, 0), (0, 1)])
+    step = 1
+    while queue:
+        for _ in range(len(queue)):
+            node, color = queue.popleft()
+            nc = 1 - color
+            for nxt in adj[node][nc]:
+                if not visited[nxt][nc]:
+                    visited[nxt][nc] = True
+                    if dist[nxt] == -1:
+                        dist[nxt] = step
+                    queue.append((nxt, nc))
+        step += 1
+    return dist
 `,
   },
   visibleTests: [

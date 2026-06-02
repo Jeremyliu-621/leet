@@ -46,14 +46,97 @@ Return all element counts as a single string: element names in **sorted alphabet
   params: ['formula'],
   starterCode: {
     javascript: `function countOfAtoms(formula) {
-
-}
-`,
+  let i = 0;
+  const parse = () => {
+    const stack = [new Map()];
+    while (i < formula.length) {
+      if (formula[i] === '(') {
+        i++;
+        stack.push(new Map());
+      } else if (formula[i] === ')') {
+        i++;
+        let num = 0;
+        while (i < formula.length && formula[i] >= '0' && formula[i] <= '9') num = num * 10 + +formula[i++];
+        if (num === 0) num = 1;
+        const top = stack.pop();
+        const cur = stack[stack.length - 1];
+        for (const [el, cnt] of top) cur.set(el, (cur.get(el) || 0) + cnt * num);
+      } else {
+        let el = formula[i++];
+        while (i < formula.length && formula[i] >= 'a' && formula[i] <= 'z') el += formula[i++];
+        let num = 0;
+        while (i < formula.length && formula[i] >= '0' && formula[i] <= '9') num = num * 10 + +formula[i++];
+        if (num === 0) num = 1;
+        const cur = stack[stack.length - 1];
+        cur.set(el, (cur.get(el) || 0) + num);
+      }
+    }
+    return stack[0];
+  };
+  const counts = parse();
+  return [...counts.keys()].sort().map(k => k + (counts.get(k) === 1 ? '' : counts.get(k))).join('');
+}`,
     typescript: `function countOfAtoms(formula: string): string {
-
+  let i = 0;
+  const parse = (): Map<string, number> => {
+    const stack: Map<string, number>[] = [new Map()];
+    while (i < formula.length) {
+      if (formula[i] === '(') {
+        i++;
+        stack.push(new Map());
+      } else if (formula[i] === ')') {
+        i++;
+        let num = 0;
+        while (i < formula.length && formula[i]! >= '0' && formula[i]! <= '9') num = num * 10 + +formula[i++]!;
+        if (num === 0) num = 1;
+        const top = stack.pop()!;
+        const cur = stack[stack.length - 1]!;
+        for (const [el, cnt] of top) cur.set(el, (cur.get(el) ?? 0) + cnt * num);
+      } else {
+        let el = formula[i++]!;
+        while (i < formula.length && formula[i]! >= 'a' && formula[i]! <= 'z') el += formula[i++]!;
+        let num = 0;
+        while (i < formula.length && formula[i]! >= '0' && formula[i]! <= '9') num = num * 10 + +formula[i++]!;
+        if (num === 0) num = 1;
+        const cur = stack[stack.length - 1]!;
+        cur.set(el, (cur.get(el) ?? 0) + num);
+      }
+    }
+    return stack[0]!;
+  };
+  const counts = parse();
+  return [...counts.keys()].sort().map(k => k + (counts.get(k) === 1 ? '' : counts.get(k))).join('');
 }`,
     python: `def countOfAtoms(formula):
-    pass
+    i = 0
+    def parse():
+        nonlocal i
+        stack = [{}]
+        while i < len(formula):
+            if formula[i] == '(':
+                i += 1
+                stack.append({})
+            elif formula[i] == ')':
+                i += 1
+                num = 0
+                while i < len(formula) and formula[i].isdigit():
+                    num = num * 10 + int(formula[i]); i += 1
+                if num == 0: num = 1
+                top = stack.pop()
+                for el, cnt in top.items():
+                    stack[-1][el] = stack[-1].get(el, 0) + cnt * num
+            else:
+                el = formula[i]; i += 1
+                while i < len(formula) and formula[i].islower():
+                    el += formula[i]; i += 1
+                num = 0
+                while i < len(formula) and formula[i].isdigit():
+                    num = num * 10 + int(formula[i]); i += 1
+                if num == 0: num = 1
+                stack[-1][el] = stack[-1].get(el, 0) + num
+        return stack[0]
+    counts = parse()
+    return ''.join(k + ('' if counts[k] == 1 else str(counts[k])) for k in sorted(counts))
 `,
   },
   visibleTests: [

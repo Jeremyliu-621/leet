@@ -39,12 +39,45 @@ So \`10\` is valid, contributing \`100\` to the sum.`,
   params: ['n'],
   starterCode: {
     javascript: `function punishmentNumber(n) {
-
+  const canSplit = (s, target) => {
+    if (s.length === 0) return target === 0;
+    for (let len = 1; len <= s.length; len++) {
+      const part = parseInt(s.slice(0, len));
+      if (part > target) break;
+      if (canSplit(s.slice(len), target - part)) return true;
+    }
+    return false;
+  };
+  let ans = 0;
+  for (let i = 1; i <= n; i++) if (canSplit(String(i * i), i)) ans += i * i;
+  return ans;
 }`,
-    typescript: "function punishmentNumber(n: number): number {\n\n}",
-
+    typescript: `function punishmentNumber(n: number): number {
+  const canSplit = (s: string, target: number): boolean => {
+    if (s.length === 0) return target === 0;
+    for (let len = 1; len <= s.length; len++) {
+      const part = parseInt(s.slice(0, len));
+      if (part > target) break;
+      if (canSplit(s.slice(len), target - part)) return true;
+    }
+    return false;
+  };
+  let ans = 0;
+  for (let i = 1; i <= n; i++) if (canSplit(String(i * i), i)) ans += i * i;
+  return ans;
+}`,
     python: `def punishmentNumber(n):
-    pass
+    def can_split(s, target):
+        if not s:
+            return target == 0
+        for length in range(1, len(s) + 1):
+            part = int(s[:length])
+            if part > target:
+                break
+            if can_split(s[length:], target - part):
+                return True
+        return False
+    return sum(i * i for i in range(1, n + 1) if can_split(str(i * i), i))
 `,
   },
   visibleTests: [

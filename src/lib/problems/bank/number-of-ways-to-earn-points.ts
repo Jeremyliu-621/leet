@@ -43,14 +43,42 @@ Return the number of ways you can earn **exactly** \`target\` points in the exam
   params: ['target', 'types'],
   starterCode: {
     javascript: `function waysToReachTarget(target, types) {
-  // Bounded knapsack: dp[j] = ways to score exactly j points.
+  const MOD = 1_000_000_007;
+  const dp = new Array(target + 1).fill(0);
+  dp[0] = 1;
+  for (const [count, marks] of types) {
+    for (let j = target; j >= 0; j--) {
+      for (let k = 1; k <= count && k * marks <= j; k++) {
+        dp[j] = (dp[j] + dp[j - k * marks]) % MOD;
+      }
+    }
+  }
+  return dp[target];
 }`,
     typescript: `function waysToReachTarget(target: number, types: number[][]): number {
-  // Bounded knapsack: dp[j] = ways to score exactly j points.
+  const MOD = 1_000_000_007;
+  const dp = new Array<number>(target + 1).fill(0);
+  dp[0] = 1;
+  for (const [count, marks] of types) {
+    for (let j = target; j >= 0; j--) {
+      for (let k = 1; k <= count! && k * marks! <= j; k++) {
+        dp[j] = (dp[j]! + dp[j - k * marks!]!) % MOD;
+      }
+    }
+  }
+  return dp[target]!;
 }`,
     python: `def waysToReachTarget(target, types):
-    # Bounded knapsack: dp[j] = ways to score exactly j points.
-    pass
+    MOD = 10**9 + 7
+    dp = [0] * (target + 1)
+    dp[0] = 1
+    for count, marks in types:
+        for j in range(target, -1, -1):
+            for k in range(1, count + 1):
+                if k * marks > j:
+                    break
+                dp[j] = (dp[j] + dp[j - k * marks]) % MOD
+    return dp[target]
 `,
   },
   visibleTests: [
