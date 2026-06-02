@@ -8,9 +8,13 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2937** problems; 9159 tests green. Batch 283 (8 new problems) pushed.
+**Current focus:** Bank at **2937** problems; 9159 tests green. ALL STUBS FILLED — starter backfill complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 284+); starter backfill (batch 40+); UX polish.
+**Next up:** Continued bank growth (batch 284+); UX polish (light+dark mode, more languages, accessibility).
+
+### feat(bank): starter-fill batches 52–56 — ALL stubs filled (2026-06-02)
+Completed the full starter code backfill: every problem in the bank now has working JS, TS, and Python implementations.
+Batches 52–56 covered ~57 problems including: sort-* series, spiral-matrix, split-*, stock-price-fluctuation, stone-game-ii, subarray-*, sum-game, sum-of-all-submatrix-sums, sum-of-all-subset-xor-totals, sum-of-* series, the-number-of-beautiful-subsets, the-skyline-problem, three-sum-*, top-k-frequent, trap-rain-water, trapping-rain-water-ii, two-city-scheduling, two-furthest-houses, two-sum-*, ugly-number-ii, unique-email-addresses, utf-8-validation, valid-parenthesis-string, valid-square, valid-subsequence, valid-sudoku, valid-tic-tac-toe-state, valid-triangle-number, verifying-alien-dictionary, vowel-tally, walking-robot-simulation, water-bottles, watering-plants-ii, word-break, word-frequency.
 
 ### feat(bank): batch 283 (local) — min-score-removals-tree, verbal-arithmetic, palindrome-removal, valid-words-puzzle (2026-06-02)
 Four new problems: `minimum-score-after-removals-on-a-tree` (hard/tree+bit-manipulation — DFS subtree XOR precomputation; ancestor check via in/out DFS timestamps; O(n²) pair enumeration; three-component scores for ancestor vs. sibling edge pairs), `verbal-arithmetic-puzzle` (hard/backtracking — column-by-column digit assignment with carry propagation; assigns result digit deterministically from column sum; Python solution uses column-wise pruning for speed), `palindrome-removal` (hard/dp — interval DP: dp[i][j]=1+dp[i][j-1]; if arr[i]==arr[j] then dp[i+1][j-1]; for k where arr[k]==arr[j]: dp[i][k]+dp[k+1][j-1]; O(n³)), `number-of-valid-words-for-each-puzzle` (hard/bit-manipulation+hash-map — word bitmask frequency map; enumerate all 2^7=128 submasks of puzzle bitmask containing first letter bit; O(128) per puzzle). Bank at **2937**; 9159 tests.
