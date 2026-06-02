@@ -36,13 +36,28 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function maximumPrefixSum(nums) {
-
+  let sum = 0, best = 0;
+  for (const n of nums) {
+    sum += n;
+    if (sum > best) best = sum;
+  }
+  return best;
 }`,
     typescript: `function maximumPrefixSum(nums: number[]): number {
-
+  let sum = 0, best = 0;
+  for (const n of nums) {
+    sum += n;
+    if (sum > best) best = sum;
+  }
+  return best;
 }`,
     python: `def maximumPrefixSum(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    s = best = 0
+    for n in nums:
+        s += n
+        if s > best: best = s
+    return best`,
   },
   visibleTests: [
     { args: [[1, -2, 3, 4, -1]], expected: 6 },

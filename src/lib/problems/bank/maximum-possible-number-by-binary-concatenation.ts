@@ -42,11 +42,31 @@ function maximumBinaryString(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function maximumBinaryString(nums) {
-
+  const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+  let best = 0;
+  for (const p of perms) {
+    const val = parseInt(nums[p[0]].toString(2) + nums[p[1]].toString(2) + nums[p[2]].toString(2), 2);
+    if (val > best) best = val;
+  }
+  return best;
 }`,
-    typescript: 'function maximumBinaryString(nums: number[]): number {\n\n}',
+    typescript: `function maximumBinaryString(nums: number[]): number {
+  const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+  let best = 0;
+  for (const p of perms) {
+    const val = parseInt(nums[p[0]!]!.toString(2) + nums[p[1]!]!.toString(2) + nums[p[2]!]!.toString(2), 2);
+    if (val > best) best = val;
+  }
+  return best;
+}`,
     python: `def maximumBinaryString(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    from itertools import permutations
+    best = 0
+    for perm in permutations(nums):
+        val = int(''.join(bin(x)[2:] for x in perm), 2)
+        if val > best: best = val
+    return best`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 30 },

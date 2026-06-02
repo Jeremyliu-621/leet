@@ -33,12 +33,30 @@ Return the **maximum product** of \`nums\` after **at most** \`k\` operations. S
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximumProduct(nums, k) {
-
+  const MOD = 1_000_000_007n;
+  const heap = nums.slice();
+  const siftDown = (i) => { while (2*i+1 < heap.length) { let c = 2*i+1; if (c+1 < heap.length && heap[c+1] < heap[c]) c++; if (heap[i] <= heap[c]) break; [heap[i],heap[c]]=[heap[c],heap[i]]; i=c; } };
+  for (let i = (heap.length >> 1) - 1; i >= 0; i--) siftDown(i);
+  for (let i = 0; i < k; i++) { heap[0]++; siftDown(0); }
+  return Number(heap.reduce((acc, x) => acc * BigInt(x) % MOD, 1n));
 }`,
-    typescript: "function maximumProduct(nums: number[], k: number): number {\n\n}",
-
+    typescript: `function maximumProduct(nums: number[], k: number): number {
+  const MOD = 1_000_000_007n;
+  const heap = nums.slice();
+  const siftDown = (i: number) => { while (2*i+1 < heap.length) { let c = 2*i+1; if (c+1 < heap.length && heap[c+1]! < heap[c]!) c++; if (heap[i]! <= heap[c]!) break; [heap[i],heap[c]]=[heap[c]!,heap[i]!]; i=c; } };
+  for (let i = (heap.length >> 1) - 1; i >= 0; i--) siftDown(i);
+  for (let i = 0; i < k; i++) { heap[0]!++; siftDown(0); }
+  return Number(heap.reduce((acc, x) => acc * BigInt(x) % MOD, 1n));
+}`,
     python: `def maximumProduct(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    import heapq
+    heapq.heapify(nums)
+    for _ in range(k): heapq.heapreplace(nums, nums[0] + 1)
+    MOD = 10**9 + 7
+    result = 1
+    for x in nums: result = result * x % MOD
+    return result`,
   },
   visibleTests: [
     { args: [[0, 4], 5], expected: 20 },

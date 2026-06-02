@@ -42,12 +42,54 @@ Return the maximum performance of this team. Since the answer can be a huge numb
   params: ['n', 'speed', 'efficiency', 'k'],
   starterCode: {
     javascript: `function maxPerformance(n, speed, efficiency, k) {
-
+  const MOD = 1_000_000_007n;
+  const engineers = speed.map((s, i) => [efficiency[i], s]).sort((a, b) => b[0] - a[0]);
+  const heap = [];
+  const siftUp = (i) => { while (i > 0) { const p = (i-1) >> 1; if (heap[p] <= heap[i]) break; [heap[p],heap[i]]=[heap[i],heap[p]]; i=p; } };
+  const siftDown = (i) => { while (2*i+1 < heap.length) { let c = 2*i+1; if (c+1 < heap.length && heap[c+1] < heap[c]) c++; if (heap[i] <= heap[c]) break; [heap[i],heap[c]]=[heap[c],heap[i]]; i=c; } };
+  const popMin = () => { const min = heap[0]; const last = heap.pop(); if (heap.length) { heap[0] = last; siftDown(0); } return min; };
+  let speedSum = 0n, best = 0n;
+  for (const [eff, spd] of engineers) {
+    heap.push(spd); siftUp(heap.length - 1);
+    speedSum += BigInt(spd);
+    if (heap.length > k) speedSum -= BigInt(popMin());
+    const perf = speedSum * BigInt(eff);
+    if (perf > best) best = perf;
+  }
+  return Number(best % MOD);
 }`,
-    typescript: "function maxPerformance(n: number, speed: number[], efficiency: number[], k: number): number {\n\n}",
-
+    typescript: `function maxPerformance(n: number, speed: number[], efficiency: number[], k: number): number {
+  const MOD = 1_000_000_007n;
+  const engineers = speed.map((s, i) => [efficiency[i]!, s]).sort((a, b) => b[0]! - a[0]!);
+  const heap: number[] = [];
+  const siftUp = (i: number) => { while (i > 0) { const p = (i-1) >> 1; if (heap[p]! <= heap[i]!) break; [heap[p],heap[i]]=[heap[i]!,heap[p]!]; i=p; } };
+  const siftDown = (i: number) => { while (2*i+1 < heap.length) { let c = 2*i+1; if (c+1 < heap.length && heap[c+1]! < heap[c]!) c++; if (heap[i]! <= heap[c]!) break; [heap[i],heap[c]]=[heap[c]!,heap[i]!]; i=c; } };
+  const popMin = () => { const min = heap[0]!; const last = heap.pop()!; if (heap.length) { heap[0] = last; siftDown(0); } return min; };
+  let speedSum = 0n, best = 0n;
+  for (const [eff, spd] of engineers) {
+    heap.push(spd!); siftUp(heap.length - 1);
+    speedSum += BigInt(spd!);
+    if (heap.length > k) speedSum -= BigInt(popMin());
+    const perf = speedSum * BigInt(eff!);
+    if (perf > best) best = perf;
+  }
+  return Number(best % MOD);
+}`,
     python: `def maxPerformance(n: int, speed: list[int], efficiency: list[int], k: int) -> int:
-    pass`,
+    if hasattr(speed, 'to_py'): speed = list(speed.to_py())
+    if hasattr(efficiency, 'to_py'): efficiency = list(efficiency.to_py())
+    import heapq
+    MOD = 10**9 + 7
+    engineers = sorted(zip(efficiency, speed), reverse=True)
+    heap = []
+    speed_sum = best = 0
+    for eff, spd in engineers:
+        heapq.heappush(heap, spd)
+        speed_sum += spd
+        if len(heap) > k: speed_sum -= heapq.heappop(heap)
+        perf = speed_sum * eff
+        if perf > best: best = perf
+    return best % MOD`,
   },
   visibleTests: [
     { args: [6, [2, 10, 3, 1, 5, 8], [5, 4, 3, 9, 7, 2], 2], expected: 60 },

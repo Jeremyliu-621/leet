@@ -46,13 +46,66 @@ Return the **maximum quality** of a valid path.
   params: ['values', 'edges', 'maxTime'],
   starterCode: {
     javascript: `function maximalPathQuality(values, edges, maxTime) {
-
+  const n = values.length;
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v, t] of edges) { adj[u].push([v, t]); adj[v].push([u, t]); }
+  const count = new Array(n).fill(0);
+  count[0] = 1;
+  let ans = 0;
+  const dfs = (node, timeLeft, quality) => {
+    if (node === 0) ans = Math.max(ans, quality);
+    for (const [next, t] of adj[node]) {
+      if (t <= timeLeft) {
+        const add = count[next] === 0 ? values[next] : 0;
+        count[next]++;
+        dfs(next, timeLeft - t, quality + add);
+        count[next]--;
+      }
+    }
+  };
+  dfs(0, maxTime, values[0]);
+  return ans;
 }`,
     typescript: `function maximalPathQuality(values: number[], edges: number[][], maxTime: number): number {
-
+  const n = values.length;
+  const adj: [number, number][][] = Array.from({length: n}, () => []);
+  for (const e of edges) { adj[e[0]!]!.push([e[1]!, e[2]!]); adj[e[1]!]!.push([e[0]!, e[2]!]); }
+  const count = new Array<number>(n).fill(0);
+  count[0] = 1;
+  let ans = 0;
+  const dfs = (node: number, timeLeft: number, quality: number): void => {
+    if (node === 0) ans = Math.max(ans, quality);
+    for (const [next, t] of adj[node]!) {
+      if (t <= timeLeft) {
+        const add = count[next]! === 0 ? values[next]! : 0;
+        count[next]!++;
+        dfs(next, timeLeft - t, quality + add);
+        count[next]!--;
+      }
+    }
+  };
+  dfs(0, maxTime, values[0]!);
+  return ans;
 }`,
     python: `def maximalPathQuality(values, edges, maxTime):
-    pass`,
+    if hasattr(values, 'to_py'): values = list(values.to_py())
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    n = len(values)
+    adj = [[] for _ in range(n)]
+    for u, v, t in edges: adj[u].append((v, t)); adj[v].append((u, t))
+    count = [0] * n
+    count[0] = 1
+    ans = [0]
+    def dfs(node, time_left, quality):
+        if node == 0: ans[0] = max(ans[0], quality)
+        for nxt, t in adj[node]:
+            if t <= time_left:
+                add = values[nxt] if count[nxt] == 0 else 0
+                count[nxt] += 1
+                dfs(nxt, time_left - t, quality + add)
+                count[nxt] -= 1
+    dfs(0, maxTime, values[0])
+    return ans[0]`,
   },
   visibleTests: [
     { args: [[0, 32, 10, 43], [[0, 1, 10], [1, 2, 15], [0, 3, 10]], 49], expected: 75 },

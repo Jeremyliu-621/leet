@@ -38,12 +38,28 @@ Note: Only adjacent pairs (consecutive elements) are considered.`,
   params: ['nums'],
   starterCode: {
     javascript: `function maxProduct(nums) {
-
+  let best = nums[0] * nums[1];
+  for (let i = 1; i < nums.length - 1; i++) {
+    const p = nums[i] * nums[i + 1];
+    if (p > best) best = p;
+  }
+  return best;
 }`,
-    typescript: "function maxProduct(nums: number[]): number {\n\n}",
-
+    typescript: `function maxProduct(nums: number[]): number {
+  let best = nums[0]! * nums[1]!;
+  for (let i = 1; i < nums.length - 1; i++) {
+    const p = nums[i]! * nums[i + 1]!;
+    if (p > best) best = p;
+  }
+  return best;
+}`,
     python: `def maxProduct(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    best = nums[0] * nums[1]
+    for i in range(1, len(nums) - 1):
+        p = nums[i] * nums[i + 1]
+        if p > best: best = p
+    return best`,
   },
   visibleTests: [
     { args: [[3, 4, 5, 2]], expected: 20 },

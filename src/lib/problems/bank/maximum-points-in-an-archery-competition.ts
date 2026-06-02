@@ -78,7 +78,21 @@ Return an array \`bobArrows\` of size 12 representing how many arrows Bob shoots
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: `function maximumBobPoints(numArrows, aliceArrows) {
-
+  let bestMask = 0, bestScore = 0;
+  for (let mask = 0; mask < (1 << 11); mask++) {
+    let cost = 0, score = 0;
+    for (let i = 1; i <= 11; i++) {
+      if ((mask >> (i - 1)) & 1) { cost += aliceArrows[i] + 1; score += i; }
+    }
+    if (cost <= numArrows && score > bestScore) { bestScore = score; bestMask = mask; }
+  }
+  const bob = new Array(12).fill(0);
+  let remaining = numArrows;
+  for (let i = 1; i <= 11; i++) {
+    if ((bestMask >> (i - 1)) & 1) { bob[i] = aliceArrows[i] + 1; remaining -= bob[i]; }
+  }
+  bob[0] = remaining;
+  return bob;
 }`,
     typescript: `function maximumBobPointsRunner(numArrows: number, aliceArrows: number[]): number {
   const bobArrows = maximumBobPoints(numArrows, aliceArrows);
@@ -87,16 +101,48 @@ Return an array \`bobArrows\` of size 12 representing how many arrows Bob shoots
   if (total > numArrows || bobArrows.some((x: number) => x < 0)) return -2;
   let score = 0;
   for (let i = 1; i < 12; i++) {
-    if (bobArrows[i] > aliceArrows[i]) score += i;
+    if (bobArrows[i]! > aliceArrows[i]!) score += i;
   }
   return score;
 }
 
 function maximumBobPoints(numArrows: number, aliceArrows: number[]): number[] {
-
+  let bestMask = 0, bestScore = 0;
+  for (let mask = 0; mask < (1 << 11); mask++) {
+    let cost = 0, score = 0;
+    for (let i = 1; i <= 11; i++) {
+      if ((mask >> (i - 1)) & 1) { cost += aliceArrows[i]! + 1; score += i; }
+    }
+    if (cost <= numArrows && score > bestScore) { bestScore = score; bestMask = mask; }
+  }
+  const bob = new Array<number>(12).fill(0);
+  let remaining = numArrows;
+  for (let i = 1; i <= 11; i++) {
+    if ((bestMask >> (i - 1)) & 1) { bob[i] = aliceArrows[i]! + 1; remaining -= bob[i]!; }
+  }
+  bob[0] = remaining;
+  return bob;
 }`,
     python: `def maximumBobPoints(numArrows, aliceArrows):
-    pass`,
+    if hasattr(aliceArrows, 'to_py'): aliceArrows = list(aliceArrows.to_py())
+    best_mask = best_score = 0
+    for mask in range(1 << 11):
+        cost = score = 0
+        for i in range(1, 12):
+            if (mask >> (i - 1)) & 1:
+                cost += aliceArrows[i] + 1
+                score += i
+        if cost <= numArrows and score > best_score:
+            best_score = score
+            best_mask = mask
+    bob = [0] * 12
+    remaining = numArrows
+    for i in range(1, 12):
+        if (best_mask >> (i - 1)) & 1:
+            bob[i] = aliceArrows[i] + 1
+            remaining -= bob[i]
+    bob[0] = remaining
+    return bob`,
   },
   visibleTests: [
     { args: [9, [1, 1, 0, 1, 0, 0, 2, 1, 0, 1, 2, 2]], expected: 40 },
