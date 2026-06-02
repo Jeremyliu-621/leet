@@ -63,11 +63,61 @@ function minimumDiameterAfterMerge(edges1, edges2) {
   params: ['edges1', 'edges2'],
   starterCode: {
     javascript: `function minimumDiameterAfterMerge(edges1, edges2) {
-
+  function getDiameter(edges, n) {
+    if (n === 1) return 0;
+    const adj = Array.from({length: n}, () => []);
+    for (const [u,v] of edges) { adj[u].push(v); adj[v].push(u); }
+    function bfs(start) {
+      const dist = new Array(n).fill(-1); dist[start] = 0;
+      const q = [start]; let far = start;
+      for (let h = 0; h < q.length; h++)
+        for (const v of adj[q[h]])
+          if (dist[v] === -1) { dist[v] = dist[q[h]] + 1; q.push(v); if (dist[v] > dist[far]) far = v; }
+      return [far, dist[far]];
+    }
+    return bfs(bfs(0)[0])[1];
+  }
+  const d1 = getDiameter(edges1, edges1.length + 1);
+  const d2 = getDiameter(edges2, edges2.length + 1);
+  return Math.max(d1, d2, Math.ceil(d1 / 2) + Math.ceil(d2 / 2) + 1);
 }`,
-    typescript: 'function minimumDiameterAfterMerge(edges1: number[][], edges2: number[][]): number {\n\n}',
+    typescript: `function minimumDiameterAfterMerge(edges1: number[][], edges2: number[][]): number {
+  function getDiameter(edges: number[][], n: number): number {
+    if (n === 1) return 0;
+    const adj: number[][] = Array.from({length: n}, () => []);
+    for (const e of edges) { adj[e[0]!].push(e[1]!); adj[e[1]!].push(e[0]!); }
+    function bfs(start: number): [number, number] {
+      const dist = new Array(n).fill(-1); dist[start] = 0;
+      const q = [start]; let far = start;
+      for (let h = 0; h < q.length; h++)
+        for (const v of adj[q[h]!]!)
+          if (dist[v] === -1) { dist[v] = dist[q[h]!]! + 1; q.push(v); if (dist[v]! > dist[far]!) far = v; }
+      return [far, dist[far]!];
+    }
+    return bfs(bfs(0)[0])[1];
+  }
+  const d1 = getDiameter(edges1, edges1.length + 1);
+  const d2 = getDiameter(edges2, edges2.length + 1);
+  return Math.max(d1, d2, Math.ceil(d1 / 2) + Math.ceil(d2 / 2) + 1);
+}`,
     python: `def minimumDiameterAfterMerge(edges1, edges2):
-    pass`,
+    from collections import deque
+    import math
+    def get_diameter(edges, n):
+        if n == 1: return 0
+        adj = [[] for _ in range(n)]
+        for u, v in edges: adj[u].append(v); adj[v].append(u)
+        def bfs(src):
+            dist = [-1]*n; dist[src]=0; q=deque([src]); far=src
+            while q:
+                u = q.popleft()
+                for v in adj[u]:
+                    if dist[v]==-1: dist[v]=dist[u]+1; q.append(v)
+                    if dist[v]>dist[far]: far=v
+            return far, dist[far]
+        return bfs(bfs(0)[0])[1]
+    d1 = get_diameter(edges1, len(edges1)+1); d2 = get_diameter(edges2, len(edges2)+1)
+    return max(d1, d2, math.ceil(d1/2)+math.ceil(d2/2)+1)`,
   },
   visibleTests: [
     { args: [[[0, 1], [0, 2], [0, 3]], [[0, 1]]], expected: 3 },

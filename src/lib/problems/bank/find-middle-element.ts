@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function findMiddleElement(nums) {
-
+  return nums[Math.floor(nums.length / 2)];
 }`,
     typescript: `function findMiddleElement(nums: number[]): number {
-
+  return nums[Math.floor(nums.length / 2)]!;
 }`,
-    python: `def findMiddleElement(nums: list[int]) -> int:
-    pass`,
+    python: `def findMiddleElement(nums):
+    return nums[len(nums) // 2]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: 3 },

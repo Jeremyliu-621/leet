@@ -38,12 +38,13 @@ Return the **minimum** number of operations to make all elements of \`nums\` div
   params: ['nums'],
   starterCode: {
     javascript: `function minimumOperations(nums) {
-
+  return nums.filter(n => n % 3 !== 0).length;
 }`,
-    typescript: "function minimumOperations(nums: number[]): number {\n\n}",
-
+    typescript: `function minimumOperations(nums: number[]): number {
+  return nums.filter(n => n % 3 !== 0).length;
+}`,
     python: `def minimumOperations(nums):
-    pass`,
+    return sum(1 for n in nums if n % 3 != 0)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: 3 },

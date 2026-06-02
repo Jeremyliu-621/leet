@@ -34,12 +34,33 @@ You must decrease the overall operation steps as much as possible.`,
   params: ['nums'],
   starterCode: {
     javascript: `function findMin(nums) {
-
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid] < nums[hi]) hi = mid;
+    else if (nums[mid] > nums[hi]) lo = mid + 1;
+    else hi--;
+  }
+  return nums[lo];
 }`,
-    typescript: "function findMin(nums: number[]): number {\n\n}",
-
+    typescript: `function findMin(nums: number[]): number {
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (nums[mid]! < nums[hi]!) hi = mid;
+    else if (nums[mid]! > nums[hi]!) lo = mid + 1;
+    else hi--;
+  }
+  return nums[lo]!;
+}`,
     python: `def findMin(nums):
-    pass`,
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < nums[hi]: hi = mid
+        elif nums[mid] > nums[hi]: lo = mid + 1
+        else: hi -= 1
+    return nums[lo]`,
   },
   visibleTests: [
     { args: [[1, 3, 5]], expected: 1 },

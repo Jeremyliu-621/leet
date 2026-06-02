@@ -41,13 +41,57 @@ Return the **minimum** time to reach the room \`(n - 1, m - 1)\`.
   params: ['moveTime'],
   starterCode: {
     javascript: `function minTimeToReach(moveTime) {
-
+  const n = moveTime.length, m = moveTime[0].length;
+  const dist = Array.from({length: n}, () => new Array(m).fill(Infinity));
+  dist[0][0] = 0;
+  const pq = [[0, 0, 0]];
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (pq.length) {
+    pq.sort((a, b) => a[0] - b[0]);
+    const [t, r, c] = pq.shift();
+    if (t > dist[r][c]) continue;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
+      const nt = Math.max(t, moveTime[nr][nc]) + 1;
+      if (nt < dist[nr][nc]) { dist[nr][nc] = nt; pq.push([nt, nr, nc]); }
+    }
+  }
+  return dist[n-1][m-1];
 }`,
     typescript: `function minTimeToReach(moveTime: number[][]): number {
-
+  const n = moveTime.length, m = moveTime[0]!.length;
+  const dist: number[][] = Array.from({length: n}, () => new Array(m).fill(Infinity));
+  dist[0]![0] = 0;
+  const pq: [number, number, number][] = [[0, 0, 0]];
+  const dirs: [number,number][] = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (pq.length) {
+    pq.sort((a, b) => a[0] - b[0]);
+    const [t, r, c] = pq.shift()!;
+    if (t > dist[r]![c]!) continue;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
+      const nt = Math.max(t, moveTime[nr]![nc]!) + 1;
+      if (nt < dist[nr]![nc]!) { dist[nr]![nc] = nt; pq.push([nt, nr, nc]); }
+    }
+  }
+  return dist[n-1]![m-1]!;
 }`,
     python: `def minTimeToReach(moveTime):
-    pass`,
+    import heapq
+    n, m = len(moveTime), len(moveTime[0])
+    dist = [[float('inf')] * m for _ in range(n)]
+    dist[0][0] = 0; pq = [(0, 0, 0)]
+    while pq:
+        t, r, c = heapq.heappop(pq)
+        if t > dist[r][c]: continue
+        for dr, dc in [(0,1),(0,-1),(1,0),(-1,0)]:
+            nr, nc = r+dr, c+dc
+            if 0<=nr<n and 0<=nc<m:
+                nt = max(t, moveTime[nr][nc]) + 1
+                if nt < dist[nr][nc]: dist[nr][nc]=nt; heapq.heappush(pq,(nt,nr,nc))
+    return dist[n-1][m-1]`,
   },
   visibleTests: [
     { args: [[[0, 4], [4, 4]]], expected: 6 },
