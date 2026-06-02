@@ -50392,30 +50392,21 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(BigInt(maxH) * BigInt(maxV) % MOD);
   },
 
-  'minimum-operations-to-write-the-letter-y-on-a-grid': (...args: unknown[]) => {
-    const grid = args[0] as number[][];
-    const n = grid.length;
-    const mid = Math.floor(n / 2);
-    const yFreq = [0, 0, 0];
-    const nonYFreq = [0, 0, 0];
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < n; j++) {
-        const isY = (i === j && i <= mid) || (i + j === n - 1 && i <= mid) || (j === mid && i >= mid);
-        const cell = grid[i]![j]!;
-        if (isY) yFreq[cell]!++;
-        else nonYFreq[cell]!++;
+  'capacity-to-ship-packages-within-d-days': (...args: unknown[]) => {
+    const weights = args[0] as number[];
+    const days = args[1] as number;
+    let lo = Math.max(...weights), hi = weights.reduce((a, b) => a + b, 0);
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      let needed = 1, cur = 0;
+      for (const w of weights) {
+        if (cur + w > mid) { needed++; cur = 0; }
+        cur += w;
       }
+      if (needed <= days) hi = mid;
+      else lo = mid + 1;
     }
-    const yTotal = yFreq[0]! + yFreq[1]! + yFreq[2]!;
-    const nonYTotal = nonYFreq[0]! + nonYFreq[1]! + nonYFreq[2]!;
-    let ans = Infinity;
-    for (let v1 = 0; v1 <= 2; v1++) {
-      for (let v2 = 0; v2 <= 2; v2++) {
-        if (v1 === v2) continue;
-        ans = Math.min(ans, (yTotal - yFreq[v1]!) + (nonYTotal - nonYFreq[v2]!));
-      }
-    }
-    return ans;
+    return lo;
   },
 
   // batch 291

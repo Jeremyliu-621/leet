@@ -3458,7 +3458,7 @@ import { problem as minimumCostOfRopes } from './minimum-cost-of-ropes';
 import { problem as findNumberOfGoodPairsInArray } from './find-the-number-of-good-pairs-in-an-array';
 import { problem as checkIfValidPartitionForArray } from './check-if-there-is-valid-partition-for-the-array';
 import { problem as maximumAreaCakeAfterCuts } from './maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts';
-import { problem as minimumOperationsWriteLetterY } from './minimum-operations-to-write-the-letter-y-on-a-grid';
+import { problem as capacityToShipPackagesWithinDDays } from './capacity-to-ship-packages-within-d-days';
 import { problem as maximumSumOfHeightsMountain } from './maximum-sum-of-heights-of-a-mountain';
 export const problems: readonly Problem[] = [
   // arrays — easy
@@ -6943,7 +6943,7 @@ export const problems: readonly Problem[] = [
   // batch 290
   checkIfValidPartitionForArray,
   maximumAreaCakeAfterCuts,
-  minimumOperationsWriteLetterY,
+  capacityToShipPackagesWithinDDays,
   maximumSumOfHeightsMountain,
   // batch 291
   countNodesMaxScore,

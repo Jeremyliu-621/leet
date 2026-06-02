@@ -49197,28 +49197,22 @@ def maxArea(h: int, w: int, horizontalCuts: list[int], verticalCuts: list[int]) 
     return (max_h * max_v) % MOD
 `,
 
-  'minimum-operations-to-write-the-letter-y-on-a-grid': `
-def minimumOperationsToWriteY(grid: list[list[int]]) -> int:
-    n = len(grid)
-    mid = n // 2
-    y_freq = [0, 0, 0]
-    non_y_freq = [0, 0, 0]
-    for i in range(n):
-        for j in range(n):
-            is_y = (i == j and i <= mid) or (i + j == n - 1 and i <= mid) or (j == mid and i >= mid)
-            if is_y:
-                y_freq[grid[i][j]] += 1
-            else:
-                non_y_freq[grid[i][j]] += 1
-    y_total = sum(y_freq)
-    non_y_total = sum(non_y_freq)
-    ans = float('inf')
-    for v1 in range(3):
-        for v2 in range(3):
-            if v1 == v2:
-                continue
-            ans = min(ans, (y_total - y_freq[v1]) + (non_y_total - non_y_freq[v2]))
-    return ans
+  'capacity-to-ship-packages-within-d-days': `
+def shipWithinDays(weights: list[int], days: int) -> int:
+    lo, hi = max(weights), sum(weights)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        needed, cur = 1, 0
+        for w in weights:
+            if cur + w > mid:
+                needed += 1
+                cur = 0
+            cur += w
+        if needed <= days:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
 `,
 
   // batch 291
