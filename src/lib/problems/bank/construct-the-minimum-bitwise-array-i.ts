@@ -51,11 +51,31 @@ function minBitwiseArray(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function minBitwiseArray(nums) {
-
+  return nums.map(p => {
+    for (let x = 0; x < p; x++) {
+      if ((x | (x + 1)) === p) return x;
+    }
+    return -1;
+  });
 }`,
-    typescript: 'function minBitwiseArray(nums: number[]): number[] {\n\n}',
+    typescript: `function minBitwiseArray(nums: number[]): number[] {
+  return nums.map(p => {
+    for (let x = 0; x < p; x++) {
+      if ((x | (x + 1)) === p) return x;
+    }
+    return -1;
+  });
+}`,
     python: `def minBitwiseArray(nums):
-    pass`,
+    result = []
+    for p in nums:
+        found = -1
+        for x in range(p):
+            if (x | (x + 1)) == p:
+                found = x
+                break
+        result.append(found)
+    return result`,
   },
   visibleTests: [
     { args: [[2,3,5,7]], expected: [-1,1,4,3] },

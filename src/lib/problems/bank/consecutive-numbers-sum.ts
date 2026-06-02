@@ -37,13 +37,27 @@ For example, \`n = 15\` can be written as \`15\`, \`7+8\`, \`4+5+6\`, or \`1+2+3
   params: ['n'],
   starterCode: {
     javascript: `function consecutiveNumbersSum(n) {
-
+  let count = 0;
+  for (let k = 1; k * (k + 1) <= 2 * n; k++) {
+    if ((2 * n - k * (k - 1)) % (2 * k) === 0) count++;
+  }
+  return count;
 }`,
     typescript: `function consecutiveNumbersSum(n: number): number {
-
+  let count = 0;
+  for (let k = 1; k * (k + 1) <= 2 * n; k++) {
+    if ((2 * n - k * (k - 1)) % (2 * k) === 0) count++;
+  }
+  return count;
 }`,
     python: `def consecutiveNumbersSum(n):
-    pass`,
+    count = 0
+    k = 1
+    while k * (k + 1) <= 2 * n:
+        if (2 * n - k * (k - 1)) % (2 * k) == 0:
+            count += 1
+        k += 1
+    return count`,
   },
   visibleTests: [
     { args: [5], expected: 2 },

@@ -38,13 +38,60 @@ Each number in \`candidates\` may only be used **once** in the combination.
   params: ['candidates', 'target'],
   starterCode: {
     javascript: `function combinationSum2(candidates, target) {
-  // Return unique combinations summing to target, each element used once
+  candidates.sort((a, b) => a - b);
+  const result = [];
+  function backtrack(start, current, remaining) {
+    if (remaining === 0) {
+      result.push([...current]);
+      return;
+    }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i] > remaining) break;
+      if (i > start && candidates[i] === candidates[i - 1]) continue;
+      current.push(candidates[i]);
+      backtrack(i + 1, current, remaining - candidates[i]);
+      current.pop();
+    }
+  }
+  backtrack(0, [], target);
+  return result;
 }`,
-    typescript: "function combinationSum2(candidates: number[], target: number): number[][] {\n  // Return unique combinations summing to target, each element used once\n}",
-
+    typescript: `function combinationSum2(candidates: number[], target: number): number[][] {
+  candidates.sort((a, b) => a - b);
+  const result: number[][] = [];
+  function backtrack(start: number, current: number[], remaining: number): void {
+    if (remaining === 0) {
+      result.push([...current]);
+      return;
+    }
+    for (let i = start; i < candidates.length; i++) {
+      if (candidates[i] > remaining) break;
+      if (i > start && candidates[i] === candidates[i - 1]) continue;
+      current.push(candidates[i]);
+      backtrack(i + 1, current, remaining - candidates[i]);
+      current.pop();
+    }
+  }
+  backtrack(0, [], target);
+  return result;
+}`,
     python: `def combinationSum2(candidates, target):
-    # Return unique combinations summing to target, each element used once
-    pass`,
+    candidates.sort()
+    result = []
+    def backtrack(start, current, remaining):
+        if remaining == 0:
+            result.append(list(current))
+            return
+        for i in range(start, len(candidates)):
+            if candidates[i] > remaining:
+                break
+            if i > start and candidates[i] == candidates[i - 1]:
+                continue
+            current.append(candidates[i])
+            backtrack(i + 1, current, remaining - candidates[i])
+            current.pop()
+    backtrack(0, [], target)
+    return result`,
   },
   visibleTests: [
     { args: [[10, 1, 2, 7, 6, 1, 5], 8], expected: [[1,1,6],[1,2,5],[1,7],[2,6]] },

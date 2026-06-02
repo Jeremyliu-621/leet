@@ -37,12 +37,13 @@ Return \`ans\`. Answers within \`10^-5\` of the actual answer will be accepted.`
   params: ['celsius'],
   starterCode: {
     javascript: `function convertTemperature(celsius) {
-
+  return [celsius + 273.15, celsius * 1.80 + 32.00];
 }`,
-    typescript: "function convertTemperature(celsius: number): number[] {\n\n}",
-
+    typescript: `function convertTemperature(celsius: number): number[] {
+  return [celsius + 273.15, celsius * 1.80 + 32.00];
+}`,
     python: `def convertTemperature(celsius):
-    pass`,
+    return [celsius + 273.15, celsius * 1.80 + 32.00]`,
   },
   visibleTests: [
     { args: [36.50], expected: [309.65, 97.7] },

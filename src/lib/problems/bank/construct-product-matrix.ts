@@ -33,11 +33,73 @@ export const problem: Problem = {
   params: ['grid'],
   starterCode: {
     javascript: `function constructProductMatrix(grid) {
-
+  const MOD = 12345;
+  const n = grid.length;
+  const m = grid[0].length;
+  const total = n * m;
+  const flat = grid.flat();
+  const prefix = new Array(total).fill(1);
+  const suffix = new Array(total).fill(1);
+  for (let i = 1; i < total; i++) {
+    prefix[i] = (prefix[i - 1] * flat[i - 1]) % MOD;
+  }
+  for (let i = total - 2; i >= 0; i--) {
+    suffix[i] = (suffix[i + 1] * flat[i + 1]) % MOD;
+  }
+  const result = [];
+  for (let i = 0; i < n; i++) {
+    result.push([]);
+    for (let j = 0; j < m; j++) {
+      const k = i * m + j;
+      result[i].push((prefix[k] * suffix[k]) % MOD);
+    }
+  }
+  return result;
 }`,
-    typescript: 'function constructProductMatrix(grid: number[][]): number[][] {\n\n}',
+    typescript: `function constructProductMatrix(grid: number[][]): number[][] {
+  const MOD = 12345;
+  const n = grid.length;
+  const m = grid[0].length;
+  const total = n * m;
+  const flat = grid.flat();
+  const prefix = new Array(total).fill(1);
+  const suffix = new Array(total).fill(1);
+  for (let i = 1; i < total; i++) {
+    prefix[i] = (prefix[i - 1] * flat[i - 1]) % MOD;
+  }
+  for (let i = total - 2; i >= 0; i--) {
+    suffix[i] = (suffix[i + 1] * flat[i + 1]) % MOD;
+  }
+  const result: number[][] = [];
+  for (let i = 0; i < n; i++) {
+    result.push([]);
+    for (let j = 0; j < m; j++) {
+      const k = i * m + j;
+      result[i].push((prefix[k] * suffix[k]) % MOD);
+    }
+  }
+  return result;
+}`,
     python: `def constructProductMatrix(grid):
-    pass`,
+    MOD = 12345
+    n = len(grid)
+    m = len(grid[0])
+    total = n * m
+    flat = [grid[i][j] for i in range(n) for j in range(m)]
+    prefix = [1] * total
+    suffix = [1] * total
+    for i in range(1, total):
+        prefix[i] = (prefix[i - 1] * flat[i - 1]) % MOD
+    for i in range(total - 2, -1, -1):
+        suffix[i] = (suffix[i + 1] * flat[i + 1]) % MOD
+    result = []
+    for i in range(n):
+        row = []
+        for j in range(m):
+            k = i * m + j
+            row.append((prefix[k] * suffix[k]) % MOD)
+        result.append(row)
+    return result`,
   },
   visibleTests: [
     { args: [[[1, 2], [3, 4]]], expected: [[24, 12], [8, 6]] },

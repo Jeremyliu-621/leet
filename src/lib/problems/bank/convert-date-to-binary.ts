@@ -41,13 +41,20 @@ Return the **binary representation** of \`date\`.`,
   params: ['date'],
   starterCode: {
     javascript: `function convertDateToBinary(date) {
-
+  const [year, month, day] = date.split('-');
+  return [Number(year), Number(month), Number(day)]
+    .map(n => n.toString(2))
+    .join('-');
 }`,
     typescript: `function convertDateToBinary(date: string): string {
-
+  const [year, month, day] = date.split('-');
+  return [Number(year), Number(month), Number(day)]
+    .map(n => n.toString(2))
+    .join('-');
 }`,
     python: `def convertDateToBinary(date):
-    pass`,
+    parts = date.split('-')
+    return '-'.join(bin(int(p))[2:] for p in parts)`,
   },
   visibleTests: [
     { args: ['2080-02-29'], expected: '100000100000-10-11101' },
