@@ -51299,6 +51299,65 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return [];
   },
 
+  // batch 304
+  'single-element-in-a-sorted-array': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[];
+    let lo = 0, hi = nums.length - 1;
+    while (lo < hi) {
+      let mid = (lo + hi) >> 1;
+      if (mid % 2 === 1) mid--;
+      if (nums[mid] === nums[mid + 1]) lo = mid + 2;
+      else hi = mid;
+    }
+    return nums[lo]!;
+  },
+
+  'check-if-there-is-a-path-with-equal-number-of-0s-and-1s': (...args: unknown[]): unknown => {
+    const grid = args[0] as number[][];
+    const m = grid.length, n = grid[0]!.length;
+    const len = m + n - 1;
+    if (len % 2 === 1) return false;
+    const target = len / 2;
+    const mn = Array.from({length: m}, () => new Array(n).fill(Infinity));
+    const mx = Array.from({length: m}, () => new Array(n).fill(-Infinity));
+    mn[0]![0] = mx[0]![0] = grid[0]![0]!;
+    for (let i = 1; i < m; i++) { mn[i]![0] = mn[i-1]![0]! + grid[i]![0]!; mx[i]![0] = mx[i-1]![0]! + grid[i]![0]!; }
+    for (let j = 1; j < n; j++) { mn[0]![j] = mn[0]![j-1]! + grid[0]![j]!; mx[0]![j] = mx[0]![j-1]! + grid[0]![j]!; }
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        mn[i]![j] = Math.min(mn[i-1]![j]!, mn[i]![j-1]!) + grid[i]![j]!;
+        mx[i]![j] = Math.max(mx[i-1]![j]!, mx[i]![j-1]!) + grid[i]![j]!;
+      }
+    }
+    return mn[m-1]![n-1]! <= target && target <= mx[m-1]![n-1]!;
+  },
+
+  'minimum-operations-to-write-the-letter-y-on-a-grid': (...args: unknown[]): unknown => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const half = (n - 1) / 2;
+    const yFreq = [0, 0, 0];
+    const nFreq = [0, 0, 0];
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        const v = grid[i]![j]!;
+        const isY = (i === j && i <= half) || (i + j === n - 1 && i <= half) || (i >= half && j === half);
+        if (isY) yFreq[v]!++;
+        else nFreq[v]!++;
+      }
+    }
+    const yT = yFreq[0]! + yFreq[1]! + yFreq[2]!;
+    const nT = nFreq[0]! + nFreq[1]! + nFreq[2]!;
+    let ans = Infinity;
+    for (let v1 = 0; v1 <= 2; v1++) {
+      for (let v2 = 0; v2 <= 2; v2++) {
+        if (v1 === v2) continue;
+        ans = Math.min(ans, (yT - yFreq[v1]!) + (nT - nFreq[v2]!));
+      }
+    }
+    return ans;
+  },
+
   'removing-boxes': (...args: unknown[]): unknown => {
     const boxes = args[0] as number[];
     const n = boxes.length;

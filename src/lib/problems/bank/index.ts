@@ -3508,6 +3508,10 @@ import { problem as threeSumClosestProblem } from './3sum-closest';
 import { problem as countCharactersStrings } from './number-of-strings-can-be-formed-using-characters';
 import { problem as meetingScheduler } from './meeting-scheduler';
 import { problem as removingBoxes } from './removing-boxes';
+// batch 304
+import { problem as singleElementInSortedArray } from './single-element-in-a-sorted-array';
+import { problem as pathEqualZerosOnes } from './check-if-there-is-a-path-with-equal-number-of-0s-and-1s';
+import { problem as minimumOpsWriteLetterY } from './minimum-operations-to-write-the-letter-y-on-a-grid';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7055,4 +7059,8 @@ export const problems: readonly Problem[] = [
   countCharactersStrings,
   meetingScheduler,
   removingBoxes,
+  // batch 304
+  singleElementInSortedArray,
+  pathEqualZerosOnes,
+  minimumOpsWriteLetterY,
 ];

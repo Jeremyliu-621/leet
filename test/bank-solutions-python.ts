@@ -50100,6 +50100,68 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return []
 `,
 
+  // batch 304
+  'single-element-in-a-sorted-array': `def singleNonDuplicate(nums):
+    nums = [int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums)]
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) >> 1
+        if mid % 2 == 1:
+            mid -= 1
+        if nums[mid] == nums[mid + 1]:
+            lo = mid + 2
+        else:
+            hi = mid
+    return nums[lo]
+`,
+
+  'check-if-there-is-a-path-with-equal-number-of-0s-and-1s': `def isThereAPath(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    m, n = len(grid), len(grid[0])
+    length = m + n - 1
+    if length % 2 == 1: return False
+    target = length // 2
+    INF = float('inf')
+    mn = [[INF]*n for _ in range(m)]
+    mx = [[-INF]*n for _ in range(m)]
+    mn[0][0] = mx[0][0] = grid[0][0]
+    for i in range(1, m):
+        mn[i][0] = mn[i-1][0] + grid[i][0]
+        mx[i][0] = mx[i-1][0] + grid[i][0]
+    for j in range(1, n):
+        mn[0][j] = mn[0][j-1] + grid[0][j]
+        mx[0][j] = mx[0][j-1] + grid[0][j]
+    for i in range(1, m):
+        for j in range(1, n):
+            mn[i][j] = min(mn[i-1][j], mn[i][j-1]) + grid[i][j]
+            mx[i][j] = max(mx[i-1][j], mx[i][j-1]) + grid[i][j]
+    return mn[m-1][n-1] <= target <= mx[m-1][n-1]
+`,
+
+  'minimum-operations-to-write-the-letter-y-on-a-grid': `def minimumOperationsToWriteY(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    half = (n - 1) // 2
+    y_freq = [0, 0, 0]
+    n_freq = [0, 0, 0]
+    for i in range(n):
+        for j in range(n):
+            v = grid[i][j]
+            is_y = (i == j and i <= half) or (i + j == n - 1 and i <= half) or (i >= half and j == half)
+            if is_y:
+                y_freq[v] += 1
+            else:
+                n_freq[v] += 1
+    y_total = sum(y_freq)
+    n_total = sum(n_freq)
+    ans = float('inf')
+    for v1 in range(3):
+        for v2 in range(3):
+            if v1 == v2: continue
+            ans = min(ans, (y_total - y_freq[v1]) + (n_total - n_freq[v2]))
+    return ans
+`,
+
   'removing-boxes': `def removeBoxes(boxes):
     boxes = [int(x) for x in (boxes.to_py() if hasattr(boxes, 'to_py') else boxes)]
     n = len(boxes)
