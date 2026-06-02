@@ -41,12 +41,17 @@ function dayOfTheWeek(day, month, year) {
   params: ['day', 'month', 'year'],
   starterCode: {
     javascript: `function dayOfTheWeek(day, month, year) {
-
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  return days[new Date(Date.UTC(year, month - 1, day)).getUTCDay()];
 }`,
-    typescript: "function dayOfTheWeek(day: number, month: number, year: number): string {\n\n}",
-
+    typescript: `function dayOfTheWeek(day: number, month: number, year: number): string {
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  return days[new Date(Date.UTC(year, month - 1, day)).getUTCDay()]!;
+}`,
     python: `def dayOfTheWeek(day, month, year):
-    pass`,
+    import datetime
+    days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+    return days[datetime.date(year, month, day).weekday()]`,
   },
   visibleTests: [
     { args: [31, 8, 2019], expected: 'Saturday' },

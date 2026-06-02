@@ -40,12 +40,27 @@ Return the final string after the deletion. It can be shown that the answer will
   params: ['s'],
   starterCode: {
     javascript: `function makeFancyString(s) {
-
+  const res = [];
+  for (const c of s) {
+    const n = res.length;
+    if (n < 2 || !(res[n - 1] === c && res[n - 2] === c)) res.push(c);
+  }
+  return res.join('');
 }`,
-    typescript: "function makeFancyString(s: string): string {\n\n}",
-
+    typescript: `function makeFancyString(s: string): string {
+  const res: string[] = [];
+  for (const c of s) {
+    const n = res.length;
+    if (n < 2 || !(res[n - 1] === c && res[n - 2] === c)) res.push(c);
+  }
+  return res.join('');
+}`,
     python: `def makeFancyString(s):
-    pass`,
+    res = []
+    for c in s:
+        if len(res) < 2 or not (res[-1] == c == res[-2]):
+            res.append(c)
+    return ''.join(res)`,
   },
   visibleTests: [
     { args: ['leeetcode'], expected: 'leetcode' },

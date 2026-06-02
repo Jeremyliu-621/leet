@@ -42,13 +42,33 @@ Return \`true\` if such a pattern exists, otherwise return \`false\`.`,
   params: ['arr', 'm', 'k'],
   starterCode: {
     javascript: `function containsPattern(arr, m, k) {
-
+  const n = arr.length;
+  for (let i = 0; i + m * k <= n; i++) {
+    let ok = true;
+    for (let j = i; j < i + m * (k - 1); j++) {
+      if (arr[j] !== arr[j + m]) { ok = false; break; }
+    }
+    if (ok) return true;
+  }
+  return false;
 }`,
     typescript: `function containsPattern(arr: number[], m: number, k: number): boolean {
-
+  const n = arr.length;
+  for (let i = 0; i + m * k <= n; i++) {
+    let ok = true;
+    for (let j = i; j < i + m * (k - 1); j++) {
+      if (arr[j] !== arr[j + m]) { ok = false; break; }
+    }
+    if (ok) return true;
+  }
+  return false;
 }`,
     python: `def containsPattern(arr, m, k):
-    pass`,
+    n = len(arr)
+    for i in range(n - m * k + 1):
+        if all(arr[j] == arr[j + m] for j in range(i, i + m * (k - 1))):
+            return True
+    return False`,
   },
   visibleTests: [
     { args: [[1, 2, 4, 4, 4, 4], 1, 3], expected: true },

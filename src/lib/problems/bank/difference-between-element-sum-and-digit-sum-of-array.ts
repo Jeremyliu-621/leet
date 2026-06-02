@@ -38,12 +38,19 @@ Return the **absolute** difference between the element sum and digit sum of \`nu
   params: ['nums'],
   starterCode: {
     javascript: `function differenceOfSum(nums) {
-
+  const elementSum = nums.reduce((a, b) => a + b, 0);
+  const digitSum = nums.reduce((a, n) => a + String(n).split('').reduce((s, d) => s + Number(d), 0), 0);
+  return Math.abs(elementSum - digitSum);
 }`,
-    typescript: "function differenceOfSum(nums: number[]): number {\n\n}",
-
+    typescript: `function differenceOfSum(nums: number[]): number {
+  const elementSum = nums.reduce((a, b) => a + b, 0);
+  const digitSum = nums.reduce((a, n) => a + String(n).split('').reduce((s, d) => s + Number(d), 0), 0);
+  return Math.abs(elementSum - digitSum);
+}`,
     python: `def differenceOfSum(nums):
-    pass`,
+    element_sum = sum(nums)
+    digit_sum = sum(int(d) for n in nums for d in str(n))
+    return abs(element_sum - digit_sum)`,
   },
   visibleTests: [
     { args: [[1, 15, 6, 3]], expected: 9 },

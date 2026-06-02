@@ -28,12 +28,13 @@ A **defanged IP address** replaces every period \`"."\` with \`"[.]"\`.`,
   params: ['address'],
   starterCode: {
     javascript: `function defangIPaddr(address) {
-
+  return address.split('.').join('[.]');
 }`,
-    typescript: "function defangIPaddr(address: string): string {\n\n}",
-
+    typescript: `function defangIPaddr(address: string): string {
+  return address.split('.').join('[.]');
+}`,
     python: `def defangIPaddr(address):
-    pass`,
+    return address.replace('.', '[.]')`,
   },
   visibleTests: [
     { args: ['1.1.1.1'], expected: '1[.]1[.]1[.]1' },

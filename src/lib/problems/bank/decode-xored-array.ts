@@ -41,12 +41,20 @@ return arr;\`\`\``
   params: ['encoded', 'first'],
   starterCode: {
     javascript: `function decode(encoded, first) {
-
+  const arr = [first];
+  for (const e of encoded) arr.push(arr[arr.length - 1] ^ e);
+  return arr;
 }`,
-    typescript: "function decode(encoded: number[], first: number): number[] {\n\n}",
-
+    typescript: `function decode(encoded: number[], first: number): number[] {
+  const arr = [first];
+  for (const e of encoded) arr.push(arr[arr.length - 1]! ^ e);
+  return arr;
+}`,
     python: `def decode(encoded, first):
-    pass`,
+    arr = [first]
+    for e in encoded:
+        arr.append(arr[-1] ^ e)
+    return arr`,
   },
   visibleTests: [
     { args: [[1, 2, 3], 1], expected: [1, 0, 2, 1] },

@@ -49,12 +49,13 @@ function squareIsWhite(coordinates) {
   params: ['coordinates'],
   starterCode: {
     javascript: `function squareIsWhite(coordinates) {
-
+  return (coordinates.charCodeAt(0) + Number(coordinates[1])) % 2 === 1;
 }`,
-    typescript: "function squareIsWhite(coordinates: string): boolean {\n\n}",
-
+    typescript: `function squareIsWhite(coordinates: string): boolean {
+  return (coordinates.charCodeAt(0) + Number(coordinates[1])) % 2 === 1;
+}`,
     python: `def squareIsWhite(coordinates):
-    pass`,
+    return (ord(coordinates[0]) + int(coordinates[1])) % 2 == 1`,
   },
   visibleTests: [
     { args: ['a1'], expected: false },

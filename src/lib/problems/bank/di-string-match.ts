@@ -43,12 +43,35 @@ Given a string \`s\`, reconstruct the permutation \`perm\` and return it. If the
   params: ['s'],
   starterCode: {
     javascript: `function diStringMatch(s) {
-
+  let lo = 0, hi = s.length;
+  const result = [];
+  for (const c of s) {
+    result.push(c === 'I' ? lo++ : hi--);
+  }
+  result.push(lo);
+  return result;
 }`,
-    typescript: "function diStringMatch(s: string): number[] {\n\n}",
-
+    typescript: `function diStringMatch(s: string): number[] {
+  let lo = 0, hi = s.length;
+  const result: number[] = [];
+  for (const c of s) {
+    result.push(c === 'I' ? lo++ : hi--);
+  }
+  result.push(lo);
+  return result;
+}`,
     python: `def diStringMatch(s):
-    pass`,
+    lo, hi = 0, len(s)
+    result = []
+    for c in s:
+        if c == 'I':
+            result.append(lo)
+            lo += 1
+        else:
+            result.append(hi)
+            hi -= 1
+    result.append(lo)
+    return result`,
   },
   visibleTests: [
     { args: ['IDID'], expected: [0, 4, 1, 3, 2] },
