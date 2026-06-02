@@ -49,43 +49,43 @@ Return the **maximum** possible frequency score after performing at most \`k\` o
   // = nums[r]*(r-l+1) - (prefix[r+1] - prefix[l])
   let ans = 0, left = 0;
   for (let right = 0; right < n; right++) {
-    // Shrink window while cost > k
-    // With leftover ops, we can raise target by floor(leftover / windowSize)
-    // TODO: compute score = windowSize * (nums[right] + extra) and track max
+    while (nums[right]! * (right - left + 1) - (prefix[right + 1]! - prefix[left]!) > k) left++;
+    const size = right - left + 1;
+    const cost = nums[right]! * size - (prefix[right + 1]! - prefix[left]!);
+    const extra = Math.floor((k - cost) / size);
+    ans = Math.max(ans, size * (nums[right]! + extra));
   }
   return ans;
 }`,
     typescript: `function maxFrequencyScore(nums: number[], k: number): number {
   nums.sort((a, b) => a - b);
   const n = nums.length;
-  // prefix[i] = sum of nums[0..i-1]
   const prefix = [0];
-  for (const x of nums) prefix.push(prefix[prefix.length - 1] + x);
-  // Cost to raise all elements in window [l,r] to nums[r]:
-  // = nums[r]*(r-l+1) - (prefix[r+1] - prefix[l])
+  for (const x of nums) prefix.push(prefix[prefix.length - 1]! + x);
   let ans = 0, left = 0;
   for (let right = 0; right < n; right++) {
-    // Shrink window while cost > k
-    // With leftover ops, raise target by floor(leftover / windowSize)
-    // TODO: compute score = windowSize * (nums[right] + extra) and track max
+    while (nums[right]! * (right - left + 1) - (prefix[right + 1]! - prefix[left]!) > k) left++;
+    const size = right - left + 1;
+    const cost = nums[right]! * size - (prefix[right + 1]! - prefix[left]!);
+    const extra = Math.floor((k - cost) / size);
+    ans = Math.max(ans, size * (nums[right]! + extra));
   }
   return ans;
 }`,
     python: `def maxFrequencyScore(nums: list[int], k: int) -> int:
     nums.sort()
     n = len(nums)
-    # prefix[i] = sum of nums[0..i-1]
     prefix = [0] * (n + 1)
     for i, x in enumerate(nums):
         prefix[i + 1] = prefix[i] + x
-    # Cost to raise all elements in window [l,r] to nums[r]:
-    # = nums[r]*(r-l+1) - (prefix[r+1] - prefix[l])
     ans, left = 0, 0
     for right in range(n):
-        # Shrink window while cost > k
-        # With leftover ops, raise target by leftover // window_size
-        # TODO: compute score = window_size * (nums[right] + extra) and track max
-        pass
+        while nums[right] * (right - left + 1) - (prefix[right + 1] - prefix[left]) > k:
+            left += 1
+        size = right - left + 1
+        cost = nums[right] * size - (prefix[right + 1] - prefix[left])
+        extra = (k - cost) // size
+        ans = max(ans, size * (nums[right] + extra))
     return ans`,
   },
   visibleTests: [

@@ -46,7 +46,7 @@ Return the **minimum cost** to collect chocolates of all types, given that you c
     for (let i = 0; i < n; i++) {
       minCol[i] = Math.min(minCol[i], nums[(i - j + n) % n]);
     }
-    // TODO: update ans = min(ans, j*x + sum(minCol))
+    ans = Math.min(ans, j * x + minCol.reduce((s, v) => s + v, 0));
   }
   return ans;
 }`,
@@ -60,7 +60,7 @@ Return the **minimum cost** to collect chocolates of all types, given that you c
     for (let i = 0; i < n; i++) {
       minCol[i] = Math.min(minCol[i], nums[(i - j + n) % n]);
     }
-    // TODO: update ans = min(ans, j*x + sum(minCol))
+    ans = Math.min(ans, j * x + minCol.reduce((s, v) => s + v, 0));
   }
   return ans;
 }`,

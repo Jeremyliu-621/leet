@@ -44,31 +44,32 @@ export const problem: Problem = {
   params: ['n', 'edges', 'source', 'destination'],
   starterCode: {
     javascript: `function leadsToDestination(n, edges, source, destination) {
-  // Build adjacency list
   const adj = Array.from({ length: n }, () => []);
   for (const [a, b] of edges) adj[a].push(b);
-  // 3-color DFS: 0=unvisited, 1=visiting, 2=done+valid
   const color = new Array(n).fill(0);
   function dfs(node) {
-    // If visiting again => cycle => false
-    // If terminal node != destination => false
-    // Mark visiting, recurse on neighbors, mark done
-    // TODO: implement and return boolean
+    if (color[node] === 2) return true;
+    if (color[node] === 1) return false; // cycle
+    if (!adj[node].length) return node === destination; // terminal
+    color[node] = 1;
+    for (const nb of adj[node]) if (!dfs(nb)) return false;
+    color[node] = 2;
+    return true;
   }
   return dfs(source);
 }`,
     typescript: `function leadsToDestination(n: number, edges: number[][], source: number, destination: number): boolean {
-  // Build adjacency list
   const adj: number[][] = Array.from({ length: n }, () => []);
-  for (const [a, b] of edges) adj[a].push(b);
-  // 3-color DFS: 0=unvisited, 1=visiting, 2=done+valid
-  const color = new Array(n).fill(0);
+  for (const [a, b] of edges) adj[a]!.push(b!);
+  const color = new Array<number>(n).fill(0);
   function dfs(node: number): boolean {
-    // If visiting again => cycle => false
-    // If terminal node != destination => false
-    // Mark visiting, recurse on neighbors, mark done
-    // TODO: implement and return boolean
-    return false;
+    if (color[node] === 2) return true;
+    if (color[node] === 1) return false;
+    if (!adj[node]!.length) return node === destination;
+    color[node] = 1;
+    for (const nb of adj[node]!) if (!dfs(nb)) return false;
+    color[node] = 2;
+    return true;
   }
   return dfs(source);
 }`,
@@ -77,14 +78,16 @@ export const problem: Problem = {
     adj = defaultdict(list)
     for a, b in edges:
         adj[a].append(b)
-    # 3-color DFS: 0=unvisited, 1=visiting, 2=done+valid
     color = [0] * n
     def dfs(node):
-        # If visiting again => cycle => False
-        # If terminal node != destination => False
-        # Mark visiting, recurse on neighbors, mark done
-        # TODO: implement and return bool
-        pass
+        if color[node] == 2: return True
+        if color[node] == 1: return False  # cycle
+        if not adj[node]: return node == destination  # terminal
+        color[node] = 1
+        for nb in adj[node]:
+            if not dfs(nb): return False
+        color[node] = 2
+        return True
     return dfs(source)`,
   },
   visibleTests: [

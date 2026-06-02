@@ -52,7 +52,7 @@ You may use each card **exactly once** and you may use any parentheses arrangeme
         const a = nums[i], b = nums[j];
         const cands = [a + b, a - b, a * b];
         if (Math.abs(b) > EPS) cands.push(a / b);
-        // TODO: recurse on each candidate combined with rest
+        for (const c of cands) if (solve([...rest, c])) return true;
       }
     }
     return false;
@@ -62,15 +62,15 @@ You may use each card **exactly once** and you may use any parentheses arrangeme
     typescript: `function judgePoint24(cards: number[]): boolean {
   const EPS = 1e-6;
   function solve(nums: number[]): boolean {
-    if (nums.length === 1) return Math.abs(nums[0] - 24) < EPS;
+    if (nums.length === 1) return Math.abs(nums[0]! - 24) < EPS;
     for (let i = 0; i < nums.length; i++) {
       for (let j = 0; j < nums.length; j++) {
         if (i === j) continue;
         const rest = nums.filter((_, k) => k !== i && k !== j);
-        const a = nums[i], b = nums[j];
+        const a = nums[i]!, b = nums[j]!;
         const cands = [a + b, a - b, a * b];
         if (Math.abs(b) > EPS) cands.push(a / b);
-        // TODO: recurse on each candidate combined with rest
+        for (const c of cands) if (solve([...rest, c])) return true;
       }
     }
     return false;
@@ -84,14 +84,13 @@ You may use each card **exactly once** and you may use any parentheses arrangeme
             return abs(nums[0] - 24) < EPS
         for i in range(len(nums)):
             for j in range(len(nums)):
-                if i == j:
-                    continue
+                if i == j: continue
                 rest = [nums[k] for k in range(len(nums)) if k != i and k != j]
                 a, b = nums[i], nums[j]
                 cands = [a + b, a - b, a * b]
-                if abs(b) > EPS:
-                    cands.append(a / b)
-                # TODO: recurse on each candidate combined with rest
+                if abs(b) > EPS: cands.append(a / b)
+                for c in cands:
+                    if solve(rest + [c]): return True
         return False
     return solve([float(c) for c in cards])`,
   },
