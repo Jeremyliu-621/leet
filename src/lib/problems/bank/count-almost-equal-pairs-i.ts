@@ -57,11 +57,57 @@ function countPairs(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function countPairs(nums) {
-
+  const maxLen = Math.max(...nums.map(n => String(n).length));
+  const padded = nums.map(n => String(n).padStart(maxLen, '0'));
+  let count = 0;
+  for (let i = 0; i < padded.length; i++) {
+    for (let j = i + 1; j < padded.length; j++) {
+      const a = padded[i], b = padded[j];
+      if (a === b) { count++; continue; }
+      const diffs = [];
+      for (let k = 0; k < maxLen; k++) if (a[k] !== b[k]) diffs.push(k);
+      if (diffs.length === 2) {
+        const [p, q] = diffs;
+        if (a[p] === b[q] && a[q] === b[p]) count++;
+      }
+    }
+  }
+  return count;
 }`,
-    typescript: 'function countPairs(nums: number[]): number {\n\n}',
+    typescript: `function countPairs(nums: number[]): number {
+  const maxLen = Math.max(...nums.map(n => String(n).length));
+  const padded = nums.map(n => String(n).padStart(maxLen, '0'));
+  let count = 0;
+  for (let i = 0; i < padded.length; i++) {
+    for (let j = i + 1; j < padded.length; j++) {
+      const a = padded[i]!, b = padded[j]!;
+      if (a === b) { count++; continue; }
+      const diffs: number[] = [];
+      for (let k = 0; k < maxLen; k++) if (a[k] !== b[k]) diffs.push(k);
+      if (diffs.length === 2) {
+        const [p, q] = diffs as [number, number];
+        if (a[p] === b[q] && a[q] === b[p]) count++;
+      }
+    }
+  }
+  return count;
+}`,
     python: `def countPairs(nums):
-    pass`,
+    max_len = max(len(str(n)) for n in nums)
+    padded = [str(n).zfill(max_len) for n in nums]
+    count = 0
+    for i in range(len(padded)):
+        for j in range(i + 1, len(padded)):
+            a, b = padded[i], padded[j]
+            if a == b:
+                count += 1
+                continue
+            diffs = [k for k in range(max_len) if a[k] != b[k]]
+            if len(diffs) == 2:
+                p, q = diffs
+                if a[p] == b[q] and a[q] == b[p]:
+                    count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[3, 12, 30, 17, 21]], expected: 2 },

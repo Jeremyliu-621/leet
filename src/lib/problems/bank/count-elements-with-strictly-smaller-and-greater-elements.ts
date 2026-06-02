@@ -36,13 +36,16 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function countElements(nums) {
-
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return nums.filter(x => x > mn && x < mx).length;
 }`,
     typescript: `function countElements(nums: number[]): number {
-
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return nums.filter(x => x > mn && x < mx).length;
 }`,
     python: `def countElements(nums):
-    `,
+    mn, mx = min(nums), max(nums)
+    return sum(1 for x in nums if mn < x < mx)`,
   },
   visibleTests: [
     { args: [[11, 7, 2, 15]], expected: 2 },

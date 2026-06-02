@@ -37,12 +37,39 @@ Return the number of **complete** subarrays.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countCompleteSubarrays(nums) {
-
+  const total = new Set(nums).size;
+  let count = 0;
+  for (let l = 0; l < nums.length; l++) {
+    const seen = new Set();
+    for (let r = l; r < nums.length; r++) {
+      seen.add(nums[r]);
+      if (seen.size === total) count++;
+    }
+  }
+  return count;
 }`,
-    typescript: "function countCompleteSubarrays(nums: number[]): number {\n\n}",
-
+    typescript: `function countCompleteSubarrays(nums: number[]): number {
+  const total = new Set(nums).size;
+  let count = 0;
+  for (let l = 0; l < nums.length; l++) {
+    const seen = new Set<number>();
+    for (let r = l; r < nums.length; r++) {
+      seen.add(nums[r]!);
+      if (seen.size === total) count++;
+    }
+  }
+  return count;
+}`,
     python: `def countCompleteSubarrays(nums):
-    pass`,
+    total = len(set(nums))
+    count = 0
+    for l in range(len(nums)):
+        seen = set()
+        for r in range(l, len(nums)):
+            seen.add(nums[r])
+            if len(seen) == total:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 3, 1, 2, 2]], expected: 4 },

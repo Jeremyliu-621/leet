@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countElementsEqualToK(nums, k) {
-
+  return nums.filter(n => n === k).length;
 }`,
     typescript: `function countElementsEqualToK(nums: number[], k: number): number {
-
+  return nums.filter(n => n === k).length;
 }`,
     python: `def countElementsEqualToK(nums: list[int], k: int) -> int:
-    pass`,
+    return nums.count(k)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 2], 2], expected: 3 },

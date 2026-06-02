@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countDivisibleByK(nums, k) {
-
+  return nums.filter(n => n % k === 0).length;
 }`,
     typescript: `function countDivisibleByK(nums: number[], k: number): number {
-
+  return nums.filter(n => n % k === 0).length;
 }`,
     python: `def countDivisibleByK(nums, k):
-    pass`,
+    return sum(1 for n in nums if n % k == 0)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6], 2], expected: 3 },

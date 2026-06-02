@@ -40,13 +40,27 @@ Return the number of alternating subarrays in \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countAlternatingSubarrays(nums) {
-
+  let count = 1, run = 1;
+  for (let i = 1; i < nums.length; i++) {
+    run = nums[i] !== nums[i - 1] ? run + 1 : 1;
+    count += run;
+  }
+  return count;
 }`,
     typescript: `function countAlternatingSubarrays(nums: number[]): number {
-
+  let count = 1, run = 1;
+  for (let i = 1; i < nums.length; i++) {
+    run = nums[i] !== nums[i - 1] ? run + 1 : 1;
+    count += run;
+  }
+  return count;
 }`,
     python: `def countAlternatingSubarrays(nums):
-    pass`,
+    count, run = 1, 1
+    for i in range(1, len(nums)):
+        run = run + 1 if nums[i] != nums[i - 1] else 1
+        count += run
+    return count`,
   },
   visibleTests: [
     { args: [[0, 1, 1, 1]], expected: 5 },

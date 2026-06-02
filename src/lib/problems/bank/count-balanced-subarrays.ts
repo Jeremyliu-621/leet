@@ -40,13 +40,35 @@ A subarray is a contiguous non-empty sequence of elements within an array.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countBalanced(nums) {
-
+  const freq = new Map([[0, 1]]);
+  let prefDiff = 0, count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    prefDiff += (i % 2 === 0 ? 1 : -1) * nums[i];
+    count += freq.get(prefDiff) || 0;
+    freq.set(prefDiff, (freq.get(prefDiff) || 0) + 1);
+  }
+  return count;
 }`,
     typescript: `function countBalanced(nums: number[]): number {
-
+  const freq = new Map<number, number>([[0, 1]]);
+  let prefDiff = 0, count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    prefDiff += (i % 2 === 0 ? 1 : -1) * nums[i]!;
+    count += freq.get(prefDiff) ?? 0;
+    freq.set(prefDiff, (freq.get(prefDiff) ?? 0) + 1);
+  }
+  return count;
 }`,
     python: `def countBalanced(nums):
-    pass`,
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    pref_diff, count = 0, 0
+    for i, x in enumerate(nums):
+        pref_diff += x if i % 2 == 0 else -x
+        count += freq[pref_diff]
+        freq[pref_diff] += 1
+    return count`,
   },
   visibleTests: [
     { args: [[2, 4, 4, 2]], expected: 2 },

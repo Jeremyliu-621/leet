@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countElementsGreaterThanK(nums, k) {
-
+  return nums.filter(n => n > k).length;
 }`,
     typescript: `function countElementsGreaterThanK(nums: number[], k: number): number {
-
+  return nums.filter(n => n > k).length;
 }`,
     python: `def countElementsGreaterThanK(nums: list[int], k: int) -> int:
-    pass`,
+    return sum(1 for n in nums if n > k)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 3], expected: 2 },

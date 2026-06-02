@@ -42,12 +42,46 @@ Return the count of days when the employee is available for work but no meetings
   params: ['days', 'meetings'],
   starterCode: {
     javascript: `function countDays(days, meetings) {
-
+  meetings.sort((a, b) => a[0] - b[0]);
+  let covered = 0, curStart = -1, curEnd = -1;
+  for (const [s, e] of meetings) {
+    if (s > curEnd + 1) {
+      if (curEnd >= 0) covered += curEnd - curStart + 1;
+      curStart = s; curEnd = e;
+    } else {
+      curEnd = Math.max(curEnd, e);
+    }
+  }
+  if (curEnd >= 0) covered += curEnd - curStart + 1;
+  return days - covered;
 }`,
-    typescript: "function countDays(days: number, meetings: number[][]): number {\n\n}",
-
+    typescript: `function countDays(days: number, meetings: number[][]): number {
+  meetings.sort((a, b) => a[0]! - b[0]!);
+  let covered = 0, curStart = -1, curEnd = -1;
+  for (const [s, e] of meetings) {
+    if (s! > curEnd + 1) {
+      if (curEnd >= 0) covered += curEnd - curStart + 1;
+      curStart = s!; curEnd = e!;
+    } else {
+      curEnd = Math.max(curEnd, e!);
+    }
+  }
+  if (curEnd >= 0) covered += curEnd - curStart + 1;
+  return days - covered;
+}`,
     python: `def countDays(days, meetings):
-    pass`,
+    meetings.sort()
+    covered, cur_start, cur_end = 0, -1, -1
+    for s, e in meetings:
+        if s > cur_end + 1:
+            if cur_end >= 0:
+                covered += cur_end - cur_start + 1
+            cur_start, cur_end = s, e
+        else:
+            cur_end = max(cur_end, e)
+    if cur_end >= 0:
+        covered += cur_end - cur_start + 1
+    return days - covered`,
   },
   visibleTests: [
     { args: [10, [[5, 7], [1, 3], [9, 10]]], expected: 2 },

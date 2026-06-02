@@ -35,12 +35,26 @@ The *frequency* of an element is the number of occurrences of that element in th
   params: ['nums'],
   starterCode: {
     javascript: `function maxFrequencyElements(nums) {
-
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) || 0) + 1);
+  const maxF = Math.max(...freq.values());
+  let total = 0;
+  for (const f of freq.values()) if (f === maxF) total += f;
+  return total;
 }`,
-    typescript: "function maxFrequencyElements(nums: number[]): number {\n\n}",
-
+    typescript: `function maxFrequencyElements(nums: number[]): number {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  const maxF = Math.max(...freq.values());
+  let total = 0;
+  for (const f of freq.values()) if (f === maxF) total += f;
+  return total;
+}`,
     python: `def maxFrequencyElements(nums):
-    pass`,
+    from collections import Counter
+    freq = Counter(nums)
+    max_f = max(freq.values())
+    return sum(f for f in freq.values() if f == max_f)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 1, 4]], expected: 4 },

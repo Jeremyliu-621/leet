@@ -36,12 +36,36 @@ Two integers are **coprime** if their greatest common divisor is \`1\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countBeautifulPairs(nums) {
-
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    const first = Number(String(nums[i])[0]);
+    for (let j = i + 1; j < nums.length; j++) {
+      if (gcd(first, nums[j] % 10) === 1) count++;
+    }
+  }
+  return count;
 }`,
-    typescript: "function countBeautifulPairs(nums: number[]): number {\n\n}",
-
+    typescript: `function countBeautifulPairs(nums: number[]): number {
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    const first = Number(String(nums[i])[0]);
+    for (let j = i + 1; j < nums.length; j++) {
+      if (gcd(first, nums[j]! % 10) === 1) count++;
+    }
+  }
+  return count;
+}`,
     python: `def countBeautifulPairs(nums):
-    pass`,
+    from math import gcd
+    count = 0
+    for i in range(len(nums)):
+        first = int(str(nums[i])[0])
+        for j in range(i + 1, len(nums)):
+            if gcd(first, nums[j] % 10) == 1:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[2, 5, 1, 4]], expected: 5 },
