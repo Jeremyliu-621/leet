@@ -48907,4 +48907,63 @@ def maxPower(stations: list[int], r: int, k: int) -> int:
             hi = mid - 1
     return lo
 `,
+  'count-subarrays-with-maximum-bitwise-and': `
+def countSubarrays(nums: list[int]) -> int:
+    max_val = max(nums)
+    ans = run = 0
+    for x in nums:
+        if x == max_val:
+            run += 1
+            ans += run
+        else:
+            run = 0
+    return ans
+`,
+
+  'number-of-ways-to-express-n-as-sum-of-powers': `
+def numberOfWays(n: int, x: int) -> int:
+    MOD = 10 ** 9 + 7
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    i = 1
+    while True:
+        v = i ** x
+        if v > n:
+            break
+        for j in range(n, v - 1, -1):
+            dp[j] = (dp[j] + dp[j - v]) % MOD
+        i += 1
+    return dp[n]
+`,
+
+  'minimum-cost-of-ropes': `
+def minCostRopes(ropes: list[int]) -> int:
+    import heapq
+    ropes = list(ropes) if hasattr(ropes, 'to_py') else list(ropes)
+    if len(ropes) <= 1:
+        return 0
+    heapq.heapify(ropes)
+    cost = 0
+    while len(ropes) > 1:
+        first = heapq.heappop(ropes)
+        second = heapq.heappop(ropes)
+        merged = first + second
+        cost += merged
+        heapq.heappush(ropes, merged)
+    return cost
+`,
+
+  'find-the-number-of-good-pairs-in-an-array': `
+def numberOfPairs(nums1: list[int], nums2: list[int]) -> int:
+    nums1 = list(nums1) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2) if hasattr(nums2, 'to_py') else list(nums2)
+    set1 = set(nums1)
+    count = 0
+    for a in nums1:
+        for b in nums2:
+            if a % b == 0 and a // b in set1:
+                count += 1
+    return count
+`,
+
 };

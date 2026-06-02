@@ -3431,6 +3431,10 @@ import { problem as determineIfMatrixRotation } from './determine-if-matrix-can-
 import { problem as numberOfSubstringsFixedRatio } from './number-of-substrings-with-fixed-ratio';
 import { problem as findClosestMarkedNode } from './find-the-closest-marked-node';
 import { problem as maximizeTheMinimumPoweredCity } from './maximize-the-minimum-powered-city';
+import { problem as countSubarraysMaxBitwiseAnd } from './count-subarrays-with-maximum-bitwise-and';
+import { problem as numberOfWaysToExpressNAsSumOfPowers } from './number-of-ways-to-express-n-as-sum-of-powers';
+import { problem as minimumCostOfRopes } from './minimum-cost-of-ropes';
+import { problem as findNumberOfGoodPairsInArray } from './find-the-number-of-good-pairs-in-an-array';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6901,4 +6905,9 @@ export const problems: readonly Problem[] = [
   numberOfSubstringsFixedRatio,
   findClosestMarkedNode,
   maximizeTheMinimumPoweredCity,
+  // batch 289
+  countSubarraysMaxBitwiseAnd,
+  numberOfWaysToExpressNAsSumOfPowers,
+  minimumCostOfRopes,
+  findNumberOfGoodPairsInArray,
 ];

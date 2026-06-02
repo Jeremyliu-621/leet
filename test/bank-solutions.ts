@@ -50116,4 +50116,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return lo;
   },
+  'count-subarrays-with-maximum-bitwise-and': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const maxVal = Math.max(...nums);
+    let ans = 0, run = 0;
+    for (const x of nums) {
+      if (x === maxVal) {
+        run++;
+        ans += run;
+      } else {
+        run = 0;
+      }
+    }
+    return ans;
+  },
+
+  'number-of-ways-to-express-n-as-sum-of-powers': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const x = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const dp = new Array<bigint>(n + 1).fill(0n);
+    dp[0] = 1n;
+    for (let i = 1; ; i++) {
+      let v = 1;
+      for (let j = 0; j < x; j++) v *= i;
+      if (v > n) break;
+      for (let j = n; j >= v; j--) {
+        dp[j] = (dp[j]! + dp[j - v]!) % MOD;
+      }
+    }
+    return Number(dp[n]!);
+  },
+
+  'minimum-cost-of-ropes': (...args: unknown[]) => {
+    const ropes = [...(args[0] as number[])];
+    if (ropes.length <= 1) return 0;
+    ropes.sort((a, b) => a - b);
+    let cost = 0;
+    while (ropes.length > 1) {
+      const first = ropes.shift()!;
+      const second = ropes.shift()!;
+      const merged = first + second;
+      cost += merged;
+      let lo = 0, hi = ropes.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (ropes[mid]! < merged) lo = mid + 1; else hi = mid;
+      }
+      ropes.splice(lo, 0, merged);
+    }
+    return cost;
+  },
+
+  'find-the-number-of-good-pairs-in-an-array': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const set1 = new Set(nums1);
+    let count = 0;
+    for (const a of nums1) {
+      for (const b of nums2) {
+        if (a % b === 0 && set1.has(a / b)) count++;
+      }
+    }
+    return count;
+  },
+
 };
