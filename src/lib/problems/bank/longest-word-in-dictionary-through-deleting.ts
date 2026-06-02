@@ -42,13 +42,40 @@ If there are more than one possible results, return the **longest** word with th
   params: ['s', 'dictionary'],
   starterCode: {
     javascript: `function findLongestWord(s, dictionary) {
-
+  const isSub = (w) => {
+    let i = 0;
+    for (let j = 0; j < s.length && i < w.length; j++) if (s[j] === w[i]) i++;
+    return i === w.length;
+  };
+  let res = '';
+  for (const w of dictionary) {
+    if (isSub(w) && (w.length > res.length || (w.length === res.length && w < res))) res = w;
+  }
+  return res;
 }`,
     typescript: `function findLongestWord(s: string, dictionary: string[]): string {
-
+  const isSub = (w: string): boolean => {
+    let i = 0;
+    for (let j = 0; j < s.length && i < w.length; j++) if (s[j] === w[i]) i++;
+    return i === w.length;
+  };
+  let res = '';
+  for (const w of dictionary) {
+    if (isSub(w) && (w.length > res.length || (w.length === res.length && w < res))) res = w;
+  }
+  return res;
 }`,
     python: `def findLongestWord(s, dictionary):
-    pass`,
+    def is_sub(w):
+        i = 0
+        for c in s:
+            if i < len(w) and c == w[i]: i += 1
+        return i == len(w)
+    res = ''
+    for w in dictionary:
+        if is_sub(w) and (len(w) > len(res) or (len(w) == len(res) and w < res)):
+            res = w
+    return res`,
   },
   visibleTests: [
     { args: ['abpcplea', ['ale', 'apple', 'monkey', 'plea']], expected: 'apple' },

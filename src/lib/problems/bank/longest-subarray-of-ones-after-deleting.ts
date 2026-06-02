@@ -38,12 +38,32 @@ Return the size of the longest non-empty subarray containing only \`1\`'s in the
   params: ['nums'],
   starterCode: {
     javascript: `function longestSubarray(nums) {
-
+  let left = 0, zeros = 0, ans = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] === 0) zeros++;
+    while (zeros > 1) { if (nums[left++] === 0) zeros--; }
+    ans = Math.max(ans, right - left);
+  }
+  return ans;
 }`,
-    typescript: "function longestSubarray(nums: number[]): number {\n\n}",
-
+    typescript: `function longestSubarray(nums: number[]): number {
+  let left = 0, zeros = 0, ans = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] === 0) zeros++;
+    while (zeros > 1) { if (nums[left++] === 0) zeros--; }
+    ans = Math.max(ans, right - left);
+  }
+  return ans;
+}`,
     python: `def longestSubarray(nums):
-    pass`,
+    left = zeros = ans = 0
+    for right, x in enumerate(nums):
+        if x == 0: zeros += 1
+        while zeros > 1:
+            if nums[left] == 0: zeros -= 1
+            left += 1
+        ans = max(ans, right - left)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 1, 0, 1]], expected: 3 },

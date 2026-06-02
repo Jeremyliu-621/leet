@@ -37,13 +37,21 @@ export const problem: Problem = {
   params: ['words'],
   starterCode: {
     javascript: `function longestStringInArray(words) {
-
+  let res = words[0];
+  for (let i = 1; i < words.length; i++) {
+    if (words[i].length > res.length) res = words[i];
+  }
+  return res;
 }`,
     typescript: `function longestStringInArray(words: string[]): string {
-
+  let res = words[0];
+  for (let i = 1; i < words.length; i++) {
+    if (words[i].length > res.length) res = words[i];
+  }
+  return res;
 }`,
     python: `def longestStringInArray(words: list[str]) -> str:
-    pass`,
+    return max(words, key=len)`,
   },
   visibleTests: [
     { args: [['apple', 'banana', 'fig', 'date']], expected: 'banana' },

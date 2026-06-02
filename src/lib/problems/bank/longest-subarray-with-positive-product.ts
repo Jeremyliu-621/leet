@@ -38,13 +38,33 @@ A subarray of an array is a contiguous part of the array. The product of an empt
   params: ['nums'],
   starterCode: {
     javascript: `function getMaxLen(nums) {
-
+  let pos = 0, neg = 0, ans = 0;
+  for (const x of nums) {
+    if (x > 0) { [pos, neg] = [pos + 1, neg > 0 ? neg + 1 : 0]; }
+    else if (x < 0) { [pos, neg] = [neg > 0 ? neg + 1 : 0, pos + 1]; }
+    else { pos = 0; neg = 0; }
+    ans = Math.max(ans, pos);
+  }
+  return ans;
 }`,
     typescript: `function getMaxLen(nums: number[]): number {
-
+  let pos = 0, neg = 0, ans = 0;
+  for (const x of nums) {
+    if (x > 0) { [pos, neg] = [pos + 1, neg > 0 ? neg + 1 : 0]; }
+    else if (x < 0) { [pos, neg] = [neg > 0 ? neg + 1 : 0, pos + 1]; }
+    else { pos = 0; neg = 0; }
+    ans = Math.max(ans, pos);
+  }
+  return ans;
 }`,
     python: `def getMaxLen(nums):
-    pass`,
+    pos = neg = ans = 0
+    for x in nums:
+        if x > 0: pos, neg = pos + 1, (neg + 1 if neg > 0 else 0)
+        elif x < 0: pos, neg = (neg + 1 if neg > 0 else 0), pos + 1
+        else: pos = neg = 0
+        ans = max(ans, pos)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, -2, -3, 4]], expected: 4 },

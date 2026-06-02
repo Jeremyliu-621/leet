@@ -38,12 +38,44 @@ Return the **length** of the longest possible word chain with words chosen from 
   params: ['words'],
   starterCode: {
     javascript: `function longestStrChain(words) {
-
+  words.sort((a, b) => a.length - b.length);
+  const dp = new Map();
+  let ans = 1;
+  for (const word of words) {
+    let best = 0;
+    for (let i = 0; i < word.length; i++) {
+      const prev = word.slice(0, i) + word.slice(i + 1);
+      best = Math.max(best, dp.get(prev) || 0);
+    }
+    dp.set(word, best + 1);
+    ans = Math.max(ans, best + 1);
+  }
+  return ans;
 }`,
-    typescript: "function longestStrChain(words: string[]): number {\n\n}",
-
+    typescript: `function longestStrChain(words: string[]): number {
+  words.sort((a, b) => a.length - b.length);
+  const dp = new Map<string, number>();
+  let ans = 1;
+  for (const word of words) {
+    let best = 0;
+    for (let i = 0; i < word.length; i++) {
+      const prev = word.slice(0, i) + word.slice(i + 1);
+      best = Math.max(best, dp.get(prev) ?? 0);
+    }
+    dp.set(word, best + 1);
+    ans = Math.max(ans, best + 1);
+  }
+  return ans;
+}`,
     python: `def longestStrChain(words):
-    pass`,
+    words.sort(key=len)
+    dp = {}
+    ans = 1
+    for word in words:
+        best = max((dp.get(word[:i] + word[i+1:], 0) for i in range(len(word))), default=0)
+        dp[word] = best + 1
+        ans = max(ans, best + 1)
+    return ans`,
   },
   visibleTests: [
     { args: [['a', 'b', 'ba', 'bca', 'bda', 'bdca']], expected: 4 },

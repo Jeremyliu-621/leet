@@ -36,13 +36,33 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function longestMonotonicSubarray(nums) {
-
+  let inc = 1, dec = 1, ans = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > nums[i-1]) { inc++; dec = 1; }
+    else if (nums[i] < nums[i-1]) { dec++; inc = 1; }
+    else { inc = 1; dec = 1; }
+    ans = Math.max(ans, inc, dec);
+  }
+  return ans;
 }`,
     typescript: `function longestMonotonicSubarray(nums: number[]): number {
-
+  let inc = 1, dec = 1, ans = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > nums[i-1]) { inc++; dec = 1; }
+    else if (nums[i] < nums[i-1]) { dec++; inc = 1; }
+    else { inc = 1; dec = 1; }
+    ans = Math.max(ans, inc, dec);
+  }
+  return ans;
 }`,
     python: `def longestMonotonicSubarray(nums):
-    pass`,
+    inc = dec = ans = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i-1]: inc += 1; dec = 1
+        elif nums[i] < nums[i-1]: dec += 1; inc = 1
+        else: inc = dec = 1
+        ans = max(ans, inc, dec)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 4, 3, 3, 2]], expected: 2 },

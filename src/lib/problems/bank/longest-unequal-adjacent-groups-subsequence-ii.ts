@@ -66,11 +66,62 @@ function getWordsInLongestSubsequence(words, groups) {
   params: ['words', 'groups'],
   starterCode: {
     javascript: `function getWordsInLongestSubsequence(words, groups) {
-
+  const n = words.length;
+  const hamming = (a, b) => {
+    if (a.length !== b.length) return Infinity;
+    let d = 0; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) d++;
+    return d;
+  };
+  const dp = new Array(n).fill(1), prev = new Array(n).fill(-1);
+  let bestEnd = 0;
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < i; j++) {
+      if (groups[i] !== groups[j] && hamming(words[i], words[j]) === 1 && dp[j] + 1 > dp[i]) {
+        dp[i] = dp[j] + 1; prev[i] = j;
+      }
+    }
+    if (dp[i] > dp[bestEnd]) bestEnd = i;
+  }
+  const result = [];
+  for (let cur = bestEnd; cur !== -1; cur = prev[cur]) result.push(words[cur]);
+  return result.reverse();
 }`,
-    typescript: 'function getWordsInLongestSubsequence(words: string[], groups: number[]): string[] {\n\n}',
+    typescript: `function getWordsInLongestSubsequence(words: string[], groups: number[]): string[] {
+  const n = words.length;
+  const hamming = (a: string, b: string): number => {
+    if (a.length !== b.length) return Infinity;
+    let d = 0; for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) d++;
+    return d;
+  };
+  const dp = new Array(n).fill(1), prev = new Array(n).fill(-1);
+  let bestEnd = 0;
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < i; j++) {
+      if (groups[i] !== groups[j] && hamming(words[i], words[j]) === 1 && dp[j] + 1 > dp[i]) {
+        dp[i] = dp[j] + 1; prev[i] = j;
+      }
+    }
+    if (dp[i] > dp[bestEnd]) bestEnd = i;
+  }
+  const result: string[] = [];
+  for (let cur = bestEnd; cur !== -1; cur = prev[cur]) result.push(words[cur]);
+  return result.reverse();
+}`,
     python: `def getWordsInLongestSubsequence(words, groups):
-    pass`,
+    n = len(words)
+    def hamming(a, b):
+        if len(a) != len(b): return float('inf')
+        return sum(x != y for x, y in zip(a, b))
+    dp, prev = [1]*n, [-1]*n
+    best_end = 0
+    for i in range(1, n):
+        for j in range(i):
+            if groups[i] != groups[j] and hamming(words[i], words[j]) == 1 and dp[j]+1 > dp[i]:
+                dp[i] = dp[j]+1; prev[i] = j
+        if dp[i] > dp[best_end]: best_end = i
+    result, cur = [], best_end
+    while cur != -1: result.append(words[cur]); cur = prev[cur]
+    return result[::-1]`,
   },
   visibleTests: [
     { args: [['bab', 'dab', 'cab'], [1, 2, 2]], expected: ['bab', 'dab'] },

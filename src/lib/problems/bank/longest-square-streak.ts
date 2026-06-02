@@ -38,12 +38,34 @@ A **subsequence** is an array that can be derived from another array by deleting
   params: ['nums'],
   starterCode: {
     javascript: `function longestSquareStreak(nums) {
-
+  const set = new Set(nums);
+  let ans = -1;
+  for (const num of set) {
+    let len = 1, cur = num;
+    while (set.has(cur * cur)) { cur = cur * cur; len++; }
+    if (len >= 2) ans = Math.max(ans, len);
+  }
+  return ans;
 }`,
-    typescript: "function longestSquareStreak(nums: number[]): number {\n\n}",
-
+    typescript: `function longestSquareStreak(nums: number[]): number {
+  const set = new Set(nums);
+  let ans = -1;
+  for (const num of set) {
+    let len = 1, cur = num;
+    while (set.has(cur * cur)) { cur = cur * cur; len++; }
+    if (len >= 2) ans = Math.max(ans, len);
+  }
+  return ans;
+}`,
     python: `def longestSquareStreak(nums):
-    pass`,
+    s = set(nums)
+    ans = -1
+    for num in s:
+        length, cur = 1, num
+        while cur * cur in s:
+            cur = cur * cur; length += 1
+        if length >= 2: ans = max(ans, length)
+    return ans`,
   },
   visibleTests: [
     { args: [[4, 3, 6, 16, 8, 2]], expected: 3 },

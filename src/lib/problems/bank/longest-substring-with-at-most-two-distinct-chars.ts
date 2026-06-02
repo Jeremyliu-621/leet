@@ -31,13 +31,45 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: `function lengthOfLongestSubstringTwoDistinct(s) {
-
+  if (s.length === 0) return 0;
+  const count = new Map();
+  let left = 0, ans = 0;
+  for (let right = 0; right < s.length; right++) {
+    count.set(s[right], (count.get(s[right]) || 0) + 1);
+    while (count.size > 2) {
+      const c = s[left++];
+      if (count.get(c) === 1) count.delete(c); else count.set(c, count.get(c) - 1);
+    }
+    ans = Math.max(ans, right - left + 1);
+  }
+  return ans;
 }`,
     typescript: `function lengthOfLongestSubstringTwoDistinct(s: string): number {
-
+  if (s.length === 0) return 0;
+  const count = new Map<string, number>();
+  let left = 0, ans = 0;
+  for (let right = 0; right < s.length; right++) {
+    count.set(s[right], (count.get(s[right]) ?? 0) + 1);
+    while (count.size > 2) {
+      const c = s[left++];
+      if (count.get(c) === 1) count.delete(c); else count.set(c, count.get(c)! - 1);
+    }
+    ans = Math.max(ans, right - left + 1);
+  }
+  return ans;
 }`,
     python: `def lengthOfLongestSubstringTwoDistinct(s: str) -> int:
-    pass`,
+    from collections import defaultdict
+    count = defaultdict(int)
+    left = ans = 0
+    for right, c in enumerate(s):
+        count[c] += 1
+        while len(count) > 2:
+            count[s[left]] -= 1
+            if count[s[left]] == 0: del count[s[left]]
+            left += 1
+        ans = max(ans, right - left + 1)
+    return ans`,
   },
   functionName: 'lengthOfLongestSubstringTwoDistinct',
   visibleTests: [

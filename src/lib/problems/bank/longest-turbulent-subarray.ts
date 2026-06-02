@@ -40,13 +40,33 @@ A subarray is **turbulent** if the comparison sign alternates between consecutiv
   params: ['arr'],
   starterCode: {
     javascript: `function maxTurbulenceSize(arr) {
-
+  let up = 1, down = 1, ans = 1;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > arr[i-1]) { up = down + 1; down = 1; }
+    else if (arr[i] < arr[i-1]) { down = up + 1; up = 1; }
+    else { up = 1; down = 1; }
+    ans = Math.max(ans, up, down);
+  }
+  return ans;
 }`,
     typescript: `function maxTurbulenceSize(arr: number[]): number {
-
+  let up = 1, down = 1, ans = 1;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > arr[i-1]) { up = down + 1; down = 1; }
+    else if (arr[i] < arr[i-1]) { down = up + 1; up = 1; }
+    else { up = 1; down = 1; }
+    ans = Math.max(ans, up, down);
+  }
+  return ans;
 }`,
     python: `def maxTurbulenceSize(arr):
-    pass`,
+    up = down = ans = 1
+    for i in range(1, len(arr)):
+        if arr[i] > arr[i-1]: up, down = down + 1, 1
+        elif arr[i] < arr[i-1]: down, up = up + 1, 1
+        else: up = down = 1
+        ans = max(ans, up, down)
+    return ans`,
   },
   visibleTests: [
     { args: [[9, 4, 2, 10, 7, 8, 8, 1, 9]], expected: 5 },

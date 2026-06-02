@@ -34,13 +34,31 @@ If no such non-empty subarray exists (i.e., every single element exceeds \`k\`),
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function longestBoundedSubarray(nums, k) {
-
+  let left = 0, sum = 0, ans = 0;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (sum > k) sum -= nums[left++];
+    ans = Math.max(ans, right - left + 1);
+  }
+  return ans;
 }`,
     typescript: `function longestBoundedSubarray(nums: number[], k: number): number {
-
+  let left = 0, sum = 0, ans = 0;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (sum > k) sum -= nums[left++];
+    ans = Math.max(ans, right - left + 1);
+  }
+  return ans;
 }`,
     python: `def longestBoundedSubarray(nums, k):
-    pass`,
+    left = total = ans = 0
+    for right, x in enumerate(nums):
+        total += x
+        while total > k:
+            total -= nums[left]; left += 1
+        ans = max(ans, right - left + 1)
+    return ans`,
   },
   visibleTests: [
     { args: [[3, 1, 2, 7, 4, 2, 1, 1, 5], 8], expected: 4 },

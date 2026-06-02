@@ -38,13 +38,27 @@ A **run** is a maximal contiguous subsequence of the same value. For example, in
   params: ['nums'],
   starterCode: {
     javascript: `function longestRunOfEqualElements(nums) {
-
+  let best = 1, cur = 1;
+  for (let i = 1; i < nums.length; i++) {
+    cur = nums[i] === nums[i-1] ? cur + 1 : 1;
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
     typescript: `function longestRunOfEqualElements(nums: number[]): number {
-
+  let best = 1, cur = 1;
+  for (let i = 1; i < nums.length; i++) {
+    cur = nums[i] === nums[i-1] ? cur + 1 : 1;
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
     python: `def longestRunOfEqualElements(nums: list[int]) -> int:
-    pass`,
+    best = cur = 1
+    for i in range(1, len(nums)):
+        cur = cur + 1 if nums[i] == nums[i-1] else 1
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 2, 2, 1]], expected: 3 },

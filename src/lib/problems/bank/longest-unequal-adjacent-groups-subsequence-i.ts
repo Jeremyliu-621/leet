@@ -43,13 +43,26 @@ Return any **valid alternating subsequence** from \`words\`. It can be shown tha
   params: ['words', 'groups'],
   starterCode: {
     javascript: `function getLongestSubsequence(words, groups) {
-
+  const res = [words[0]];
+  let lastGroup = groups[0];
+  for (let i = 1; i < words.length; i++) {
+    if (groups[i] !== lastGroup) { res.push(words[i]); lastGroup = groups[i]; }
+  }
+  return res;
 }`,
     typescript: `function getLongestSubsequence(words: string[], groups: number[]): string[] {
-
+  const res = [words[0]];
+  let lastGroup = groups[0];
+  for (let i = 1; i < words.length; i++) {
+    if (groups[i] !== lastGroup) { res.push(words[i]); lastGroup = groups[i]; }
+  }
+  return res;
 }`,
     python: `def getLongestSubsequence(words, groups):
-    pass`,
+    res, last = [words[0]], groups[0]
+    for w, g in zip(words[1:], groups[1:]):
+        if g != last: res.append(w); last = g
+    return res`,
   },
   visibleTests: [
     { args: [['e', 'a', 'b'], [0, 0, 1]], expected: ['e', 'b'] },

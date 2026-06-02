@@ -32,12 +32,37 @@ export const problem: Problem = {
   params: ['s', 'k'],
   starterCode: {
     javascript: `function characterReplacement(s, k) {
-
+  const count = new Array(26).fill(0);
+  let left = 0, maxFreq = 0, ans = 0;
+  for (let right = 0; right < s.length; right++) {
+    count[s.charCodeAt(right) - 65]++;
+    maxFreq = Math.max(maxFreq, count[s.charCodeAt(right) - 65]);
+    while (right - left + 1 - maxFreq > k) count[s.charCodeAt(left++) - 65]--;
+    ans = Math.max(ans, right - left + 1);
+  }
+  return ans;
 }`,
-    typescript: "function characterReplacement(s: string, k: number): number {\n\n}",
-
+    typescript: `function characterReplacement(s: string, k: number): number {
+  const count = new Array(26).fill(0);
+  let left = 0, maxFreq = 0, ans = 0;
+  for (let right = 0; right < s.length; right++) {
+    count[s.charCodeAt(right) - 65]++;
+    maxFreq = Math.max(maxFreq, count[s.charCodeAt(right) - 65]);
+    while (right - left + 1 - maxFreq > k) count[s.charCodeAt(left++) - 65]--;
+    ans = Math.max(ans, right - left + 1);
+  }
+  return ans;
+}`,
     python: `def characterReplacement(s, k):
-    pass`,
+    count = [0] * 26
+    left = max_freq = ans = 0
+    for right, c in enumerate(s):
+        count[ord(c) - 65] += 1
+        max_freq = max(max_freq, count[ord(c) - 65])
+        while right - left + 1 - max_freq > k:
+            count[ord(s[left]) - 65] -= 1; left += 1
+        ans = max(ans, right - left + 1)
+    return ans`,
   },
   visibleTests: [
     { args: ['ABAB', 2], expected: 4 },
