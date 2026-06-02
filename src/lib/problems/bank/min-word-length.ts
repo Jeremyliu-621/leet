@@ -30,18 +30,15 @@ export const problem: Problem = {
   functionName: 'minWordLength',
   params: ['words'],
   starterCode: {
-    javascript: `/**
- * @param {string[]} words
- * @return {number}
- */
-function minWordLength(words) {
-
+    javascript: `function minWordLength(words) {
+  return Math.min(...words.map(w => w.length));
 }`,
     typescript: `function minWordLength(words: string[]): number {
-
+  return Math.min(...words.map(w => w.length));
 }`,
     python: `def minWordLength(words: list[str]) -> int:
-    pass`,
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    return min(len(w) for w in words)`,
   },
   hints: [
     'Map each word to its length, then find the minimum among those lengths.',

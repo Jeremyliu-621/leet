@@ -52,12 +52,87 @@ Return the **updated board**.`,
   params: ['board', 'click'],
   starterCode: {
     javascript: `function updateBoard(board, click) {
-
+  const [r, c] = click;
+  if (board[r][c] === 'M') { board[r][c] = 'X'; return board; }
+  const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+  const m = board.length, n = board[0].length;
+  const queue = [[r, c]];
+  board[r][c] = 'B';
+  while (queue.length) {
+    const [cr, cc] = queue.shift();
+    let mines = 0;
+    for (const [dr, dc] of dirs) {
+      const nr = cr + dr, nc = cc + dc;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr][nc] === 'M') mines++;
+    }
+    if (mines > 0) {
+      board[cr][cc] = String(mines);
+    } else {
+      for (const [dr, dc] of dirs) {
+        const nr = cr + dr, nc = cc + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr][nc] === 'E') {
+          board[nr][nc] = 'B';
+          queue.push([nr, nc]);
+        }
+      }
+    }
+  }
+  return board;
 }`,
-    typescript: "function updateBoard(board: string[][], click: number[]): string[][] {\n\n}",
-
+    typescript: `function updateBoard(board: string[][], click: number[]): string[][] {
+  const [r, c] = click as [number, number];
+  if (board[r]![c] === 'M') { board[r]![c] = 'X'; return board; }
+  const dirs: [number, number][] = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+  const m = board.length, n = board[0]!.length;
+  const queue: [number, number][] = [[r, c]];
+  board[r]![c] = 'B';
+  while (queue.length) {
+    const [cr, cc] = queue.shift()!;
+    let mines = 0;
+    for (const [dr, dc] of dirs) {
+      const nr = cr + dr, nc = cc + dc;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr]![nc] === 'M') mines++;
+    }
+    if (mines > 0) {
+      board[cr]![cc] = String(mines);
+    } else {
+      for (const [dr, dc] of dirs) {
+        const nr = cr + dr, nc = cc + dc;
+        if (nr >= 0 && nr < m && nc >= 0 && nc < n && board[nr]![nc] === 'E') {
+          board[nr]![nc] = 'B';
+          queue.push([nr, nc]);
+        }
+      }
+    }
+  }
+  return board;
+}`,
     python: `def updateBoard(board: list[list[str]], click: list[int]) -> list[list[str]]:
-    pass`,
+    if hasattr(board, 'to_py'):
+        board = [[str(ch) for ch in (row.to_py() if hasattr(row, 'to_py') else row)] for row in board.to_py()]
+    else:
+        board = [list(row) for row in board]
+    if hasattr(click, 'to_py'): click = list(click.to_py())
+    r, c = int(click[0]), int(click[1])
+    if board[r][c] == 'M':
+        board[r][c] = 'X'
+        return board
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    m, n = len(board), len(board[0])
+    queue = [(r, c)]
+    board[r][c] = 'B'
+    while queue:
+        cr, cc = queue.pop(0)
+        mines = sum(1 for dr, dc in dirs if 0 <= cr+dr < m and 0 <= cc+dc < n and board[cr+dr][cc+dc] == 'M')
+        if mines > 0:
+            board[cr][cc] = str(mines)
+        else:
+            for dr, dc in dirs:
+                nr, nc = cr+dr, cc+dc
+                if 0 <= nr < m and 0 <= nc < n and board[nr][nc] == 'E':
+                    board[nr][nc] = 'B'
+                    queue.append((nr, nc))
+    return board`,
   },
   visibleTests: [
     {

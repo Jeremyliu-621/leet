@@ -36,12 +36,61 @@ Return the **minimum cost** to make all points connected (so that there is exact
   params: ['points'],
   starterCode: {
     javascript: `function minCostConnectPoints(points) {
-
+  const n = points.length;
+  const dist = new Array(n).fill(Infinity);
+  dist[0] = 0;
+  const visited = new Array(n).fill(false);
+  let ans = 0;
+  for (let i = 0; i < n; i++) {
+    let u = -1;
+    for (let v = 0; v < n; v++) if (!visited[v] && (u === -1 || dist[v] < dist[u])) u = v;
+    visited[u] = true;
+    ans += dist[u];
+    for (let v = 0; v < n; v++) {
+      if (!visited[v]) {
+        const d = Math.abs(points[u][0] - points[v][0]) + Math.abs(points[u][1] - points[v][1]);
+        if (d < dist[v]) dist[v] = d;
+      }
+    }
+  }
+  return ans;
 }`,
-    typescript: "function minCostConnectPoints(points: number[][]): number {\n\n}",
-
+    typescript: `function minCostConnectPoints(points: number[][]): number {
+  const n = points.length;
+  const dist = new Array<number>(n).fill(Infinity);
+  dist[0] = 0;
+  const visited = new Array<boolean>(n).fill(false);
+  let ans = 0;
+  for (let i = 0; i < n; i++) {
+    let u = -1;
+    for (let v = 0; v < n; v++) if (!visited[v] && (u === -1 || dist[v]! < dist[u]!)) u = v;
+    visited[u] = true;
+    ans += dist[u]!;
+    for (let v = 0; v < n; v++) {
+      if (!visited[v]) {
+        const d = Math.abs(points[u]![0]! - points[v]![0]!) + Math.abs(points[u]![1]! - points[v]![1]!);
+        if (d < dist[v]!) dist[v] = d;
+      }
+    }
+  }
+  return ans;
+}`,
     python: `def minCostConnectPoints(points):
-    pass`,
+    if hasattr(points, 'to_py'): points = [[int(x) for x in (p.to_py() if hasattr(p, 'to_py') else p)] for p in points.to_py()]
+    n = len(points)
+    dist = [float('inf')] * n
+    dist[0] = 0
+    visited = [False] * n
+    ans = 0
+    for _ in range(n):
+        u = min((v for v in range(n) if not visited[v]), key=lambda v: dist[v])
+        visited[u] = True
+        ans += dist[u]
+        for v in range(n):
+            if not visited[v]:
+                d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
+                if d < dist[v]: dist[v] = d
+    return ans`,
   },
   visibleTests: [
     {

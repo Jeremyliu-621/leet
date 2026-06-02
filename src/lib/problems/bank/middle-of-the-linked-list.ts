@@ -82,13 +82,27 @@ export const problem: Problem = {
   starterCode: {
     javascript: `// ListNode is pre-defined. Implement the function below:
 function middleNode(head) {
-
+  let slow = head, fast = head;
+  while (fast && fast.next) { slow = slow.next; fast = fast.next.next; }
+  return slow;
 }`,
-    typescript: "function middleNodeRunner(head: number[]): number[] {\n\n}",
-
+    typescript: `function middleNodeRunner(head: number[]): number[] {
+  type N = { val: number; next: N | null };
+  const nodes = head.map<N>(v => ({ val: v, next: null }));
+  for (let i = 0; i < nodes.length - 1; i++) nodes[i]!.next = nodes[i + 1]!;
+  let slow: N | null = nodes[0] ?? null, fast: N | null = nodes[0] ?? null;
+  while (fast && fast.next) { slow = slow!.next; fast = fast.next.next; }
+  const res: number[] = [];
+  for (let cur: N | null = slow; cur; cur = cur.next) res.push(cur.val);
+  return res;
+}`,
     python: `# ListNode is pre-defined. Implement the function below:
 def middleNode(head):
-    pass`,
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: [3, 4, 5] },
