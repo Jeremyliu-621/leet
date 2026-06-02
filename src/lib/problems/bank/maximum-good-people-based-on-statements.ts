@@ -43,9 +43,53 @@ Return the **maximum** number of people who can be labeled **good** based on the
   functionName: 'maximumGood',
   params: ['statements'],
   starterCode: {
-    javascript: 'function maximumGood(statements) {\n  // your code here\n}\n',
-    typescript: 'function maximumGood(statements: number[][]): number {\n  // your code here\n}\n',
-    python: 'def maximumGood(statements):\n    # your code here\n    pass\n',
+    javascript: `function maximumGood(statements) {
+  const n = statements.length;
+  let best = 0;
+  for (let mask = 1; mask < (1 << n); mask++) {
+    let ok = true;
+    for (let i = 0; i < n && ok; i++) {
+      if (!(mask >> i & 1)) continue;
+      for (let j = 0; j < n; j++) {
+        if (statements[i][j] === 2) continue;
+        if ((statements[i][j] === 1) !== !!(mask >> j & 1)) { ok = false; break; }
+      }
+    }
+    if (ok) { let c = 0, m = mask; while (m) { c += m & 1; m >>= 1; } best = Math.max(best, c); }
+  }
+  return best;
+}`,
+    typescript: `function maximumGood(statements: number[][]): number {
+  const n = statements.length;
+  let best = 0;
+  for (let mask = 1; mask < (1 << n); mask++) {
+    let ok = true;
+    for (let i = 0; i < n && ok; i++) {
+      if (!(mask >> i & 1)) continue;
+      for (let j = 0; j < n; j++) {
+        if (statements[i]![j] === 2) continue;
+        if ((statements[i]![j] === 1) !== !!(mask >> j & 1)) { ok = false; break; }
+      }
+    }
+    if (ok) { let c = 0, m = mask; while (m) { c += m & 1; m >>= 1; } best = Math.max(best, c); }
+  }
+  return best;
+}`,
+    python: `def maximumGood(statements):
+    if hasattr(statements, 'to_py'): statements = statements.to_py()
+    statements = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in statements]
+    n = len(statements)
+    best = 0
+    for mask in range(1, 1 << n):
+        ok = True
+        for i in range(n):
+            if not (mask >> i & 1): continue
+            for j in range(n):
+                if statements[i][j] == 2: continue
+                if (statements[i][j] == 1) != bool(mask >> j & 1): ok = False; break
+            if not ok: break
+        if ok: best = max(best, bin(mask).count('1'))
+    return best`,
   },
   visibleTests: [
     {

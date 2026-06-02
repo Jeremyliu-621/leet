@@ -34,10 +34,49 @@ Return the **maximum** number of events you can attend.`,
   functionName: 'maxEvents',
   params: ['events'],
   starterCode: {
-    javascript: 'function maxEvents(events) {\n  // your code here\n}\n',
-    typescript: "function maxEvents(events: number[][]): number {\n  // your code here\n}",
-
-    python: 'def maxEvents(events):\n    # your code here\n    pass\n',
+    javascript: `function maxEvents(events) {
+  events.sort((a, b) => a[0] - b[0]);
+  const h = [];
+  function push(v) { h.push(v); let i = h.length - 1; while (i > 0) { const p = (i-1)>>1; if (h[p] <= h[i]) break; [h[p],h[i]]=[h[i],h[p]]; i=p; } }
+  function pop() { const t=h[0], l=h.pop(); if (h.length) { h[0]=l; let i=0; while(true){const a=2*i+1,b=2*i+2;let m=i;if(a<h.length&&h[a]<h[m])m=a;if(b<h.length&&h[b]<h[m])m=b;if(m===i)break;[h[m],h[i]]=[h[i],h[m]];i=m;} } return t; }
+  const maxDay = Math.max(...events.map(e => e[1]));
+  let ei = 0, count = 0;
+  for (let d = 1; d <= maxDay && (ei < events.length || h.length); d++) {
+    while (ei < events.length && events[ei][0] <= d) push(events[ei++][1]);
+    while (h.length && h[0] < d) pop();
+    if (h.length) { pop(); count++; }
+  }
+  return count;
+}`,
+    typescript: `function maxEvents(events: number[][]): number {
+  events.sort((a, b) => a[0]! - b[0]!);
+  const h: number[] = [];
+  function push(v: number) { h.push(v); let i = h.length-1; while(i>0){const p=(i-1)>>1;if(h[p]!<=h[i]!)break;[h[p],h[i]]=[h[i]!,h[p]!];i=p;} }
+  function pop(): number { const t=h[0]!,l=h.pop()!; if(h.length){h[0]=l;let i=0;while(true){const a=2*i+1,b=2*i+2;let m=i;if(a<h.length&&h[a]!<h[m]!)m=a;if(b<h.length&&h[b]!<h[m]!)m=b;if(m===i)break;[h[m],h[i]]=[h[i]!,h[m]!];i=m;}}return t;}
+  const maxDay = Math.max(...events.map(e => e[1]!));
+  let ei = 0, count = 0;
+  for (let d = 1; d <= maxDay && (ei < events.length || h.length); d++) {
+    while (ei < events.length && events[ei]![0]! <= d) push(events[ei++]![1]!);
+    while (h.length && h[0]! < d) pop();
+    if (h.length) { pop(); count++; }
+  }
+  return count;
+}`,
+    python: `def maxEvents(events):
+    if hasattr(events, 'to_py'): events = events.to_py()
+    events = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in events]
+    import heapq
+    events.sort()
+    n = len(events)
+    max_day = max(e[1] for e in events)
+    heap = []
+    ei = count = 0
+    for d in range(1, max_day + 1):
+        if ei >= n and not heap: break
+        while ei < n and events[ei][0] <= d: heapq.heappush(heap, events[ei][1]); ei += 1
+        while heap and heap[0] < d: heapq.heappop(heap)
+        if heap: heapq.heappop(heap); count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[[1, 2], [2, 3], [3, 4]]], expected: 3 },

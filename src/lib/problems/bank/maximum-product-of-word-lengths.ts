@@ -36,10 +36,33 @@ export const problem: Problem = {
   functionName: 'maxProduct',
   params: ['words'],
   starterCode: {
-    javascript: `function maxProduct(words) {\n  // your code here\n}\n`,
-    typescript: "function maxProduct(words: string[]): number {\n  // your code here\n}",
-
-    python: `def maxProduct(words):\n    # your code here\n    pass\n`,
+    javascript: `function maxProduct(words) {
+  const masks = words.map(w => [...w].reduce((m, c) => m | (1 << (c.charCodeAt(0) - 97)), 0));
+  let max = 0;
+  for (let i = 0; i < words.length; i++)
+    for (let j = i + 1; j < words.length; j++)
+      if (!(masks[i] & masks[j])) max = Math.max(max, words[i].length * words[j].length);
+  return max;
+}`,
+    typescript: `function maxProduct(words: string[]): number {
+  const masks = words.map(w => [...w].reduce((m, c) => m | (1 << (c.charCodeAt(0) - 97)), 0));
+  let max = 0;
+  for (let i = 0; i < words.length; i++)
+    for (let j = i + 1; j < words.length; j++)
+      if (!(masks[i]! & masks[j]!)) max = Math.max(max, words[i]!.length * words[j]!.length);
+  return max;
+}`,
+    python: `def maxProduct(words):
+    if hasattr(words, 'to_py'): words = words.to_py()
+    words = [str(w.to_py() if hasattr(w, 'to_py') else w) for w in words]
+    masks = [0] * len(words)
+    for i, w in enumerate(words):
+        for c in w: masks[i] |= 1 << (ord(c) - 97)
+    best = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if not (masks[i] & masks[j]): best = max(best, len(words[i]) * len(words[j]))
+    return best`,
   },
   visibleTests: [
     { args: [['abcw','baz','foo','bar','xtfn','abcdef']], expected: 16 },

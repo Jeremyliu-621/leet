@@ -32,10 +32,36 @@ Given an integer array \`nums\`, return the **maximum width of a ramp** in \`num
   functionName: 'maxWidthRamp',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxWidthRamp(nums) {\n  // your code here\n}\n',
-    typescript: "function maxWidthRamp(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def maxWidthRamp(nums):\n    # your code here\n    pass\n',
+    javascript: `function maxWidthRamp(nums) {
+  const st = [];
+  for (let i = 0; i < nums.length; i++)
+    if (!st.length || nums[i] < nums[st[st.length - 1]]) st.push(i);
+  let ans = 0;
+  for (let j = nums.length - 1; j >= 0; j--)
+    while (st.length && nums[st[st.length - 1]] <= nums[j])
+      ans = Math.max(ans, j - st.pop());
+  return ans;
+}`,
+    typescript: `function maxWidthRamp(nums: number[]): number {
+  const st: number[] = [];
+  for (let i = 0; i < nums.length; i++)
+    if (!st.length || nums[i]! < nums[st[st.length - 1]!]!) st.push(i);
+  let ans = 0;
+  for (let j = nums.length - 1; j >= 0; j--)
+    while (st.length && nums[st[st.length - 1]!]! <= nums[j]!)
+      ans = Math.max(ans, j - st.pop()!);
+  return ans;
+}`,
+    python: `def maxWidthRamp(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    st = []
+    for i, v in enumerate(nums):
+        if not st or v < nums[st[-1]]: st.append(i)
+    ans = 0
+    for j in range(len(nums) - 1, -1, -1):
+        while st and nums[st[-1]] <= nums[j]:
+            ans = max(ans, j - st.pop())
+    return ans`,
   },
   visibleTests: [
     { args: [[6, 0, 8, 2, 1, 5]], expected: 4 },

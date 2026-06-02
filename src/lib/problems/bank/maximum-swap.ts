@@ -29,10 +29,44 @@ Return the maximum valued number you can get.`,
   functionName: 'maximumSwap',
   params: ['num'],
   starterCode: {
-    javascript: 'function maximumSwap(num) {\n  // your code here\n}\n',
-    typescript: "function maximumSwap(num: number): number {\n  // your code here\n}",
-
-    python: 'def maximumSwap(num: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function maximumSwap(num) {
+  const d = String(num).split('');
+  const last = {};
+  for (let i = 0; i < d.length; i++) last[d[i]] = i;
+  for (let i = 0; i < d.length; i++) {
+    for (let c = 9; c > Number(d[i]); c--) {
+      if (last[c] > i) {
+        [d[i], d[last[c]]] = [d[last[c]], d[i]];
+        return Number(d.join(''));
+      }
+    }
+  }
+  return num;
+}`,
+    typescript: `function maximumSwap(num: number): number {
+  const d = String(num).split('');
+  const last: Record<string, number> = {};
+  for (let i = 0; i < d.length; i++) last[d[i]!] = i;
+  for (let i = 0; i < d.length; i++) {
+    for (let c = 9; c > Number(d[i]); c--) {
+      if ((last[c] ?? -1) > i) {
+        [d[i], d[last[c]!]] = [d[last[c]!]!, d[i]!];
+        return Number(d.join(''));
+      }
+    }
+  }
+  return num;
+}`,
+    python: `def maximumSwap(num):
+    d = list(str(num))
+    last = {c: i for i, c in enumerate(d)}
+    for i in range(len(d)):
+        for c in range(9, int(d[i]), -1):
+            if last.get(str(c), -1) > i:
+                j = last[str(c)]
+                d[i], d[j] = d[j], d[i]
+                return int(''.join(d))
+    return num`,
   },
   visibleTests: [
     { args: [2736], expected: 7236 },
