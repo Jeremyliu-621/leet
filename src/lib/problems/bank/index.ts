@@ -3489,6 +3489,10 @@ import { problem as createBinaryTreeFromDescriptions } from './create-binary-tre
 import { problem as findDuplicateSubtrees } from './find-duplicate-subtrees';
 import { problem as countGoodBinaryStrings } from './count-good-binary-strings';
 import { problem as maximumBinaryTreeII } from './maximum-binary-tree-ii';
+// batch 299
+import { problem as deleteNodesFromLinkedListPresentInArray } from './delete-nodes-from-linked-list-present-in-array';
+import { problem as countPathsThatCanFormAPalindromeInATree } from './count-paths-that-can-form-a-palindrome-in-a-tree';
+import { problem as maximumNumberOfEdgesToRemove } from './maximum-number-of-edges-to-remove-to-keep-graph-fully-traversable';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7017,4 +7021,8 @@ export const problems: readonly Problem[] = [
   findDuplicateSubtrees,
   countGoodBinaryStrings,
   maximumBinaryTreeII,
+  // batch 299
+  deleteNodesFromLinkedListPresentInArray,
+  countPathsThatCanFormAPalindromeInATree,
+  maximumNumberOfEdgesToRemove,
 ];

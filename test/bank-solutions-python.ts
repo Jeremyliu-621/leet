@@ -49825,6 +49825,75 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return sum(dp[low:high+1]) % MOD
 `,
 
+  'delete-nodes-from-linked-list-present-in-array': `def deleteNodes(nums, head):
+    nums_list = nums.to_py() if hasattr(nums, 'to_py') else list(nums)
+    head_list = head.to_py() if hasattr(head, 'to_py') else list(head)
+    remove = set(int(x) for x in nums_list)
+    return [int(v) for v in head_list if int(v) not in remove]
+`,
+
+  'count-paths-that-can-form-a-palindrome-in-a-tree': `def countPalindromePaths(parent, s):
+    parent = parent.to_py() if hasattr(parent, 'to_py') else list(parent)
+    parent = [int(x) for x in parent]
+    s = str(s)
+    n = len(parent)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parent[i]].append(i)
+    xor = [0] * n
+    queue = [0]
+    while queue:
+        u = queue.pop(0)
+        for v in children[u]:
+            xor[v] = xor[u] ^ (1 << (ord(s[v]) - ord('a')))
+            queue.append(v)
+    count = {}
+    ans = 0
+    for v in range(n):
+        m = xor[v]
+        ans += count.get(m, 0)
+        for b in range(26):
+            ans += count.get(m ^ (1 << b), 0)
+        count[m] = count.get(m, 0) + 1
+    return ans
+`,
+
+  'maximum-number-of-edges-to-remove-to-keep-graph-fully-traversable': `def maxNumEdgesToRemove(n, edges):
+    n = int(n)
+    edges_raw = edges.to_py() if hasattr(edges, 'to_py') else list(edges)
+    edges_list = [[int(x) for x in e] for e in edges_raw]
+    def make_uf(size):
+        parent = list(range(size + 1))
+        rank = [0] * (size + 1)
+        count = [size]
+        def find(x):
+            while parent[x] != x:
+                parent[x] = parent[parent[x]]
+                x = parent[x]
+            return x
+        def union(a, b):
+            a, b = find(a), find(b)
+            if a == b: return False
+            if rank[a] < rank[b]: a, b = b, a
+            parent[b] = a
+            if rank[a] == rank[b]: rank[a] += 1
+            count[0] -= 1
+            return True
+        return union, lambda: count[0] == 1
+    a_union, a_conn = make_uf(n)
+    b_union, b_conn = make_uf(n)
+    used = 0
+    for t, u, v in edges_list:
+        if t == 3:
+            a = a_union(u, v); b = b_union(u, v)
+            if a or b: used += 1
+    for t, u, v in edges_list:
+        if t == 1 and a_union(u, v): used += 1
+        if t == 2 and b_union(u, v): used += 1
+    if not a_conn() or not b_conn(): return -1
+    return len(edges_list) - used
+`,
+
   'maximum-binary-tree-ii': `def insertIntoMaxTreeRunner(arr, val):
     a = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
     a = [int(x) if isinstance(x, (int, float)) else None for x in a]

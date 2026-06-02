@@ -51047,4 +51047,71 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return _treeToArr(insert(root));
   },
 
+  'delete-nodes-from-linked-list-present-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const head = args[1] as number[];
+    const remove = new Set(nums);
+    return head.filter(v => !remove.has(v));
+  },
+
+  'count-paths-that-can-form-a-palindrome-in-a-tree': (...args: unknown[]) => {
+    const parent = args[0] as number[];
+    const s = args[1] as string;
+    const n = parent.length;
+    const children: number[][] = Array.from({length: n}, () => []) as number[][];
+    for (let i = 1; i < n; i++) (children[parent[i] as number] as number[]).push(i);
+    const xor = new Array<number>(n).fill(0);
+    const queue = [0];
+    while (queue.length) {
+      const u = queue.shift()!;
+      for (const v of (children[u] as number[])) {
+        (xor as number[])[v] = (xor[u] as number) ^ (1 << (s.charCodeAt(v) - 97));
+        queue.push(v);
+      }
+    }
+    const count = new Map<number, number>();
+    let ans = 0;
+    for (let v = 0; v < n; v++) {
+      const m = xor[v]!;
+      ans += (count.get(m) || 0);
+      for (let b = 0; b < 26; b++) ans += (count.get(m ^ (1 << b)) || 0);
+      count.set(m, (count.get(m) || 0) + 1);
+    }
+    return ans;
+  },
+
+  'maximum-number-of-edges-to-remove-to-keep-graph-fully-traversable': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    function makeUF(size: number) {
+      const parent = Array.from({length: size + 1}, (_, i) => i) as number[];
+      const rank = new Array<number>(size + 1).fill(0);
+      let components = size;
+      const find = (x: number): number => { while (parent[x] !== x) { const px = parent[x] as number; parent[x] = parent[px] as number; x = px; } return x; };
+      const union = (a: number, b: number) => {
+        a = find(a); b = find(b);
+        if (a === b) return false;
+        if ((rank[a] as number) < (rank[b] as number)) [a, b] = [b, a];
+        parent[b] = a;
+        if (rank[a] === rank[b]) (rank[a] as number)++;
+        components--;
+        return true;
+      };
+      return { union, connected: () => components === 1 };
+    }
+    const alice = makeUF(n), bob = makeUF(n);
+    let used = 0;
+    for (const e of edges) {
+      const t = e[0] as number, u = e[1] as number, v = e[2] as number;
+      if (t === 3) { const a = alice.union(u, v), b = bob.union(u, v); if (a || b) used++; }
+    }
+    for (const e of edges) {
+      const t = e[0] as number, u = e[1] as number, v = e[2] as number;
+      if (t === 1) { if (alice.union(u, v)) used++; }
+      if (t === 2) { if (bob.union(u, v)) used++; }
+    }
+    if (!alice.connected() || !bob.connected()) return -1;
+    return edges.length - used;
+  },
+
 };
