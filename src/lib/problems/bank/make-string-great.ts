@@ -42,13 +42,27 @@ Return the resulting good string. It is **guaranteed** the answer is unique.`,
   params: ['s'],
   starterCode: {
     javascript: `function makeGood(s) {
-
+  const stack = [];
+  for (const c of s) {
+    if (stack.length && Math.abs(stack[stack.length-1].charCodeAt(0) - c.charCodeAt(0)) === 32) stack.pop();
+    else stack.push(c);
+  }
+  return stack.join('');
 }`,
     typescript: `function makeGood(s: string): string {
-
+  const stack: string[] = [];
+  for (const c of s) {
+    if (stack.length && Math.abs(stack[stack.length-1].charCodeAt(0) - c.charCodeAt(0)) === 32) stack.pop();
+    else stack.push(c);
+  }
+  return stack.join('');
 }`,
     python: `def makeGood(s):
-    pass`,
+    stack = []
+    for c in s:
+        if stack and abs(ord(stack[-1]) - ord(c)) == 32: stack.pop()
+        else: stack.append(c)
+    return ''.join(stack)`,
   },
   visibleTests: [
     { args: ['leEeetcode'], expected: 'leetcode' },

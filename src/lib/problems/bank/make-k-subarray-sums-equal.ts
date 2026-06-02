@@ -42,13 +42,50 @@ Return the **minimum** number of operations to make the sum of every **subarray*
   params: ['arr', 'k'],
   starterCode: {
     javascript: `function makeSubKSumEqual(arr, k) {
-
+  const n = arr.length;
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  const g = gcd(n, k);
+  let total = 0;
+  for (let start = 0; start < g; start++) {
+    const group = [];
+    let i = start;
+    do { group.push(arr[i]); i = (i + k) % n; } while (i !== start);
+    group.sort((a, b) => a - b);
+    const median = group[Math.floor(group.length / 2)];
+    for (const x of group) total += Math.abs(x - median);
+  }
+  return total;
 }`,
     typescript: `function makeSubKSumEqual(arr: number[], k: number): number {
-
+  const n = arr.length;
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const g = gcd(n, k);
+  let total = 0;
+  for (let start = 0; start < g; start++) {
+    const group: number[] = [];
+    let i = start;
+    do { group.push(arr[i]); i = (i + k) % n; } while (i !== start);
+    group.sort((a, b) => a - b);
+    const median = group[Math.floor(group.length / 2)];
+    for (const x of group) total += Math.abs(x - median);
+  }
+  return total;
 }`,
     python: `def makeSubKSumEqual(arr, k):
-    pass`,
+    from math import gcd
+    n = len(arr)
+    g = gcd(n, k)
+    total = 0
+    for start in range(g):
+        group = []
+        i = start
+        while True:
+            group.append(arr[i]); i = (i + k) % n
+            if i == start: break
+        group.sort()
+        median = group[len(group) // 2]
+        total += sum(abs(x - median) for x in group)
+    return total`,
   },
   visibleTests: [
     { args: [[1, 4, 1, 3], 2], expected: 1 },

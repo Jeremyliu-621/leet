@@ -36,13 +36,67 @@ export const problem: Problem = {
   params: ['matchsticks'],
   starterCode: {
     javascript: `function makesquare(matchsticks) {
-
+  const total = matchsticks.reduce((a, b) => a + b, 0);
+  if (total % 4 !== 0) return false;
+  const side = total / 4;
+  matchsticks.sort((a, b) => b - a);
+  if (matchsticks[0] > side) return false;
+  const buckets = [0, 0, 0, 0];
+  function bt(i) {
+    if (i === matchsticks.length) return true;
+    const seen = new Set();
+    for (let j = 0; j < 4; j++) {
+      if (seen.has(buckets[j])) continue;
+      if (buckets[j] + matchsticks[i] <= side) {
+        seen.add(buckets[j]); buckets[j] += matchsticks[i];
+        if (bt(i + 1)) return true;
+        buckets[j] -= matchsticks[i];
+      }
+    }
+    return false;
+  }
+  return bt(0);
 }`,
     typescript: `function makesquare(matchsticks: number[]): boolean {
-
+  const total = matchsticks.reduce((a, b) => a + b, 0);
+  if (total % 4 !== 0) return false;
+  const side = total / 4;
+  matchsticks.sort((a, b) => b - a);
+  if (matchsticks[0] > side) return false;
+  const buckets = [0, 0, 0, 0];
+  function bt(i: number): boolean {
+    if (i === matchsticks.length) return true;
+    const seen = new Set<number>();
+    for (let j = 0; j < 4; j++) {
+      if (seen.has(buckets[j])) continue;
+      if (buckets[j] + matchsticks[i] <= side) {
+        seen.add(buckets[j]); buckets[j] += matchsticks[i];
+        if (bt(i + 1)) return true;
+        buckets[j] -= matchsticks[i];
+      }
+    }
+    return false;
+  }
+  return bt(0);
 }`,
     python: `def makesquare(matchsticks: list[int]) -> bool:
-    pass`,
+    total = sum(matchsticks)
+    if total % 4 != 0: return False
+    side = total // 4
+    matchsticks.sort(reverse=True)
+    if matchsticks[0] > side: return False
+    buckets = [0, 0, 0, 0]
+    def bt(i):
+        if i == len(matchsticks): return True
+        seen = set()
+        for j in range(4):
+            if buckets[j] in seen: continue
+            if buckets[j] + matchsticks[i] <= side:
+                seen.add(buckets[j]); buckets[j] += matchsticks[i]
+                if bt(i + 1): return True
+                buckets[j] -= matchsticks[i]
+        return False
+    return bt(0)`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 2, 2]], expected: true },

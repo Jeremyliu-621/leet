@@ -8,15 +8,9 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2971** problems; 9285 tests green. Batch 287 complete.
+**Current focus:** Bank at **2963** problems; 9261 tests green. Starter batches 41f–41k complete (~72 stubs filled, ~572 remaining).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 289+); starter backfill; UX polish.
-
-### feat(bank): batch 287 — target-nodes-ii, adj-swaps-kth-smallest, min-cost-arrays-identical, count-pairs (2026-06-02)
-Four new problems: `maximize-the-number-of-target-nodes-after-connecting-trees-ii` (hard/tree+graph — bipartite 2-coloring via BFS; ans[i]=cnt[color(i)_in_tree1]+m-min(d0_tree2,d1_tree2); O(n+m)), `minimum-adjacent-swaps-to-reach-the-kth-smallest-number` (medium/strings+arrays — apply nextPermutation k times for target; count min adjacent swaps via greedy leftmost-match; O(n*k+n^2)), `minimum-cost-to-make-arrays-identical` (medium/arrays+math — min(inversions_direct, k+inversions_after_sort); inversions via merge sort; canonical left-to-right matching for duplicates; O(n log n)), `count-subarrays-where-elements-come-in-pairs` (medium/arrays+hash-map — O(n^2) with early break when any element exceeds count 2; oddCount==0 iff all present elements appear exactly twice). Bank at **2971**; 9285 tests.
-
-### feat(bank): batch 288 — matrix-rotation, fixed-ratio-substrings, closest-marked-node, maximize-min-power (2026-06-02)
-Four new problems: `determine-if-matrix-can-be-obtained-by-rotation` (easy/simulation — try all 4 rotations (0°/90°/180°/270°); rotate90: new[j][n-1-i]=old[i][j]; compare with target; O(n²)), `number-of-substrings-with-fixed-ratio` (medium/hash-map — prefix key = num2*cnt0-num1*cnt1; count pairs i<j with equal key; O(n)), `find-the-closest-marked-node` (medium/shortest-path — Dijkstra from each node; min dist to any marked node; -1 if unreachable; O(n*(n+E)log n)), `maximize-the-minimum-powered-city` (hard/binary-search — binary search on answer; greedy feasibility with difference array to track added stations; O(n log(sum+k))). Bank at **2967**; 9273 tests.
+**Next up:** Continue starter backfill (next: longest-c* range); bank growth (batch 288+); UX polish.
 
 ### feat(bank): batch 287 — design-an-atm-machine, minimum-time-to-remove-all-cars-containing-illegal-goods, design-movie-rental-system (2026-06-02)
 Three new problems: `design-an-atm-machine` (medium/design — 5 denominations [20,50,100,200,500]; greedy withdraw largest-first; -1 if can't make exact amount; O(5) per op), `minimum-time-to-remove-all-cars-containing-illegal-goods` (hard/dp — prefix[i]=min cost to clear 1s in s[0..i] (each '1': min(prefix+2, i+1)); suffix from right; answer=min over split points of prefix[i]+suffix[i+1]; O(n)), `design-movie-rental-system` (hard/design — sorted arrays + binary-search insert/delete for unrented[movie] and rented sets; search/report return top-5 cheapest; O(n log n) per op). Bank at **2963**; 9249 tests.

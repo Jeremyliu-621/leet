@@ -41,12 +41,45 @@ A **subarray** is defined as a contiguous block of elements in the array.`,
   params: ['nums', 'p'],
   starterCode: {
     javascript: `function minSubarray(nums, p) {
-
+  const total = nums.reduce((a, b) => a + b, 0);
+  const target = total % p;
+  if (target === 0) return 0;
+  const prefMod = new Map([[0, -1]]);
+  let prefSum = 0, ans = nums.length;
+  for (let i = 0; i < nums.length; i++) {
+    prefSum = (prefSum + nums[i]) % p;
+    const need = (prefSum - target + p) % p;
+    if (prefMod.has(need)) ans = Math.min(ans, i - prefMod.get(need));
+    prefMod.set(prefSum, i);
+  }
+  return ans === nums.length ? -1 : ans;
 }`,
-    typescript: "function minSubarray(nums: number[], p: number): number {\n\n}",
-
+    typescript: `function minSubarray(nums: number[], p: number): number {
+  const total = nums.reduce((a, b) => a + b, 0);
+  const target = total % p;
+  if (target === 0) return 0;
+  const prefMod = new Map([[0, -1]]);
+  let prefSum = 0, ans = nums.length;
+  for (let i = 0; i < nums.length; i++) {
+    prefSum = (prefSum + nums[i]) % p;
+    const need = (prefSum - target + p) % p;
+    if (prefMod.has(need)) ans = Math.min(ans, i - prefMod.get(need)!);
+    prefMod.set(prefSum, i);
+  }
+  return ans === nums.length ? -1 : ans;
+}`,
     python: `def minSubarray(nums, p):
-    pass`,
+    total = sum(nums)
+    target = total % p
+    if target == 0: return 0
+    pref_mod = {0: -1}
+    pref_sum = 0; ans = len(nums)
+    for i, x in enumerate(nums):
+        pref_sum = (pref_sum + x) % p
+        need = (pref_sum - target + p) % p
+        if need in pref_mod: ans = min(ans, i - pref_mod[need])
+        pref_mod[pref_sum] = i
+    return -1 if ans == len(nums) else ans`,
   },
   visibleTests: [
     { args: [[3, 1, 4, 2], 6], expected: 1 },

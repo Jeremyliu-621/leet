@@ -42,11 +42,19 @@ Return the **minimum number of operations** needed to make all three strings equ
   params: ['s1', 's2', 's3'],
   starterCode: {
     javascript: `function equalStrings(s1, s2, s3) {
-
+  let L = 0;
+  while (L < s1.length && L < s2.length && L < s3.length && s1[L] === s2[L] && s2[L] === s3[L]) L++;
+  return L === 0 ? -1 : s1.length + s2.length + s3.length - 3 * L;
 }`,
-    typescript: 'function equalStrings(s1: string, s2: string, s3: string): number {\n\n}',
+    typescript: `function equalStrings(s1: string, s2: string, s3: string): number {
+  let L = 0;
+  while (L < s1.length && L < s2.length && L < s3.length && s1[L] === s2[L] && s2[L] === s3[L]) L++;
+  return L === 0 ? -1 : s1.length + s2.length + s3.length - 3 * L;
+}`,
     python: `def equalStrings(s1, s2, s3):
-    pass`,
+    L = 0
+    while L < len(s1) and L < len(s2) and L < len(s3) and s1[L] == s2[L] == s3[L]: L += 1
+    return -1 if L == 0 else len(s1) + len(s2) + len(s3) - 3 * L`,
   },
   visibleTests: [
     { args: ['abc', 'abb', 'ab'], expected: 2 },

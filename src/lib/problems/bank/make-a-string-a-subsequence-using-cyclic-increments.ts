@@ -43,13 +43,29 @@ A string \`t\` is a **subsequence** of a string \`s\` if \`t\` can be obtained f
   params: ['str1', 'str2'],
   starterCode: {
     javascript: `function canMakeSubsequence(str1, str2) {
-
+  let j = 0;
+  for (let i = 0; i < str1.length && j < str2.length; i++) {
+    const c1 = str1.charCodeAt(i) - 97, c2 = str2.charCodeAt(j) - 97;
+    if (c1 === c2 || (c1 + 1) % 26 === c2) j++;
+  }
+  return j === str2.length;
 }`,
     typescript: `function canMakeSubsequence(str1: string, str2: string): boolean {
-
+  let j = 0;
+  for (let i = 0; i < str1.length && j < str2.length; i++) {
+    const c1 = str1.charCodeAt(i) - 97, c2 = str2.charCodeAt(j) - 97;
+    if (c1 === c2 || (c1 + 1) % 26 === c2) j++;
+  }
+  return j === str2.length;
 }`,
     python: `def canMakeSubsequence(str1, str2):
-    pass`,
+    j = 0
+    for c1 in str1:
+        if j < len(str2):
+            c2 = str2[j]
+            if c1 == c2 or (ord(c1) - 96) % 26 == ord(c2) - 97:
+                j += 1
+    return j == len(str2)`,
   },
   visibleTests: [
     { args: ['abc', 'ad'], expected: true },

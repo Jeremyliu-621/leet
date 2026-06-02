@@ -35,13 +35,52 @@ Return \`true\` if it is possible to get the number of distinct characters in \`
   params: ['word1', 'word2'],
   starterCode: {
     javascript: `function isItPossible(word1, word2) {
-
+  const f1 = new Array(26).fill(0), f2 = new Array(26).fill(0);
+  for (const c of word1) f1[c.charCodeAt(0)-97]++;
+  for (const c of word2) f2[c.charCodeAt(0)-97]++;
+  const d1 = f1.filter(x=>x>0).length, d2 = f2.filter(x=>x>0).length;
+  for (let c1 = 0; c1 < 26; c1++) {
+    if (!f1[c1]) continue;
+    for (let c2 = 0; c2 < 26; c2++) {
+      if (!f2[c2]) continue;
+      if (c1 === c2) { if (d1 === d2) return true; continue; }
+      const nd1 = d1 - (f1[c1]===1?1:0) + (f1[c2]===0?1:0);
+      const nd2 = d2 - (f2[c2]===1?1:0) + (f2[c1]===0?1:0);
+      if (nd1 === nd2) return true;
+    }
+  }
+  return false;
 }`,
     typescript: `function isItPossible(word1: string, word2: string): boolean {
-
+  const f1 = new Array(26).fill(0), f2 = new Array(26).fill(0);
+  for (const c of word1) f1[c.charCodeAt(0)-97]++;
+  for (const c of word2) f2[c.charCodeAt(0)-97]++;
+  const d1 = f1.filter(x=>x>0).length, d2 = f2.filter(x=>x>0).length;
+  for (let c1 = 0; c1 < 26; c1++) {
+    if (!f1[c1]) continue;
+    for (let c2 = 0; c2 < 26; c2++) {
+      if (!f2[c2]) continue;
+      if (c1 === c2) { if (d1 === d2) return true; continue; }
+      const nd1 = d1 - (f1[c1]===1?1:0) + (f1[c2]===0?1:0);
+      const nd2 = d2 - (f2[c2]===1?1:0) + (f2[c1]===0?1:0);
+      if (nd1 === nd2) return true;
+    }
+  }
+  return false;
 }`,
     python: `def isItPossible(word1, word2):
-    pass`,
+    from collections import Counter
+    f1, f2 = Counter(word1), Counter(word2)
+    d1, d2 = len(f1), len(f2)
+    for c1 in list(f1):
+        for c2 in list(f2):
+            if c1 == c2:
+                if d1 == d2: return True
+            else:
+                nd1 = d1 - (1 if f1[c1]==1 else 0) + (1 if c2 not in f1 else 0)
+                nd2 = d2 - (1 if f2[c2]==1 else 0) + (1 if c1 not in f2 else 0)
+                if nd1 == nd2: return True
+    return False`,
   },
   visibleTests: [
     { args: ['ab', 'a'], expected: true },

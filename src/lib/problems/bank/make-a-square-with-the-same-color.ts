@@ -48,11 +48,32 @@ function canMakeSquare(grid) {
   params: ['grid'],
   starterCode: {
     javascript: `function canMakeSquare(grid) {
-
+  for (let r = 0; r < 2; r++) {
+    for (let c = 0; c < 2; c++) {
+      const cells = [grid[r][c], grid[r][c+1], grid[r+1][c], grid[r+1][c+1]];
+      const w = cells.filter(x => x === 'W').length;
+      if (w >= 3 || w <= 1) return true;
+    }
+  }
+  return false;
 }`,
-    typescript: 'function canMakeSquare(grid: string[][]): boolean {\n\n}',
+    typescript: `function canMakeSquare(grid: string[][]): boolean {
+  for (let r = 0; r < 2; r++) {
+    for (let c = 0; c < 2; c++) {
+      const cells = [grid[r][c], grid[r][c+1], grid[r+1][c], grid[r+1][c+1]];
+      const w = cells.filter(x => x === 'W').length;
+      if (w >= 3 || w <= 1) return true;
+    }
+  }
+  return false;
+}`,
     python: `def canMakeSquare(grid):
-    pass`,
+    for r in range(2):
+        for c in range(2):
+            cells = [grid[r][c], grid[r][c+1], grid[r+1][c], grid[r+1][c+1]]
+            w = cells.count('W')
+            if w >= 3 or w <= 1: return True
+    return False`,
   },
   visibleTests: [
     { args: [[['B', 'W', 'B'], ['B', 'W', 'B'], ['B', 'W', 'B']]], expected: false },

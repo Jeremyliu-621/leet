@@ -39,11 +39,33 @@ Simulate the class with an array of operations and arguments. The first operatio
   params: ['ops', 'args'],
   starterCode: {
     javascript: `function mapSumPairs(ops, args) {
-
+  const map = new Map();
+  return ops.map((op, i) => {
+    if (op === 'MapSum') return null;
+    if (op === 'insert') { map.set(args[i][0], args[i][1]); return null; }
+    let total = 0;
+    for (const [k, v] of map) if (k.startsWith(args[i][0])) total += v;
+    return total;
+  });
 }`,
-    typescript: 'function mapSumPairs(ops: string[], args: (string | number)[][]): (number | null)[] {\n\n}',
+    typescript: `function mapSumPairs(ops: string[], args: (string | number)[][]): (number | null)[] {
+  const map = new Map<string, number>();
+  return ops.map((op, i) => {
+    if (op === 'MapSum') return null;
+    if (op === 'insert') { map.set(args[i][0] as string, args[i][1] as number); return null; }
+    let total = 0;
+    for (const [k, v] of map) if (k.startsWith(args[i][0] as string)) total += v;
+    return total;
+  });
+}`,
     python: `def mapSumPairs(ops, args):
-    pass`,
+    m = {}
+    res = []
+    for op, a in zip(ops, args):
+        if op == 'MapSum': res.append(None)
+        elif op == 'insert': m[a[0]] = a[1]; res.append(None)
+        else: res.append(sum(v for k, v in m.items() if k.startswith(a[0])))
+    return res`,
   },
   visibleTests: [
     {

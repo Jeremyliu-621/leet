@@ -36,13 +36,48 @@ Return the **lexicographically smallest array** that can be obtained by performi
   params: ['nums', 'limit'],
   starterCode: {
     javascript: `function lexicographicallySmallestArray(nums, limit) {
-
+  const n = nums.length;
+  const sorted = nums.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0]);
+  const result = new Array(n);
+  let i = 0;
+  while (i < n) {
+    let j = i;
+    while (j + 1 < n && sorted[j+1][0] - sorted[j][0] <= limit) j++;
+    const values = sorted.slice(i, j+1).map(x => x[0]);
+    const indices = sorted.slice(i, j+1).map(x => x[1]).sort((a, b) => a - b);
+    for (let k = 0; k < values.length; k++) result[indices[k]] = values[k];
+    i = j + 1;
+  }
+  return result;
 }`,
     typescript: `function lexicographicallySmallestArray(nums: number[], limit: number): number[] {
-
+  const n = nums.length;
+  const sorted = nums.map((v, i) => [v, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+  const result = new Array<number>(n);
+  let i = 0;
+  while (i < n) {
+    let j = i;
+    while (j + 1 < n && sorted[j+1][0] - sorted[j][0] <= limit) j++;
+    const values = sorted.slice(i, j+1).map(x => x[0]);
+    const indices = sorted.slice(i, j+1).map(x => x[1]).sort((a, b) => a - b);
+    for (let k = 0; k < values.length; k++) result[indices[k]] = values[k];
+    i = j + 1;
+  }
+  return result;
 }`,
     python: `def lexicographicallySmallestArray(nums: list[int], limit: int) -> list[int]:
-    pass`,
+    n = len(nums)
+    sorted_pairs = sorted(enumerate(nums), key=lambda x: x[1])
+    result = [0] * n
+    i = 0
+    while i < n:
+        j = i
+        while j + 1 < n and sorted_pairs[j+1][1] - sorted_pairs[j][1] <= limit: j += 1
+        values = [sorted_pairs[k][1] for k in range(i, j+1)]
+        indices = sorted([sorted_pairs[k][0] for k in range(i, j+1)])
+        for k, idx in enumerate(indices): result[idx] = values[k]
+        i = j + 1
+    return result`,
   },
   functionName: 'lexicographicallySmallestArray',
   visibleTests: [

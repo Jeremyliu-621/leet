@@ -41,13 +41,13 @@ Return the **minimum number of operations** to make every element in \`nums\` eq
   params: ['nums'],
   starterCode: {
     javascript: `function minimumOperations(nums) {
-
+  return new Set(nums.filter(x => x > 0)).size;
 }`,
     typescript: `function minimumOperations(nums: number[]): number {
-
+  return new Set(nums.filter(x => x > 0)).size;
 }`,
     python: `def minimumOperations(nums: list[int]) -> int:
-    pass`,
+    return len(set(x for x in nums if x > 0))`,
   },
   visibleTests: [
     { args: [[1, 5, 0, 3, 5]], expected: 3 },
