@@ -3097,6 +3097,10 @@ import { problem as doubleModularExponentiation } from './double-modular-exponen
 import { problem as maximumScoreNodeSequence } from './maximum-score-node-sequence';
 import { problem as minimumIncrementArrayUnique } from './minimum-increment-to-make-array-unique';
 import { problem as minimumOpsStringSort } from './minimum-number-of-operations-to-make-string-sorted';
+import { problem as minimumScoreAfterRemovalsOnTree } from './minimum-score-after-removals-on-a-tree';
+import { problem as verbalArithmeticPuzzle } from './verbal-arithmetic-puzzle';
+import { problem as palindromeRemoval } from './palindrome-removal';
+import { problem as numberOfValidWordsForEachPuzzle } from './number-of-valid-words-for-each-puzzle';
 // batch 282
 import { problem as maximumStrongPairsII } from './maximum-strong-pairs-in-an-array-ii';
 import { problem as minimumLinesToCoverPoints } from './minimum-number-of-lines-to-cover-points';
@@ -6540,6 +6544,10 @@ export const problems: readonly Problem[] = [
   maximumScoreNodeSequence,
   minimumIncrementArrayUnique,
   minimumOpsStringSort,
+  minimumScoreAfterRemovalsOnTree,
+  verbalArithmeticPuzzle,
+  palindromeRemoval,
+  numberOfValidWordsForEachPuzzle,
   // batch 282
   maximumStrongPairsII,
   minimumLinesToCoverPoints,

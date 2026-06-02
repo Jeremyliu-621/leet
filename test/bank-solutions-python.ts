@@ -46429,6 +46429,128 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 283
+  'minimum-score-after-removals-on-a-tree': `def minimumScore(nums, edges):
+    from collections import defaultdict
+    n = len(nums)
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b)
+        adj[b].append(a)
+    subtree_xor = nums[:]
+    in_time = [0] * n
+    out_time = [0] * n
+    timer = [0]
+    def dfs(u, parent):
+        in_time[u] = timer[0]; timer[0] += 1
+        for v in adj[u]:
+            if v != parent:
+                dfs(v, u)
+                subtree_xor[u] ^= subtree_xor[v]
+        out_time[u] = timer[0]; timer[0] += 1
+    dfs(0, -1)
+    xor_all = subtree_xor[0]
+    def is_anc(u, v):
+        return in_time[u] <= in_time[v] and out_time[v] <= out_time[u]
+    ans = float('inf')
+    for i in range(1, n):
+        for j in range(i+1, n):
+            if is_anc(i, j):
+                a, b, c = subtree_xor[j], subtree_xor[i] ^ subtree_xor[j], xor_all ^ subtree_xor[i]
+            elif is_anc(j, i):
+                a, b, c = subtree_xor[i], subtree_xor[j] ^ subtree_xor[i], xor_all ^ subtree_xor[j]
+            else:
+                a, b, c = subtree_xor[i], subtree_xor[j], xor_all ^ subtree_xor[i] ^ subtree_xor[j]
+            ans = min(ans, max(a,b,c) - min(a,b,c))
+    return ans
+`,
+
+  'verbal-arithmetic-puzzle': `def isSolvable(words, result):
+    rwords = [w[::-1] for w in words]
+    rresult = result[::-1]
+    max_col = max(max(len(w) for w in words), len(result))
+    leading = set()
+    for w in words:
+        if len(w) > 1: leading.add(w[0])
+    if len(result) > 1: leading.add(result[0])
+    assign = {}
+    used = [False] * 10
+    def get_ac(col): return [w[col] for w in rwords if col < len(w)]
+    def get_rc(col): return rresult[col] if col < len(rresult) else None
+    def bt(col, ua, idx, carry):
+        if idx < len(ua):
+            c = ua[idx]
+            for d in range(10):
+                if used[d]: continue
+                if d == 0 and c in leading: continue
+                assign[c] = d; used[d] = True
+                if bt(col, ua, idx + 1, carry): return True
+                del assign[c]; used[d] = False
+            return False
+        ac = get_ac(col); rc = get_rc(col)
+        s = carry + sum(assign[c] for c in ac)
+        digit = s % 10; nc2 = s // 10
+        def nxt():
+            if col + 1 == max_col: return nc2 == 0
+            nac = get_ac(col + 1); nrc = get_rc(col + 1)
+            seen = set(); nua = []
+            for c in nac:
+                if c not in assign and c not in seen: seen.add(c); nua.append(c)
+            return bt(col + 1, nua, 0, nc2)
+        if rc is None:
+            return False if digit != 0 else nxt()
+        if rc in assign:
+            return nxt() if assign[rc] == digit else False
+        if used[digit] or (digit == 0 and rc in leading): return False
+        assign[rc] = digit; used[digit] = True
+        res = nxt()
+        del assign[rc]; used[digit] = False
+        return res
+    ac0 = get_ac(0); seen0 = set(); ua0 = []
+    for c in ac0:
+        if c not in seen0: seen0.add(c); ua0.append(c)
+    return bt(0, ua0, 0, 0)
+`,
+
+  'palindrome-removal': `def minimumMoves(arr):
+    n = len(arr)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n): dp[i][i] = 1
+    for length in range(2, n+1):
+        for i in range(n-length+1):
+            j = i + length - 1
+            dp[i][j] = 1 + dp[i][j-1]
+            if arr[i] == arr[j]:
+                dp[i][j] = min(dp[i][j], 1 if i+1 > j-1 else dp[i+1][j-1])
+            for k in range(i, j-1):
+                if arr[k] == arr[j]:
+                    mid = 0 if k+1 > j-1 else dp[k+1][j-1]
+                    dp[i][j] = min(dp[i][j], dp[i][k] + mid)
+    return dp[0][n-1]
+`,
+
+  'number-of-valid-words-for-each-puzzle': `def findNumOfValidWords(words, puzzles):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    for w in words:
+        mask = 0
+        for c in w: mask |= 1 << (ord(c) - ord('a'))
+        freq[mask] += 1
+    result = []
+    for p in puzzles:
+        puzzle_mask = 0
+        for c in p: puzzle_mask |= 1 << (ord(c) - ord('a'))
+        first_bit = 1 << (ord(p[0]) - ord('a'))
+        ans = 0
+        sub = puzzle_mask
+        while sub > 0:
+            if sub & first_bit:
+                ans += freq[sub]
+            sub = (sub - 1) & puzzle_mask
+        result.append(ans)
+    return result
+`,
+
   // batch 282
   'best-hand-of-cards': `def bestHand(ranks, suits):
     if len(set(suits)) == 1:

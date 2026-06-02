@@ -47404,6 +47404,121 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 283
+  'minimum-score-after-removals-on-a-tree': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const edges = args[1] as number[][];
+    const n = nums.length;
+    const adj: number[][] = Array.from({ length: n }, () => []);
+    for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+    const subtreeXor = new Array<number>(n).fill(0);
+    const inTime = new Array<number>(n).fill(0);
+    const outTime = new Array<number>(n).fill(0);
+    let timer = 0;
+    function dfs(u: number, parent: number): void {
+      inTime[u] = timer++;
+      subtreeXor[u] = nums[u]!;
+      for (const v of adj[u]!) {
+        if (v !== parent) { dfs(v, u); subtreeXor[u] ^= subtreeXor[v]!; }
+      }
+      outTime[u] = timer++;
+    }
+    dfs(0, -1);
+    const xorAll = subtreeXor[0]!;
+    function isAnc(u: number, v: number): boolean {
+      return inTime[u]! <= inTime[v]! && outTime[v]! <= outTime[u]!;
+    }
+    let ans = Infinity;
+    for (let i = 1; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        let a: number, b: number, c: number;
+        if (isAnc(i, j)) { a = subtreeXor[j]!; b = subtreeXor[i]! ^ a; c = xorAll ^ subtreeXor[i]!; }
+        else if (isAnc(j, i)) { a = subtreeXor[i]!; b = subtreeXor[j]! ^ a; c = xorAll ^ subtreeXor[j]!; }
+        else { a = subtreeXor[i]!; b = subtreeXor[j]!; c = xorAll ^ a ^ b; }
+        ans = Math.min(ans, Math.max(a, b, c) - Math.min(a, b, c));
+      }
+    }
+    return ans;
+  },
+  'verbal-arithmetic-puzzle': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const result = args[1] as string;
+    const chars = new Set<string>();
+    const leading = new Set<string>();
+    for (const w of words) { for (const c of w) chars.add(c); if (w.length > 1) leading.add(w[0]!); }
+    for (const c of result) chars.add(c);
+    if (result.length > 1) leading.add(result[0]!);
+    const charArr = Array.from(chars);
+    const used = new Array<boolean>(10).fill(false);
+    const assign = new Map<string, number>();
+    function check(): boolean {
+      let sum = 0;
+      for (const w of words) {
+        let val = 0;
+        for (const c of w) val = val * 10 + assign.get(c)!;
+        sum += val;
+      }
+      let res = 0;
+      for (const c of result) res = res * 10 + assign.get(c)!;
+      return sum === res;
+    }
+    function bt(idx: number): boolean {
+      if (idx === charArr.length) return check();
+      const c = charArr[idx]!;
+      for (let d = 0; d <= 9; d++) {
+        if (used[d]) continue;
+        if (d === 0 && leading.has(c)) continue;
+        used[d] = true; assign.set(c, d);
+        if (bt(idx + 1)) return true;
+        used[d] = false; assign.delete(c);
+      }
+      return false;
+    }
+    return bt(0);
+  },
+  'palindrome-removal': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    const dp: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+    for (let i = 0; i < n; i++) dp[i]![i] = 1;
+    for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+        const j = i + len - 1;
+        dp[i]![j] = 1 + dp[i]![j - 1]!;
+        if (arr[i] === arr[j]) {
+          dp[i]![j] = Math.min(dp[i]![j]!, i + 1 > j - 1 ? 1 : dp[i + 1]![j - 1]!);
+        }
+        for (let k = i; k < j - 1; k++) {
+          if (arr[k] === arr[j]) {
+            const mid = k + 1 > j - 1 ? 0 : dp[k + 1]![j - 1]!;
+            dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + mid);
+          }
+        }
+      }
+    }
+    return dp[0]![n - 1]!;
+  },
+  'number-of-valid-words-for-each-puzzle': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const puzzles = args[1] as string[];
+    const freq = new Map<number, number>();
+    for (const w of words) {
+      let mask = 0;
+      for (const c of w) mask |= 1 << (c.charCodeAt(0) - 97);
+      freq.set(mask, (freq.get(mask) ?? 0) + 1);
+    }
+    return puzzles.map(p => {
+      let puzzleMask = 0;
+      for (const c of p) puzzleMask |= 1 << (c.charCodeAt(0) - 97);
+      const firstBit = 1 << (p.charCodeAt(0) - 97);
+      let ans = 0;
+      for (let sub = puzzleMask; sub > 0; sub = (sub - 1) & puzzleMask) {
+        if (sub & firstBit) ans += freq.get(sub) ?? 0;
+      }
+      return ans;
+    });
+  },
+
   // batch 282
   'best-hand-of-cards': (...args: unknown[]) => {
     const ranks = args[0] as number[];
