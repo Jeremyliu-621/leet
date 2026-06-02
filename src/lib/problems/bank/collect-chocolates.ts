@@ -73,7 +73,7 @@ Return the **minimum cost** to collect chocolates of all types, given that you c
         # After j rotations, type i can also be collected from position (i-j)%n
         for i in range(n):
             min_col[i] = min(min_col[i], nums[(i - j) % n])
-        # TODO: update ans = min(ans, j*x + sum(min_col))
+        ans = min(ans, j * x + sum(min_col))
     return ans`,
   },
   visibleTests: [

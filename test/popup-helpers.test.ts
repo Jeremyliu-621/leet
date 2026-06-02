@@ -25,8 +25,8 @@ describe('computeSolvedStats', () => {
 
   it('counts a single known problem correctly', () => {
     const all = getAllProblems();
-    const first = all[0];
-    if (!first) return;
+    expect(all.length).toBeGreaterThan(0);
+    const first = all[0]!;
     const stats = computeSolvedStats([makeRecord(first.id)]);
     expect(stats.total).toBe(1);
     expect(stats.byDifficulty[first.difficulty]).toBe(1);
@@ -37,8 +37,8 @@ describe('computeSolvedStats', () => {
 
   it('deduplicates repeated solves of the same problem', () => {
     const all = getAllProblems();
-    const first = all[0];
-    if (!first) return;
+    expect(all.length).toBeGreaterThan(0);
+    const first = all[0]!;
     const stats = computeSolvedStats([
       makeRecord(first.id),
       makeRecord(first.id),
@@ -56,22 +56,21 @@ describe('computeSolvedStats', () => {
 
   it('counts multiple distinct problems correctly', () => {
     const problems = getAllProblems();
-    // Pick two problems with known difficulties.
     const easy = problems.find((p) => p.difficulty === 'easy');
     const medium = problems.find((p) => p.difficulty === 'medium');
-    if (!easy || !medium) return; // bank may not have both difficulties
+    expect(easy).toBeDefined();
+    expect(medium).toBeDefined();
 
-    const stats = computeSolvedStats([makeRecord(easy.id), makeRecord(medium.id)]);
+    const stats = computeSolvedStats([makeRecord(easy!.id), makeRecord(medium!.id)]);
     expect(stats.total).toBe(2);
     expect(stats.byDifficulty.easy).toBeGreaterThanOrEqual(1);
     expect(stats.byDifficulty.medium).toBeGreaterThanOrEqual(1);
   });
 
   it('accumulates tag counts across multiple problems', () => {
-    // Find two problems that share a common tag.
     const problems = getAllProblems();
     const arraysProblems = problems.filter((p) => p.tags.includes('arrays')).slice(0, 2);
-    if (arraysProblems.length < 2) return;
+    expect(arraysProblems.length).toBeGreaterThanOrEqual(2);
 
     const stats = computeSolvedStats(arraysProblems.map((p) => makeRecord(p.id)));
     expect(stats.byTag['arrays']).toBe(2);
@@ -81,7 +80,6 @@ describe('computeSolvedStats', () => {
     const records = getAllProblems().map((p) => makeRecord(p.id));
     const stats = computeSolvedStats(records);
     expect(stats.total).toBe(getAllProblems().length);
-    // Every problem is counted in at least one difficulty bucket.
     const diffTotal = stats.byDifficulty.easy + stats.byDifficulty.medium + stats.byDifficulty.hard;
     expect(diffTotal).toBe(stats.total);
   });
