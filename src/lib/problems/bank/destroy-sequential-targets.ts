@@ -39,12 +39,44 @@ Note: you can only choose **one** seed.`,
   params: ['nums', 'space'],
   starterCode: {
     javascript: `function destroyTargets(nums, space) {
-
+  const groups = new Map();
+  for (const n of nums) {
+    const key = n % space;
+    groups.set(key, (groups.get(key) ?? 0) + 1);
+  }
+  let best = 0, bestCount = 0;
+  for (const n of nums) {
+    const cnt = groups.get(n % space);
+    if (cnt > bestCount || (cnt === bestCount && n < best)) {
+      bestCount = cnt; best = n;
+    }
+  }
+  return best;
 }`,
-    typescript: "function destroyTargets(nums: number[], space: number): number {\n\n}",
-
+    typescript: `function destroyTargets(nums: number[], space: number): number {
+  const groups = new Map<number, number>();
+  for (const n of nums) {
+    const key = n % space;
+    groups.set(key, (groups.get(key) ?? 0) + 1);
+  }
+  let best = 0, bestCount = 0;
+  for (const n of nums) {
+    const cnt = groups.get(n % space)!;
+    if (cnt > bestCount || (cnt === bestCount && n < best)) {
+      bestCount = cnt; best = n;
+    }
+  }
+  return best;
+}`,
     python: `def destroyTargets(nums, space):
-    pass`,
+    from collections import Counter
+    groups = Counter(n % space for n in nums)
+    best, best_count = 0, 0
+    for n in nums:
+        cnt = groups[n % space]
+        if cnt > best_count or (cnt == best_count and n < best):
+            best_count, best = cnt, n
+    return best`,
   },
   visibleTests: [
     { args: [[3, 7, 8, 1, 1, 5], 2], expected: 1 },

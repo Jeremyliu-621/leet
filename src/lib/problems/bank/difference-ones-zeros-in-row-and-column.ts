@@ -46,13 +46,23 @@ diff[0][0] = 2+1−1−2 = 0, diff[0][2] = 2+3−1−0 = 4, diff[2][2] = 1+3−2
   params: ['grid'],
   starterCode: {
     javascript: `function onesMinusZeros(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  const rowOnes = grid.map(r => r.reduce((s, v) => s + v, 0));
+  const colOnes = Array.from({ length: n }, (_, j) => grid.reduce((s, r) => s + r[j], 0));
+  return grid.map((r, i) => r.map((_, j) => rowOnes[i] - (n - rowOnes[i]) + colOnes[j] - (m - colOnes[j])));
 }`,
     typescript: `function onesMinusZeros(grid: number[][]): number[][] {
-
+  const m = grid.length, n = grid[0]!.length;
+  const rowOnes = grid.map(r => r.reduce((s, v) => s + v, 0));
+  const colOnes = Array.from({ length: n }, (_, j) => grid.reduce((s, r) => s + r[j]!, 0));
+  return grid.map((r, i) => r.map((_, j) => rowOnes[i]! - (n - rowOnes[i]!) + colOnes[j]! - (m - colOnes[j]!)));
 }`,
     python: `def onesMinusZeros(grid):
-    pass`,
+    m, n = len(grid), len(grid[0])
+    row_ones = [sum(r) for r in grid]
+    col_ones = [sum(grid[i][j] for i in range(m)) for j in range(n)]
+    return [[row_ones[i] - (n - row_ones[i]) + col_ones[j] - (m - col_ones[j])
+             for j in range(n)] for i in range(m)]`,
   },
   visibleTests: [
     { args: [[[0, 1, 1], [1, 0, 1], [0, 0, 1]]], expected: [[0, 0, 4], [0, 0, 4], [-2, -2, 2]] },

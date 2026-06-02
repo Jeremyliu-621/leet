@@ -41,12 +41,47 @@ Return the **earliest** time at which all \`n\` people become friends with each 
   params: ['logs', 'n'],
   starterCode: {
     javascript: `function earliestAcq(logs, n) {
-
+  const parent = Array.from({ length: n }, (_, i) => i);
+  function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
+  logs.sort((a, b) => a[0] - b[0]);
+  let components = n;
+  for (const [t, x, y] of logs) {
+    const rx = find(x), ry = find(y);
+    if (rx !== ry) { parent[rx] = ry; components--; }
+    if (components === 1) return t;
+  }
+  return -1;
 }`,
-    typescript: "function earliestAcq(logs: number[][], n: number): number {\n\n}",
-
+    typescript: `function earliestAcq(logs: number[][], n: number): number {
+  const parent = Array.from({ length: n }, (_, i) => i);
+  function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+  logs.sort((a, b) => a[0]! - b[0]!);
+  let components = n;
+  for (const log of logs) {
+    const [t, x, y] = [log[0]!, log[1]!, log[2]!];
+    const rx = find(x), ry = find(y);
+    if (rx !== ry) { parent[rx] = ry; components--; }
+    if (components === 1) return t;
+  }
+  return -1;
+}`,
     python: `def earliestAcq(logs, n):
-    pass`,
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    logs.sort()
+    components = n
+    for t, x, y in logs:
+        rx, ry = find(x), find(y)
+        if rx != ry:
+            parent[rx] = ry
+            components -= 1
+        if components == 1:
+            return t
+    return -1`,
   },
   visibleTests: [
     { args: [[[20190101, 0, 1], [20190104, 3, 4], [20190107, 2, 3], [20190211, 1, 5], [20190224, 2, 4], [20190301, 0, 3], [20190312, 1, 2], [20190322, 4, 5]], 6], expected: 20190301 },
