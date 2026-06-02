@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2890** problems; 8996 tests green. Starter backfill ongoing (~167 stubs remaining of ~370 filled this session).
+**Current focus:** Bank at **2890** problems; 8996 tests green. Starter backfill ongoing (~1000 stubs remaining).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued starter backfill (batches 27–33+); UX polish.
+**Next up:** Continued starter backfill (check-*, circular-*, climbing-*, c-range); UX polish.
 
 ### feat(bank): batches 26–33 — starter backfill (2026-06-02)
 Filled starters (JS/TS/Python) for 40 stub problems across 8 batches:
