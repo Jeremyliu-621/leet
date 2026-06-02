@@ -255,7 +255,7 @@ export function Popup() {
     setData({
       ...data,
       blockedDomains: nextDomains,
-      alreadyBlocked: data.currentDomain === lower ? true : data.alreadyBlocked,
+      alreadyBlocked: data.currentDomain === lower || data.alreadyBlocked,
     });
   }
 
