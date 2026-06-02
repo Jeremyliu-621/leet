@@ -41,13 +41,32 @@ Return the **maximum** number of **distinct** values in \`nums\` after performin
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maxDistinctElements(nums, k) {
-
+  nums.sort((a, b) => a - b);
+  let count = 0, prev = -Infinity;
+  for (const x of nums) {
+    const assigned = Math.max(prev + 1, x - k);
+    if (assigned <= x + k) { count++; prev = assigned; }
+  }
+  return count;
 }`,
     typescript: `function maxDistinctElements(nums: number[], k: number): number {
-
+  nums.sort((a, b) => a - b);
+  let count = 0, prev = -Infinity;
+  for (const x of nums) {
+    const assigned = Math.max(prev + 1, x - k);
+    if (assigned <= x + k) { count++; prev = assigned; }
+  }
+  return count;
 }`,
     python: `def maxDistinctElements(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(int(x) for x in nums)
+    count, prev = 0, float('-inf')
+    for x in nums:
+        assigned = max(prev + 1, x - k)
+        if assigned <= x + k:
+            count += 1; prev = assigned
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 3, 4], 2], expected: 6 },

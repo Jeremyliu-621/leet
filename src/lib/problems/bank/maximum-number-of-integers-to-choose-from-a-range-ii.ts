@@ -63,11 +63,71 @@ function maxCount(banned, n, maxSum) {
   params: ['banned', 'n', 'maxSum'],
   starterCode: {
     javascript: `function maxCount(banned, n, maxSum) {
-
+  const bannedSet = new Set(banned);
+  const sorted = [...bannedSet].filter(x => x <= n).sort((a, b) => a - b);
+  let count = 0, sum = 0n;
+  const ms = BigInt(maxSum);
+  let prev = 0;
+  const takeFrom = (lo, hi) => {
+    if (lo > hi) return;
+    const loB = BigInt(lo);
+    let lo2 = 0, hi2 = hi - lo + 1;
+    while (lo2 < hi2) {
+      const mid = (lo2 + hi2 + 1) >> 1;
+      const m = BigInt(mid);
+      if (sum + m*loB + m*(m-1n)/2n <= ms) lo2 = mid; else hi2 = mid - 1;
+    }
+    const k = BigInt(lo2);
+    sum += k*loB + k*(k-1n)/2n;
+    count += lo2;
+  };
+  for (const b of sorted) { if (b > prev + 1) takeFrom(prev + 1, b - 1); prev = b; }
+  if (prev < n) takeFrom(prev + 1, n);
+  return count;
 }`,
-    typescript: 'function maxCount(banned: number[], n: number, maxSum: number): number {\n\n}',
+    typescript: `function maxCount(banned: number[], n: number, maxSum: number): number {
+  const bannedSet = new Set(banned);
+  const sorted = [...bannedSet].filter(x => x <= n).sort((a, b) => a - b);
+  let count = 0, sum = 0n;
+  const ms = BigInt(maxSum);
+  let prev = 0;
+  const takeFrom = (lo: number, hi: number) => {
+    if (lo > hi) return;
+    const loB = BigInt(lo);
+    let lo2 = 0, hi2 = hi - lo + 1;
+    while (lo2 < hi2) {
+      const mid = (lo2 + hi2 + 1) >> 1;
+      const m = BigInt(mid);
+      if (sum + m*loB + m*(m-1n)/2n <= ms) lo2 = mid; else hi2 = mid - 1;
+    }
+    const k = BigInt(lo2);
+    sum += k*loB + k*(k-1n)/2n;
+    count += lo2;
+  };
+  for (const b of sorted) { if (b > prev + 1) takeFrom(prev + 1, b - 1); prev = b; }
+  if (prev < n) takeFrom(prev + 1, n);
+  return count;
+}`,
     python: `def maxCount(banned, n, maxSum):
-    pass`,
+    if hasattr(banned, 'to_py'): banned = list(banned.to_py())
+    banned_set = set(int(x) for x in banned)
+    sorted_banned = sorted(x for x in banned_set if x <= n)
+    count, total, prev = 0, 0, 0
+    def take_from(lo, hi):
+        nonlocal count, total
+        if lo > hi or total >= maxSum: return
+        lo2, hi2 = 0, hi - lo + 1
+        while lo2 < hi2:
+            mid = (lo2 + hi2 + 1) // 2
+            if total + mid*lo + mid*(mid-1)//2 <= maxSum: lo2 = mid
+            else: hi2 = mid - 1
+        total += lo2*lo + lo2*(lo2-1)//2
+        count += lo2
+    for b in sorted_banned:
+        if b > prev + 1: take_from(prev + 1, b - 1)
+        prev = b
+    if prev < n: take_from(prev + 1, n)
+    return count`,
   },
   visibleTests: [
     { args: [[1, 4, 6], 6, 5], expected: 2 },

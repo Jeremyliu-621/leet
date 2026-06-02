@@ -41,12 +41,52 @@ Return the **maximum** number of moves that you can perform.`,
   params: ['grid'],
   starterCode: {
     javascript: `function maxMoves(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  let reachable = new Set(Array.from({length: m}, (_, i) => i));
+  for (let c = 0; c < n - 1; c++) {
+    const next = new Set();
+    for (const r of reachable) {
+      for (const dr of [-1, 0, 1]) {
+        const nr = r + dr;
+        if (nr >= 0 && nr < m && grid[nr][c+1] > grid[r][c]) next.add(nr);
+      }
+    }
+    if (!next.size) return c;
+    reachable = next;
+  }
+  return n - 1;
 }`,
-    typescript: "function maxMoves(grid: number[][]): number {\n\n}",
-
+    typescript: `function maxMoves(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  let reachable = new Set<number>(Array.from({length: m}, (_, i) => i));
+  for (let c = 0; c < n - 1; c++) {
+    const next = new Set<number>();
+    for (const r of reachable) {
+      for (const dr of [-1, 0, 1]) {
+        const nr = r + dr;
+        if (nr >= 0 && nr < m && grid[nr]![c+1]! > grid[r]![c]!) next.add(nr);
+      }
+    }
+    if (!next.size) return c;
+    reachable = next;
+  }
+  return n - 1;
+}`,
     python: `def maxMoves(grid):
-    pass`,
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in grid]
+    m, n = len(grid), len(grid[0])
+    reachable = set(range(m))
+    for c in range(n - 1):
+        nxt = set()
+        for r in reachable:
+            for dr in (-1, 0, 1):
+                nr = r + dr
+                if 0 <= nr < m and grid[nr][c+1] > grid[r][c]:
+                    nxt.add(nr)
+        if not nxt: return c
+        reachable = nxt
+    return n - 1`,
   },
   visibleTests: [
     { args: [[[2, 4, 3, 5], [5, 4, 9, 3], [3, 4, 2, 11], [10, 9, 13, 15]]], expected: 3 },

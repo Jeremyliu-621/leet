@@ -44,13 +44,51 @@ Return the **maximum sum** of values you can receive by attending events.`,
   params: ['events', 'k'],
   starterCode: {
     javascript: `function maxValue(events, k) {
-
+  events.sort((a, b) => a[1] - b[1]);
+  const n = events.length;
+  const dp = Array.from({length: n+1}, () => new Array(k+1).fill(0));
+  for (let i = 1; i <= n; i++) {
+    const [start, , val] = events[i-1];
+    let lo = 0, hi = i - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (events[mid-1][1] < start) lo = mid; else hi = mid - 1;
+    }
+    for (let j = 1; j <= k; j++)
+      dp[i][j] = Math.max(dp[i-1][j], dp[lo][j-1] + val);
+  }
+  return dp[n][k];
 }`,
     typescript: `function maxValue(events: number[][], k: number): number {
-
+  events.sort((a, b) => a[1]! - b[1]!);
+  const n = events.length;
+  const dp: number[][] = Array.from({length: n+1}, () => new Array(k+1).fill(0));
+  for (let i = 1; i <= n; i++) {
+    const [start, , val] = events[i-1]!;
+    let lo = 0, hi = i - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (events[mid-1]![1]! < start!) lo = mid; else hi = mid - 1;
+    }
+    for (let j = 1; j <= k; j++)
+      dp[i]![j] = Math.max(dp[i-1]![j]!, dp[lo]![j-1]! + val!);
+  }
+  return dp[n]![k]!;
 }`,
     python: `def maxValue(events, k):
-    pass`,
+    if hasattr(events, 'to_py'): events = events.to_py()
+    events = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in events]
+    import bisect
+    events.sort(key=lambda e: e[1])
+    n = len(events)
+    ends = [e[1] for e in events]
+    dp = [[0]*(k+1) for _ in range(n+1)]
+    for i in range(1, n+1):
+        start, _, val = events[i-1]
+        lo = bisect.bisect_left(ends, start, 0, i-1)
+        for j in range(1, k+1):
+            dp[i][j] = max(dp[i-1][j], dp[lo][j-1] + val)
+    return dp[n][k]`,
   },
   visibleTests: [
     { args: [[[1, 2, 4], [3, 4, 3], [2, 3, 1]], 2], expected: 7 },

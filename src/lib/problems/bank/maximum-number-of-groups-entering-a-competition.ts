@@ -36,13 +36,17 @@ Return the **maximum** number of groups you can create.`,
   params: ['grades'],
   starterCode: {
     javascript: `function maximumGroups(grades) {
-
+  const n = grades.length;
+  return Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
 }`,
     typescript: `function maximumGroups(grades: number[]): number {
-
+  const n = grades.length;
+  return Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
 }`,
     python: `def maximumGroups(grades):
-    pass`,
+    import math
+    n = len(grades)
+    return int((-1 + math.sqrt(1 + 8 * n)) / 2)`,
   },
   visibleTests: [
     { args: [[10, 6, 12, 7, 3, 5]], expected: 3 },

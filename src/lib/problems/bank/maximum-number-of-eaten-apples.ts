@@ -39,13 +39,50 @@ Given two integer arrays \`days\` and \`apples\` of length \`n\`, return the **m
   params: ['apples', 'days'],
   starterCode: {
     javascript: `function eatenApples(apples, days) {
-
+  const n = apples.length;
+  const heap = []; // min-heap [expirationDay, count]
+  const siftUp = i => { while (i > 0) { const p = (i-1)>>1; if (heap[p][0] <= heap[i][0]) break; [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } };
+  const siftDown = i => { while (true) { const l=2*i+1, r=2*i+2; let m=i; if (l<heap.length && heap[l][0]<heap[m][0]) m=l; if (r<heap.length && heap[r][0]<heap[m][0]) m=r; if (m===i) break; [heap[i], heap[m]] = [heap[m], heap[i]]; i=m; } };
+  let ans = 0;
+  for (let day = 0; day < n || heap.length > 0; day++) {
+    if (day < n && apples[day] > 0) { heap.push([day + days[day], apples[day]]); siftUp(heap.length - 1); }
+    while (heap.length > 0 && heap[0][0] <= day) { heap[0] = heap.pop(); if (heap.length > 0) siftDown(0); }
+    if (heap.length > 0) { ans++; heap[0][1]--; if (heap[0][1] === 0) { heap[0] = heap.pop(); if (heap.length > 0) siftDown(0); } }
+  }
+  return ans;
 }`,
     typescript: `function eatenApples(apples: number[], days: number[]): number {
-
+  const n = apples.length;
+  const heap: [number, number][] = [];
+  const siftUp = (i: number) => { while (i > 0) { const p = (i-1)>>1; if (heap[p]![0] <= heap[i]![0]) break; [heap[p], heap[i]] = [heap[i]!, heap[p]!]; i = p; } };
+  const siftDown = (i: number) => { while (true) { const l=2*i+1, r=2*i+2; let m=i; if (l<heap.length && heap[l]![0]<heap[m]![0]) m=l; if (r<heap.length && heap[r]![0]<heap[m]![0]) m=r; if (m===i) break; [heap[i], heap[m]] = [heap[m]!, heap[i]!]; i=m; } };
+  let ans = 0;
+  for (let day = 0; day < n || heap.length > 0; day++) {
+    if (day < n && apples[day]! > 0) { heap.push([day + days[day]!, apples[day]!]); siftUp(heap.length - 1); }
+    while (heap.length > 0 && heap[0]![0] <= day) { heap[0] = heap.pop()!; if (heap.length > 0) siftDown(0); }
+    if (heap.length > 0) { ans++; heap[0]![1]--; if (heap[0]![1] === 0) { heap[0] = heap.pop()!; if (heap.length > 0) siftDown(0); } }
+  }
+  return ans;
 }`,
     python: `def eatenApples(apples, days):
-    pass`,
+    if hasattr(apples, 'to_py'): apples = list(apples.to_py())
+    if hasattr(days, 'to_py'): days = list(days.to_py())
+    import heapq
+    n = len(apples)
+    heap = []  # (expiration_day, count)
+    ans = 0
+    day = 0
+    while day < n or heap:
+        if day < n and apples[day] > 0:
+            heapq.heappush(heap, (day + days[day], apples[day]))
+        while heap and heap[0][0] <= day:
+            heapq.heappop(heap)
+        if heap:
+            ans += 1
+            exp, cnt = heapq.heappop(heap)
+            if cnt > 1: heapq.heappush(heap, (exp, cnt - 1))
+        day += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 5, 2], [3, 2, 1, 4, 2]], expected: 7 },

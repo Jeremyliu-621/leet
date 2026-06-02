@@ -40,12 +40,45 @@ export const problem: Problem = {
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function maxNonOverlapping(nums, target) {
-
+  let count = 0, prefix = 0;
+  let seen = new Set([0]);
+  for (const n of nums) {
+    prefix += n;
+    if (seen.has(prefix - target)) {
+      count++;
+      seen = new Set([prefix]);
+    } else {
+      seen.add(prefix);
+    }
+  }
+  return count;
 }`,
-    typescript: "function maxNonOverlapping(nums: number[], target: number): number {\n\n}",
-
+    typescript: `function maxNonOverlapping(nums: number[], target: number): number {
+  let count = 0, prefix = 0;
+  let seen = new Set<number>([0]);
+  for (const n of nums) {
+    prefix += n;
+    if (seen.has(prefix - target)) {
+      count++;
+      seen = new Set<number>([prefix]);
+    } else {
+      seen.add(prefix);
+    }
+  }
+  return count;
+}`,
     python: `def maxNonOverlapping(nums, target):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    count, prefix = 0, 0
+    seen = {0}
+    for n in nums:
+        prefix += n
+        if prefix - target in seen:
+            count += 1
+            seen = {prefix}
+        else:
+            seen.add(prefix)
+    return count`,
   },
   visibleTests: [
     { args: [[1, 1, 1, 1, 1], 2], expected: 2 },
