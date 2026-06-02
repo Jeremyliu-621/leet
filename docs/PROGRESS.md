@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2918** problems; 9074 tests green. Starter backfill batches 6b–9 complete (~60 stubs filled). ~2040+ stubs remaining.
+**Current focus:** Bank at **2922** problems; 9097 tests green. Batch 281 (3 new problems) pushed. ~2040+ stubs remaining.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued starter backfill (batch 40+); bank growth (batch 281+); UX polish.
+**Next up:** Continued bank growth (batch 282+); starter backfill (batch 40+); UX polish.
+
+### feat(bank): batch 281 — count-interesting-subarrays, minimize-deviations, longest-word-dict-deleting (2026-06-02)
+Three new problems: `count-the-number-of-interesting-subarrays` (medium/arrays+hash-map — prefix-count hash map; cnt=(qualifying elements in [l,r])%modulo==k; O(n)), `minimize-deviations-in-array` (hard/arrays+heap — multiply all odds by 2, greedily halve max in max-heap tracking global min; O(n log n log max_val)), `longest-word-in-dictionary-through-deleting` (medium/strings+two-pointers — subsequence check per word via two-pointer; track longest then lex-smallest; O(n*|s|)). Bank at **2922**; 9097 tests.
 
 ### feat(bank): starter-fill batches 6b–9 — 60 stubs (2026-06-02)
 Filled JS/TS/Python starters for 60 problems across batches 6b–9:
