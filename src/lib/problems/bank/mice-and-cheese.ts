@@ -47,13 +47,25 @@ Return the **maximum** total reward after assigning the cheeses optimally.
   params: ['reward1', 'reward2', 'k'],
   starterCode: {
     javascript: `function miceAndCheese(reward1, reward2, k) {
-  // Return maximum total reward: mouse 1 eats exactly k cheeses, mouse 2 eats the rest
+  let ans = 0;
+  for (let i = 0; i < reward2.length; i++) ans += reward2[i];
+  const diffs = reward1.map((r, i) => r - reward2[i]).sort((a, b) => b - a);
+  for (let i = 0; i < k; i++) ans += diffs[i];
+  return ans;
 }`,
-    typescript: "function miceAndCheese(reward1: number[], reward2: number[], k: number): number {\n  // Return maximum total reward: mouse 1 eats exactly k cheeses, mouse 2 eats the rest\n}",
-
+    typescript: `function miceAndCheese(reward1: number[], reward2: number[], k: number): number {
+  let ans = 0;
+  for (let i = 0; i < reward2.length; i++) ans += reward2[i]!;
+  const diffs = reward1.map((r, i) => r - reward2[i]!).sort((a, b) => b - a);
+  for (let i = 0; i < k; i++) ans += diffs[i]!;
+  return ans;
+}`,
     python: `def miceAndCheese(reward1: list[int], reward2: list[int], k: int) -> int:
-    # Return maximum total reward: mouse 1 eats exactly k cheeses, mouse 2 eats the rest
-    pass`,
+    if hasattr(reward1, 'to_py'): reward1 = list(reward1.to_py())
+    if hasattr(reward2, 'to_py'): reward2 = list(reward2.to_py())
+    ans = sum(reward2)
+    diffs = sorted([reward1[i] - reward2[i] for i in range(len(reward1))], reverse=True)
+    return ans + sum(diffs[:k])`,
   },
   visibleTests: [
     { args: [[1, 1, 3, 4], [4, 4, 1, 1], 2], expected: 15 },

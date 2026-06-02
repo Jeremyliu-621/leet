@@ -32,12 +32,24 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function minProductSum(nums1, nums2) {
-
+  nums1.sort((a, b) => a - b);
+  nums2.sort((a, b) => b - a);
+  let ans = 0;
+  for (let i = 0; i < nums1.length; i++) ans += nums1[i] * nums2[i];
+  return ans;
 }`,
-    typescript: "function minProductSum(nums1: number[], nums2: number[]): number {\n\n}",
-
+    typescript: `function minProductSum(nums1: number[], nums2: number[]): number {
+  nums1.sort((a, b) => a - b);
+  nums2.sort((a, b) => b - a);
+  let ans = 0;
+  for (let i = 0; i < nums1.length; i++) ans += nums1[i]! * nums2[i]!;
+  return ans;
+}`,
     python: `def minProductSum(nums1, nums2):
-    pass`,
+    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
+    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
+    nums1.sort(); nums2.sort(reverse=True)
+    return sum(nums1[i] * nums2[i] for i in range(len(nums1)))`,
   },
   visibleTests: [
     { args: [[5,3,4,2], [4,2,2,5]], expected: 40 },

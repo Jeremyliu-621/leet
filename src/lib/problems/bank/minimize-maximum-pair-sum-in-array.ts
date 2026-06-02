@@ -42,12 +42,24 @@ Return the minimized maximum pair sum after optimally pairing up the elements.`,
   params: ['nums'],
   starterCode: {
     javascript: `function minPairSum(nums) {
-
+  nums.sort((a, b) => a - b);
+  let ans = 0;
+  const n = nums.length;
+  for (let i = 0; i < n / 2; i++) ans = Math.max(ans, nums[i] + nums[n - 1 - i]);
+  return ans;
 }`,
-    typescript: "function minPairSum(nums: number[]): number {\n\n}",
-
+    typescript: `function minPairSum(nums: number[]): number {
+  nums.sort((a, b) => a - b);
+  let ans = 0;
+  const n = nums.length;
+  for (let i = 0; i < n / 2; i++) ans = Math.max(ans, nums[i]! + nums[n - 1 - i]!);
+  return ans;
+}`,
     python: `def minPairSum(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums.sort()
+    n = len(nums)
+    return max(nums[i] + nums[n - 1 - i] for i in range(n // 2))`,
   },
   visibleTests: [
     { args: [[3, 5, 2, 3]], expected: 7 },

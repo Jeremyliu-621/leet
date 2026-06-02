@@ -49,13 +49,47 @@ Return the **minimum deviation** the array can have after performing some number
   params: ['nums'],
   starterCode: {
     javascript: `function minimizeDeviation(nums) {
-
+  let arr = nums.map(x => x % 2 === 1 ? x * 2 : x).sort((a, b) => b - a);
+  let globalMin = arr[arr.length - 1], ans = arr[0] - globalMin;
+  while (arr[0] % 2 === 0) {
+    const top = arr.shift();
+    const half = top / 2;
+    if (half < globalMin) globalMin = half;
+    let lo = 0, hi = arr.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid] >= half) lo = mid + 1; else hi = mid; }
+    arr.splice(lo, 0, half);
+    ans = Math.min(ans, arr[0] - globalMin);
+  }
+  return ans;
 }`,
     typescript: `function minimizeDeviation(nums: number[]): number {
-
+  let arr = nums.map(x => x % 2 === 1 ? x * 2 : x).sort((a, b) => b - a);
+  let globalMin = arr[arr.length - 1]!, ans = arr[0]! - globalMin;
+  while (arr[0]! % 2 === 0) {
+    const top = arr.shift()!;
+    const half = top / 2;
+    if (half < globalMin) globalMin = half;
+    let lo = 0, hi = arr.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (arr[mid]! >= half) lo = mid + 1; else hi = mid; }
+    arr.splice(lo, 0, half);
+    ans = Math.min(ans, arr[0]! - globalMin);
+  }
+  return ans;
 }`,
     python: `def minimizeDeviation(nums):
-    pass`,
+    import heapq
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    heap = [-(x * 2 if x % 2 else x) for x in nums]
+    heapq.heapify(heap)
+    global_min = min(-x for x in heap)
+    ans = -heap[0] - global_min
+    while (-heap[0]) % 2 == 0:
+        top = -heapq.heappop(heap)
+        half = top // 2
+        if half < global_min: global_min = half
+        heapq.heappush(heap, -half)
+        ans = min(ans, -heap[0] - global_min)
+    return ans`,
   },
   visibleTests: [
     { args: [[4, 1, 5, 20, 3]], expected: 3 },

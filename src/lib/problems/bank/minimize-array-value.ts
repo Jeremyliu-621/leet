@@ -38,12 +38,29 @@ Return the **minimum** possible maximum of \`nums\` after any number of operatio
   params: ['nums'],
   starterCode: {
     javascript: `function minimizeArrayValue(nums) {
-
+  let sum = 0, ans = 0;
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i];
+    ans = Math.max(ans, Math.ceil(sum / (i + 1)));
+  }
+  return ans;
 }`,
-    typescript: "function minimizeArrayValue(nums: number[]): number {\n\n}",
-
+    typescript: `function minimizeArrayValue(nums: number[]): number {
+  let sum = 0, ans = 0;
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i]!;
+    ans = Math.max(ans, Math.ceil(sum / (i + 1)));
+  }
+  return ans;
+}`,
     python: `def minimizeArrayValue(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    import math
+    s = ans = 0
+    for i, x in enumerate(nums):
+        s += x
+        ans = max(ans, math.ceil(s / (i + 1)))
+    return ans`,
   },
   visibleTests: [
     { args: [[3,7,1,6]], expected: 5 },

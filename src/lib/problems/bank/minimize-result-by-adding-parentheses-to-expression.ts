@@ -39,12 +39,45 @@ Return *the expression after adding a pair of parentheses such that \`expression
   params: ['expression'],
   starterCode: {
     javascript: `function minimizeResult(expression) {
-
+  const plus = expression.indexOf('+');
+  const num1 = expression.slice(0, plus), num2 = expression.slice(plus + 1);
+  let best = Infinity, bestStr = '';
+  for (let i = 0; i < num1.length; i++) {
+    for (let j = 1; j <= num2.length; j++) {
+      const left = num1.slice(0, i), inner1 = num1.slice(i);
+      const inner2 = num2.slice(0, j), right = num2.slice(j);
+      const val = (left ? parseInt(left) : 1) * (parseInt(inner1) + parseInt(inner2)) * (right ? parseInt(right) : 1);
+      if (val < best) { best = val; bestStr = left + '(' + inner1 + '+' + inner2 + ')' + right; }
+    }
+  }
+  return bestStr;
 }`,
-    typescript: "function minimizeResult(expression: string): string {\n\n}",
-
+    typescript: `function minimizeResult(expression: string): string {
+  const plus = expression.indexOf('+');
+  const num1 = expression.slice(0, plus), num2 = expression.slice(plus + 1);
+  let best = Infinity, bestStr = '';
+  for (let i = 0; i < num1.length; i++) {
+    for (let j = 1; j <= num2.length; j++) {
+      const left = num1.slice(0, i), inner1 = num1.slice(i);
+      const inner2 = num2.slice(0, j), right = num2.slice(j);
+      const val = (left ? parseInt(left) : 1) * (parseInt(inner1) + parseInt(inner2)) * (right ? parseInt(right) : 1);
+      if (val < best) { best = val; bestStr = left + '(' + inner1 + '+' + inner2 + ')' + right; }
+    }
+  }
+  return bestStr;
+}`,
     python: `def minimizeResult(expression):
-    pass`,
+    if hasattr(expression, 'to_py'): expression = str(expression)
+    plus = expression.index('+')
+    num1, num2 = expression[:plus], expression[plus+1:]
+    best, best_str = float('inf'), ''
+    for i in range(len(num1)):
+        for j in range(1, len(num2) + 1):
+            left, inner1 = num1[:i], num1[i:]
+            inner2, right = num2[:j], num2[j:]
+            val = (int(left) if left else 1) * (int(inner1) + int(inner2)) * (int(right) if right else 1)
+            if val < best: best = val; best_str = left + '(' + inner1 + '+' + inner2 + ')' + right
+    return best_str`,
   },
   visibleTests: [
     { args: ['247+38'], expected: '2(47+38)' },

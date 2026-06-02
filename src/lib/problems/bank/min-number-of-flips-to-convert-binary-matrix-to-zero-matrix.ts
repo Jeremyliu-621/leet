@@ -39,10 +39,87 @@ A binary matrix has only \`0\` and \`1\` values. A zero matrix is all \`0\`s.`,
   functionName: 'minFlips',
   params: ['mat'],
   starterCode: {
-    javascript: 'function minFlips(mat) {\n\n}\n',
-    typescript: "function minFlips(mat: number[][]): number {\n\n}",
-
-    python: 'def minFlips(mat: list) -> int:\n    pass\n',
+    javascript: `function minFlips(mat) {
+  const m = mat.length, n = mat[0].length;
+  let start = 0;
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (mat[i][j]) start |= 1 << (i * n + j);
+  if (start === 0) return 0;
+  const dirs = [[0,0],[-1,0],[1,0],[0,-1],[0,1]];
+  const seen = new Set([start]);
+  let queue = [start], steps = 0;
+  while (queue.length) {
+    steps++;
+    const next = [];
+    for (const state of queue) {
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+          let ns = state;
+          for (const [di, dj] of dirs) {
+            const ni = i + di, nj = j + dj;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) ns ^= 1 << (ni * n + nj);
+          }
+          if (ns === 0) return steps;
+          if (!seen.has(ns)) { seen.add(ns); next.push(ns); }
+        }
+      }
+    }
+    queue = next;
+  }
+  return -1;
+}`,
+    typescript: `function minFlips(mat: number[][]): number {
+  const m = mat.length, n = mat[0]!.length;
+  let start = 0;
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (mat[i]![j]) start |= 1 << (i * n + j);
+  if (start === 0) return 0;
+  const dirs: [number, number][] = [[0,0],[-1,0],[1,0],[0,-1],[0,1]];
+  const seen = new Set([start]);
+  let queue = [start], steps = 0;
+  while (queue.length) {
+    steps++;
+    const next: number[] = [];
+    for (const state of queue) {
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+          let ns = state;
+          for (const [di, dj] of dirs) {
+            const ni = i + di, nj = j + dj;
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) ns ^= 1 << (ni * n + nj);
+          }
+          if (ns === 0) return steps;
+          if (!seen.has(ns)) { seen.add(ns); next.push(ns); }
+        }
+      }
+    }
+    queue = next;
+  }
+  return -1;
+}`,
+    python: `def minFlips(mat: list) -> int:
+    if hasattr(mat, 'to_py'): mat = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in mat.to_py()]
+    m, n = len(mat), len(mat[0])
+    start = 0
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j]: start |= 1 << (i * n + j)
+    if start == 0: return 0
+    dirs = [(0,0),(-1,0),(1,0),(0,-1),(0,1)]
+    seen = {start}
+    queue = [start]; steps = 0
+    while queue:
+        steps += 1
+        next_q = []
+        for state in queue:
+            for i in range(m):
+                for j in range(n):
+                    ns = state
+                    for di, dj in dirs:
+                        ni, nj = i+di, j+dj
+                        if 0 <= ni < m and 0 <= nj < n: ns ^= 1 << (ni * n + nj)
+                    if ns == 0: return steps
+                    if ns not in seen: seen.add(ns); next_q.append(ns)
+        queue = next_q
+    return -1`,
   },
   visibleTests: [
     { args: [[[0,0],[0,1]]], expected: 3 },

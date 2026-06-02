@@ -41,9 +41,34 @@ Return the last number that remains in \`nums\` after applying the algorithm.`,
   functionName: 'minMaxGame',
   params: ['nums'],
   starterCode: {
-    javascript: `function minMaxGame(nums) {\n  \n}`,
-    typescript: `function minMaxGame(nums: number[]): number {\n  \n}`,
-    python: `def minMaxGame(nums):\n    `,
+    javascript: `function minMaxGame(nums) {
+  while (nums.length > 1) {
+    const next = [];
+    for (let i = 0; i < nums.length / 2; i++) {
+      next.push(i % 2 === 0 ? Math.min(nums[2*i], nums[2*i+1]) : Math.max(nums[2*i], nums[2*i+1]));
+    }
+    nums = next;
+  }
+  return nums[0];
+}`,
+    typescript: `function minMaxGame(nums: number[]): number {
+  while (nums.length > 1) {
+    const next: number[] = [];
+    for (let i = 0; i < nums.length / 2; i++) {
+      next.push(i % 2 === 0 ? Math.min(nums[2*i]!, nums[2*i+1]!) : Math.max(nums[2*i]!, nums[2*i+1]!));
+    }
+    nums = next;
+  }
+  return nums[0]!;
+}`,
+    python: `def minMaxGame(nums):
+  if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+  while len(nums) > 1:
+      next_nums = []
+      for i in range(len(nums) // 2):
+          next_nums.append(min(nums[2*i], nums[2*i+1]) if i % 2 == 0 else max(nums[2*i], nums[2*i+1]))
+      nums = next_nums
+  return nums[0]`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 2, 4, 8, 2, 2]], expected: 1 },
