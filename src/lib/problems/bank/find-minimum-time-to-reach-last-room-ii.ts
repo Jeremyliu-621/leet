@@ -44,13 +44,62 @@ Return the **minimum** time to reach the room \`(n - 1, m - 1)\`.
   params: ['moveTime'],
   starterCode: {
     javascript: `function minTimeToReach(moveTime) {
-
+  const n = moveTime.length, m = moveTime[0].length;
+  const dist = Array.from({length: n}, () => Array.from({length: m}, () => [Infinity, Infinity]));
+  dist[0][0][0] = 0;
+  const pq = [[0, 0, 0, 0]]; // [time, r, c, parity]
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (pq.length) {
+    pq.sort((a, b) => a[0] - b[0]);
+    const [t, r, c, p] = pq.shift();
+    if (t > dist[r][c][p]) continue;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
+      const cost = p === 0 ? 1 : 2;
+      const nt = Math.max(t, moveTime[nr][nc]) + cost;
+      const np = 1 - p;
+      if (nt < dist[nr][nc][np]) { dist[nr][nc][np] = nt; pq.push([nt, nr, nc, np]); }
+    }
+  }
+  return Math.min(dist[n-1][m-1][0], dist[n-1][m-1][1]);
 }`,
     typescript: `function minTimeToReach(moveTime: number[][]): number {
-
+  const n = moveTime.length, m = moveTime[0]!.length;
+  const dist: number[][][] = Array.from({length: n}, () => Array.from({length: m}, () => [Infinity, Infinity]));
+  dist[0]![0]![0] = 0;
+  const pq: [number, number, number, number][] = [[0, 0, 0, 0]];
+  const dirs: [number,number][] = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (pq.length) {
+    pq.sort((a, b) => a[0] - b[0]);
+    const [t, r, c, p] = pq.shift()!;
+    if (t > dist[r]![c]![p]!) continue;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= n || nc < 0 || nc >= m) continue;
+      const cost = p === 0 ? 1 : 2;
+      const nt = Math.max(t, moveTime[nr]![nc]!) + cost;
+      const np = 1 - p;
+      if (nt < dist[nr]![nc]![np]!) { dist[nr]![nc]![np] = nt; pq.push([nt, nr, nc, np]); }
+    }
+  }
+  return Math.min(dist[n-1]![m-1]![0]!, dist[n-1]![m-1]![1]!);
 }`,
     python: `def minTimeToReach(moveTime):
-    pass`,
+    import heapq
+    n, m = len(moveTime), len(moveTime[0])
+    dist = [[[float('inf'), float('inf')] for _ in range(m)] for _ in range(n)]
+    dist[0][0][0] = 0; pq = [(0, 0, 0, 0)]
+    while pq:
+        t, r, c, p = heapq.heappop(pq)
+        if t > dist[r][c][p]: continue
+        for dr, dc in [(0,1),(0,-1),(1,0),(-1,0)]:
+            nr, nc = r+dr, c+dc
+            if 0<=nr<n and 0<=nc<m:
+                cost = 1 if p == 0 else 2
+                nt = max(t, moveTime[nr][nc]) + cost; np = 1 - p
+                if nt < dist[nr][nc][np]: dist[nr][nc][np]=nt; heapq.heappush(pq,(nt,nr,nc,np))
+    return min(dist[n-1][m-1][0], dist[n-1][m-1][1])`,
   },
   visibleTests: [
     { args: [[[0, 4], [4, 4]]], expected: 7 },

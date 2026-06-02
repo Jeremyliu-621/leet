@@ -45,11 +45,13 @@ function minValueAfterReplacingWithDigitSum(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function minValueAfterReplacingWithDigitSum(nums) {
-
+  return Math.min(...nums.map(n => String(n).split('').reduce((s, d) => s + Number(d), 0)));
 }`,
-    typescript: 'function minValueAfterReplacingWithDigitSum(nums: number[]): number {\n\n}',
+    typescript: `function minValueAfterReplacingWithDigitSum(nums: number[]): number {
+  return Math.min(...nums.map(n => String(n).split('').reduce((s, d) => s + Number(d), 0)));
+}`,
     python: `def minValueAfterReplacingWithDigitSum(nums):
-    pass`,
+    return min(sum(int(d) for d in str(n)) for n in nums)`,
   },
   visibleTests: [
     { args: [[10, 12, 13, 14]], expected: 1 },

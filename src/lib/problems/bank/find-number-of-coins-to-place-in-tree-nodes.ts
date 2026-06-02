@@ -48,13 +48,70 @@ Return an array \`ans\` where \`ans[i]\` is the number of coins placed on node \
   params: ['edges', 'cost'],
   starterCode: {
     javascript: `function placedCoins(edges, cost) {
-
+  const n = cost.length;
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); }
+  const ans = new Array(n).fill(0);
+  function dfs(node, par) {
+    let vals = [cost[node]];
+    for (const child of adj[node]) {
+      if (child === par) continue;
+      vals = [...vals, ...dfs(child, node)];
+    }
+    vals.sort((a, b) => a - b);
+    const len = vals.length;
+    if (len >= 3) {
+      const c1 = vals[len-1] * vals[len-2] * vals[len-3];
+      const c2 = vals[0] * vals[1] * vals[len-1];
+      ans[node] = Math.max(0, c1, c2);
+    }
+    return len <= 5 ? vals : [vals[0], vals[1], vals[len-3], vals[len-2], vals[len-1]];
+  }
+  dfs(0, -1);
+  return ans;
 }`,
     typescript: `function placedCoins(edges: number[][], cost: number[]): number[] {
-
+  const n = cost.length;
+  const adj: number[][] = Array.from({length: n}, () => []);
+  for (const e of edges) { adj[e[0]!].push(e[1]!); adj[e[1]!].push(e[0]!); }
+  const ans: number[] = new Array(n).fill(0);
+  function dfs(node: number, par: number): number[] {
+    let vals = [cost[node]!];
+    for (const child of adj[node]!) {
+      if (child === par) continue;
+      vals = [...vals, ...dfs(child, node)];
+    }
+    vals.sort((a, b) => a - b);
+    const len = vals.length;
+    if (len >= 3) {
+      const c1 = vals[len-1]! * vals[len-2]! * vals[len-3]!;
+      const c2 = vals[0]! * vals[1]! * vals[len-1]!;
+      ans[node] = Math.max(0, c1, c2);
+    }
+    return len <= 5 ? vals : [vals[0]!, vals[1]!, vals[len-3]!, vals[len-2]!, vals[len-1]!];
+  }
+  dfs(0, -1);
+  return ans;
 }`,
     python: `def placedCoins(edges, cost):
-    pass`,
+    n = len(cost)
+    adj = [[] for _ in range(n)]
+    for u, v in edges: adj[u].append(v); adj[v].append(u)
+    ans = [0] * n
+    def dfs(node, par):
+        vals = [cost[node]]
+        for child in adj[node]:
+            if child == par: continue
+            vals += dfs(child, node)
+        vals.sort()
+        l = len(vals)
+        if l >= 3:
+            c1 = vals[-1] * vals[-2] * vals[-3]
+            c2 = vals[0] * vals[1] * vals[-1]
+            ans[node] = max(0, c1, c2)
+        return vals if l <= 5 else [vals[0], vals[1], vals[-3], vals[-2], vals[-1]]
+    dfs(0, -1)
+    return ans`,
   },
   visibleTests: [
     {

@@ -40,13 +40,26 @@ Return the \`k\`-th **occurrence** (1-indexed) of \`target\` in \`nums\`. If the
   params: ['nums', 'target', 'k'],
   starterCode: {
     javascript: `function findOccurrences(nums, target, k) {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === target && ++count === k) return i;
+  }
+  return -1;
 }`,
     typescript: `function findOccurrences(nums: number[], target: number, k: number): number {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === target && ++count === k) return i;
+  }
+  return -1;
 }`,
     python: `def findOccurrences(nums, target, k):
-    pass`,
+    count = 0
+    for i, v in enumerate(nums):
+        if v == target:
+            count += 1
+            if count == k: return i
+    return -1`,
   },
   visibleTests: [
     { args: [[1, 3, 1, 7], 1, 1], expected: 0 },

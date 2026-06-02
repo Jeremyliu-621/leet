@@ -42,13 +42,29 @@ If there are multiple valid arrays, return **any** of them.`,
   params: ['rolls', 'mean', 'n'],
   starterCode: {
     javascript: `function missingRolls(rolls, mean, n) {
-
+  const total = mean * (rolls.length + n);
+  const missing = total - rolls.reduce((a, b) => a + b, 0);
+  if (missing < n || missing > 6 * n) return [];
+  const base = Math.floor(missing / n), rem = missing % n;
+  const result = new Array(n).fill(base);
+  for (let i = 0; i < rem; i++) result[i]++;
+  return result;
 }`,
     typescript: `function missingRolls(rolls: number[], mean: number, n: number): number[] {
-
+  const total = mean * (rolls.length + n);
+  const missing = total - rolls.reduce((a, b) => a + b, 0);
+  if (missing < n || missing > 6 * n) return [];
+  const base = Math.floor(missing / n), rem = missing % n;
+  const result: number[] = new Array(n).fill(base);
+  for (let i = 0; i < rem; i++) result[i]++;
+  return result;
 }`,
     python: `def missingRolls(rolls, mean, n):
-    pass`,
+    total = mean * (len(rolls) + n)
+    missing = total - sum(rolls)
+    if missing < n or missing > 6 * n: return []
+    base, rem = divmod(missing, n)
+    return [base + (1 if i < rem else 0) for i in range(n)]`,
   },
   visibleTests: [
     { args: [[3, 2, 4, 3], 4, 2], expected: [6, 6] },
