@@ -33,11 +33,38 @@ Return the **maximum** value of \`nums[i] + nums[j]\` over all valid pairs, or \
   params: ['nums'],
   starterCode: {
     javascript: `function maximumSum(nums) {
-
+  const digitSum = x => { let s = 0; while (x > 0) { s += x % 10; x = Math.floor(x / 10); } return s; };
+  const best = new Map();
+  let ans = -1;
+  for (const n of nums) {
+    const s = digitSum(n);
+    if (best.has(s)) { ans = Math.max(ans, best.get(s) + n); best.set(s, Math.max(best.get(s), n)); }
+    else best.set(s, n);
+  }
+  return ans;
 }`,
-    typescript: 'function maximumSum(nums: number[]): number {\n\n}',
+    typescript: `function maximumSum(nums: number[]): number {
+  const digitSum = (x: number): number => { let s = 0; while (x > 0) { s += x % 10; x = Math.floor(x / 10); } return s; };
+  const best = new Map<number, number>();
+  let ans = -1;
+  for (const n of nums) {
+    const s = digitSum(n);
+    if (best.has(s)) { ans = Math.max(ans, best.get(s)! + n); best.set(s, Math.max(best.get(s)!, n)); }
+    else best.set(s, n);
+  }
+  return ans;
+}`,
     python: `def maximumSum(nums):
-    pass`,
+    def digit_sum(x):
+        s = 0
+        while x: s += x % 10; x //= 10
+        return s
+    best = {}; ans = -1
+    for n in nums:
+        s = digit_sum(n)
+        if s in best: ans = max(ans, best[s] + n); best[s] = max(best[s], n)
+        else: best[s] = n
+    return ans`,
   },
   visibleTests: [
     { args: [[18, 43, 36, 13, 7]], expected: 54 },

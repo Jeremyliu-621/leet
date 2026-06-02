@@ -36,13 +36,13 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function maxOfFirstAndLast(nums) {
-
+  return Math.max(nums[0], nums[nums.length - 1]);
 }`,
     typescript: `function maxOfFirstAndLast(nums: number[]): number {
-
+  return Math.max(nums[0], nums[nums.length - 1]);
 }`,
     python: `def maxOfFirstAndLast(nums: list[int]) -> int:
-    pass`,
+    return max(nums[0], nums[-1])`,
   },
   visibleTests: [
     { args: [[3, 1, 4, 1, 5, 9, 2, 6]], expected: 6 },

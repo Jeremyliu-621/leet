@@ -39,12 +39,31 @@ return max / k;\`\`\``
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function findMaxAverage(nums, k) {
-
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i];
+  let maxSum = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i] - nums[i-k];
+    if (sum > maxSum) maxSum = sum;
+  }
+  return maxSum / k;
 }`,
-    typescript: "function findMaxAverage(nums: number[], k: number): number {\n\n}",
-
+    typescript: `function findMaxAverage(nums: number[], k: number): number {
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i];
+  let maxSum = sum;
+  for (let i = k; i < nums.length; i++) {
+    sum += nums[i] - nums[i-k];
+    if (sum > maxSum) maxSum = sum;
+  }
+  return maxSum / k;
+}`,
     python: `def findMaxAverage(nums, k):
-    pass`,
+    s = sum(nums[:k]); best = s
+    for i in range(k, len(nums)):
+        s += nums[i] - nums[i-k]
+        best = max(best, s)
+    return best / k`,
   },
   visibleTests: [
     { args: [[1, 12, -5, -6, 50, 3], 4], expected: 12.75 },

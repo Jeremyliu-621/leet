@@ -33,12 +33,64 @@ export const problem: Problem = {
   params: ['points'],
   starterCode: {
     javascript: `function maxPoints(points) {
-
+  const n = points.length;
+  if (n <= 2) return n;
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  let ans = 2;
+  for (let i = 0; i < n; i++) {
+    const slopes = new Map(); let dups = 1;
+    for (let j = i + 1; j < n; j++) {
+      let dy = points[j][1] - points[i][1], dx = points[j][0] - points[i][0];
+      if (dy === 0 && dx === 0) { dups++; continue; }
+      const g = gcd(Math.abs(dy), Math.abs(dx));
+      dy /= g; dx /= g;
+      if (dx < 0 || (dx === 0 && dy < 0)) { dy = -dy; dx = -dx; }
+      const key = dy + ',' + dx;
+      slopes.set(key, (slopes.get(key) || 0) + 1);
+    }
+    if (slopes.size === 0) ans = Math.max(ans, dups);
+    for (const cnt of slopes.values()) ans = Math.max(ans, cnt + dups);
+  }
+  return ans;
 }`,
-    typescript: "function maxPoints(points: number[][]): number {\n\n}",
-
+    typescript: `function maxPoints(points: number[][]): number {
+  const n = points.length;
+  if (n <= 2) return n;
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  let ans = 2;
+  for (let i = 0; i < n; i++) {
+    const slopes = new Map<string, number>(); let dups = 1;
+    for (let j = i + 1; j < n; j++) {
+      let dy = points[j][1] - points[i][1], dx = points[j][0] - points[i][0];
+      if (dy === 0 && dx === 0) { dups++; continue; }
+      const g = gcd(Math.abs(dy), Math.abs(dx));
+      dy /= g; dx /= g;
+      if (dx < 0 || (dx === 0 && dy < 0)) { dy = -dy; dx = -dx; }
+      const key = dy + ',' + dx;
+      slopes.set(key, (slopes.get(key) ?? 0) + 1);
+    }
+    if (slopes.size === 0) ans = Math.max(ans, dups);
+    for (const cnt of slopes.values()) ans = Math.max(ans, cnt + dups);
+  }
+  return ans;
+}`,
     python: `def maxPoints(points):
-    pass`,
+    from math import gcd
+    n = len(points)
+    if n <= 2: return n
+    ans = 2
+    for i in range(n):
+        slopes = {}; dups = 1
+        for j in range(i+1, n):
+            dy = points[j][1] - points[i][1]; dx = points[j][0] - points[i][0]
+            if dy == 0 and dx == 0: dups += 1; continue
+            g = gcd(abs(dy), abs(dx)); dy //= g; dx //= g
+            if dx < 0 or (dx == 0 and dy < 0): dy, dx = -dy, -dx
+            key = (dy, dx)
+            slopes[key] = slopes.get(key, 0) + 1
+        if not slopes: ans = max(ans, dups)
+        for cnt in slopes.values(): ans = max(ans, cnt + dups)
+    return ans`,
   },
   visibleTests: [
     { args: [[[1, 1], [2, 2], [3, 3]]], expected: 3 },

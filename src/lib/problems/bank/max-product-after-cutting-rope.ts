@@ -39,13 +39,25 @@ You must make at least one cut, so you cannot keep the rope whole.
   params: ['n'],
   starterCode: {
     javascript: `function cuttingRope(n) {
-
+  if (n === 2) return 1;
+  if (n === 3) return 2;
+  let product = 1;
+  while (n > 4) { product *= 3; n -= 3; }
+  return product * n;
 }`,
     typescript: `function cuttingRope(n: number): number {
-
+  if (n === 2) return 1;
+  if (n === 3) return 2;
+  let product = 1;
+  while (n > 4) { product *= 3; n -= 3; }
+  return product * n;
 }`,
     python: `def cuttingRope(n):
-    pass`,
+    if n == 2: return 1
+    if n == 3: return 2
+    product = 1
+    while n > 4: product *= 3; n -= 3
+    return product * n`,
   },
   visibleTests: [
     { args: [2], expected: 1 },

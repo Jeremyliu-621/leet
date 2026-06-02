@@ -37,12 +37,36 @@ export const problem: Problem = {
   params: ['mat', 'k'],
   starterCode: {
     javascript: `function matrixBlockSum(mat, k) {
-
+  const m = mat.length, n = mat[0].length;
+  const pre = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      pre[i][j] = mat[i-1][j-1] + pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1];
+  const sum = (r1, c1, r2, c2) => pre[r2][c2] - pre[r1][c2] - pre[r2][c1] + pre[r1][c1];
+  return Array.from({length: m}, (_, i) =>
+    Array.from({length: n}, (_, j) =>
+      sum(Math.max(0,i-k), Math.max(0,j-k), Math.min(m,i+k+1), Math.min(n,j+k+1))));
 }`,
-    typescript: "function matrixBlockSum(mat: number[][], k: number): number[][] {\n\n}",
-
+    typescript: `function matrixBlockSum(mat: number[][], k: number): number[][] {
+  const m = mat.length, n = mat[0].length;
+  const pre = Array.from({length: m+1}, () => new Array(n+1).fill(0));
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      pre[i][j] = mat[i-1][j-1] + pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1];
+  const sum = (r1: number, c1: number, r2: number, c2: number) =>
+    pre[r2][c2] - pre[r1][c2] - pre[r2][c1] + pre[r1][c1];
+  return Array.from({length: m}, (_, i) =>
+    Array.from({length: n}, (_, j) =>
+      sum(Math.max(0,i-k), Math.max(0,j-k), Math.min(m,i+k+1), Math.min(n,j+k+1))));
+}`,
     python: `def matrixBlockSum(mat, k):
-    pass`,
+    m, n = len(mat), len(mat[0])
+    pre = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            pre[i][j] = mat[i-1][j-1] + pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1]
+    def s(r1, c1, r2, c2): return pre[r2][c2] - pre[r1][c2] - pre[r2][c1] + pre[r1][c1]
+    return [[s(max(0,i-k), max(0,j-k), min(m,i+k+1), min(n,j+k+1)) for j in range(n)] for i in range(m)]`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], 1], expected: [[12, 21, 16], [27, 45, 33], [24, 39, 28]] },

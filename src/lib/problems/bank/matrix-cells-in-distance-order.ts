@@ -50,12 +50,21 @@ function allCellsDistOrder(rows, cols, rCenter, cCenter) {
   params: ['rows', 'cols', 'rCenter', 'cCenter'],
   starterCode: {
     javascript: `function matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter) {
-
+  const cells = [];
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) cells.push([r, c]);
+  return cells.sort((a, b) =>
+    (Math.abs(a[0]-rCenter)+Math.abs(a[1]-cCenter)) - (Math.abs(b[0]-rCenter)+Math.abs(b[1]-cCenter)));
 }`,
-    typescript: "function matrixCellsInDistanceOrder(rows: number, cols: number, rCenter: number, cCenter: number): number[][] {\n\n}",
-
+    typescript: `function matrixCellsInDistanceOrder(rows: number, cols: number, rCenter: number, cCenter: number): number[][] {
+  const cells: number[][] = [];
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) cells.push([r, c]);
+  return cells.sort((a, b) =>
+    (Math.abs(a[0]-rCenter)+Math.abs(a[1]-cCenter)) - (Math.abs(b[0]-rCenter)+Math.abs(b[1]-cCenter)));
+}`,
     python: `def matrixCellsInDistanceOrder(rows, cols, rCenter, cCenter):
-    pass`,
+    cells = [[r, c] for r in range(rows) for c in range(cols)]
+    cells.sort(key=lambda p: abs(p[0]-rCenter)+abs(p[1]-cCenter))
+    return cells`,
   },
   visibleTests: [
     { args: [1, 2, 0, 0], expected: [[0, 0], [0, 1]] },

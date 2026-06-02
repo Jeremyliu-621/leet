@@ -40,12 +40,35 @@ The **dot product** of arrays \`[a1, a2, ..., ak]\` and \`[b1, b2, ..., bk]\` is
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function maxDotProduct(nums1, nums2) {
-
+  const m = nums1.length, n = nums2.length;
+  const dp = Array.from({length: m+1}, () => new Array(n+1).fill(-Infinity));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cur = nums1[i-1] * nums2[j-1];
+      dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1], cur, cur + Math.max(0, dp[i-1][j-1]));
+    }
+  }
+  return dp[m][n];
 }`,
-    typescript: "function maxDotProduct(nums1: number[], nums2: number[]): number {\n\n}",
-
+    typescript: `function maxDotProduct(nums1: number[], nums2: number[]): number {
+  const m = nums1.length, n = nums2.length;
+  const dp = Array.from({length: m+1}, () => new Array(n+1).fill(-Infinity));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cur = nums1[i-1] * nums2[j-1];
+      dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1], cur, cur + Math.max(0, dp[i-1][j-1]));
+    }
+  }
+  return dp[m][n];
+}`,
     python: `def maxDotProduct(nums1, nums2):
-    `,
+    m, n = len(nums1), len(nums2)
+    dp = [[-float('inf')] * (n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            cur = nums1[i-1] * nums2[j-1]
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1], cur, cur + max(0, dp[i-1][j-1]))
+    return dp[m][n]`,
   },
   visibleTests: [
     { args: [[2, 1, -2, 5], [3, 0, -6]], expected: 18 },

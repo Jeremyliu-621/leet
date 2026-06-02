@@ -36,12 +36,64 @@ It is guaranteed that there will be a rectangle with a sum no larger than \`k\`.
   params: ['matrix', 'k'],
   starterCode: {
     javascript: `function maxSumSubmatrix(matrix, k) {
-
+  const m = matrix.length, n = matrix[0].length;
+  let ans = -Infinity;
+  for (let l = 0; l < n; l++) {
+    const rowSum = new Array(m).fill(0);
+    for (let r = l; r < n; r++) {
+      for (let i = 0; i < m; i++) rowSum[i] += matrix[i][r];
+      const sorted = [0]; let prefSum = 0;
+      for (const s of rowSum) {
+        prefSum += s;
+        const target = prefSum - k;
+        let lo = 0, hi = sorted.length;
+        while (lo < hi) { const mid = (lo+hi)>>1; if (sorted[mid] < target) lo = mid+1; else hi = mid; }
+        if (lo < sorted.length) ans = Math.max(ans, prefSum - sorted[lo]);
+        let left = 0, right = sorted.length;
+        while (left < right) { const mid = (left+right)>>1; if (sorted[mid] < prefSum) left = mid+1; else right = mid; }
+        sorted.splice(left, 0, prefSum);
+      }
+    }
+  }
+  return ans;
 }`,
-    typescript: "function maxSumSubmatrix(matrix: number[][], k: number): number {\n\n}",
-
+    typescript: `function maxSumSubmatrix(matrix: number[][], k: number): number {
+  const m = matrix.length, n = matrix[0].length;
+  let ans = -Infinity;
+  for (let l = 0; l < n; l++) {
+    const rowSum = new Array(m).fill(0);
+    for (let r = l; r < n; r++) {
+      for (let i = 0; i < m; i++) rowSum[i] += matrix[i][r];
+      const sorted = [0]; let prefSum = 0;
+      for (const s of rowSum) {
+        prefSum += s;
+        const target = prefSum - k;
+        let lo = 0, hi = sorted.length;
+        while (lo < hi) { const mid = (lo+hi)>>1; if (sorted[mid] < target) lo = mid+1; else hi = mid; }
+        if (lo < sorted.length) ans = Math.max(ans, prefSum - sorted[lo]);
+        let left = 0, right = sorted.length;
+        while (left < right) { const mid = (left+right)>>1; if (sorted[mid] < prefSum) left = mid+1; else right = mid; }
+        sorted.splice(left, 0, prefSum);
+      }
+    }
+  }
+  return ans;
+}`,
     python: `def maxSumSubmatrix(matrix, k):
-    pass`,
+    import bisect
+    m, n = len(matrix), len(matrix[0])
+    ans = float('-inf')
+    for l in range(n):
+        row_sum = [0] * m
+        for r in range(l, n):
+            for i in range(m): row_sum[i] += matrix[i][r]
+            sorted_pre = [0]; pref = 0
+            for s in row_sum:
+                pref += s
+                idx = bisect.bisect_left(sorted_pre, pref - k)
+                if idx < len(sorted_pre): ans = max(ans, pref - sorted_pre[idx])
+                bisect.insort(sorted_pre, pref)
+    return ans`,
   },
   visibleTests: [
     { args: [[[1,0,1],[0,-2,3]], 2], expected: 2 },

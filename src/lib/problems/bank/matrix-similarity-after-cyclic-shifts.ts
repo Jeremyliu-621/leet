@@ -40,13 +40,38 @@ Return \`true\` if the final matrix equals the initial matrix, \`false\` otherwi
   params: ['mat', 'k'],
   starterCode: {
     javascript: `function areSimilar(mat, k) {
-
+  const rows = mat.length, cols = mat[0].length;
+  const shift = k % cols;
+  if (shift === 0) return true;
+  for (let r = 0; r < rows; r++) {
+    const d = r % 2 === 0 ? shift : cols - shift;
+    for (let c = 0; c < cols; c++) {
+      if (mat[r][c] !== mat[r][(c + d) % cols]) return false;
+    }
+  }
+  return true;
 }`,
     typescript: `function areSimilar(mat: number[][], k: number): boolean {
-
+  const rows = mat.length, cols = mat[0].length;
+  const shift = k % cols;
+  if (shift === 0) return true;
+  for (let r = 0; r < rows; r++) {
+    const d = r % 2 === 0 ? shift : cols - shift;
+    for (let c = 0; c < cols; c++) {
+      if (mat[r][c] !== mat[r][(c + d) % cols]) return false;
+    }
+  }
+  return true;
 }`,
     python: `def areSimilar(mat: list[list[int]], k: int) -> bool:
-    `,
+    rows, cols = len(mat), len(mat[0])
+    shift = k % cols
+    if shift == 0: return True
+    for r in range(rows):
+        d = shift if r % 2 == 0 else cols - shift
+        for c in range(cols):
+            if mat[r][c] != mat[r][(c + d) % cols]: return False
+    return True`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], 4], expected: false },

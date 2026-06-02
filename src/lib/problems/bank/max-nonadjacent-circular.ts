@@ -34,13 +34,34 @@ You may choose any number of elements (including zero). The circular adjacency m
   params: ['nums'],
   starterCode: {
     javascript: `function maxNonAdjacentCircular(nums) {
-
+  const n = nums.length;
+  if (n === 1) return nums[0];
+  const rob = (arr) => {
+    let prev2 = 0, prev1 = 0;
+    for (const x of arr) { const cur = Math.max(prev1, prev2 + x); prev2 = prev1; prev1 = cur; }
+    return prev1;
+  };
+  return Math.max(rob(nums.slice(0, n-1)), rob(nums.slice(1)));
 }`,
     typescript: `function maxNonAdjacentCircular(nums: number[]): number {
-
+  const n = nums.length;
+  if (n === 1) return nums[0];
+  const rob = (arr: number[]): number => {
+    let prev2 = 0, prev1 = 0;
+    for (const x of arr) { const cur = Math.max(prev1, prev2 + x); prev2 = prev1; prev1 = cur; }
+    return prev1;
+  };
+  return Math.max(rob(nums.slice(0, n-1)), rob(nums.slice(1)));
 }`,
     python: `def maxNonAdjacentCircular(nums):
-    pass`,
+    n = len(nums)
+    if n == 1: return nums[0]
+    def rob(arr):
+        p2 = p1 = 0
+        for x in arr:
+            p2, p1 = p1, max(p1, p2 + x)
+        return p1
+    return max(rob(nums[:-1]), rob(nums[1:]))`,
   },
   visibleTests: [
     { args: [[3, 7, 4, 6, 5]], expected: 13 },
