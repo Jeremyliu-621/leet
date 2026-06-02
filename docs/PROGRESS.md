@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2911** problems; 9050 tests green. Starter-fill batch 38 (13 problems: amount-of-time-for-binary-tree-to-be-infected through diagonal-traverse-ii) pushed. ~2100+ stubs remaining.
+**Current focus:** Bank at **2918** problems; 9074 tests green. Batch 280 pushed (maximum-students-taking-exam, max-sum-two-non-overlapping-subarrays). ~2100+ stubs remaining.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued starter backfill (batch 39+); bank growth (batch 279+); UX polish.
+**Next up:** Continued starter backfill (batch 39+); bank growth (batch 281+); UX polish.
+
+### feat(bank): batch 280 — maximum-students-taking-exam, max-sum-two-non-overlapping-subarrays (2026-06-02)
+Two new problems: `maximum-students-taking-exam` (hard/dp+bit-manipulation — bitmask row-profile DP; submask enumeration trick: mask=(mask-1)&avail; O(3^n·m)), `maximum-sum-of-elements-in-two-non-overlapping-subarrays` (medium/arrays+dp+sliding-window — prefix sums + maxF/maxS prefix-max arrays; try both orderings; O(n)). Bank at **2918**; 9074 tests.
 
 ### feat(bank): starter-fill batch 38 — 13 problems (2026-06-02)
 Filled JS/TS/Python starter code for: `amount-of-time-for-binary-tree-to-be-infected` (BFS on undirected tree), `as-far-from-land-as-possible` (multi-source BFS), `construct-k-palindrome-strings` (odd-freq char count), `construct-string-with-repeat-limit` (greedy freq from 'z'), `count-the-number-of-fair-pairs` (sort + two-pointer countAtMost), `count-the-number-of-inversions` (merge sort), `count-unreachable-pairs-of-nodes` (union-find), `count-vowel-substrings-of-a-string` (O(n²) window), `count-ways-to-build-good-strings` (DP), `count-ways-to-select-buildings` (prefix ones), `day-of-the-year` (cumulative days + leap), `determine-if-string-halves-are-alike` (vowel count both halves), `diagonal-traverse-ii` (group by r+c, reverse each bucket). 9050 tests.
