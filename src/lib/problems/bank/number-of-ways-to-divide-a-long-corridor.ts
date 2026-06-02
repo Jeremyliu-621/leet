@@ -4,88 +4,50 @@ export const problem: Problem = {
   id: 'number-of-ways-to-divide-a-long-corridor',
   title: 'Number of Ways to Divide a Long Corridor',
   difficulty: 'hard',
-  tags: ['math', 'dynamic-programming'],
-  description: `Along a hallway, there are \`n\` sections of wall, each marked as either a seat (\`'S'\`) or plant (\`'P'\`). You want to install dividers so that **every section between two consecutive dividers contains exactly 2 seats**.
+  tags: ['math', 'dynamic-programming', 'strings'],
+  description: `Along a long corridor, there is a line of seats and decorative plants. You are given a 0-indexed string \`corridor\` of length \`n\` consisting of letters \`'S'\` and \`'P'\` where each \`'S'\` represents a seat and each \`'P'\` represents a plant.
 
-Return the number of ways to place the dividers, modulo \`10^9 + 7\`. If there is no valid placement, return \`0\`.
+One room divider has **already** been installed to the left of index \`0\`, and another to the right of index \`n - 1\`. Additional room dividers can be installed. For each section between dividers, there must be **exactly 2 seats**.
 
-Dividers go **between** adjacent positions (in the gaps, not on top of sections). The two ends of the corridor are fixed walls and do not need dividers.
-
-\`\`\`
-Input:  corridor = "SSPPSPS"
-Output: 3
-\`\`\`
-Seats are at positions 0, 1, 4, 6. Valid pairs: (0,1) and (4,6). The divider must go in one of 3 gaps between positions 1 and 4: after position 1, 2, or 3.`,
+Return the number of ways to install dividers such that each section has exactly 2 seats. Since the answer may be very large, return it **modulo** \`10^9 + 7\`. If there is no way, return \`0\`.`,
   constraints: [
     'n == corridor.length',
     '1 <= n <= 10^5',
-    "corridor[i] is either 'S' or 'P'.",
+    "corridor[i] is either 'S' or 'P'",
   ],
   examples: [
     {
       input: 'corridor = "SSPPSPS"',
       output: '3',
-      explanation:
-        'Seats at indices 0,1,4,6. One divider must separate pair (0,1) from pair (4,6); it can go after index 1, 2, or 3 — giving 3 ways.',
+      explanation: 'Seats at positions 0,1,4,6. Pairs (0,1) and (4,6). Between them: 2 plants → 3 valid cut positions.',
     },
     {
       input: 'corridor = "PPSPSP"',
       output: '1',
-      explanation: 'Only 2 seats (at indices 2 and 4), so just one section covering the entire corridor.',
+      explanation: 'Seats at positions 2 and 4. One section with 2 seats — no additional dividers needed, exactly 1 way.',
     },
     {
       input: 'corridor = "S"',
       output: '0',
-      explanation: 'Odd number of seats — no valid division exists.',
+      explanation: 'Only 1 seat; impossible to make sections each with exactly 2 seats.',
     },
   ],
   hints: [
-    "Collect all seat indices into an array. If the count is odd or zero, return 0.",
-    'Pair up seats: (seat[0], seat[1]), (seat[2], seat[3]), …. Between adjacent pairs — between seat[2k−1] and seat[2k] — a divider can go in any of the `seat[2k] − seat[2k−1]` gaps.',
-    'Multiply all gap counts together modulo 10^9+7. Use BigInt to avoid overflow: `result = (result * BigInt(gap)) % BigInt(1e9+7)`, then convert back to a number at the end.',
+    'Level 1: Find all seat positions. If total seats is 0 or odd, return 0.',
+    'Level 2: Group seats into consecutive pairs: (s1,s2), (s3,s4), .... Between the 2nd seat of pair i and the 1st seat of pair i+1, count the gap distance (s_{2i+1} - s_{2i}).',
+    'Level 3: Each gap of distance d contributes d valid cut positions. Multiply all gap distances modulo 10^9+7 to get the answer.',
   ],
   functionName: 'numberOfWays',
   params: ['corridor'],
   starterCode: {
     javascript: `function numberOfWays(corridor) {
-  const MOD = 1_000_000_007n;
-  const seats = [];
-  for (let i = 0; i < corridor.length; i++) {
-    if (corridor[i] === 'S') seats.push(i);
-  }
-  if (seats.length === 0 || seats.length % 2 !== 0) return 0;
-  let ways = 1n;
-  for (let i = 2; i < seats.length; i += 2) {
-    ways = ways * BigInt(seats[i] - seats[i - 1]) % MOD;
-  }
-  return Number(ways);
+
 }`,
     typescript: `function numberOfWays(corridor: string): number {
-  const MOD = 1_000_000_007n;
-  const seats: number[] = [];
-  for (let i = 0; i < corridor.length; i++) {
-    if (corridor[i] === 'S') seats.push(i);
-  }
-  if (seats.length === 0 || seats.length % 2 !== 0) return 0;
-  let ways = 1n;
-  for (let i = 2; i < seats.length; i += 2) {
-    ways = ways * BigInt(seats[i]! - seats[i - 1]!) % MOD;
-  }
-  return Number(ways);
+
 }`,
-    python: `def numberOfWays(corridor):
-    if hasattr(corridor, 'to_py'):
-        corridor = str(corridor)
-    MOD = 10**9 + 7
-    seats = [i for i, c in enumerate(corridor) if c == 'S']
-    if not seats or len(seats) % 2 != 0:
-        return 0
-    ways = 1
-    i = 2
-    while i < len(seats):
-        ways = ways * (seats[i] - seats[i - 1]) % MOD
-        i += 2
-    return ways`,
+    python: `def numberOfWays(corridor: str) -> int:
+    pass`,
   },
   visibleTests: [
     { args: ['SSPPSPS'], expected: 3 },
@@ -93,14 +55,13 @@ Seats are at positions 0, 1, 4, 6. Valid pairs: (0,1) and (4,6). The divider mus
     { args: ['S'], expected: 0 },
   ],
   hiddenTests: [
-    { args: ['P'], expected: 0 },
     { args: ['SS'], expected: 1 },
-    { args: ['SP'], expected: 0 },
-    { args: ['SSSSSS'], expected: 1 },
+    { args: ['PP'], expected: 0 },
+    { args: ['SSSS'], expected: 1 },
     { args: ['SSPSPS'], expected: 2 },
-    { args: ['SSPSSPPSPS'], expected: 6 },
-    { args: ['PPPPP'], expected: 0 },
-    { args: ['SPPS'], expected: 1 },
-    { args: ['SPPSSPP'], expected: 0 },
+    { args: ['SSPPSS'], expected: 3 },
+    { args: ['SSSSSS'], expected: 1 },
+    { args: ['SPSPSP'], expected: 0 },
+    { args: ['SSPSS'], expected: 2 },
   ],
 };
