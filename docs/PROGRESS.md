@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2942** problems; 9174 tests green. Batches 39x–39y complete (12 stubs filled); ~760 stubs remaining.
+**Current focus:** Bank at **2946** problems; 9171 tests green. Batch 284 (local+remote, 9 total) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued starter backfill (batch 39z+); bank growth (batch 285+); UX polish.
+**Next up:** Bank growth (batch 285+); starter backfill; UX polish.
+
+### feat(bank): batch 284 (local) — find-good-ways-split-string, count-good-subarrays, min-cost-flip-expression, find-good-indices (2026-06-02)
+Four new problems: `find-number-of-good-ways-to-split-a-string` (medium/strings+hash-map — O(n) prefix/suffix distinct char count arrays; count positions where counts match), `count-number-of-good-subarrays` (medium/arrays+hash-map+two-pointers — sliding window; cnt+=freq[nums[r]] before incrementing; shrink left while cnt>=k; ans+=l), `minimum-cost-to-change-final-value-of-expression` (hard/stack+DP — recursive descent parseAtom/parseExpr; per-subexpr (cost_to_make_0, cost_to_make_1) DP with operator-flip cost of +1), `find-good-indices` (medium/arrays+DP — decLen[i] = non-increasing run length ending at i; incLen[i] from right; good iff decLen[i-1]>=k and incLen[i+1]>=k). Bank at **2946**; 9171 tests.
 
 ### feat(bank): batch 284 — segment-tree-range-max, euler-tour-subtree, mo-distinct, bipartite-matching, count-arithmetic-triplets (2026-06-02)
 Five new problems: `segment-tree-range-max` (medium/segment-tree — point update + range max query; O(log n) each), `euler-tour-subtree-queries` (hard/segment-tree+tree — DFS Euler tour flat array + BIT for subtree sum queries with updates; O(n + q log n)), `mo-algorithm-range-distinct` (hard/arrays — Mo's offline algorithm with zigzag block sort; O((n+q)√n) distinct count per range), `maximum-bipartite-matching` (hard/graph — Kuhn's augmenting path DFS; O(V·E) maximum bipartite matching), `count-arithmetic-triplets` (easy/arrays+hash-map — hash set lookup for x, x-diff, x-2*diff; O(n)). Bank at **2942**; 9174 tests.
