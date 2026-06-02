@@ -49,13 +49,61 @@ Return the **minimum cost** to change the **final value** of the expression.
   params: ['expression'],
   starterCode: {
     javascript: `function minOperationsToFlip(expression) {
-
+  let idx = 0;
+  function parseAtom() {
+    if (expression[idx] === '(') { idx++; const r = parse(); idx++; return r; }
+    const ch = expression[idx++]; return ch === '0' ? [0, 1] : [1, 0];
+  }
+  function parse() {
+    let [c0, c1] = parseAtom();
+    while (idx < expression.length && expression[idx] !== ')') {
+      const op = expression[idx++];
+      const [r0, r1] = parseAtom();
+      if (op === '&') { [c0, c1] = [Math.min(c0, r0, 1+c0+r0), Math.min(c1+r1, 1+Math.min(c1,r1))]; }
+      else { [c0, c1] = [Math.min(c0+r0, 1+Math.min(c0,r0)), Math.min(c1, r1, 1+c1+r1)]; }
+    }
+    return [c0, c1];
+  }
+  const [c0, c1] = parse();
+  return c0 === 0 ? c1 : c0;
 }`,
     typescript: `function minOperationsToFlip(expression: string): number {
-
+  let idx = 0;
+  function parseAtom(): [number, number] {
+    if (expression[idx] === '(') { idx++; const r = parse(); idx++; return r; }
+    const ch = expression[idx++]; return ch === '0' ? [0, 1] : [1, 0];
+  }
+  function parse(): [number, number] {
+    let [c0, c1] = parseAtom();
+    while (idx < expression.length && expression[idx] !== ')') {
+      const op = expression[idx++];
+      const [r0, r1] = parseAtom();
+      if (op === '&') { [c0, c1] = [Math.min(c0, r0, 1+c0+r0), Math.min(c1+r1, 1+Math.min(c1,r1))]; }
+      else { [c0, c1] = [Math.min(c0+r0, 1+Math.min(c0,r0)), Math.min(c1, r1, 1+c1+r1)]; }
+    }
+    return [c0, c1];
+  }
+  const [c0, c1] = parse();
+  return c0 === 0 ? c1 : c0;
 }`,
     python: `def minOperationsToFlip(expression):
-    pass`,
+    if hasattr(expression, 'to_py'): expression = str(expression)
+    idx = [0]
+    def parse_atom():
+        if expression[idx[0]] == '(':
+            idx[0] += 1; result = parse(); idx[0] += 1; return result
+        ch = expression[idx[0]]; idx[0] += 1
+        return (0, 1) if ch == '0' else (1, 0)
+    def parse():
+        c0, c1 = parse_atom()
+        while idx[0] < len(expression) and expression[idx[0]] != ')':
+            op = expression[idx[0]]; idx[0] += 1
+            r0, r1 = parse_atom()
+            if op == '&': c0, c1 = min(c0, r0, 1+c0+r0), min(c1+r1, 1+min(c1,r1))
+            else: c0, c1 = min(c0+r0, 1+min(c0,r0)), min(c1, r1, 1+c1+r1)
+        return c0, c1
+    c0, c1 = parse()
+    return c1 if c0 == 0 else c0`,
   },
   visibleTests: [
     { args: ['1&(0|1)'], expected: 1 },

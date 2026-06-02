@@ -44,13 +44,76 @@ A single point may have multiple connections. Return the **minimum total cost** 
   params: ['cost'],
   starterCode: {
     javascript: `function minCostConnectGroups(cost) {
-
+  const s1 = cost.length, s2 = cost[0].length, full = (1 << s2) - 1;
+  const minCost2 = new Array(s2).fill(Infinity);
+  for (let i = 0; i < s1; i++) for (let j = 0; j < s2; j++) if (cost[i][j] < minCost2[j]) minCost2[j] = cost[i][j];
+  let dp = new Array(1 << s2).fill(Infinity); dp[0] = 0;
+  for (let i = 0; i < s1; i++) {
+    const newDp = new Array(1 << s2).fill(Infinity);
+    for (let mask = 0; mask <= full; mask++) {
+      if (dp[mask] === Infinity) continue;
+      for (let j = 0; j < s2; j++) {
+        const c = dp[mask] + cost[i][j];
+        const nm = mask | (1 << j);
+        if (c < newDp[nm]) newDp[nm] = c;
+      }
+    }
+    dp = newDp;
+  }
+  let ans = Infinity;
+  for (let mask = 0; mask <= full; mask++) {
+    if (dp[mask] === Infinity) continue;
+    let extra = 0;
+    for (let j = 0; j < s2; j++) if (!(mask & (1 << j))) extra += minCost2[j];
+    if (dp[mask] + extra < ans) ans = dp[mask] + extra;
+  }
+  return ans;
 }`,
     typescript: `function minCostConnectGroups(cost: number[][]): number {
-
+  const s1 = cost.length, s2 = cost[0]!.length, full = (1 << s2) - 1;
+  const minCost2 = new Array<number>(s2).fill(Infinity);
+  for (let i = 0; i < s1; i++) for (let j = 0; j < s2; j++) if (cost[i]![j]! < minCost2[j]!) minCost2[j] = cost[i]![j]!;
+  let dp = new Array<number>(1 << s2).fill(Infinity); dp[0] = 0;
+  for (let i = 0; i < s1; i++) {
+    const newDp = new Array<number>(1 << s2).fill(Infinity);
+    for (let mask = 0; mask <= full; mask++) {
+      if (dp[mask]! === Infinity) continue;
+      for (let j = 0; j < s2; j++) {
+        const c = dp[mask]! + cost[i]![j]!;
+        const nm = mask | (1 << j);
+        if (c < newDp[nm]!) newDp[nm] = c;
+      }
+    }
+    dp = newDp;
+  }
+  let ans = Infinity;
+  for (let mask = 0; mask <= full; mask++) {
+    if (dp[mask]! === Infinity) continue;
+    let extra = 0;
+    for (let j = 0; j < s2; j++) if (!(mask & (1 << j))) extra += minCost2[j]!;
+    if (dp[mask]! + extra < ans) ans = dp[mask]! + extra;
+  }
+  return ans;
 }`,
     python: `def minCostConnectGroups(cost):
-    pass`,
+    if hasattr(cost, 'to_py'): cost = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in cost.to_py()]
+    s1, s2 = len(cost), len(cost[0]); full = (1 << s2) - 1
+    min_cost2 = [min(cost[i][j] for i in range(s1)) for j in range(s2)]
+    dp = [float('inf')] * (1 << s2); dp[0] = 0
+    for i in range(s1):
+        new_dp = [float('inf')] * (1 << s2)
+        for mask in range(full + 1):
+            if dp[mask] == float('inf'): continue
+            for j in range(s2):
+                c = dp[mask] + cost[i][j]; nm = mask | (1 << j)
+                if c < new_dp[nm]: new_dp[nm] = c
+        dp = new_dp
+    ans = float('inf')
+    for mask in range(full + 1):
+        if dp[mask] == float('inf'): continue
+        extra = sum(min_cost2[j] for j in range(s2) if not (mask & (1 << j)))
+        if dp[mask] + extra < ans: ans = dp[mask] + extra
+    return ans`,
   },
   visibleTests: [
     { args: [[[1]]], expected: 1 },

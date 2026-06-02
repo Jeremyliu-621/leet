@@ -35,12 +35,40 @@ Return the **minimum cost** of connecting all the given sticks into one stick in
   params: ['sticks'],
   starterCode: {
     javascript: `function connectSticks(sticks) {
-
+  if (sticks.length <= 1) return 0;
+  sticks = [...sticks].sort((a, b) => a - b);
+  let total = 0;
+  while (sticks.length > 1) {
+    const merged = sticks.shift() + sticks.shift();
+    total += merged;
+    let lo = 0, hi = sticks.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (sticks[mid] <= merged) lo = mid + 1; else hi = mid; }
+    sticks.splice(lo, 0, merged);
+  }
+  return total;
 }`,
-    typescript: "function connectSticks(sticks: number[]): number {\n\n}",
-
+    typescript: `function connectSticks(sticks: number[]): number {
+  if (sticks.length <= 1) return 0;
+  sticks = [...sticks].sort((a, b) => a - b);
+  let total = 0;
+  while (sticks.length > 1) {
+    const merged = sticks.shift()! + sticks.shift()!;
+    total += merged;
+    let lo = 0, hi = sticks.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (sticks[mid]! <= merged) lo = mid + 1; else hi = mid; }
+    sticks.splice(lo, 0, merged);
+  }
+  return total;
+}`,
     python: `def connectSticks(sticks):
-    pass`,
+    import heapq
+    if hasattr(sticks, 'to_py'): sticks = list(sticks.to_py())
+    heapq.heapify(sticks)
+    total = 0
+    while len(sticks) > 1:
+        merged = heapq.heappop(sticks) + heapq.heappop(sticks)
+        total += merged; heapq.heappush(sticks, merged)
+    return total`,
   },
   visibleTests: [
     { args: [[2, 4, 3]], expected: 14 },

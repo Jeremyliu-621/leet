@@ -46,13 +46,98 @@ Your goal is to convert \`source\` to \`target\`. Return the **minimum total cos
   params: ['source', 'target', 'original', 'changed', 'cost'],
   starterCode: {
     javascript: `function minimumCost(source, target, original, changed, cost) {
-
+  const n = source.length;
+  const strId = new Map();
+  const getId = s => { if (!strId.has(s)) strId.set(s, strId.size); return strId.get(s); };
+  for (const s of original) getId(s);
+  for (const s of changed) getId(s);
+  const m = strId.size;
+  const INF = Infinity;
+  const dist = Array.from({length: m}, (_, i) => { const r = new Array(m).fill(INF); r[i] = 0; return r; });
+  for (let k = 0; k < original.length; k++) {
+    const u = getId(original[k]), v = getId(changed[k]);
+    if (cost[k] < dist[u][v]) dist[u][v] = cost[k];
+  }
+  for (let k=0;k<m;k++) for (let i=0;i<m;i++) for (let j=0;j<m;j++)
+    if (dist[i][k]<INF&&dist[k][j]<INF&&dist[i][k]+dist[k][j]<dist[i][j]) dist[i][j]=dist[i][k]+dist[k][j];
+  const dp = new Array(n + 1).fill(INF); dp[0] = 0;
+  for (let i = 1; i <= n; i++) {
+    for (let len = 1; len <= i; len++) {
+      if (dp[i - len] === INF) continue;
+      const src = source.slice(i - len, i), tgt = target.slice(i - len, i);
+      if (src === tgt) { if (dp[i - len] < dp[i]) dp[i] = dp[i - len]; continue; }
+      if (!strId.has(src) || !strId.has(tgt)) continue;
+      const u = strId.get(src), v = strId.get(tgt), c = dist[u][v];
+      if (c < INF && dp[i - len] + c < dp[i]) dp[i] = dp[i - len] + c;
+    }
+  }
+  return dp[n] === INF ? -1 : dp[n];
 }`,
     typescript: `function minimumCost(source: string, target: string, original: string[], changed: string[], cost: number[]): number {
-
+  const n = source.length;
+  const strId = new Map<string, number>();
+  const getId = (s: string): number => { if (!strId.has(s)) strId.set(s, strId.size); return strId.get(s)!; };
+  for (const s of original) getId(s);
+  for (const s of changed) getId(s);
+  const m = strId.size;
+  const INF = Infinity;
+  const dist = Array.from({length: m}, (_, i) => { const r = new Array<number>(m).fill(INF); r[i] = 0; return r; });
+  for (let k = 0; k < original.length; k++) {
+    const u = getId(original[k]!), v = getId(changed[k]!);
+    if (cost[k]! < dist[u]![v]!) dist[u]![v] = cost[k]!;
+  }
+  for (let k=0;k<m;k++) for (let i=0;i<m;i++) for (let j=0;j<m;j++)
+    if (dist[i]![k]!<INF&&dist[k]![j]!<INF&&dist[i]![k]!+dist[k]![j]!<dist[i]![j]!) dist[i]![j]=dist[i]![k]!+dist[k]![j]!;
+  const dp = new Array<number>(n + 1).fill(INF); dp[0] = 0;
+  for (let i = 1; i <= n; i++) {
+    for (let len = 1; len <= i; len++) {
+      if (dp[i - len]! === INF) continue;
+      const src = source.slice(i - len, i), tgt = target.slice(i - len, i);
+      if (src === tgt) { if (dp[i - len]! < dp[i]!) dp[i] = dp[i - len]!; continue; }
+      if (!strId.has(src) || !strId.has(tgt)) continue;
+      const u = strId.get(src)!, v = strId.get(tgt)!, c = dist[u]![v]!;
+      if (c < INF && dp[i - len]! + c < dp[i]!) dp[i] = dp[i - len]! + c;
+    }
+  }
+  return dp[n]! === INF ? -1 : dp[n]!;
 }`,
     python: `def minimumCost(source, target, original, changed, cost):
-    pass`,
+    if hasattr(source, 'to_py'): source = str(source)
+    if hasattr(target, 'to_py'): target = str(target)
+    if hasattr(original, 'to_py'): original = [str(x) for x in original.to_py()]
+    if hasattr(changed, 'to_py'): changed = [str(x) for x in changed.to_py()]
+    if hasattr(cost, 'to_py'): cost = list(cost.to_py())
+    n = len(source)
+    str_id = {}
+    def get_id(s):
+        if s not in str_id: str_id[s] = len(str_id)
+        return str_id[s]
+    for s in original: get_id(s)
+    for s in changed: get_id(s)
+    m = len(str_id)
+    INF = float('inf')
+    dist = [[INF] * m for _ in range(m)]
+    for i in range(m): dist[i][i] = 0
+    for k in range(len(original)):
+        u, v = get_id(original[k]), get_id(changed[k])
+        if cost[k] < dist[u][v]: dist[u][v] = cost[k]
+    for k in range(m):
+        for i in range(m):
+            for j in range(m):
+                if dist[i][k] < INF and dist[k][j] < INF and dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    dp = [INF] * (n + 1); dp[0] = 0
+    for i in range(1, n + 1):
+        for l in range(1, i + 1):
+            if dp[i - l] == INF: continue
+            src = source[i-l:i]; tgt = target[i-l:i]
+            if src == tgt:
+                if dp[i - l] < dp[i]: dp[i] = dp[i - l]
+                continue
+            if src not in str_id or tgt not in str_id: continue
+            u, v = str_id[src], str_id[tgt]; c = dist[u][v]
+            if c < INF and dp[i - l] + c < dp[i]: dp[i] = dp[i - l] + c
+    return -1 if dp[n] == INF else dp[n]`,
   },
   visibleTests: [
     {

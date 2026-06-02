@@ -38,14 +38,61 @@ Return the **minimum cost** to convert \`original\` to \`target\` using any numb
   params: ['original', 'target', 'originalChar', 'changedChar', 'cost'],
   starterCode: {
     javascript: `function minimumCostConvertString(original, target, originalChar, changedChar, cost) {
-  // Floyd-Warshall on 26 chars, then sum per-position costs
+  const INF = Infinity;
+  const dist = Array.from({length: 26}, (_, i) => { const r = new Array(26).fill(INF); r[i] = 0; return r; });
+  for (let k = 0; k < originalChar.length; k++) {
+    const u = originalChar[k].charCodeAt(0) - 97, v = changedChar[k].charCodeAt(0) - 97;
+    if (cost[k] < dist[u][v]) dist[u][v] = cost[k];
+  }
+  for (let k=0;k<26;k++) for (let i=0;i<26;i++) for (let j=0;j<26;j++)
+    if (dist[i][k]<INF&&dist[k][j]<INF&&dist[i][k]+dist[k][j]<dist[i][j]) dist[i][j]=dist[i][k]+dist[k][j];
+  let total = 0;
+  for (let i = 0; i < original.length; i++) {
+    const u = original.charCodeAt(i) - 97, v = target.charCodeAt(i) - 97;
+    if (u !== v) { if (dist[u][v] === INF) return -1; total += dist[u][v]; }
+  }
+  return total;
 }`,
     typescript: `function minimumCostConvertString(original: string, target: string, originalChar: string[], changedChar: string[], cost: number[]): number {
-  // Floyd-Warshall on 26 chars, then sum per-position costs
+  const INF = Infinity;
+  const dist = Array.from({length: 26}, (_, i) => { const r = new Array<number>(26).fill(INF); r[i] = 0; return r; });
+  for (let k = 0; k < originalChar.length; k++) {
+    const u = originalChar[k]!.charCodeAt(0) - 97, v = changedChar[k]!.charCodeAt(0) - 97;
+    if (cost[k]! < dist[u]![v]!) dist[u]![v] = cost[k]!;
+  }
+  for (let k=0;k<26;k++) for (let i=0;i<26;i++) for (let j=0;j<26;j++)
+    if (dist[i]![k]!<INF&&dist[k]![j]!<INF&&dist[i]![k]!+dist[k]![j]!<dist[i]![j]!) dist[i]![j]=dist[i]![k]!+dist[k]![j]!;
+  let total = 0;
+  for (let i = 0; i < original.length; i++) {
+    const u = original.charCodeAt(i) - 97, v = target.charCodeAt(i) - 97;
+    if (u !== v) { if (dist[u]![v]! === INF) return -1; total += dist[u]![v]!; }
+  }
+  return total;
 }`,
     python: `def minimumCostConvertString(original, target, originalChar, changedChar, cost):
-    # Floyd-Warshall on 26 chars, then sum per-position costs
-    pass`,
+    if hasattr(original, 'to_py'): original = str(original)
+    if hasattr(target, 'to_py'): target = str(target)
+    if hasattr(originalChar, 'to_py'): originalChar = [str(x) for x in originalChar.to_py()]
+    if hasattr(changedChar, 'to_py'): changedChar = [str(x) for x in changedChar.to_py()]
+    if hasattr(cost, 'to_py'): cost = list(cost.to_py())
+    INF = float('inf')
+    dist = [[INF] * 26 for _ in range(26)]
+    for i in range(26): dist[i][i] = 0
+    for k in range(len(originalChar)):
+        u = ord(originalChar[k]) - 97; v = ord(changedChar[k]) - 97
+        if cost[k] < dist[u][v]: dist[u][v] = cost[k]
+    for k in range(26):
+        for i in range(26):
+            for j in range(26):
+                if dist[i][k] < INF and dist[k][j] < INF and dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+    total = 0
+    for i in range(len(original)):
+        u = ord(original[i]) - 97; v = ord(target[i]) - 97
+        if u != v:
+            if dist[u][v] == INF: return -1
+            total += dist[u][v]
+    return total`,
   },
   visibleTests: [
     { args: ['abcd', 'acbe', ['a','b','c','c','e','d'], ['b','c','b','e','b','e'], [2,5,5,1,2,20]], expected: 28 },
