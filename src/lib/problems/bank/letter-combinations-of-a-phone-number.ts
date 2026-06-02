@@ -43,12 +43,36 @@ A mapping of digits to letters (just like on the telephone buttons) is given bel
   params: ['digits'],
   starterCode: {
     javascript: `function letterCombinations(digits) {
-
+  if (!digits.length) return [];
+  const map = {2:'abc',3:'def',4:'ghi',5:'jkl',6:'mno',7:'pqrs',8:'tuv',9:'wxyz'};
+  const res = [];
+  function bt(i, cur) {
+    if (i === digits.length) { res.push(cur); return; }
+    for (const c of map[digits[i]]) bt(i + 1, cur + c);
+  }
+  bt(0, '');
+  return res;
 }`,
-    typescript: "function letterCombinations(digits: string): string[] {\n\n}",
-
-    python: `def letterCombinations(digits: str) -> list[str]:
-    pass`,
+    typescript: `function letterCombinations(digits: string): string[] {
+  if (!digits.length) return [];
+  const map: Record<string, string> = {2:'abc',3:'def',4:'ghi',5:'jkl',6:'mno',7:'pqrs',8:'tuv',9:'wxyz'};
+  const res: string[] = [];
+  function bt(i: number, cur: string) {
+    if (i === digits.length) { res.push(cur); return; }
+    for (const c of map[digits[i]]) bt(i + 1, cur + c);
+  }
+  bt(0, '');
+  return res;
+}`,
+    python: `def letterCombinations(digits):
+    if not digits: return []
+    mp = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}
+    res = []
+    def bt(i, cur):
+        if i == len(digits): res.append(cur); return
+        for c in mp[digits[i]]: bt(i+1, cur+c)
+    bt(0, '')
+    return res`,
   },
   visibleTests: [
     { args: ['23'], expected: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'] },

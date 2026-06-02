@@ -49,11 +49,35 @@ function getSmallestString(s) {
   params: ['s'],
   starterCode: {
     javascript: `function getSmallestString(s) {
-
+  const arr = s.split('');
+  for (let i = 0; i < arr.length - 1; i++) {
+    const a = +arr[i], b = +arr[i + 1];
+    if (a % 2 === b % 2 && b < a) {
+      [arr[i], arr[i+1]] = [arr[i+1], arr[i]];
+      return arr.join('');
+    }
+  }
+  return s;
 }`,
-    typescript: 'function getSmallestString(s: string): string {\n\n}',
+    typescript: `function getSmallestString(s: string): string {
+  const arr = s.split('');
+  for (let i = 0; i < arr.length - 1; i++) {
+    const a = +arr[i], b = +arr[i + 1];
+    if (a % 2 === b % 2 && b < a) {
+      [arr[i], arr[i+1]] = [arr[i+1], arr[i]];
+      return arr.join('');
+    }
+  }
+  return s;
+}`,
     python: `def getSmallestString(s):
-    pass`,
+    arr = list(s)
+    for i in range(len(arr) - 1):
+        a, b = int(arr[i]), int(arr[i+1])
+        if a % 2 == b % 2 and b < a:
+            arr[i], arr[i+1] = arr[i+1], arr[i]
+            return ''.join(arr)
+    return s`,
   },
   visibleTests: [
     { args: ['45'], expected: '45' },

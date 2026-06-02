@@ -32,13 +32,33 @@ export const problem: Problem = {
   params: ['arr', 'k'],
   starterCode: {
     javascript: `function findLeastNumOfUniqueInts(arr, k) {
-
+  const freq = new Map();
+  for (const x of arr) freq.set(x, (freq.get(x) ?? 0) + 1);
+  const freqs = [...freq.values()].sort((a, b) => a - b);
+  let removed = 0;
+  for (const f of freqs) {
+    if (k >= f) { k -= f; removed++; } else break;
+  }
+  return freqs.length - removed;
 }`,
     typescript: `function findLeastNumOfUniqueInts(arr: number[], k: number): number {
-
+  const freq = new Map<number, number>();
+  for (const x of arr) freq.set(x, (freq.get(x) ?? 0) + 1);
+  const freqs = [...freq.values()].sort((a, b) => a - b);
+  let removed = 0;
+  for (const f of freqs) {
+    if (k >= f) { k -= f; removed++; } else break;
+  }
+  return freqs.length - removed;
 }`,
     python: `def findLeastNumOfUniqueInts(arr, k):
-    pass`,
+    from collections import Counter
+    freqs = sorted(Counter(arr).values())
+    removed = 0
+    for f in freqs:
+        if k >= f: k -= f; removed += 1
+        else: break
+    return len(freqs) - removed`,
   },
   visibleTests: [
     { args: [[5, 5, 4], 1], expected: 1 },

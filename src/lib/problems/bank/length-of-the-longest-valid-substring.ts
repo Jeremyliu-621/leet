@@ -36,13 +36,43 @@ A string is called **valid** if none of its substrings is in \`forbidden\`. Retu
   params: ['word', 'forbidden'],
   starterCode: {
     javascript: `function longestValidSubstring(word, forbidden) {
-
+  const forbidSet = new Set(forbidden);
+  let left = 0, ans = 0;
+  for (let right = 0; right < word.length; right++) {
+    for (let l = 1; l <= Math.min(10, right - left + 1); l++) {
+      if (forbidSet.has(word.slice(right - l + 1, right + 1))) {
+        left = right - l + 2;
+        break;
+      }
+    }
+    if (right - left + 1 > ans) ans = right - left + 1;
+  }
+  return ans;
 }`,
     typescript: `function longestValidSubstring(word: string, forbidden: string[]): number {
-
+  const forbidSet = new Set(forbidden);
+  let left = 0, ans = 0;
+  for (let right = 0; right < word.length; right++) {
+    for (let l = 1; l <= Math.min(10, right - left + 1); l++) {
+      if (forbidSet.has(word.slice(right - l + 1, right + 1))) {
+        left = right - l + 2;
+        break;
+      }
+    }
+    if (right - left + 1 > ans) ans = right - left + 1;
+  }
+  return ans;
 }`,
     python: `def longestValidSubstring(word, forbidden):
-    pass`,
+    forbid = set(forbidden)
+    left = ans = 0
+    for right in range(len(word)):
+        for l in range(1, min(10, right - left + 1) + 1):
+            if word[right - l + 1:right + 1] in forbid:
+                left = right - l + 2
+                break
+        ans = max(ans, right - left + 1)
+    return ans`,
   },
   visibleTests: [
     { args: ['cbaaaabc', ['aaa', 'cb']], expected: 4 },

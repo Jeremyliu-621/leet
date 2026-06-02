@@ -44,12 +44,28 @@ function longestContinuousSubstring(s) {
   params: ['s'],
   starterCode: {
     javascript: `function longestContinuousSubstring(s) {
-
+  let best = 1, cur = 1;
+  for (let i = 1; i < s.length; i++) {
+    if (s.charCodeAt(i) === s.charCodeAt(i-1) + 1) cur++; else cur = 1;
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
-    typescript: "function longestContinuousSubstring(s: string): number {\n\n}",
-
+    typescript: `function longestContinuousSubstring(s: string): number {
+  let best = 1, cur = 1;
+  for (let i = 1; i < s.length; i++) {
+    if (s.charCodeAt(i) === s.charCodeAt(i-1) + 1) cur++; else cur = 1;
+    if (cur > best) best = cur;
+  }
+  return best;
+}`,
     python: `def longestContinuousSubstring(s):
-    pass`,
+    best = cur = 1
+    for i in range(1, len(s)):
+        if ord(s[i]) == ord(s[i-1]) + 1: cur += 1
+        else: cur = 1
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: ['abacaba'], expected: 2 },

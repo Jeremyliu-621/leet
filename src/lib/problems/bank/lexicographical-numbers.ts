@@ -28,11 +28,46 @@ You must write an algorithm that runs in \`O(n)\` time and uses \`O(1)\` extra s
   params: ['n'],
   starterCode: {
     javascript: `function lexicalOrder(n) {
-
+  const res = [];
+  let curr = 1;
+  for (let i = 0; i < n; i++) {
+    res.push(curr);
+    if (curr * 10 <= n) {
+      curr *= 10;
+    } else {
+      if (curr === n) curr = Math.floor(curr / 10);
+      curr++;
+      while (curr % 10 === 0) curr = Math.floor(curr / 10);
+    }
+  }
+  return res;
 }`,
-    typescript: 'function lexicalOrder(n: number): number[] {\n\n}',
+    typescript: `function lexicalOrder(n: number): number[] {
+  const res: number[] = [];
+  let curr = 1;
+  for (let i = 0; i < n; i++) {
+    res.push(curr);
+    if (curr * 10 <= n) {
+      curr *= 10;
+    } else {
+      if (curr === n) curr = Math.floor(curr / 10);
+      curr++;
+      while (curr % 10 === 0) curr = Math.floor(curr / 10);
+    }
+  }
+  return res;
+}`,
     python: `def lexicalOrder(n):
-    pass`,
+    res, curr = [], 1
+    for _ in range(n):
+        res.append(curr)
+        if curr * 10 <= n:
+            curr *= 10
+        else:
+            if curr == n: curr //= 10
+            curr += 1
+            while curr % 10 == 0: curr //= 10
+    return res`,
   },
   visibleTests: [
     { args: [13], expected: [1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9] },

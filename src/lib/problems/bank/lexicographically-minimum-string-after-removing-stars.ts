@@ -37,13 +37,48 @@ Return the **lexicographically smallest** resulting string after removing all \`
   params: ['s'],
   starterCode: {
     javascript: `function clearStars(s) {
-
+  const buckets = Array.from({length: 26}, () => []);
+  const deleted = new Array(s.length).fill(false);
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '*') {
+      deleted[i] = true;
+      for (let c = 0; c < 26; c++) {
+        if (buckets[c].length > 0) { deleted[buckets[c].pop()] = true; break; }
+      }
+    } else {
+      buckets[s.charCodeAt(i) - 97].push(i);
+    }
+  }
+  return [...s].filter((_, i) => !deleted[i]).join('');
 }`,
     typescript: `function clearStars(s: string): string {
-
+  const buckets: number[][] = Array.from({length: 26}, () => []);
+  const deleted = new Array(s.length).fill(false);
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '*') {
+      deleted[i] = true;
+      for (let c = 0; c < 26; c++) {
+        if (buckets[c].length > 0) { deleted[buckets[c].pop()!] = true; break; }
+      }
+    } else {
+      buckets[s.charCodeAt(i) - 97].push(i);
+    }
+  }
+  return [...s].filter((_, i) => !deleted[i]).join('');
 }`,
-    python: `def clearStars(s: str) -> str:
-    pass`,
+    python: `def clearStars(s):
+    buckets = [[] for _ in range(26)]
+    deleted = [False] * len(s)
+    for i, c in enumerate(s):
+        if c == '*':
+            deleted[i] = True
+            for b in range(26):
+                if buckets[b]:
+                    deleted[buckets[b].pop()] = True
+                    break
+        else:
+            buckets[ord(c) - ord('a')].append(i)
+    return ''.join(c for i, c in enumerate(s) if not deleted[i])`,
   },
   visibleTests: [
     { args: ['aaba*'], expected: 'aab' },

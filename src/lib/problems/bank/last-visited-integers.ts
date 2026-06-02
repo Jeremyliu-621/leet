@@ -44,11 +44,42 @@ Return an array of the last visited integers in the order they are found.`,
   params: ['nums'],
   starterCode: {
     javascript: `function lastVisitedIntegers(nums) {
-
+  const seen = [], res = [];
+  let k = 0;
+  for (const n of nums) {
+    if (n === -1) {
+      k++;
+      res.push(seen.length >= k ? seen[seen.length - k] : -1);
+    } else {
+      seen.push(n);
+      k = 0;
+    }
+  }
+  return res;
 }`,
-    typescript: 'function lastVisitedIntegers(nums: number[]): number[] {\n\n}',
+    typescript: `function lastVisitedIntegers(nums: number[]): number[] {
+  const seen: number[] = [], res: number[] = [];
+  let k = 0;
+  for (const n of nums) {
+    if (n === -1) {
+      k++;
+      res.push(seen.length >= k ? seen[seen.length - k] : -1);
+    } else {
+      seen.push(n);
+      k = 0;
+    }
+  }
+  return res;
+}`,
     python: `def lastVisitedIntegers(nums):
-    pass`,
+    seen, res, k = [], [], 0
+    for n in nums:
+        if n == -1:
+            k += 1
+            res.append(seen[-k] if len(seen) >= k else -1)
+        else:
+            seen.append(n); k = 0
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, -1, -1, -1]], expected: [2, 1, -1] },
