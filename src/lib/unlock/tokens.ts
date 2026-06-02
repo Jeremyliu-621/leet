@@ -20,7 +20,7 @@ export function createToken(input: CreateTokenInput): UnlockToken {
   const now = input.now ?? Date.now();
   // Guard against zero, negative, NaN, or Infinity — clamp to at least 1 minute.
   const durationMs =
-    typeof input.durationMs === 'number' && isFinite(input.durationMs) && input.durationMs > 0
+    typeof input.durationMs === 'number' && Number.isFinite(input.durationMs) && input.durationMs > 0
       ? input.durationMs
       : MIN_DURATION_MS;
   return {
