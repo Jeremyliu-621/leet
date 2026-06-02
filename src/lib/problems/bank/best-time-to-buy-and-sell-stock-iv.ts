@@ -41,14 +41,46 @@ export const problem: Problem = {
   params: ['k', 'prices'],
   starterCode: {
     javascript: `function maxProfit(k, prices) {
-  // return max profit with at most k transactions
-
+  if (k >= prices.length / 2) {
+    let p = 0;
+    for (let i = 1; i < prices.length; i++) p += Math.max(0, prices[i] - prices[i - 1]);
+    return p;
+  }
+  const buy = new Array(k + 1).fill(-Infinity), sell = new Array(k + 1).fill(0);
+  for (const p of prices)
+    for (let j = k; j >= 1; j--) {
+      buy[j] = Math.max(buy[j], sell[j - 1] - p);
+      sell[j] = Math.max(sell[j], buy[j] + p);
+    }
+  return sell[k];
 }`,
-    typescript: "function maxProfit(k: number, prices: number[]): number {\n  // return max profit with at most k transactions\n\n}",
+    typescript: `function maxProfit(k: number, prices: number[]): number {
+  if (k >= prices.length / 2) {
+    let p = 0;
+    for (let i = 1; i < prices.length; i++) p += Math.max(0, prices[i]! - prices[i - 1]!);
+    return p;
+  }
+  const buy = new Array<number>(k + 1).fill(-Infinity), sell = new Array<number>(k + 1).fill(0);
+  for (const p of prices)
+    for (let j = k; j >= 1; j--) {
+      buy[j]! = Math.max(buy[j]!, sell[j - 1]! - p);
+      sell[j]! = Math.max(sell[j]!, buy[j]! + p);
+    }
+  return sell[k]!;
+}`,
 
     python: `def maxProfit(k: int, prices: list) -> int:
-    # return max profit with at most k transactions
-    pass
+    if hasattr(prices, 'to_py'): prices = prices.to_py()
+    prices = [int(x) for x in prices]
+    n = len(prices)
+    if k >= n // 2:
+        return sum(max(0, prices[i]-prices[i-1]) for i in range(1, n))
+    buy = [-float('inf')] * (k+1); sell = [0] * (k+1)
+    for p in prices:
+        for j in range(k, 0, -1):
+            buy[j] = max(buy[j], sell[j-1] - p)
+            sell[j] = max(sell[j], buy[j] + p)
+    return sell[k]
 `,
   },
   visibleTests: [

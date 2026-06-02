@@ -107,11 +107,32 @@ Trees are given as BFS-order arrays where \`null\` indicates missing children.`,
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and minCameraCoverRunner wrapper are pre-defined.\n// Implement the function below:\nfunction minCameraCover(root) {\n\n}\n',
-    typescript: "function minCameraCoverRunner(root: (number | null)[]): number {\n\n}",
+      '// TreeNode class and minCameraCoverRunner wrapper are pre-defined.\n// Implement the function below:\nfunction minCameraCover(root) {\n  let count = 0;\n  function dfs(node) {\n    if (!node) return 1;\n    const l = dfs(node.left), r = dfs(node.right);\n    if (l === 0 || r === 0) { count++; return 2; }\n    if (l === 2 || r === 2) return 1;\n    return 0;\n  }\n  if (dfs(root) === 0) count++;\n  return count;\n}\n',
+    typescript: `function minCameraCoverRunner(root: (number | null)[]): number {
+  if (!root.length || root[0] === null) return 0;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  let count = 0;
+  function dfs(n: N|null): number {
+    if (!n) return 1;
+    const l = dfs(n.l), rv = dfs(n.r);
+    if (l === 0 || rv === 0) { count++; return 2; }
+    if (l === 2 || rv === 2) return 1;
+    return 0;
+  }
+  if (dfs(r) === 0) count++;
+  return count;
+}`,
 
     python:
-      '# TreeNode class and minCameraCoverRunner wrapper are pre-defined.\n# Implement the function below:\ndef minCameraCover(root):\n    pass\n',
+      '# TreeNode class and minCameraCoverRunner wrapper are pre-defined.\n# Implement the function below:\ndef minCameraCover(root):\n    count = [0]\n    def dfs(node):\n        if not node: return 1\n        l, r = dfs(node.left), dfs(node.right)\n        if l == 0 or r == 0: count[0] += 1; return 2\n        if l == 2 or r == 2: return 1\n        return 0\n    if dfs(root) == 0: count[0] += 1\n    return count[0]\n',
   },
   visibleTests: [
     { args: [[0,0,null,0,0]], expected: 1 },

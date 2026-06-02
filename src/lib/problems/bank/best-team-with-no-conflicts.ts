@@ -43,10 +43,37 @@ Given two lists, \`scores\` and \`ages\`, where each \`scores[i]\` and \`ages[i]
   functionName: 'bestTeamScore',
   params: ['scores', 'ages'],
   starterCode: {
-    javascript: 'function bestTeamScore(scores, ages) {\n\n}\n',
-    typescript: "function bestTeamScore(scores: number[], ages: number[]): number {\n\n}",
+    javascript: `function bestTeamScore(scores, ages) {
+  const n = scores.length;
+  const p = Array.from({length: n}, (_, i) => [ages[i], scores[i]]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const dp = p.map(x => x[1]);
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < i; j++)
+      if (p[j][1] <= p[i][1]) dp[i] = Math.max(dp[i], dp[j] + p[i][1]);
+  return Math.max(...dp);
+}`,
+    typescript: `function bestTeamScore(scores: number[], ages: number[]): number {
+  const n = scores.length;
+  const p = Array.from({length: n}, (_, i) => [ages[i]!, scores[i]!]).sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+  const dp = p.map(x => x[1]!);
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < i; j++)
+      if (p[j]![1]! <= p[i]![1]!) dp[i] = Math.max(dp[i]!, dp[j]! + p[i]![1]!);
+  return Math.max(...dp);
+}`,
 
-    python: 'def bestTeamScore(scores: list, ages: list) -> int:\n    pass\n',
+    python: `def bestTeamScore(scores: list, ages: list) -> int:
+    if hasattr(scores, 'to_py'): scores = scores.to_py()
+    if hasattr(ages, 'to_py'): ages = ages.to_py()
+    players = sorted(zip([int(a) for a in ages], [int(s) for s in scores]))
+    n = len(players)
+    dp = [s for _, s in players]
+    for i in range(n):
+        for j in range(i):
+            if players[j][1] <= players[i][1]:
+                dp[i] = max(dp[i], dp[j] + players[i][1])
+    return max(dp)
+`,
   },
   visibleTests: [
     { args: [[1,3,5,10,15], [1,2,3,4,5]], expected: 34 },

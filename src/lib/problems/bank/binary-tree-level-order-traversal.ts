@@ -90,15 +90,48 @@ export const problem: Problem = {
   starterCode: {
     javascript: `// TreeNode is pre-defined. Implement the function below:
 function levelOrder(root) {
-
+  if (!root) return [];
+  const result = [], q = [root];
+  while (q.length) {
+    const level = [], sz = q.length;
+    for (let i = 0; i < sz; i++) {
+      const node = q.shift();
+      level.push(node.val);
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+    }
+    result.push(level);
+  }
+  return result;
 }`,
     typescript: `// TreeNode is pre-defined. Implement the function below:
-function levelOrder(root: TreeNode | null): number[][] {
-
+function levelOrder(root: any): number[][] {
+  if (!root) return [];
+  const result: number[][] = [], q: any[] = [root];
+  while (q.length) {
+    const level: number[] = [], sz = q.length;
+    for (let i = 0; i < sz; i++) {
+      const node = q.shift();
+      level.push(node.val);
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+    }
+    result.push(level);
+  }
+  return result;
 }`,
     python: `# TreeNode is pre-defined. Implement the function below:
 def levelOrder(root):
-    pass`,
+    if not root: return []
+    result, q = [], [root]
+    while q:
+        level, nxt = [], []
+        for node in q:
+            level.append(node.val)
+            if node.left: nxt.append(node.left)
+            if node.right: nxt.append(node.right)
+        result.append(level); q = nxt
+    return result`,
   },
   visibleTests: [
     { args: [[3, 9, 20, null, null, 15, 7]], expected: [[3], [9, 20], [15, 7]] },

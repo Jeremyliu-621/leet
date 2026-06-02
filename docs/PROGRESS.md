@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2911** problems; 9050 tests green. Batch 278 (check-if-two-events-conflict, count-good-substrings, count-words-with-prefix, first-day-all-rooms) pushed.
+**Current focus:** Bank at **2911** problems; 9050 tests green. Starter-fill batch 38 (13 problems: amount-of-time-for-binary-tree-to-be-infected through diagonal-traverse-ii) pushed. ~2100+ stubs remaining.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 279+); UX polish; terminal/verdict-panel UX improvements.
+**Next up:** Continued starter backfill (batch 39+); bank growth (batch 279+); UX polish.
+
+### feat(bank): starter-fill batch 38 — 13 problems (2026-06-02)
+Filled JS/TS/Python starter code for: `amount-of-time-for-binary-tree-to-be-infected` (BFS on undirected tree), `as-far-from-land-as-possible` (multi-source BFS), `construct-k-palindrome-strings` (odd-freq char count), `construct-string-with-repeat-limit` (greedy freq from 'z'), `count-the-number-of-fair-pairs` (sort + two-pointer countAtMost), `count-the-number-of-inversions` (merge sort), `count-unreachable-pairs-of-nodes` (union-find), `count-vowel-substrings-of-a-string` (O(n²) window), `count-ways-to-build-good-strings` (DP), `count-ways-to-select-buildings` (prefix ones), `day-of-the-year` (cumulative days + leap), `determine-if-string-halves-are-alike` (vowel count both halves), `diagonal-traverse-ii` (group by r+c, reverse each bucket). 9050 tests.
 
 ### feat(bank): batch 278 — check-if-two-events-conflict, count-good-substrings, count-words-with-prefix, first-day-all-rooms (2026-06-02)
 Four new problems: `check-if-two-events-have-conflict` (easy/strings — string lexicographic comparison for interval overlap: s1<=e2 && s2<=e1; O(1)), `count-good-substrings` (easy/sliding-window — slide window of 3, count if all 3 chars distinct; O(n)), `count-words-with-a-given-prefix` (easy/strings — filter words using startsWith; O(n*p)), `first-day-where-you-have-been-in-all-the-rooms` (medium/dp — dp[i]=(2*dp[i-1]-dp[nextVisit[i-1]]+2) mod 10^9+7; O(n)). Bank at **2911**; 9050 tests.

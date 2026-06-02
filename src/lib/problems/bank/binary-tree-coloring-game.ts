@@ -102,11 +102,30 @@ Trees are represented as level-order (BFS) arrays where \`null\` marks a missing
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and btreeGameWinningMoveRunner wrapper are pre-defined.\nfunction btreeGameWinningMove(n, root, x) {\n  \n}\n',
-    typescript:
-      'function btreeGameWinningMoveRunner(n: number, root: (number | null)[], x: number): boolean {\n  \n}',
+      '// TreeNode class and btreeGameWinningMoveRunner wrapper are pre-defined.\nfunction btreeGameWinningMove(n, root, x) {\n  const size = (node) => node ? 1 + size(node.left) + size(node.right) : 0;\n  let lc = 0, rc = 0;\n  const find = (node) => {\n    if (!node) return false;\n    if (node.val === x) { lc = size(node.left); rc = size(node.right); return true; }\n    return find(node.left) || find(node.right);\n  };\n  find(root);\n  return Math.max(lc, rc, n - lc - rc - 1) > n / 2;\n}\n',
+    typescript: `function btreeGameWinningMoveRunner(n: number, root: (number | null)[], x: number): boolean {
+  if (!root.length || root[0] === null) return false;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const nd = q.shift()!;
+    if (root[i] != null) { nd.l = mk(root[i] as number); q.push(nd.l); } i++;
+    if (i < root.length && root[i] != null) { nd.r = mk(root[i] as number); q.push(nd.r); } i++;
+  }
+  const size = (nd: N|null): number => nd ? 1 + size(nd.l) + size(nd.r) : 0;
+  let lc = 0, rc = 0;
+  const find = (nd: N|null): boolean => {
+    if (!nd) return false;
+    if (nd.v === x) { lc = size(nd.l); rc = size(nd.r); return true; }
+    return find(nd.l) || find(nd.r);
+  };
+  find(r);
+  return Math.max(lc, rc, n - lc - rc - 1) > n / 2;
+}`,
     python:
-      '# TreeNode class and btreeGameWinningMoveRunner wrapper are pre-defined.\ndef btreeGameWinningMove(n, root, x):\n    pass\n',
+      '# TreeNode class and btreeGameWinningMoveRunner wrapper are pre-defined.\ndef btreeGameWinningMove(n, root, x):\n    def size(node): return 1+size(node.left)+size(node.right) if node else 0\n    lc = rc = 0\n    def find(node):\n        nonlocal lc, rc\n        if not node: return False\n        if node.val == x: lc=size(node.left); rc=size(node.right); return True\n        return find(node.left) or find(node.right)\n    find(root)\n    return max(lc, rc, n-lc-rc-1) > n/2\n',
   },
   visibleTests: [
     { args: [11, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 3], expected: true },
