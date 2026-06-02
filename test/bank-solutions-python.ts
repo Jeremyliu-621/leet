@@ -47146,6 +47146,30 @@ def maxTotalReward(rewardValues):
     return prev[n]
 `,
 
+  // batch 278
+  'shift-distance-between-two-strings': `def shiftDistance(s, t, nextCost, previousCost):
+    n = 26
+    fwd_prefix = [0] * (n + 1)
+    for i in range(n):
+        fwd_prefix[i + 1] = fwd_prefix[i] + nextCost[i]
+    bwd_prefix = [0] * (n + 1)
+    for i in range(n):
+        bwd_prefix[i + 1] = bwd_prefix[i] + previousCost[i]
+    total = 0
+    for i in range(len(s)):
+        a = ord(s[i]) - ord('a')
+        b = ord(t[i]) - ord('a')
+        if a <= b:
+            fwd = fwd_prefix[b] - fwd_prefix[a]
+            bwd = bwd_prefix[a + 1] + (bwd_prefix[n] - bwd_prefix[b + 1])
+        else:
+            fwd = (fwd_prefix[n] - fwd_prefix[a]) + fwd_prefix[b]
+            bwd = bwd_prefix[a + 1] - bwd_prefix[b + 1]
+        total += min(fwd, bwd)
+    return total
+`,
+
+
   // batch 275
   'minimum-array-sum': `import math
 def minimumArraySum(nums, k, op1, op2):

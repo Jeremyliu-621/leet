@@ -3092,6 +3092,8 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 279
+import { problem as shiftDistanceTwoStrings } from './shift-distance-between-two-strings';
 // batch 278
 import { problem as checkTwoEventsConflict } from './check-if-two-events-have-conflict';
 import { problem as countGoodSubstrings } from './count-good-substrings';
@@ -6513,6 +6515,8 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 279
+  shiftDistanceTwoStrings,
   // batch 278
   checkTwoEventsConflict,
   countGoodSubstrings,

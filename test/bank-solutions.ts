@@ -48221,6 +48221,34 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return prev[n]!;
   },
 
+  // batch 278
+  'shift-distance-between-two-strings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const t = args[1] as string;
+    const nextCost = args[2] as number[];
+    const previousCost = args[3] as number[];
+    const n = 26;
+    const fwdPrefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) fwdPrefix[i + 1] = fwdPrefix[i]! + nextCost[i]!;
+    const bwdPrefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) bwdPrefix[i + 1] = bwdPrefix[i]! + previousCost[i]!;
+    let total = 0;
+    for (let i = 0; i < s.length; i++) {
+      const a = s.charCodeAt(i) - 97;
+      const b = t.charCodeAt(i) - 97;
+      let fwd: number, bwd: number;
+      if (a <= b) {
+        fwd = fwdPrefix[b]! - fwdPrefix[a]!;
+        bwd = bwdPrefix[a + 1]! + (bwdPrefix[n]! - bwdPrefix[b + 1]!);
+      } else {
+        fwd = (fwdPrefix[n]! - fwdPrefix[a]!) + fwdPrefix[b]!;
+        bwd = bwdPrefix[a + 1]! - bwdPrefix[b + 1]!;
+      }
+      total += Math.min(fwd, bwd);
+    }
+    return total;
+  },
+
   // batch 275
   'minimum-array-sum': (...args: unknown[]) => {
     const nums = args[0] as number[];
