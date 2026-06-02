@@ -32,13 +32,30 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countPairs(nums, k) {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] === nums[j] && (i * j) % k === 0) count++;
+    }
+  }
+  return count;
 }`,
     typescript: `function countPairs(nums: number[], k: number): number {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] === nums[j] && (i * j) % k === 0) count++;
+    }
+  }
+  return count;
 }`,
     python: `def countPairs(nums: list[int], k: int) -> int:
-    pass`,
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] == nums[j] and (i * j) % k == 0:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[3, 1, 2, 2, 2, 1, 3], 2], expected: 4 },

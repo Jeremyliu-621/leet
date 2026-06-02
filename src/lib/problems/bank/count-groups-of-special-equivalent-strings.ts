@@ -44,13 +44,27 @@ The third group is ["zzyx"]: even-indexed chars sort to "yz", odd-indexed to "xz
   params: ['words'],
   starterCode: {
     javascript: `function numSpecialEquivGroups(words) {
-
+  const canonical = w => {
+    const even = [...w].filter((_, i) => i % 2 === 0).sort().join('');
+    const odd = [...w].filter((_, i) => i % 2 === 1).sort().join('');
+    return even + '|' + odd;
+  };
+  return new Set(words.map(canonical)).size;
 }`,
     typescript: `function numSpecialEquivGroups(words: string[]): number {
-
+  const canonical = (w: string) => {
+    const even = [...w].filter((_, i) => i % 2 === 0).sort().join('');
+    const odd = [...w].filter((_, i) => i % 2 === 1).sort().join('');
+    return even + '|' + odd;
+  };
+  return new Set(words.map(canonical)).size;
 }`,
     python: `def numSpecialEquivGroups(words):
-    pass`,
+    def canonical(w):
+        even = sorted(w[i] for i in range(0, len(w), 2))
+        odd = sorted(w[i] for i in range(1, len(w), 2))
+        return tuple(even + ['|'] + odd)
+    return len(set(canonical(w) for w in words))`,
   },
   visibleTests: [
     { args: [['abcd', 'cdab', 'cbad', 'xyzz', 'zzxy', 'zzyx']], expected: 3 },

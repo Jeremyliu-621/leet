@@ -34,12 +34,23 @@ The **digit sum** of a positive integer is the sum of all its digits.
   params: ['num'],
   starterCode: {
     javascript: `function countEven(num) {
-
+  let count = 0;
+  for (let i = 1; i <= num; i++) {
+    const digitSum = String(i).split('').reduce((s, d) => s + Number(d), 0);
+    if (digitSum % 2 === 0) count++;
+  }
+  return count;
 }`,
-    typescript: "function countEven(num: number): number {\n\n}",
-
+    typescript: `function countEven(num: number): number {
+  let count = 0;
+  for (let i = 1; i <= num; i++) {
+    const digitSum = String(i).split('').reduce((s, d) => s + Number(d), 0);
+    if (digitSum % 2 === 0) count++;
+  }
+  return count;
+}`,
     python: `def countEven(num: int) -> int:
-    pass`,
+    return sum(1 for i in range(1, num + 1) if sum(int(d) for d in str(i)) % 2 == 0)`,
   },
   visibleTests: [
     { args: [30], expected: 14 },

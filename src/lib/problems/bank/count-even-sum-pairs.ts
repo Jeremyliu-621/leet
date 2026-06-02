@@ -34,13 +34,19 @@ A sum of two integers is even if and only if both integers have the same parity 
   params: ['nums'],
   starterCode: {
     javascript: `function countEvenSumPairs(nums) {
-
+  let even = 0, odd = 0;
+  for (const n of nums) n % 2 === 0 ? even++ : odd++;
+  return (even * (even - 1) / 2) + (odd * (odd - 1) / 2);
 }`,
     typescript: `function countEvenSumPairs(nums: number[]): number {
-
+  let even = 0, odd = 0;
+  for (const n of nums) n % 2 === 0 ? even++ : odd++;
+  return (even * (even - 1) / 2) + (odd * (odd - 1) / 2);
 }`,
     python: `def countEvenSumPairs(nums):
-    pass`,
+    even = sum(1 for n in nums if n % 2 == 0)
+    odd = len(nums) - even
+    return even * (even - 1) // 2 + odd * (odd - 1) // 2`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: 4 },

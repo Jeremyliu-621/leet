@@ -43,12 +43,41 @@ Return *the number of good triplets*.`,
   params: ['arr', 'a', 'b', 'c'],
   starterCode: {
     javascript: `function countGoodTriplets(arr, a, b, c) {
-
+  let count = 0;
+  const n = arr.length;
+  for (let i = 0; i < n - 2; i++) {
+    for (let j = i + 1; j < n - 1; j++) {
+      if (Math.abs(arr[i] - arr[j]) > a) continue;
+      for (let k = j + 1; k < n; k++) {
+        if (Math.abs(arr[j] - arr[k]) <= b && Math.abs(arr[i] - arr[k]) <= c) count++;
+      }
+    }
+  }
+  return count;
 }`,
-    typescript: "function countGoodTriplets(arr: number[], a: number, b: number, c: number): number {\n\n}",
-
+    typescript: `function countGoodTriplets(arr: number[], a: number, b: number, c: number): number {
+  let count = 0;
+  const n = arr.length;
+  for (let i = 0; i < n - 2; i++) {
+    for (let j = i + 1; j < n - 1; j++) {
+      if (Math.abs(arr[i]! - arr[j]!) > a) continue;
+      for (let k = j + 1; k < n; k++) {
+        if (Math.abs(arr[j]! - arr[k]!) <= b && Math.abs(arr[i]! - arr[k]!) <= c) count++;
+      }
+    }
+  }
+  return count;
+}`,
     python: `def countGoodTriplets(arr, a, b, c):
-    pass`,
+    count, n = 0, len(arr)
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            if abs(arr[i] - arr[j]) > a:
+                continue
+            for k in range(j + 1, n):
+                if abs(arr[j] - arr[k]) <= b and abs(arr[i] - arr[k]) <= c:
+                    count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[3, 0, 1, 1, 9, 7], 7, 2, 3], expected: 4 },

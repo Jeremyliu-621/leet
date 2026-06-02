@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['words'],
   starterCode: {
     javascript: `function countEvenLengthStrings(words) {
-
+  return words.filter(w => w.length % 2 === 0).length;
 }`,
     typescript: `function countEvenLengthStrings(words: string[]): number {
-
+  return words.filter(w => w.length % 2 === 0).length;
 }`,
     python: `def countEvenLengthStrings(words: list[str]) -> int:
-    pass`,
+    return sum(1 for w in words if len(w) % 2 == 0)`,
   },
   visibleTests: [
     { args: [['ab', 'cd', 'e']], expected: 2 },
