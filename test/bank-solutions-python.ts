@@ -48710,4 +48710,101 @@ def movieRentalSystem(n: int, entries: list[list[int]], ops: list) -> list:
             result.append([[s, m] for _, s, m in rented[:5]])
     return result
 `,
+
+  'determine-if-matrix-can-be-obtained-by-rotation': `
+def findRotation(mat: list[list[int]], target: list[list[int]]) -> bool:
+    mat = [list(row) for row in mat]
+    target = [list(row) for row in target]
+    n = len(mat)
+    def rotate90(m):
+        r = [[0] * n for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                r[j][n - 1 - i] = m[i][j]
+        return r
+    cur = mat
+    for _ in range(4):
+        if cur == target:
+            return True
+        cur = rotate90(cur)
+    return False
+`,
+
+  'number-of-substrings-with-fixed-ratio': `
+def fixedRatio(s: str, num1: int, num2: int) -> int:
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    cnt0 = cnt1 = ans = 0
+    for c in s:
+        if c == '0':
+            cnt0 += 1
+        else:
+            cnt1 += 1
+        key = num2 * cnt0 - num1 * cnt1
+        ans += freq[key]
+        freq[key] += 1
+    return ans
+`,
+
+  'find-the-closest-marked-node': `
+def closestMarkedNode(n: int, edges: list[list[int]], markedNodes: list[int]) -> list[int]:
+    import heapq
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+    marked = set(markedNodes)
+    INF = float('inf')
+    def dijkstra(src):
+        dist = [INF] * n
+        dist[src] = 0
+        heap = [(0, src)]
+        while heap:
+            d, u = heapq.heappop(heap)
+            if d > dist[u]:
+                continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]:
+                    dist[v] = dist[u] + w
+                    heapq.heappush(heap, (dist[v], v))
+        return dist
+    ans = []
+    for i in range(n):
+        dist = dijkstra(i)
+        best = min(dist[m] for m in marked)
+        ans.append(-1 if best == INF else best)
+    return ans
+`,
+
+  'maximize-the-minimum-powered-city': `
+def maxPower(stations: list[int], r: int, k: int) -> int:
+    n = len(stations)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + stations[i]
+    power = [prefix[min(n-1,i+r)+1] - prefix[max(0,i-r)] for i in range(n)]
+    def can_achieve(min_pow):
+        diff = [0] * (n + 1)
+        extra = added = 0
+        for i in range(n):
+            extra += diff[i]
+            cur = power[i] + extra
+            if cur < min_pow:
+                need = min_pow - cur
+                if added + need > k:
+                    return False
+                added += need
+                extra += need
+                pos = min(i + r, n - 1)
+                diff[pos + 1] -= need
+        return True
+    lo, hi = 0, sum(stations) + k
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid):
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
 };

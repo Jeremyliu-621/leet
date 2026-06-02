@@ -3422,6 +3422,10 @@ import { problem as minimumTimeToFinishRaces } from './minimum-time-to-finish-ra
 import { problem as designAnAtmMachine } from './design-an-atm-machine';
 import { problem as minimumTimeToRemoveCarsIllegalGoods } from './minimum-time-to-remove-all-cars-containing-illegal-goods';
 import { problem as designMovieRentalSystem } from './design-movie-rental-system';
+import { problem as determineIfMatrixRotation } from './determine-if-matrix-can-be-obtained-by-rotation';
+import { problem as numberOfSubstringsFixedRatio } from './number-of-substrings-with-fixed-ratio';
+import { problem as findClosestMarkedNode } from './find-the-closest-marked-node';
+import { problem as maximizeTheMinimumPoweredCity } from './maximize-the-minimum-powered-city';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6882,4 +6886,9 @@ export const problems: readonly Problem[] = [
   designAnAtmMachine,
   minimumTimeToRemoveCarsIllegalGoods,
   designMovieRentalSystem,
+  // batch 288
+  determineIfMatrixRotation,
+  numberOfSubstringsFixedRatio,
+  findClosestMarkedNode,
+  maximizeTheMinimumPoweredCity,
 ];

@@ -49903,4 +49903,111 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return result;
   },
+
+  'determine-if-matrix-can-be-obtained-by-rotation': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const target = args[1] as number[][];
+    const n = mat.length;
+    function rotate90(m: number[][]): number[][] {
+      const r = Array.from({length: n}, () => new Array<number>(n).fill(0));
+      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) r[j]![n - 1 - i] = m[i]![j]!;
+      return r;
+    }
+    function equal(a: number[][], b: number[][]): boolean {
+      for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) if (a[i]![j] !== b[i]![j]) return false;
+      return true;
+    }
+    let cur = mat;
+    for (let k = 0; k < 4; k++) { if (equal(cur, target)) return true; cur = rotate90(cur); }
+    return false;
+  },
+
+  'number-of-substrings-with-fixed-ratio': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const num1 = args[1] as number;
+    const num2 = args[2] as number;
+    const freq = new Map<number, number>();
+    freq.set(0, 1);
+    let cnt0 = 0, cnt1 = 0, ans = 0;
+    for (const c of s) {
+      if (c === '0') cnt0++; else cnt1++;
+      const key = num2 * cnt0 - num1 * cnt1;
+      ans += (freq.get(key) ?? 0);
+      freq.set(key, (freq.get(key) ?? 0) + 1);
+    }
+    return ans;
+  },
+
+  'find-the-closest-marked-node': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const markedNodes = args[2] as number[];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const e of edges) adj[e[0]!]!.push([e[1]!, e[2]!]);
+    const marked = new Set(markedNodes);
+    const INF = Infinity;
+    function dijkstra(src: number): number[] {
+      const dist = new Array<number>(n).fill(INF);
+      dist[src] = 0;
+      const heap: [number, number][] = [[0, src]];
+      while (heap.length) {
+        heap.sort((a, b) => a[0]! - b[0]!);
+        const [d, u] = heap.shift()!;
+        if (d > dist[u]!) continue;
+        for (const [v, w] of adj[u]!) {
+          if (dist[u]! + w < dist[v]!) {
+            dist[v] = dist[u]! + w;
+            heap.push([dist[v]!, v]);
+          }
+        }
+      }
+      return dist;
+    }
+    const ans = new Array<number>(n).fill(-1);
+    for (let i = 0; i < n; i++) {
+      const dist = dijkstra(i);
+      let best = INF;
+      for (const m of marked) best = Math.min(best, dist[m]!);
+      ans[i] = best === INF ? -1 : best;
+    }
+    return ans;
+  },
+
+  'maximize-the-minimum-powered-city': (...args: unknown[]) => {
+    const stations = args[0] as number[];
+    const r = args[1] as number;
+    const k = args[2] as number;
+    const n = stations.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + stations[i]!;
+    const power = new Array<number>(n);
+    for (let i = 0; i < n; i++) {
+      const lo = Math.max(0, i - r);
+      const hi = Math.min(n - 1, i + r);
+      power[i] = prefix[hi + 1]! - prefix[lo]!;
+    }
+    function canAchieve(minPow: number): boolean {
+      const diff = new Array<number>(n + 1).fill(0);
+      let extra = 0, added = 0;
+      for (let i = 0; i < n; i++) {
+        extra += diff[i]!;
+        const cur = power[i]! + extra;
+        if (cur < minPow) {
+          const need = minPow - cur;
+          if (added + need > k) return false;
+          added += need;
+          extra += need;
+          const pos = Math.min(i + r, n - 1);
+          diff[pos + 1]! -= need;
+        }
+      }
+      return true;
+    }
+    let lo = 0, hi = prefix[n]! + k;
+    while (lo < hi) {
+      const mid = Math.ceil((lo + hi) / 2);
+      if (canAchieve(mid)) lo = mid; else hi = mid - 1;
+    }
+    return lo;
+  },
 };
