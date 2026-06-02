@@ -49439,6 +49439,69 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return ''.join(result)
 `,
 
+  // batch 295
+  'rearrange-string-k-distance-apart': `def rearrangeString(s, k):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s); k = int(k)
+    if k == 0: return s
+    freq = [0] * 26
+    for c in s: freq[ord(c) - 97] += 1
+    result = []
+    cooldown = [-float('inf')] * 26
+    for pos in range(len(s)):
+        best = -1
+        for i in range(26):
+            if freq[i] > 0 and pos - cooldown[i] >= k:
+                if best == -1 or freq[i] > freq[best]:
+                    best = i
+        if best == -1: return ''
+        result.append(chr(97 + best))
+        freq[best] -= 1
+        cooldown[best] = pos
+    return ''.join(result)
+`,
+
+  'paths-in-matrix-whose-sum-is-divisible-by-k': `def numberOfPaths(grid, k):
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(x) for x in (row.to_py() if hasattr(row,'to_py') else row)] for row in grid]
+    k = int(k)
+    MOD = 10**9 + 7
+    m, n = len(grid), len(grid[0])
+    dp = [[[0]*k for _ in range(n)] for _ in range(m)]
+    dp[0][0][grid[0][0] % k] = 1
+    for j in range(1, n):
+        v = grid[0][j] % k
+        for r in range(k):
+            dp[0][j][r] = dp[0][j-1][(r - v) % k]
+    for i in range(1, m):
+        v = grid[i][0] % k
+        for r in range(k):
+            dp[i][0][r] = dp[i-1][0][(r - v) % k]
+    for i in range(1, m):
+        for j in range(1, n):
+            v = grid[i][j] % k
+            for r in range(k):
+                prev = (r - v) % k
+                dp[i][j][r] = (dp[i-1][j][prev] + dp[i][j-1][prev]) % MOD
+    return dp[m-1][n-1][0]
+`,
+
+  'find-punishment-number-of-an-integer': `def punishmentNumber(n):
+    n = int(n)
+    def can_partition(s, target):
+        if target < 0: return False
+        if not s: return target == 0
+        for length in range(1, len(s) + 1):
+            if can_partition(s[length:], target - int(s[:length])):
+                return True
+        return False
+    ans = 0
+    for i in range(1, n + 1):
+        if can_partition(str(i * i), i):
+            ans += i * i
+    return ans
+`,
+
   // batch 293
   'minimum-path-sum-in-a-triangle-grid': `def minimumTotal(triangle):
     if hasattr(triangle, 'to_py'): triangle = triangle.to_py()

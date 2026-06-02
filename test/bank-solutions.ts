@@ -50652,6 +50652,77 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return result.join('');
   },
 
+  // batch 295
+  'rearrange-string-k-distance-apart': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const k = args[1] as number;
+    if (k === 0) return s;
+    const freq = new Array<number>(26).fill(0);
+    for (const c of s) freq[c.charCodeAt(0) - 97]!++;
+    const result = new Array<string>(s.length);
+    const cooldown = new Array<number>(26).fill(-Infinity);
+    for (let pos = 0; pos < s.length; pos++) {
+      let best = -1;
+      for (let i = 0; i < 26; i++) {
+        if (freq[i]! > 0 && pos - cooldown[i]! >= k)
+          if (best === -1 || freq[i]! > freq[best]!) best = i;
+      }
+      if (best === -1) return '';
+      result[pos] = String.fromCharCode(97 + best);
+      freq[best]!--;
+      cooldown[best] = pos;
+    }
+    return result.join('');
+  },
+
+  'paths-in-matrix-whose-sum-is-divisible-by-k': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const k = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const m = grid.length, n = grid[0]!.length;
+    const dp: bigint[][][] = Array.from({length: m}, () =>
+      Array.from({length: n}, () => new Array<bigint>(k).fill(0n))
+    );
+    dp[0]![0]![grid[0]![0]! % k] = 1n;
+    for (let j = 1; j < n; j++) {
+      const v = grid[0]![j]! % k;
+      for (let r = 0; r < k; r++)
+        dp[0]![j]![r] = dp[0]![j-1]![(r - v + k) % k]!;
+    }
+    for (let i = 1; i < m; i++) {
+      const v = grid[i]![0]! % k;
+      for (let r = 0; r < k; r++)
+        dp[i]![0]![r] = dp[i-1]![0]![(r - v + k) % k]!;
+    }
+    for (let i = 1; i < m; i++) {
+      for (let j = 1; j < n; j++) {
+        const v = grid[i]![j]! % k;
+        for (let r = 0; r < k; r++) {
+          const prev = (r - v + k) % k;
+          dp[i]![j]![r] = (dp[i-1]![j]![prev]! + dp[i]![j-1]![prev]!) % MOD;
+        }
+      }
+    }
+    return Number(dp[m-1]![n-1]![0]);
+  },
+
+  'find-punishment-number-of-an-integer': (...args: unknown[]) => {
+    const n = args[0] as number;
+    function canPartition(s: string, target: number): boolean {
+      if (target < 0) return false;
+      if (s.length === 0) return target === 0;
+      for (let len = 1; len <= s.length; len++) {
+        if (canPartition(s.slice(len), target - parseInt(s.slice(0, len)))) return true;
+      }
+      return false;
+    }
+    let ans = 0;
+    for (let i = 1; i <= n; i++) {
+      if (canPartition(String(i * i), i)) ans += i * i;
+    }
+    return ans;
+  },
+
   'maximum-subarray-minimum-product': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const MOD = 1_000_000_007n;

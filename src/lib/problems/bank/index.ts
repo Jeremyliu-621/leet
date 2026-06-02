@@ -3117,6 +3117,10 @@ import { problem as maxSubarrayMinProduct } from './maximum-subarray-minimum-pro
 import { problem as binaryTreesWithFactors } from './binary-trees-with-factors';
 import { problem as rankTransformMatrix } from './rank-transform-of-a-matrix';
 import { problem as robotWithString } from './using-a-robot-to-print-the-lexicographically-smallest-string';
+// batch 295
+import { problem as rearrangeStringKDistanceApart } from './rearrange-string-k-distance-apart';
+import { problem as pathsInMatrixDivisibleByK } from './paths-in-matrix-whose-sum-is-divisible-by-k';
+import { problem as findPunishmentNumber } from './find-punishment-number-of-an-integer';
 // batch 287
 import { problem as maxTargetNodesII } from './maximize-the-number-of-target-nodes-after-connecting-trees-ii';
 import { problem as minAdjSwapsKthSmallest } from './minimum-adjacent-swaps-to-reach-the-kth-smallest-number';
@@ -6976,4 +6980,8 @@ export const problems: readonly Problem[] = [
   binaryTreesWithFactors,
   rankTransformMatrix,
   robotWithString,
+  // batch 295
+  rearrangeStringKDistanceApart,
+  pathsInMatrixDivisibleByK,
+  findPunishmentNumber,
 ];
