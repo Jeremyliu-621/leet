@@ -45,10 +45,58 @@ Output: 1
   functionName: 'beautifulSubsets',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function beautifulSubsets(nums, k) {\n  // your code here\n}\n',
-    typescript: "function beautifulSubsets(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def beautifulSubsets(nums, k):\n    pass\n',
+    javascript: `function beautifulSubsets(nums, k) {
+  nums.sort((a, b) => a - b);
+  const freq = new Map();
+  let count = 0;
+  function bt(i) {
+    for (let j = i; j < nums.length; j++) {
+      if (!freq.get(nums[j] - k)) {
+        freq.set(nums[j], (freq.get(nums[j]) || 0) + 1);
+        count++;
+        bt(j + 1);
+        const v = freq.get(nums[j]) - 1;
+        if (v === 0) freq.delete(nums[j]); else freq.set(nums[j], v);
+      }
+    }
+  }
+  bt(0);
+  return count;
+}`,
+    typescript: `function beautifulSubsets(nums: number[], k: number): number {
+  nums.sort((a, b) => a - b);
+  const freq = new Map<number, number>();
+  let count = 0;
+  function bt(i: number): void {
+    for (let j = i; j < nums.length; j++) {
+      const v = nums[j]!;
+      if (!freq.get(v - k)) {
+        freq.set(v, (freq.get(v) || 0) + 1);
+        count++;
+        bt(j + 1);
+        const nv = freq.get(v)! - 1;
+        if (nv === 0) freq.delete(v); else freq.set(v, nv);
+      }
+    }
+  }
+  bt(0);
+  return count;
+}`,
+    python: `def beautifulSubsets(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    nums = sorted(int(x) for x in nums); k = int(k)
+    freq = {}; count = [0]
+    def bt(i):
+        for j in range(i, len(nums)):
+            v = nums[j]
+            if not freq.get(v - k, 0):
+                freq[v] = freq.get(v, 0) + 1; count[0] += 1
+                bt(j + 1)
+                freq[v] -= 1
+                if freq[v] == 0: del freq[v]
+    bt(0)
+    return count[0]`,
   },
   visibleTests: [
     { args: [[2, 4, 6], 2], expected: 4 },

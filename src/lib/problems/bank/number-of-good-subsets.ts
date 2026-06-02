@@ -42,9 +42,92 @@ Since the answer may be too large, return it **modulo** \`10^9 + 7\`.
   functionName: 'numberOfGoodSubsets',
   params: ['nums'],
   starterCode: {
-    javascript: 'function numberOfGoodSubsets(nums) {\n  // your code here\n}\n',
-    typescript: 'function numberOfGoodSubsets(nums: number[]): number {\n  // your code here\n}\n',
-    python: 'def numberOfGoodSubsets(nums):\n    # your code here\n    pass\n',
+    javascript: `function numberOfGoodSubsets(nums) {
+  const MOD = 1000000007n;
+  const primes = [2,3,5,7,11,13,17,19,23,29];
+  const freq = new Array(31).fill(0);
+  for (const v of nums) freq[v]++;
+  function squarefree(v) {
+    for (const p of primes) if (v % (p * p) === 0) return false;
+    return true;
+  }
+  function primeMask(v) {
+    let mask = 0;
+    for (let i = 0; i < primes.length; i++) if (v % primes[i] === 0) mask |= 1 << i;
+    return mask;
+  }
+  const dp = new Array(1 << 10).fill(0n);
+  dp[0] = 1n;
+  for (let v = 2; v <= 30; v++) {
+    if (!freq[v] || !squarefree(v)) continue;
+    const mask = primeMask(v);
+    const f = BigInt(freq[v]);
+    for (let m = (1 << 10) - 1; m >= 0; m--) {
+      if (dp[m] && (m & mask) === 0) dp[m | mask] = (dp[m | mask] + dp[m] * f) % MOD;
+    }
+  }
+  let ans = 0n;
+  for (let m = 1; m < (1 << 10); m++) ans = (ans + dp[m]) % MOD;
+  let pow2 = 1n;
+  for (let i = 0; i < freq[1]; i++) pow2 = pow2 * 2n % MOD;
+  return Number(ans * pow2 % MOD);
+}`,
+    typescript: `function numberOfGoodSubsets(nums: number[]): number {
+  const MOD = 1000000007n;
+  const primes = [2,3,5,7,11,13,17,19,23,29];
+  const freq = new Array(31).fill(0) as number[];
+  for (const v of nums) freq[v]!++;
+  function squarefree(v: number): boolean {
+    for (const p of primes) if (v % (p * p) === 0) return false;
+    return true;
+  }
+  function primeMask(v: number): number {
+    let mask = 0;
+    for (let i = 0; i < primes.length; i++) if (v % primes[i]! === 0) mask |= 1 << i;
+    return mask;
+  }
+  const dp = new Array(1 << 10).fill(0n) as bigint[];
+  dp[0] = 1n;
+  for (let v = 2; v <= 30; v++) {
+    if (!freq[v] || !squarefree(v)) continue;
+    const mask = primeMask(v);
+    const f = BigInt(freq[v]!);
+    for (let m = (1 << 10) - 1; m >= 0; m--) {
+      if (dp[m]! && (m & mask) === 0) dp[m | mask] = (dp[m | mask]! + dp[m]! * f) % MOD;
+    }
+  }
+  let ans = 0n;
+  for (let m = 1; m < (1 << 10); m++) ans = (ans + dp[m]!) % MOD;
+  let pow2 = 1n;
+  for (let i = 0; i < freq[1]!; i++) pow2 = pow2 * 2n % MOD;
+  return Number(ans * pow2 % MOD);
+}`,
+    python: `def numberOfGoodSubsets(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    MOD = 10**9+7
+    primes = [2,3,5,7,11,13,17,19,23,29]
+    freq = [0]*31
+    for v in nums: freq[v] += 1
+    def squarefree(v):
+        for p in primes:
+            if v % (p*p) == 0: return False
+        return True
+    def prime_mask(v):
+        mask = 0
+        for i, p in enumerate(primes):
+            if v % p == 0: mask |= 1 << i
+        return mask
+    dp = [0]*(1<<10); dp[0] = 1
+    for v in range(2, 31):
+        if not freq[v] or not squarefree(v): continue
+        mask = prime_mask(v); f = freq[v]
+        for m in range((1<<10)-1, -1, -1):
+            if dp[m] and (m & mask) == 0:
+                dp[m | mask] = (dp[m | mask] + dp[m]*f) % MOD
+    ans = sum(dp[1:]) % MOD
+    pow2 = pow(2, freq[1], MOD)
+    return ans * pow2 % MOD`,
   },
   visibleTests: [
     {

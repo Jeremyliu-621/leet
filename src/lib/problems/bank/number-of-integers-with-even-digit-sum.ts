@@ -32,12 +32,20 @@ The **digit sum** of a positive integer is the sum of all its digits.`,
   params: ['num'],
   starterCode: {
     javascript: `function countEven(num) {
-  // your code here
+  let s = num, sum = 0;
+  while (s > 0) { sum += s % 10; s = Math.floor(s / 10); }
+  return sum % 2 === 0 ? Math.floor(num / 2) : Math.floor((num - 1) / 2);
 }`,
-    typescript: 'function countEven(num: number): number {\n  // your code here\n}',
+    typescript: `function countEven(num: number): number {
+  let s = num, sum = 0;
+  while (s > 0) { sum += s % 10; s = Math.floor(s / 10); }
+  return sum % 2 === 0 ? Math.floor(num / 2) : Math.floor((num - 1) / 2);
+}`,
     python: `def countEven(num):
-    # your code here
-    pass`,
+    if hasattr(num, 'to_py'): num = num.to_py()
+    num = int(num)
+    s = sum(int(d) for d in str(num))
+    return num // 2 if s % 2 == 0 else (num - 1) // 2`,
   },
   visibleTests: [
     { args: [4], expected: 2 },

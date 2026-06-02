@@ -38,9 +38,61 @@ A **block** is a \`2 x 2\` subgrid of the grid. Return a **0-indexed** integer a
   functionName: 'countBlackBlocks',
   params: ['m', 'n', 'coordinates'],
   starterCode: {
-    javascript: 'function countBlackBlocks(m, n, coordinates) {\n  // your code here\n}\n',
-    typescript: 'function countBlackBlocks(m: number, n: number, coordinates: number[][]): number[] {\n  // your code here\n}\n',
-    python: 'def countBlackBlocks(m, n, coordinates):\n    # your code here\n    pass\n',
+    javascript: `function countBlackBlocks(m, n, coordinates) {
+  const blockCount = new Map();
+  for (const [x, y] of coordinates) {
+    for (let dr = 0; dr <= 1; dr++) {
+      for (let dc = 0; dc <= 1; dc++) {
+        const r = x - dr, c = y - dc;
+        if (r >= 0 && r < m - 1 && c >= 0 && c < n - 1) {
+          const key = r * 100000 + c;
+          blockCount.set(key, (blockCount.get(key) || 0) + 1);
+        }
+      }
+    }
+  }
+  const arr = [0, 0, 0, 0, 0];
+  for (const v of blockCount.values()) arr[v]++;
+  arr[0] = (m - 1) * (n - 1) - blockCount.size;
+  return arr;
+}`,
+    typescript: `function countBlackBlocks(m: number, n: number, coordinates: number[][]): number[] {
+  const blockCount = new Map<number, number>();
+  for (const coord of coordinates) {
+    const x = coord[0]!, y = coord[1]!;
+    for (let dr = 0; dr <= 1; dr++) {
+      for (let dc = 0; dc <= 1; dc++) {
+        const r = x - dr, c = y - dc;
+        if (r >= 0 && r < m - 1 && c >= 0 && c < n - 1) {
+          const key = r * 100000 + c;
+          blockCount.set(key, (blockCount.get(key) ?? 0) + 1);
+        }
+      }
+    }
+  }
+  const arr = [0, 0, 0, 0, 0];
+  for (const v of blockCount.values()) arr[v]!++;
+  arr[0] = (m - 1) * (n - 1) - blockCount.size;
+  return arr;
+}`,
+    python: `def countBlackBlocks(m, n, coordinates):
+    if hasattr(m, 'to_py'): m = m.to_py()
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(coordinates, 'to_py'): coordinates = coordinates.to_py()
+    m = int(m); n = int(n)
+    coordinates = [[int(v) for v in (c.to_py() if hasattr(c,'to_py') else c)] for c in coordinates]
+    block_count = {}
+    for x, y in coordinates:
+        for dr in range(2):
+            for dc in range(2):
+                r, c = x - dr, y - dc
+                if 0 <= r < m - 1 and 0 <= c < n - 1:
+                    key = r * 100000 + c
+                    block_count[key] = block_count.get(key, 0) + 1
+    arr = [0] * 5
+    for v in block_count.values(): arr[v] += 1
+    arr[0] = (m - 1) * (n - 1) - len(block_count)
+    return arr`,
   },
   visibleTests: [
     {

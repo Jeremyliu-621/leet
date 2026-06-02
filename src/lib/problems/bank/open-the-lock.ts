@@ -46,10 +46,73 @@ Return the **minimum** number of turns required to reach the target, or \`-1\` i
   functionName: 'openLock',
   params: ['deadends', 'target'],
   starterCode: {
-    javascript: 'function openLock(deadends, target) {\n  // your code here\n}\n',
-    typescript: "function openLock(deadends: string[], target: string): number {\n  // your code here\n}",
-
-    python: 'def openLock(deadends, target):\n    # your code here\n    pass\n',
+    javascript: `function openLock(deadends, target) {
+  const dead = new Set(deadends);
+  if (dead.has('0000')) return -1;
+  if (target === '0000') return 0;
+  const vis = new Set(dead);
+  vis.add('0000');
+  let q = ['0000'], steps = 0;
+  while (q.length) {
+    const next = []; steps++;
+    for (const s of q) {
+      for (let i = 0; i < 4; i++) {
+        for (const d of [1, -1]) {
+          const arr = s.split('');
+          arr[i] = String((+arr[i] + d + 10) % 10);
+          const t = arr.join('');
+          if (t === target) return steps;
+          if (!vis.has(t)) { vis.add(t); next.push(t); }
+        }
+      }
+    }
+    q = next;
+  }
+  return -1;
+}`,
+    typescript: `function openLock(deadends: string[], target: string): number {
+  const dead = new Set(deadends);
+  if (dead.has('0000')) return -1;
+  if (target === '0000') return 0;
+  const vis = new Set(dead);
+  vis.add('0000');
+  let q: string[] = ['0000'], steps = 0;
+  while (q.length) {
+    const next: string[] = []; steps++;
+    for (const s of q) {
+      for (let i = 0; i < 4; i++) {
+        for (const d of [1, -1]) {
+          const arr = s.split('');
+          arr[i] = String((+(arr[i]!) + d + 10) % 10);
+          const t = arr.join('');
+          if (t === target) return steps;
+          if (!vis.has(t)) { vis.add(t); next.push(t); }
+        }
+      }
+    }
+    q = next;
+  }
+  return -1;
+}`,
+    python: `def openLock(deadends, target):
+    if hasattr(deadends, 'to_py'): deadends = deadends.to_py()
+    if hasattr(target, 'to_py'): target = target.to_py()
+    deadends = [str(d) for d in deadends]; target = str(target)
+    dead = set(deadends)
+    if '0000' in dead: return -1
+    if target == '0000': return 0
+    vis = set(dead); vis.add('0000')
+    q = ['0000']; steps = 0
+    while q:
+        nxt = []; steps += 1
+        for s in q:
+            for i in range(4):
+                for d in (1,-1):
+                    arr = list(s); arr[i] = str((int(arr[i])+d+10)%10); t = ''.join(arr)
+                    if t == target: return steps
+                    if t not in vis: vis.add(t); nxt.append(t)
+        q = nxt
+    return -1`,
   },
   visibleTests: [
     { args: [['0201', '0101', '0102', '1212', '2002'], '0202'], expected: 6 },

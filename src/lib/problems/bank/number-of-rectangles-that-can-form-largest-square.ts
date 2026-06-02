@@ -39,14 +39,32 @@ Return the **number** of rectangles from which you can make a square with side l
   params: ['rectangles'],
   starterCode: {
     javascript: `function countGoodRectangles(rectangles) {
-  // your code here
+  let maxLen = 0, count = 0;
+  for (const [l, w] of rectangles) {
+    const s = Math.min(l, w);
+    if (s > maxLen) { maxLen = s; count = 1; }
+    else if (s === maxLen) count++;
+  }
+  return count;
 }`,
     typescript: `function countGoodRectangles(rectangles: number[][]): number {
-  // your code here
+  let maxLen = 0, count = 0;
+  for (const rect of rectangles) {
+    const s = Math.min(rect[0]!, rect[1]!);
+    if (s > maxLen) { maxLen = s; count = 1; }
+    else if (s === maxLen) count++;
+  }
+  return count;
 }`,
     python: `def countGoodRectangles(rectangles):
-    # your code here
-    pass`,
+    if hasattr(rectangles, 'to_py'): rectangles = rectangles.to_py()
+    rectangles = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in rectangles]
+    max_len = 0; count = 0
+    for l, w in rectangles:
+        s = min(l, w)
+        if s > max_len: max_len = s; count = 1
+        elif s == max_len: count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[[5, 8], [3, 9], [5, 12], [16, 5]]], expected: 3 },

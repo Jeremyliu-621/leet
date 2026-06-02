@@ -44,10 +44,61 @@ Output: 3
   functionName: 'countPaths',
   params: ['grid'],
   starterCode: {
-    javascript: 'function countPaths(grid) {\n  // your code here\n}\n',
-    typescript: "function countPaths(grid: number[][]): number {\n  // your code here\n}",
-
-    python: 'def countPaths(grid):\n    pass\n',
+    javascript: `function countPaths(grid) {
+  const MOD = 1000000007;
+  const m = grid.length, n = grid[0].length;
+  const dp = Array.from({length: m}, () => new Array(n).fill(-1));
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  function dfs(r, c) {
+    if (dp[r][c] !== -1) return dp[r][c];
+    let count = 1;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr][nc] > grid[r][c])
+        count = (count + dfs(nr, nc)) % MOD;
+    }
+    dp[r][c] = count; return count;
+  }
+  let ans = 0;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = (ans + dfs(r, c)) % MOD;
+  return ans;
+}`,
+    typescript: `function countPaths(grid: number[][]): number {
+  const MOD = 1000000007;
+  const m = grid.length, n = grid[0]!.length;
+  const dp: number[][] = Array.from({length: m}, () => new Array(n).fill(-1));
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  function dfs(r: number, c: number): number {
+    if (dp[r]![c]! !== -1) return dp[r]![c]!;
+    let count = 1;
+    for (const dir of dirs) {
+      const nr = r + dir[0]!, nc = c + dir[1]!;
+      if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr]![nc]! > grid[r]![c]!)
+        count = (count + dfs(nr, nc)) % MOD;
+    }
+    dp[r]![c] = count; return count;
+  }
+  let ans = 0;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = (ans + dfs(r, c)) % MOD;
+  return ans;
+}`,
+    python: `def countPaths(grid):
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in grid]
+    MOD = 10**9+7; m, n = len(grid), len(grid[0])
+    dp = [[-1]*n for _ in range(m)]
+    def dfs(r, c):
+        if dp[r][c] != -1: return dp[r][c]
+        count = 1
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] > grid[r][c]:
+                count = (count+dfs(nr,nc))%MOD
+        dp[r][c] = count; return count
+    ans = 0
+    for r in range(m):
+        for c in range(n): ans = (ans+dfs(r,c))%MOD
+    return ans`,
   },
   visibleTests: [
     { args: [[[1, 1], [3, 4]]], expected: 8 },

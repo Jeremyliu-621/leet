@@ -33,10 +33,44 @@ Return the **number of non-empty subsequences** of \`nums\` such that the sum of
   functionName: 'numSubseq',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function numSubseq(nums, target) {\n  // your code here\n}\n',
-    typescript: "function numSubseq(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def numSubseq(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function numSubseq(nums, target) {
+  const MOD = 1000000007;
+  const n = nums.length;
+  nums.sort((a, b) => a - b);
+  const pow2 = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) pow2[i] = pow2[i-1] * 2 % MOD;
+  let ans = 0, l = 0, r = n - 1;
+  while (l <= r) {
+    if (nums[l] + nums[r] <= target) { ans = (ans + pow2[r - l]) % MOD; l++; }
+    else r--;
+  }
+  return ans;
+}`,
+    typescript: `function numSubseq(nums: number[], target: number): number {
+  const MOD = 1000000007;
+  const n = nums.length;
+  nums.sort((a, b) => a - b);
+  const pow2 = new Array(n).fill(1) as number[];
+  for (let i = 1; i < n; i++) pow2[i] = pow2[i-1]! * 2 % MOD;
+  let ans = 0, l = 0, r = n - 1;
+  while (l <= r) {
+    if (nums[l]! + nums[r]! <= target) { ans = (ans + pow2[r - l]!) % MOD; l++; }
+    else r--;
+  }
+  return ans;
+}`,
+    python: `def numSubseq(nums, target):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(target, 'to_py'): target = target.to_py()
+    nums = sorted(int(x) for x in nums); target = int(target)
+    MOD = 10**9+7; n = len(nums)
+    pow2 = [1]*n
+    for i in range(1,n): pow2[i] = pow2[i-1]*2%MOD
+    ans = 0; l = 0; r = n-1
+    while l <= r:
+        if nums[l]+nums[r] <= target: ans = (ans+pow2[r-l])%MOD; l += 1
+        else: r -= 1
+    return ans`,
   },
   visibleTests: [
     { args: [[3, 5, 6, 7], 9], expected: 4 },
