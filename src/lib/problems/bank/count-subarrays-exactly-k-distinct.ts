@@ -45,13 +45,51 @@ A subarray is a contiguous part of the array.
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function subarraysWithKDistinct(nums, k) {
-  // Return the count of subarrays with exactly k distinct integers
+  function atMost(maxK) {
+    const freq = new Map();
+    let result = 0, left = 0;
+    for (let right = 0; right < nums.length; right++) {
+      freq.set(nums[right], (freq.get(nums[right]) ?? 0) + 1);
+      while (freq.size > maxK) {
+        const lv = nums[left++];
+        freq.set(lv, freq.get(lv) - 1);
+        if (freq.get(lv) === 0) freq.delete(lv);
+      }
+      result += right - left + 1;
+    }
+    return result;
+  }
+  return atMost(k) - atMost(k - 1);
 }`,
-    typescript: "function subarraysWithKDistinct(nums: number[], k: number): number {\n  // Return the count of subarrays with exactly k distinct integers\n}",
-
-    python: `def subarraysWithKDistinct(nums: list[int], k: int) -> int:
-    # Return the count of subarrays with exactly k distinct integers
-    pass`,
+    typescript: `function subarraysWithKDistinct(nums: number[], k: number): number {
+  function atMost(maxK: number): number {
+    const freq = new Map<number, number>();
+    let result = 0, left = 0;
+    for (let right = 0; right < nums.length; right++) {
+      freq.set(nums[right]!, (freq.get(nums[right]!) ?? 0) + 1);
+      while (freq.size > maxK) {
+        const lv = nums[left++]!;
+        freq.set(lv, freq.get(lv)! - 1);
+        if (freq.get(lv) === 0) freq.delete(lv);
+      }
+      result += right - left + 1;
+    }
+    return result;
+  }
+  return atMost(k) - atMost(k - 1);
+}`,
+    python: `def subarraysWithKDistinct(nums, k):
+    def at_most(max_k):
+        freq, result, left = {}, 0, 0
+        for right, v in enumerate(nums):
+            freq[v] = freq.get(v, 0) + 1
+            while len(freq) > max_k:
+                lv = nums[left]; left += 1
+                freq[lv] -= 1
+                if freq[lv] == 0: del freq[lv]
+            result += right - left + 1
+        return result
+    return at_most(k) - at_most(k - 1)`,
   },
   visibleTests: [
     { args: [[1, 2, 1, 2, 3], 2], expected: 7 },

@@ -37,13 +37,45 @@ export const problem: Problem = {
   params: ['s', 'k'],
   starterCode: {
     javascript: `function numberOfSubstrings(s, k) {
-
+  const n = s.length;
+  const total = n * (n + 1) / 2;
+  const freq = new Array(26).fill(0);
+  let left = 0, noBad = 0;
+  for (let right = 0; right < n; right++) {
+    freq[s.charCodeAt(right) - 97]++;
+    while (freq[s.charCodeAt(right) - 97] >= k) {
+      freq[s.charCodeAt(left++) - 97]--;
+    }
+    noBad += right - left + 1;
+  }
+  return total - noBad;
 }`,
     typescript: `function numberOfSubstrings(s: string, k: number): number {
-
+  const n = s.length;
+  const total = n * (n + 1) / 2;
+  const freq = new Array<number>(26).fill(0);
+  let left = 0, noBad = 0;
+  for (let right = 0; right < n; right++) {
+    freq[s.charCodeAt(right) - 97]!++;
+    while (freq[s.charCodeAt(right) - 97]! >= k) {
+      freq[s.charCodeAt(left++) - 97]!--;
+    }
+    noBad += right - left + 1;
+  }
+  return total - noBad;
 }`,
     python: `def numberOfSubstrings(s, k):
-    pass`,
+    n = len(s)
+    total = n * (n + 1) // 2
+    freq = [0] * 26
+    left = no_bad = 0
+    for right, c in enumerate(s):
+        freq[ord(c) - 97] += 1
+        while freq[ord(s[right]) - 97] >= k:
+            freq[ord(s[left]) - 97] -= 1
+            left += 1
+        no_bad += right - left + 1
+    return total - no_bad`,
   },
   visibleTests: [
     { args: ['abacb', 2], expected: 4 },

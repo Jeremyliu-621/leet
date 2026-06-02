@@ -37,13 +37,80 @@ A string is **palindromic** if it reads the same forward and backward.`,
   params: ['s'],
   starterCode: {
     javascript: `function countPalindromes(s) {
-
+  const MOD = 1000000007;
+  const n = s.length;
+  const pos = Array.from({length: 26}, () => []);
+  for (let i = 0; i < n; i++) pos[s.charCodeAt(i) - 97].push(i);
+  let ans = 0;
+  for (let c1 = 0; c1 < 26; c1++) {
+    const p1 = pos[c1];
+    if (p1.length < 2) continue;
+    const l1 = p1[0], r1 = p1[p1.length - 1];
+    for (let c2 = 0; c2 < 26; c2++) {
+      const p2 = pos[c2];
+      // l2 = first c2 after l1, r2 = last c2 before r1
+      let l2 = -1, r2 = -1;
+      for (const idx of p2) { if (idx > l1) { l2 = idx; break; } }
+      for (let i = p2.length - 1; i >= 0; i--) { if (p2[i] < r1) { r2 = p2[i]; break; } }
+      if (l2 === -1 || r2 === -1 || l2 >= r2) continue;
+      // Count distinct chars strictly between l2 and r2
+      const present = new Set();
+      for (let i = 0; i < 26; i++) {
+        for (const idx of pos[i]) {
+          if (idx > l2 && idx < r2) { present.add(i); break; }
+        }
+      }
+      ans = (ans + present.size) % MOD;
+    }
+  }
+  return ans;
 }`,
     typescript: `function countPalindromes(s: string): number {
-
+  const MOD = 1000000007;
+  const n = s.length;
+  const pos: number[][] = Array.from({length: 26}, () => []);
+  for (let i = 0; i < n; i++) pos[s.charCodeAt(i) - 97]!.push(i);
+  let ans = 0;
+  for (let c1 = 0; c1 < 26; c1++) {
+    const p1 = pos[c1]!;
+    if (p1.length < 2) continue;
+    const l1 = p1[0]!, r1 = p1[p1.length - 1]!;
+    for (let c2 = 0; c2 < 26; c2++) {
+      const p2 = pos[c2]!;
+      let l2 = -1, r2 = -1;
+      for (const idx of p2) { if (idx > l1) { l2 = idx; break; } }
+      for (let i = p2.length - 1; i >= 0; i--) { if (p2[i]! < r1) { r2 = p2[i]!; break; } }
+      if (l2 === -1 || r2 === -1 || l2 >= r2) continue;
+      const present = new Set<number>();
+      for (let i = 0; i < 26; i++) {
+        for (const idx of pos[i]!) { if (idx > l2 && idx < r2) { present.add(i); break; } }
+      }
+      ans = (ans + present.size) % MOD;
+    }
+  }
+  return ans;
 }`,
     python: `def countPalindromes(s):
-    pass`,
+    MOD = 10**9 + 7
+    n = len(s)
+    pos = [[] for _ in range(26)]
+    for i, c in enumerate(s): pos[ord(c) - 97].append(i)
+    ans = 0
+    for c1 in range(26):
+        p1 = pos[c1]
+        if len(p1) < 2: continue
+        l1, r1 = p1[0], p1[-1]
+        for c2 in range(26):
+            p2 = pos[c2]
+            l2 = next((idx for idx in p2 if idx > l1), -1)
+            r2 = next((idx for idx in reversed(p2) if idx < r1), -1)
+            if l2 == -1 or r2 == -1 or l2 >= r2: continue
+            present = set()
+            for i in range(26):
+                for idx in pos[i]:
+                    if l2 < idx < r2: present.add(i); break
+            ans = (ans + len(present)) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: ['aaaaa'], expected: 1 },

@@ -42,13 +42,64 @@ The time complexity of your solution must be \`O(n log n)\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function incremovableSubarrayCount(nums) {
-
+  const n = nums.length;
+  // Find longest strictly increasing prefix ending at pre
+  let pre = 0;
+  while (pre < n - 1 && nums[pre] < nums[pre + 1]) pre++;
+  // Find longest strictly increasing suffix starting at suf
+  let suf = n - 1;
+  while (suf > 0 && nums[suf - 1] < nums[suf]) suf--;
+  // If entire array is increasing: l=0 removals (n+1 choices for left endpoint, n+1 for right)
+  if (suf === 0) return (n + 1) * (n + 2) / 2;
+  // l=0 (remove from beginning): any r in [suf-1..n-1] works, count = n - suf + 1
+  let ans = n - suf + 1;
+  // l from 1 to pre+1: binary search for smallest r such that nums[r] > nums[l-1]
+  for (let l = 1; l <= pre + 1; l++) {
+    let lo = suf, hi = n;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid] > nums[l - 1]) hi = mid; else lo = mid + 1;
+    }
+    ans += n - lo + 1; // r can be lo..n-1 (r is last included in removed range = [l..r]), plus empty suffix
+  }
+  return ans;
 }`,
     typescript: `function incremovableSubarrayCount(nums: number[]): number {
-
+  const n = nums.length;
+  let pre = 0;
+  while (pre < n - 1 && nums[pre]! < nums[pre + 1]!) pre++;
+  let suf = n - 1;
+  while (suf > 0 && nums[suf - 1]! < nums[suf]!) suf--;
+  if (suf === 0) return (n + 1) * (n + 2) / 2;
+  let ans = n - suf + 1;
+  for (let l = 1; l <= pre + 1; l++) {
+    let lo = suf, hi = n;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid]! > nums[l - 1]!) hi = mid; else lo = mid + 1;
+    }
+    ans += n - lo + 1;
+  }
+  return ans;
 }`,
     python: `def incremovableSubarrayCount(nums: list[int]) -> int:
-    pass`,
+    import bisect
+    n = len(nums)
+    pre = 0
+    while pre < n - 1 and nums[pre] < nums[pre + 1]: pre += 1
+    suf = n - 1
+    while suf > 0 and nums[suf - 1] < nums[suf]: suf -= 1
+    if suf == 0: return (n + 1) * (n + 2) // 2
+    ans = n - suf + 1  # l=0 case
+    for l in range(1, pre + 2):
+        # find first r in [suf..n-1] where nums[r] > nums[l-1]
+        lo, hi = suf, n
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if nums[mid] > nums[l - 1]: hi = mid
+            else: lo = mid + 1
+        ans += n - lo + 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 10, 5]], expected: 9 },

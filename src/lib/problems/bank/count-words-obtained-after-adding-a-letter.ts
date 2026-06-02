@@ -38,12 +38,39 @@ Explanation: tack = act + 'k' (rearranged), acti = act + 'i'. "act" cannot be fo
   params: ['startWords', 'targetWords'],
   starterCode: {
     javascript: `function wordCount(startWords, targetWords) {
-
+  const mask = w => [...w].reduce((m, c) => m | (1 << (c.charCodeAt(0) - 97)), 0);
+  const set = new Set(startWords.map(mask));
+  let count = 0;
+  for (const t of targetWords) {
+    const tm = mask(t);
+    for (let i = 0; i < 26; i++) {
+      if (tm & (1 << i) && set.has(tm ^ (1 << i))) { count++; break; }
+    }
+  }
+  return count;
 }`,
-    typescript: "function wordCount(startWords: string[], targetWords: string[]): number {\n\n}",
-
+    typescript: `function wordCount(startWords: string[], targetWords: string[]): number {
+  const mask = (w: string) => [...w].reduce((m, c) => m | (1 << (c.charCodeAt(0) - 97)), 0);
+  const set = new Set(startWords.map(mask));
+  let count = 0;
+  for (const t of targetWords) {
+    const tm = mask(t);
+    for (let i = 0; i < 26; i++) {
+      if (tm & (1 << i) && set.has(tm ^ (1 << i))) { count++; break; }
+    }
+  }
+  return count;
+}`,
     python: `def wordCount(startWords, targetWords):
-    `,
+    def mask(w): return sum(1 << (ord(c) - 97) for c in w)
+    start_set = set(mask(w) for w in startWords)
+    count = 0
+    for t in targetWords:
+        tm = mask(t)
+        for i in range(26):
+            if (tm >> i & 1) and (tm ^ (1 << i)) in start_set:
+                count += 1; break
+    return count`,
   },
   visibleTests: [
     { args: [['ant','act','tack'], ['tack','act','acti']], expected: 2 },

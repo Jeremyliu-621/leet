@@ -47,13 +47,77 @@ Return the **maximum** integer \`m\` such that \`[s2, m]\` can be **obtained** f
   params: ['s1', 'n1', 's2', 'n2'],
   starterCode: {
     javascript: `function getMaxRepetitions(s1, n1, s2, n2) {
-
+  const l1 = s1.length, l2 = s2.length;
+  const seen = new Map(); // j -> [copy_i, s2_count]
+  let j = 0, s2Count = 0;
+  for (let i = 0; i < n1; i++) {
+    for (const c of s1) {
+      if (c === s2[j]) { j++; if (j === l2) { j = 0; s2Count++; } }
+    }
+    if (seen.has(j)) {
+      const [ci, cc] = seen.get(j);
+      const cycleLen = i - ci, cycleCount = s2Count - cc;
+      const rem = n1 - 1 - i;
+      s2Count += Math.floor(rem / cycleLen) * cycleCount;
+      const leftover = rem % cycleLen;
+      for (let k = 0; k < leftover; k++) {
+        for (const c of s1) {
+          if (c === s2[j]) { j++; if (j === l2) { j = 0; s2Count++; } }
+        }
+      }
+      return Math.floor(s2Count / n2);
+    }
+    seen.set(j, [i, s2Count]);
+  }
+  return Math.floor(s2Count / n2);
 }`,
     typescript: `function getMaxRepetitions(s1: string, n1: number, s2: string, n2: number): number {
-
+  const l2 = s2.length;
+  const seen = new Map<number, [number, number]>();
+  let j = 0, s2Count = 0;
+  for (let i = 0; i < n1; i++) {
+    for (const c of s1) {
+      if (c === s2[j]) { j++; if (j === l2) { j = 0; s2Count++; } }
+    }
+    if (seen.has(j)) {
+      const [ci, cc] = seen.get(j)!;
+      const cycleLen = i - ci, cycleCount = s2Count - cc;
+      const rem = n1 - 1 - i;
+      s2Count += Math.floor(rem / cycleLen) * cycleCount;
+      const leftover = rem % cycleLen;
+      for (let k = 0; k < leftover; k++) {
+        for (const c of s1) {
+          if (c === s2[j]) { j++; if (j === l2) { j = 0; s2Count++; } }
+        }
+      }
+      return Math.floor(s2Count / n2);
+    }
+    seen.set(j, [i, s2Count]);
+  }
+  return Math.floor(s2Count / n2);
 }`,
     python: `def getMaxRepetitions(s1, n1, s2, n2):
-    pass`,
+    l2 = len(s2)
+    seen = {}  # j -> (i, s2_count)
+    j = s2_count = 0
+    for i in range(n1):
+        for c in s1:
+            if c == s2[j]:
+                j += 1
+                if j == l2: j = 0; s2_count += 1
+        if j in seen:
+            ci, cc = seen[j]
+            cycle_len = i - ci; cycle_count = s2_count - cc
+            rem = n1 - 1 - i
+            s2_count += (rem // cycle_len) * cycle_count
+            for _ in range(rem % cycle_len):
+                for c in s1:
+                    if c == s2[j]:
+                        j += 1
+                        if j == l2: j = 0; s2_count += 1
+            return s2_count // n2
+        seen[j] = (i, s2_count)
+    return s2_count // n2`,
   },
   visibleTests: [
     { args: ['acb', 4, 'ab', 2], expected: 2 },

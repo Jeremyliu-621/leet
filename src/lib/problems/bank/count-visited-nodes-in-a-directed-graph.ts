@@ -42,11 +42,73 @@ Return an integer array \`answer\` of length \`n\` where \`answer[i]\` is the nu
   params: ['edges'],
   starterCode: {
     javascript: `function countVisitedNodes(edges) {
-
+  const n = edges.length;
+  const ans = new Array(n).fill(0);
+  for (let start = 0; start < n; start++) {
+    if (ans[start]) continue;
+    const path = [], pos = new Map();
+    let cur = start;
+    while (!ans[cur] && !pos.has(cur)) {
+      pos.set(cur, path.length);
+      path.push(cur);
+      cur = edges[cur];
+    }
+    if (ans[cur]) {
+      for (let i = path.length - 1; i >= 0; i--) ans[path[i]] = ans[edges[path[i]]] + 1;
+    } else {
+      const cycleStart = pos.get(cur);
+      const cycleLen = path.length - cycleStart;
+      for (let i = cycleStart; i < path.length; i++) ans[path[i]] = cycleLen;
+      for (let i = cycleStart - 1; i >= 0; i--) ans[path[i]] = ans[edges[path[i]]] + 1;
+    }
+  }
+  return ans;
 }`,
-    typescript: 'function countVisitedNodes(edges: number[]): number[] {\n\n}',
+    typescript: `function countVisitedNodes(edges: number[]): number[] {
+  const n = edges.length;
+  const ans = new Array<number>(n).fill(0);
+  for (let start = 0; start < n; start++) {
+    if (ans[start]) continue;
+    const path: number[] = [], pos = new Map<number, number>();
+    let cur = start;
+    while (!ans[cur] && !pos.has(cur)) {
+      pos.set(cur, path.length);
+      path.push(cur);
+      cur = edges[cur]!;
+    }
+    if (ans[cur]) {
+      for (let i = path.length - 1; i >= 0; i--) {
+        ans[path[i]!] = ans[edges[path[i]!]!]! + 1;
+      }
+    } else {
+      const cycleStart = pos.get(cur)!;
+      const cycleLen = path.length - cycleStart;
+      for (let i = cycleStart; i < path.length; i++) ans[path[i]!] = cycleLen;
+      for (let i = cycleStart - 1; i >= 0; i--) ans[path[i]!] = ans[edges[path[i]!]!]! + 1;
+    }
+  }
+  return ans;
+}`,
     python: `def countVisitedNodes(edges):
-    pass`,
+    n = len(edges)
+    ans = [0] * n
+    for start in range(n):
+        if ans[start]: continue
+        path, pos = [], {}
+        cur = start
+        while not ans[cur] and cur not in pos:
+            pos[cur] = len(path)
+            path.append(cur)
+            cur = edges[cur]
+        if ans[cur]:
+            for i in range(len(path) - 1, -1, -1):
+                ans[path[i]] = ans[edges[path[i]]] + 1
+        else:
+            cycle_start = pos[cur]
+            cycle_len = len(path) - cycle_start
+            for i in range(cycle_start, len(path)): ans[path[i]] = cycle_len
+            for i in range(cycle_start - 1, -1, -1): ans[path[i]] = ans[edges[path[i]]] + 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 0, 0]], expected: [3, 3, 3, 4] },

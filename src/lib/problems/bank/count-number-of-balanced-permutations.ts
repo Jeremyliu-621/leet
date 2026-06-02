@@ -41,52 +41,103 @@ Return the **number of distinct balanced permutations** of \`num\`, modulo \`10^
   params: ['num'],
   starterCode: {
     javascript: `function countBalancedPermutations(num) {
-  const MOD = 1_000_000_007n;
-  const digits = num.split('').map(Number);
-  const total = digits.reduce((s, d) => s + d, 0);
-  if (total % 2 !== 0) return 0; // odd sum can't be split equally
-  const target = total / 2;
-  const n = digits.length;
-  const nEven = Math.ceil(n / 2); // slots at even indices
-  // Count digit frequencies
+  const MOD = 1000000007n;
   const cnt = new Array(10).fill(0);
-  for (const d of digits) cnt[d]++;
-  // DP: dp[j][s] = ways to fill j even slots with digit sum s (divided by factorials)
-  // Precompute factorials/inverses for combination counting
-  // TODO: iterate over digits 0-9, for each try placing e copies at even positions
+  for (const c of num) cnt[+c]++;
+  const total = num.length;
+  const totalSum = num.split('').reduce((s, c) => s + +c, 0);
+  if (totalSum % 2 !== 0) return 0;
+  const target = totalSum / 2, nEven = Math.ceil(total / 2), nOdd = Math.floor(total / 2);
+  const maxVal = Math.max(target + 1, nEven + 1) + 1;
+  // Precompute factorials and inverse
+  const fact = new Array(total + 1).fill(1n);
+  for (let i = 1; i <= total; i++) fact[i] = fact[i-1] * BigInt(i) % MOD;
+  const pow = (b, e) => { let r=1n; b%=MOD; while(e>0n){if(e&1n)r=r*b%MOD;b=b*b%MOD;e>>=1n;}return r; };
+  const inv = x => pow(x, MOD-2n);
+  // dp[j][k] = ways to assign j digits to even positions with sum k, divided by factorials
+  // Use flat array dp[j*(target+1)+k]
+  let dp = new Array((nEven+1)*(target+1)).fill(0n);
+  dp[0*(target+1)+0] = 1n;
+  for (let d = 0; d <= 9; d++) {
+    const c = cnt[d];
+    if (c === 0) continue;
+    // Process in reverse to avoid using same digit twice (0/1 knapsack for each digit value)
+    const ndp = new Array((nEven+1)*(target+1)).fill(0n);
+    for (let j = 0; j <= nEven; j++) {
+      for (let k = 0; k <= target; k++) {
+        if (!dp[j*(target+1)+k]) continue;
+        // Place e of digit d at even positions (0 <= e <= min(c, nEven-j))
+        for (let e = 0; e <= Math.min(c, nEven-j); e++) {
+          const nj = j+e, nk = k+d*e;
+          if (nk > target) break;
+          // Divide by e! and (c-e)!
+          const contrib = dp[j*(target+1)+k] * inv(fact[e]) % MOD * inv(fact[c-e]) % MOD;
+          ndp[nj*(target+1)+nk] = (ndp[nj*(target+1)+nk] + contrib) % MOD;
+        }
+      }
+    }
+    dp = ndp;
+  }
+  return Number(dp[nEven*(target+1)+target] * fact[nEven] % MOD * fact[nOdd] % MOD);
 }`,
     typescript: `function countBalancedPermutations(num: string): number {
-  const MOD = 1_000_000_007n;
-  const digits = num.split('').map(Number);
-  const total = digits.reduce((s, d) => s + d, 0);
-  if (total % 2 !== 0) return 0; // odd sum can't be split equally
-  const target = total / 2;
-  const n = digits.length;
-  const nEven = Math.ceil(n / 2); // slots at even indices
-  // Count digit frequencies
-  const cnt = new Array(10).fill(0);
-  for (const d of digits) cnt[d]++;
-  // DP: dp[j][s] = ways to fill j even slots with digit sum s (divided by factorials)
-  // Precompute factorials/inverses for combination counting
-  // TODO: iterate over digits 0-9, for each try placing e copies at even positions
-  return 0;
+  const MOD = 1000000007n;
+  const cnt = new Array<number>(10).fill(0);
+  for (const c of num) cnt[+c]!++;
+  const total = num.length;
+  const totalSum = [...num].reduce((s, c) => s + +c, 0);
+  if (totalSum % 2 !== 0) return 0;
+  const target = totalSum / 2, nEven = Math.ceil(total / 2), nOdd = Math.floor(total / 2);
+  const fact: bigint[] = new Array(total + 1).fill(1n);
+  for (let i = 1; i <= total; i++) fact[i] = fact[i-1]! * BigInt(i) % MOD;
+  const pow = (b: bigint, e: bigint): bigint => { let r=1n; b%=MOD; while(e>0n){if(e&1n)r=r*b%MOD;b=b*b%MOD;e>>=1n;}return r; };
+  const inv = (x: bigint) => pow(x, MOD-2n);
+  let dp: bigint[] = new Array((nEven+1)*(target+1)).fill(0n);
+  dp[0] = 1n;
+  for (let d = 0; d <= 9; d++) {
+    const c = cnt[d]!;
+    if (c === 0) continue;
+    const ndp: bigint[] = new Array((nEven+1)*(target+1)).fill(0n);
+    for (let j = 0; j <= nEven; j++) {
+      for (let k = 0; k <= target; k++) {
+        const cur = dp[j*(target+1)+k]!;
+        if (!cur) continue;
+        for (let e = 0; e <= Math.min(c, nEven-j); e++) {
+          const nk = k+d*e;
+          if (nk > target) break;
+          ndp[(j+e)*(target+1)+nk] = (ndp[(j+e)*(target+1)+nk]! + cur * inv(fact[e]!) % MOD * inv(fact[c-e]!) % MOD) % MOD;
+        }
+      }
+    }
+    dp = ndp;
+  }
+  return Number(dp[nEven*(target+1)+target]! * fact[nEven]! % MOD * fact[nOdd]! % MOD);
 }`,
-    python: `def countBalancedPermutations(num: str) -> int:
+    python: `def countBalancedPermutations(num):
+    from math import factorial
     MOD = 10**9 + 7
-    digits = [int(c) for c in num]
-    total = sum(digits)
-    if total % 2 != 0:
-        return 0  # odd sum can't be split equally
-    target = total // 2
-    n = len(digits)
-    n_even = (n + 1) // 2  # slots at even indices
-    # Count digit frequencies
-    from collections import Counter
-    cnt = Counter(digits)
-    # DP: dp[j][s] = ways to fill j even slots with digit sum s (divided by factorials)
-    # Precompute factorials/inverses for combination counting
-    # TODO: iterate over digits 0-9, for each try placing e copies at even positions
-    pass`,
+    cnt = [0] * 10
+    for c in num: cnt[int(c)] += 1
+    total = len(num)
+    total_sum = sum(int(c) for c in num)
+    if total_sum % 2: return 0
+    target = total_sum // 2
+    n_even = (total + 1) // 2; n_odd = total // 2
+    dp = [[0] * (target + 1) for _ in range(n_even + 1)]
+    dp[0][0] = 1
+    for d in range(10):
+        c = cnt[d]
+        if not c: continue
+        ndp = [[0] * (target + 1) for _ in range(n_even + 1)]
+        for j in range(n_even + 1):
+            for k in range(target + 1):
+                if not dp[j][k]: continue
+                for e in range(min(c, n_even - j) + 1):
+                    nk = k + d * e
+                    if nk > target: break
+                    ndp[j+e][nk] = (ndp[j+e][nk] + dp[j][k] * pow(factorial(e) * factorial(c-e), MOD-2, MOD)) % MOD
+        dp = ndp
+    return dp[n_even][target] * factorial(n_even) % MOD * factorial(n_odd) % MOD`,
   },
   visibleTests: [
     { args: ['123'], expected: 2 },

@@ -42,13 +42,57 @@ A 5-character palindrome has the form \`xyzyx\` — the first and last character
   params: ['s'],
   starterCode: {
     javascript: `function countPalindromes(s) {
-  // Count palindromic subsequences of length 5, modulo 10^9+7
+  const MOD = 1000000007n, n = s.length;
+  const rS = new Array(10).fill(0), rP = Array.from({length:10},()=>new Array(10).fill(0));
+  for (const c of s) { const d=+c; for (let p=0;p<10;p++) rP[p][d]+=rS[p]; rS[d]++; }
+  const lS = new Array(10).fill(0), lP = Array.from({length:10},()=>new Array(10).fill(0));
+  let ans = 0n;
+  for (let k = 0; k < n; k++) {
+    const d = +s[k];
+    rS[d]--; for (let q=0;q<10;q++) rP[d][q]-=rS[q];
+    for (let x=0;x<10;x++) for (let y=0;y<10;y++) ans=(ans+BigInt(lP[x][y])*BigInt(rP[y][x]))%MOD;
+    for (let p=0;p<10;p++) lP[p][d]+=lS[p]; lS[d]++;
+  }
+  return Number(ans);
 }`,
-    typescript: "function countPalindromes(s: string): number {\n  // Count palindromic subsequences of length 5, modulo 10^9+7\n}",
-
+    typescript: `function countPalindromes(s: string): number {
+  const MOD = 1000000007n, n = s.length;
+  const rS = new Array<number>(10).fill(0);
+  const rP: number[][] = Array.from({length:10},()=>new Array<number>(10).fill(0));
+  for (const c of s) { const d=+c; for (let p=0;p<10;p++) rP[p]![d]!+=rS[p]!; rS[d]!++; }
+  const lS = new Array<number>(10).fill(0);
+  const lP: number[][] = Array.from({length:10},()=>new Array<number>(10).fill(0));
+  let ans = 0n;
+  for (let k = 0; k < n; k++) {
+    const d = +s[k]!;
+    rS[d]!--; for (let q=0;q<10;q++) rP[d]![q]!-=rS[q]!;
+    for (let x=0;x<10;x++) for (let y=0;y<10;y++) ans=(ans+BigInt(lP[x]![y]!)*BigInt(rP[y]![x]!))%MOD;
+    for (let p=0;p<10;p++) lP[p]![d]!+=lS[p]!; lS[d]!++;
+  }
+  return Number(ans);
+}`,
     python: `def countPalindromes(s: str) -> int:
-    # Count palindromic subsequences of length 5, modulo 10**9+7
-    pass`,
+    MOD = 10**9 + 7
+    n = len(s)
+    r_s = [0] * 10
+    r_p = [[0]*10 for _ in range(10)]
+    for c in s:
+        d = int(c)
+        for p in range(10): r_p[p][d] += r_s[p]
+        r_s[d] += 1
+    l_s = [0] * 10
+    l_p = [[0]*10 for _ in range(10)]
+    ans = 0
+    for k in range(n):
+        d = int(s[k])
+        r_s[d] -= 1
+        for q in range(10): r_p[d][q] -= r_s[q]
+        for x in range(10):
+            for y in range(10):
+                ans = (ans + l_p[x][y] * r_p[y][x]) % MOD
+        for p in range(10): l_p[p][d] += l_s[p]
+        l_s[d] += 1
+    return ans`,
   },
   visibleTests: [
     { args: ['103301'], expected: 2 },

@@ -34,11 +34,102 @@ A **nice pair** is a pair \`(i, j)\` where \`0 <= i < j < nums.length\` and \`lo
   params: ['nums', 'low', 'high'],
   starterCode: {
     javascript: `function countPairs(nums, low, high) {
-
+  const BITS = 15;
+  // Trie node: [count, children[0], children[1]]
+  const trie = [[0, -1, -1]];
+  const insert = v => {
+    let node = 0;
+    for (let b = BITS; b >= 0; b--) {
+      const bit = (v >> b) & 1;
+      if (trie[node][bit + 1] === -1) { trie[node][bit + 1] = trie.length; trie.push([0, -1, -1]); }
+      node = trie[node][bit + 1];
+      trie[node][0]++;
+    }
+  };
+  const countBelow = (v, limit) => {
+    let node = 0, cnt = 0;
+    for (let b = BITS; b >= 0; b--) {
+      const vb = (v >> b) & 1, lb = (limit >> b) & 1;
+      if (lb === 1) {
+        const child = trie[node][vb + 1]; // going same bit -> XOR bit = 0 < 1, all count
+        if (child !== -1) cnt += trie[child][0];
+        node = trie[node][(1 - vb) + 1]; // go to bit that makes XOR bit = 1
+      } else {
+        node = trie[node][vb + 1]; // must pick same bit to keep XOR < limit
+      }
+      if (node === -1) break;
+    }
+    return cnt;
+  };
+  let ans = 0;
+  for (const n of nums) {
+    ans += countBelow(n, high + 1) - countBelow(n, low);
+    insert(n);
+  }
+  return ans;
 }`,
-    typescript: 'function countPairs(nums: number[], low: number, high: number): number {\n\n}',
+    typescript: `function countPairs(nums: number[], low: number, high: number): number {
+  const BITS = 15;
+  const trie: [number, number, number][] = [[0, -1, -1]];
+  const insert = (v: number) => {
+    let node = 0;
+    for (let b = BITS; b >= 0; b--) {
+      const bit = (v >> b) & 1;
+      if (trie[node]![bit + 1] === -1) { trie[node]![bit + 1] = trie.length; trie.push([0, -1, -1]); }
+      node = trie[node]![bit + 1]!;
+      trie[node]![0]++;
+    }
+  };
+  const countBelow = (v: number, limit: number): number => {
+    let node = 0, cnt = 0;
+    for (let b = BITS; b >= 0; b--) {
+      const vb = (v >> b) & 1, lb = (limit >> b) & 1;
+      if (lb === 1) {
+        const child = trie[node]![vb + 1]!;
+        if (child !== -1) cnt += trie[child]![0]!;
+        node = trie[node]![(1 - vb) + 1]!;
+      } else {
+        node = trie[node]![vb + 1]!;
+      }
+      if (node === -1) break;
+    }
+    return cnt;
+  };
+  let ans = 0;
+  for (const n of nums) {
+    ans += countBelow(n, high + 1) - countBelow(n, low);
+    insert(n);
+  }
+  return ans;
+}`,
     python: `def countPairs(nums, low, high):
-    pass`,
+    BITS = 15
+    trie = [[0, None, None]]  # [count, child0, child1]
+    def insert(v):
+        node = 0
+        for b in range(BITS, -1, -1):
+            bit = (v >> b) & 1
+            if trie[node][bit + 1] is None:
+                trie[node][bit + 1] = len(trie); trie.append([0, None, None])
+            node = trie[node][bit + 1]
+            trie[node][0] += 1
+    def count_below(v, limit):
+        node, cnt = 0, 0
+        for b in range(BITS, -1, -1):
+            vb = (v >> b) & 1; lb = (limit >> b) & 1
+            if lb == 1:
+                child = trie[node][vb + 1]
+                if child is not None: cnt += trie[child][0]
+                node = trie[node][(1 - vb) + 1]
+            else:
+                node = trie[node][vb + 1]
+            if node is None: break
+        return cnt
+    ans = 0
+    for n in nums:
+        ans += count_below(n, high + 1) - count_below(n, low)
+        insert(n)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 4, 2, 7], 2, 6], expected: 6 },

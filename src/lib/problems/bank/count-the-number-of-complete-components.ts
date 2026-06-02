@@ -37,14 +37,58 @@ A **complete component** is a connected component where every pair of its vertic
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function countCompleteComponents(n, edges) {
-  // DSU: track component size and edge count; check k*(k-1)/2
+  const parent = Array.from({length: n}, (_, i) => i);
+  const size = new Array(n).fill(1), edgeCnt = new Array(n).fill(0);
+  const find = x => parent[x] === x ? x : (parent[x] = find(parent[x]));
+  const union = (a, b) => {
+    a = find(a); b = find(b);
+    if (a === b) { edgeCnt[a]++; return; }
+    if (size[a] < size[b]) [a, b] = [b, a];
+    parent[b] = a; size[a] += size[b]; edgeCnt[a] += edgeCnt[b] + 1;
+  };
+  for (const [u, v] of edges) union(u, v);
+  let count = 0;
+  for (let i = 0; i < n; i++) {
+    if (find(i) === i) {
+      const k = size[i];
+      if (edgeCnt[i] === k * (k - 1) / 2) count++;
+    }
+  }
+  return count;
 }`,
     typescript: `function countCompleteComponents(n: number, edges: number[][]): number {
-  // DSU: track component size and edge count; check k*(k-1)/2
+  const parent = Array.from({length: n}, (_, i) => i);
+  const size = new Array<number>(n).fill(1), edgeCnt = new Array<number>(n).fill(0);
+  const find = (x: number): number => parent[x] === x ? x : (parent[x] = find(parent[x]!));
+  const union = (a: number, b: number) => {
+    a = find(a); b = find(b);
+    if (a === b) { edgeCnt[a]!++; return; }
+    if (size[a]! < size[b]!) [a, b] = [b, a];
+    parent[b]! = a; size[a]! += size[b]!; edgeCnt[a]! += edgeCnt[b]! + 1;
+  };
+  for (const [u, v] of edges) union(u!, v!);
+  let count = 0;
+  for (let i = 0; i < n; i++) {
+    if (find(i) === i) {
+      const k = size[i]!;
+      if (edgeCnt[i]! === k * (k - 1) / 2) count++;
+    }
+  }
+  return count;
 }`,
     python: `def countCompleteComponents(n, edges):
-    # DSU: track component size and edge count; check k*(k-1)/2
-    pass`,
+    parent = list(range(n))
+    size = [1] * n
+    edge_cnt = [0] * n
+    def find(x):
+        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    for u, v in edges:
+        a, b = find(u), find(v)
+        if a == b: edge_cnt[a] += 1; continue
+        if size[a] < size[b]: a, b = b, a
+        parent[b] = a; size[a] += size[b]; edge_cnt[a] += edge_cnt[b] + 1
+    return sum(1 for i in range(n) if find(i) == i and edge_cnt[i] == size[i] * (size[i] - 1) // 2)`,
   },
   visibleTests: [
     { args: [6, [[0,1],[0,2],[1,2],[3,4]]], expected: 3 },

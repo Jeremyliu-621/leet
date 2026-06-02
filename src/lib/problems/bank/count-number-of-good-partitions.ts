@@ -50,44 +50,35 @@ function numberOfGoodPartitions(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function numberOfGoodPartitions(nums) {
-  const MOD = 1_000_000_007n;
-  // Precompute last occurrence index of each value
+  const MOD = 1000000007n;
   const last = new Map();
   for (let i = 0; i < nums.length; i++) last.set(nums[i], i);
-  // Sweep: track the farthest last-occurrence seen so far (maxEnd)
-  // When current index equals maxEnd, a valid cut point exists -> multiply by 2
   let result = 1n, maxEnd = 0;
   for (let i = 0; i < nums.length - 1; i++) {
     maxEnd = Math.max(maxEnd, last.get(nums[i]));
-    // TODO: if i === maxEnd, result = result * 2n % MOD
+    if (i === maxEnd) result = result * 2n % MOD;
   }
   return Number(result);
 }`,
     typescript: `function numberOfGoodPartitions(nums: number[]): number {
-  const MOD = 1_000_000_007n;
-  // Precompute last occurrence index of each value
+  const MOD = 1000000007n;
   const last = new Map<number, number>();
-  for (let i = 0; i < nums.length; i++) last.set(nums[i], i);
-  // Sweep: track the farthest last-occurrence seen so far (maxEnd)
-  // When current index equals maxEnd, a valid cut point exists -> multiply by 2
+  for (let i = 0; i < nums.length; i++) last.set(nums[i]!, i);
   let result = 1n, maxEnd = 0;
   for (let i = 0; i < nums.length - 1; i++) {
-    maxEnd = Math.max(maxEnd, last.get(nums[i])!);
-    // TODO: if i === maxEnd, result = result * 2n % MOD
+    maxEnd = Math.max(maxEnd, last.get(nums[i]!)!);
+    if (i === maxEnd) result = result * 2n % MOD;
   }
   return Number(result);
 }`,
-    python: `def numberOfGoodPartitions(nums: list[int]) -> int:
+    python: `def numberOfGoodPartitions(nums):
     MOD = 10**9 + 7
-    # Precompute last occurrence index of each value
     last = {v: i for i, v in enumerate(nums)}
-    # Sweep: track the farthest last-occurrence seen so far (max_end)
-    # When current index equals max_end, a valid cut point -> multiply by 2
-    result = 1
-    max_end = 0
+    result, max_end = 1, 0
     for i in range(len(nums) - 1):
         max_end = max(max_end, last[nums[i]])
-        # TODO: if i == max_end, result = result * 2 % MOD
+        if i == max_end:
+            result = result * 2 % MOD
     return result`,
   },
   visibleTests: [

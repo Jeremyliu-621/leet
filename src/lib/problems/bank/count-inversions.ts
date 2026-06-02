@@ -38,16 +38,55 @@ An **inversion** is a pair \`(i, j)\` where \`i < j\` and \`nums[i] > nums[j]\`.
   params: ['nums'],
   starterCode: {
     javascript: `function countInversions(nums) {
-  // Coordinate-compress, then use a BIT scanning left to right.
-  // For each element at rank r, the number of inversions it forms
-  // with previous elements = (elements already inserted) - prefixSum(r).
+  const sorted = [...new Set(nums)].sort((a, b) => a - b);
+  const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+  const n = sorted.length;
+  const bit = new Array(n + 1).fill(0);
+  const update = i => { for (; i <= n; i += i & -i) bit[i]++; };
+  const query = i => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]; return s; };
+  let inv = 0, inserted = 0;
+  for (const v of nums) {
+    const r = rank.get(v);
+    inv += inserted - query(r);
+    update(r);
+    inserted++;
+  }
+  return inv;
 }`,
-    typescript: "function countInversions(nums: number[]): number {\n  // Coordinate-compress, then use a BIT scanning left to right.\n  // For each element at rank r, the number of inversions it forms\n  // with previous elements = (elements already inserted) - prefixSum(r).\n}",
-
+    typescript: `function countInversions(nums: number[]): number {
+  const sorted = [...new Set(nums)].sort((a, b) => a - b);
+  const rank = new Map<number, number>(sorted.map((v, i) => [v, i + 1]));
+  const n = sorted.length;
+  const bit = new Array<number>(n + 1).fill(0);
+  const update = (i: number) => { for (; i <= n; i += i & -i) bit[i]!++; };
+  const query = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+  let inv = 0, inserted = 0;
+  for (const v of nums) {
+    const r = rank.get(v)!;
+    inv += inserted - query(r);
+    update(r);
+    inserted++;
+  }
+  return inv;
+}`,
     python: `def countInversions(nums):
-    # Coordinate-compress, then use a BIT scanning left to right.
-    # For each element at rank r, inversions formed = (elements inserted) - prefix_sum(r).
-    pass`,
+    sorted_u = sorted(set(nums))
+    rank = {v: i + 1 for i, v in enumerate(sorted_u)}
+    n = len(sorted_u)
+    bit = [0] * (n + 1)
+    def update(i):
+        while i <= n: bit[i] += 1; i += i & -i
+    def query(i):
+        s = 0
+        while i > 0: s += bit[i]; i -= i & -i
+        return s
+    inv = inserted = 0
+    for v in nums:
+        r = rank[v]
+        inv += inserted - query(r)
+        update(r)
+        inserted += 1
+    return inv`,
   },
   visibleTests: [
     { args: [[3, 1, 2]], expected: 2 },

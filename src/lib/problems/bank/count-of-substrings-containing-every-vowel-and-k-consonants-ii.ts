@@ -63,11 +63,66 @@ function countOfSubstrings(word, k) {
   params: ['word', 'k'],
   starterCode: {
     javascript: `function countOfSubstrings(word, k) {
-
+  const VOWELS = new Set('aeiou');
+  function atLeast(minK) {
+    const vowelCnt = new Map();
+    let consonants = 0, result = 0, left = 0;
+    for (let right = 0; right < word.length; right++) {
+      const c = word[right];
+      if (VOWELS.has(c)) vowelCnt.set(c, (vowelCnt.get(c) ?? 0) + 1);
+      else consonants++;
+      while (vowelCnt.size === 5 && consonants >= minK) {
+        result += word.length - right;
+        const lc = word[left++];
+        if (VOWELS.has(lc)) {
+          vowelCnt.set(lc, vowelCnt.get(lc) - 1);
+          if (vowelCnt.get(lc) === 0) vowelCnt.delete(lc);
+        } else consonants--;
+      }
+    }
+    return result;
+  }
+  return atLeast(k) - atLeast(k + 1);
 }`,
-    typescript: 'function countOfSubstrings(word: string, k: number): number {\n\n}',
+    typescript: `function countOfSubstrings(word: string, k: number): number {
+  const VOWELS = new Set('aeiou');
+  function atLeast(minK: number): number {
+    const vowelCnt = new Map<string, number>();
+    let consonants = 0, result = 0, left = 0;
+    for (let right = 0; right < word.length; right++) {
+      const c = word[right]!;
+      if (VOWELS.has(c)) vowelCnt.set(c, (vowelCnt.get(c) ?? 0) + 1);
+      else consonants++;
+      while (vowelCnt.size === 5 && consonants >= minK) {
+        result += word.length - right;
+        const lc = word[left++]!;
+        if (VOWELS.has(lc)) {
+          vowelCnt.set(lc, vowelCnt.get(lc)! - 1);
+          if (vowelCnt.get(lc) === 0) vowelCnt.delete(lc);
+        } else consonants--;
+      }
+    }
+    return result;
+  }
+  return atLeast(k) - atLeast(k + 1);
+}`,
     python: `def countOfSubstrings(word, k):
-    pass`,
+    VOWELS = set('aeiou')
+    def at_least(min_k):
+        vowel_cnt = {}
+        consonants = result = left = 0
+        for right, c in enumerate(word):
+            if c in VOWELS: vowel_cnt[c] = vowel_cnt.get(c, 0) + 1
+            else: consonants += 1
+            while len(vowel_cnt) == 5 and consonants >= min_k:
+                result += len(word) - right
+                lc = word[left]; left += 1
+                if lc in VOWELS:
+                    vowel_cnt[lc] -= 1
+                    if vowel_cnt[lc] == 0: del vowel_cnt[lc]
+                else: consonants -= 1
+        return result
+    return at_least(k) - at_least(k + 1)`,
   },
   visibleTests: [
     { args: ['aeioqq', 1], expected: 0 },

@@ -37,13 +37,62 @@ Given a positive integer \`n\`, return the number of special integers in the ran
   params: ['n'],
   starterCode: {
     javascript: `function countSpecialNumbers(n) {
-
+  const digits = String(n).split('').map(Number);
+  const len = digits.length;
+  const memo = new Map();
+  function dp(pos, mask, tight, started) {
+    if (pos === len) return started ? 1 : 0;
+    const key = \`\${pos},\${mask},\${tight},\${started}\`;
+    if (memo.has(key)) return memo.get(key);
+    const limit = tight ? digits[pos] : 9;
+    let res = 0;
+    for (let d = 0; d <= limit; d++) {
+      if (started && (mask >> d & 1)) continue;
+      const newStarted = started || d !== 0;
+      const newMask = newStarted ? mask | (1 << d) : 0;
+      res += dp(pos + 1, newMask, tight && d === limit, newStarted);
+    }
+    memo.set(key, res);
+    return res;
+  }
+  return dp(0, 0, true, false);
 }`,
     typescript: `function countSpecialNumbers(n: number): number {
-
+  const digits = String(n).split('').map(Number);
+  const len = digits.length;
+  const memo = new Map<string, number>();
+  function dp(pos: number, mask: number, tight: boolean, started: boolean): number {
+    if (pos === len) return started ? 1 : 0;
+    const key = \`\${pos},\${mask},\${tight},\${started}\`;
+    if (memo.has(key)) return memo.get(key)!;
+    const limit = tight ? digits[pos]! : 9;
+    let res = 0;
+    for (let d = 0; d <= limit; d++) {
+      if (started && (mask >> d & 1)) continue;
+      const newStarted = started || d !== 0;
+      const newMask = newStarted ? mask | (1 << d) : 0;
+      res += dp(pos + 1, newMask, tight && d === limit, newStarted);
+    }
+    memo.set(key, res);
+    return res;
+  }
+  return dp(0, 0, true, false);
 }`,
     python: `def countSpecialNumbers(n):
-    pass`,
+    digits = list(map(int, str(n)))
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(pos, mask, tight, started):
+        if pos == len(digits): return 1 if started else 0
+        limit = digits[pos] if tight else 9
+        res = 0
+        for d in range(limit + 1):
+            if started and (mask >> d & 1): continue
+            new_started = started or d != 0
+            new_mask = mask | (1 << d) if new_started else 0
+            res += dp(pos + 1, new_mask, tight and d == limit, new_started)
+        return res
+    return dp(0, 0, True, False)`,
   },
   visibleTests: [
     { args: [20], expected: 19 },

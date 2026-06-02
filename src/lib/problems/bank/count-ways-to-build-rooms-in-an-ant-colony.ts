@@ -36,12 +36,67 @@ Return the number of **different orders** you can build all the rooms in. Since 
   params: ['prevRoom'],
   starterCode: {
     javascript: `function waysToBuildRooms(prevRoom) {
-
+  const MOD = 1000000007n;
+  const n = prevRoom.length;
+  const children = Array.from({length: n}, () => []);
+  for (let i = 1; i < n; i++) children[prevRoom[i]].push(i);
+  const size = new Array(n).fill(1);
+  // Iterative post-order DFS
+  const order = [], stack = [0];
+  while (stack.length) {
+    const u = stack.pop();
+    order.push(u);
+    for (const c of children[u]) stack.push(c);
+  }
+  for (let i = order.length - 1; i >= 0; i--) {
+    const u = order[i];
+    for (const c of children[u]) size[u] += size[c];
+  }
+  const fact = new Array(n + 1).fill(1n);
+  for (let i = 1; i <= n; i++) fact[i] = fact[i-1] * BigInt(i) % MOD;
+  const pow = (b, e) => { let r = 1n; b %= MOD; while (e > 0n) { if (e & 1n) r = r * b % MOD; b = b * b % MOD; e >>= 1n; } return r; };
+  let ans = fact[n];
+  for (let i = 0; i < n; i++) ans = ans * pow(BigInt(size[i]), MOD - 2n) % MOD;
+  return Number(ans);
 }`,
-    typescript: "function waysToBuildRooms(prevRoom: number[]): number {\n\n}",
-
+    typescript: `function waysToBuildRooms(prevRoom: number[]): number {
+  const MOD = 1000000007n;
+  const n = prevRoom.length;
+  const children: number[][] = Array.from({length: n}, () => []);
+  for (let i = 1; i < n; i++) children[prevRoom[i]!]!.push(i);
+  const size = new Array<number>(n).fill(1);
+  const order: number[] = [], stack = [0];
+  while (stack.length) {
+    const u = stack.pop()!;
+    order.push(u);
+    for (const c of children[u]!) stack.push(c);
+  }
+  for (let i = order.length - 1; i >= 0; i--) {
+    for (const c of children[order[i]!]!) size[order[i]!]! += size[c]!;
+  }
+  const fact: bigint[] = new Array(n + 1).fill(1n);
+  for (let i = 1; i <= n; i++) fact[i] = fact[i-1]! * BigInt(i) % MOD;
+  const pow = (b: bigint, e: bigint): bigint => { let r = 1n; b %= MOD; while (e > 0n) { if (e & 1n) r = r * b % MOD; b = b * b % MOD; e >>= 1n; } return r; };
+  let ans = fact[n]!;
+  for (let i = 0; i < n; i++) ans = ans * pow(BigInt(size[i]!), MOD - 2n) % MOD;
+  return Number(ans);
+}`,
     python: `def waysToBuildRooms(prevRoom):
-    pass`,
+    MOD = 10**9 + 7
+    n = len(prevRoom)
+    children = [[] for _ in range(n)]
+    for i in range(1, n): children[prevRoom[i]].append(i)
+    size = [1] * n
+    order, stack = [], [0]
+    while stack:
+        u = stack.pop(); order.append(u)
+        for c in children[u]: stack.append(c)
+    for u in reversed(order):
+        for c in children[u]: size[u] += size[c]
+    import math
+    ans = math.factorial(n)
+    for s in size: ans = ans * pow(s, MOD - 2, MOD) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [[-1, 0, 1]], expected: 1 },

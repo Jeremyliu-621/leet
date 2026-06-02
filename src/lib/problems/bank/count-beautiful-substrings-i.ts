@@ -45,15 +45,40 @@ Return the **total number of beautiful substrings** in \`s\`.`,
   params: ['s', 'k'],
   starterCode: {
     javascript: `function beautifulSubstrings(s, k) {
-  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
-  // Try all starting indices i; extend j and check the beautiful condition.
+  const vowels = new Set('aeiou');
+  let count = 0;
+  for (let i = 0; i < s.length; i++) {
+    let v = 0, c = 0;
+    for (let j = i; j < s.length; j++) {
+      vowels.has(s[j]) ? v++ : c++;
+      if (v === c && (j - i + 1) % k === 0) count++;
+    }
+  }
+  return count;
 }`,
-    typescript: "function beautifulSubstrings(s: string, k: number): number {\n  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);\n  // Try all starting indices i; extend j and check the beautiful condition.\n}",
-
+    typescript: `function beautifulSubstrings(s: string, k: number): number {
+  const vowels = new Set('aeiou');
+  let count = 0;
+  for (let i = 0; i < s.length; i++) {
+    let v = 0, c = 0;
+    for (let j = i; j < s.length; j++) {
+      vowels.has(s[j]!) ? v++ : c++;
+      if (v === c && (j - i + 1) % k === 0) count++;
+    }
+  }
+  return count;
+}`,
     python: `def beautifulSubstrings(s, k):
     vowels = set('aeiou')
-    # Try all starting indices i; extend j and check the beautiful condition.
-    pass`,
+    count = 0
+    for i in range(len(s)):
+        v = c = 0
+        for j in range(i, len(s)):
+            if s[j] in vowels: v += 1
+            else: c += 1
+            if v == c and (j - i + 1) % k == 0:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: ['baeyh', 2], expected: 4 },

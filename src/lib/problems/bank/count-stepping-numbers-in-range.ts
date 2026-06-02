@@ -74,13 +74,93 @@ function countSteppingNumbers(low, high) {
   params: ['low', 'high'],
   starterCode: {
     javascript: `function countSteppingNumbers(low, high) {
-
+  const MOD = 1000000007n;
+  function countUpTo(s) {
+    const n = s.length;
+    const memo = new Map();
+    function dp(pos, last, tight, started) {
+      if (pos === n) return started ? 1n : 0n;
+      const key = \`\${pos},\${last},\${tight},\${started}\`;
+      if (memo.has(key)) return memo.get(key);
+      const limit = tight ? +s[pos] : 9;
+      let res = 0n;
+      for (let d = 0; d <= limit; d++) {
+        const nt = tight && d === limit;
+        if (!started && d === 0) { res = (res + dp(pos+1, -1, nt, false)) % MOD; continue; }
+        if (started && Math.abs(d - last) !== 1) continue;
+        res = (res + dp(pos+1, d, nt, true)) % MOD;
+      }
+      memo.set(key, res);
+      return res;
+    }
+    return dp(0, -1, true, false);
+  }
+  function subOne(s) {
+    const a = s.split('').map(Number);
+    let i = a.length - 1;
+    while (i >= 0 && a[i] === 0) { a[i] = 9; i--; }
+    a[i]--;
+    return a.join('').replace(/^0+/, '') || '0';
+  }
+  const hi = countUpTo(high), lo = countUpTo(subOne(low));
+  return Number((hi - lo + MOD) % MOD);
 }`,
     typescript: `function countSteppingNumbers(low: string, high: string): number {
-
+  const MOD = 1000000007n;
+  function countUpTo(s: string): bigint {
+    const n = s.length;
+    const memo = new Map<string, bigint>();
+    function dp(pos: number, last: number, tight: boolean, started: boolean): bigint {
+      if (pos === n) return started ? 1n : 0n;
+      const key = \`\${pos},\${last},\${tight},\${started}\`;
+      if (memo.has(key)) return memo.get(key)!;
+      const limit = tight ? +s[pos]! : 9;
+      let res = 0n;
+      for (let d = 0; d <= limit; d++) {
+        const nt = tight && d === limit;
+        if (!started && d === 0) { res = (res + dp(pos+1, -1, nt, false)) % MOD; continue; }
+        if (started && Math.abs(d - last) !== 1) continue;
+        res = (res + dp(pos+1, d, nt, true)) % MOD;
+      }
+      memo.set(key, res);
+      return res;
+    }
+    return dp(0, -1, true, false);
+  }
+  function subOne(s: string): string {
+    const a = s.split('').map(Number);
+    let i = a.length - 1;
+    while (i >= 0 && a[i] === 0) { a[i] = 9; i--; }
+    a[i]!--;
+    return a.join('').replace(/^0+/, '') || '0';
+  }
+  const hi = countUpTo(high), lo = countUpTo(subOne(low));
+  return Number((hi - lo + MOD) % MOD);
 }`,
     python: `def countSteppingNumbers(low, high):
-    pass`,
+    MOD = 10**9 + 7
+    from functools import lru_cache
+    def count_up_to(s):
+        n = len(s)
+        @lru_cache(maxsize=None)
+        def dp(pos, last, tight, started):
+            if pos == n: return 1 if started else 0
+            limit = int(s[pos]) if tight else 9
+            res = 0
+            for d in range(limit + 1):
+                nt = tight and d == limit
+                if not started and d == 0: res = (res + dp(pos+1, -1, nt, False)) % MOD; continue
+                if started and abs(d - last) != 1: continue
+                res = (res + dp(pos+1, d, nt, True)) % MOD
+            return res
+        return dp(0, -1, True, False)
+    def sub_one(s):
+        a = list(s)
+        i = len(a) - 1
+        while i >= 0 and a[i] == '0': a[i] = '9'; i -= 1
+        a[i] = str(int(a[i]) - 1)
+        return ''.join(a).lstrip('0') or '0'
+    return (count_up_to(high) - count_up_to(sub_one(low)) + MOD) % MOD`,
   },
   visibleTests: [
     { args: ['1', '11'], expected: 10 },

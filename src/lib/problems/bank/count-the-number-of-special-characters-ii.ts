@@ -52,11 +52,40 @@ function numberOfSpecialChars(word) {
   params: ['word'],
   starterCode: {
     javascript: `function numberOfSpecialChars(word) {
-
+  const lastLower = new Map(), firstUpper = new Map();
+  for (let i = 0; i < word.length; i++) {
+    const c = word[i];
+    if (c === c.toLowerCase()) lastLower.set(c, i);
+    else if (!firstUpper.has(c.toLowerCase())) firstUpper.set(c.toLowerCase(), i);
+  }
+  let count = 0;
+  for (const [c, lIdx] of lastLower) {
+    const uIdx = firstUpper.get(c);
+    if (uIdx !== undefined && lIdx < uIdx) count++;
+  }
+  return count;
 }`,
-    typescript: 'function numberOfSpecialChars(word: string): number {\n\n}',
+    typescript: `function numberOfSpecialChars(word: string): number {
+  const lastLower = new Map<string, number>(), firstUpper = new Map<string, number>();
+  for (let i = 0; i < word.length; i++) {
+    const c = word[i]!;
+    if (c === c.toLowerCase()) lastLower.set(c, i);
+    else if (!firstUpper.has(c.toLowerCase())) firstUpper.set(c.toLowerCase(), i);
+  }
+  let count = 0;
+  for (const [c, lIdx] of lastLower) {
+    const uIdx = firstUpper.get(c);
+    if (uIdx !== undefined && lIdx < uIdx) count++;
+  }
+  return count;
+}`,
     python: `def numberOfSpecialChars(word):
-    pass`,
+    last_lower = {}
+    first_upper = {}
+    for i, c in enumerate(word):
+        if c.islower(): last_lower[c] = i
+        elif c.lower() not in first_upper: first_upper[c.lower()] = i
+    return sum(1 for c, li in last_lower.items() if c in first_upper and li < first_upper[c])`,
   },
   visibleTests: [
     { args: ['aaAbcBC'], expected: 3 },

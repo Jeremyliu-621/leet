@@ -52,13 +52,70 @@ Process words left-to-right: for each word \`t\`, count how many prior words \`s
   params: ['words'],
   starterCode: {
     javascript: `function countPrefixSuffixPairs(words) {
-
+  const root = {cnt: 0, ch: new Map()};
+  let ans = 0;
+  for (const w of words) {
+    const L = w.length, half = Math.ceil(L / 2);
+    // Query: accumulate terminal counts along w's pair path
+    let node = root;
+    for (let i = 0; i < half; i++) {
+      const key = w[i] + w[L-1-i];
+      if (!node.ch.has(key)) break;
+      node = node.ch.get(key);
+      ans += node.cnt;
+    }
+    // Insert: walk to terminal, increment only at terminal
+    node = root;
+    for (let i = 0; i < half; i++) {
+      const key = w[i] + w[L-1-i];
+      if (!node.ch.has(key)) node.ch.set(key, {cnt: 0, ch: new Map()});
+      node = node.ch.get(key);
+    }
+    node.cnt++;
+  }
+  return ans;
 }`,
     typescript: `function countPrefixSuffixPairs(words: string[]): number {
-
+  interface TrieNode { cnt: number; ch: Map<string, TrieNode>; }
+  const root: TrieNode = {cnt: 0, ch: new Map()};
+  let ans = 0;
+  for (const w of words) {
+    const L = w.length, half = Math.ceil(L / 2);
+    let node = root;
+    for (let i = 0; i < half; i++) {
+      const key = w[i]! + w[L-1-i]!;
+      if (!node.ch.has(key)) break;
+      node = node.ch.get(key)!;
+      ans += node.cnt;
+    }
+    node = root;
+    for (let i = 0; i < half; i++) {
+      const key = w[i]! + w[L-1-i]!;
+      if (!node.ch.has(key)) node.ch.set(key, {cnt: 0, ch: new Map()});
+      node = node.ch.get(key)!;
+    }
+    node.cnt++;
+  }
+  return ans;
 }`,
     python: `def countPrefixSuffixPairs(words: list[str]) -> int:
-    pass`,
+    root = {'cnt': 0, 'ch': {}}
+    ans = 0
+    for w in words:
+        L = len(w); half = (L + 1) // 2
+        node = root
+        for i in range(half):
+            key = w[i] + w[L-1-i]
+            if key not in node['ch']: break
+            node = node['ch'][key]
+            ans += node['cnt']
+        node = root
+        for i in range(half):
+            key = w[i] + w[L-1-i]
+            if key not in node['ch']: node['ch'][key] = {'cnt': 0, 'ch': {}}
+            node = node['ch'][key]
+        node['cnt'] += 1
+    return ans`,
   },
   visibleTests: [
     { args: [['a', 'aba', 'ababa', 'aa']], expected: 4 },

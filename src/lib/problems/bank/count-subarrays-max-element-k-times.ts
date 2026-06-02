@@ -46,13 +46,39 @@ The maximum element is the global maximum of the entire array.
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countSubarrays(nums, k) {
-  // Return count of subarrays where the global max element appears at least k times
+  const mx = Math.max(...nums);
+  let ans = 0, count = 0, left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right] === mx) count++;
+    while (count >= k) {
+      ans += nums.length - right;
+      if (nums[left++] === mx) count--;
+    }
+  }
+  return ans;
 }`,
-    typescript: "function countSubarrays(nums: number[], k: number): number {\n  // Return count of subarrays where the global max element appears at least k times\n}",
-
-    python: `def countSubarrays(nums: list[int], k: int) -> int:
-    # Return count of subarrays where the global max element appears at least k times
-    pass`,
+    typescript: `function countSubarrays(nums: number[], k: number): number {
+  const mx = Math.max(...nums);
+  let ans = 0, count = 0, left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    if (nums[right]! === mx) count++;
+    while (count >= k) {
+      ans += nums.length - right;
+      if (nums[left++]! === mx) count--;
+    }
+  }
+  return ans;
+}`,
+    python: `def countSubarrays(nums, k):
+    mx = max(nums)
+    ans = count = left = 0
+    for right, v in enumerate(nums):
+        if v == mx: count += 1
+        while count >= k:
+            ans += len(nums) - right
+            if nums[left] == mx: count -= 1
+            left += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 3, 3], 2], expected: 6 },

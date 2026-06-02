@@ -44,13 +44,55 @@ Return the number of submatrices of \`grid\` such that:
   params: ['grid', 'x', 'y'],
   starterCode: {
     javascript: `function numberOfSubmatrices(grid, x, y) {
-
+  const m = grid.length, n = grid[0].length;
+  const px = Array.from({length: m}, () => new Array(n).fill(0));
+  const py = Array.from({length: m}, () => new Array(n).fill(0));
+  let count = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const up = i > 0 ? px[i-1][j] : 0, left = j > 0 ? px[i][j-1] : 0, ul = i > 0 && j > 0 ? px[i-1][j-1] : 0;
+      px[i][j] = up + left - ul + (grid[i][j] === x ? 1 : 0);
+      const uy = i > 0 ? py[i-1][j] : 0, ly = j > 0 ? py[i][j-1] : 0, uly = i > 0 && j > 0 ? py[i-1][j-1] : 0;
+      py[i][j] = uy + ly - uly + (grid[i][j] === y ? 1 : 0);
+      if (px[i][j] > 0 && px[i][j] === py[i][j]) count++;
+    }
+  }
+  return count;
 }`,
     typescript: `function numberOfSubmatrices(grid: string[][], x: string, y: string): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  const px = Array.from({length: m}, () => new Array<number>(n).fill(0));
+  const py = Array.from({length: m}, () => new Array<number>(n).fill(0));
+  let count = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const up = i > 0 ? px[i-1]![j]! : 0, left = j > 0 ? px[i]![j-1]! : 0, ul = i > 0 && j > 0 ? px[i-1]![j-1]! : 0;
+      px[i]![j] = up + left - ul + (grid[i]![j] === x ? 1 : 0);
+      const uy = i > 0 ? py[i-1]![j]! : 0, ly = j > 0 ? py[i]![j-1]! : 0, uly = i > 0 && j > 0 ? py[i-1]![j-1]! : 0;
+      py[i]![j] = uy + ly - uly + (grid[i]![j] === y ? 1 : 0);
+      if (px[i]![j]! > 0 && px[i]![j] === py[i]![j]) count++;
+    }
+  }
+  return count;
 }`,
     python: `def numberOfSubmatrices(grid, x, y):
-    pass`,
+    m, n = len(grid), len(grid[0])
+    px = [[0]*n for _ in range(m)]
+    py = [[0]*n for _ in range(m)]
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            up = px[i-1][j] if i > 0 else 0
+            le = px[i][j-1] if j > 0 else 0
+            ul = px[i-1][j-1] if i > 0 and j > 0 else 0
+            px[i][j] = up + le - ul + (1 if grid[i][j] == x else 0)
+            uy = py[i-1][j] if i > 0 else 0
+            ly = py[i][j-1] if j > 0 else 0
+            uly = py[i-1][j-1] if i > 0 and j > 0 else 0
+            py[i][j] = uy + ly - uly + (1 if grid[i][j] == y else 0)
+            if px[i][j] > 0 and px[i][j] == py[i][j]:
+                count += 1
+    return count`,
   },
   visibleTests: [
     {

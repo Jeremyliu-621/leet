@@ -41,13 +41,79 @@ Return the **number of restricted paths** from node \`1\` to node \`n\`. Since t
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function countRestrictedPaths(n, edges) {
-  // Return number of restricted paths from node 1 to node n, mod 10^9+7
+  const MOD = 1000000007;
+  const adj = Array.from({length: n+1}, () => []);
+  for (const [u,v,w] of edges) { adj[u].push([v,w]); adj[v].push([u,w]); }
+  // Dijkstra from n
+  const dist = new Array(n+1).fill(Infinity); dist[n] = 0;
+  const pq = [[0, n]]; // [dist, node]
+  while (pq.length) {
+    pq.sort((a,b) => a[0]-b[0]);
+    const [d, u] = pq.shift();
+    if (d > dist[u]) continue;
+    for (const [v, w] of adj[u]) {
+      if (dist[u]+w < dist[v]) { dist[v] = dist[u]+w; pq.push([dist[v],v]); }
+    }
+  }
+  // Memoized DFS
+  const memo = new Array(n+1).fill(-1);
+  const dfs = u => {
+    if (u === n) return 1;
+    if (memo[u] !== -1) return memo[u];
+    let cnt = 0;
+    for (const [v] of adj[u]) {
+      if (dist[v] < dist[u]) cnt = (cnt + dfs(v)) % MOD;
+    }
+    return memo[u] = cnt;
+  };
+  return dfs(1);
 }`,
-    typescript: "function countRestrictedPaths(n: number, edges: number[][]): number {\n  // Return number of restricted paths from node 1 to node n, mod 10^9+7\n}",
-
+    typescript: `function countRestrictedPaths(n: number, edges: number[][]): number {
+  const MOD = 1000000007;
+  const adj: [number, number][][] = Array.from({length: n+1}, () => []);
+  for (const [u,v,w] of edges) { adj[u]!.push([v!,w!]); adj[v]!.push([u!,w!]); }
+  const dist = new Array<number>(n+1).fill(Infinity); dist[n] = 0;
+  const pq: [number, number][] = [[0, n]];
+  while (pq.length) {
+    pq.sort((a,b) => a[0]-b[0]);
+    const [d, u] = pq.shift()!;
+    if (d > dist[u]!) continue;
+    for (const [v, w] of adj[u]!) {
+      if (dist[u]!+w < dist[v]!) { dist[v] = dist[u]!+w; pq.push([dist[v]!,v]); }
+    }
+  }
+  const memo = new Array<number>(n+1).fill(-1);
+  const dfs = (u: number): number => {
+    if (u === n) return 1;
+    if (memo[u]! !== -1) return memo[u]!;
+    let cnt = 0;
+    for (const [v] of adj[u]!) {
+      if (dist[v]! < dist[u]!) cnt = (cnt + dfs(v)) % MOD;
+    }
+    return memo[u] = cnt;
+  };
+  return dfs(1);
+}`,
     python: `def countRestrictedPaths(n: int, edges: list[list[int]]) -> int:
-    # Return number of restricted paths from node 1 to node n, mod 10^9+7
-    pass`,
+    import heapq
+    MOD = 10**9 + 7
+    adj = [[] for _ in range(n+1)]
+    for u, v, w in edges:
+        adj[u].append((v, w)); adj[v].append((u, w))
+    dist = [float('inf')] * (n+1); dist[n] = 0
+    pq = [(0, n)]
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]: continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w; heapq.heappush(pq, (dist[v], v))
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dfs(u):
+        if u == n: return 1
+        return sum(dfs(v) for v, _ in adj[u] if dist[v] < dist[u]) % MOD
+    return dfs(1)`,
   },
   visibleTests: [
     { args: [5, [[1, 2, 3], [1, 3, 3], [2, 3, 1], [1, 4, 2], [5, 2, 2], [3, 5, 1], [5, 4, 10]]], expected: 3 },

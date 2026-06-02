@@ -52,14 +52,41 @@ Return the **total number** of pyramids and inverse pyramids in the grid.`,
   params: ['grid'],
   starterCode: {
     javascript: `function countPyramids(grid) {
-  // DP: dp[i][j] = max pyramid height with apex at (i,j)
+  const m = grid.length, n = grid[0].length;
+  function countUp(g) {
+    const dp = g.map(row => [...row]);
+    for (let i = m - 2; i >= 0; i--) {
+      for (let j = 1; j < n - 1; j++) {
+        if (dp[i][j]) dp[i][j] = Math.min(dp[i+1][j-1], dp[i+1][j], dp[i+1][j+1]) + 1;
+      }
+    }
+    return dp.reduce((s, row) => s + row.reduce((rs, v) => rs + Math.max(0, v - 1), 0), 0);
+  }
+  return countUp(grid) + countUp([...grid].reverse());
 }`,
     typescript: `function countPyramids(grid: number[][]): number {
-  // DP: dp[i][j] = max pyramid height with apex at (i,j)
+  const m = grid.length, n = grid[0]!.length;
+  function countUp(g: number[][]): number {
+    const dp = g.map(row => [...row]);
+    for (let i = m - 2; i >= 0; i--) {
+      for (let j = 1; j < n - 1; j++) {
+        if (dp[i]![j]) dp[i]![j] = Math.min(dp[i+1]![j-1]!, dp[i+1]![j]!, dp[i+1]![j+1]!) + 1;
+      }
+    }
+    return dp.reduce((s, row) => s + row.reduce((rs, v) => rs + Math.max(0, v - 1), 0), 0);
+  }
+  return countUp(grid) + countUp([...grid].reverse());
 }`,
     python: `def countPyramids(grid):
-    # DP: dp[i][j] = max pyramid height with apex at (i,j)
-    pass`,
+    m, n = len(grid), len(grid[0])
+    def count_up(g):
+        dp = [row[:] for row in g]
+        for i in range(m - 2, -1, -1):
+            for j in range(1, n - 1):
+                if dp[i][j]:
+                    dp[i][j] = min(dp[i+1][j-1], dp[i+1][j], dp[i+1][j+1]) + 1
+        return sum(max(0, v - 1) for row in dp for v in row)
+    return count_up(grid) + count_up(grid[::-1])`,
   },
   visibleTests: [
     { args: [[[0,1,1,0],[1,1,1,1]]], expected: 2 },

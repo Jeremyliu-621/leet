@@ -35,9 +35,79 @@ A **subset** is a contiguous or non-contiguous part of an array with elements ta
   functionName: 'squareFreeSubsets',
   params: ['nums'],
   starterCode: {
-    javascript: 'function squareFreeSubsets(nums) {\n\n}\n',
-    typescript: 'function squareFreeSubsets(nums: number[]): number {\n\n}\n',
-    python: 'def squareFreeSubsets(nums):\n    pass\n',
+    javascript: `function squareFreeSubsets(nums) {
+  const MOD = 1000000007;
+  const primes = [2,3,5,7,11,13,17,19,23,29];
+  const primeMask = v => {
+    let mask = 0;
+    for (let i = 0; i < 10; i++) {
+      if (v % primes[i] === 0) {
+        if (v % (primes[i] * primes[i]) === 0) return -1; // not square-free
+        mask |= 1 << i;
+      }
+    }
+    return mask;
+  };
+  const dp = new Array(1024).fill(0);
+  dp[0] = 1;
+  for (const n of nums) {
+    if (n === 1) { for (let m = 0; m < 1024; m++) dp[m] = dp[m] * 2 % MOD; continue; }
+    const pm = primeMask(n);
+    if (pm < 0) continue;
+    for (let m = 1023; m >= 0; m--) {
+      if (!dp[m]) continue;
+      if ((m & pm) === 0) dp[m | pm] = (dp[m | pm] + dp[m]) % MOD;
+    }
+  }
+  return (dp.reduce((s, v) => (s + v) % MOD, 0) - 1 + MOD) % MOD;
+}`,
+    typescript: `function squareFreeSubsets(nums: number[]): number {
+  const MOD = 1000000007;
+  const primes = [2,3,5,7,11,13,17,19,23,29];
+  const primeMask = (v: number) => {
+    let mask = 0;
+    for (let i = 0; i < 10; i++) {
+      if (v % primes[i]! === 0) {
+        if (v % (primes[i]! * primes[i]!) === 0) return -1;
+        mask |= 1 << i;
+      }
+    }
+    return mask;
+  };
+  const dp = new Array<number>(1024).fill(0);
+  dp[0] = 1;
+  for (const n of nums) {
+    if (n === 1) { for (let m = 0; m < 1024; m++) dp[m] = dp[m]! * 2 % MOD; continue; }
+    const pm = primeMask(n);
+    if (pm < 0) continue;
+    for (let m = 1023; m >= 0; m--) {
+      if (!dp[m]) continue;
+      if ((m & pm) === 0) dp[m | pm] = (dp[m | pm]! + dp[m]!) % MOD;
+    }
+  }
+  return (dp.reduce((s, v) => (s + v) % MOD, 0) - 1 + MOD) % MOD;
+}`,
+    python: `def squareFreeSubsets(nums):
+    MOD = 10**9 + 7
+    primes = [2,3,5,7,11,13,17,19,23,29]
+    def prime_mask(v):
+        mask = 0
+        for i, p in enumerate(primes):
+            if v % p == 0:
+                if v % (p*p) == 0: return -1
+                mask |= 1 << i
+        return mask
+    dp = [0] * 1024; dp[0] = 1
+    for n in nums:
+        if n == 1:
+            for m in range(1024): dp[m] = dp[m] * 2 % MOD
+            continue
+        pm = prime_mask(n)
+        if pm < 0: continue
+        for m in range(1023, -1, -1):
+            if dp[m] and (m & pm) == 0:
+                dp[m | pm] = (dp[m | pm] + dp[m]) % MOD
+    return (sum(dp) % MOD - 1 + MOD) % MOD`,
   },
   visibleTests: [
     { args: [[3, 4, 4, 5]], expected: 3 },

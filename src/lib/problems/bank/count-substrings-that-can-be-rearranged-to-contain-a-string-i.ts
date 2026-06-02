@@ -44,13 +44,57 @@ Since the answer may be very large, return it **modulo \`10^9 + 7\`**.`,
   params: ['word1', 'word2'],
   starterCode: {
     javascript: `function validSubstringCount(word1, word2) {
-
+  const MOD = 1000000007;
+  const need = new Array(26).fill(0);
+  for (const c of word2) need[c.charCodeAt(0) - 97]++;
+  const have = new Array(26).fill(0);
+  let deficit = word2.length, ans = 0, left = 0;
+  for (let right = 0; right < word1.length; right++) {
+    const ri = word1.charCodeAt(right) - 97;
+    have[ri]++;
+    if (have[ri] <= need[ri]) deficit--;
+    while (deficit === 0) {
+      const li = word1.charCodeAt(left) - 97;
+      if (have[li] > need[li]) { have[li]--; left++; } else break;
+    }
+    if (deficit === 0) ans = (ans + left + 1) % MOD;
+  }
+  return ans;
 }`,
     typescript: `function validSubstringCount(word1: string, word2: string): number {
-
+  const MOD = 1000000007;
+  const need = new Array<number>(26).fill(0);
+  for (const c of word2) need[c.charCodeAt(0) - 97]!++;
+  const have = new Array<number>(26).fill(0);
+  let deficit = word2.length, ans = 0, left = 0;
+  for (let right = 0; right < word1.length; right++) {
+    const ri = word1.charCodeAt(right) - 97;
+    have[ri]!++;
+    if (have[ri]! <= need[ri]!) deficit--;
+    while (deficit === 0) {
+      const li = word1.charCodeAt(left) - 97;
+      if (have[li]! > need[li]!) { have[li]!--; left++; } else break;
+    }
+    if (deficit === 0) ans = (ans + left + 1) % MOD;
+  }
+  return ans;
 }`,
     python: `def validSubstringCount(word1: str, word2: str) -> int:
-    pass`,
+    MOD = 10**9 + 7
+    need = [0] * 26
+    for c in word2: need[ord(c) - 97] += 1
+    have = [0] * 26
+    deficit = len(word2); ans = left = 0
+    for right, c in enumerate(word1):
+        ri = ord(c) - 97
+        have[ri] += 1
+        if have[ri] <= need[ri]: deficit -= 1
+        while deficit == 0:
+            li = ord(word1[left]) - 97
+            if have[li] > need[li]: have[li] -= 1; left += 1
+            else: break
+        if deficit == 0: ans = (ans + left + 1) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: ['bcca', 'abc'], expected: 1 },

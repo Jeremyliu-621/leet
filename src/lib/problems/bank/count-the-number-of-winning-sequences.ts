@@ -42,13 +42,97 @@ Return the number of **distinct** sequences Bob can play that guarantee him a wi
   params: ['s'],
   starterCode: {
     javascript: `function countWinningSequences(s) {
-
+  const MOD = 1000000007;
+  const spellIdx = {F: 0, W: 1, E: 2};
+  const delta = [[0, -1, 1], [1, 0, -1], [-1, 1, 0]]; // delta[bob][alice]: +1 win, -1 lose, 0 tie
+  const n = s.length, offset = n;
+  // dp[last][score+offset] = count
+  let dp = Array.from({length: 3}, () => new Array(2*n+1).fill(0));
+  const alice0 = spellIdx[s[0]];
+  for (let bob = 0; bob < 3; bob++) {
+    const sc = delta[bob][alice0];
+    dp[bob][sc + offset] = (dp[bob][sc + offset] + 1) % MOD;
+  }
+  for (let i = 1; i < n; i++) {
+    const aliceI = spellIdx[s[i]];
+    const ndp = Array.from({length: 3}, () => new Array(2*n+1).fill(0));
+    for (let last = 0; last < 3; last++) {
+      for (let sc = 0; sc <= 2*n; sc++) {
+        if (!dp[last][sc]) continue;
+        for (let bob = 0; bob < 3; bob++) {
+          if (bob === last) continue;
+          const nsc = sc + delta[bob][aliceI];
+          if (nsc >= 0 && nsc <= 2*n) ndp[bob][nsc] = (ndp[bob][nsc] + dp[last][sc]) % MOD;
+        }
+      }
+    }
+    dp = ndp;
+  }
+  let ans = 0;
+  for (let last = 0; last < 3; last++) {
+    for (let sc = offset + 1; sc <= 2*n; sc++) {
+      ans = (ans + dp[last][sc]) % MOD;
+    }
+  }
+  return ans;
 }`,
     typescript: `function countWinningSequences(s: string): number {
-
+  const MOD = 1000000007;
+  const spellIdx: Record<string, number> = {F: 0, W: 1, E: 2};
+  const delta = [[0, -1, 1], [1, 0, -1], [-1, 1, 0]];
+  const n = s.length, offset = n;
+  let dp = Array.from({length: 3}, () => new Array<number>(2*n+1).fill(0));
+  const alice0 = spellIdx[s[0]!]!;
+  for (let bob = 0; bob < 3; bob++) {
+    const sc = delta[bob]![alice0]!;
+    dp[bob]![sc + offset] = (dp[bob]![sc + offset]! + 1) % MOD;
+  }
+  for (let i = 1; i < n; i++) {
+    const aliceI = spellIdx[s[i]!]!;
+    const ndp = Array.from({length: 3}, () => new Array<number>(2*n+1).fill(0));
+    for (let last = 0; last < 3; last++) {
+      for (let sc = 0; sc <= 2*n; sc++) {
+        if (!dp[last]![sc]) continue;
+        for (let bob = 0; bob < 3; bob++) {
+          if (bob === last) continue;
+          const nsc = sc + delta[bob]![aliceI]!;
+          if (nsc >= 0 && nsc <= 2*n) ndp[bob]![nsc] = (ndp[bob]![nsc]! + dp[last]![sc]!) % MOD;
+        }
+      }
+    }
+    dp = ndp;
+  }
+  let ans = 0;
+  for (let last = 0; last < 3; last++) {
+    for (let sc = offset + 1; sc <= 2*n; sc++) {
+      ans = (ans + dp[last]![sc]!) % MOD;
+    }
+  }
+  return ans;
 }`,
     python: `def countWinningSequences(s: str) -> int:
-    pass`,
+    MOD = 10**9 + 7
+    spell_idx = {'F': 0, 'W': 1, 'E': 2}
+    delta = [[0,-1,1],[1,0,-1],[-1,1,0]]
+    n = len(s); offset = n
+    dp = [[0]*(2*n+1) for _ in range(3)]
+    alice0 = spell_idx[s[0]]
+    for bob in range(3):
+        sc = delta[bob][alice0]
+        dp[bob][sc + offset] = 1
+    for i in range(1, n):
+        alice_i = spell_idx[s[i]]
+        ndp = [[0]*(2*n+1) for _ in range(3)]
+        for last in range(3):
+            for sc in range(2*n+1):
+                if not dp[last][sc]: continue
+                for bob in range(3):
+                    if bob == last: continue
+                    nsc = sc + delta[bob][alice_i]
+                    if 0 <= nsc <= 2*n:
+                        ndp[bob][nsc] = (ndp[bob][nsc] + dp[last][sc]) % MOD
+        dp = ndp
+    return sum(dp[last][sc] for last in range(3) for sc in range(offset+1, 2*n+1)) % MOD`,
   },
   visibleTests: [
     { args: ['WFF'], expected: 4 },

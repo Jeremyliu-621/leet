@@ -41,15 +41,31 @@ Return the number of **good** arrays modulo \`10^9 + 7\`.`,
   params: ['n', 'm', 'k'],
   starterCode: {
     javascript: `function countGoodArrays(n, m, k) {
-  // Answer = C(n-1, k) * m * (m-1)^(n-1-k) mod (10^9+7).
-  // Precompute factorials and inverse factorials for the binomial coefficient.
+  const MOD = 1000000007n;
+  const N = n;
+  const fact = new Array(N).fill(1n);
+  for (let i = 1; i < N; i++) fact[i] = fact[i-1] * BigInt(i) % MOD;
+  const pow = (b, e, mod) => { let r = 1n; b %= mod; while (e > 0n) { if (e & 1n) r = r * b % mod; b = b * b % mod; e >>= 1n; } return r; };
+  const inv = x => pow(x, MOD - 2n, MOD);
+  const C = (a, b) => b < 0 || b > a ? 0n : fact[a] * inv(fact[b]) % MOD * inv(fact[a-b]) % MOD;
+  const ans = C(n-1, k) * BigInt(m) % MOD * pow(BigInt(m-1), BigInt(n-1-k), MOD) % MOD;
+  return Number(ans);
 }`,
-    typescript: "function countGoodArrays(n: number, m: number, k: number): number {\n  // Answer = C(n-1, k) * m * (m-1)^(n-1-k) mod (10^9+7).\n  // Precompute factorials and inverse factorials for the binomial coefficient.\n}",
-
+    typescript: `function countGoodArrays(n: number, m: number, k: number): number {
+  const MOD = 1000000007n;
+  const fact: bigint[] = new Array(n).fill(1n);
+  for (let i = 1; i < n; i++) fact[i] = fact[i-1]! * BigInt(i) % MOD;
+  const pow = (b: bigint, e: bigint): bigint => { let r = 1n; b %= MOD; while (e > 0n) { if (e & 1n) r = r * b % MOD; b = b * b % MOD; e >>= 1n; } return r; };
+  const inv = (x: bigint) => pow(x, MOD - 2n);
+  const C = (a: number, b: number): bigint => b < 0 || b > a ? 0n : fact[a]! * inv(fact[b]!) % MOD * inv(fact[a-b]!) % MOD;
+  const ans = C(n-1, k) * BigInt(m) % MOD * pow(BigInt(m-1), BigInt(n-1-k)) % MOD;
+  return Number(ans);
+}`,
     python: `def countGoodArrays(n, m, k):
-    # Answer = C(n-1, k) * m * (m-1)^(n-1-k) mod (10^9+7).
-    # Use Python's built-in pow(base, exp, mod) for fast modular exponentiation.
-    pass`,
+    MOD = 10**9 + 7
+    import math
+    ans = math.comb(n-1, k) * m % MOD * pow(m-1, n-1-k, MOD) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [3, 2, 1], expected: 4 },
