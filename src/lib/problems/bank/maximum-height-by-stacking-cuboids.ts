@@ -39,10 +39,46 @@ You can **rearrange** the dimensions of a cuboid. Return the **maximum height** 
   functionName: 'maxHeight',
   params: ['cuboids'],
   starterCode: {
-    javascript: 'function maxHeight(cuboids) {\n\n}\n',
-    typescript: "function maxHeight(cuboids: number[][]): number {\n\n}",
-
-    python: 'def maxHeight(cuboids: list) -> int:\n    pass\n',
+    javascript: `function maxHeight(cuboids) {
+  for (const c of cuboids) c.sort((a, b) => a - b);
+  cuboids.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] !== b[1] ? a[1] - b[1] : a[2] - b[2]);
+  const n = cuboids.length;
+  const dp = new Array(n).fill(0);
+  for (let i = 0; i < n; i++) {
+    dp[i] = cuboids[i][2];
+    for (let j = 0; j < i; j++) {
+      if (cuboids[j][0] <= cuboids[i][0] && cuboids[j][1] <= cuboids[i][1] && cuboids[j][2] <= cuboids[i][2])
+        dp[i] = Math.max(dp[i], dp[j] + cuboids[i][2]);
+    }
+  }
+  return Math.max(...dp);
+}`,
+    typescript: `function maxHeight(cuboids: number[][]): number {
+  for (const c of cuboids) c.sort((a, b) => a - b);
+  cuboids.sort((a, b) => a[0]! !== b[0]! ? a[0]! - b[0]! : a[1]! !== b[1]! ? a[1]! - b[1]! : a[2]! - b[2]!);
+  const n = cuboids.length;
+  const dp = new Array(n).fill(0);
+  for (let i = 0; i < n; i++) {
+    dp[i] = cuboids[i]![2]!;
+    for (let j = 0; j < i; j++) {
+      if (cuboids[j]![0]! <= cuboids[i]![0]! && cuboids[j]![1]! <= cuboids[i]![1]! && cuboids[j]![2]! <= cuboids[i]![2]!)
+        dp[i] = Math.max(dp[i], dp[j] + cuboids[i]![2]!);
+    }
+  }
+  return Math.max(...dp);
+}`,
+    python: `def maxHeight(cuboids):
+    if hasattr(cuboids, 'to_py'): cuboids = cuboids.to_py()
+    cuboids = [sorted(r.to_py() if hasattr(r, 'to_py') else list(r)) for r in cuboids]
+    cuboids.sort()
+    n = len(cuboids)
+    dp = [0] * n
+    for i in range(n):
+        dp[i] = cuboids[i][2]
+        for j in range(i):
+            if all(cuboids[j][d] <= cuboids[i][d] for d in range(3)):
+                dp[i] = max(dp[i], dp[j] + cuboids[i][2])
+    return max(dp)`,
   },
   visibleTests: [
     { args: [[[50,45,20],[95,37,53],[45,23,12]]], expected: 190 },

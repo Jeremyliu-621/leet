@@ -38,13 +38,54 @@ Return the **maximum sum** of a good subarray, or \`0\` if no good subarrays exi
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximumSubarraySum(nums, k) {
-
+  const minPrefix = new Map();
+  let prefix = 0, ans = -Infinity, found = false;
+  for (let r = 0; r < nums.length; r++) {
+    const cur = nums[r];
+    for (const target of [cur - k, cur + k]) {
+      if (minPrefix.has(target)) {
+        found = true;
+        const cand = prefix + cur - minPrefix.get(target);
+        if (cand > ans) ans = cand;
+      }
+    }
+    if (!minPrefix.has(cur) || prefix < minPrefix.get(cur)) minPrefix.set(cur, prefix);
+    prefix += cur;
+  }
+  return found ? ans : 0;
 }`,
     typescript: `function maximumSubarraySum(nums: number[], k: number): number {
-
+  const minPrefix = new Map<number, number>();
+  let prefix = 0, ans = -Infinity, found = false;
+  for (let r = 0; r < nums.length; r++) {
+    const cur = nums[r]!;
+    for (const target of [cur - k, cur + k]) {
+      const prev = minPrefix.get(target);
+      if (prev !== undefined) {
+        found = true;
+        const cand = prefix + cur - prev;
+        if (cand > ans) ans = cand;
+      }
+    }
+    const existing = minPrefix.get(cur);
+    if (existing === undefined || prefix < existing) minPrefix.set(cur, prefix);
+    prefix += cur;
+  }
+  return found ? ans : 0;
 }`,
     python: `def maximumSubarraySum(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    min_prefix = {}
+    prefix, ans, found = 0, float('-inf'), False
+    for cur in nums:
+        for target in (cur - k, cur + k):
+            if target in min_prefix:
+                found = True
+                ans = max(ans, prefix + cur - min_prefix[target])
+        if cur not in min_prefix or prefix < min_prefix[cur]:
+            min_prefix[cur] = prefix
+        prefix += cur
+    return ans if found else 0`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6], 1], expected: 11 },

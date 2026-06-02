@@ -46,10 +46,59 @@ Return the **maximum** total fruits you can collect.`,
   functionName: 'maxTotalFruits',
   params: ['fruits', 'startPos', 'k'],
   starterCode: {
-    javascript: 'function maxTotalFruits(fruits, startPos, k) {\n  \n}\n',
-    typescript: "function maxTotalFruits(fruits: number[][], startPos: number, k: number): number {\n  \n}",
-
-    python: 'def maxTotalFruits(fruits, startPos, k):\n    pass\n',
+    javascript: `function maxTotalFruits(fruits, startPos, k) {
+  const n = fruits.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i+1] = prefix[i] + fruits[i][1];
+  const steps = (l, r) => {
+    const lp = fruits[l][0], rp = fruits[r][0];
+    if (startPos <= lp) return rp - startPos;
+    if (startPos >= rp) return startPos - lp;
+    return Math.min(2*(startPos-lp)+(rp-startPos), 2*(rp-startPos)+(startPos-lp));
+  };
+  let ans = 0, l = 0;
+  for (let r = 0; r < n; r++) {
+    while (l <= r && steps(l, r) > k) l++;
+    if (l <= r) ans = Math.max(ans, prefix[r+1] - prefix[l]);
+  }
+  return ans;
+}`,
+    typescript: `function maxTotalFruits(fruits: number[][], startPos: number, k: number): number {
+  const n = fruits.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i+1] = prefix[i] + fruits[i]![1]!;
+  const steps = (l: number, r: number): number => {
+    const lp = fruits[l]![0]!, rp = fruits[r]![0]!;
+    if (startPos <= lp) return rp - startPos;
+    if (startPos >= rp) return startPos - lp;
+    return Math.min(2*(startPos-lp)+(rp-startPos), 2*(rp-startPos)+(startPos-lp));
+  };
+  let ans = 0, l = 0;
+  for (let r = 0; r < n; r++) {
+    while (l <= r && steps(l, r) > k) l++;
+    if (l <= r) ans = Math.max(ans, prefix[r+1]! - prefix[l]!);
+  }
+  return ans;
+}`,
+    python: `def maxTotalFruits(fruits, startPos, k):
+    if hasattr(fruits, 'to_py'): fruits = fruits.to_py()
+    fruits = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in fruits]
+    n = len(fruits)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + fruits[i][1]
+    def steps(l, r):
+        lp, rp = fruits[l][0], fruits[r][0]
+        if startPos <= lp: return rp - startPos
+        if startPos >= rp: return startPos - lp
+        return min(2*(startPos-lp)+(rp-startPos), 2*(rp-startPos)+(startPos-lp))
+    ans, l = 0, 0
+    for r in range(n):
+        while l <= r and steps(l, r) > k:
+            l += 1
+        if l <= r:
+            ans = max(ans, prefix[r+1] - prefix[l])
+    return ans`,
   },
   visibleTests: [
     { args: [[[2, 8], [6, 3], [8, 6]], 5, 4], expected: 9 },

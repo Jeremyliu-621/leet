@@ -49,12 +49,34 @@ function maxIceCream(costs, coins) {
   params: ['costs', 'coins'],
   starterCode: {
     javascript: `function maxIceCream(costs, coins) {
-
+  costs.sort((a, b) => a - b);
+  let count = 0;
+  for (const c of costs) {
+    if (coins < c) break;
+    coins -= c;
+    count++;
+  }
+  return count;
 }`,
-    typescript: "function maxIceCream(costs: number[], coins: number): number {\n\n}",
-
+    typescript: `function maxIceCream(costs: number[], coins: number): number {
+  costs.sort((a, b) => a - b);
+  let count = 0;
+  for (const c of costs) {
+    if (coins < c) break;
+    coins -= c;
+    count++;
+  }
+  return count;
+}`,
     python: `def maxIceCream(costs, coins):
-    pass`,
+    if hasattr(costs, 'to_py'): costs = list(costs.to_py())
+    costs = sorted(int(c) for c in costs)
+    count = 0
+    for c in costs:
+        if coins < c: break
+        coins -= c
+        count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 4, 1], 7], expected: 4 },

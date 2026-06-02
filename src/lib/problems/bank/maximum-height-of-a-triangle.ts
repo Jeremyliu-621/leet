@@ -40,11 +40,44 @@ Return the **maximum height** of the triangle that can be formed, or \`0\` if no
   params: ['red', 'blue'],
   starterCode: {
     javascript: `function maxHeightOfTriangle(red, blue) {
-
+  function sim(a, b) {
+    let h = 0;
+    for (let row = 1; ; row++) {
+      if (row % 2 === 1) { if (a < row) break; a -= row; }
+      else { if (b < row) break; b -= row; }
+      h = row;
+    }
+    return h;
+  }
+  return Math.max(sim(red, blue), sim(blue, red));
 }`,
-    typescript: 'function maxHeightOfTriangle(red: number, blue: number): number {\n\n}',
+    typescript: `function maxHeightOfTriangle(red: number, blue: number): number {
+  function sim(a: number, b: number): number {
+    let h = 0;
+    for (let row = 1; ; row++) {
+      if (row % 2 === 1) { if (a < row) break; a -= row; }
+      else { if (b < row) break; b -= row; }
+      h = row;
+    }
+    return h;
+  }
+  return Math.max(sim(red, blue), sim(blue, red));
+}`,
     python: `def maxHeightOfTriangle(red, blue):
-    pass`,
+    def sim(a, b):
+        h = 0
+        row = 1
+        while True:
+            if row % 2 == 1:
+                if a < row: break
+                a -= row
+            else:
+                if b < row: break
+                b -= row
+            h = row
+            row += 1
+        return h
+    return max(sim(red, blue), sim(blue, red))`,
   },
   visibleTests: [
     { args: [2, 4], expected: 3 },
