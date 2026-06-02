@@ -44,13 +44,36 @@ nums1[i] + nums1[j] > nums2[i] + nums2[j]
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function countPairs(nums1, nums2) {
-
+  const n = nums1.length;
+  const diff = nums1.map((v, i) => v - nums2[i]).sort((a, b) => a - b);
+  let count = 0;
+  for (let i = 0; i < n - 1; i++) {
+    let lo = i + 1, hi = n;
+    while (lo < hi) { const mid = (lo + hi) >> 1; diff[mid] > -diff[i] ? hi = mid : lo = mid + 1; }
+    count += n - lo;
+  }
+  return count;
 }`,
     typescript: `function countPairs(nums1: number[], nums2: number[]): number {
-
+  const n = nums1.length;
+  const diff = nums1.map((v, i) => v - nums2[i]!).sort((a, b) => a - b);
+  let count = 0;
+  for (let i = 0; i < n - 1; i++) {
+    let lo = i + 1, hi = n;
+    while (lo < hi) { const mid = (lo + hi) >> 1; diff[mid]! > -diff[i]! ? hi = mid : lo = mid + 1; }
+    count += n - lo;
+  }
+  return count;
 }`,
     python: `def countPairs(nums1, nums2):
-    pass`,
+    from bisect import bisect_right
+    n = len(nums1)
+    diff = sorted(a - b for a, b in zip(nums1, nums2))
+    count = 0
+    for i in range(n - 1):
+        lo = bisect_right(diff, -diff[i], i + 1)
+        count += n - lo
+    return count`,
   },
   visibleTests: [
     { args: [[2, 1, 2, 1], [1, 2, 1, 2]], expected: 1 },

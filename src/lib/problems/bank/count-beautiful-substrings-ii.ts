@@ -42,11 +42,52 @@ Return the number of **non-empty beautiful substrings** in the given string \`s\
   params: ['s', 'k'],
   starterCode: {
     javascript: `function beautifulSubstrings(s, k) {
-
+  // Find smallest L with L*L % k == 0; period = 2*L
+  let L = 1;
+  while ((L * L) % k !== 0) L++;
+  const period = 2 * L;
+  const vowels = new Set('aeiou');
+  const map = new Map();
+  map.set('0,0', 1);
+  let score = 0, count = 0;
+  for (let i = 0; i < s.length; i++) {
+    score += vowels.has(s[i]) ? 1 : -1;
+    const key = score + ',' + ((i + 1) % period);
+    count += map.get(key) || 0;
+    map.set(key, (map.get(key) || 0) + 1);
+  }
+  return count;
 }`,
-    typescript: 'function beautifulSubstrings(s: string, k: number): number {\n\n}',
+    typescript: `function beautifulSubstrings(s: string, k: number): number {
+  let L = 1;
+  while ((L * L) % k !== 0) L++;
+  const period = 2 * L;
+  const vowels = new Set('aeiou');
+  const map = new Map<string, number>();
+  map.set('0,0', 1);
+  let score = 0, count = 0;
+  for (let i = 0; i < s.length; i++) {
+    score += vowels.has(s[i]!) ? 1 : -1;
+    const key = score + ',' + ((i + 1) % period);
+    count += map.get(key) ?? 0;
+    map.set(key, (map.get(key) ?? 0) + 1);
+  }
+  return count;
+}`,
     python: `def beautifulSubstrings(s, k):
-    pass`,
+    L = 1
+    while (L * L) % k != 0:
+        L += 1
+    period = 2 * L
+    vowels = set('aeiou')
+    freq = {(0, 0): 1}
+    score = count = 0
+    for i, c in enumerate(s):
+        score += 1 if c in vowels else -1
+        key = (score, (i + 1) % period)
+        count += freq.get(key, 0)
+        freq[key] = freq.get(key, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: ['baeyh', 2], expected: 2 },

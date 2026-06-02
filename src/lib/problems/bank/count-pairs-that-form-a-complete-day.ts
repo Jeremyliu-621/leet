@@ -35,13 +35,25 @@ A **complete day** is defined as a time duration that is an **exact multiple of 
   params: ['hours'],
   starterCode: {
     javascript: `function countCompleteDayPairs(hours) {
-
+  const freq = new Array(24).fill(0);
+  let count = 0;
+  for (const h of hours) { const r = h % 24; count += freq[(24 - r) % 24]; freq[r]++; }
+  return count;
 }`,
     typescript: `function countCompleteDayPairs(hours: number[]): number {
-
+  const freq = new Array<number>(24).fill(0);
+  let count = 0;
+  for (const h of hours) { const r = h % 24; count += freq[(24 - r) % 24]!; freq[r]!++; }
+  return count;
 }`,
     python: `def countCompleteDayPairs(hours):
-    pass`,
+    freq = [0] * 24
+    count = 0
+    for h in hours:
+        r = h % 24
+        count += freq[(24 - r) % 24]
+        freq[r] += 1
+    return count`,
   },
   visibleTests: [
     { args: [[12, 12, 30, 24, 24]], expected: 2 },

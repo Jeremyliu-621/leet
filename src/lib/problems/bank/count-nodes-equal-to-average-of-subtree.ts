@@ -97,12 +97,56 @@ Trees are represented as level-order (BFS) arrays where \`null\` marks a missing
   params: ['root'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript:
-      '// TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.\nfunction averageOfSubtree(root) {\n  \n}\n',
-    typescript:
-      'function averageOfSubtreeRunner(root: (number | null)[]): number {\n  \n}',
-    python:
-      '# TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.\ndef averageOfSubtree(root):\n    pass\n',
+    javascript: `// TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.
+function averageOfSubtree(root) {
+  let count = 0;
+  function dfs(node) {
+    if (!node) return [0, 0];
+    const [ls, lc] = dfs(node.left);
+    const [rs, rc] = dfs(node.right);
+    const sum = ls + rs + node.val, cnt = lc + rc + 1;
+    if (Math.floor(sum / cnt) === node.val) count++;
+    return [sum, cnt];
+  }
+  dfs(root);
+  return count;
+}`,
+    typescript: `function averageOfSubtreeRunner(root: (number | null)[]): number {
+  if (!root || root.length === 0) return 0;
+  class TreeNode { constructor(public val: number, public left: TreeNode | null = null, public right: TreeNode | null = null) {} }
+  const treeRoot = new TreeNode(root[0] as number);
+  const queue: TreeNode[] = [treeRoot];
+  let i = 1;
+  while (queue.length > 0 && i < root.length) {
+    const node = queue.shift()!;
+    if (i < root.length && root[i] !== null) { node.left = new TreeNode(root[i] as number); queue.push(node.left); } i++;
+    if (i < root.length && root[i] !== null) { node.right = new TreeNode(root[i] as number); queue.push(node.right); } i++;
+  }
+  let count = 0;
+  function dfs(node: TreeNode | null): [number, number] {
+    if (!node) return [0, 0];
+    const [ls, lc] = dfs(node.left), [rs, rc] = dfs(node.right);
+    const sum = ls + rs + node.val, cnt = lc + rc + 1;
+    if (Math.floor(sum / cnt) === node.val) count++;
+    return [sum, cnt];
+  }
+  dfs(treeRoot);
+  return count;
+}`,
+    python: `# TreeNode class and averageOfSubtreeRunner wrapper are pre-defined.
+def averageOfSubtree(root):
+    count = [0]
+    def dfs(node):
+        if not node:
+            return 0, 0
+        ls, lc = dfs(node.left)
+        rs, rc = dfs(node.right)
+        s, c = ls + rs + node.val, lc + rc + 1
+        if s // c == node.val:
+            count[0] += 1
+        return s, c
+    dfs(root)
+    return count[0]`,
   },
   visibleTests: [
     { args: [[4, 8, 5, 0, 1, null, 6]], expected: 5 },

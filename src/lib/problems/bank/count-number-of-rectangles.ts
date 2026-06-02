@@ -48,12 +48,58 @@ return res;\`\`\``,
   params: ['rectangles', 'points'],
   starterCode: {
     javascript: `function countRectangles(rectangles, points) {
-
+  // Group widths by height (heights are 1..100)
+  const byH = Array.from({length: 101}, () => []);
+  for (const [l, h] of rectangles) byH[h].push(l);
+  // Precompute merged sorted widths for height >= h (from 100 down to 1)
+  const merged = new Array(102).fill(null).map(() => []);
+  for (let h = 100; h >= 1; h--) {
+    const a = merged[h + 1], b = byH[h].sort((x, y) => x - y);
+    const r = []; let ai = 0, bi = 0;
+    while (ai < a.length && bi < b.length) a[ai] <= b[bi] ? r.push(a[ai++]) : r.push(b[bi++]);
+    while (ai < a.length) r.push(a[ai++]);
+    while (bi < b.length) r.push(b[bi++]);
+    merged[h] = r;
+  }
+  return points.map(([x, y]) => {
+    const arr = merged[y]; let lo = 0, hi = arr.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; arr[mid] >= x ? hi = mid : lo = mid + 1; }
+    return arr.length - lo;
+  });
 }`,
-    typescript: "function countRectangles(rectangles: number[][], points: number[][]): number[] {\n\n}",
-
+    typescript: `function countRectangles(rectangles: number[][], points: number[][]): number[] {
+  const byH: number[][] = Array.from({length: 101}, () => []);
+  for (const [l, h] of rectangles) byH[h]!.push(l!);
+  const merged: number[][] = new Array(102).fill(null).map(() => []);
+  for (let h = 100; h >= 1; h--) {
+    const a = merged[h + 1]!, b = byH[h]!.sort((x, y) => x - y);
+    const r: number[] = []; let ai = 0, bi = 0;
+    while (ai < a.length && bi < b.length) a[ai]! <= b[bi]! ? r.push(a[ai++]!) : r.push(b[bi++]!);
+    while (ai < a.length) r.push(a[ai++]!);
+    while (bi < b.length) r.push(b[bi++]!);
+    merged[h] = r;
+  }
+  return points.map(([x, y]) => {
+    const arr = merged[y!]!; let lo = 0, hi = arr.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; arr[mid]! >= x! ? hi = mid : lo = mid + 1; }
+    return arr.length - lo;
+  });
+}`,
     python: `def countRectangles(rectangles, points):
-    pass`,
+    from bisect import bisect_left
+    by_h = [[] for _ in range(101)]
+    for l, h in rectangles:
+        by_h[h].append(l)
+    merged = [[] for _ in range(102)]
+    for h in range(100, 0, -1):
+        import heapq
+        merged[h] = sorted(merged[h + 1] + by_h[h])
+    result = []
+    for x, y in points:
+        arr = merged[y]
+        lo = bisect_left(arr, x)
+        result.append(len(arr) - lo)
+    return result`,
   },
   visibleTests: [
     { args: [[[1, 2], [2, 3], [2, 5]], [[2, 1], [1, 4]]], expected: [2, 1] },
