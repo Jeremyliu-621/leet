@@ -39,13 +39,34 @@ Return **any** such a choice as an array \`answer\`, where \`answer[i]\` is the 
   params: ['n', 'paths'],
   starterCode: {
     javascript: `function gardenNoAdj(n, paths) {
-
+  const adj = Array.from({length: n + 1}, () => []);
+  for (const [a, b] of paths) { adj[a].push(b); adj[b].push(a); }
+  const color = new Array(n + 1).fill(0);
+  for (let i = 1; i <= n; i++) {
+    const used = new Set(adj[i].map(j => color[j]));
+    for (let c = 1; c <= 4; c++) { if (!used.has(c)) { color[i] = c; break; } }
+  }
+  return color.slice(1);
 }`,
     typescript: `function gardenNoAdj(n: number, paths: number[][]): number[] {
-
+  const adj: number[][] = Array.from({length: n + 1}, () => []);
+  for (const [a, b] of paths) { adj[a].push(b); adj[b].push(a); }
+  const color = new Array(n + 1).fill(0);
+  for (let i = 1; i <= n; i++) {
+    const used = new Set(adj[i].map(j => color[j]));
+    for (let c = 1; c <= 4; c++) { if (!used.has(c)) { color[i] = c; break; } }
+  }
+  return color.slice(1);
 }`,
     python: `def gardenNoAdj(n, paths):
-    pass`,
+    adj = [[] for _ in range(n + 1)]
+    for a, b in paths: adj[a].append(b); adj[b].append(a)
+    color = [0] * (n + 1)
+    for i in range(1, n + 1):
+        used = {color[j] for j in adj[i]}
+        for c in range(1, 5):
+            if c not in used: color[i] = c; break
+    return color[1:]`,
   },
   visibleTests: [
     { args: [3, [[1, 2], [2, 3], [3, 1]]], expected: [1, 2, 3] },

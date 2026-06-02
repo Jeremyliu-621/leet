@@ -41,11 +41,13 @@ To invert an image means that each \`0\` is replaced by \`1\`, and each \`1\` is
   params: ['image'],
   starterCode: {
     javascript: `function flipAndInvertImage(image) {
-
+  return image.map(row => [...row].reverse().map(v => v ^ 1));
 }`,
-    typescript: 'function flipAndInvertImage(image: number[][]): number[][] {\n\n}',
+    typescript: `function flipAndInvertImage(image: number[][]): number[][] {
+  return image.map(row => [...row].reverse().map(v => v ^ 1));
+}`,
     python: `def flipAndInvertImage(image):
-    pass`,
+    return [[v ^ 1 for v in row[::-1]] for row in image]`,
   },
   visibleTests: [
     { args: [[[1, 1, 0], [1, 0, 1], [0, 0, 0]]], expected: [[1, 0, 0], [0, 1, 0], [1, 1, 1]] },

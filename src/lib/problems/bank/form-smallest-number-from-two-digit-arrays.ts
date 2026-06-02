@@ -38,13 +38,23 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function minNumber(nums1, nums2) {
-
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  for (let d = 1; d <= 9; d++) if (s1.has(d) && s2.has(d)) return d;
+  const m1 = Math.min(...nums1), m2 = Math.min(...nums2);
+  return Math.min(m1 * 10 + m2, m2 * 10 + m1);
 }`,
     typescript: `function minNumber(nums1: number[], nums2: number[]): number {
-
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  for (let d = 1; d <= 9; d++) if (s1.has(d) && s2.has(d)) return d;
+  const m1 = Math.min(...nums1), m2 = Math.min(...nums2);
+  return Math.min(m1 * 10 + m2, m2 * 10 + m1);
 }`,
     python: `def minNumber(nums1, nums2):
-    pass`,
+    s1, s2 = set(nums1), set(nums2)
+    common = s1 & s2
+    if common: return min(common)
+    m1, m2 = min(nums1), min(nums2)
+    return min(m1 * 10 + m2, m2 * 10 + m1)`,
   },
   visibleTests: [
     { args: [[4, 1, 3], [5, 7]], expected: 15 },

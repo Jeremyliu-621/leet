@@ -45,13 +45,38 @@ Note that the subarrays are **disjoint** if and only if they do not share any el
   params: ['groups', 'nums'],
   starterCode: {
     javascript: `function canChoose(groups, nums) {
-
+  let pos = 0;
+  for (const g of groups) {
+    let found = false;
+    while (pos + g.length <= nums.length) {
+      if (g.every((v, i) => nums[pos + i] === v)) { pos += g.length; found = true; break; }
+      pos++;
+    }
+    if (!found) return false;
+  }
+  return true;
 }`,
     typescript: `function canChoose(groups: number[][], nums: number[]): boolean {
-
+  let pos = 0;
+  for (const g of groups) {
+    let found = false;
+    while (pos + g.length <= nums.length) {
+      if (g.every((v, i) => nums[pos + i] === v)) { pos += g.length; found = true; break; }
+      pos++;
+    }
+    if (!found) return false;
+  }
+  return true;
 }`,
     python: `def canChoose(groups, nums):
-    pass`,
+    pos = 0
+    for g in groups:
+        found = False
+        while pos + len(g) <= len(nums):
+            if nums[pos:pos+len(g)] == g: pos += len(g); found = True; break
+            pos += 1
+        if not found: return False
+    return True`,
   },
   visibleTests: [
     { args: [[[1,-1,-1],[3,-2,0]], [1,-1,-1,3,-2,0]], expected: true },

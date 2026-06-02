@@ -38,13 +38,51 @@ Return the **number of visible mountains**.`,
   params: ['peaks'],
   starterCode: {
     javascript: `function numberOfVisibleMountains(peaks) {
-
+  const freq = new Map();
+  for (const [x, y] of peaks) {
+    const key = \`\${x - y},\${x + y}\`;
+    freq.set(key, (freq.get(key) ?? 0) + 1);
+  }
+  const intervals = [...freq.entries()].map(([k, cnt]) => {
+    const [l, r] = k.split(',').map(Number);
+    return [l, r, cnt];
+  });
+  intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+  let maxR = -Infinity, count = 0;
+  for (const [, r, cnt] of intervals) {
+    if (cnt === 1 && r > maxR) count++;
+    if (r > maxR) maxR = r;
+  }
+  return count;
 }`,
     typescript: `function numberOfVisibleMountains(peaks: number[][]): number {
-
+  const freq = new Map<string, number>();
+  for (const [x, y] of peaks) {
+    const key = \`\${x - y},\${x + y}\`;
+    freq.set(key, (freq.get(key) ?? 0) + 1);
+  }
+  const intervals = [...freq.entries()].map(([k, cnt]) => {
+    const [l, r] = k.split(',').map(Number);
+    return [l, r, cnt];
+  });
+  intervals.sort((a, b) => a[0] - b[0] || b[1] - a[1]);
+  let maxR = -Infinity, count = 0;
+  for (const [, r, cnt] of intervals) {
+    if (cnt === 1 && r > maxR) count++;
+    if (r > maxR) maxR = r;
+  }
+  return count;
 }`,
     python: `def numberOfVisibleMountains(peaks):
-    pass`,
+    from collections import Counter
+    intervals = [(x - y, x + y) for x, y in peaks]
+    freq = Counter(intervals)
+    unique = sorted(freq.items(), key=lambda e: (e[0][0], -e[0][1]))
+    max_r, count = float('-inf'), 0
+    for (l, r), cnt in unique:
+        if cnt == 1 and r > max_r: count += 1
+        if r > max_r: max_r = r
+    return count`,
   },
   visibleTests: [
     { args: [[[2, 2], [6, 3], [5, 4]]], expected: 2 },

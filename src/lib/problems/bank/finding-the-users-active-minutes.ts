@@ -39,13 +39,33 @@ Return the answer array.`,
   params: ['logs', 'k'],
   starterCode: {
     javascript: `function findingUsersActiveMinutes(logs, k) {
-
+  const uam = new Map();
+  for (const [id, t] of logs) {
+    if (!uam.has(id)) uam.set(id, new Set());
+    uam.get(id).add(t);
+  }
+  const ans = new Array(k).fill(0);
+  for (const s of uam.values()) if (s.size <= k) ans[s.size - 1]++;
+  return ans;
 }`,
     typescript: `function findingUsersActiveMinutes(logs: number[][], k: number): number[] {
-
+  const uam = new Map<number, Set<number>>();
+  for (const [id, t] of logs) {
+    if (!uam.has(id)) uam.set(id, new Set());
+    uam.get(id)!.add(t);
+  }
+  const ans = new Array(k).fill(0);
+  for (const s of uam.values()) if (s.size <= k) ans[s.size - 1]++;
+  return ans;
 }`,
     python: `def findingUsersActiveMinutes(logs, k):
-    pass`,
+    from collections import defaultdict
+    uam = defaultdict(set)
+    for uid, t in logs: uam[uid].add(t)
+    ans = [0] * k
+    for s in uam.values():
+        if len(s) <= k: ans[len(s) - 1] += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[[0, 5], [1, 2], [0, 2], [0, 5], [1, 3]], 5], expected: [0, 2, 0, 0, 0] },

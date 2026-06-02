@@ -36,12 +36,27 @@ It is guaranteed that at least one letter appears twice.`,
   params: ['s'],
   starterCode: {
     javascript: `function repeatedCharacter(s) {
-
+  const seen = new Set();
+  for (const c of s) {
+    if (seen.has(c)) return c;
+    seen.add(c);
+  }
+  return '';
 }`,
-    typescript: "function repeatedCharacter(s: string): string {\n\n}",
-
+    typescript: `function repeatedCharacter(s: string): string {
+  const seen = new Set<string>();
+  for (const c of s) {
+    if (seen.has(c)) return c;
+    seen.add(c);
+  }
+  return '';
+}`,
     python: `def repeatedCharacter(s):
-    pass`,
+    seen = set()
+    for c in s:
+        if c in seen: return c
+        seen.add(c)
+    return ''`,
   },
   visibleTests: [
     { args: ['abccbaacz'], expected: 'c' },

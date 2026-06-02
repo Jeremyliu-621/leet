@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['matrix'],
   starterCode: {
     javascript: `function flatten2dArray(matrix) {
-
+  return matrix.flat();
 }`,
     typescript: `function flatten2dArray(matrix: number[][]): number[] {
-
+  return matrix.flat();
 }`,
     python: `def flatten2dArray(matrix: list[list[int]]) -> list[int]:
-    pass`,
+    return [v for row in matrix for v in row]`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6]]], expected: [1, 2, 3, 4, 5, 6] },
