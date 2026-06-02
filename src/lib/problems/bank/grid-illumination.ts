@@ -44,12 +44,70 @@ Return an array \`ans\` of length \`queries.length\` where \`ans[j]\` is \`1\` i
   params: ['n', 'lamps', 'queries'],
   starterCode: {
     javascript: `function gridIllumination(n, lamps, queries) {
-
+  const rows = new Map(), cols = new Map(), diag = new Map(), anti = new Map();
+  const lampSet = new Set();
+  const inc = (m, k) => m.set(k, (m.get(k) ?? 0) + 1);
+  const dec = (m, k) => { const v = m.get(k) - 1; if (v === 0) m.delete(k); else m.set(k, v); };
+  for (const [r, c] of lamps) {
+    const key = r * 100001 + c;
+    if (lampSet.has(key)) continue;
+    lampSet.add(key); inc(rows, r); inc(cols, c); inc(diag, r - c); inc(anti, r + c);
+  }
+  const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,0],[0,1],[1,-1],[1,0],[1,1]];
+  const res = [];
+  for (const [r, c] of queries) {
+    res.push((rows.get(r) ?? 0) > 0 || (cols.get(c) ?? 0) > 0 || (diag.get(r-c) ?? 0) > 0 || (anti.get(r+c) ?? 0) > 0 ? 1 : 0);
+    for (const [di, dj] of dirs) {
+      const nr = r + di, nc = c + dj;
+      if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+      const key = nr * 100001 + nc;
+      if (lampSet.has(key)) { lampSet.delete(key); dec(rows, nr); dec(cols, nc); dec(diag, nr-nc); dec(anti, nr+nc); }
+    }
+  }
+  return res;
 }`,
-    typescript: "function gridIllumination(n: number, lamps: number[][], queries: number[][]): number[] {\n\n}",
-
+    typescript: `function gridIllumination(n: number, lamps: number[][], queries: number[][]): number[] {
+  const rows = new Map<number,number>(), cols = new Map<number,number>();
+  const diag = new Map<number,number>(), anti = new Map<number,number>();
+  const lampSet = new Set<number>();
+  const inc = (m: Map<number,number>, k: number) => m.set(k, (m.get(k) ?? 0) + 1);
+  const dec = (m: Map<number,number>, k: number) => { const v = m.get(k)! - 1; if (v === 0) m.delete(k); else m.set(k, v); };
+  for (const [r, c] of lamps) {
+    const key = r * 100001 + c;
+    if (lampSet.has(key)) continue;
+    lampSet.add(key); inc(rows, r); inc(cols, c); inc(diag, r - c); inc(anti, r + c);
+  }
+  const dirs: [number,number][] = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,0],[0,1],[1,-1],[1,0],[1,1]];
+  const res: number[] = [];
+  for (const [r, c] of queries) {
+    res.push((rows.get(r) ?? 0) > 0 || (cols.get(c) ?? 0) > 0 || (diag.get(r-c) ?? 0) > 0 || (anti.get(r+c) ?? 0) > 0 ? 1 : 0);
+    for (const [di, dj] of dirs) {
+      const nr = r + di, nc = c + dj;
+      if (nr < 0 || nr >= n || nc < 0 || nc >= n) continue;
+      const key = nr * 100001 + nc;
+      if (lampSet.has(key)) { lampSet.delete(key); dec(rows, nr); dec(cols, nc); dec(diag, nr-nc); dec(anti, nr+nc); }
+    }
+  }
+  return res;
+}`,
     python: `def gridIllumination(n, lamps, queries):
-    pass`,
+    from collections import defaultdict
+    rows, cols, diag, anti = (defaultdict(int) for _ in range(4))
+    lamp_set = set()
+    for r, c in lamps:
+        if (r, c) in lamp_set: continue
+        lamp_set.add((r, c)); rows[r] += 1; cols[c] += 1; diag[r-c] += 1; anti[r+c] += 1
+    def turn_off(r, c):
+        if (r, c) not in lamp_set: return
+        lamp_set.discard((r, c)); rows[r] -= 1; cols[c] -= 1; diag[r-c] -= 1; anti[r+c] -= 1
+    res = []
+    for r, c in queries:
+        res.append(1 if rows[r] or cols[c] or diag[r-c] or anti[r+c] else 0)
+        for dr in (-1, 0, 1):
+            for dc in (-1, 0, 1):
+                nr, nc = r+dr, c+dc
+                if 0 <= nr < n and 0 <= nc < n: turn_off(nr, nc)
+    return res`,
   },
   visibleTests: [
     { args: [5, [[0,0],[4,4]], [[1,1],[1,0]]], expected: [1,0] },

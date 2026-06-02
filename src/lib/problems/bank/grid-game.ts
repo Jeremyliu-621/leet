@@ -42,12 +42,42 @@ Return the **minimum** number of points Robot 2 can collect.`,
   params: ['grid'],
   starterCode: {
     javascript: `function gridGame(grid) {
-
+  const n = grid[0].length;
+  const topTotal = grid[0].reduce((a, b) => a + b, 0);
+  let topPre = 0, bottomPre = 0, ans = Infinity;
+  for (let c = 0; c < n; c++) {
+    topPre += grid[0][c];
+    const topSuffix = topTotal - topPre;
+    const robot2 = Math.max(topSuffix, bottomPre);
+    ans = Math.min(ans, robot2);
+    bottomPre += grid[1][c];
+  }
+  return ans;
 }`,
-    typescript: "function gridGame(grid: number[][]): number {\n\n}",
-
+    typescript: `function gridGame(grid: number[][]): number {
+  const n = grid[0].length;
+  const topTotal = grid[0].reduce((a, b) => a + b, 0);
+  let topPre = 0, bottomPre = 0, ans = Infinity;
+  for (let c = 0; c < n; c++) {
+    topPre += grid[0][c];
+    const topSuffix = topTotal - topPre;
+    const robot2 = Math.max(topSuffix, bottomPre);
+    ans = Math.min(ans, robot2);
+    bottomPre += grid[1][c];
+  }
+  return ans;
+}`,
     python: `def gridGame(grid):
-    pass`,
+    n = len(grid[0])
+    top_total = sum(grid[0])
+    top_pre = bottom_pre = 0
+    ans = float('inf')
+    for c in range(n):
+        top_pre += grid[0][c]
+        top_suffix = top_total - top_pre
+        ans = min(ans, max(top_suffix, bottom_pre))
+        bottom_pre += grid[1][c]
+    return ans`,
   },
   visibleTests: [
     { args: [[[2, 3, 1, 4], [0, 2, 1, 1]]], expected: 3 },

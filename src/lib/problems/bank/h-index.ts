@@ -40,12 +40,26 @@ function hIndex(citations) {
   params: ['citations'],
   starterCode: {
     javascript: `function hIndex(citations) {
-
+  citations.sort((a, b) => b - a);
+  let h = 0;
+  for (let i = 0; i < citations.length; i++)
+    if (citations[i] >= i + 1) h = i + 1; else break;
+  return h;
 }`,
-    typescript: "function hIndex(citations: number[]): number {\n\n}",
-
+    typescript: `function hIndex(citations: number[]): number {
+  citations.sort((a, b) => b - a);
+  let h = 0;
+  for (let i = 0; i < citations.length; i++)
+    if (citations[i] >= i + 1) h = i + 1; else break;
+  return h;
+}`,
     python: `def hIndex(citations):
-    pass`,
+    citations.sort(reverse=True)
+    h = 0
+    for i, c in enumerate(citations):
+        if c >= i + 1: h = i + 1
+        else: break
+    return h`,
   },
   visibleTests: [
     { args: [[3, 0, 6, 1, 5]], expected: 3 },

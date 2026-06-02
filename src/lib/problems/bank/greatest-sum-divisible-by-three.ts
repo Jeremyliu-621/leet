@@ -36,11 +36,41 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function maxSumDivThree(nums) {
-
+  let dp = [0, -Infinity, -Infinity];
+  for (const n of nums) {
+    const nd = [...dp];
+    for (let r = 0; r < 3; r++) {
+      if (dp[r] === -Infinity) continue;
+      const nr = (r + n % 3) % 3;
+      nd[nr] = Math.max(nd[nr], dp[r] + n);
+    }
+    dp = nd;
+  }
+  return dp[0];
 }`,
-    typescript: 'function maxSumDivThree(nums: number[]): number {\n\n}',
+    typescript: `function maxSumDivThree(nums: number[]): number {
+  let dp = [0, -Infinity, -Infinity];
+  for (const n of nums) {
+    const nd = [...dp];
+    for (let r = 0; r < 3; r++) {
+      if (dp[r] === -Infinity) continue;
+      const nr = (r + n % 3) % 3;
+      nd[nr] = Math.max(nd[nr], dp[r] + n);
+    }
+    dp = nd;
+  }
+  return dp[0];
+}`,
     python: `def maxSumDivThree(nums):
-    pass`,
+    dp = [0, float('-inf'), float('-inf')]
+    for n in nums:
+        nd = dp[:]
+        for r in range(3):
+            if dp[r] == float('-inf'): continue
+            nr = (r + n % 3) % 3
+            nd[nr] = max(nd[nr], dp[r] + n)
+        dp = nd
+    return dp[0]`,
   },
   visibleTests: [
     { args: [[3, 6, 5, 1, 8]], expected: 18 },

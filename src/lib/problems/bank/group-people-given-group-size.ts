@@ -36,12 +36,32 @@ Return a list of groups there are. Each person should appear in **exactly one gr
   params: ['groupSizes'],
   starterCode: {
     javascript: `function groupThePeople(groupSizes) {
-
+  const buckets = new Map(), res = [];
+  for (let i = 0; i < groupSizes.length; i++) {
+    const sz = groupSizes[i];
+    if (!buckets.has(sz)) buckets.set(sz, []);
+    buckets.get(sz).push(i);
+    if (buckets.get(sz).length === sz) { res.push(buckets.get(sz)); buckets.set(sz, []); }
+  }
+  return res;
 }`,
-    typescript: "function groupThePeople(groupSizes: number[]): number[][] {\n\n}",
-
+    typescript: `function groupThePeople(groupSizes: number[]): number[][] {
+  const buckets = new Map<number, number[]>(), res: number[][] = [];
+  for (let i = 0; i < groupSizes.length; i++) {
+    const sz = groupSizes[i];
+    if (!buckets.has(sz)) buckets.set(sz, []);
+    buckets.get(sz)!.push(i);
+    if (buckets.get(sz)!.length === sz) { res.push(buckets.get(sz)!); buckets.set(sz, []); }
+  }
+  return res;
+}`,
     python: `def groupThePeople(groupSizes):
-    pass`,
+    from collections import defaultdict
+    buckets, res = defaultdict(list), []
+    for i, sz in enumerate(groupSizes):
+        buckets[sz].append(i)
+        if len(buckets[sz]) == sz: res.append(buckets[sz][:]); buckets[sz].clear()
+    return res`,
   },
   visibleTests: [
     { args: [[3, 3, 3, 3, 3, 1, 3]], expected: [[0, 1, 2], [5], [3, 4, 6]] },

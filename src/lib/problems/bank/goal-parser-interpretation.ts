@@ -35,13 +35,13 @@ Given the string \`command\`, return *the Goal Parser's interpretation of* \`com
   params: ['command'],
   starterCode: {
     javascript: `function interpret(command) {
-
+  return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
 }`,
     typescript: `function interpret(command: string): string {
-
+  return command.replace(/\(\)/g, 'o').replace(/\(al\)/g, 'al');
 }`,
     python: `def interpret(command):
-    pass`,
+    return command.replace('()', 'o').replace('(al)', 'al')`,
   },
   visibleTests: [
     { args: ['G()()()()(al)'], expected: 'Gooooal' },

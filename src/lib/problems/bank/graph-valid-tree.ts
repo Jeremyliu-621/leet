@@ -38,12 +38,38 @@ A valid tree has **no cycles** and all nodes are **connected**.`,
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function validTree(n, edges) {
-
+  if (edges.length !== n - 1) return false;
+  const parent = Array.from({length: n}, (_, i) => i);
+  const find = (x) => x === parent[x] ? x : (parent[x] = find(parent[x]));
+  for (const [a, b] of edges) {
+    const pa = find(a), pb = find(b);
+    if (pa === pb) return false;
+    parent[pa] = pb;
+  }
+  return true;
 }`,
-    typescript: "function validTree(n: number, edges: number[][]): boolean {\n\n}",
-
+    typescript: `function validTree(n: number, edges: number[][]): boolean {
+  if (edges.length !== n - 1) return false;
+  const parent = Array.from({length: n}, (_, i) => i);
+  const find = (x: number): number => x === parent[x] ? x : (parent[x] = find(parent[x]));
+  for (const [a, b] of edges) {
+    const pa = find(a), pb = find(b);
+    if (pa === pb) return false;
+    parent[pa] = pb;
+  }
+  return true;
+}`,
     python: `def validTree(n, edges):
-    pass`,
+    if len(edges) != n - 1: return False
+    parent = list(range(n))
+    def find(x):
+        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    for a, b in edges:
+        pa, pb = find(a), find(b)
+        if pa == pb: return False
+        parent[pa] = pb
+    return True`,
   },
   visibleTests: [
     { args: [5, [[0, 1], [0, 2], [0, 3], [1, 4]]], expected: true },
