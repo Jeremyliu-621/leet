@@ -39,11 +39,33 @@ A character must appear in every string. If it appears multiple times in every s
   params: ['words'],
   starterCode: {
     javascript: `function commonChars(words) {
-
+  const freq = w => { const f = new Array(26).fill(0); for (const c of w) f[c.charCodeAt(0)-97]++; return f; };
+  let min = freq(words[0]);
+  for (let i = 1; i < words.length; i++) {
+    const f = freq(words[i]);
+    for (let j = 0; j < 26; j++) min[j] = Math.min(min[j], f[j]);
+  }
+  const res = [];
+  for (let j = 0; j < 26; j++) for (let k = 0; k < min[j]; k++) res.push(String.fromCharCode(97 + j));
+  return res;
 }`,
-    typescript: 'function commonChars(words: string[]): string[] {\n\n}',
+    typescript: `function commonChars(words: string[]): string[] {
+  const freq = (w: string) => { const f = new Array(26).fill(0) as number[]; for (const c of w) f[c.charCodeAt(0)-97]!++; return f; };
+  let min = freq(words[0]!);
+  for (let i = 1; i < words.length; i++) {
+    const f = freq(words[i]!);
+    for (let j = 0; j < 26; j++) min[j] = Math.min(min[j]!, f[j]!);
+  }
+  const res: string[] = [];
+  for (let j = 0; j < 26; j++) for (let k = 0; k < min[j]!; k++) res.push(String.fromCharCode(97 + j));
+  return res;
+}`,
     python: `def commonChars(words):
-    pass`,
+    from collections import Counter
+    from functools import reduce
+    min_freq = reduce(lambda a, b: {c: min(a.get(c,0), b.get(c,0)) for c in set(a)|set(b)},
+                      [Counter(w) for w in words])
+    return [c for c, cnt in min_freq.items() for _ in range(cnt)]`,
   },
   visibleTests: [
     { args: [['bella', 'label', 'roller']], expected: ['e', 'l', 'l'] },

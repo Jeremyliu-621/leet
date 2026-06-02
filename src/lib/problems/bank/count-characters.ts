@@ -36,12 +36,29 @@ Return the sum of lengths of all **good** strings in \`words\`.`,
   params: ['words', 'chars'],
   starterCode: {
     javascript: `function countCharacters(words, chars) {
-
+  const freq = s => { const f = {}; for (const c of s) f[c] = (f[c] || 0) + 1; return f; };
+  const cf = freq(chars);
+  let total = 0;
+  for (const w of words) {
+    const wf = freq(w);
+    if (Object.keys(wf).every(c => (wf[c] || 0) <= (cf[c] || 0))) total += w.length;
+  }
+  return total;
 }`,
-    typescript: "function countCharacters(words: string[], chars: string): number {\n\n}",
-
+    typescript: `function countCharacters(words: string[], chars: string): number {
+  const freq = (s: string) => { const f: Record<string, number> = {}; for (const c of s) f[c] = (f[c] ?? 0) + 1; return f; };
+  const cf = freq(chars);
+  let total = 0;
+  for (const w of words) {
+    const wf = freq(w);
+    if (Object.keys(wf).every(c => (wf[c] ?? 0) <= (cf[c] ?? 0))) total += w.length;
+  }
+  return total;
+}`,
     python: `def countCharacters(words, chars):
-    pass`,
+    from collections import Counter
+    cf = Counter(chars)
+    return sum(len(w) for w in words if not (Counter(w) - cf))`,
   },
   visibleTests: [
     { args: [['cat', 'bt', 'hat', 'tree'], 'atach'], expected: 6 },

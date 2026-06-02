@@ -42,13 +42,17 @@ Return the total number of collisions.`,
   params: ['directions'],
   starterCode: {
     javascript: `function countCollisions(directions) {
-
+  // Trim leading L's and trailing R's — they never collide
+  let s = directions.replace(/^L+/, '').replace(/R+$/, '');
+  return s.split('').filter(c => c !== 'S').length;
 }`,
     typescript: `function countCollisions(directions: string): number {
-
+  const s = directions.replace(/^L+/, '').replace(/R+$/, '');
+  return [...s].filter(c => c !== 'S').length;
 }`,
     python: `def countCollisions(directions):
-    pass`,
+    s = directions.lstrip('L').rstrip('R')
+    return sum(1 for c in s if c != 'S')`,
   },
   visibleTests: [
     { args: ['RLRSLL'], expected: 5 },

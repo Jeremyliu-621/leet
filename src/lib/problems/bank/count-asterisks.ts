@@ -39,12 +39,29 @@ More formally, a \`'*'\` counts if it appears before the first \`'|'\`, after th
   params: ['s'],
   starterCode: {
     javascript: `function countAsterisks(s) {
-
+  let count = 0, inside = false;
+  for (const c of s) {
+    if (c === '|') inside = !inside;
+    else if (c === '*' && !inside) count++;
+  }
+  return count;
 }`,
-    typescript: "function countAsterisks(s: string): number {\n\n}",
-
+    typescript: `function countAsterisks(s: string): number {
+  let count = 0, inside = false;
+  for (const c of s) {
+    if (c === '|') inside = !inside;
+    else if (c === '*' && !inside) count++;
+  }
+  return count;
+}`,
     python: `def countAsterisks(s):
-    pass`,
+    count, inside = 0, False
+    for c in s:
+        if c == '|':
+            inside = not inside
+        elif c == '*' and not inside:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: ['l|*e*et|**co|*de|'], expected: 2 },
