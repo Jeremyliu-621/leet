@@ -111,7 +111,7 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
               value={prefs.editorFontSize}
               onChange={(e) => {
                 const val = parseInt(e.target.value, 10);
-                if (!isNaN(val) && val >= FONT_MIN && val <= FONT_MAX) {
+                if (!Number.isNaN(val) && val >= FONT_MIN && val <= FONT_MAX) {
                   onChange({ editorFontSize: val });
                 }
               }}

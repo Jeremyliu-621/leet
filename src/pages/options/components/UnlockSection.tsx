@@ -38,7 +38,7 @@ export function UnlockSection({ prefs, pendingNotice, onChange }: UnlockSectionP
           value={prefs.unlockDurationMin}
           onChange={(e) => {
             const val = parseInt(e.target.value, 10);
-            if (!isNaN(val) && val >= 1 && val <= 240) {
+            if (!Number.isNaN(val) && val >= 1 && val <= 240) {
               onChange({ unlockDurationMin: val });
             }
           }}

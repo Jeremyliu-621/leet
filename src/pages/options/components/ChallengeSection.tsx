@@ -43,7 +43,7 @@ export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSe
             value={prefs.challengeTimeLimitSec}
             onChange={(e) => {
               const val = parseInt(e.target.value, 10);
-              if (!isNaN(val) && val >= 60 && val <= 3600) {
+              if (!Number.isNaN(val) && val >= 60 && val <= 3600) {
                 onChange({ challengeTimeLimitSec: val });
               }
             }}
@@ -67,7 +67,7 @@ export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSe
             value={prefs.maxSubmissionAttempts}
             onChange={(e) => {
               const val = parseInt(e.target.value, 10);
-              if (!isNaN(val) && val >= 1 && val <= 20) {
+              if (!Number.isNaN(val) && val >= 1 && val <= 20) {
                 onChange({ maxSubmissionAttempts: val });
               }
             }}
