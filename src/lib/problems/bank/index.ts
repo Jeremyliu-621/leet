@@ -3472,6 +3472,11 @@ import { problem as maximumSumOfHeightsMountain } from './maximum-sum-of-heights
 import { problem as maximumValueAtAGivenIndexInABoundedArray } from './maximum-value-at-a-given-index-in-a-bounded-array';
 import { problem as senderWithLargestWordCount } from './sender-with-largest-word-count';
 import { problem as lastSubstringInLexicographicalOrder } from './last-substring-in-lexicographical-order';
+// batch 295
+import { problem as maximumWhiteTilesCoveredByACarpet } from './maximum-white-tiles-covered-by-a-carpet';
+import { problem as minimumTimeToMakeArraySumAtMostX } from './minimum-time-to-make-array-sum-at-most-x';
+import { problem as differenceOfSumAndDigitSum } from './difference-between-element-sum-and-digit-sum-of-an-array';
+import { problem as countMentionsPerUser } from './count-mentions-per-user';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6984,4 +6989,9 @@ export const problems: readonly Problem[] = [
   rearrangeStringKDistanceApart,
   pathsInMatrixDivisibleByK,
   findPunishmentNumber,
+  // batch 296
+  maximumWhiteTilesCoveredByACarpet,
+  minimumTimeToMakeArraySumAtMostX,
+  differenceOfSumAndDigitSum,
+  countMentionsPerUser,
 ];

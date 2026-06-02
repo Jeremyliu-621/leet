@@ -50788,6 +50788,88 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return best;
   },
 
+  'maximum-white-tiles-covered-by-a-carpet': (...args: unknown[]) => {
+    const tiles = (args[0] as number[][]).map(t => [...t]);
+    const carpetLen = args[1] as number;
+    tiles.sort((a, b) => a[0]! - b[0]!);
+    const n = tiles.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + tiles[i]![1]! - tiles[i]![0]! + 1;
+    let ans = 0;
+    for (let i = 0; i < n; i++) {
+      const rightEdge = tiles[i]![0]! + carpetLen - 1;
+      let lo = i, hi = n - 1, j = i;
+      while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (tiles[mid]![0]! <= rightEdge) { j = mid; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      const covered = prefix[j]! - prefix[i]! + Math.min(tiles[j]![1]!, rightEdge) - tiles[j]![0]! + 1;
+      ans = Math.max(ans, covered);
+    }
+    return ans;
+  },
+
+  'minimum-time-to-make-array-sum-at-most-x': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const x = args[2] as number;
+    const n = nums1.length;
+    const pairs = nums1.map((v, i) => [v, nums2[i]!] as [number, number]).sort((a, b) => a[1] - b[1]);
+    const s1 = nums1.reduce((a, b) => a + b, 0);
+    const s2 = nums2.reduce((a, b) => a + b, 0);
+    const dp = new Array<number>(n + 1).fill(0);
+    for (const [n1, n2] of pairs) {
+      for (let j = n; j >= 1; j--) {
+        dp[j] = Math.max(dp[j]!, dp[j - 1]! + n1 + j * n2);
+      }
+    }
+    for (let t = 0; t <= n; t++) {
+      if (s1 + t * s2 - dp[t]! <= x) return t;
+    }
+    return -1;
+  },
+
+  'difference-between-element-sum-and-digit-sum-of-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let elemSum = 0, digitSum = 0;
+    for (const n of nums) {
+      elemSum += n;
+      let v = n;
+      while (v > 0) { digitSum += v % 10; v = Math.floor(v / 10); }
+    }
+    return elemSum - digitSum;
+  },
+
+  'count-mentions-per-user': (...args: unknown[]) => {
+    const numberOfUsers = args[0] as number;
+    const events = (args[1] as string[][]).map(e => [...e]);
+    events.sort((a, b) => {
+      const t = Number(a[1]) - Number(b[1]);
+      if (t !== 0) return t;
+      return a[0] === 'OFFLINE' ? -1 : 1;
+    });
+    const mentions = new Array<number>(numberOfUsers).fill(0);
+    const offlineUntil = new Array<number>(numberOfUsers).fill(0);
+    for (const ev of events) {
+      const type = ev[0]!;
+      const t = Number(ev[1]);
+      const info = ev[2]!;
+      if (type === 'OFFLINE') {
+        offlineUntil[Number(info)] = t + 60;
+      } else if (info === 'ALL') {
+        for (let i = 0; i < numberOfUsers; i++) mentions[i]!++;
+      } else if (info === 'HERE') {
+        for (let i = 0; i < numberOfUsers; i++) {
+          if (t >= offlineUntil[i]!) mentions[i]!++;
+        }
+      } else {
+        for (const id of info.split(' ')) mentions[Number(id.slice(2))]!++;
+      }
+    }
+    return mentions;
+  },
+
   'last-substring-in-lexicographical-order': (...args: unknown[]) => {
     const s = args[0] as string;
     let i = 0, j = 1, k = 0;

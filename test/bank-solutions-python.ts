@@ -49570,6 +49570,77 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return best
 `,
 
+  'maximum-white-tiles-covered-by-a-carpet': `def maximumWhiteTiles(tiles, carpetLen):
+    if hasattr(tiles, 'to_py'): tiles = tiles.to_py()
+    tiles = [list(t) for t in tiles]
+    tiles.sort(key=lambda t: t[0])
+    n = len(tiles)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + tiles[i][1] - tiles[i][0] + 1
+    ans = 0
+    for i in range(n):
+        right_edge = tiles[i][0] + carpetLen - 1
+        lo, hi, j = i, n - 1, i
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if tiles[mid][0] <= right_edge:
+                j = mid; lo = mid + 1
+            else:
+                hi = mid - 1
+        covered = prefix[j] - prefix[i] + min(tiles[j][1], right_edge) - tiles[j][0] + 1
+        ans = max(ans, covered)
+    return ans
+`,
+
+  'minimum-time-to-make-array-sum-at-most-x': `def minimumTime(nums1, nums2, x):
+    if hasattr(nums1, 'to_py'): nums1 = nums1.to_py()
+    if hasattr(nums2, 'to_py'): nums2 = nums2.to_py()
+    nums1 = [int(v) for v in nums1]
+    nums2 = [int(v) for v in nums2]
+    n = len(nums1)
+    pairs = sorted(zip(nums2, nums1))
+    s1, s2 = sum(nums1), sum(nums2)
+    dp = [0] * (n + 1)
+    for n2, n1 in pairs:
+        for j in range(n, 0, -1):
+            dp[j] = max(dp[j], dp[j - 1] + n1 + j * n2)
+    for t in range(n + 1):
+        if s1 + t * s2 - dp[t] <= x:
+            return t
+    return -1
+`,
+
+  'difference-between-element-sum-and-digit-sum-of-an-array': `def differenceOfSum(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    elem_sum = sum(int(x) for x in nums)
+    digit_sum = sum(int(d) for n in nums for d in str(int(n)))
+    return elem_sum - digit_sum
+`,
+
+  'count-mentions-per-user': `def countMentions(numberOfUsers, events):
+    if hasattr(events, 'to_py'): events = events.to_py()
+    events = [[str(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in events]
+    events.sort(key=lambda e: (int(e[1]), 0 if e[0] == 'OFFLINE' else 1))
+    mentions = [0] * numberOfUsers
+    offline_until = [0] * numberOfUsers
+    for event_type, ts, info in events:
+        t = int(ts)
+        if event_type == 'OFFLINE':
+            offline_until[int(info)] = t + 60
+        elif info == 'ALL':
+            for i in range(numberOfUsers):
+                mentions[i] += 1
+        elif info == 'HERE':
+            for i in range(numberOfUsers):
+                if t >= offline_until[i]:
+                    mentions[i] += 1
+        else:
+            for uid in info.split():
+                mentions[int(uid[2:])] += 1
+    return mentions
+`,
+
   'last-substring-in-lexicographical-order': `def lastSubstring(s):
     n = len(s)
     i, j, k = 0, 1, 0
