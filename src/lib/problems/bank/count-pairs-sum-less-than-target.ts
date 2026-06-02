@@ -31,10 +31,34 @@ return count;\`\`\``
   functionName: 'countPairs',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function countPairs(nums, target) {\n  \n}\n',
-    typescript: "function countPairs(nums: number[], target: number): number {\n  \n}",
-
-    python: 'def countPairs(nums, target):\n    pass\n',
+    javascript: `function countPairs(nums, target) {
+  nums.sort((a, b) => a - b);
+  let l = 0, r = nums.length - 1, count = 0;
+  while (l < r) {
+    if (nums[l] + nums[r] < target) { count += r - l; l++; }
+    else r--;
+  }
+  return count;
+}`,
+    typescript: `function countPairs(nums: number[], target: number): number {
+  nums.sort((a, b) => a - b);
+  let l = 0, r = nums.length - 1, count = 0;
+  while (l < r) {
+    if (nums[l]! + nums[r]! < target) { count += r - l; l++; }
+    else r--;
+  }
+  return count;
+}`,
+    python: `def countPairs(nums, target):
+    nums.sort()
+    l, r, count = 0, len(nums) - 1, 0
+    while l < r:
+        if nums[l] + nums[r] < target:
+            count += r - l
+            l += 1
+        else:
+            r -= 1
+    return count`,
   },
   visibleTests: [
     { args: [[-1,1,2,3,1], 2], expected: 3 },

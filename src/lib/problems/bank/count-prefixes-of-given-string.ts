@@ -38,10 +38,14 @@ function countPrefixes(words, s) {
   functionName: 'countPrefixes',
   params: ['words', 's'],
   starterCode: {
-    javascript: 'function countPrefixes(words, s) {\n  \n}\n',
-    typescript: "function countPrefixes(words: string[], s: string): number {\n  \n}",
-
-    python: 'def countPrefixes(words, s):\n    pass\n',
+    javascript: `function countPrefixes(words, s) {
+  return words.filter(w => s.startsWith(w)).length;
+}`,
+    typescript: `function countPrefixes(words: string[], s: string): number {
+  return words.filter(w => s.startsWith(w)).length;
+}`,
+    python: `def countPrefixes(words, s):
+    return sum(1 for w in words if s.startswith(w))`,
   },
   visibleTests: [
     { args: [['a', 'b', 'c', 'ab', 'bc', 'abc'], 'abc'], expected: 3 },

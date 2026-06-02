@@ -37,10 +37,30 @@ Return the number of **pairs** \`(i, j)\` such that \`0 <= i < j <= word.length 
   functionName: 'similarPairs',
   params: ['words'],
   starterCode: {
-    javascript: 'function similarPairs(words) {\n  \n}\n',
-    typescript: "function similarPairs(words: string[]): number {\n  \n}",
-
-    python: 'def similarPairs(words):\n    pass\n',
+    javascript: `function similarPairs(words) {
+  const freq = new Map();
+  for (const w of words) {
+    const key = [...new Set(w)].sort().join('');
+    freq.set(key, (freq.get(key) || 0) + 1);
+  }
+  let count = 0;
+  for (const k of freq.values()) count += k * (k - 1) / 2;
+  return count;
+}`,
+    typescript: `function similarPairs(words: string[]): number {
+  const freq = new Map<string, number>();
+  for (const w of words) {
+    const key = [...new Set(w)].sort().join('');
+    freq.set(key, (freq.get(key) ?? 0) + 1);
+  }
+  let count = 0;
+  for (const k of freq.values()) count += k * (k - 1) / 2;
+  return count;
+}`,
+    python: `def similarPairs(words):
+    from collections import Counter
+    freq = Counter(''.join(sorted(set(w))) for w in words)
+    return sum(k * (k - 1) // 2 for k in freq.values())`,
   },
   visibleTests: [
     { args: [['aba','aabb','abcd','bac','aabc']], expected: 2 },

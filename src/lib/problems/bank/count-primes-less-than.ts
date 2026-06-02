@@ -26,10 +26,31 @@ return sieve.reduce((a,b)=>a+b,0);\`\`\``
   functionName: 'countPrimes',
   params: ['n'],
   starterCode: {
-    javascript: 'function countPrimes(n) {\n  \n}\n',
-    typescript: "function countPrimes(n: number): number {\n  \n}",
-
-    python: 'def countPrimes(n):\n    pass\n',
+    javascript: `function countPrimes(n) {
+  if (n < 2) return 0;
+  const sieve = new Uint8Array(n).fill(1);
+  sieve[0] = sieve[1] = 0;
+  for (let i = 2; i * i < n; i++) if (sieve[i]) for (let j = i * i; j < n; j += i) sieve[j] = 0;
+  return sieve.reduce((a, b) => a + b, 0);
+}`,
+    typescript: `function countPrimes(n: number): number {
+  if (n < 2) return 0;
+  const sieve = new Uint8Array(n).fill(1);
+  sieve[0] = sieve[1] = 0;
+  for (let i = 2; i * i < n; i++) if (sieve[i]) for (let j = i * i; j < n; j += i) sieve[j] = 0;
+  return sieve.reduce((a, b) => a + b, 0);
+}`,
+    python: `def countPrimes(n):
+    if n < 2:
+        return 0
+    sieve = bytearray([1]) * n
+    sieve[0] = sieve[1] = 0
+    i = 2
+    while i * i < n:
+        if sieve[i]:
+            sieve[i*i::i] = bytearray(len(sieve[i*i::i]))
+        i += 1
+    return sum(sieve)`,
   },
   visibleTests: [
     { args: [10], expected: 4 },
