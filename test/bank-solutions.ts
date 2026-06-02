@@ -50941,6 +50941,22 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   },
 
 
+  'find-duplicate-subtrees': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const map = new Map<string, number>();
+    const result: _TN[] = [];
+    const serialize = (node: _TN | null): string => {
+      if (!node) return '#';
+      const s = serialize(node.l) + ',' + serialize(node.r) + ',' + node.v;
+      const count = (map.get(s) ?? 0) + 1;
+      map.set(s, count);
+      if (count === 2) result.push(node);
+      return s;
+    };
+    serialize(root);
+    return result.map(n => _treeToArr(n));
+  },
+
   'create-binary-tree-from-descriptions': (...args: unknown[]) => {
     const descriptions = args[0] as number[][];
     const nodes = new Map<number, _TN>();
@@ -51003,6 +51019,32 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const comb = fact[N]! * invk % MOD * invNk % MOD;
     const ways = comb * BigInt(m) % MOD * power(BigInt(m - 1), BigInt(N - k), MOD) % MOD;
     return Number(ways);
+  },
+
+  'count-good-binary-strings': (...args: unknown[]) => {
+    const low = args[0] as number, high = args[1] as number;
+    const zero = args[2] as number, one = args[3] as number;
+    const MOD = 1_000_000_007;
+    const dp = new Array<number>(high + 1).fill(0);
+    dp[0] = 1;
+    for (let i = 1; i <= high; i++) {
+      if (i >= zero) dp[i] = (dp[i]! + dp[i - zero]!) % MOD;
+      if (i >= one) dp[i] = (dp[i]! + dp[i - one]!) % MOD;
+    }
+    let ans = 0;
+    for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
+    return ans;
+  },
+
+  'maximum-binary-tree-ii': (...args: unknown[]) => {
+    const root = _buildTree(args[0] as (number | null)[]);
+    const val = args[1] as number;
+    const insert = (node: _TN | null): _TN => {
+      if (!node || val > node.v) { return { v: val, l: node, r: null }; }
+      node.r = insert(node.r);
+      return node;
+    };
+    return _treeToArr(insert(root));
   },
 
 };

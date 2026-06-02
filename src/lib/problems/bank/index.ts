@@ -3485,6 +3485,10 @@ import { problem as countMentionsPerUser } from './count-mentions-per-user';
 import { problem as lexicographicallySmallestArraySwapping } from './lexicographically-smallest-array-by-swapping-elements';
 import { problem as countGoodArrays } from './count-good-arrays';
 import { problem as createBinaryTreeFromDescriptions } from './create-binary-tree-from-descriptions';
+// batch 298
+import { problem as findDuplicateSubtrees } from './find-duplicate-subtrees';
+import { problem as countGoodBinaryStrings } from './count-good-binary-strings';
+import { problem as maximumBinaryTreeII } from './maximum-binary-tree-ii';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7009,4 +7013,8 @@ export const problems: readonly Problem[] = [
   lexicographicallySmallestArraySwapping,
   countGoodArrays,
   createBinaryTreeFromDescriptions,
+  // batch 298
+  findDuplicateSubtrees,
+  countGoodBinaryStrings,
+  maximumBinaryTreeII,
 ];

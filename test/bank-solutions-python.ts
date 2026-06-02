@@ -49778,4 +49778,84 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return comb * m % MOD * power(m - 1, N - k, MOD) % MOD
 `,
 
+  'find-duplicate-subtrees': `def findDuplicateSubtreesRunner(root_arr):
+    if hasattr(root_arr, 'to_py'): root_arr = root_arr.to_py()
+    arr = [int(x) if isinstance(x, (int, float)) else None for x in root_arr]
+    if not arr or arr[0] is None: return []
+    root = [arr[0], None, None]
+    queue = [root]; i = 1
+    while queue and i < len(arr):
+        node = queue.pop(0)
+        if i < len(arr) and arr[i] is not None:
+            node[1] = [arr[i], None, None]; queue.append(node[1])
+        i += 1
+        if i < len(arr) and arr[i] is not None:
+            node[2] = [arr[i], None, None]; queue.append(node[2])
+        i += 1
+    from collections import defaultdict
+    count = defaultdict(int)
+    result = []
+    def serialize(node):
+        if node is None: return '#'
+        s = serialize(node[1]) + ',' + serialize(node[2]) + ',' + str(node[0])
+        count[s] += 1
+        if count[s] == 2: result.append(node)
+        return s
+    serialize(root)
+    def to_arr(node):
+        if node is None: return []
+        res = []; q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None: res.append(None)
+            else: res.append(n[0]); q.append(n[1]); q.append(n[2])
+        while res and res[-1] is None: res.pop()
+        return res
+    return [to_arr(n) for n in result]
+`,
+
+  'count-good-binary-strings': `def countGoodStrings(low, high, zero, one):
+    low = int(low); high = int(high); zero = int(zero); one = int(one)
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero: dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one: dp[i] = (dp[i] + dp[i - one]) % MOD
+    return sum(dp[low:high+1]) % MOD
+`,
+
+  'maximum-binary-tree-ii': `def insertIntoMaxTreeRunner(arr, val):
+    a = arr.to_py() if hasattr(arr, 'to_py') else list(arr)
+    a = [int(x) if isinstance(x, (int, float)) else None for x in a]
+    val = int(val)
+    def build(lst):
+        if not lst or lst[0] is None: return None
+        root = [lst[0], None, None]; queue = [root]; i = 1
+        while queue and i < len(lst):
+            node = queue.pop(0)
+            if i < len(lst) and lst[i] is not None:
+                node[1] = [lst[i], None, None]; queue.append(node[1])
+            i += 1
+            if i < len(lst) and lst[i] is not None:
+                node[2] = [lst[i], None, None]; queue.append(node[2])
+            i += 1
+        return root
+    def insert(node):
+        if node is None or val > node[0]:
+            return [val, node, None]
+        node[2] = insert(node[2])
+        return node
+    def to_arr(node):
+        if node is None: return []
+        res = []; q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None: res.append(None)
+            else: res.append(n[0]); q.append(n[1]); q.append(n[2])
+        while res and res[-1] is None: res.pop()
+        return res
+    return to_arr(insert(build(a)))
+`,
+
 };
