@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3016** problems; 9396 tests green. Batches 296 + 41ab–41ad complete.
+**Current focus:** Bank at **3019** problems; 9405 tests green. Batches 296 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Bank growth (batch 297+); starter backfill (batch 41ae+); UX polish.
+
+### feat(bank): batch 296 — max-profit-trading, minimize-array-length, houses-at-distance (2026-06-02)
+Three new problems: `maximum-profit-from-trading-stocks` (medium/dp — 0/1 knapsack; only buy stocks with future>present; dp[c]=max profit with c budget; O(n*budget)), `minimize-length-of-array-using-operations` (medium/arrays+math — g=gcd(nums); elements>g can be eliminated by modding against g; answer=max(1, count(g in nums))), `count-the-number-of-houses-at-a-certain-distance-i` (medium/graph+shortest-path — BFS from each node on graph=linear chain 1..n plus shortcut x-y; O(n²); tally result[dist-1]++). Bank at **3019**; 9405 tests.
 
 ### feat(bank): batch 296 — max-white-tiles, min-time-array-sum, diff-elem-digit-sum, count-mentions (2026-06-02)
 Four new problems: `maximum-white-tiles-covered-by-a-carpet` (medium/binary-search — sort tiles by left, prefix sums, binary search rightmost tile within carpet, O(n log n)), `minimum-time-to-make-array-sum-at-most-x` (hard/dp — sort by nums2 ascending; dp[j]=max savings, contribution=nums1[i]+j*nums2[i]; check t=0..n for sum(nums1)+t*sum(nums2)-dp[t]<=x; O(n²)), `difference-between-element-sum-and-digit-sum-of-an-array` (easy/math — elementSum - digitSum, always ≥0; O(n*d)), `count-mentions-per-user` (medium/simulation — sort events by (time, OFFLINE-first); track offline_until[user]; ALL/HERE/specific handling; O(events log events)). Bank at **3016**; 9396 tests.
