@@ -45,12 +45,23 @@ function findMaxK(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function findMaxK(nums) {
-
+  const s = new Set(nums);
+  let best = -1;
+  for (const n of nums) if (n > 0 && s.has(-n)) best = Math.max(best, n);
+  return best;
 }`,
-    typescript: "function findMaxK(nums: number[]): number {\n\n}",
-
+    typescript: `function findMaxK(nums: number[]): number {
+  const s = new Set(nums);
+  let best = -1;
+  for (const n of nums) if (n > 0 && s.has(-n)) best = Math.max(best, n);
+  return best;
+}`,
     python: `def findMaxK(nums):
-    pass`,
+    s = set(nums)
+    best = -1
+    for n in nums:
+        if n > 0 and -n in s: best = max(best, n)
+    return best`,
   },
   visibleTests: [
     { args: [[-1, 2, -3, 3]], expected: 3 },

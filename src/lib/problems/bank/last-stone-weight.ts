@@ -38,12 +38,31 @@ At the end of the game, there is **at most one** stone left. Return the weight o
   params: ['stones'],
   starterCode: {
     javascript: `function lastStoneWeight(stones) {
-
+  const s = [...stones];
+  while (s.length > 1) {
+    s.sort((a, b) => a - b);
+    const y = s.pop(), x = s.pop();
+    if (y !== x) s.push(y - x);
+  }
+  return s.length ? s[0] : 0;
 }`,
-    typescript: "function lastStoneWeight(stones: number[]): number {\n\n}",
-
+    typescript: `function lastStoneWeight(stones: number[]): number {
+  const s = [...stones];
+  while (s.length > 1) {
+    s.sort((a, b) => a - b);
+    const y = s.pop()!, x = s.pop()!;
+    if (y !== x) s.push(y - x);
+  }
+  return s.length ? s[0] : 0;
+}`,
     python: `def lastStoneWeight(stones):
-    pass`,
+    import heapq
+    h = [-s for s in stones]
+    heapq.heapify(h)
+    while len(h) > 1:
+        y, x = -heapq.heappop(h), -heapq.heappop(h)
+        if y != x: heapq.heappush(h, -(y - x))
+    return -h[0] if h else 0`,
   },
   visibleTests: [
     { args: [[2, 7, 4, 1, 8, 1]], expected: 1 },

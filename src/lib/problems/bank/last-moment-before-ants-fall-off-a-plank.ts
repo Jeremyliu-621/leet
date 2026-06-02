@@ -42,12 +42,17 @@ Given an integer \`n\` and two integer arrays \`left\` and \`right\`, the positi
   params: ['n', 'left', 'right'],
   starterCode: {
     javascript: `function getLastMoment(n, left, right) {
-
+  const maxLeft = left.length ? Math.max(...left) : 0;
+  const maxRight = right.length ? Math.max(...right.map(p => n - p)) : 0;
+  return Math.max(maxLeft, maxRight);
 }`,
-    typescript: "function getLastMoment(n: number, left: number[], right: number[]): number {\n\n}",
-
+    typescript: `function getLastMoment(n: number, left: number[], right: number[]): number {
+  const maxLeft = left.length ? Math.max(...left) : 0;
+  const maxRight = right.length ? Math.max(...right.map(p => n - p)) : 0;
+  return Math.max(maxLeft, maxRight);
+}`,
     python: `def getLastMoment(n, left, right):
-    pass`,
+    return max(max(left, default=0), max(n-p for p in right) if right else 0)`,
   },
   visibleTests: [
     { args: [4, [4, 3], [0, 1]], expected: 4 },

@@ -31,12 +31,41 @@ export const problem: Problem = {
   params: ['heights'],
   starterCode: {
     javascript: `function largestRectangleArea(heights) {
-
+  const stack = [], h = [...heights, 0];
+  let maxArea = 0;
+  for (let i = 0; i < h.length; i++) {
+    while (stack.length && h[stack[stack.length-1]] > h[i]) {
+      const height = h[stack.pop()];
+      const width = stack.length ? i - stack[stack.length-1] - 1 : i;
+      maxArea = Math.max(maxArea, height * width);
+    }
+    stack.push(i);
+  }
+  return maxArea;
 }`,
-    typescript: "function largestRectangleArea(heights: number[]): number {\n\n}",
-
+    typescript: `function largestRectangleArea(heights: number[]): number {
+  const stack: number[] = [], h = [...heights, 0];
+  let maxArea = 0;
+  for (let i = 0; i < h.length; i++) {
+    while (stack.length && h[stack[stack.length-1]] > h[i]) {
+      const height = h[stack.pop()!];
+      const width = stack.length ? i - stack[stack.length-1] - 1 : i;
+      maxArea = Math.max(maxArea, height * width);
+    }
+    stack.push(i);
+  }
+  return maxArea;
+}`,
     python: `def largestRectangleArea(heights):
-    pass`,
+    stack, max_area = [], 0
+    h = heights + [0]
+    for i, val in enumerate(h):
+        while stack and h[stack[-1]] > val:
+            height = h[stack.pop()]
+            width = i - stack[-1] - 1 if stack else i
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    return max_area`,
   },
   visibleTests: [
     { args: [[2, 1, 5, 6, 2, 3]], expected: 10 },

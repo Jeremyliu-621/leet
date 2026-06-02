@@ -40,13 +40,55 @@ Return the latest 24-hour time in \`"HH:MM"\` format. If no valid time can be ma
   params: ['arr'],
   starterCode: {
     javascript: `function largestTimeFromDigits(arr) {
-
+  let best = -1;
+  const perm = [0, 1, 2, 3];
+  const permute = (start) => {
+    if (start === 4) {
+      const [a, b, c, d] = perm.map(i => arr[i]);
+      const h = a * 10 + b, m = c * 10 + d;
+      if (h <= 23 && m <= 59) best = Math.max(best, h * 60 + m);
+      return;
+    }
+    for (let i = start; i < 4; i++) {
+      [perm[start], perm[i]] = [perm[i], perm[start]];
+      permute(start + 1);
+      [perm[start], perm[i]] = [perm[i], perm[start]];
+    }
+  };
+  permute(0);
+  if (best === -1) return '';
+  const h = Math.floor(best / 60), m = best % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }`,
     typescript: `function largestTimeFromDigits(arr: number[]): string {
-
+  let best = -1;
+  const perm = [0, 1, 2, 3];
+  const permute = (start: number) => {
+    if (start === 4) {
+      const [a, b, c, d] = perm.map(i => arr[i]);
+      const h = a * 10 + b, m = c * 10 + d;
+      if (h <= 23 && m <= 59) best = Math.max(best, h * 60 + m);
+      return;
+    }
+    for (let i = start; i < 4; i++) {
+      [perm[start], perm[i]] = [perm[i], perm[start]];
+      permute(start + 1);
+      [perm[start], perm[i]] = [perm[i], perm[start]];
+    }
+  };
+  permute(0);
+  if (best === -1) return '';
+  const h = Math.floor(best / 60), m = best % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
 }`,
     python: `def largestTimeFromDigits(arr):
-    pass`,
+    from itertools import permutations
+    best = -1
+    for p in permutations(arr):
+        h, m = p[0]*10+p[1], p[2]*10+p[3]
+        if h <= 23 and m <= 59: best = max(best, h*60+m)
+    if best == -1: return ''
+    return f'{best//60:02d}:{best%60:02d}'`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: '23:41' },

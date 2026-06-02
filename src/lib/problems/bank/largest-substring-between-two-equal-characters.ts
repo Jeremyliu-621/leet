@@ -42,12 +42,29 @@ function maxLengthBetweenEqualCharacters(s) {
   params: ['s'],
   starterCode: {
     javascript: `function maxLengthBetweenEqualCharacters(s) {
-
+  const first = {};
+  let best = -1;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] in first) best = Math.max(best, i - first[s[i]] - 1);
+    else first[s[i]] = i;
+  }
+  return best;
 }`,
-    typescript: "function maxLengthBetweenEqualCharacters(s: string): number {\n\n}",
-
+    typescript: `function maxLengthBetweenEqualCharacters(s: string): number {
+  const first: Record<string, number> = {};
+  let best = -1;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] in first) best = Math.max(best, i - first[s[i]] - 1);
+    else first[s[i]] = i;
+  }
+  return best;
+}`,
     python: `def maxLengthBetweenEqualCharacters(s):
-    pass`,
+    first, best = {}, -1
+    for i, c in enumerate(s):
+        if c in first: best = max(best, i - first[c] - 1)
+        else: first[c] = i
+    return best`,
   },
   visibleTests: [
     { args: ['aa'], expected: 0 },
