@@ -53,11 +53,33 @@ function smallestNumber(pattern) {
   params: ['pattern'],
   starterCode: {
     javascript: `function smallestNumber(pattern) {
-
+  const result = [], stack = [];
+  for (let i = 0; i <= pattern.length; i++) {
+    stack.push(i + 1);
+    if (i === pattern.length || pattern[i] === 'I') {
+      while (stack.length) result.push(stack.pop());
+    }
+  }
+  return result.join('');
 }`,
-    typescript: 'function smallestNumber(pattern: string): string {\n\n}',
-    python: `def smallestNumber(pattern: str) -> str:
-    pass`,
+    typescript: `function smallestNumber(pattern: string): string {
+  const result: number[] = [], stack: number[] = [];
+  for (let i = 0; i <= pattern.length; i++) {
+    stack.push(i + 1);
+    if (i === pattern.length || pattern[i] === 'I') {
+      while (stack.length) result.push(stack.pop()!);
+    }
+  }
+  return result.join('');
+}`,
+    python: `def smallestNumber(pattern):
+    result, stack = [], []
+    for i in range(len(pattern) + 1):
+        stack.append(i + 1)
+        if i == len(pattern) or pattern[i] == 'I':
+            while stack:
+                result.append(stack.pop())
+    return ''.join(map(str, result))`,
   },
   visibleTests: [
     { args: ['IIIDIDDD'], expected: '123549876' },

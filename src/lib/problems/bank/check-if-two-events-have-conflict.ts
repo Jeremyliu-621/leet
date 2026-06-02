@@ -43,13 +43,13 @@ Return \`true\` if there is a conflict between the two events, and \`false\` oth
   params: ['event1', 'event2'],
   starterCode: {
     javascript: `function haveConflict(event1, event2) {
-
+  return event1[0] <= event2[1] && event2[0] <= event1[1];
 }`,
     typescript: `function haveConflict(event1: string[], event2: string[]): boolean {
-
+  return event1[0]! <= event2[1]! && event2[0]! <= event1[1]!;
 }`,
     python: `def haveConflict(event1, event2):
-    pass`,
+    return event1[0] <= event2[1] and event2[0] <= event1[1]`,
   },
   visibleTests: [
     { args: [['01:15', '02:00'], ['02:00', '03:00']], expected: true },

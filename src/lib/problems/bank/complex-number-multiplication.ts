@@ -40,12 +40,28 @@ Output: "0+-2i"
   params: ['num1', 'num2'],
   starterCode: {
     javascript: `function complexNumberMultiply(num1, num2) {
-
+  function parse(s) {
+    const [real, imag] = s.split('+');
+    return [parseInt(real), parseInt(imag)];
+  }
+  const [a, b] = parse(num1), [c, d] = parse(num2);
+  return \`\${a * c - b * d}+\${a * d + b * c}i\`;
 }`,
-    typescript: "function complexNumberMultiply(num1: string, num2: string): string {\n\n}",
-
+    typescript: `function complexNumberMultiply(num1: string, num2: string): string {
+  function parse(s: string): [number, number] {
+    const parts = s.split('+');
+    return [parseInt(parts[0]!), parseInt(parts[1]!)];
+  }
+  const [a, b] = parse(num1), [c, d] = parse(num2);
+  return \`\${a * c - b * d}+\${a * d + b * c}i\`;
+}`,
     python: `def complexNumberMultiply(num1, num2):
-    `,
+    def parse(s):
+        real, imag = s.split('+')
+        return int(real), int(imag[:-1])
+    a, b = parse(num1)
+    c, d = parse(num2)
+    return f'{a*c - b*d}+{a*d + b*c}i'`,
   },
   visibleTests: [
     { args: ['1+1i', '1+1i'], expected: '0+2i' },

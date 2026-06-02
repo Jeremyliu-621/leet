@@ -37,11 +37,34 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: `function baseNeg2(n) {
-
+  if (n === 0) return '0';
+  let result = '';
+  while (n !== 0) {
+    const rem = ((n % 2) + 2) % 2;
+    result = rem + result;
+    n = (n - rem) / (-2);
+  }
+  return result;
 }`,
-    typescript: 'function baseNeg2(n: number): string {\n\n}',
+    typescript: `function baseNeg2(n: number): string {
+  if (n === 0) return '0';
+  let result = '';
+  while (n !== 0) {
+    const rem = ((n % 2) + 2) % 2;
+    result = rem + result;
+    n = (n - rem) / (-2);
+  }
+  return result;
+}`,
     python: `def baseNeg2(n):
-    pass`,
+    if n == 0:
+        return '0'
+    result = ''
+    while n != 0:
+        rem = ((n % 2) + 2) % 2
+        result = str(rem) + result
+        n = (n - rem) // (-2)
+    return result`,
   },
   visibleTests: [
     { args: [2], expected: '110' },

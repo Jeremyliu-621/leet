@@ -39,13 +39,38 @@ Return the resulting array. If there are multiple answers, return any of them.
   params: ['nums'],
   starterCode: {
     javascript: `function findMatrix(nums) {
-
+  const freq = new Map();
+  const result = [];
+  for (const n of nums) {
+    const cnt = freq.get(n) ?? 0;
+    if (cnt >= result.length) result.push([]);
+    result[cnt].push(n);
+    freq.set(n, cnt + 1);
+  }
+  return result;
 }`,
     typescript: `function findMatrix(nums: number[]): number[][] {
-
+  const freq = new Map<number, number>();
+  const result: number[][] = [];
+  for (const n of nums) {
+    const cnt = freq.get(n) ?? 0;
+    if (cnt >= result.length) result.push([]);
+    result[cnt]!.push(n);
+    freq.set(n, cnt + 1);
+  }
+  return result;
 }`,
     python: `def findMatrix(nums):
-    pass`,
+    from collections import defaultdict
+    freq = defaultdict(int)
+    result = []
+    for n in nums:
+        cnt = freq[n]
+        if cnt >= len(result):
+            result.append([])
+        result[cnt].append(n)
+        freq[n] += 1
+    return result`,
   },
   visibleTests: [
     { args: [[1, 3, 4, 1, 2, 3, 1]], expected: [[1, 3, 4, 2], [1, 3], [1]] },

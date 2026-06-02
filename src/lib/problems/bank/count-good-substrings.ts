@@ -36,13 +36,25 @@ A **substring** is a contiguous sequence of characters in a string.`,
   params: ['s'],
   starterCode: {
     javascript: `function countGoodSubstrings(s) {
-
+  let count = 0;
+  for (let i = 0; i <= s.length - 3; i++) {
+    if (s[i] !== s[i + 1] && s[i + 1] !== s[i + 2] && s[i] !== s[i + 2]) count++;
+  }
+  return count;
 }`,
     typescript: `function countGoodSubstrings(s: string): number {
-
+  let count = 0;
+  for (let i = 0; i <= s.length - 3; i++) {
+    if (s[i] !== s[i + 1] && s[i + 1] !== s[i + 2] && s[i] !== s[i + 2]) count++;
+  }
+  return count;
 }`,
     python: `def countGoodSubstrings(s):
-    pass`,
+    count = 0
+    for i in range(len(s) - 2):
+        if s[i] != s[i+1] and s[i+1] != s[i+2] and s[i] != s[i+2]:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: ['aababcabc'], expected: 4 },
