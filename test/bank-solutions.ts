@@ -51332,6 +51332,73 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return mn[m-1]![n-1]! <= target && target <= mx[m-1]![n-1]!;
   },
 
+  // batch 305
+  'minimum-cost-to-connect-two-groups-of-points': (...args: unknown[]): unknown => {
+    const cost = args[0] as number[][];
+    const n = cost.length, m = cost[0]!.length;
+    const minForGroup2 = new Array(m).fill(Infinity);
+    for (let j = 0; j < m; j++) for (let i = 0; i < n; i++) minForGroup2[j] = Math.min(minForGroup2[j], cost[i]![j]!);
+    let dp = new Array(1 << m).fill(Infinity) as number[];
+    dp[0] = 0;
+    for (let i = 0; i < n; i++) {
+      const ndp = new Array(1 << m).fill(Infinity) as number[];
+      for (let mask = 0; mask < (1 << m); mask++) {
+        if (dp[mask] === Infinity) continue;
+        for (let j = 0; j < m; j++) {
+          const nm = mask | (1 << j);
+          if (ndp[nm]! > dp[mask]! + cost[i]![j]!) ndp[nm] = dp[mask]! + cost[i]![j]!;
+        }
+      }
+      dp = ndp;
+    }
+    let ans = Infinity;
+    for (let mask = 0; mask < (1 << m); mask++) {
+      if (dp[mask] === Infinity) continue;
+      let extra = 0;
+      for (let j = 0; j < m; j++) if (!(mask & (1 << j))) extra += minForGroup2[j]!;
+      if (dp[mask]! + extra < ans) ans = dp[mask]! + extra;
+    }
+    return ans;
+  },
+
+  'count-array-pairs-divisible-by-k': (...args: unknown[]): unknown => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+    const cnt = new Map<number, number>();
+    for (const n of nums) {
+      const d = gcd(n, k);
+      cnt.set(d, (cnt.get(d) ?? 0) + 1);
+    }
+    let ans = 0;
+    const divs = [...cnt.keys()];
+    for (let i = 0; i < divs.length; i++) {
+      for (let j = i; j < divs.length; j++) {
+        const d1 = divs[i]!, d2 = divs[j]!;
+        if ((d1 * d2) % k === 0) {
+          const c1 = cnt.get(d1)!, c2 = cnt.get(d2)!;
+          if (i === j) ans += c1 * (c1 - 1) / 2;
+          else ans += c1 * c2;
+        }
+      }
+    }
+    return ans;
+  },
+
+  'path-in-zigzag-labelled-binary-tree': (...args: unknown[]): unknown => {
+    let label = args[0] as number;
+    let level = Math.floor(Math.log2(label)) + 1;
+    const path: number[] = [];
+    while (level >= 1) {
+      path.unshift(label);
+      const minL = 1 << (level - 1);
+      const maxL = (1 << level) - 1;
+      label = (minL + maxL - label) >> 1;
+      level--;
+    }
+    return path;
+  },
+
   'minimum-operations-to-write-the-letter-y-on-a-grid': (...args: unknown[]): unknown => {
     const grid = args[0] as number[][];
     const n = grid.length;

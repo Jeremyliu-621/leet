@@ -50138,6 +50138,68 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return mn[m-1][n-1] <= target <= mx[m-1][n-1]
 `,
 
+  // batch 305
+  'minimum-cost-to-connect-two-groups-of-points': `def connectTwoGroups(cost):
+    cost = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (cost.to_py() if hasattr(cost, 'to_py') else cost)]
+    n, m = len(cost), len(cost[0])
+    min_for_group2 = [min(cost[i][j] for i in range(n)) for j in range(m)]
+    INF = float('inf')
+    dp = [INF] * (1 << m)
+    dp[0] = 0
+    for i in range(n):
+        ndp = [INF] * (1 << m)
+        for mask in range(1 << m):
+            if dp[mask] == INF: continue
+            for j in range(m):
+                nm = mask | (1 << j)
+                val = dp[mask] + cost[i][j]
+                if val < ndp[nm]:
+                    ndp[nm] = val
+        dp = ndp
+    ans = INF
+    for mask in range(1 << m):
+        if dp[mask] == INF: continue
+        extra = sum(min_for_group2[j] for j in range(m) if not (mask & (1 << j)))
+        ans = min(ans, dp[mask] + extra)
+    return ans
+`,
+
+  'count-array-pairs-divisible-by-k': `def countPairs(nums, k):
+    from math import gcd
+    nums = [int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums)]
+    k = int(k)
+    cnt = {}
+    for n in nums:
+        d = gcd(n, k)
+        cnt[d] = cnt.get(d, 0) + 1
+    ans = 0
+    divs = list(cnt.keys())
+    for i in range(len(divs)):
+        for j in range(i, len(divs)):
+            d1, d2 = divs[i], divs[j]
+            if (d1 * d2) % k == 0:
+                c1, c2 = cnt[d1], cnt[d2]
+                if i == j:
+                    ans += c1 * (c1 - 1) // 2
+                else:
+                    ans += c1 * c2
+    return ans
+`,
+
+  'path-in-zigzag-labelled-binary-tree': `def pathInZigZagTree(label):
+    label = int(label)
+    import math
+    level = int(math.log2(label)) + 1
+    path = []
+    while level >= 1:
+        path.append(label)
+        min_l = 1 << (level - 1)
+        max_l = (1 << level) - 1
+        label = (min_l + max_l - label) >> 1
+        level -= 1
+    return path[::-1]
+`,
+
   'minimum-operations-to-write-the-letter-y-on-a-grid': `def minimumOperationsToWriteY(grid):
     grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
     n = len(grid)

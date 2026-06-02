@@ -3512,6 +3512,10 @@ import { problem as removingBoxes } from './removing-boxes';
 import { problem as singleElementInSortedArray } from './single-element-in-a-sorted-array';
 import { problem as pathEqualZerosOnes } from './check-if-there-is-a-path-with-equal-number-of-0s-and-1s';
 import { problem as minimumOpsWriteLetterY } from './minimum-operations-to-write-the-letter-y-on-a-grid';
+// batch 305
+import { problem as connectTwoGroupsOfPoints } from './minimum-cost-to-connect-two-groups-of-points';
+import { problem as countArrayPairsDivisibleByK } from './count-array-pairs-divisible-by-k';
+import { problem as pathInZigzagTree } from './path-in-zigzag-labelled-binary-tree';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7063,4 +7067,8 @@ export const problems: readonly Problem[] = [
   singleElementInSortedArray,
   pathEqualZerosOnes,
   minimumOpsWriteLetterY,
+  // batch 305
+  connectTwoGroupsOfPoints,
+  countArrayPairsDivisibleByK,
+  pathInZigzagTree,
 ];
