@@ -46429,6 +46429,63 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 285
+  'minimum-number-of-operations-to-make-all-array-elements-equal-to-one': `def minOperations(nums):
+    from math import gcd
+    n = len(nums)
+    ones = nums.count(1)
+    if ones > 0:
+        return n - ones
+    min_len = float('inf')
+    for i in range(n):
+        g = 0
+        for j in range(i, n):
+            g = gcd(g, nums[j])
+            if g == 1:
+                min_len = min(min_len, j - i + 1)
+                break
+    return -1 if min_len == float('inf') else min_len + n - 2
+`,
+
+  'query-kth-smallest-trimmed-number': `def smallestTrimmedNumbers(nums, queries):
+    result = []
+    for k, trim in queries:
+        indexed = sorted(enumerate(nums), key=lambda p: (p[1][len(p[1]) - trim:], p[0]))
+        result.append(indexed[k - 1][0])
+    return result
+`,
+
+  'minimum-deletions-to-make-array-divisible': `def minOperations(nums, numsDivide):
+    from math import gcd
+    g = 0
+    for d in numsDivide:
+        g = gcd(g, d)
+    for i, x in enumerate(sorted(nums)):
+        if g % x == 0:
+            return i
+    return -1
+`,
+
+  'finding-the-number-of-visible-mountains': `def numberOfVisibleMountains(peaks):
+    from collections import Counter
+    intervals = [(x - y, x + y) for x, y in peaks]
+    freq = Counter(intervals)
+    intervals.sort(key=lambda p: (p[0], -p[1]))
+    max_r = float('-inf')
+    visible = 0
+    seen = set()
+    for l, r in intervals:
+        if (l, r) in seen:
+            continue
+        seen.add((l, r))
+        if freq[(l, r)] > 1 or r <= max_r:
+            max_r = max(max_r, r)
+            continue
+        visible += 1
+        max_r = r
+    return visible
+`,
+
   // batch 284
   'find-number-of-good-ways-to-split-a-string': `def numSplits(s):
     n = len(s)

@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 285
+import { problem as minOpsAllEqualToOne } from './minimum-number-of-operations-to-make-all-array-elements-equal-to-one';
+import { problem as queryKthSmallestTrimmed } from './query-kth-smallest-trimmed-number';
+import { problem as minDeletionsDivisible } from './minimum-deletions-to-make-array-divisible';
+import { problem as findingVisibleMountains } from './finding-the-number-of-visible-mountains';
 // batch 284
 import { problem as segTreeRangeMax } from './segment-tree-range-max';
 import { problem as eulerTourSubtree } from './euler-tour-subtree-queries';
@@ -6549,6 +6554,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 285
+  minOpsAllEqualToOne,
+  queryKthSmallestTrimmed,
+  minDeletionsDivisible,
+  findingVisibleMountains,
   // batch 284
   segTreeRangeMax,
   eulerTourSubtree,

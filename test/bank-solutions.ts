@@ -47404,6 +47404,70 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 285
+  'minimum-number-of-operations-to-make-all-array-elements-equal-to-one': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+    const ones = nums.filter(x => x === 1).length;
+    if (ones > 0) return nums.length - ones;
+    let minLen = Infinity;
+    for (let i = 0; i < nums.length; i++) {
+      let g = 0;
+      for (let j = i; j < nums.length; j++) {
+        g = gcd(g, nums[j]!);
+        if (g === 1) { minLen = Math.min(minLen, j - i + 1); break; }
+      }
+    }
+    return minLen === Infinity ? -1 : minLen + nums.length - 2;
+  },
+
+  'query-kth-smallest-trimmed-number': (...args: unknown[]) => {
+    const nums = args[0] as string[];
+    const queries = args[1] as number[][];
+    return queries.map(([k, trim]) => {
+      const indexed = nums.map((num, idx) => [num.slice(num.length - trim!), idx] as [string, number]);
+      indexed.sort((a, b) => a[0]! < b[0]! ? -1 : a[0]! > b[0]! ? 1 : a[1]! - b[1]!);
+      return indexed[k! - 1]![1]!;
+    });
+  },
+
+  'minimum-deletions-to-make-array-divisible': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const numsDivide = args[1] as number[];
+    function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+    let g = 0;
+    for (const d of numsDivide) g = gcd(g, d);
+    const sorted = [...nums].sort((a, b) => a - b);
+    for (let i = 0; i < sorted.length; i++) {
+      if (g % sorted[i]! === 0) return i;
+    }
+    return -1;
+  },
+
+  'finding-the-number-of-visible-mountains': (...args: unknown[]) => {
+    const peaks = args[0] as number[][];
+    const freq = new Map<string, number>();
+    const intervals: [number, number][] = peaks.map(([x, y]) => {
+      const l = x! - y!, r = x! + y!;
+      const key = `${l},${r}`;
+      freq.set(key, (freq.get(key) ?? 0) + 1);
+      return [l, r];
+    });
+    intervals.sort((a, b) => a[0] !== b[0] ? a[0]! - b[0]! : b[1]! - a[1]!);
+    const seen = new Set<string>();
+    let maxR = -Infinity;
+    let visible = 0;
+    for (const [l, r] of intervals) {
+      const key = `${l},${r}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      if (freq.get(key)! > 1 || r! <= maxR) { maxR = Math.max(maxR, r!); continue; }
+      visible++;
+      maxR = r!;
+    }
+    return visible;
+  },
+
   // batch 284
   'find-number-of-good-ways-to-split-a-string': (...args: unknown[]) => {
     const s = args[0] as string;
