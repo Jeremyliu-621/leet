@@ -119,19 +119,91 @@ Return an array of results for each operation: \`null\` for \`add\`/\`deleteOne\
   starterCode: {
     javascript: `// frequencyTracker is pre-defined and calls your class below.
 class FrequencyTracker {
-  constructor() {}
-  add(number) {}
-  deleteOne(number) {}
-  hasFrequency(frequency) {}
+  constructor() {
+    this.count = new Map();
+    this.freqCount = new Map();
+  }
+  add(number) {
+    const prev = this.count.get(number) || 0;
+    if (prev > 0) this._dec(prev);
+    this.count.set(number, prev + 1);
+    this._inc(prev + 1);
+  }
+  deleteOne(number) {
+    const prev = this.count.get(number) || 0;
+    if (prev === 0) return;
+    this._dec(prev);
+    this.count.set(number, prev - 1);
+    if (prev - 1 > 0) this._inc(prev - 1);
+  }
+  hasFrequency(frequency) {
+    return (this.freqCount.get(frequency) || 0) > 0;
+  }
+  _inc(f) { this.freqCount.set(f, (this.freqCount.get(f) || 0) + 1); }
+  _dec(f) {
+    const c = this.freqCount.get(f) || 0;
+    if (c <= 1) this.freqCount.delete(f); else this.freqCount.set(f, c - 1);
+  }
 }`,
-    typescript: "function frequencyTracker(operations: string[], args: number[][]): (null | boolean)[] {\n  constructor() {}\n  add(number) {}\n  deleteOne(number) {}\n  hasFrequency(frequency) {}\n}",
+    typescript: `function frequencyTracker(operations: string[], args: number[][]): (null | boolean)[] {
+  const count = new Map<number, number>();
+  const freqCount = new Map<number, number>();
+  const incFreq = (f: number) => freqCount.set(f, (freqCount.get(f) ?? 0) + 1);
+  const decFreq = (f: number) => {
+    const c = freqCount.get(f) ?? 0;
+    if (c <= 1) freqCount.delete(f); else freqCount.set(f, c - 1);
+  };
+  return operations.map((op, i) => {
+    const a = args[i] ?? [];
+    if (op === 'add') {
+      const num = a[0]!;
+      const prev = count.get(num) ?? 0;
+      if (prev > 0) decFreq(prev);
+      count.set(num, prev + 1);
+      incFreq(prev + 1);
+      return null;
+    } else if (op === 'deleteOne') {
+      const num = a[0]!;
+      const prev = count.get(num) ?? 0;
+      if (prev === 0) return null;
+      decFreq(prev);
+      count.set(num, prev - 1);
+      if (prev - 1 > 0) incFreq(prev - 1);
+      return null;
+    } else {
+      return (freqCount.get(a[0]!) ?? 0) > 0;
+    }
+  });
+}`,
 
     python: `# frequencyTracker is pre-defined and calls your class below.
 class FrequencyTracker:
-    def __init__(self): pass
-    def add(self, number): pass
-    def deleteOne(self, number): pass
-    def hasFrequency(self, frequency): pass`,
+    def __init__(self):
+        self.count = {}
+        self.freq_count = {}
+    def _inc(self, f):
+        self.freq_count[f] = self.freq_count.get(f, 0) + 1
+    def _dec(self, f):
+        if self.freq_count.get(f, 0) <= 1:
+            self.freq_count.pop(f, None)
+        else:
+            self.freq_count[f] -= 1
+    def add(self, number):
+        prev = self.count.get(number, 0)
+        if prev > 0:
+            self._dec(prev)
+        self.count[number] = prev + 1
+        self._inc(prev + 1)
+    def deleteOne(self, number):
+        prev = self.count.get(number, 0)
+        if prev == 0:
+            return
+        self._dec(prev)
+        self.count[number] = prev - 1
+        if prev - 1 > 0:
+            self._inc(prev - 1)
+    def hasFrequency(self, frequency):
+        return self.freq_count.get(frequency, 0) > 0`,
   },
   visibleTests: [
     {

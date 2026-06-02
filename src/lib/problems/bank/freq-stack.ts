@@ -94,29 +94,72 @@ Implement the \`FreqStack\` class:
     javascript: `// freqStack runner is pre-defined and calls your class below.
 class FreqStack {
   constructor() {
-
+    this.freq = new Map();
+    this.group = new Map();
+    this.maxFreq = 0;
   }
-
   push(val) {
-
+    const f = (this.freq.get(val) || 0) + 1;
+    this.freq.set(val, f);
+    if (f > this.maxFreq) this.maxFreq = f;
+    if (!this.group.has(f)) this.group.set(f, []);
+    this.group.get(f).push(val);
   }
-
   pop() {
-
+    const val = this.group.get(this.maxFreq).pop();
+    if (this.group.get(this.maxFreq).length === 0) this.maxFreq--;
+    this.freq.set(val, this.freq.get(val) - 1);
+    return val;
   }
 }`,
-    typescript: "function freqStack(ops: string[], vals: (unknown[] | number[])[]): (null | number)[] {\n  constructor() {\n\n  }\n\n  push(val) {\n\n  }\n\n  pop() {\n\n  }\n}",
+    typescript: `function freqStack(ops: string[], vals: (number[] | never[])[]): (null | number)[] {
+  const freq = new Map<number, number>();
+  const group = new Map<number, number[]>();
+  let maxFreq = 0;
+  const result: (null | number)[] = [];
+  for (let i = 0; i < ops.length; i++) {
+    const op = ops[i]!;
+    if (op === 'FreqStack') {
+      result.push(null);
+    } else if (op === 'push') {
+      const val = (vals[i] as number[])[0]!;
+      const f = (freq.get(val) ?? 0) + 1;
+      freq.set(val, f);
+      if (f > maxFreq) maxFreq = f;
+      if (!group.has(f)) group.set(f, []);
+      group.get(f)!.push(val);
+      result.push(null);
+    } else {
+      const top = group.get(maxFreq)!;
+      const val = top.pop()!;
+      if (top.length === 0) maxFreq--;
+      freq.set(val, freq.get(val)! - 1);
+      result.push(val);
+    }
+  }
+  return result;
+}`,
 
     python: `# freqStack runner is pre-defined and calls your class below.
 class FreqStack:
     def __init__(self):
-        pass
+        self.freq = {}
+        self.group = {}
+        self.max_freq = 0
 
     def push(self, val: int) -> None:
-        pass
+        f = self.freq.get(val, 0) + 1
+        self.freq[val] = f
+        if f > self.max_freq:
+            self.max_freq = f
+        self.group.setdefault(f, []).append(val)
 
     def pop(self) -> int:
-        pass`,
+        val = self.group[self.max_freq].pop()
+        if not self.group[self.max_freq]:
+            self.max_freq -= 1
+        self.freq[val] -= 1
+        return val`,
   },
   visibleTests: [
     {

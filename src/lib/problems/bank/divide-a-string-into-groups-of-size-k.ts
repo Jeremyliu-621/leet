@@ -48,14 +48,25 @@ function divideString(s, k, fill) {
   params: ['s', 'k', 'fill'],
   starterCode: {
     javascript: `function divideString(s, k, fill) {
-  // return array of groups
-
+  const rem = s.length % k;
+  if (rem) s += fill.repeat(k - rem);
+  const result = [];
+  for (let i = 0; i < s.length; i += k) result.push(s.slice(i, i + k));
+  return result;
 }`,
-    typescript: "function divideString(s: string, k: number, fill: string): string[] {\n  // return array of groups\n\n}",
+    typescript: `function divideString(s: string, k: number, fill: string): string[] {
+  const rem = s.length % k;
+  if (rem) s += fill.repeat(k - rem);
+  const result: string[] = [];
+  for (let i = 0; i < s.length; i += k) result.push(s.slice(i, i + k));
+  return result;
+}`,
 
     python: `def divideString(s: str, k: int, fill: str) -> list:
-    # return array of groups
-    pass
+    rem = len(s) % k
+    if rem:
+        s += fill * (k - rem)
+    return [s[i:i + k] for i in range(0, len(s), k)]
 `,
   },
   visibleTests: [

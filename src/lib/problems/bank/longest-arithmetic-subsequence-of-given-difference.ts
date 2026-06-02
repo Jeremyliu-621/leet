@@ -39,16 +39,35 @@ export const problem: Problem = {
   params: ['arr', 'difference'],
   starterCode: {
     javascript: `function longestSubsequence(arr, difference) {
-  // return the length of the longest arithmetic subsequence
-  // with consecutive difference equal to 'difference'
-
+  const dp = new Map();
+  let ans = 0;
+  for (const x of arr) {
+    const prev = dp.get(x - difference) || 0;
+    dp.set(x, prev + 1);
+    if (prev + 1 > ans) ans = prev + 1;
+  }
+  return ans;
 }`,
-    typescript: "function longestSubsequence(arr: number[], difference: number): number {\n  // return the length of the longest arithmetic subsequence\n  // with consecutive difference equal to 'difference'\n\n}",
+    typescript: `function longestSubsequence(arr: number[], difference: number): number {
+  const dp = new Map<number, number>();
+  let ans = 0;
+  for (const x of arr) {
+    const prev = dp.get(x - difference) ?? 0;
+    dp.set(x, prev + 1);
+    if (prev + 1 > ans) ans = prev + 1;
+  }
+  return ans;
+}`,
 
     python: `def longestSubsequence(arr: list, difference: int) -> int:
-    # return the length of the longest arithmetic subsequence
-    # with consecutive difference equal to 'difference'
-    pass
+    dp = {}
+    ans = 0
+    for x in arr:
+        prev = dp.get(x - difference, 0)
+        dp[x] = prev + 1
+        if dp[x] > ans:
+            ans = dp[x]
+    return ans
 `,
   },
   visibleTests: [

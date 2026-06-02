@@ -40,14 +40,42 @@ Return the **smallest possible weight** of the leftmost stone. If there are no s
   params: ['stones'],
   starterCode: {
     javascript: `function lastStoneWeightII(stones) {
-  // return minimum possible last stone weight
-
+  const total = stones.reduce((a, b) => a + b, 0);
+  const half = Math.floor(total / 2);
+  const dp = new Array(half + 1).fill(false);
+  dp[0] = true;
+  for (const s of stones)
+    for (let j = half; j >= s; j--)
+      dp[j] = dp[j] || dp[j - s];
+  for (let j = half; j >= 0; j--)
+    if (dp[j]) return total - 2 * j;
+  return total;
 }`,
-    typescript: "function lastStoneWeightII(stones: number[]): number {\n  // return minimum possible last stone weight\n\n}",
+    typescript: `function lastStoneWeightII(stones: number[]): number {
+  const total = stones.reduce((a, b) => a + b, 0);
+  const half = Math.floor(total / 2);
+  const dp = new Array<boolean>(half + 1).fill(false);
+  dp[0] = true;
+  for (const s of stones)
+    for (let j = half; j >= s; j--)
+      dp[j] = dp[j]! || dp[j - s]!;
+  for (let j = half; j >= 0; j--)
+    if (dp[j]) return total - 2 * j;
+  return total;
+}`,
 
     python: `def lastStoneWeightII(stones: list) -> int:
-    # return minimum possible last stone weight
-    pass
+    total = sum(stones)
+    half = total // 2
+    dp = [False] * (half + 1)
+    dp[0] = True
+    for s in stones:
+        for j in range(half, s - 1, -1):
+            dp[j] = dp[j] or dp[j - s]
+    for j in range(half, -1, -1):
+        if dp[j]:
+            return total - 2 * j
+    return total
 `,
   },
   visibleTests: [

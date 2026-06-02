@@ -49,15 +49,65 @@ Return the **number of distinct friend groups** (connected components).
   params: ['n', 'pairs'],
   starterCode: {
     javascript: `function countFriendGroups(n, pairs) {
-
+  const parent = Array.from({ length: n }, (_, i) => i);
+  const rank = new Array(n).fill(0);
+  function find(x) {
+    while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; }
+    return x;
+  }
+  let components = n;
+  for (const [a, b] of pairs) {
+    const ra = find(a), rb = find(b);
+    if (ra !== rb) {
+      components--;
+      if (rank[ra] < rank[rb]) parent[ra] = rb;
+      else if (rank[ra] > rank[rb]) parent[rb] = ra;
+      else { parent[rb] = ra; rank[ra]++; }
+    }
+  }
+  return components;
 }
 `,
     typescript: `function countFriendGroups(n: number, pairs: number[][]): number {
-
-  return 0;
+  const parent = Array.from({ length: n }, (_, i) => i);
+  const rank = new Array<number>(n).fill(0);
+  function find(x: number): number {
+    while (parent[x] !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; }
+    return x;
+  }
+  let components = n;
+  for (const p of pairs) {
+    const ra = find(p[0]!), rb = find(p[1]!);
+    if (ra !== rb) {
+      components--;
+      if (rank[ra]! < rank[rb]!) parent[ra] = rb;
+      else if (rank[ra]! > rank[rb]!) parent[rb] = ra;
+      else { parent[rb] = ra; rank[ra]!++; }
+    }
+  }
+  return components;
 }`,
     python: `def countFriendGroups(n, pairs):
-    pass
+    parent = list(range(n))
+    rank = [0] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    components = n
+    for a, b in pairs:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            components -= 1
+            if rank[ra] < rank[rb]:
+                parent[ra] = rb
+            elif rank[ra] > rank[rb]:
+                parent[rb] = ra
+            else:
+                parent[rb] = ra
+                rank[ra] += 1
+    return components
 `,
   },
   visibleTests: [

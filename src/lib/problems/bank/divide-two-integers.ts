@@ -39,14 +39,44 @@ Return the **quotient** after dividing \`dividend\` by \`divisor\`.
   params: ['dividend', 'divisor'],
   starterCode: {
     javascript: `function divide(dividend, divisor) {
-  // return quotient of dividend / divisor without using * / or %
-
+  if (dividend === -2147483648 && divisor === -1) return 2147483647;
+  const sign = (dividend > 0) === (divisor > 0) ? 1 : -1;
+  let a = BigInt(Math.abs(dividend)), b = BigInt(Math.abs(divisor));
+  let result = 0n;
+  while (a >= b) {
+    let temp = b, mul = 1n;
+    while (a >= (temp << 1n)) { temp <<= 1n; mul <<= 1n; }
+    a -= temp; result += mul;
+  }
+  return Number(BigInt(sign) * result);
 }`,
-    typescript: "function divide(dividend: number, divisor: number): number {\n  // return quotient of dividend / divisor without using * / or %\n\n}",
+    typescript: `function divide(dividend: number, divisor: number): number {
+  if (dividend === -2147483648 && divisor === -1) return 2147483647;
+  const sign = (dividend > 0) === (divisor > 0) ? 1 : -1;
+  let a = BigInt(Math.abs(dividend)), b = BigInt(Math.abs(divisor));
+  let result = 0n;
+  while (a >= b) {
+    let temp = b, mul = 1n;
+    while (a >= (temp << 1n)) { temp <<= 1n; mul <<= 1n; }
+    a -= temp; result += mul;
+  }
+  return Number(BigInt(sign) * result);
+}`,
 
     python: `def divide(dividend: int, divisor: int) -> int:
-    # return quotient of dividend / divisor without using * / or %
-    pass
+    if dividend == -(2**31) and divisor == -1:
+        return 2**31 - 1
+    sign = 1 if (dividend > 0) == (divisor > 0) else -1
+    a, b = abs(dividend), abs(divisor)
+    result = 0
+    while a >= b:
+        temp, mul = b, 1
+        while a >= (temp << 1):
+            temp <<= 1
+            mul <<= 1
+        a -= temp
+        result += mul
+    return sign * result
 `,
   },
   visibleTests: [

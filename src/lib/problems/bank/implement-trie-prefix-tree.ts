@@ -36,41 +36,87 @@ Implement the \`Trie\` class:
   params: ['ops'],
   starterCode: {
     javascript: `function trieOps(ops) {
-  // ops is an array of [methodName, args] pairs.
-  // Return an array of results; use null for void methods.
   const results = [];
   let trie;
   for (const [method, args] of ops) {
-    if (method === 'Trie') {
-      // Initialize your Trie here
-      trie = new Trie();
-      results.push(null);
-    } else {
-      results.push(trie[method](...args));
-    }
+    if (method === 'Trie') { trie = new Trie(); results.push(null); }
+    else results.push(trie[method](...args) ?? null);
   }
   return results;
 }
 
 class Trie {
   constructor() {
-
+    this.children = {};
+    this.isEnd = false;
   }
   insert(word) {
-
+    let node = this;
+    for (const c of word) {
+      if (!node.children[c]) node.children[c] = new Trie();
+      node = node.children[c];
+    }
+    node.isEnd = true;
   }
   search(word) {
-
+    let node = this;
+    for (const c of word) {
+      if (!node.children[c]) return false;
+      node = node.children[c];
+    }
+    return node.isEnd;
   }
   startsWith(prefix) {
-
+    let node = this;
+    for (const c of prefix) {
+      if (!node.children[c]) return false;
+      node = node.children[c];
+    }
+    return true;
   }
 }`,
-    typescript: "function trieOps(ops: ((string | unknown[])[] | (string | string[])[])[]): (null | boolean)[] {\n  // ops is an array of [methodName, args] pairs.\n  // Return an array of results; use null for void methods.\n  const results = [];\n  let trie;\n  for (const [method, args] of ops) {\n    if (method === 'Trie') {\n      // Initialize your Trie here\n      trie = new Trie();\n      results.push(null);\n    } else {\n      results.push(trie[method](...args));\n    }\n  }\n  return results;\n}\n\nclass Trie {\n  constructor() {\n\n  }\n  insert(word) {\n\n  }\n  search(word) {\n\n  }\n  startsWith(prefix) {\n\n  }\n}",
+    typescript: `function trieOps(ops: [string, string[]][]): (null | boolean)[] {
+  class TrieNode {
+    children = new Map<string, TrieNode>();
+    isEnd = false;
+  }
+  class Trie {
+    private root = new TrieNode();
+    insert(word: string): void {
+      let node = this.root;
+      for (const c of word) {
+        if (!node.children.has(c)) node.children.set(c, new TrieNode());
+        node = node.children.get(c)!;
+      }
+      node.isEnd = true;
+    }
+    search(word: string): boolean {
+      let node = this.root;
+      for (const c of word) {
+        if (!node.children.has(c)) return false;
+        node = node.children.get(c)!;
+      }
+      return node.isEnd;
+    }
+    startsWith(prefix: string): boolean {
+      let node = this.root;
+      for (const c of prefix) {
+        if (!node.children.has(c)) return false;
+        node = node.children.get(c)!;
+      }
+      return true;
+    }
+  }
+  const results: (null | boolean)[] = [];
+  let trie: Trie | undefined;
+  for (const [method, args] of ops) {
+    if (method === 'Trie') { trie = new Trie(); results.push(null); }
+    else results.push((trie as unknown as Record<string, (...a: string[]) => boolean>)[method]!(...args) ?? null);
+  }
+  return results;
+}`,
 
     python: `def trieOps(ops):
-    # ops is a list of [method, args] pairs.
-    # Return a list of results; use None for void methods.
     ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
     results = []
     trie = None
@@ -87,13 +133,29 @@ class Trie {
 
 class Trie:
     def __init__(self):
-        pass
+        self.children = {}
+        self.is_end = False
     def insert(self, word):
-        pass
+        node = self
+        for c in word:
+            if c not in node.children:
+                node.children[c] = Trie()
+            node = node.children[c]
+        node.is_end = True
     def search(self, word):
-        pass
+        node = self
+        for c in word:
+            if c not in node.children:
+                return False
+            node = node.children[c]
+        return node.is_end
     def startsWith(self, prefix):
-        pass`,
+        node = self
+        for c in prefix:
+            if c not in node.children:
+                return False
+            node = node.children[c]
+        return True`,
   },
   visibleTests: [
     {

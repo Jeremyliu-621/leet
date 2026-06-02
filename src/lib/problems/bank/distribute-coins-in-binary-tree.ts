@@ -111,16 +111,53 @@ Trees are given as level-order (BFS) arrays where \`null\` marks a missing child
     javascript: `// TreeNode class and distributeCoinsRunner wrapper are pre-defined.
 // Implement the function below:
 function distributeCoinsBT(root) {
-
+  let moves = 0;
+  function excess(node) {
+    if (!node) return 0;
+    const left = excess(node.left), right = excess(node.right);
+    moves += Math.abs(left) + Math.abs(right);
+    return node.val + left + right - 1;
+  }
+  excess(root);
+  return moves;
 }
 `,
-    typescript: `function distributeCoinsRunner(vals: number[]): number {
-
+    typescript: `function distributeCoinsRunner(vals: (number | null)[]): number {
+  type N = { val: number; left: N | null; right: N | null };
+  if (!vals || vals.length === 0 || vals[0] == null) return 0;
+  const root: N = { val: vals[0], left: null, right: null };
+  const queue: N[] = [root];
+  let i = 1;
+  while (queue.length > 0 && i < vals.length) {
+    const node = queue.shift()!;
+    if (vals[i] != null) { node.left = { val: vals[i]!, left: null, right: null }; queue.push(node.left); }
+    i++;
+    if (i < vals.length && vals[i] != null) { node.right = { val: vals[i]!, left: null, right: null }; queue.push(node.right); }
+    i++;
+  }
+  let moves = 0;
+  function excess(node: N | null): number {
+    if (!node) return 0;
+    const left = excess(node.left), right = excess(node.right);
+    moves += Math.abs(left) + Math.abs(right);
+    return node.val + left + right - 1;
+  }
+  excess(root);
+  return moves;
 }`,
     python: `# TreeNode class and distributeCoinsRunner wrapper are pre-defined.
 # Implement the function below:
 def distribute_coins_bt(root):
-    pass
+    moves = [0]
+    def excess(node):
+        if not node:
+            return 0
+        left = excess(node.left)
+        right = excess(node.right)
+        moves[0] += abs(left) + abs(right)
+        return node.val + left + right - 1
+    excess(root)
+    return moves[0]
 `,
   },
   visibleTests: [

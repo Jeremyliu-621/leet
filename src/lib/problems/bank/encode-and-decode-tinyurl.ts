@@ -40,32 +40,60 @@ Return an array of results, one per operation.`,
   const longToShort = new Map();
   const shortToLong = new Map();
   let counter = 0;
-
   return operations.map((op, i) => {
     const a = args[i] ?? [];
     if (op === 'encode') {
-      // implement encode
+      const longUrl = a[0];
+      if (!longToShort.has(longUrl)) {
+        counter++;
+        const shortUrl = \`http://tinyurl.com/\${counter}\`;
+        longToShort.set(longUrl, shortUrl);
+        shortToLong.set(shortUrl, longUrl);
+      }
+      return longToShort.get(longUrl);
     } else {
-      // implement decode
+      return shortToLong.get(a[0]);
     }
   });
 }`,
-    typescript: "function tinyUrl(operations: string[], args: string[][]): string[] {\n  const longToShort = new Map();\n  const shortToLong = new Map();\n  let counter = 0;\n\n  return operations.map((op, i) => {\n    const a = args[i] ?? [];\n    if (op === 'encode') {\n      // implement encode\n    } else {\n      // implement decode\n    }\n  });\n}",
+    typescript: `function tinyUrl(operations: string[], args: string[][]): string[] {
+  const longToShort = new Map<string, string>();
+  const shortToLong = new Map<string, string>();
+  let counter = 0;
+  return operations.map((op, i) => {
+    const a = args[i] ?? [];
+    if (op === 'encode') {
+      const longUrl = a[0]!;
+      if (!longToShort.has(longUrl)) {
+        counter++;
+        const shortUrl = \`http://tinyurl.com/\${counter}\`;
+        longToShort.set(longUrl, shortUrl);
+        shortToLong.set(shortUrl, longUrl);
+      }
+      return longToShort.get(longUrl)!;
+    } else {
+      return shortToLong.get(a[0]!)!;
+    }
+  });
+}`,
 
     python: `def tinyUrl(operations, args):
     long_to_short = {}
     short_to_long = {}
-    counter = 0
-
+    counter = [0]
     results = []
     for i, op in enumerate(operations):
         a = args[i] if i < len(args) else []
         if op == 'encode':
-            # implement encode
-            pass
+            long_url = a[0]
+            if long_url not in long_to_short:
+                counter[0] += 1
+                short_url = f'http://tinyurl.com/{counter[0]}'
+                long_to_short[long_url] = short_url
+                short_to_long[short_url] = long_url
+            results.append(long_to_short[long_url])
         else:
-            # implement decode
-            pass
+            results.append(short_to_long[a[0]])
     return results
 `,
   },
