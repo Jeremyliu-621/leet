@@ -25,7 +25,7 @@ export function SyncStatusSection({ lastSyncAt }: SyncStatusSectionProps) {
       try {
         // A lightweight read to confirm sync is reachable.
         if (typeof chrome !== 'undefined' && chrome.storage?.sync) {
-          await chrome.storage.sync.get(null);
+          await chrome.storage.sync.get('userPreferences');
           if (mounted) {
             setSyncState('ok');
             setCheckedAt(Date.now());

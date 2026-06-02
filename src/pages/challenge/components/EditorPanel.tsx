@@ -1466,6 +1466,13 @@ export function EditorPanel({
     }
   }, [onGiveUp, giveUpArmed]);
 
+  // Clean up give-up timer on unmount.
+  useEffect(() => {
+    return () => {
+      if (giveUpTimerRef.current) clearTimeout(giveUpTimerRef.current);
+    };
+  }, []);
+
   const handleGiveUpKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === ' ') handleGiveUpClick();
@@ -1481,6 +1488,9 @@ export function EditorPanel({
     setShowSaved(true);
     if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
     savedTimerRef.current = setTimeout(() => setShowSaved(false), 2000);
+    return () => {
+      if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
+    };
   }, [draftSavedAt]);
 
   // Line / column state — updated on every selection change.
