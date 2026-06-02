@@ -45,10 +45,51 @@ Since the answer may be very large, return it **modulo** \`10^9 + 7\`.`,
   functionName: 'minCostToEqualizeArray',
   params: ['nums', 'cost1', 'cost2'],
   starterCode: {
-    javascript: 'function minCostToEqualizeArray(nums, cost1, cost2) {\n\n}',
-    typescript: "function minCostToEqualizeArray(nums: number[], cost1: number, cost2: number): number {\n\n}",
-
-    python: 'def minCostToEqualizeArray(nums, cost1, cost2):\n    pass',
+    javascript: `function minCostToEqualizeArray(nums, cost1, cost2) {
+  const MOD = 1000000007n;
+  const n = nums.length;
+  if (n === 1) return 0;
+  const maxVal = Math.max(...nums), minVal = Math.min(...nums);
+  const baseSum = nums.reduce((s, v) => s + maxVal - v, 0);
+  const c1 = BigInt(cost1), c2 = BigInt(cost2);
+  if (cost1 * 2 <= cost2) return Number(BigInt(baseSum) % MOD * c1 % MOD);
+  let ans = null;
+  for (let extra = 0; extra <= n; extra++) {
+    const S = BigInt(baseSum + extra * n), D = BigInt(maxVal - minVal + extra);
+    const cost = D * 2n <= S ? S / 2n * c2 + S % 2n * c1 : (S - D) * c2 + (2n * D - S) * c1;
+    if (ans === null || cost < ans) ans = cost;
+  }
+  return Number(ans % MOD);
+}`,
+    typescript: `function minCostToEqualizeArray(nums: number[], cost1: number, cost2: number): number {
+  const MOD = 1000000007n;
+  const n = nums.length;
+  if (n === 1) return 0;
+  const maxVal = Math.max(...nums), minVal = Math.min(...nums);
+  const baseSum = nums.reduce((s, v) => s + maxVal - v, 0);
+  const c1 = BigInt(cost1), c2 = BigInt(cost2);
+  if (cost1 * 2 <= cost2) return Number(BigInt(baseSum) % MOD * c1 % MOD);
+  let ans: bigint | null = null;
+  for (let extra = 0; extra <= n; extra++) {
+    const S = BigInt(baseSum + extra * n), D = BigInt(maxVal - minVal + extra);
+    const cost = D * 2n <= S ? S / 2n * c2 + S % 2n * c1 : (S - D) * c2 + (2n * D - S) * c1;
+    if (ans === null || cost < ans) ans = cost;
+  }
+  return Number(ans! % MOD);
+}`,
+    python: `def minCostToEqualizeArray(nums, cost1, cost2):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    MOD = 10**9 + 7; n = len(nums)
+    if n == 1: return 0
+    max_val = max(nums); min_val = min(nums)
+    base_sum = sum(max_val - v for v in nums)
+    if cost1 * 2 <= cost2: return (base_sum * cost1) % MOD
+    ans = None
+    for extra in range(n + 1):
+        S = base_sum + extra * n; D = max_val - min_val + extra
+        cost = S // 2 * cost2 + S % 2 * cost1 if D * 2 <= S else (S - D) * cost2 + (2 * D - S) * cost1
+        if ans is None or cost < ans: ans = cost
+    return ans % MOD`,
   },
   visibleTests: [
     { args: [[4, 1], 5, 1], expected: 15 },

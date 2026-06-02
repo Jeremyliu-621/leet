@@ -47,11 +47,27 @@ function minCost(nums, cost) {
   params: ['nums', 'cost'],
   starterCode: {
     javascript: `function minCost(nums, cost) {
-
+  const pairs = nums.map((v, i) => [v, cost[i]]).sort((a, b) => a[0] - b[0]);
+  const total = cost.reduce((s, c) => s + c, 0);
+  let prefix = 0, median = pairs[0][0];
+  for (const [v, c] of pairs) { prefix += c; if (prefix * 2 >= total) { median = v; break; } }
+  return pairs.reduce((s, [v, c]) => s + Math.abs(v - median) * c, 0);
 }`,
-    typescript: 'function minCost(nums: number[], cost: number[]): number {\n\n}',
+    typescript: `function minCost(nums: number[], cost: number[]): number {
+  const pairs = nums.map((v, i) => [v, cost[i]!] as [number, number]).sort((a, b) => a[0] - b[0]);
+  const total = cost.reduce((s, c) => s + c, 0);
+  let prefix = 0, median = pairs[0]![0];
+  for (const [v, c] of pairs) { prefix += c; if (prefix * 2 >= total) { median = v; break; } }
+  return pairs.reduce((s, [v, c]) => s + Math.abs(v - median) * c, 0);
+}`,
     python: `def minCost(nums, cost):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(cost, 'to_py'): cost = list(cost.to_py())
+    pairs = sorted(zip(nums, cost)); total = sum(cost); prefix = 0; median = pairs[0][0]
+    for v, c in pairs:
+        prefix += c
+        if prefix * 2 >= total: median = v; break
+    return sum(abs(v - median) * c for v, c in pairs)`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 2], [2, 3, 1, 14]], expected: 8 },

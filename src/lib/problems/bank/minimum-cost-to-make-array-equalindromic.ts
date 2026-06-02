@@ -44,13 +44,70 @@ A palindromic number is a positive integer that is the same when read from left 
   params: ['nums'],
   starterCode: {
     javascript: `function minimumCost(nums) {
-
+  nums = [...nums].sort((a, b) => a - b);
+  const cost = p => nums.reduce((s, v) => s + Math.abs(v - p), 0);
+  function genPalins(x) {
+    if (x <= 0) return [];
+    const s = x.toString(), d = s.length, h = Math.ceil(d / 2), fh = parseInt(s.slice(0, h));
+    const palins = [];
+    for (let delta = -1; delta <= 1; delta++) {
+      const nfh = fh + delta;
+      if (nfh <= 0) continue;
+      const nfhs = nfh.toString(), rev = nfhs.split('').reverse();
+      const p = d % 2 === 0 ? parseInt(nfhs + rev.join('')) : parseInt(nfhs + rev.slice(1).join(''));
+      if (p > 0) palins.push(p);
+    }
+    if (d > 1) palins.push(Math.pow(10, d - 1) - 1);
+    palins.push(Math.pow(10, d) + 1);
+    return palins;
+  }
+  const median = nums[Math.floor(nums.length / 2)];
+  let ans = Infinity;
+  for (const p of genPalins(median)) ans = Math.min(ans, cost(p));
+  return ans;
 }`,
     typescript: `function minimumCost(nums: number[]): number {
-
+  nums = [...nums].sort((a, b) => a - b);
+  const cost = (p: number) => nums.reduce((s, v) => s + Math.abs(v - p), 0);
+  function genPalins(x: number): number[] {
+    if (x <= 0) return [];
+    const s = x.toString(), d = s.length, h = Math.ceil(d / 2), fh = parseInt(s.slice(0, h));
+    const palins: number[] = [];
+    for (let delta = -1; delta <= 1; delta++) {
+      const nfh = fh + delta;
+      if (nfh <= 0) continue;
+      const nfhs = nfh.toString(), rev = nfhs.split('').reverse();
+      const p = d % 2 === 0 ? parseInt(nfhs + rev.join('')) : parseInt(nfhs + rev.slice(1).join(''));
+      if (p > 0) palins.push(p);
+    }
+    if (d > 1) palins.push(Math.pow(10, d - 1) - 1);
+    palins.push(Math.pow(10, d) + 1);
+    return palins;
+  }
+  const median = nums[Math.floor(nums.length / 2)]!;
+  let ans = Infinity;
+  for (const p of genPalins(median)) ans = Math.min(ans, cost(p));
+  return ans;
 }`,
     python: `def minimumCost(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(nums)
+    cost = lambda p: sum(abs(v - p) for v in nums)
+    def gen_palins(x):
+        if x <= 0: return []
+        s = str(x); d = len(s); h = (d + 1) // 2; fh = int(s[:h])
+        palins = []
+        for delta in (-1, 0, 1):
+            nfh = fh + delta
+            if nfh <= 0: continue
+            nfhs = str(nfh); rev = nfhs[::-1]
+            p = int(nfhs + rev) if d % 2 == 0 else int(nfhs + rev[1:])
+            if p > 0: palins.append(p)
+        if d > 1: palins.append(10**(d-1) - 1)
+        palins.append(10**d + 1)
+        return palins
+    median = nums[len(nums) // 2]
+    return min(cost(p) for p in gen_palins(median))`,
   },
   visibleTests: [
     { args: [[1, 2]], expected: 1 },

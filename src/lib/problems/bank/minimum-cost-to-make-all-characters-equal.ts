@@ -35,10 +35,25 @@ Return the **minimum cost** to make all characters of the string **equal**.`,
   functionName: 'minimumCost',
   params: ['s'],
   starterCode: {
-    javascript: 'function minimumCost(s) {\n\n}\n',
-    typescript: "function minimumCost(s: string): number {\n\n}",
-
-    python: 'def minimumCost(s):\n    pass\n',
+    javascript: `function minimumCost(s) {
+  const n = s.length;
+  let cost = 0;
+  for (let i = 1; i < n; i++) if (s[i] !== s[i-1]) cost += Math.min(i, n - i);
+  return cost;
+}`,
+    typescript: `function minimumCost(s: string): number {
+  const n = s.length;
+  let cost = 0;
+  for (let i = 1; i < n; i++) if (s[i] !== s[i-1]) cost += Math.min(i, n - i);
+  return cost;
+}`,
+    python: `def minimumCost(s):
+    if hasattr(s, 'to_py'): s = str(s)
+    n = len(s)
+    cost = 0
+    for i in range(1, n):
+        if s[i] != s[i-1]: cost += min(i, n - i)
+    return cost`,
   },
   visibleTests: [
     { args: ['0011'], expected: 2 },
