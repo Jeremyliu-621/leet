@@ -3435,6 +3435,10 @@ import { problem as countSubarraysMaxBitwiseAnd } from './count-subarrays-with-m
 import { problem as numberOfWaysToExpressNAsSumOfPowers } from './number-of-ways-to-express-n-as-sum-of-powers';
 import { problem as minimumCostOfRopes } from './minimum-cost-of-ropes';
 import { problem as findNumberOfGoodPairsInArray } from './find-the-number-of-good-pairs-in-an-array';
+import { problem as checkIfValidPartitionForArray } from './check-if-there-is-valid-partition-for-the-array';
+import { problem as maximumAreaCakeAfterCuts } from './maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts';
+import { problem as minimumOperationsWriteLetterY } from './minimum-operations-to-write-the-letter-y-on-a-grid';
+import { problem as maximumSumOfHeightsMountain } from './maximum-sum-of-heights-of-a-mountain';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6910,4 +6914,9 @@ export const problems: readonly Problem[] = [
   numberOfWaysToExpressNAsSumOfPowers,
   minimumCostOfRopes,
   findNumberOfGoodPairsInArray,
+  // batch 290
+  checkIfValidPartitionForArray,
+  maximumAreaCakeAfterCuts,
+  minimumOperationsWriteLetterY,
+  maximumSumOfHeightsMountain,
 ];

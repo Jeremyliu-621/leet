@@ -48966,4 +48966,85 @@ def numberOfPairs(nums1: list[int], nums2: list[int]) -> int:
     return count
 `,
 
+  'check-if-there-is-valid-partition-for-the-array': `
+def validPartition(nums: list[int]) -> bool:
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        if dp[i-2] and nums[i-1] == nums[i-2]:
+            dp[i] = True
+        if i >= 3 and dp[i-3] and nums[i-1] == nums[i-2] == nums[i-3]:
+            dp[i] = True
+        if i >= 3 and dp[i-3] and nums[i-1] == nums[i-2]+1 == nums[i-3]+2:
+            dp[i] = True
+    return dp[n]
+`,
+
+  'maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts': `
+def maxArea(h: int, w: int, horizontalCuts: list[int], verticalCuts: list[int]) -> int:
+    MOD = 10 ** 9 + 7
+    horizontalCuts = sorted(horizontalCuts)
+    verticalCuts = sorted(verticalCuts)
+    max_h = max(horizontalCuts[0], h - horizontalCuts[-1])
+    for i in range(1, len(horizontalCuts)):
+        max_h = max(max_h, horizontalCuts[i] - horizontalCuts[i-1])
+    max_v = max(verticalCuts[0], w - verticalCuts[-1])
+    for i in range(1, len(verticalCuts)):
+        max_v = max(max_v, verticalCuts[i] - verticalCuts[i-1])
+    return (max_h * max_v) % MOD
+`,
+
+  'minimum-operations-to-write-the-letter-y-on-a-grid': `
+def minimumOperationsToWriteY(grid: list[list[int]]) -> int:
+    n = len(grid)
+    mid = n // 2
+    y_freq = [0, 0, 0]
+    non_y_freq = [0, 0, 0]
+    for i in range(n):
+        for j in range(n):
+            is_y = (i == j and i <= mid) or (i + j == n - 1 and i <= mid) or (j == mid and i >= mid)
+            if is_y:
+                y_freq[grid[i][j]] += 1
+            else:
+                non_y_freq[grid[i][j]] += 1
+    y_total = sum(y_freq)
+    non_y_total = sum(non_y_freq)
+    ans = float('inf')
+    for v1 in range(3):
+        for v2 in range(3):
+            if v1 == v2:
+                continue
+            ans = min(ans, (y_total - y_freq[v1]) + (non_y_total - non_y_freq[v2]))
+    return ans
+`,
+
+  'maximum-sum-of-heights-of-a-mountain': `
+def maximumSumOfHeights(heights: list[int]) -> int:
+    n = len(heights)
+    left = [0] * n
+    right = [0] * n
+    stack = []
+    total = 0
+    for i in range(n):
+        while stack and heights[stack[-1]] > heights[i]:
+            top = stack.pop()
+            total -= heights[top] * (top - (stack[-1] if stack else -1))
+        j = stack[-1] if stack else -1
+        total += heights[i] * (i - j)
+        left[i] = total
+        stack.append(i)
+    stack.clear()
+    total = 0
+    for i in range(n - 1, -1, -1):
+        while stack and heights[stack[-1]] > heights[i]:
+            top = stack.pop()
+            total -= heights[top] * ((stack[-1] if stack else n) - top)
+        j = stack[-1] if stack else n
+        total += heights[i] * (j - i)
+        right[i] = total
+        stack.append(i)
+    return max(left[i] + right[i] - heights[i] for i in range(n))
+`,
+
 };

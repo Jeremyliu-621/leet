@@ -50181,4 +50181,92 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return count;
   },
 
+  'check-if-there-is-valid-partition-for-the-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const dp = new Array<boolean>(n + 1).fill(false);
+    dp[0] = true;
+    for (let i = 2; i <= n; i++) {
+      if (dp[i-2]! && nums[i-1]! === nums[i-2]!) dp[i] = true;
+      if (i >= 3 && dp[i-3]! && nums[i-1]! === nums[i-2]! && nums[i-2]! === nums[i-3]!) dp[i] = true;
+      if (i >= 3 && dp[i-3]! && nums[i-1]! === nums[i-2]!+1 && nums[i-2]! === nums[i-3]!+1) dp[i] = true;
+    }
+    return dp[n]!;
+  },
+
+  'maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts': (...args: unknown[]) => {
+    const h = args[0] as number;
+    const w = args[1] as number;
+    const horizontalCuts = [...(args[2] as number[])].sort((a, b) => a - b);
+    const verticalCuts = [...(args[3] as number[])].sort((a, b) => a - b);
+    const MOD = 1_000_000_007n;
+    let maxH = Math.max(horizontalCuts[0]!, h - horizontalCuts[horizontalCuts.length - 1]!);
+    for (let i = 1; i < horizontalCuts.length; i++)
+      maxH = Math.max(maxH, horizontalCuts[i]! - horizontalCuts[i - 1]!);
+    let maxV = Math.max(verticalCuts[0]!, w - verticalCuts[verticalCuts.length - 1]!);
+    for (let i = 1; i < verticalCuts.length; i++)
+      maxV = Math.max(maxV, verticalCuts[i]! - verticalCuts[i - 1]!);
+    return Number(BigInt(maxH) * BigInt(maxV) % MOD);
+  },
+
+  'minimum-operations-to-write-the-letter-y-on-a-grid': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const mid = Math.floor(n / 2);
+    const yFreq = [0, 0, 0];
+    const nonYFreq = [0, 0, 0];
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        const isY = (i === j && i <= mid) || (i + j === n - 1 && i <= mid) || (j === mid && i >= mid);
+        const cell = grid[i]![j]!;
+        if (isY) yFreq[cell]!++;
+        else nonYFreq[cell]!++;
+      }
+    }
+    const yTotal = yFreq[0]! + yFreq[1]! + yFreq[2]!;
+    const nonYTotal = nonYFreq[0]! + nonYFreq[1]! + nonYFreq[2]!;
+    let ans = Infinity;
+    for (let v1 = 0; v1 <= 2; v1++) {
+      for (let v2 = 0; v2 <= 2; v2++) {
+        if (v1 === v2) continue;
+        ans = Math.min(ans, (yTotal - yFreq[v1]!) + (nonYTotal - nonYFreq[v2]!));
+      }
+    }
+    return ans;
+  },
+
+  'maximum-sum-of-heights-of-a-mountain': (...args: unknown[]) => {
+    const heights = args[0] as number[];
+    const n = heights.length;
+    const left = new Array<number>(n).fill(0);
+    const right = new Array<number>(n).fill(0);
+    const stack: number[] = [];
+    let total = 0;
+    for (let i = 0; i < n; i++) {
+      while (stack.length && heights[stack[stack.length - 1]!]! > heights[i]!) {
+        const top = stack.pop()!;
+        total -= heights[top]! * (top - (stack.length ? stack[stack.length - 1]! : -1));
+      }
+      const j = stack.length ? stack[stack.length - 1]! : -1;
+      total += heights[i]! * (i - j);
+      left[i] = total;
+      stack.push(i);
+    }
+    stack.length = 0;
+    total = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length && heights[stack[stack.length - 1]!]! > heights[i]!) {
+        const top = stack.pop()!;
+        total -= heights[top]! * ((stack.length ? stack[stack.length - 1]! : n) - top);
+      }
+      const j = stack.length ? stack[stack.length - 1]! : n;
+      total += heights[i]! * (j - i);
+      right[i] = total;
+      stack.push(i);
+    }
+    let ans = 0;
+    for (let i = 0; i < n; i++) ans = Math.max(ans, left[i]! + right[i]! - heights[i]!);
+    return ans;
+  },
+
 };
