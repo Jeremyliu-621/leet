@@ -41,13 +41,36 @@ Return the **number of odd-valued cells** in the matrix after performing all the
   params: ['m', 'n', 'indices'],
   starterCode: {
     javascript: `function oddCells(m, n, indices) {
-
+  const rows = new Array(m).fill(0);
+  const cols = new Array(n).fill(0);
+  for (const [r, c] of indices) {
+    rows[r]++;
+    cols[c]++;
+  }
+  const oddRows = rows.filter(x => x % 2 === 1).length;
+  const oddCols = cols.filter(x => x % 2 === 1).length;
+  return oddRows * (n - oddCols) + (m - oddRows) * oddCols;
 }`,
     typescript: `function oddCells(m: number, n: number, indices: number[][]): number {
-
+  const rows = new Array(m).fill(0);
+  const cols = new Array(n).fill(0);
+  for (const [r, c] of indices) {
+    rows[r]++;
+    cols[c]++;
+  }
+  const oddRows = rows.filter(x => x % 2 === 1).length;
+  const oddCols = cols.filter(x => x % 2 === 1).length;
+  return oddRows * (n - oddCols) + (m - oddRows) * oddCols;
 }`,
     python: `def oddCells(m: int, n: int, indices: list[list[int]]) -> int:
-    pass`,
+    rows = [0] * m
+    cols = [0] * n
+    for r, c in indices:
+        rows[r] += 1
+        cols[c] += 1
+    odd_rows = sum(1 for x in rows if x % 2 == 1)
+    odd_cols = sum(1 for x in cols if x % 2 == 1)
+    return odd_rows * (n - odd_cols) + (m - odd_rows) * odd_cols`,
   },
   visibleTests: [
     { args: [2, 3, [[0, 1], [1, 1]]], expected: 6 },

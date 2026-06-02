@@ -36,12 +36,20 @@ For this problem, the linked list is represented as an array of integers (e.g., 
   params: ['head'],
   starterCode: {
     javascript: `function getDecimalValue(head) {
-
+  let val = 0;
+  for (const bit of head) val = val * 2 + bit;
+  return val;
 }`,
-    typescript: "function getDecimalValue(head: number[]): number {\n\n}",
-
+    typescript: `function getDecimalValue(head: number[]): number {
+  let val = 0;
+  for (const bit of head) val = val * 2 + bit;
+  return val;
+}`,
     python: `def getDecimalValue(head: list[int]) -> int:
-    pass`,
+    val = 0
+    for bit in head:
+        val = val * 2 + bit
+    return val`,
   },
   visibleTests: [
     { args: [[1, 0, 1]], expected: 5 },

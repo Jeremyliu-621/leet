@@ -43,12 +43,17 @@ Return the constructed 2D array if possible. If the total number of elements in 
   params: ['original', 'm', 'n'],
   starterCode: {
     javascript: `function construct2DArray(original, m, n) {
-
+  if (original.length !== m * n) return [];
+  return Array.from({ length: m }, (_, i) => original.slice(i * n, (i + 1) * n));
 }`,
-    typescript: "function construct2DArray(original: number[], m: number, n: number): number[][] {\n\n}",
-
+    typescript: `function construct2DArray(original: number[], m: number, n: number): number[][] {
+  if (original.length !== m * n) return [];
+  return Array.from({ length: m }, (_, i) => original.slice(i * n, (i + 1) * n));
+}`,
     python: `def construct2DArray(original: list[int], m: int, n: int) -> list[list[int]]:
-    pass`,
+    if len(original) != m * n:
+        return []
+    return [original[i * n:(i + 1) * n] for i in range(m)]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 2, 2], expected: [[1, 2], [3, 4]] },

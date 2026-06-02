@@ -36,13 +36,13 @@ export const problem: Problem = {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function concatenateTwoArrays(nums1, nums2) {
-
+  return [...nums1, ...nums2];
 }`,
     typescript: `function concatenateTwoArrays(nums1: number[], nums2: number[]): number[] {
-
+  return [...nums1, ...nums2];
 }`,
     python: `def concatenateTwoArrays(nums1: list[int], nums2: list[int]) -> list[int]:
-    pass`,
+    return nums1 + nums2`,
   },
   visibleTests: [
     { args: [[1, 2, 3], [4, 5, 6]], expected: [1, 2, 3, 4, 5, 6] },

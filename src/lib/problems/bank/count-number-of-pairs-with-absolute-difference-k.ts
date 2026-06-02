@@ -39,13 +39,27 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countKDifference(nums, k) {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++)
+      if (Math.abs(nums[i] - nums[j]) === k) count++;
+  return count;
 }`,
     typescript: `function countKDifference(nums: number[], k: number): number {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++)
+      if (Math.abs(nums[i]! - nums[j]!) === k) count++;
+  return count;
 }`,
     python: `def countKDifference(nums, k):
-    pass`,
+    count = 0
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if abs(nums[i] - nums[j]) == k:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 1], 1], expected: 4 },

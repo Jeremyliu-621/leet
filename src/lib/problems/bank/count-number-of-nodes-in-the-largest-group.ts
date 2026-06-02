@@ -39,13 +39,30 @@ Return the **number of groups** that have the **maximum number of nodes**.`,
   params: ['n'],
   starterCode: {
     javascript: `function countLargestGroup(n) {
-
+  const digitSum = x => { let s = 0; while (x) { s += x % 10; x = Math.floor(x / 10); } return s; };
+  const freq = new Map();
+  for (let i = 1; i <= n; i++) {
+    const s = digitSum(i);
+    freq.set(s, (freq.get(s) || 0) + 1);
+  }
+  const max = Math.max(...freq.values());
+  return [...freq.values()].filter(v => v === max).length;
 }`,
     typescript: `function countLargestGroup(n: number): number {
-
+  const digitSum = (x: number) => { let s = 0; while (x) { s += x % 10; x = Math.floor(x / 10); } return s; };
+  const freq = new Map<number, number>();
+  for (let i = 1; i <= n; i++) {
+    const s = digitSum(i);
+    freq.set(s, (freq.get(s) ?? 0) + 1);
+  }
+  const max = Math.max(...freq.values());
+  return [...freq.values()].filter(v => v === max).length;
 }`,
     python: `def countLargestGroup(n):
-    pass`,
+    from collections import Counter
+    freq = Counter(sum(int(d) for d in str(i)) for i in range(1, n + 1))
+    max_size = max(freq.values())
+    return sum(1 for v in freq.values() if v == max_size)`,
   },
   visibleTests: [
     { args: [13], expected: 4 },

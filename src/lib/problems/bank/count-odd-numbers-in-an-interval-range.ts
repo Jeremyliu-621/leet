@@ -32,13 +32,13 @@ export const problem: Problem = {
   params: ['low', 'high'],
   starterCode: {
     javascript: `function countOdds(low, high) {
-
+  return Math.floor((high + 1) / 2) - Math.floor(low / 2);
 }`,
     typescript: `function countOdds(low: number, high: number): number {
-
+  return Math.floor((high + 1) / 2) - Math.floor(low / 2);
 }`,
     python: `def countOdds(low, high):
-    pass`,
+    return (high + 1) // 2 - low // 2`,
   },
   visibleTests: [
     { args: [3, 7], expected: 3 },
