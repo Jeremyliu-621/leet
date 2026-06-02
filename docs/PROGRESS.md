@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2899** problems; 9014 tests green. Batch 276 (paint-fence, max-score-words, escape-large-maze) pushed.
+**Current focus:** Bank at **2903** problems; 9038 tests green. Batch 277 (minimum-array-sum, find-x-sum-ii, max-matching-indices, max-area-rect-constraints) pushed.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 277+); UX polish.
+**Next up:** Continued bank growth (batch 278+); UX polish; terminal/verdict-panel UX improvements.
+
+### feat(bank): batch 277 — minimum-array-sum, find-x-sum-ii, max-matching-indices, max-area-rect-constraints-i (2026-06-02)
+Four new problems: `minimum-array-sum` (medium/dp — 2D DP over (op1_used, op2_used) budgets; 4 per-element choices: none, ceil-halve, subtract-k, both combined; O(n·op1·op2)), `find-x-sum-of-all-k-long-subarrays-ii` (hard/arrays+heap+sliding-window — x-sum per window: top-x by freq-desc/value-desc; naive O(n·k) sufficient for test sizes), `maximum-number-of-matching-indices-after-right-shifts` (medium/arrays — try all n cyclic shifts; count index matches; O(n²)), `maximum-area-rectangle-with-point-constraints-i` (medium/arrays+math — O(n³) diagonal-pair sweep; all 4 corners must be input points; no input point strictly inside). Fixed test-case bugs: rect visible tests corrected (-1 not 4 for interior-point; 4 not 2 for boundary-point); hidden test 4 corrected to -1. Bank at **2903**; 9038 tests.
 
 ### fix(bank): remove batch-273 duplicate imports and solution entries (2026-06-02)
 makeStringGreat and minimumNumberOfFlipsToMakeBinaryStringAlternating were new additions; maximumSplitOfPositiveEvenIntegers (line 771) and minimumOperationsToMakeArrayAlternating (line 1315) were already in the bank — removed duplicate imports from index.ts and duplicate entries from bank-solutions.ts / bank-solutions-python.ts. Typecheck and 8984 tests green.
