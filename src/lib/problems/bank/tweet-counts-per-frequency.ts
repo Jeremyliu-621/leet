@@ -69,41 +69,62 @@ Implement the \`TweetCounts\` class:
     javascript: `// tweetCountsRunner is pre-defined and calls your class below.
 class TweetCounts {
   constructor() {
-
+    this.store = new Map();
   }
-
-  /**
-   * @param {string} tweetName
-   * @param {number} time
-   */
   recordTweet(tweetName, time) {
-
+    if (!this.store.has(tweetName)) this.store.set(tweetName, []);
+    this.store.get(tweetName).push(time);
   }
-
-  /**
-   * @param {string} freq
-   * @param {string} tweetName
-   * @param {number} startTime
-   * @param {number} endTime
-   * @return {number[]}
-   */
   getTweetCountsPerFrequency(freq, tweetName, startTime, endTime) {
-
+    const delta = freq === 'minute' ? 60 : freq === 'hour' ? 3600 : 86400;
+    const chunks = Math.floor((endTime - startTime) / delta) + 1;
+    const result = new Array(chunks).fill(0);
+    for (const t of (this.store.get(tweetName) ?? [])) {
+      if (t >= startTime && t <= endTime) result[Math.floor((t - startTime) / delta)]++;
+    }
+    return result;
   }
 }`,
-    typescript: `function tweetCountsRunner(ops: string[], vals: string[][]): unknown[] {
-
+    typescript: `function tweetCountsRunner(ops: string[], vals: (string | number)[][]): (null | number[])[] {
+  const store = new Map<string, number[]>();
+  const deltas: Record<string, number> = { minute: 60, hour: 3600, day: 86400 };
+  return ops.map((op, i) => {
+    const v = vals[i]!;
+    if (op === 'recordTweet') {
+      const name = v[0] as string, time = v[1] as number;
+      if (!store.has(name)) store.set(name, []);
+      store.get(name)!.push(time);
+      return null;
+    }
+    const freq = v[0] as string, name = v[1] as string;
+    const start = v[2] as number, end = v[3] as number;
+    const delta = deltas[freq]!;
+    const chunks = Math.floor((end - start) / delta) + 1;
+    const result = new Array<number>(chunks).fill(0);
+    for (const t of (store.get(name) ?? [])) {
+      if (t >= start && t <= end) result[Math.floor((t - start) / delta)]!++;
+    }
+    return result;
+  });
 }`,
     python: `# tweetCountsRunner is pre-defined and calls your class below.
 class TweetCounts:
     def __init__(self):
-        pass
+        self.store = {}
 
     def recordTweet(self, tweetName: str, time: int) -> None:
-        pass
+        if tweetName not in self.store:
+            self.store[tweetName] = []
+        self.store[tweetName].append(time)
 
     def getTweetCountsPerFrequency(self, freq: str, tweetName: str, startTime: int, endTime: int) -> list[int]:
-        pass`,
+        delta = {'minute': 60, 'hour': 3600, 'day': 86400}[freq]
+        chunks = (endTime - startTime) // delta + 1
+        result = [0] * chunks
+        for t in self.store.get(tweetName, []):
+            if startTime <= t <= endTime:
+                result[(t - startTime) // delta] += 1
+        return result`,
   },
   visibleTests: [
     {

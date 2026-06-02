@@ -44,14 +44,32 @@ Explanation: alternate between v1 and v2. After v1 runs out at index 2, continue
   params: ['v1', 'v2'],
   starterCode: {
     javascript: `function zigzagIterator(v1, v2) {
-  // Return a flat array of all elements from v1 and v2 in zigzag (alternating) order.
-
+  const result = [];
+  let i = 0, j = 0;
+  while (i < v1.length || j < v2.length) {
+    if (i < v1.length) result.push(v1[i++]);
+    if (j < v2.length) result.push(v2[j++]);
+  }
+  return result;
 }`,
-    typescript: "function zigzagIterator(v1: number[], v2: number[]): number[] {\n  // Return a flat array of all elements from v1 and v2 in zigzag (alternating) order.\n\n}",
-
+    typescript: `function zigzagIterator(v1: number[], v2: number[]): number[] {
+  const result: number[] = [];
+  let i = 0, j = 0;
+  while (i < v1.length || j < v2.length) {
+    if (i < v1.length) result.push(v1[i++]!);
+    if (j < v2.length) result.push(v2[j++]!);
+  }
+  return result;
+}`,
     python: `def zigzagIterator(v1: list, v2: list) -> list:
-    # Return a flat list of all elements from v1 and v2 in zigzag order.
-    pass
+    result = []
+    i, j = 0, 0
+    while i < len(v1) or j < len(v2):
+        if i < len(v1):
+            result.append(v1[i]); i += 1
+        if j < len(v2):
+            result.append(v2[j]); j += 1
+    return result
 `,
   },
   visibleTests: [

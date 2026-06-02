@@ -43,30 +43,46 @@ Implement the \`TwoSum\` class:
   const results = [];
   let ts;
   for (const [method, args] of ops) {
-    if (method === 'TwoSum') {
-      ts = new TwoSum();
-      results.push(null);
-    } else {
-      const res = ts[method](...args);
-      results.push(res === undefined ? null : res);
-    }
+    if (method === 'TwoSum') { ts = new TwoSum(); results.push(null); }
+    else { const res = ts[method](...args); results.push(res === undefined ? null : res); }
   }
   return results;
 }
 
 class TwoSum {
-  constructor() {
-
-  }
-  add(number) {
-
-  }
+  constructor() { this.freq = new Map(); }
+  add(number) { this.freq.set(number, (this.freq.get(number) || 0) + 1); }
   find(value) {
-
+    for (const [n, cnt] of this.freq) {
+      const comp = value - n;
+      if (comp === n ? cnt >= 2 : this.freq.has(comp)) return true;
+    }
+    return false;
   }
 }`,
-    typescript: "function twoSumOps(ops: ((string | unknown[])[] | (string | number[])[])[]): (null | boolean)[] {\n  const results = [];\n  let ts;\n  for (const [method, args] of ops) {\n    if (method === 'TwoSum') {\n      ts = new TwoSum();\n      results.push(null);\n    } else {\n      const res = ts[method](...args);\n      results.push(res === undefined ? null : res);\n    }\n  }\n  return results;\n}\n\nclass TwoSum {\n  constructor() {\n\n  }\n  add(number) {\n\n  }\n  find(value) {\n\n  }\n}",
+    typescript: `function twoSumOps(ops: (string | number[])[][]): (null | boolean)[] {
+  const results: (null | boolean)[] = [];
+  let ts: TwoSum | null = null;
+  for (const [method, args] of ops) {
+    const m = method as string, a = args as number[];
+    if (m === 'TwoSum') { ts = new TwoSum(); results.push(null); }
+    else if (m === 'add') { ts!.add(a[0]!); results.push(null); }
+    else { results.push(ts!.find(a[0]!)); }
+  }
+  return results;
+}
 
+class TwoSum {
+  private freq = new Map<number, number>();
+  add(number: number): void { this.freq.set(number, (this.freq.get(number) ?? 0) + 1); }
+  find(value: number): boolean {
+    for (const [n, cnt] of this.freq) {
+      const comp = value - n;
+      if (comp === n ? cnt >= 2 : this.freq.has(comp)) return true;
+    }
+    return false;
+  }
+}`,
     python: `def twoSumOps(ops):
     ops = ops.to_py() if hasattr(ops, 'to_py') else list(ops)
     results = []
@@ -85,11 +101,18 @@ class TwoSum {
 
 class TwoSum:
     def __init__(self):
-        pass
+        self.freq = {}
     def add(self, number):
-        pass
+        self.freq[number] = self.freq.get(number, 0) + 1
     def find(self, value):
-        pass`,
+        for n, cnt in self.freq.items():
+            comp = value - n
+            if comp == n:
+                if cnt >= 2:
+                    return True
+            elif comp in self.freq:
+                return True
+        return False`,
   },
   visibleTests: [
     {

@@ -40,14 +40,32 @@ Given an integer array \`nums\`, return the **sum of Hamming distances** between
   params: ['nums'],
   starterCode: {
     javascript: `function totalHammingDistance(nums) {
-  // return sum of Hamming distances between all pairs
-
+  let total = 0;
+  const n = nums.length;
+  for (let i = 0; i < 32; i++) {
+    let ones = 0;
+    for (const x of nums) ones += (x >> i) & 1;
+    total += ones * (n - ones);
+  }
+  return total;
 }`,
-    typescript: "function totalHammingDistance(nums: number[]): number {\n  // return sum of Hamming distances between all pairs\n\n}",
-
+    typescript: `function totalHammingDistance(nums: number[]): number {
+  let total = 0;
+  const n = nums.length;
+  for (let i = 0; i < 32; i++) {
+    let ones = 0;
+    for (const x of nums) ones += (x >> i) & 1;
+    total += ones * (n - ones);
+  }
+  return total;
+}`,
     python: `def totalHammingDistance(nums: list) -> int:
-    # return sum of Hamming distances between all pairs
-    pass
+    total = 0
+    n = len(nums)
+    for i in range(32):
+        ones = sum((x >> i) & 1 for x in nums)
+        total += ones * (n - ones)
+    return total
 `,
   },
   visibleTests: [

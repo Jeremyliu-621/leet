@@ -50,12 +50,41 @@ Answer: **2**`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function threeSumSmaller(nums, target) {
-
+  nums.sort((a, b) => a - b);
+  let count = 0;
+  for (let i = 0; i < nums.length - 2; i++) {
+    let l = i + 1, r = nums.length - 1;
+    while (l < r) {
+      if (nums[i] + nums[l] + nums[r] < target) { count += r - l; l++; }
+      else r--;
+    }
+  }
+  return count;
 }`,
-    typescript: "function threeSumSmaller(nums: number[], target: number): number {\n\n}",
-
+    typescript: `function threeSumSmaller(nums: number[], target: number): number {
+  nums.sort((a, b) => a - b);
+  let count = 0;
+  for (let i = 0; i < nums.length - 2; i++) {
+    let l = i + 1, r = nums.length - 1;
+    while (l < r) {
+      if (nums[i]! + nums[l]! + nums[r]! < target) { count += r - l; l++; }
+      else r--;
+    }
+  }
+  return count;
+}`,
     python: `def threeSumSmaller(nums, target):
-    pass
+    nums.sort()
+    count = 0
+    for i in range(len(nums) - 2):
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            if nums[i] + nums[l] + nums[r] < target:
+                count += r - l
+                l += 1
+            else:
+                r -= 1
+    return count
 `,
   },
   visibleTests: [

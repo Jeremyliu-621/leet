@@ -40,14 +40,28 @@ Return a string describing the type of triangle that can be formed with the give
   params: ['nums'],
   starterCode: {
     javascript: `function triangleType(nums) {
-  // return "equilateral", "isosceles", "scalene", or "none"
-
+  const a = [...nums].sort((x, y) => x - y);
+  if (a[0] + a[1] <= a[2]) return 'none';
+  if (a[0] === a[2]) return 'equilateral';
+  if (a[0] === a[1] || a[1] === a[2]) return 'isosceles';
+  return 'scalene';
 }`,
-    typescript: "function triangleType(nums: number[]): string {\n  // return \"equilateral\", \"isosceles\", \"scalene\", or \"none\"\n\n}",
-
+    typescript: `function triangleType(nums: number[]): string {
+  const a = [...nums].sort((x, y) => x - y);
+  if (a[0]! + a[1]! <= a[2]!) return 'none';
+  if (a[0] === a[2]) return 'equilateral';
+  if (a[0] === a[1] || a[1] === a[2]) return 'isosceles';
+  return 'scalene';
+}`,
     python: `def triangleType(nums: list) -> str:
-    # return "equilateral", "isosceles", "scalene", or "none"
-    pass
+    a = sorted(nums)
+    if a[0] + a[1] <= a[2]:
+        return 'none'
+    if a[0] == a[2]:
+        return 'equilateral'
+    if a[0] == a[1] or a[1] == a[2]:
+        return 'isosceles'
+    return 'scalene'
 `,
   },
   visibleTests: [

@@ -40,16 +40,30 @@ Given a string \`s\`, return \`true\` if it is a palindrome, or \`false\` otherw
   params: ['s'],
   starterCode: {
     javascript: `function isPalindrome(s) {
-  // return true if s is a palindrome (ignoring non-alphanumeric chars and case)
-
+  const isAlnum = c => /[a-zA-Z0-9]/.test(c);
+  let l = 0, r = s.length - 1;
+  while (l < r) {
+    while (l < r && !isAlnum(s[l])) l++;
+    while (l < r && !isAlnum(s[r])) r--;
+    if (s[l].toLowerCase() !== s[r].toLowerCase()) return false;
+    l++; r--;
+  }
+  return true;
 }`,
     typescript: `function isPalindrome(s: string): boolean {
-  // return true if s is a palindrome (ignoring non-alphanumeric chars and case)
-
+  const isAlnum = (c: string) => /[a-zA-Z0-9]/.test(c);
+  let l = 0, r = s.length - 1;
+  while (l < r) {
+    while (l < r && !isAlnum(s[l]!)) l++;
+    while (l < r && !isAlnum(s[r]!)) r--;
+    if (s[l]!.toLowerCase() !== s[r]!.toLowerCase()) return false;
+    l++; r--;
+  }
+  return true;
 }`,
     python: `def isPalindrome(s: str) -> bool:
-    # return true if s is a palindrome (ignoring non-alphanumeric chars and case)
-    pass
+    filtered = [c.lower() for c in s if c.isalnum()]
+    return filtered == filtered[::-1]
 `,
   },
   visibleTests: [

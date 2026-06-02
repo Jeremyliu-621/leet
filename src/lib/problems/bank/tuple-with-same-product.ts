@@ -35,14 +35,35 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function tupleSameProduct(nums) {
-  // Count pairs by product, then for each freq f add f*(f-1)/2*8.
+  const freq = new Map();
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++) {
+      const p = nums[i] * nums[j];
+      freq.set(p, (freq.get(p) || 0) + 1);
+    }
+  let ans = 0;
+  for (const f of freq.values()) ans += f * (f - 1) / 2 * 8;
+  return ans;
 }`,
     typescript: `function tupleSameProduct(nums: number[]): number {
-  // Count pairs by product, then for each freq f add f*(f-1)/2*8.
+  const freq = new Map<number, number>();
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++) {
+      const p = nums[i]! * nums[j]!;
+      freq.set(p, (freq.get(p) ?? 0) + 1);
+    }
+  let ans = 0;
+  for (const f of freq.values()) ans += f * (f - 1) / 2 * 8;
+  return ans;
 }`,
     python: `def tupleSameProduct(nums):
-    # Count pairs by product, then for each freq f add f*(f-1)//2*8.
-    pass
+    from collections import defaultdict
+    freq = defaultdict(int)
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            freq[nums[i] * nums[j]] += 1
+    return sum(f * (f - 1) // 2 * 8 for f in freq.values())
 `,
   },
   visibleTests: [

@@ -37,14 +37,27 @@ Given an integer \`n\`, return the **minimum** number of operations to get the c
   params: ['n'],
   starterCode: {
     javascript: `function minSteps(n) {
-  // return minimum operations to get exactly n 'A's
-
+  let res = 0;
+  for (let p = 2; p <= n; p++) {
+    while (n % p === 0) { res += p; n = Math.floor(n / p); }
+  }
+  return res;
 }`,
-    typescript: "function minSteps(n: number): number {\n  // return minimum operations to get exactly n 'A's\n\n}",
-
+    typescript: `function minSteps(n: number): number {
+  let res = 0;
+  for (let p = 2; p <= n; p++) {
+    while (n % p === 0) { res += p; n = Math.floor(n / p); }
+  }
+  return res;
+}`,
     python: `def minSteps(n: int) -> int:
-    # return minimum operations to get exactly n 'A's
-    pass
+    res, p = 0, 2
+    while p <= n:
+        while n % p == 0:
+            res += p
+            n //= p
+        p += 1
+    return res
 `,
   },
   visibleTests: [

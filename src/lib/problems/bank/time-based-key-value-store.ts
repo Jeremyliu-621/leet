@@ -36,16 +36,71 @@ Implement the \`TimeMap\` class:
   params: ['ops', 'args'],
   starterCode: {
     javascript: `function timeMap(ops, args) {
-  // Simulate TimeMap class operations
-  // ops: array of method names, args: array of argument arrays
-  // Return array of results (null for constructor and set, string for get)
-}
-`,
-    typescript: "function timeMap(ops: string[], args: (unknown[] | (string | number)[])[]): (null | string)[] {\n  // Simulate TimeMap class operations\n  // ops: array of method names, args: array of argument arrays\n  // Return array of results (null for constructor and set, string for get)\n}",
-
+  const store = new Map(); // key → [[timestamp, value], ...]
+  return ops.map((op, i) => {
+    if (op === 'TimeMap') return null;
+    const a = args[i];
+    if (op === 'set') {
+      if (!store.has(a[0])) store.set(a[0], []);
+      store.get(a[0]).push([a[2], a[1]]);
+      return null;
+    }
+    // get: binary search for largest timestamp <= a[1]
+    const arr = store.get(a[0]) ?? [];
+    let lo = 0, hi = arr.length - 1, res = '';
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (arr[mid][0] <= a[1]) { res = arr[mid][1]; lo = mid + 1; } else hi = mid - 1;
+    }
+    return res;
+  });
+}`,
+    typescript: `function timeMap(ops: string[], args: (string | number)[][]): (null | string)[] {
+  const store = new Map<string, [number, string][]>();
+  return ops.map((op, i) => {
+    if (op === 'TimeMap') return null;
+    const a = args[i]!;
+    if (op === 'set') {
+      const key = a[0] as string, val = a[1] as string, ts = a[2] as number;
+      if (!store.has(key)) store.set(key, []);
+      store.get(key)!.push([ts, val]);
+      return null;
+    }
+    const key = a[0] as string, ts = a[1] as number;
+    const arr = store.get(key) ?? [];
+    let lo = 0, hi = arr.length - 1, res = '';
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (arr[mid]![0] <= ts) { res = arr[mid]![1]; lo = mid + 1; } else hi = mid - 1;
+    }
+    return res;
+  });
+}`,
     python: `def timeMap(ops, args):
-    # Simulate TimeMap class operations
-    pass
+    import bisect
+    store = {}
+    results = []
+    for op, a in zip(ops, args):
+        if op == 'TimeMap':
+            results.append(None)
+        elif op == 'set':
+            key, val, ts = a[0], a[1], int(a[2])
+            if key not in store:
+                store[key] = []
+            store[key].append((ts, val))
+            results.append(None)
+        else:
+            key, ts = a[0], int(a[1])
+            arr = store.get(key, [])
+            lo, hi, res = 0, len(arr) - 1, ''
+            while lo <= hi:
+                mid = (lo + hi) // 2
+                if arr[mid][0] <= ts:
+                    res = arr[mid][1]; lo = mid + 1
+                else:
+                    hi = mid - 1
+            results.append(res)
+    return results
 `,
   },
   visibleTests: [
