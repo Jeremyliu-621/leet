@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3028** problems; 9423 tests green. Batch 299 complete.
+**Current focus:** Bank at **3030** problems; 9438 tests green. Batch 300 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 300+); starter backfill (batch 41ar+, continuing from minimum-diff*); UX polish.
+**Next up:** Bank growth (batch 301+); starter backfill (batch 41ar+, continuing from minimum-diff*); UX polish.
+
+### feat(bank): batch 300 — minimum-cost-to-fill-cups, path-sum-iv (2026-06-02)
+Two new problems: `minimum-cost-to-fill-cups` (easy/arrays+math — answer is max(max(amount), ⌈sum/2⌉); O(1)), `path-sum-iv` (medium/tree+hash-map — parse 3-digit encoding: d=hundreds, p=tens, v=units; key=d*10+p; DFS from (1,1) with left child at (d+1,2p-1) and right at (d+1,2p); leaf when neither child key exists; O(n)). Also filled in full heap-based starter code for `number-of-orders-in-the-backlog`. Bank at **3030**; 9438 tests.
 
 ### feat: starter backfill batches 41am–41aq — 39 more stubs filled (2026-06-02)
 Batch 41am (3 stubs): `minimum-cost-to-convert-string-i` (Floyd-Warshall 26×26 + char position sum), `minimum-cost-to-convert-string-ii` (string IDs + Floyd-Warshall + interval DP). Batch 41an (7 stubs): `minimum-cost-to-cut-a-stick`/`-cut-stick` (interval DP with sentinels 0/n), `minimum-cost-to-equalize-array` (BigInt math, try maxVal+extra targets), `minimum-cost-to-hire-k-workers` (ratio sort + max-heap size k), `minimum-cost-to-make-all-characters-equal` (split cost sum), `minimum-cost-to-make-array-equal` (weighted median), `minimum-cost-to-make-array-equalindromic` (nearest palindrome to median via half-mirror). Batch 41ao (3 stubs): `minimum-cost-to-make-valid-parentheses` (open+close greedy), `minimum-cost-to-merge-stones` (interval DP k-step), `minimum-cost-to-move-chips` (even/odd count min). Batch 41ap (7 stubs): `minimum-cost-to-reach-all-nodes` (O(V²) Dijkstra), `minimum-cost-to-reach-destination-in-time` (2D DP dp[t][v]), `minimum-cost-to-split-an-array` (O(n²) DP freq map), `minimum-cost-tree-from-leaf-values` (monotone stack), `minimum-cost-walk-in-a-weighted-graph`+`-weighted-graph` (Union-Find AND), `minimum-cuts-to-divide-a-circle` (parity formula). Batch 41aq (9 stubs): `minimum-deletions-char-frequencies`+`-character-frequencies-unique` (greedy freq Set), `minimum-deletions-to-make-string-balanced` (DP bCount/min), `minimum-deletions-to-make-array-divisible` (GCD+sort), `minimum-deletions-to-make-string-k-special` (sort freqs try threshold), `minimum-deletions-to-balance-parentheses` (greedy bCount), `minimum-depth-of-binary-tree` (level-order BFS), `minimum-difference-between-largest-and-smallest-in-three-moves` (sort+4 combos), `minimum-distance-to-the-target-element` (linear scan). 9423 tests.
