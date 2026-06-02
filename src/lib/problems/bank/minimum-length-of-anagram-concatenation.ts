@@ -43,12 +43,47 @@ Return the minimum possible length of \`t\`.`,
   params: ['s'],
   starterCode: {
     javascript: `function minAnagramLength(s) {
-
+  const n = s.length;
+  for (let k = 1; k <= n; k++) {
+    if (n % k !== 0) continue;
+    const target = new Array(26).fill(0);
+    for (let i = 0; i < k; i++) target[s.charCodeAt(i) - 97]++;
+    let valid = true;
+    for (let p = 1; p < n / k; p++) {
+      const cur = new Array(26).fill(0);
+      for (let i = p*k; i < (p+1)*k; i++) cur[s.charCodeAt(i) - 97]++;
+      if (cur.some((v, c) => v !== target[c])) { valid = false; break; }
+    }
+    if (valid) return k;
+  }
+  return n;
 }`,
-    typescript: "function minAnagramLength(s: string): number {\n\n}",
-
+    typescript: `function minAnagramLength(s: string): number {
+  const n = s.length;
+  for (let k = 1; k <= n; k++) {
+    if (n % k !== 0) continue;
+    const target = new Array(26).fill(0);
+    for (let i = 0; i < k; i++) target[s.charCodeAt(i) - 97]++;
+    let valid = true;
+    for (let p = 1; p < n / k; p++) {
+      const cur = new Array(26).fill(0);
+      for (let i = p*k; i < (p+1)*k; i++) cur[s.charCodeAt(i) - 97]++;
+      if (cur.some((v, c) => v !== (target[c] ?? 0))) { valid = false; break; }
+    }
+    if (valid) return k;
+  }
+  return n;
+}`,
     python: `def minAnagramLength(s):
-    pass`,
+    n = len(s)
+    for k in range(1, n + 1):
+        if n % k != 0: continue
+        target = [s.count(chr(97+i), 0, k) for i in range(26)]
+        if all([s.count(chr(97+i), p*k, (p+1)*k) for i in range(26)] == target or
+               all(s.count(chr(97+i), p*k, (p+1)*k) == target[i] for i in range(26))
+               for p in range(1, n // k)):
+            return k
+    return n`,
   },
   visibleTests: [
     { args: ['abab'], expected: 2 },

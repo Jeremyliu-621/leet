@@ -24,10 +24,29 @@ A Palindrome String is one that reads the same backward as well as forward.`,
   functionName: 'minInsertions',
   params: ['s'],
   starterCode: {
-    javascript: 'function minInsertions(s) {\n\n}\n',
-    typescript: "function minInsertions(s: string): number {\n\n}",
-
-    python: 'def minInsertions(s):\n    pass\n',
+    javascript: `function minInsertions(s) {
+  const n = s.length, r = s.split('').reverse().join('');
+  const dp = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= n; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i][j] = s[i-1] === r[j-1] ? dp[i-1][j-1] + 1 : Math.max(dp[i-1][j], dp[i][j-1]);
+  return n - dp[n][n];
+}`,
+    typescript: `function minInsertions(s: string): number {
+  const n = s.length, r = s.split('').reverse().join('');
+  const dp: number[][] = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= n; i++)
+    for (let j = 1; j <= n; j++)
+      dp[i]![j] = s[i-1] === r[j-1] ? dp[i-1]![j-1]! + 1 : Math.max(dp[i-1]![j]!, dp[i]![j-1]!);
+  return n - dp[n]![n]!;
+}`,
+    python: `def minInsertions(s):
+    n = len(s); r = s[::-1]
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(1, n + 1):
+            dp[i][j] = dp[i-1][j-1] + 1 if s[i-1] == r[j-1] else max(dp[i-1][j], dp[i][j-1])
+    return n - dp[n][n]`,
   },
   visibleTests: [
     { args: ['zzazz'], expected: 0 },

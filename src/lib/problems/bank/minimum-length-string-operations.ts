@@ -30,10 +30,28 @@ return Object.values(freq).reduce((acc, v) => acc + (v % 2 === 0 ? 2 : 1), 0);\`
   functionName: 'minLength',
   params: ['s'],
   starterCode: {
-    javascript: 'function minLength(s) {\n  \n}\n',
-    typescript: "function minLength(s: string): number {\n  \n}",
-
-    python: 'def minLength(s):\n    pass\n',
+    javascript: `function minLength(s) {
+  const stack = [];
+  for (const c of s) {
+    if (stack.length && ((stack[stack.length-1] === 'A' && c === 'B') || (stack[stack.length-1] === 'C' && c === 'D'))) stack.pop();
+    else stack.push(c);
+  }
+  return stack.length;
+}`,
+    typescript: `function minLength(s: string): number {
+  const stack: string[] = [];
+  for (const c of s) {
+    if (stack.length && ((stack[stack.length-1] === 'A' && c === 'B') || (stack[stack.length-1] === 'C' && c === 'D'))) stack.pop();
+    else stack.push(c);
+  }
+  return stack.length;
+}`,
+    python: `def minLength(s):
+    stack = []
+    for c in s:
+        if stack and ((stack[-1] == 'A' and c == 'B') or (stack[-1] == 'C' and c == 'D')): stack.pop()
+        else: stack.append(c)
+    return len(stack)`,
   },
   visibleTests: [
     { args: ['ABFCACDB'], expected: 2 },

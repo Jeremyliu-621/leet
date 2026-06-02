@@ -35,12 +35,49 @@ Return the minimum number of steps needed to move the knight to the square \`[x,
   params: ['x', 'y'],
   starterCode: {
     javascript: `function minKnightMoves(x, y) {
-
+  x = Math.abs(x); y = Math.abs(y);
+  const seen = new Set(['0,0']); let q = [[0, 0]], d = 0;
+  while (q.length) {
+    const next = [];
+    for (const [cx, cy] of q) {
+      if (cx === x && cy === y) return d;
+      for (const [dx, dy] of [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]]) {
+        const nx = cx+dx, ny = cy+dy, k = nx+','+ny;
+        if (!seen.has(k) && nx >= -2 && ny >= -2 && nx <= x+2 && ny <= y+2) { seen.add(k); next.push([nx, ny]); }
+      }
+    }
+    q = next; d++;
+  }
+  return -1;
 }`,
-    typescript: "function minKnightMoves(x: number, y: number): number {\n\n}",
-
+    typescript: `function minKnightMoves(x: number, y: number): number {
+  x = Math.abs(x); y = Math.abs(y);
+  const seen = new Set(['0,0']); let q: [number,number][] = [[0,0]], d = 0;
+  while (q.length) {
+    const next: [number,number][] = [];
+    for (const [cx, cy] of q) {
+      if (cx === x && cy === y) return d;
+      for (const [dx, dy] of [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]] as [number,number][]) {
+        const nx = cx+dx, ny = cy+dy, k = nx+','+ny;
+        if (!seen.has(k) && nx >= -2 && ny >= -2 && nx <= x+2 && ny <= y+2) { seen.add(k); next.push([nx,ny]); }
+      }
+    }
+    q = next; d++;
+  }
+  return -1;
+}`,
     python: `def minKnightMoves(x, y):
-    pass`,
+    from collections import deque
+    x, y = abs(x), abs(y)
+    seen = {(0, 0)}; q = deque([(0, 0, 0)])
+    while q:
+        cx, cy, d = q.popleft()
+        if cx == x and cy == y: return d
+        for dx, dy in [(1,2),(2,1),(2,-1),(1,-2),(-1,-2),(-2,-1),(-2,1),(-1,2)]:
+            nx, ny = cx+dx, cy+dy
+            if (nx, ny) not in seen and nx >= -2 and ny >= -2 and nx <= x+2 and ny <= y+2:
+                seen.add((nx, ny)); q.append((nx, ny, d+1))
+    return -1`,
   },
   visibleTests: [
     { args: [2, 1], expected: 1 },

@@ -44,12 +44,30 @@ Return the **minimum length** of \`s\` after performing the above operation any 
   params: ['s'],
   starterCode: {
     javascript: `function minimumLength(s) {
-
+  let l = 0, r = s.length - 1;
+  while (l < r && s[l] === s[r]) {
+    const c = s[l];
+    while (l <= r && s[l] === c) l++;
+    while (l <= r && s[r] === c) r--;
+  }
+  return Math.max(0, r - l + 1);
 }`,
-    typescript: "function minimumLength(s: string): number {\n\n}",
-
+    typescript: `function minimumLength(s: string): number {
+  let l = 0, r = s.length - 1;
+  while (l < r && s[l] === s[r]) {
+    const c = s[l];
+    while (l <= r && s[l] === c) l++;
+    while (l <= r && s[r] === c) r--;
+  }
+  return Math.max(0, r - l + 1);
+}`,
     python: `def minimumLength(s):
-    pass`,
+    l, r = 0, len(s) - 1
+    while l < r and s[l] == s[r]:
+        c = s[l]
+        while l <= r and s[l] == c: l += 1
+        while l <= r and s[r] == c: r -= 1
+    return max(0, r - l + 1)`,
   },
   visibleTests: [
     { args: ['ca'], expected: 2 },

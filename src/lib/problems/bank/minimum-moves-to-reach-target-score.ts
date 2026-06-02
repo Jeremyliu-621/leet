@@ -43,10 +43,29 @@ Given the two integers \`target\` and \`maxDoubles\`, return the **minimum numbe
   functionName: 'minMoves',
   params: ['target', 'maxDoubles'],
   starterCode: {
-    javascript: 'function minMoves(target, maxDoubles) {\n\n}\n',
-    typescript: "function minMoves(target: number, maxDoubles: number): number {\n\n}",
-
-    python: 'def minMoves(target, maxDoubles):\n    pass\n',
+    javascript: `function minMoves(target, maxDoubles) {
+  let moves = 0, t = target;
+  while (t > 1 && maxDoubles > 0) {
+    if (t % 2 === 0) { t /= 2; maxDoubles--; } else t--;
+    moves++;
+  }
+  return moves + (t - 1);
+}`,
+    typescript: `function minMoves(target: number, maxDoubles: number): number {
+  let moves = 0, t = target;
+  while (t > 1 && maxDoubles > 0) {
+    if (t % 2 === 0) { t /= 2; maxDoubles--; } else t--;
+    moves++;
+  }
+  return moves + (t - 1);
+}`,
+    python: `def minMoves(target, maxDoubles):
+    moves = 0; t = target
+    while t > 1 and maxDoubles > 0:
+        if t % 2 == 0: t //= 2; maxDoubles -= 1
+        else: t -= 1
+        moves += 1
+    return moves + (t - 1)`,
   },
   visibleTests: [
     { args: [5, 0], expected: 4 },

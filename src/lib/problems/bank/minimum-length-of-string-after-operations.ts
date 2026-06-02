@@ -42,11 +42,20 @@ Return the **minimum possible length** of the resulting string after any number 
   functionName: 'minimumLength',
   params: ['s'],
   starterCode: {
-    javascript: `function minimumLength(s) {\n\n}`,
-    typescript: `function minimumLength(s: string): number {
-
+    javascript: `function minimumLength(s) {
+  const cnt = new Array(26).fill(0);
+  for (const c of s) cnt[c.charCodeAt(0) - 97]++;
+  return cnt.reduce((sum, f) => sum + (f === 0 ? 0 : f % 2 === 1 ? 1 : 2), 0);
 }`,
-    python: `def minimumLength(s: str) -> int:\n    pass`,
+    typescript: `function minimumLength(s: string): number {
+  const cnt = new Array(26).fill(0);
+  for (const c of s) cnt[c.charCodeAt(0) - 97]++;
+  return cnt.reduce((sum: number, f: number) => sum + (f === 0 ? 0 : f % 2 === 1 ? 1 : 2), 0);
+}`,
+    python: `def minimumLength(s: str) -> int:
+    cnt = [0] * 26
+    for c in s: cnt[ord(c) - 97] += 1
+    return sum(0 if f == 0 else 1 if f % 2 == 1 else 2 for f in cnt)`,
   },
   visibleTests: [
     { args: ['abaaa'], expected: 3 },

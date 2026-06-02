@@ -41,10 +41,25 @@ Return the **minimum** amount of \`money\` required before any transaction so th
   functionName: 'minimumMoney',
   params: ['transactions'],
   starterCode: {
-    javascript: 'function minimumMoney(transactions) {\n  \n}\n',
-    typescript: "function minimumMoney(transactions: number[][]): number {\n  \n}",
-
-    python: 'def minimumMoney(transactions):\n    pass\n',
+    javascript: `function minimumMoney(transactions) {
+  let totalLoss = 0;
+  for (const [c, b] of transactions) totalLoss += Math.max(0, c - b);
+  let ans = 0;
+  for (const [c, b] of transactions) ans = Math.max(ans, totalLoss - Math.max(0, c - b) + c);
+  return ans;
+}`,
+    typescript: `function minimumMoney(transactions: number[][]): number {
+  let totalLoss = 0;
+  for (const t of transactions) totalLoss += Math.max(0, t[0]! - t[1]!);
+  let ans = 0;
+  for (const t of transactions) ans = Math.max(ans, totalLoss - Math.max(0, t[0]! - t[1]!) + t[0]!);
+  return ans;
+}`,
+    python: `def minimumMoney(transactions):
+    if hasattr(transactions, 'to_py'): transactions = list(transactions.to_py())
+    transactions = [list(t.to_py()) if hasattr(t, 'to_py') else list(t) for t in transactions]
+    total_loss = sum(max(0, c - b) for c, b in transactions)
+    return max(total_loss - max(0, c - b) + c for c, b in transactions)`,
   },
   visibleTests: [
     { args: [[[2, 1], [5, 0], [4, 2]]], expected: 10 },

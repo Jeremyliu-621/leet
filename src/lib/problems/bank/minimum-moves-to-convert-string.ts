@@ -38,12 +38,21 @@ A **move** converts **any three consecutive characters** to \`'O'\`. Return the 
   params: ['s'],
   starterCode: {
     javascript: `function minimumMoves(s) {
-
+  let moves = 0, i = 0;
+  while (i < s.length) { if (s[i] === 'X') { moves++; i += 3; } else i++; }
+  return moves;
 }`,
-    typescript: "function minimumMoves(s: string): number {\n\n}",
-
+    typescript: `function minimumMoves(s: string): number {
+  let moves = 0, i = 0;
+  while (i < s.length) { if (s[i] === 'X') { moves++; i += 3; } else i++; }
+  return moves;
+}`,
     python: `def minimumMoves(s):
-    pass`,
+    moves = 0; i = 0
+    while i < len(s):
+        if s[i] == 'X': moves += 1; i += 3
+        else: i += 1
+    return moves`,
   },
   visibleTests: [
     { args: ['XXX'], expected: 1 },

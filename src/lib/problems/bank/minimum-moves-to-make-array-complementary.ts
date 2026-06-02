@@ -40,10 +40,43 @@ Return the **minimum** number of moves required to make **nums** **complementary
   functionName: 'minMoves',
   params: ['nums', 'limit'],
   starterCode: {
-    javascript: 'function minMoves(nums, limit) {\n  \n}\n',
-    typescript: "function minMoves(nums: number[], limit: number): number {\n  \n}",
-
-    python: 'def minMoves(nums, limit):\n    ',
+    javascript: `function minMoves(nums, limit) {
+  const n = nums.length, diff = new Array(2 * limit + 2).fill(0);
+  for (let i = 0; i < n / 2; i++) {
+    const a = Math.min(nums[i], nums[n-1-i]), b = Math.max(nums[i], nums[n-1-i]);
+    diff[2] += 2; diff[2*limit+1] -= 2;
+    diff[a+1] -= 1; diff[b+limit+1] += 1;
+    diff[a+b] -= 1; diff[a+b+1] += 1;
+  }
+  let ans = Infinity, cur = 0;
+  for (let t = 2; t <= 2*limit; t++) { cur += diff[t]; if (cur < ans) ans = cur; }
+  return ans;
+}`,
+    typescript: `function minMoves(nums: number[], limit: number): number {
+  const n = nums.length, diff = new Array(2 * limit + 2).fill(0);
+  for (let i = 0; i < n / 2; i++) {
+    const a = Math.min(nums[i]!, nums[n-1-i]!), b = Math.max(nums[i]!, nums[n-1-i]!);
+    diff[2] += 2; diff[2*limit+1] -= 2;
+    diff[a+1] -= 1; diff[b+limit+1] += 1;
+    diff[a+b] -= 1; diff[a+b+1] += 1;
+  }
+  let ans = Infinity, cur = 0;
+  for (let t = 2; t <= 2*limit; t++) { cur += diff[t]!; if (cur < ans) ans = cur; }
+  return ans;
+}`,
+    python: `def minMoves(nums, limit):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums); diff = [0] * (2 * limit + 2)
+    for i in range(n // 2):
+        a = min(nums[i], nums[n-1-i]); b = max(nums[i], nums[n-1-i])
+        diff[2] += 2; diff[2*limit+1] -= 2
+        diff[a+1] -= 1; diff[b+limit+1] += 1
+        diff[a+b] -= 1; diff[a+b+1] += 1
+    ans = float('inf'); cur = 0
+    for t in range(2, 2*limit+1):
+        cur += diff[t]
+        if cur < ans: ans = cur
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 4, 3], 4], expected: 1 },

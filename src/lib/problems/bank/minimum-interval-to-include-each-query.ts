@@ -40,10 +40,50 @@ Return an array containing the answers to each query.
   functionName: 'minInterval',
   params: ['intervals', 'queries'],
   starterCode: {
-    javascript: 'function minInterval(intervals, queries) {\n\n}\n',
-    typescript: "function minInterval(intervals: number[][], queries: number[]): number[] {\n\n}",
-
-    python: 'def minInterval(intervals: list, queries: list) -> list:\n    pass\n',
+    javascript: `function minInterval(intervals, queries) {
+  intervals = [...intervals].sort((a, b) => a[0] - b[0]);
+  const qi = queries.map((q, i) => [q, i]).sort((a, b) => a[0] - b[0]);
+  const res = new Array(queries.length).fill(-1);
+  const heap = []; // [size, right] min-heap by size
+  const up = i => { while (i > 0) { const p = (i-1)>>1; if (heap[p][0] <= heap[i][0]) break; [heap[p],heap[i]]=[heap[i],heap[p]]; i=p; } };
+  const dn = () => { let i=0; while(true){let m=i,l=2*i+1,r=2*i+2; if(l<heap.length&&heap[l][0]<heap[m][0])m=l; if(r<heap.length&&heap[r][0]<heap[m][0])m=r; if(m===i)break; [heap[m],heap[i]]=[heap[i],heap[m]]; i=m;} };
+  let ii = 0;
+  for (const [q, idx] of qi) {
+    while (ii < intervals.length && intervals[ii][0] <= q) { heap.push([intervals[ii][1]-intervals[ii][0]+1, intervals[ii][1]]); up(heap.length-1); ii++; }
+    while (heap.length > 0 && heap[0][1] < q) { heap[0] = heap.pop(); if (heap.length > 0) dn(); }
+    if (heap.length > 0) res[idx] = heap[0][0];
+  }
+  return res;
+}`,
+    typescript: `function minInterval(intervals: number[][], queries: number[]): number[] {
+  const sorted = [...intervals].sort((a, b) => a[0]! - b[0]!);
+  const qi = queries.map((q, i) => [q, i] as [number,number]).sort((a, b) => a[0] - b[0]);
+  const res = new Array(queries.length).fill(-1);
+  const heap: [number,number][] = [];
+  const up = (i: number) => { while (i > 0) { const p = (i-1)>>1; if (heap[p]![0] <= heap[i]![0]) break; [heap[p],heap[i]]=[heap[i]!,heap[p]!]; i=p; } };
+  const dn = () => { let i=0; while(true){let m=i,l=2*i+1,r=2*i+2; if(l<heap.length&&heap[l]![0]<heap[m]![0])m=l; if(r<heap.length&&heap[r]![0]<heap[m]![0])m=r; if(m===i)break; [heap[m],heap[i]]=[heap[i]!,heap[m]!]; i=m;} };
+  let ii = 0;
+  for (const [q, idx] of qi) {
+    while (ii < sorted.length && sorted[ii]![0]! <= q) { heap.push([sorted[ii]![1]!-sorted[ii]![0]!+1, sorted[ii]![1]!]); up(heap.length-1); ii++; }
+    while (heap.length > 0 && heap[0]![1]! < q) { heap[0] = heap.pop()!; if (heap.length > 0) dn(); }
+    if (heap.length > 0) res[idx] = heap[0]![0];
+  }
+  return res;
+}`,
+    python: `def minInterval(intervals: list, queries: list) -> list:
+    if hasattr(intervals, 'to_py'): intervals = list(intervals.to_py())
+    if hasattr(queries, 'to_py'): queries = list(queries.to_py())
+    intervals = [list(iv.to_py()) if hasattr(iv, 'to_py') else list(iv) for iv in intervals]
+    import heapq
+    intervals.sort(key=lambda x: x[0])
+    qi = sorted(enumerate(queries), key=lambda x: x[1])
+    res = [-1] * len(queries); heap = []; ii = 0
+    for orig_idx, q in qi:
+        while ii < len(intervals) and intervals[ii][0] <= q:
+            iv = intervals[ii]; heapq.heappush(heap, (iv[1]-iv[0]+1, iv[1])); ii += 1
+        while heap and heap[0][1] < q: heapq.heappop(heap)
+        if heap: res[orig_idx] = heap[0][0]
+    return res`,
   },
   visibleTests: [
     { args: [[[1,4],[2,4],[3,6],[4,4]], [2,3,4,5]], expected: [3,3,1,4] },

@@ -33,12 +33,17 @@ In one move, you can increment \`n - 1\` elements of the array by \`1\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function minMoves(nums) {
-
+  const mn = Math.min(...nums);
+  return nums.reduce((s, v) => s + v - mn, 0);
 }`,
-    typescript: "function minMoves(nums: number[]): number {\n\n}",
-
+    typescript: `function minMoves(nums: number[]): number {
+  const mn = Math.min(...nums);
+  return nums.reduce((s, v) => s + v - mn, 0);
+}`,
     python: `def minMoves(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    mn = min(nums)
+    return sum(v - mn for v in nums)`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 3 },

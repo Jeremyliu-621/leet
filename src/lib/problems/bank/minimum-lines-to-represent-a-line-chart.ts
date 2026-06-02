@@ -35,10 +35,36 @@ Return the **minimum number of lines** needed to represent the line chart.`,
   functionName: 'minimumLines',
   params: ['stockPrices'],
   starterCode: {
-    javascript: 'function minimumLines(stockPrices) {\n  \n}\n',
-    typescript: "function minimumLines(stockPrices: number[][]): number {\n  \n}",
-
-    python: 'def minimumLines(stockPrices):\n    pass\n',
+    javascript: `function minimumLines(stockPrices) {
+  if (stockPrices.length <= 1) return 0;
+  stockPrices = [...stockPrices].sort((a, b) => a[0] - b[0]);
+  let lines = 1;
+  for (let i = 2; i < stockPrices.length; i++) {
+    const [x1, y1] = stockPrices[i-2], [x2, y2] = stockPrices[i-1], [x3, y3] = stockPrices[i];
+    if (BigInt(y2-y1)*BigInt(x3-x2) !== BigInt(y3-y2)*BigInt(x2-x1)) lines++;
+  }
+  return lines;
+}`,
+    typescript: `function minimumLines(stockPrices: number[][]): number {
+  if (stockPrices.length <= 1) return 0;
+  const sp = [...stockPrices].sort((a, b) => a[0]! - b[0]!);
+  let lines = 1;
+  for (let i = 2; i < sp.length; i++) {
+    const [x1,y1]=sp[i-2]!,[x2,y2]=sp[i-1]!,[x3,y3]=sp[i]!;
+    if (BigInt(y2!-y1!)*BigInt(x3!-x2!) !== BigInt(y3!-y2!)*BigInt(x2!-x1!)) lines++;
+  }
+  return lines;
+}`,
+    python: `def minimumLines(stockPrices):
+    if hasattr(stockPrices, 'to_py'): stockPrices = list(stockPrices.to_py())
+    stockPrices = [list(p.to_py()) if hasattr(p, 'to_py') else list(p) for p in stockPrices]
+    if len(stockPrices) <= 1: return 0
+    stockPrices.sort(key=lambda p: p[0])
+    lines = 1
+    for i in range(2, len(stockPrices)):
+        x1, y1 = stockPrices[i-2]; x2, y2 = stockPrices[i-1]; x3, y3 = stockPrices[i]
+        if (y2-y1)*(x3-x2) != (y3-y2)*(x2-x1): lines += 1
+    return lines`,
   },
   visibleTests: [
     { args: [[[1,7],[2,6],[3,5],[4,4],[5,4],[6,3],[7,2],[8,2],[9,1]]], expected: 5 },

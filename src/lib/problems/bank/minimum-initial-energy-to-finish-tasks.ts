@@ -37,10 +37,27 @@ You can complete the tasks in **any order**. Return the minimum initial energy y
   functionName: 'minimumEffort',
   params: ['tasks'],
   starterCode: {
-    javascript: 'function minimumEffort(tasks) {\n  \n}\n',
-    typescript: "function minimumEffort(tasks: number[][]): number {\n  \n}",
-
-    python: 'def minimumEffort(tasks: list[list[int]]) -> int:\n    pass\n',
+    javascript: `function minimumEffort(tasks) {
+  tasks = [...tasks].sort((a, b) => (b[1] - b[0]) - (a[1] - a[0]));
+  let e = 0, ans = 0;
+  for (const [act, mn] of tasks) { if (e < mn) { ans += mn - e; e = mn; } e -= act; }
+  return ans;
+}`,
+    typescript: `function minimumEffort(tasks: number[][]): number {
+  const sorted = [...tasks].sort((a, b) => (b[1]! - b[0]!) - (a[1]! - a[0]!));
+  let e = 0, ans = 0;
+  for (const t of sorted) { const act = t[0]!, mn = t[1]!; if (e < mn) { ans += mn - e; e = mn; } e -= act; }
+  return ans;
+}`,
+    python: `def minimumEffort(tasks: list[list[int]]) -> int:
+    if hasattr(tasks, 'to_py'): tasks = list(tasks.to_py())
+    tasks = [list(t.to_py()) if hasattr(t, 'to_py') else list(t) for t in tasks]
+    tasks.sort(key=lambda t: -(t[1] - t[0]))
+    e = 0; ans = 0
+    for act, mn in tasks:
+        if e < mn: ans += mn - e; e = mn
+        e -= act
+    return ans`,
   },
   visibleTests: [
     { args: [[[1, 2], [2, 4], [4, 8]]], expected: 8 },

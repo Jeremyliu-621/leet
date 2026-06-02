@@ -25,10 +25,42 @@ export const problem: Problem = {
   functionName: 'findRestaurant',
   params: ['list1', 'list2'],
   starterCode: {
-    javascript: 'function findRestaurant(list1, list2) {\n  \n}\n',
-    typescript: "function findRestaurant(list1: string[], list2: string[]): string[] {\n  \n}",
-
-    python: 'def findRestaurant(list1, list2):\n    pass\n',
+    javascript: `function findRestaurant(list1, list2) {
+  const map = {};
+  for (let i = 0; i < list1.length; i++) map[list1[i]] = i;
+  let best = Infinity, res = [];
+  for (let j = 0; j < list2.length; j++) {
+    if (list2[j] in map) {
+      const s = map[list2[j]] + j;
+      if (s < best) { best = s; res = [list2[j]]; } else if (s === best) res.push(list2[j]);
+    }
+  }
+  return res;
+}`,
+    typescript: `function findRestaurant(list1: string[], list2: string[]): string[] {
+  const map: Record<string, number> = {};
+  for (let i = 0; i < list1.length; i++) map[list1[i]!] = i;
+  let best = Infinity; const res: string[] = [];
+  for (let j = 0; j < list2.length; j++) {
+    const item = list2[j]!;
+    if (item in map) {
+      const s = map[item]! + j;
+      if (s < best) { best = s; res.length = 0; res.push(item); } else if (s === best) res.push(item);
+    }
+  }
+  return res;
+}`,
+    python: `def findRestaurant(list1, list2):
+    if hasattr(list1, 'to_py'): list1 = list(list1.to_py())
+    if hasattr(list2, 'to_py'): list2 = list(list2.to_py())
+    idx = {v: i for i, v in enumerate(list1)}
+    best = float('inf'); res = []
+    for j, v in enumerate(list2):
+        if v in idx:
+            s = idx[v] + j
+            if s < best: best = s; res = [v]
+            elif s == best: res.append(v)
+    return res`,
   },
   visibleTests: [
     { args: [['Shogun', 'Tapioca Express', 'Burger King', 'KFC'], ['Piatti', 'The Grill at Torrey Pines', 'Hungry Hunter Steakhouse', 'Shogun']], expected: ['Shogun'] },

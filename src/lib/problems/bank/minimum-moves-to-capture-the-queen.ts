@@ -43,13 +43,28 @@ Return the **minimum** number of moves to **capture the queen** using one of the
   params: ['a', 'b', 'c', 'd', 'e', 'f'],
   starterCode: {
     javascript: `function minMovesToCaptureTheQueen(a, b, c, d, e, f) {
-
+  const between = (p, q, r) => (q - p) * (q - r) < 0;
+  const onDiag = (x1, y1, x2, y2) => Math.abs(x1 - x2) === Math.abs(y1 - y2);
+  if (b === f && !(d === b && between(a, c, e))) return 1;
+  if (a === e && !(c === a && between(b, d, f))) return 1;
+  if (onDiag(c, d, e, f) && !(onDiag(c, d, a, b) && between(c, a, e))) return 1;
+  return 2;
 }`,
     typescript: `function minMovesToCaptureTheQueen(a: number, b: number, c: number, d: number, e: number, f: number): number {
-
+  const between = (p: number, q: number, r: number) => (q - p) * (q - r) < 0;
+  const onDiag = (x1: number, y1: number, x2: number, y2: number) => Math.abs(x1 - x2) === Math.abs(y1 - y2);
+  if (b === f && !(d === b && between(a, c, e))) return 1;
+  if (a === e && !(c === a && between(b, d, f))) return 1;
+  if (onDiag(c, d, e, f) && !(onDiag(c, d, a, b) && between(c, a, e))) return 1;
+  return 2;
 }`,
     python: `def minMovesToCaptureTheQueen(a, b, c, d, e, f):
-    pass`,
+    between = lambda p, q, r: (q - p) * (q - r) < 0
+    on_diag = lambda x1, y1, x2, y2: abs(x1 - x2) == abs(y1 - y2)
+    if b == f and not (d == b and between(a, c, e)): return 1
+    if a == e and not (c == a and between(b, d, f)): return 1
+    if on_diag(c, d, e, f) and not (on_diag(c, d, a, b) and between(c, a, e)): return 1
+    return 2`,
   },
   visibleTests: [
     { args: [1, 1, 8, 8, 2, 3], expected: 2 },
