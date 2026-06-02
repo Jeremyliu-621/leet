@@ -39,12 +39,43 @@ Given a list \`piles\`, where \`piles[i]\` is a list of integers denoting the co
   params: ['piles', 'k'],
   starterCode: {
     javascript: `function maxValueOfCoins(piles, k) {
-
+  const dp = new Array(k + 1).fill(0);
+  for (const pile of piles) {
+    const prefix = [0];
+    for (const v of pile) prefix.push(prefix[prefix.length - 1] + v);
+    for (let j = k; j >= 0; j--) {
+      for (let x = 1; x <= Math.min(pile.length, j); x++) {
+        if (dp[j - x] + prefix[x] > dp[j]) dp[j] = dp[j - x] + prefix[x];
+      }
+    }
+  }
+  return dp[k];
 }`,
-    typescript: "function maxValueOfCoins(piles: number[][], k: number): number {\n\n}",
-
+    typescript: `function maxValueOfCoins(piles: number[][], k: number): number {
+  const dp = new Array<number>(k + 1).fill(0);
+  for (const pile of piles) {
+    const prefix: number[] = [0];
+    for (const v of pile) prefix.push(prefix[prefix.length - 1]! + v);
+    for (let j = k; j >= 0; j--) {
+      for (let x = 1; x <= Math.min(pile.length, j); x++) {
+        const cand = dp[j - x]! + prefix[x]!;
+        if (cand > dp[j]!) dp[j] = cand;
+      }
+    }
+  }
+  return dp[k]!;
+}`,
     python: `def maxValueOfCoins(piles, k):
-    pass`,
+    if hasattr(piles, 'to_py'): piles = [[int(x) for x in (p.to_py() if hasattr(p, 'to_py') else p)] for p in piles.to_py()]
+    dp = [0] * (k + 1)
+    for pile in piles:
+        prefix = [0]
+        for v in pile: prefix.append(prefix[-1] + v)
+        for j in range(k, -1, -1):
+            for x in range(1, min(len(pile), j) + 1):
+                cand = dp[j - x] + prefix[x]
+                if cand > dp[j]: dp[j] = cand
+    return dp[k]`,
   },
   visibleTests: [
     { args: [[[1, 100, 3], [7, 8, 9]], 2], expected: 101 },

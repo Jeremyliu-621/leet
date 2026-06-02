@@ -40,13 +40,53 @@ Note that \`XOR\` is the bitwise XOR operation.`,
   params: ['a', 'b', 'n'],
   starterCode: {
     javascript: `function maximumXorProduct(a, b, n) {
-
+  const MOD = 1_000_000_007n;
+  let A = BigInt(a), B = BigInt(b);
+  for (let i = n - 1; i >= 0; i--) {
+    const bit = 1n << BigInt(i);
+    const aBit = (A >> BigInt(i)) & 1n;
+    const bBit = (B >> BigInt(i)) & 1n;
+    if (aBit === bBit) {
+      A |= bit; B |= bit;
+    } else if (A < B) {
+      A |= bit; B &= ~bit;
+    } else {
+      B |= bit; A &= ~bit;
+    }
+  }
+  return Number((A % MOD) * (B % MOD) % MOD);
 }`,
     typescript: `function maximumXorProduct(a: number, b: number, n: number): number {
-
+  const MOD = 1_000_000_007n;
+  let A = BigInt(a), B = BigInt(b);
+  for (let i = n - 1; i >= 0; i--) {
+    const bit = 1n << BigInt(i);
+    const aBit = (A >> BigInt(i)) & 1n;
+    const bBit = (B >> BigInt(i)) & 1n;
+    if (aBit === bBit) {
+      A |= bit; B |= bit;
+    } else if (A < B) {
+      A |= bit; B &= ~bit;
+    } else {
+      B |= bit; A &= ~bit;
+    }
+  }
+  return Number((A % MOD) * (B % MOD) % MOD);
 }`,
     python: `def maximumXorProduct(a: int, b: int, n: int) -> int:
-    pass`,
+    MOD = 10**9 + 7
+    A, B = a, b
+    for i in range(n - 1, -1, -1):
+        bit = 1 << i
+        a_bit = (A >> i) & 1
+        b_bit = (B >> i) & 1
+        if a_bit == b_bit:
+            A |= bit; B |= bit
+        elif A < B:
+            A |= bit; B &= ~bit
+        else:
+            B |= bit; A &= ~bit
+    return (A % MOD) * (B % MOD) % MOD`,
   },
   visibleTests: [
     { args: [12, 5, 4], expected: 98 },

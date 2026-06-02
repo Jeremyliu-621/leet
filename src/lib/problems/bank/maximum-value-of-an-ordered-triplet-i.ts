@@ -40,12 +40,37 @@ The **value** of a triplet of indices \`(i, j, k)\` is equal to \`(nums[i] - num
   params: ['nums'],
   starterCode: {
     javascript: `function maximumTripletValue(nums) {
-
+  const n = nums.length;
+  let ans = 0;
+  for (let i = 0; i < n - 2; i++)
+    for (let j = i + 1; j < n - 1; j++)
+      for (let k = j + 1; k < n; k++) {
+        const v = (nums[i] - nums[j]) * nums[k];
+        if (v > ans) ans = v;
+      }
+  return ans;
 }`,
-    typescript: "function maximumTripletValue(nums: number[]): number {\n\n}",
-
+    typescript: `function maximumTripletValue(nums: number[]): number {
+  const n = nums.length;
+  let ans = 0;
+  for (let i = 0; i < n - 2; i++)
+    for (let j = i + 1; j < n - 1; j++)
+      for (let k = j + 1; k < n; k++) {
+        const v = (nums[i]! - nums[j]!) * nums[k]!;
+        if (v > ans) ans = v;
+      }
+  return ans;
+}`,
     python: `def maximumTripletValue(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    ans = 0
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                v = (nums[i] - nums[j]) * nums[k]
+                if v > ans: ans = v
+    return ans`,
   },
   visibleTests: [
     { args: [[12, 6, 1, 2, 7]], expected: 77 },

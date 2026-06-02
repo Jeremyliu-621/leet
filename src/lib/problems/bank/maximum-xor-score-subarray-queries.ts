@@ -49,13 +49,72 @@ Return an integer array \`answer\` where \`answer[i]\` is the answer to the \`i\
   params: ['nums', 'queries'],
   starterCode: {
     javascript: `function maximumSubarrayXor(nums, queries) {
-
+  const n = nums.length;
+  const dp = Array.from({length: n}, (_, i) => new Array(n).fill(0));
+  for (let i = 0; i < n; i++) dp[i][i] = nums[i];
+  for (let len = 2; len <= n; len++)
+    for (let i = 0; i <= n - len; i++) {
+      const j = i + len - 1;
+      dp[i][j] = dp[i][j - 1] ^ dp[i + 1][j];
+    }
+  const suf = Array.from({length: n}, () => new Array(n).fill(0));
+  for (let j = 0; j < n; j++) {
+    suf[j][j] = dp[j][j];
+    for (let i = j - 1; i >= 0; i--)
+      suf[j][i] = Math.max(dp[i][j], suf[j][i + 1]);
+  }
+  const mx = Array.from({length: n}, () => new Array(n).fill(0));
+  for (let j = 0; j < n; j++)
+    for (let i = 0; i <= j; i++) {
+      mx[j][i] = suf[j][i];
+      if (j > 0 && j - 1 >= i) mx[j][i] = Math.max(mx[j][i], mx[j - 1][i]);
+    }
+  return queries.map(([l, r]) => mx[r][l]);
 }`,
     typescript: `function maximumSubarrayXor(nums: number[], queries: number[][]): number[] {
-
+  const n = nums.length;
+  const dp: number[][] = Array.from({length: n}, (_, i) => { const a = new Array<number>(n).fill(0); a[i] = nums[i]!; return a; });
+  for (let len = 2; len <= n; len++)
+    for (let i = 0; i <= n - len; i++) {
+      const j = i + len - 1;
+      dp[i]![j] = dp[i]![j - 1]! ^ dp[i + 1]![j]!;
+    }
+  const suf: number[][] = Array.from({length: n}, () => new Array<number>(n).fill(0));
+  for (let j = 0; j < n; j++) {
+    suf[j]![j] = dp[j]![j]!;
+    for (let i = j - 1; i >= 0; i--)
+      suf[j]![i] = Math.max(dp[i]![j]!, suf[j]![i + 1]!);
+  }
+  const mx: number[][] = Array.from({length: n}, () => new Array<number>(n).fill(0));
+  for (let j = 0; j < n; j++)
+    for (let i = 0; i <= j; i++) {
+      mx[j]![i] = suf[j]![i]!;
+      if (j > 0 && j - 1 >= i) mx[j]![i] = Math.max(mx[j]![i]!, mx[j - 1]![i]!);
+    }
+  return queries.map(q => mx[q[1]!]![q[0]!]!);
 }`,
     python: `def maximumSubarrayXor(nums, queries):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(queries, 'to_py'): queries = [[int(x) for x in (q.to_py() if hasattr(q, 'to_py') else q)] for q in queries.to_py()]
+    n = len(nums)
+    dp = [[0]*n for _ in range(n)]
+    for i in range(n): dp[i][i] = nums[i]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = dp[i][j-1] ^ dp[i+1][j]
+    suf = [[0]*n for _ in range(n)]
+    for j in range(n):
+        suf[j][j] = dp[j][j]
+        for i in range(j-1, -1, -1):
+            suf[j][i] = max(dp[i][j], suf[j][i+1])
+    mx = [[0]*n for _ in range(n)]
+    for j in range(n):
+        for i in range(j+1):
+            mx[j][i] = suf[j][i]
+            if j > 0 and j-1 >= i:
+                mx[j][i] = max(mx[j][i], mx[j-1][i])
+    return [mx[r][l] for l, r in queries]`,
   },
   visibleTests: [
     { args: [[4, 5, 2, 3], [[0, 3]]], expected: [7] },

@@ -36,11 +36,95 @@ Return an integer array \`answer\` where \`answer.length == queries.length\` and
   params: ['nums', 'queries'],
   starterCode: {
     javascript: `function maximizeXor(nums, queries) {
-
+  nums.sort((a, b) => a - b);
+  const q = queries.map((qr, i) => [qr[0], qr[1], i]).sort((a, b) => a[1] - b[1]);
+  const BITS = 15;
+  const ch = [[-1, -1]];
+  let ni = 0;
+  const insert = (num) => {
+    let node = 0;
+    for (let i = BITS - 1; i >= 0; i--) {
+      const bit = (num >> i) & 1;
+      if (ch[node][bit] === -1) { ch.push([-1, -1]); ch[node][bit] = ch.length - 1; }
+      node = ch[node][bit];
+    }
+  };
+  const queryXor = (x) => {
+    let node = 0, res = 0;
+    for (let i = BITS - 1; i >= 0; i--) {
+      const bit = (x >> i) & 1, want = 1 - bit;
+      if (ch[node][want] !== -1) { res |= (1 << i); node = ch[node][want]; }
+      else node = ch[node][bit];
+    }
+    return res;
+  };
+  let ptr = 0;
+  const ans = new Array(queries.length);
+  for (const [x, m, origIdx] of q) {
+    while (ptr < nums.length && nums[ptr] <= m) insert(nums[ptr++]);
+    ans[origIdx] = ptr > 0 ? queryXor(x) : -1;
+  }
+  return ans;
 }`,
-    typescript: 'function maximizeXor(nums: number[], queries: number[][]): number[] {\n\n}',
+    typescript: `function maximizeXor(nums: number[], queries: number[][]): number[] {
+  nums.sort((a, b) => a - b);
+  const q = queries.map((qr, i) => [qr[0]!, qr[1]!, i]).sort((a, b) => a[1]! - b[1]!);
+  const BITS = 15;
+  const ch: number[][] = [[-1, -1]];
+  let ptr = 0;
+  const insert = (num: number) => {
+    let node = 0;
+    for (let i = BITS - 1; i >= 0; i--) {
+      const bit = (num >> i) & 1;
+      if (ch[node]![bit] === -1) { ch.push([-1, -1]); ch[node]![bit] = ch.length - 1; }
+      node = ch[node]![bit]!;
+    }
+  };
+  const queryXor = (x: number) => {
+    let node = 0, res = 0;
+    for (let i = BITS - 1; i >= 0; i--) {
+      const bit = (x >> i) & 1, want = 1 - bit;
+      if (ch[node]![want] !== -1) { res |= (1 << i); node = ch[node]![want]!; }
+      else node = ch[node]![bit]!;
+    }
+    return res;
+  };
+  const ans = new Array<number>(queries.length);
+  for (const entry of q) {
+    const [x, m, origIdx] = entry as [number, number, number];
+    while (ptr < nums.length && nums[ptr]! <= m) insert(nums[ptr++]!);
+    ans[origIdx] = ptr > 0 ? queryXor(x) : -1;
+  }
+  return ans;
+}`,
     python: `def maximizeXor(nums, queries):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(queries, 'to_py'): queries = [[int(x) for x in (q.to_py() if hasattr(q, 'to_py') else q)] for q in queries.to_py()]
+    nums.sort()
+    q = sorted(enumerate(queries), key=lambda t: t[1][1])
+    BITS = 15
+    ch = [[-1, -1]]
+    def insert(num):
+        node = 0
+        for i in range(BITS - 1, -1, -1):
+            bit = (num >> i) & 1
+            if ch[node][bit] == -1:
+                ch.append([-1, -1])
+                ch[node][bit] = len(ch) - 1
+            node = ch[node][bit]
+    def query_xor(x):
+        node = 0; res = 0
+        for i in range(BITS - 1, -1, -1):
+            bit = (x >> i) & 1; want = 1 - bit
+            if ch[node][want] != -1: res |= (1 << i); node = ch[node][want]
+            else: node = ch[node][bit]
+        return res
+    ptr = 0
+    ans = [0] * len(queries)
+    for orig_idx, (x, m) in q:
+        while ptr < len(nums) and nums[ptr] <= m: insert(nums[ptr]); ptr += 1
+        ans[orig_idx] = query_xor(x) if ptr > 0 else -1
+    return ans`,
   },
   visibleTests: [
     { args: [[0, 1, 2, 3, 4], [[3, 1], [1, 3], [5, 6]]], expected: [3, 3, 7] },
