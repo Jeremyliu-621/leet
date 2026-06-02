@@ -83,6 +83,32 @@ describe('buildVerdict', () => {
     expect(result.message).toContain('SyntaxError');
   });
 
+  it('reports runtime-error for a worker-error failure', () => {
+    const response: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: false,
+      reason: 'worker-error',
+      error: 'Worker crashed unexpectedly',
+    };
+    const result = buildVerdict(tests, response);
+    expect(result.outcome).toBe('runtime-error');
+    expect(result.message).toContain('Worker crashed');
+  });
+
+  it('reports compile-error for a no-function failure', () => {
+    const response: RunResponse = {
+      type: 'result',
+      requestId: 'r',
+      ok: false,
+      reason: 'no-function',
+      error: 'Could not find a function named "twoSum".',
+    };
+    const result = buildVerdict(tests, response);
+    expect(result.outcome).toBe('compile-error');
+    expect(result.message).toContain('twoSum');
+  });
+
   it('handles a response with fewer outcomes than tests', () => {
     const result = buildVerdict(tests, okResponse([returned(0, 3)]));
     expect(result.outcome).toBe('runtime-error');

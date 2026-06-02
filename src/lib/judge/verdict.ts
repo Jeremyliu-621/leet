@@ -47,7 +47,12 @@ function formatArgs(args: readonly unknown[]): string {
 export function buildVerdict(tests: readonly TestCase[], response: RunResponse): JudgeResult {
   if (!response.ok) {
     return {
-      outcome: response.reason === 'timeout' ? 'timeout' : 'compile-error',
+      outcome:
+        response.reason === 'timeout'
+          ? 'timeout'
+          : response.reason === 'worker-error'
+            ? 'runtime-error'
+            : 'compile-error',
       passed: 0,
       total: tests.length,
       verdicts: [],
