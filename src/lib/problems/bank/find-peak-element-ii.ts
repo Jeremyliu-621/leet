@@ -41,12 +41,46 @@ You must write an algorithm that runs in \`O(m log(n))\` or \`O(n log(m))\` time
   params: ['mat'],
   starterCode: {
     javascript: `function findPeakGrid(mat) {
-
+  const m = mat.length, n = mat[0].length;
+  let lo = 0, hi = n - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    let maxRow = 0;
+    for (let r = 1; r < m; r++) if (mat[r][mid] > mat[maxRow][mid]) maxRow = r;
+    const left = mid > 0 ? mat[maxRow][mid - 1] : -1;
+    const right = mid < n - 1 ? mat[maxRow][mid + 1] : -1;
+    if (mat[maxRow][mid] > left && mat[maxRow][mid] > right) return [maxRow, mid];
+    if (left > right) hi = mid - 1; else lo = mid + 1;
+  }
+  return [-1, -1];
 }`,
-    typescript: "function findPeakGrid(mat: number[][]): number[] {\n\n}",
-
+    typescript: `function findPeakGrid(mat: number[][]): number[] {
+  const m = mat.length, n = mat[0]!.length;
+  let lo = 0, hi = n - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    let maxRow = 0;
+    for (let r = 1; r < m; r++) if (mat[r]![mid]! > mat[maxRow]![mid]!) maxRow = r;
+    const left = mid > 0 ? mat[maxRow]![mid - 1]! : -1;
+    const right = mid < n - 1 ? mat[maxRow]![mid + 1]! : -1;
+    if (mat[maxRow]![mid]! > left && mat[maxRow]![mid]! > right) return [maxRow, mid];
+    if (left > right) hi = mid - 1; else lo = mid + 1;
+  }
+  return [-1, -1];
+}`,
     python: `def findPeakGrid(mat):
-    pass`,
+    m, n = len(mat), len(mat[0])
+    lo, hi = 0, n - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        max_row = max(range(m), key=lambda r: mat[r][mid])
+        left = mat[max_row][mid - 1] if mid > 0 else -1
+        right = mat[max_row][mid + 1] if mid < n - 1 else -1
+        if mat[max_row][mid] > left and mat[max_row][mid] > right:
+            return [max_row, mid]
+        if left > right: hi = mid - 1
+        else: lo = mid + 1
+    return [-1, -1]`,
   },
   visibleTests: [
     { args: [[[1, 4], [3, 2]]], expected: [1, 0] },

@@ -35,12 +35,32 @@ Given a string \`s\` that represents a DNA sequence, return all the **10-letter-
   params: ['s'],
   starterCode: {
     javascript: `function findRepeatedDnaSequences(s) {
-
+  const seen = new Map(), result = new Set();
+  for (let i = 0; i <= s.length - 10; i++) {
+    const sub = s.slice(i, i + 10);
+    const cnt = (seen.get(sub) ?? 0) + 1;
+    seen.set(sub, cnt);
+    if (cnt === 2) result.add(sub);
+  }
+  return [...result].sort();
 }`,
-    typescript: "function findRepeatedDnaSequences(s: string): string[] {\n\n}",
-
+    typescript: `function findRepeatedDnaSequences(s: string): string[] {
+  const seen = new Map<string, number>(), result = new Set<string>();
+  for (let i = 0; i <= s.length - 10; i++) {
+    const sub = s.slice(i, i + 10);
+    const cnt = (seen.get(sub) ?? 0) + 1;
+    seen.set(sub, cnt);
+    if (cnt === 2) result.add(sub);
+  }
+  return [...result].sort();
+}`,
     python: `def findRepeatedDnaSequences(s: str) -> list[str]:
-    pass`,
+    seen, result = {}, set()
+    for i in range(len(s) - 9):
+        sub = s[i:i+10]
+        seen[sub] = seen.get(sub, 0) + 1
+        if seen[sub] == 2: result.add(sub)
+    return sorted(result)`,
   },
   visibleTests: [
     {

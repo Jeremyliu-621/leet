@@ -47,13 +47,29 @@ Return the **leftmost** such index, or \`-1\` if none exists.
   params: ['nums'],
   starterCode: {
     javascript: `function findProductPivot(nums) {
-
+  const n = nums.length;
+  const prefix = new Array(n).fill(1), suffix = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) prefix[i] = prefix[i - 1] * nums[i - 1];
+  for (let i = n - 2; i >= 0; i--) suffix[i] = suffix[i + 1] * nums[i + 1];
+  for (let i = 0; i < n; i++) if (prefix[i] === suffix[i]) return i;
+  return -1;
 }`,
     typescript: `function findProductPivot(nums: number[]): number {
-
+  const n = nums.length;
+  const prefix = new Array<number>(n).fill(1), suffix = new Array<number>(n).fill(1);
+  for (let i = 1; i < n; i++) prefix[i] = prefix[i - 1]! * nums[i - 1]!;
+  for (let i = n - 2; i >= 0; i--) suffix[i] = suffix[i + 1]! * nums[i + 1]!;
+  for (let i = 0; i < n; i++) if (prefix[i] === suffix[i]) return i;
+  return -1;
 }`,
     python: `def findProductPivot(nums):
-    pass`,
+    n = len(nums)
+    prefix, suffix = [1] * n, [1] * n
+    for i in range(1, n): prefix[i] = prefix[i-1] * nums[i-1]
+    for i in range(n-2, -1, -1): suffix[i] = suffix[i+1] * nums[i+1]
+    for i in range(n):
+        if prefix[i] == suffix[i]: return i
+    return -1`,
   },
   visibleTests: [
     { args: [[2, 1, 4, 2, 1]], expected: 2 },

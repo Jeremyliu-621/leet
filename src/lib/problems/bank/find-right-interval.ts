@@ -42,12 +42,37 @@ Return an array of **right interval** indices for each interval \`i\`. If no **r
   params: ['intervals'],
   starterCode: {
     javascript: `function findRightInterval(intervals) {
-
+  const sorted = intervals.map((v, i) => [v[0], i]).sort((a, b) => a[0] - b[0]);
+  return intervals.map(([, end]) => {
+    let lo = 0, hi = sorted.length - 1, ans = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (sorted[mid][0] >= end) { ans = sorted[mid][1]; hi = mid - 1; }
+      else lo = mid + 1;
+    }
+    return ans;
+  });
 }`,
-    typescript: "function findRightInterval(intervals: number[][]): number[] {\n\n}",
-
+    typescript: `function findRightInterval(intervals: number[][]): number[] {
+  const sorted = intervals.map((v, i) => [v[0]!, i]).sort((a, b) => a[0]! - b[0]!);
+  return intervals.map(([, end]) => {
+    let lo = 0, hi = sorted.length - 1, ans = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (sorted[mid]![0]! >= end!) { ans = sorted[mid]![1]!; hi = mid - 1; }
+      else lo = mid + 1;
+    }
+    return ans;
+  });
+}`,
     python: `def findRightInterval(intervals):
-    pass`,
+    import bisect
+    sorted_starts = sorted((v[0], i) for i, v in enumerate(intervals))
+    starts = [s for s, _ in sorted_starts]
+    def find(end):
+        idx = bisect.bisect_left(starts, end)
+        return sorted_starts[idx][1] if idx < len(sorted_starts) else -1
+    return [find(e) for _, e in intervals]`,
   },
   visibleTests: [
     { args: [[[1, 2]]], expected: [-1] },

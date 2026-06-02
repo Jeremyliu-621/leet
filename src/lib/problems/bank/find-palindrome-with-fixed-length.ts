@@ -34,13 +34,42 @@ A **palindrome** is a number that reads the same forwards and backwards.`,
   params: ['queries', 'intLength'],
   starterCode: {
     javascript: `function kthPalindrome(queries, intLength) {
-
+  const halfLen = Math.ceil(intLength / 2);
+  const start = Math.pow(10, halfLen - 1);
+  const end = Math.pow(10, halfLen);
+  return queries.map(k => {
+    const first = start + k - 1;
+    if (first >= end) return -1;
+    const s = first.toString();
+    const mirror = s.split('').reverse().join('');
+    return Number(intLength % 2 === 0 ? s + mirror : s + mirror.slice(1));
+  });
 }`,
     typescript: `function kthPalindrome(queries: number[], intLength: number): number[] {
-
+  const halfLen = Math.ceil(intLength / 2);
+  const start = Math.pow(10, halfLen - 1);
+  const end = Math.pow(10, halfLen);
+  return queries.map(k => {
+    const first = start + k - 1;
+    if (first >= end) return -1;
+    const s = first.toString();
+    const mirror = s.split('').reverse().join('');
+    return Number(intLength % 2 === 0 ? s + mirror : s + mirror.slice(1));
+  });
 }`,
     python: `def kthPalindrome(queries, intLength):
-    pass`,
+    import math
+    half_len = math.ceil(intLength / 2)
+    start, end = 10 ** (half_len - 1), 10 ** half_len
+    result = []
+    for k in queries:
+        first = start + k - 1
+        if first >= end:
+            result.append(-1)
+        else:
+            s = str(first); mirror = s[::-1]
+            result.append(int(s + (mirror[1:] if intLength % 2 else mirror)))
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 90], 3], expected: [101, 111, 121, 131, 141, 999] },

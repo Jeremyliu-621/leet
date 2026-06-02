@@ -36,12 +36,13 @@ It can be proven that the answer is **unique**.`,
   params: ['pref'],
   starterCode: {
     javascript: `function findArray(pref) {
-
+  return pref.map((v, i) => i === 0 ? v : pref[i - 1] ^ v);
 }`,
-    typescript: "function findArray(pref: number[]): number[] {\n\n}",
-
+    typescript: `function findArray(pref: number[]): number[] {
+  return pref.map((v, i) => i === 0 ? v : pref[i - 1]! ^ v);
+}`,
     python: `def findArray(pref):
-    pass`,
+    return [pref[0]] + [pref[i-1] ^ pref[i] for i in range(1, len(pref))]`,
   },
   visibleTests: [
     { args: [[5, 2, 0, 3, 1]], expected: [5, 7, 2, 3, 2] },
