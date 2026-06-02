@@ -50,12 +50,56 @@ return cur;\`\`\``
   params: ['s'],
   starterCode: {
     javascript: `function decodeString(s) {
-
+  const stack = [];
+  let cur = '', k = 0;
+  for (const c of s) {
+    if (c >= '0' && c <= '9') {
+      k = k * 10 + Number(c);
+    } else if (c === '[') {
+      stack.push([cur, k]);
+      cur = ''; k = 0;
+    } else if (c === ']') {
+      const [prev, times] = stack.pop();
+      cur = prev + cur.repeat(times);
+    } else {
+      cur += c;
+    }
+  }
+  return cur;
 }`,
-    typescript: "function decodeString(s: string): string {\n\n}",
-
+    typescript: `function decodeString(s: string): string {
+  const stack: [string, number][] = [];
+  let cur = '', k = 0;
+  for (const c of s) {
+    if (c >= '0' && c <= '9') {
+      k = k * 10 + Number(c);
+    } else if (c === '[') {
+      stack.push([cur, k]);
+      cur = ''; k = 0;
+    } else if (c === ']') {
+      const [prev, times] = stack.pop()!;
+      cur = prev + cur.repeat(times);
+    } else {
+      cur += c;
+    }
+  }
+  return cur;
+}`,
     python: `def decodeString(s):
-    pass`,
+    stack = []
+    cur, k = '', 0
+    for c in s:
+        if c.isdigit():
+            k = k * 10 + int(c)
+        elif c == '[':
+            stack.append((cur, k))
+            cur, k = '', 0
+        elif c == ']':
+            prev, times = stack.pop()
+            cur = prev + cur * times
+        else:
+            cur += c
+    return cur`,
   },
   visibleTests: [
     { args: ['3[a]2[bc]'], expected: 'aaabcbc' },

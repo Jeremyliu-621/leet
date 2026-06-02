@@ -33,12 +33,39 @@ In one step, you can delete exactly **one** character in either string.`,
   params: ['word1', 'word2'],
   starterCode: {
     javascript: `function minDistance(word1, word2) {
-
+  const m = word1.length, n = word2.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = word1[i - 1] === word2[j - 1]
+        ? dp[i - 1][j - 1] + 1
+        : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+  return m + n - 2 * dp[m][n];
 }`,
-    typescript: "function minDistance(word1: string, word2: string): number {\n\n}",
-
+    typescript: `function minDistance(word1: string, word2: string): number {
+  const m = word1.length, n = word2.length;
+  const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i]![j] = word1[i - 1] === word2[j - 1]
+        ? dp[i - 1]![j - 1]! + 1
+        : Math.max(dp[i - 1]![j]!, dp[i]![j - 1]!);
+    }
+  }
+  return m + n - 2 * dp[m]![n]!;
+}`,
     python: `def minDistance(word1, word2):
-    pass`,
+    m, n = len(word1), len(word2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if word1[i-1] == word2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return m + n - 2 * dp[m][n]`,
   },
   visibleTests: [
     { args: ['sea', 'eat'], expected: 2 },

@@ -38,12 +38,27 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
   params: ['nums'],
   starterCode: {
     javascript: `function zeroFilledSubarray(nums) {
-
+  let ans = 0, run = 0;
+  for (const x of nums) {
+    run = x === 0 ? run + 1 : 0;
+    ans += run;
+  }
+  return ans;
 }`,
-    typescript: "function zeroFilledSubarray(nums: number[]): number {\n\n}",
-
+    typescript: `function zeroFilledSubarray(nums: number[]): number {
+  let ans = 0, run = 0;
+  for (const x of nums) {
+    run = x === 0 ? run + 1 : 0;
+    ans += run;
+  }
+  return ans;
+}`,
     python: `def zeroFilledSubarray(nums):
-    pass`,
+    ans, run = 0, 0
+    for x in nums:
+        run = run + 1 if x == 0 else 0
+        ans += run
+    return ans`,
   },
   visibleTests: [
     { args: [[0, 0, 0]], expected: 6 },

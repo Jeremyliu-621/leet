@@ -40,12 +40,18 @@ return [...s].sort((a,b) => (rank[a]??26)-(rank[b]??26)).join('');\`\`\``
   params: ['order', 's'],
   starterCode: {
     javascript: `function customSortString(order, s) {
-
+  const rank = {};
+  for (let i = 0; i < order.length; i++) rank[order[i]] = i;
+  return [...s].sort((a, b) => (rank[a] ?? order.length) - (rank[b] ?? order.length)).join('');
 }`,
-    typescript: "function customSortString(order: string, s: string): string {\n\n}",
-
+    typescript: `function customSortString(order: string, s: string): string {
+  const rank: Record<string, number> = {};
+  for (let i = 0; i < order.length; i++) rank[order[i]!] = i;
+  return [...s].sort((a, b) => (rank[a] ?? order.length) - (rank[b] ?? order.length)).join('');
+}`,
     python: `def customSortString(order, s):
-    pass`,
+    rank = {c: i for i, c in enumerate(order)}
+    return ''.join(sorted(s, key=lambda c: rank.get(c, len(order))))`,
   },
   visibleTests: [
     { args: ['cba', 'abcd'], expected: 'cbad' },
