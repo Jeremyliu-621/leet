@@ -12,6 +12,46 @@ const EXPORT_KEYS = [
   'userPreferences',
 ] as const;
 
+function isRecord(v: unknown): v is Record<string, unknown> {
+  return typeof v === 'object' && v !== null && !Array.isArray(v);
+}
+
+function isBlockRuleArray(v: unknown): boolean {
+  if (!Array.isArray(v)) return false;
+  return v.every(
+    (item) =>
+      isRecord(item) &&
+      typeof item['id'] === 'string' &&
+      typeof item['pattern'] === 'string' &&
+      typeof item['enabled'] === 'boolean',
+  );
+}
+
+function isKeywordRuleArray(v: unknown): boolean {
+  if (!Array.isArray(v)) return false;
+  return v.every(
+    (item) =>
+      isRecord(item) &&
+      typeof item['id'] === 'string' &&
+      typeof item['keyword'] === 'string' &&
+      typeof item['enabled'] === 'boolean',
+  );
+}
+
+/** Validate the shape of an imported value before writing to storage. */
+function validateImportKey(key: string, value: unknown): boolean {
+  switch (key) {
+    case 'blockedRules':
+      return isBlockRuleArray(value);
+    case 'keywordRules':
+      return isKeywordRuleArray(value);
+    case 'userPreferences':
+      return isRecord(value);
+    default:
+      return false;
+  }
+}
+
 export function ImportExportSection() {
   const [exportState, setExportState] = useState<ExportState>('idle');
   const [importState, setImportState] = useState<ImportState>('idle');
@@ -67,16 +107,22 @@ export function ImportExportSection() {
       }
 
       const parsed = data as Record<string, unknown>;
-      // Restore only the exported keys that are present.
+      // Restore only the exported keys that are present and have valid shapes.
+      const invalidKeys: string[] = [];
       await Promise.all(
         EXPORT_KEYS.map(async (key) => {
-          if (key in parsed) {
-            // Type-cast is intentional: we trust the export was written by this same code.
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            await setValue(key, parsed[key] as any);
+          if (!(key in parsed)) return;
+          if (!validateImportKey(key, parsed[key])) {
+            invalidKeys.push(key);
+            return;
           }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          await setValue(key, parsed[key] as any);
         }),
       );
+      if (invalidKeys.length > 0) {
+        throw new Error(`Invalid data for: ${invalidKeys.join(', ')}`);
+      }
       setImportState('done');
       setTimeout(() => {
         setImportState('idle');
