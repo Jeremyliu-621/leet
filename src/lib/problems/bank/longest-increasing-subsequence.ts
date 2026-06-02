@@ -41,10 +41,41 @@ The O(n²) DP solution is acceptable, but the O(n log n) patience sorting approa
   functionName: 'lengthOfLIS',
   params: ['nums'],
   starterCode: {
-    javascript: 'function lengthOfLIS(nums) {\n  // your code here\n}\n',
-    typescript: "function lengthOfLIS(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def lengthOfLIS(nums):\n    # your code here\n    pass\n',
+    javascript: `function lengthOfLIS(nums) {
+  const tails = [];
+  for (const num of nums) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (tails[mid] < num) lo = mid + 1;
+      else hi = mid;
+    }
+    tails[lo] = num;
+  }
+  return tails.length;
+}`,
+    typescript: `function lengthOfLIS(nums: number[]): number {
+  const tails: number[] = [];
+  for (const num of nums) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (tails[mid]! < num) lo = mid + 1;
+      else hi = mid;
+    }
+    tails[lo] = num;
+  }
+  return tails.length;
+}`,
+    python: `def lengthOfLIS(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import bisect
+    tails = []
+    for num in nums:
+        pos = bisect.bisect_left(tails, num)
+        if pos == len(tails): tails.append(num)
+        else: tails[pos] = num
+    return len(tails)`,
   },
   visibleTests: [
     { args: [[10, 9, 2, 5, 3, 7, 101, 18]], expected: 4 },

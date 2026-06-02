@@ -39,10 +39,40 @@ Your solution must run in **O(n)** time.`,
   functionName: 'longestConsecutive',
   params: ['nums'],
   starterCode: {
-    javascript: 'function longestConsecutive(nums) {\n  // your code here\n}\n',
-    typescript: "function longestConsecutive(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def longestConsecutive(nums):\n    # your code here\n    pass\n',
+    javascript: `function longestConsecutive(nums) {
+  const s = new Set(nums);
+  let best = 0;
+  for (const n of s) {
+    if (!s.has(n - 1)) {
+      let len = 1;
+      while (s.has(n + len)) len++;
+      best = Math.max(best, len);
+    }
+  }
+  return best;
+}`,
+    typescript: `function longestConsecutive(nums: number[]): number {
+  const s = new Set(nums);
+  let best = 0;
+  for (const n of s) {
+    if (!s.has(n - 1)) {
+      let len = 1;
+      while (s.has(n + len)) len++;
+      best = Math.max(best, len);
+    }
+  }
+  return best;
+}`,
+    python: `def longestConsecutive(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    s = set(nums)
+    best = 0
+    for n in s:
+        if n - 1 not in s:
+            length = 1
+            while n + length in s: length += 1
+            best = max(best, length)
+    return best`,
   },
   visibleTests: [
     { args: [[100, 4, 200, 1, 3, 2]], expected: 4 },

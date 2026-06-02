@@ -36,10 +36,41 @@ Return the **maximum score** you can get.`,
   functionName: 'maxResult',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function maxResult(nums, k) {\n  // your code here\n}\n',
-    typescript: "function maxResult(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def maxResult(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function maxResult(nums, k) {
+  const dp = [nums[0]];
+  const dq = [0];
+  for (let i = 1; i < nums.length; i++) {
+    while (dq.length && dq[0] < i - k) dq.shift();
+    dp[i] = nums[i] + dp[dq[0]];
+    while (dq.length && dp[dq[dq.length - 1]] <= dp[i]) dq.pop();
+    dq.push(i);
+  }
+  return dp[nums.length - 1];
+}`,
+    typescript: `function maxResult(nums: number[], k: number): number {
+  const dp: number[] = [nums[0]!];
+  const dq: number[] = [0];
+  for (let i = 1; i < nums.length; i++) {
+    while (dq.length && dq[0]! < i - k) dq.shift();
+    dp[i] = nums[i]! + dp[dq[0]!]!;
+    while (dq.length && dp[dq[dq.length - 1]!]! <= dp[i]!) dq.pop();
+    dq.push(i);
+  }
+  return dp[nums.length - 1]!;
+}`,
+    python: `def maxResult(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    from collections import deque
+    n = len(nums)
+    dp = [0] * n
+    dp[0] = nums[0]
+    dq = deque([0])
+    for i in range(1, n):
+        while dq and dq[0] < i - k: dq.popleft()
+        dp[i] = nums[i] + dp[dq[0]]
+        while dq and dp[dq[-1]] <= dp[i]: dq.pop()
+        dq.append(i)
+    return dp[n - 1]`,
   },
   visibleTests: [
     { args: [[1, -1, -2, 4, -7, 3], 2], expected: 7 },

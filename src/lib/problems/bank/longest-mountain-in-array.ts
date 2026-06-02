@@ -43,10 +43,40 @@ Return the length of the longest mountain subarray in \`arr\`, or \`0\` if no mo
   functionName: 'longestMountain',
   params: ['arr'] as readonly string[],
   starterCode: {
-    javascript: 'function longestMountain(arr) {\n  // your code here\n}\n',
-    typescript: "function longestMountain(arr: number[]): number {\n  // your code here\n}",
-
-    python: 'def longestMountain(arr: list[int]) -> int:\n    # your code here\n    pass\n',
+    javascript: `function longestMountain(arr) {
+  let best = 0;
+  for (let k = 1; k < arr.length - 1; k++) {
+    if (arr[k - 1] < arr[k] && arr[k] > arr[k + 1]) {
+      let l = k - 1, r = k + 1;
+      while (l > 0 && arr[l - 1] < arr[l]) l--;
+      while (r < arr.length - 1 && arr[r] > arr[r + 1]) r++;
+      best = Math.max(best, r - l + 1);
+    }
+  }
+  return best;
+}`,
+    typescript: `function longestMountain(arr: number[]): number {
+  let best = 0;
+  for (let k = 1; k < arr.length - 1; k++) {
+    if (arr[k - 1]! < arr[k]! && arr[k]! > arr[k + 1]!) {
+      let l = k - 1, r = k + 1;
+      while (l > 0 && arr[l - 1]! < arr[l]!) l--;
+      while (r < arr.length - 1 && arr[r]! > arr[r + 1]!) r++;
+      best = Math.max(best, r - l + 1);
+    }
+  }
+  return best;
+}`,
+    python: `def longestMountain(arr):
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    best = 0
+    for k in range(1, len(arr) - 1):
+        if arr[k - 1] < arr[k] > arr[k + 1]:
+            l, r = k - 1, k + 1
+            while l > 0 and arr[l - 1] < arr[l]: l -= 1
+            while r < len(arr) - 1 and arr[r] > arr[r + 1]: r += 1
+            best = max(best, r - l + 1)
+    return best`,
   },
   visibleTests: [
     { args: [[2, 1, 4, 7, 3, 2, 5]], expected: 5 },

@@ -35,10 +35,32 @@ export const problem: Problem = {
   functionName: 'longestEqualRun',
   params: ['text'],
   starterCode: {
-    javascript: 'function longestEqualRun(text) {\n  // your code here\n}\n',
-    typescript: "function longestEqualRun(text: string): number {\n  // your code here\n}",
-
-    python: 'def longestEqualRun(text):\n    # your code here\n    pass\n',
+    javascript: `function longestEqualRun(text) {
+  if (!text.length) return 0;
+  let best = 1, curr = 1;
+  for (let i = 1; i < text.length; i++) {
+    curr = text[i] === text[i - 1] ? curr + 1 : 1;
+    best = Math.max(best, curr);
+  }
+  return best;
+}`,
+    typescript: `function longestEqualRun(text: string): number {
+  if (!text.length) return 0;
+  let best = 1, curr = 1;
+  for (let i = 1; i < text.length; i++) {
+    curr = text[i] === text[i - 1] ? curr + 1 : 1;
+    best = Math.max(best, curr);
+  }
+  return best;
+}`,
+    python: `def longestEqualRun(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    if not text: return 0
+    best = curr = 1
+    for i in range(1, len(text)):
+        curr = curr + 1 if text[i] == text[i - 1] else 1
+        best = max(best, curr)
+    return best`,
   },
   visibleTests: [
     { args: ['aabbbcc'], expected: 3 },
