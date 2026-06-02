@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 277
+import { problem as minimumArraySum } from './minimum-array-sum';
+import { problem as findXSumSubarraysII } from './find-x-sum-of-all-k-long-subarrays-ii';
+import { problem as maximumMatchingIndicesRightShifts } from './maximum-number-of-matching-indices-after-right-shifts';
+import { problem as maxAreaRectanglePointConstraintsI } from './maximum-area-rectangle-with-point-constraints-i';
 // batch 276
 import { problem as numWaysPaintFence } from './number-of-ways-to-paint-the-fence';
 import { problem as maxScoreWordsLetters } from './maximum-score-words-formed-by-letters';
@@ -6497,6 +6502,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 277
+  minimumArraySum,
+  findXSumSubarraysII,
+  maximumMatchingIndicesRightShifts,
+  maxAreaRectanglePointConstraintsI,
   // batch 276
   numWaysPaintFence,
   maxScoreWordsLetters,

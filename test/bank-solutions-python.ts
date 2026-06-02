@@ -47120,6 +47120,88 @@ def maxTotalReward(rewardValues):
     return prev[n]
 `,
 
+  // batch 275
+  'minimum-array-sum': `import math
+def minimumArraySum(nums, k, op1, op2):
+    INF = float('inf')
+    dp = [[INF] * (op2 + 1) for _ in range(op1 + 1)]
+    dp[0][0] = 0
+    for x in nums:
+        nd = [[INF] * (op2 + 1) for _ in range(op1 + 1)]
+        for i in range(op1 + 1):
+            for j in range(op2 + 1):
+                if dp[i][j] == INF:
+                    continue
+                base = dp[i][j]
+                if nd[i][j] > base + x:
+                    nd[i][j] = base + x
+                if i < op1:
+                    v = math.ceil(x / 2)
+                    if nd[i + 1][j] > base + v:
+                        nd[i + 1][j] = base + v
+                if j < op2 and x >= k:
+                    v = x - k
+                    if nd[i][j + 1] > base + v:
+                        nd[i][j + 1] = base + v
+                if i < op1 and j < op2:
+                    both = INF
+                    if x >= k:
+                        v = math.ceil((x - k) / 2)
+                        both = min(both, v)
+                    after_op1 = math.ceil(x / 2)
+                    if after_op1 >= k:
+                        v = after_op1 - k
+                        both = min(both, v)
+                    if both < INF and nd[i + 1][j + 1] > base + both:
+                        nd[i + 1][j + 1] = base + both
+        dp = nd
+    return min(dp[i][j] for i in range(op1 + 1) for j in range(op2 + 1))
+`,
+
+  'find-x-sum-of-all-k-long-subarrays-ii': `from collections import Counter
+def findXSum(nums, k, x):
+    n = len(nums)
+    result = []
+    for i in range(n - k + 1):
+        freq = Counter(nums[i:i+k])
+        top = sorted(freq.items(), key=lambda p: (p[1], p[0]), reverse=True)
+        s = sum(v * c for v, c in top[:x])
+        result.append(s)
+    return result
+`,
+
+  'maximum-number-of-matching-indices-after-right-shifts': `def maximumMatchingIndices(nums1, nums2):
+    n = len(nums1)
+    best = 0
+    for shift in range(n):
+        count = sum(nums1[(i - shift) % n] == nums2[i] for i in range(n))
+        if count > best:
+            best = count
+    return best
+`,
+
+  'maximum-area-rectangle-with-point-constraints-i': `def maxRectangleArea(points):
+    pt_set = set((x, y) for x, y in points)
+    n = len(points)
+    best = -1
+    for a in range(n):
+        for b in range(a + 1, n):
+            x1, y1 = points[a]
+            x2, y2 = points[b]
+            if x1 == x2 or y1 == y2:
+                continue
+            if (x1, y2) not in pt_set or (x2, y1) not in pt_set:
+                continue
+            lx, rx = min(x1, x2), max(x1, x2)
+            ly, ry = min(y1, y2), max(y1, y2)
+            clean = all(not (lx < px < rx and ly < py < ry) for px, py in points)
+            if clean:
+                area = (rx - lx) * (ry - ly)
+                if area > best:
+                    best = area
+    return best
+`,
+
   // batch 273
   'make-string-great': `def makeGood(s):
     stack = []

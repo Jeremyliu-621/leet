@@ -48190,6 +48190,117 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return prev[n]!;
   },
 
+  // batch 275
+  'minimum-array-sum': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const op1 = args[2] as number;
+    const op2 = args[3] as number;
+    const INF = Infinity;
+    let dp = Array.from({ length: op1 + 1 }, () => new Array<number>(op2 + 1).fill(INF));
+    dp[0]![0] = 0;
+    for (const x of nums) {
+      const nd = Array.from({ length: op1 + 1 }, () => new Array<number>(op2 + 1).fill(INF));
+      for (let i = 0; i <= op1; i++) {
+        for (let j = 0; j <= op2; j++) {
+          if (dp[i]![j] === INF) continue;
+          const base = dp[i]![j]!;
+          if (nd[i]![j]! > base + x) nd[i]![j] = base + x;
+          if (i < op1) {
+            const v = Math.ceil(x / 2);
+            if (nd[i + 1]![j]! > base + v) nd[i + 1]![j] = base + v;
+          }
+          if (j < op2 && x >= k) {
+            const v = x - k;
+            if (nd[i]![j + 1]! > base + v) nd[i]![j + 1] = base + v;
+          }
+          if (i < op1 && j < op2) {
+            let both = INF;
+            if (x >= k) {
+              const v = Math.ceil((x - k) / 2);
+              if (v < both) both = v;
+            }
+            const afterOp1 = Math.ceil(x / 2);
+            if (afterOp1 >= k) {
+              const v = afterOp1 - k;
+              if (v < both) both = v;
+            }
+            if (both < INF && nd[i + 1]![j + 1]! > base + both) {
+              nd[i + 1]![j + 1] = base + both;
+            }
+          }
+        }
+      }
+      dp = nd;
+    }
+    return Math.min(...dp.flat());
+  },
+
+  'find-x-sum-of-all-k-long-subarrays-ii': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const x = args[2] as number;
+    const n = nums.length;
+    const result: number[] = [];
+    for (let i = 0; i <= n - k; i++) {
+      const freq = new Map<number, number>();
+      for (let j = i; j < i + k; j++) {
+        freq.set(nums[j]!, (freq.get(nums[j]!) ?? 0) + 1);
+      }
+      const sorted = [...freq.entries()].sort((a, b) =>
+        b[1] - a[1] !== 0 ? b[1] - a[1] : b[0] - a[0],
+      );
+      let sum = 0;
+      const take = Math.min(x, sorted.length);
+      for (let j = 0; j < take; j++) {
+        sum += sorted[j]![0] * sorted[j]![1];
+      }
+      result.push(sum);
+    }
+    return result;
+  },
+
+  'maximum-number-of-matching-indices-after-right-shifts': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const n = nums1.length;
+    let best = 0;
+    for (let shift = 0; shift < n; shift++) {
+      let count = 0;
+      for (let i = 0; i < n; i++) {
+        if (nums1[(i - shift + n) % n] === nums2[i]) count++;
+      }
+      if (count > best) best = count;
+    }
+    return best;
+  },
+
+  'maximum-area-rectangle-with-point-constraints-i': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const ptSet = new Set(points.map(([x, y]) => `${x},${y}`));
+    const n = points.length;
+    let best = -1;
+    for (let a = 0; a < n; a++) {
+      for (let b = a + 1; b < n; b++) {
+        const [x1, y1] = points[a]!;
+        const [x2, y2] = points[b]!;
+        if (x1 === x2 || y1 === y2) continue;
+        if (!ptSet.has(`${x1},${y2}`) || !ptSet.has(`${x2},${y1}`)) continue;
+        const lx = Math.min(x1!, x2!), rx = Math.max(x1!, x2!);
+        const ly = Math.min(y1!, y2!), ry = Math.max(y1!, y2!);
+        let clean = true;
+        for (const [px, py] of points) {
+          if (px! > lx && px! < rx && py! > ly && py! < ry) { clean = false; break; }
+        }
+        if (clean) {
+          const area = (rx - lx) * (ry - ly);
+          if (area > best) best = area;
+        }
+      }
+    }
+    return best;
+  },
+
   // batch 273
   'make-string-great': (...args: unknown[]) => {
     const s = args[0] as string;
