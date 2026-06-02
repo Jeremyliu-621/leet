@@ -40,13 +40,35 @@ Return the **maximum** strength of a group the teacher can create.`,
   params: ['nums'],
   starterCode: {
     javascript: `function maxStrength(nums) {
-
+  const n = nums.length;
+  let ans = -Infinity;
+  for (let mask = 1; mask < (1 << n); mask++) {
+    let prod = 1;
+    for (let i = 0; i < n; i++) if ((mask >> i) & 1) prod *= nums[i];
+    if (prod > ans) ans = prod;
+  }
+  return ans;
 }`,
     typescript: `function maxStrength(nums: number[]): number {
-
+  const n = nums.length;
+  let ans = -Infinity;
+  for (let mask = 1; mask < (1 << n); mask++) {
+    let prod = 1;
+    for (let i = 0; i < n; i++) if ((mask >> i) & 1) prod *= nums[i]!;
+    if (prod > ans) ans = prod;
+  }
+  return ans;
 }`,
     python: `def maxStrength(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    ans = -float('inf')
+    for mask in range(1, 1 << n):
+        prod = 1
+        for i in range(n):
+            if (mask >> i) & 1: prod *= nums[i]
+        if prod > ans: ans = prod
+    return ans`,
   },
   visibleTests: [
     { args: [[3, -1, -5, 2, 4]], expected: 120 },

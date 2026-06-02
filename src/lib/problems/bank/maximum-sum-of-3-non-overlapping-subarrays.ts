@@ -35,12 +35,89 @@ Return the result as a list of indices representing the starting position of eac
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maxSumOfThreeSubarrays(nums, k) {
-
+  const n = nums.length;
+  const w = new Array(n - k + 1);
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i];
+  w[0] = sum;
+  for (let i = 1; i <= n - k; i++) {
+    sum += nums[i + k - 1] - nums[i - 1];
+    w[i] = sum;
+  }
+  const left = new Array(w.length);
+  let best = 0;
+  for (let i = 0; i < w.length; i++) {
+    if (w[i] > w[best]) best = i;
+    left[i] = best;
+  }
+  const right = new Array(w.length);
+  best = w.length - 1;
+  for (let i = w.length - 1; i >= 0; i--) {
+    if (w[i] >= w[best]) best = i;
+    right[i] = best;
+  }
+  let ans = -1, res = [-1, -1, -1];
+  for (let j = k; j <= n - 2 * k; j++) {
+    const l = left[j - k], r = right[j + k];
+    const total = w[l] + w[j] + w[r];
+    if (total > ans) { ans = total; res = [l, j, r]; }
+  }
+  return res;
 }`,
-    typescript: "function maxSumOfThreeSubarrays(nums: number[], k: number): number[] {\n\n}",
-
+    typescript: `function maxSumOfThreeSubarrays(nums: number[], k: number): number[] {
+  const n = nums.length;
+  const w = new Array<number>(n - k + 1);
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += nums[i]!;
+  w[0] = sum;
+  for (let i = 1; i <= n - k; i++) {
+    sum += nums[i + k - 1]! - nums[i - 1]!;
+    w[i] = sum;
+  }
+  const left = new Array<number>(w.length);
+  let best = 0;
+  for (let i = 0; i < w.length; i++) {
+    if (w[i]! > w[best]!) best = i;
+    left[i] = best;
+  }
+  const right = new Array<number>(w.length);
+  best = w.length - 1;
+  for (let i = w.length - 1; i >= 0; i--) {
+    if (w[i]! >= w[best]!) best = i;
+    right[i] = best;
+  }
+  let ans = -1; const res = [-1, -1, -1];
+  for (let j = k; j <= n - 2 * k; j++) {
+    const l = left[j - k]!, r = right[j + k]!;
+    const total = w[l]! + w[j]! + w[r]!;
+    if (total > ans) { ans = total; res[0] = l; res[1] = j; res[2] = r; }
+  }
+  return res;
+}`,
     python: `def maxSumOfThreeSubarrays(nums, k):
-    `,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    w = [0] * (n - k + 1)
+    w[0] = sum(nums[:k])
+    for i in range(1, n - k + 1):
+        w[i] = w[i-1] + nums[i+k-1] - nums[i-1]
+    left = [0] * len(w)
+    best = 0
+    for i in range(len(w)):
+        if w[i] > w[best]: best = i
+        left[i] = best
+    right = [0] * len(w)
+    best = len(w) - 1
+    for i in range(len(w) - 1, -1, -1):
+        if w[i] >= w[best]: best = i
+        right[i] = best
+    ans, res = -1, [-1, -1, -1]
+    for j in range(k, n - 2*k + 1):
+        l, r = left[j-k], right[j+k]
+        total = w[l] + w[j] + w[r]
+        if total > ans:
+            ans, res = total, [l, j, r]
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, 1, 2, 6, 7, 5, 1], 2], expected: [0, 3, 5] },

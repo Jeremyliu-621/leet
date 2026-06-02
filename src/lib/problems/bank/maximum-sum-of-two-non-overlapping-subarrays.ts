@@ -34,13 +34,48 @@ The subarrays may appear in either order — the subarray of length \`firstLen\`
   params: ['nums', 'firstLen', 'secondLen'],
   starterCode: {
     javascript: `function maxSumTwoNoOverlap(nums, firstLen, secondLen) {
-
+  const solve = (L, M) => {
+    const n = nums.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + nums[i];
+    const winSum = (l, r) => prefix[r + 1] - prefix[l];
+    let maxL = 0, ans = 0;
+    for (let i = L + M - 1; i < n; i++) {
+      maxL = Math.max(maxL, winSum(i - M - L + 1, i - M));
+      ans = Math.max(ans, maxL + winSum(i - M + 1, i));
+    }
+    return ans;
+  };
+  return Math.max(solve(firstLen, secondLen), solve(secondLen, firstLen));
 }`,
     typescript: `function maxSumTwoNoOverlap(nums: number[], firstLen: number, secondLen: number): number {
-
+  const solve = (L: number, M: number): number => {
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    const winSum = (l: number, r: number) => prefix[r + 1]! - prefix[l]!;
+    let maxL = 0, ans = 0;
+    for (let i = L + M - 1; i < n; i++) {
+      maxL = Math.max(maxL, winSum(i - M - L + 1, i - M));
+      ans = Math.max(ans, maxL + winSum(i - M + 1, i));
+    }
+    return ans;
+  };
+  return Math.max(solve(firstLen, secondLen), solve(secondLen, firstLen));
 }`,
     python: `def maxSumTwoNoOverlap(nums, firstLen, secondLen):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    def solve(L, M):
+        n = len(nums)
+        prefix = [0] * (n + 1)
+        for i in range(n): prefix[i+1] = prefix[i] + nums[i]
+        def win(l, r): return prefix[r+1] - prefix[l]
+        max_l = ans = 0
+        for i in range(L + M - 1, n):
+            max_l = max(max_l, win(i - M - L + 1, i - M))
+            ans = max(ans, max_l + win(i - M + 1, i))
+        return ans
+    return max(solve(firstLen, secondLen), solve(secondLen, firstLen))`,
   },
   visibleTests: [
     { args: [[0, 6, 5, 2, 2, 5, 1, 9, 4], 1, 2], expected: 20 },

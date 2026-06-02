@@ -41,13 +41,37 @@ Return the **maximum possible sum** of \`nums\` after any number of operations.`
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maxXorSum(nums, k) {
-
+  const sum = nums.reduce((a, b) => a + b, 0);
+  const gains = nums.map(x => (x ^ k) - x).sort((a, b) => b - a);
+  let totalGain = 0;
+  for (let i = 0; i + 1 < gains.length; i += 2) {
+    const pairGain = gains[i] + gains[i + 1];
+    if (pairGain > 0) totalGain += pairGain;
+    else break;
+  }
+  return sum + totalGain;
 }`,
     typescript: `function maxXorSum(nums: number[], k: number): number {
-
+  const sum = nums.reduce((a, b) => a + b, 0);
+  const gains = nums.map(x => (x ^ k) - x).sort((a, b) => b - a);
+  let totalGain = 0;
+  for (let i = 0; i + 1 < gains.length; i += 2) {
+    const pairGain = gains[i]! + gains[i + 1]!;
+    if (pairGain > 0) totalGain += pairGain;
+    else break;
+  }
+  return sum + totalGain;
 }`,
     python: `def maxXorSum(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    total = sum(nums)
+    gains = sorted(((x ^ k) - x for x in nums), reverse=True)
+    extra = 0
+    for i in range(0, len(gains) - 1, 2):
+        pair = gains[i] + gains[i + 1]
+        if pair > 0: extra += pair
+        else: break
+    return total + extra`,
   },
   visibleTests: [
     { args: [[1, 2, 1], 3], expected: 6 },

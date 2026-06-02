@@ -42,12 +42,83 @@ Note that the min-product should be maximized **before** performing the modulo o
   params: ['nums'],
   starterCode: {
     javascript: `function maxSumMinProduct(nums) {
-
+  const MOD = 1_000_000_007n;
+  const n = nums.length;
+  const prefix = new Array(n + 1).fill(0n);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + BigInt(nums[i]);
+  const left = new Array(n).fill(-1);
+  const right = new Array(n).fill(n);
+  const stack = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && nums[stack[stack.length - 1]] >= nums[i]) stack.pop();
+    left[i] = stack.length ? stack[stack.length - 1] : -1;
+    stack.push(i);
+  }
+  stack.length = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    while (stack.length && nums[stack[stack.length - 1]] > nums[i]) stack.pop();
+    right[i] = stack.length ? stack[stack.length - 1] : n;
+    stack.push(i);
+  }
+  let best = 0n;
+  for (let i = 0; i < n; i++) {
+    const sum = prefix[right[i]] - prefix[left[i] + 1];
+    const score = BigInt(nums[i]) * sum;
+    if (score > best) best = score;
+  }
+  return Number(best % MOD);
 }`,
-    typescript: "function maxSumMinProduct(nums: number[]): number {\n\n}",
-
+    typescript: `function maxSumMinProduct(nums: number[]): number {
+  const MOD = 1_000_000_007n;
+  const n = nums.length;
+  const prefix = new Array<bigint>(n + 1).fill(0n);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + BigInt(nums[i]!);
+  const left = new Array<number>(n).fill(-1);
+  const right = new Array<number>(n).fill(n);
+  const stack: number[] = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && nums[stack[stack.length - 1]!]! >= nums[i]!) stack.pop();
+    left[i] = stack.length ? stack[stack.length - 1]! : -1;
+    stack.push(i);
+  }
+  stack.length = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    while (stack.length && nums[stack[stack.length - 1]!]! > nums[i]!) stack.pop();
+    right[i] = stack.length ? stack[stack.length - 1]! : n;
+    stack.push(i);
+  }
+  let best = 0n;
+  for (let i = 0; i < n; i++) {
+    const sum = prefix[right[i]!]! - prefix[left[i]! + 1]!;
+    const score = BigInt(nums[i]!) * sum;
+    if (score > best) best = score;
+  }
+  return Number(best % MOD);
+}`,
     python: `def maxSumMinProduct(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    MOD = 10**9 + 7
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i + 1] = prefix[i] + nums[i]
+    left = [-1] * n
+    right = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] >= nums[i]: stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack.clear()
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] > nums[i]: stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    best = 0
+    for i in range(n):
+        s = prefix[right[i]] - prefix[left[i] + 1]
+        score = nums[i] * s
+        if score > best: best = score
+    return best % MOD`,
   },
   visibleTests: [
     { args: [[1,2,3,2]], expected: 14 },

@@ -48,13 +48,74 @@ Return the **maximum score** of a valid node sequence with a length of \`4\`. If
   params: ['scores', 'edges'],
   starterCode: {
     javascript: `function maximumScore(scores, edges) {
-
+  const n = scores.length;
+  const top3 = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) {
+    top3[u].push(v);
+    top3[v].push(u);
+  }
+  for (let i = 0; i < n; i++) {
+    top3[i].sort((a, b) => scores[b] - scores[a]);
+    top3[i] = top3[i].slice(0, 3);
+  }
+  let ans = -1;
+  for (const [b, c] of edges) {
+    for (const a of top3[b]) {
+      if (a === c) continue;
+      for (const d of top3[c]) {
+        if (d === b || d === a) continue;
+        const s = scores[a] + scores[b] + scores[c] + scores[d];
+        if (s > ans) ans = s;
+      }
+    }
+  }
+  return ans;
 }`,
     typescript: `function maximumScore(scores: number[], edges: number[][]): number {
-
+  const n = scores.length;
+  const top3: number[][] = Array.from({length: n}, () => []);
+  for (const e of edges) {
+    top3[e[0]!]!.push(e[1]!);
+    top3[e[1]!]!.push(e[0]!);
+  }
+  for (let i = 0; i < n; i++) {
+    top3[i]!.sort((a, b) => scores[b]! - scores[a]!);
+    top3[i] = top3[i]!.slice(0, 3);
+  }
+  let ans = -1;
+  for (const e of edges) {
+    const b = e[0]!, c = e[1]!;
+    for (const a of top3[b]!) {
+      if (a === c) continue;
+      for (const d of top3[c]!) {
+        if (d === b || d === a) continue;
+        const s = scores[a]! + scores[b]! + scores[c]! + scores[d]!;
+        if (s > ans) ans = s;
+      }
+    }
+  }
+  return ans;
 }`,
     python: `def maximumScore(scores, edges):
-    pass`,
+    if hasattr(scores, 'to_py'): scores = list(scores.to_py())
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    n = len(scores)
+    top3 = [[] for _ in range(n)]
+    for u, v in edges:
+        top3[u].append(v)
+        top3[v].append(u)
+    for i in range(n):
+        top3[i].sort(key=lambda x: -scores[x])
+        top3[i] = top3[i][:3]
+    ans = -1
+    for b, c in edges:
+        for a in top3[b]:
+            if a == c: continue
+            for d in top3[c]:
+                if d == b or d == a: continue
+                s = scores[a] + scores[b] + scores[c] + scores[d]
+                if s > ans: ans = s
+    return ans`,
   },
   visibleTests: [
     { args: [[5, 2, 9, 8], [[0, 1], [1, 2], [2, 3], [0, 2]]], expected: 24 },

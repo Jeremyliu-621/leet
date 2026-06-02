@@ -36,12 +36,55 @@ Return the maximum subarray sum of all the subarrays that meet the conditions. I
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximumSubarraySum(nums, k) {
-
+  const freq = new Map();
+  let windowSum = 0, ans = 0;
+  for (let i = 0; i < nums.length; i++) {
+    freq.set(nums[i], (freq.get(nums[i]) || 0) + 1);
+    windowSum += nums[i];
+    if (i >= k) {
+      const l = nums[i - k];
+      const c = freq.get(l) - 1;
+      if (c === 0) freq.delete(l);
+      else freq.set(l, c);
+      windowSum -= l;
+    }
+    if (i >= k - 1 && freq.size === k && windowSum > ans) ans = windowSum;
+  }
+  return ans;
 }`,
-    typescript: "function maximumSubarraySum(nums: number[], k: number): number {\n\n}",
-
+    typescript: `function maximumSubarraySum(nums: number[], k: number): number {
+  const freq = new Map<number, number>();
+  let windowSum = 0, ans = 0;
+  for (let i = 0; i < nums.length; i++) {
+    freq.set(nums[i]!, (freq.get(nums[i]!) ?? 0) + 1);
+    windowSum += nums[i]!;
+    if (i >= k) {
+      const l = nums[i - k]!;
+      const c = (freq.get(l) ?? 0) - 1;
+      if (c === 0) freq.delete(l);
+      else freq.set(l, c);
+      windowSum -= l;
+    }
+    if (i >= k - 1 && freq.size === k && windowSum > ans) ans = windowSum;
+  }
+  return ans;
+}`,
     python: `def maximumSubarraySum(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    from collections import defaultdict
+    freq = defaultdict(int)
+    window_sum = ans = 0
+    for i, x in enumerate(nums):
+        freq[x] += 1
+        window_sum += x
+        if i >= k:
+            l = nums[i - k]
+            freq[l] -= 1
+            if freq[l] == 0: del freq[l]
+            window_sum -= l
+        if i >= k - 1 and len(freq) == k and window_sum > ans:
+            ans = window_sum
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 5, 4, 2, 9, 9, 9], 3], expected: 15 },
