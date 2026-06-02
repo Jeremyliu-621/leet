@@ -42,10 +42,30 @@ Return the score of \`s\`.`,
   functionName: 'scoreOfParentheses',
   params: ['s'],
   starterCode: {
-    javascript: 'function scoreOfParentheses(s) {\n  // your code here\n}\n',
-    typescript: "function scoreOfParentheses(s: string): number {\n  // your code here\n}",
-
-    python: 'def scoreOfParentheses(s):\n    # your code here\n    pass\n',
+    javascript: `function scoreOfParentheses(s) {
+  const stack = [0];
+  for (const c of s) {
+    if (c === '(') { stack.push(0); }
+    else { const v = stack.pop(); stack[stack.length - 1] += Math.max(2 * v, 1); }
+  }
+  return stack[0];
+}`,
+    typescript: `function scoreOfParentheses(s: string): number {
+  const stack = [0];
+  for (const c of s) {
+    if (c === '(') { stack.push(0); }
+    else { const v = stack.pop()!; stack[stack.length - 1]! += Math.max(2 * v, 1); }
+  }
+  return stack[0]!;
+}`,
+    python: `def scoreOfParentheses(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    stack = [0]
+    for c in str(s):
+        if c == '(': stack.append(0)
+        else:
+            v = stack.pop(); stack[-1] += max(2*v, 1)
+    return stack[0]`,
   },
   visibleTests: [
     { args: ['()'], expected: 1 },

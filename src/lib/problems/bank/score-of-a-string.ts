@@ -38,14 +38,19 @@ Return the **score** of \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: `function scoreOfString(s) {
-  // your code here
+  let score = 0;
+  for (let i = 0; i < s.length - 1; i++) score += Math.abs(s.charCodeAt(i) - s.charCodeAt(i + 1));
+  return score;
 }`,
     typescript: `function scoreOfString(s: string): number {
-  // your code here
+  let score = 0;
+  for (let i = 0; i < s.length - 1; i++) score += Math.abs(s.charCodeAt(i) - s.charCodeAt(i + 1));
+  return score;
 }`,
     python: `def scoreOfString(s):
-    # your code here
-`,
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    return sum(abs(ord(s[i])-ord(s[i+1])) for i in range(len(s)-1))`,
   },
   visibleTests: [
     { args: ['hello'], expected: 13 },

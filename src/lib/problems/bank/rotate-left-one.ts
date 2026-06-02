@@ -36,10 +36,16 @@ export const problem: Problem = {
   functionName: 'shiftLeftByOne',
   params: ['nums'],
   starterCode: {
-    javascript: 'function shiftLeftByOne(nums) {\n  // your code here\n}\n',
-    typescript: "function shiftLeftByOne(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def shiftLeftByOne(nums):\n    # your code here\n    pass\n',
+    javascript: `function shiftLeftByOne(nums) {
+  return [...nums.slice(1), nums[0]];
+}`,
+    typescript: `function shiftLeftByOne(nums: number[]): number[] {
+  return [...nums.slice(1), nums[0]!];
+}`,
+    python: `def shiftLeftByOne(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    return nums[1:] + nums[:1]`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: [2, 3, 1] },

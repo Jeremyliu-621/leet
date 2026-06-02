@@ -42,10 +42,28 @@ Return the modified matrix.`,
   functionName: 'rotate',
   params: ['matrix'] as readonly string[],
   starterCode: {
-    javascript: 'function rotate(matrix) {\n  // your code here\n}\n',
-    typescript: "function rotate(matrix: number[][]): number[][] {\n  // your code here\n}",
-
-    python: 'def rotate(matrix: list[list[int]]) -> list[list[int]]:\n    # your code here\n    pass\n',
+    javascript: `function rotate(matrix) {
+  const n = matrix.length;
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++)
+    [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
+  for (const row of matrix) row.reverse();
+  return matrix;
+}`,
+    typescript: `function rotate(matrix: number[][]): number[][] {
+  const n = matrix.length;
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++)
+    [matrix[i]![j], matrix[j]![i]] = [matrix[j]![i]!, matrix[i]![j]!];
+  for (const row of matrix) row.reverse();
+  return matrix;
+}`,
+    python: `def rotate(matrix: list[list[int]]) -> list[list[int]]:
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(v) for v in (row.to_py() if hasattr(row,'to_py') else row)] for row in matrix]
+    n = len(matrix)
+    for i in range(n):
+        for j in range(i+1, n): matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+    for row in matrix: row.reverse()
+    return matrix`,
   },
   visibleTests: [
     { args: [[[1,2,3],[4,5,6],[7,8,9]]], expected: [[7,4,1],[8,5,2],[9,6,3]] },

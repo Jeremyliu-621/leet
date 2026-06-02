@@ -34,10 +34,20 @@ Return the resulting array. The input array is left unchanged.`,
   functionName: 'runningSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function runningSum(nums) {\n  // your code here\n}\n',
-    typescript: "function runningSum(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def runningSum(nums):\n    # your code here\n    pass\n',
+    javascript: `function runningSum(nums) {
+  let sum = 0;
+  return nums.map(n => (sum += n));
+}`,
+    typescript: `function runningSum(nums: number[]): number[] {
+  let sum = 0;
+  return nums.map(n => (sum += n));
+}`,
+    python: `def runningSum(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    s = 0; result = []
+    for n in nums: s += n; result.append(s)
+    return result`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: [1, 3, 6, 10] },

@@ -40,14 +40,31 @@ Return \`true\` if the two given sentences are similar, and \`false\` otherwise.
   params: ['sentence1', 'sentence2'],
   starterCode: {
     javascript: `function areSentencesSimilar(sentence1, sentence2) {
-  // your code here
+  const w1 = sentence1.split(' '), w2 = sentence2.split(' ');
+  const n1 = w1.length, n2 = w2.length;
+  let l = 0, r = 0;
+  while (l < n1 && l < n2 && w1[l] === w2[l]) l++;
+  while (r < n1 - l && r < n2 - l && w1[n1 - 1 - r] === w2[n2 - 1 - r]) r++;
+  return l + r >= Math.min(n1, n2);
 }`,
     typescript: `function areSentencesSimilar(sentence1: string, sentence2: string): boolean {
-  // your code here
+  const w1 = sentence1.split(' '), w2 = sentence2.split(' ');
+  const n1 = w1.length, n2 = w2.length;
+  let l = 0, r = 0;
+  while (l < n1 && l < n2 && w1[l] === w2[l]) l++;
+  while (r < n1 - l && r < n2 - l && w1[n1 - 1 - r] === w2[n2 - 1 - r]) r++;
+  return l + r >= Math.min(n1, n2);
 }`,
     python: `def areSentencesSimilar(sentence1, sentence2):
-    # your code here
-    pass`,
+    if hasattr(sentence1, 'to_py'): sentence1 = sentence1.to_py()
+    if hasattr(sentence2, 'to_py'): sentence2 = sentence2.to_py()
+    w1 = str(sentence1).split(); w2 = str(sentence2).split()
+    n1, n2 = len(w1), len(w2)
+    l = 0
+    while l < n1 and l < n2 and w1[l] == w2[l]: l += 1
+    r = 0
+    while r < n1 - l and r < n2 - l and w1[n1-1-r] == w2[n2-1-r]: r += 1
+    return l + r >= min(n1, n2)`,
   },
   visibleTests: [
     { args: ['My name is Haley', 'My Haley'], expected: true },
