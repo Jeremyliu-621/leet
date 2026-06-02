@@ -35,13 +35,50 @@ Return a 0-indexed integer array \`answer\` of length \`n\` where \`answer[i]\` 
   params: ['n', 'roads', 'appleCost', 'k'],
   starterCode: {
     javascript: `function minCost(n, roads, appleCost, k) {
-
+  const adj = Array.from({length: n + 1}, () => []);
+  for (const [u, v, c] of roads) { adj[u].push([v, c * k]); adj[v].push([u, c * k]); }
+  const dist = new Array(n + 1).fill(Infinity);
+  for (let i = 1; i <= n; i++) dist[i] = appleCost[i-1];
+  const visited = new Array(n + 1).fill(false);
+  for (let iter = 0; iter < n; iter++) {
+    let u = -1;
+    for (let v = 1; v <= n; v++) if (!visited[v] && (u === -1 || dist[v] < dist[u])) u = v;
+    if (dist[u] === Infinity) break;
+    visited[u] = true;
+    for (const [v, w] of adj[u]) if (dist[u] + w < dist[v]) dist[v] = dist[u] + w;
+  }
+  return dist.slice(1);
 }`,
     typescript: `function minCost(n: number, roads: number[][], appleCost: number[], k: number): number[] {
-
+  const adj: [number, number][][] = Array.from({length: n + 1}, () => []);
+  for (const [u, v, c] of roads) { adj[u]!.push([v!, c! * k]); adj[v]!.push([u!, c! * k]); }
+  const dist = new Array<number>(n + 1).fill(Infinity);
+  for (let i = 1; i <= n; i++) dist[i] = appleCost[i-1]!;
+  const visited = new Array<boolean>(n + 1).fill(false);
+  for (let iter = 0; iter < n; iter++) {
+    let u = -1;
+    for (let v = 1; v <= n; v++) if (!visited[v] && (u === -1 || dist[v]! < dist[u]!)) u = v;
+    if (dist[u]! === Infinity) break;
+    visited[u] = true;
+    for (const [v, w] of adj[u]!) if (dist[u]! + w < dist[v]!) dist[v] = dist[u]! + w;
+  }
+  return dist.slice(1);
 }`,
     python: `def minCost(n: int, roads: list[list[int]], appleCost: list[int], k: int) -> list[int]:
-    pass`,
+    import heapq
+    if hasattr(roads, 'to_py'): roads = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in roads.to_py()]
+    if hasattr(appleCost, 'to_py'): appleCost = list(appleCost.to_py())
+    adj = [[] for _ in range(n + 1)]
+    for u, v, c in roads: adj[u].append((v, c * k)); adj[v].append((u, c * k))
+    dist = [float('inf')] * (n + 1)
+    heap = []
+    for i in range(1, n + 1): dist[i] = appleCost[i-1]; heapq.heappush(heap, (appleCost[i-1], i))
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]: dist[v] = dist[u] + w; heapq.heappush(heap, (dist[v], v))
+    return dist[1:]`,
   },
   visibleTests: [
     { args: [4, [[1,2,4],[2,3,2],[2,4,5],[3,4,1],[1,3,4]], [56,42,102,301], 3], expected: [54,42,48,51] },

@@ -40,13 +40,21 @@ Given a **0-indexed** integer array \`cost\`, where \`cost[i]\` is the cost of t
   params: ['cost'],
   starterCode: {
     javascript: `function minimumCost(cost) {
-
+  cost.sort((a, b) => b - a);
+  let total = 0;
+  for (let i = 0; i < cost.length; i++) if ((i + 1) % 3 !== 0) total += cost[i];
+  return total;
 }`,
     typescript: `function minimumCost(cost: number[]): number {
-
+  cost.sort((a, b) => b - a);
+  let total = 0;
+  for (let i = 0; i < cost.length; i++) if ((i + 1) % 3 !== 0) total += cost[i]!;
+  return total;
 }`,
     python: `def minimumCost(cost):
-    pass`,
+    if hasattr(cost, 'to_py'): cost = list(cost.to_py())
+    cost.sort(reverse=True)
+    return sum(v for i, v in enumerate(cost) if (i + 1) % 3 != 0)`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 5 },

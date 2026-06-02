@@ -40,12 +40,19 @@ Return the **minimum** number of operations needed to make \`s\` alternating.`,
   params: ['s'],
   starterCode: {
     javascript: `function minOperations(s) {
-
+  let mismatches = 0;
+  for (let i = 0; i < s.length; i++) if ((s[i] === '1') !== (i % 2 === 1)) mismatches++;
+  return Math.min(mismatches, s.length - mismatches);
 }`,
-    typescript: "function minOperations(s: string): number {\n\n}",
-
+    typescript: `function minOperations(s: string): number {
+  let mismatches = 0;
+  for (let i = 0; i < s.length; i++) if ((s[i] === '1') !== (i % 2 === 1)) mismatches++;
+  return Math.min(mismatches, s.length - mismatches);
+}`,
     python: `def minOperations(s):
-    pass`,
+    if hasattr(s, 'to_py'): s = str(s)
+    mismatches = sum(1 for i, c in enumerate(s) if (c == '1') != (i % 2 == 1))
+    return min(mismatches, len(s) - mismatches)`,
   },
   visibleTests: [
     { args: ['0100'], expected: 1 },

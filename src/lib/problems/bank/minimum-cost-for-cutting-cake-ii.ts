@@ -40,15 +40,40 @@ Return the **minimum total cost** to cut the cake into \`1 × 1\` pieces.`,
   params: ['m', 'n', 'horizontalCut', 'verticalCut'],
   starterCode: {
     javascript: `function minimumCost(m, n, horizontalCut, verticalCut) {
-  // Sort both arrays descending.
-  // Greedy: always take the larger cut, multiplied by existing pieces in the other direction.
+  horizontalCut.sort((a, b) => b - a);
+  verticalCut.sort((a, b) => b - a);
+  let hi = 0, vi = 0, hPieces = 1, vPieces = 1, total = 0;
+  while (hi < horizontalCut.length || vi < verticalCut.length) {
+    const hVal = hi < horizontalCut.length ? horizontalCut[hi] : -1;
+    const vVal = vi < verticalCut.length ? verticalCut[vi] : -1;
+    if (vVal > hVal) { total += vVal * hPieces; vPieces++; vi++; }
+    else { total += hVal * vPieces; hPieces++; hi++; }
+  }
+  return total;
 }`,
-    typescript: "function minimumCost(m: number, n: number, horizontalCut: number[], verticalCut: number[]): number {\n  // Sort both arrays descending.\n  // Greedy: always take the larger cut, multiplied by existing pieces in the other direction.\n}",
-
+    typescript: `function minimumCost(m: number, n: number, horizontalCut: number[], verticalCut: number[]): number {
+  horizontalCut.sort((a, b) => b - a);
+  verticalCut.sort((a, b) => b - a);
+  let hi = 0, vi = 0, hPieces = 1, vPieces = 1, total = 0;
+  while (hi < horizontalCut.length || vi < verticalCut.length) {
+    const hVal = hi < horizontalCut.length ? horizontalCut[hi]! : -1;
+    const vVal = vi < verticalCut.length ? verticalCut[vi]! : -1;
+    if (vVal > hVal) { total += vVal * hPieces; vPieces++; vi++; }
+    else { total += hVal * vPieces; hPieces++; hi++; }
+  }
+  return total;
+}`,
     python: `def minimumCost(m, n, horizontalCut, verticalCut):
-    # Sort both arrays descending.
-    # Greedy: always take the larger cut, multiplied by existing pieces in the other direction.
-    pass`,
+    if hasattr(horizontalCut, 'to_py'): horizontalCut = list(horizontalCut.to_py())
+    if hasattr(verticalCut, 'to_py'): verticalCut = list(verticalCut.to_py())
+    horizontalCut.sort(reverse=True); verticalCut.sort(reverse=True)
+    hi = vi = 0; h_pieces = v_pieces = 1; total = 0
+    while hi < len(horizontalCut) or vi < len(verticalCut):
+        h_val = horizontalCut[hi] if hi < len(horizontalCut) else -1
+        v_val = verticalCut[vi] if vi < len(verticalCut) else -1
+        if v_val > h_val: total += v_val * h_pieces; v_pieces += 1; vi += 1
+        else: total += h_val * v_pieces; h_pieces += 1; hi += 1
+    return total`,
   },
   visibleTests: [
     { args: [3, 2, [1, 3], [5]], expected: 13 },

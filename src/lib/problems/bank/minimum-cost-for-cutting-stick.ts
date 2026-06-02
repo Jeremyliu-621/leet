@@ -37,9 +37,47 @@ Return the minimum total cost of the cuts.`,
   functionName: 'minCost',
   params: ['n', 'cuts'],
   starterCode: {
-    javascript: `function minCost(n, cuts) {\n\n}`,
-    typescript: 'function minCost(n: number, cuts: number[]): number {\n\n}',
-    python: `def minCost(n, cuts):\n    pass`,
+    javascript: `function minCost(n, cuts) {
+  if (!cuts.length) return 0;
+  const arr = [...cuts, 0, n].sort((a, b) => a - b);
+  const m = arr.length;
+  const dp = Array.from({length: m}, () => new Array(m).fill(0));
+  for (let len = 2; len < m; len++) {
+    for (let i = 0; i + len < m; i++) {
+      const j = i + len;
+      dp[i][j] = Infinity;
+      for (let k = i + 1; k < j; k++) dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k][j] + arr[j] - arr[i]);
+    }
+  }
+  return dp[0][m-1];
+}`,
+    typescript: `function minCost(n: number, cuts: number[]): number {
+  if (!cuts.length) return 0;
+  const arr = [...cuts, 0, n].sort((a, b) => a - b);
+  const m = arr.length;
+  const dp = Array.from({length: m}, () => new Array<number>(m).fill(0));
+  for (let len = 2; len < m; len++) {
+    for (let i = 0; i + len < m; i++) {
+      const j = i + len;
+      dp[i]![j] = Infinity;
+      for (let k = i + 1; k < j; k++) dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![k]! + dp[k]![j]! + arr[j]! - arr[i]!);
+    }
+  }
+  return dp[0]![m-1]!;
+}`,
+    python: `def minCost(n, cuts):
+    if hasattr(cuts, 'to_py'): cuts = list(cuts.to_py())
+    if not cuts: return 0
+    arr = sorted(cuts + [0, n])
+    m = len(arr)
+    dp = [[0] * m for _ in range(m)]
+    for length in range(2, m):
+        for i in range(m - length):
+            j = i + length
+            dp[i][j] = float('inf')
+            for k in range(i + 1, j):
+                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + arr[j] - arr[i])
+    return dp[0][m-1]`,
   },
   visibleTests: [
     { args: [7, [1, 3, 4, 5]], expected: 16 },
