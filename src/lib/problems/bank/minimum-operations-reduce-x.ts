@@ -40,10 +40,38 @@ Use a sliding window to find the longest subarray with the target sum.`,
   functionName: 'minOperations',
   params: ['nums', 'x'],
   starterCode: {
-    javascript: 'function minOperations(nums, x) {\n  // your code here\n}\n',
-    typescript: "function minOperations(nums: number[], x: number): number {\n  // your code here\n}",
-
-    python: 'def minOperations(nums: list, x: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function minOperations(nums, x) {
+  const target = nums.reduce((a, b) => a + b, 0) - x;
+  if (target < 0) return -1;
+  let lo = 0, sum = 0, best = -1;
+  for (let hi = 0; hi < nums.length; hi++) {
+    sum += nums[hi];
+    while (sum > target) sum -= nums[lo++];
+    if (sum === target) best = Math.max(best, hi - lo + 1);
+  }
+  return best === -1 ? -1 : nums.length - best;
+}`,
+    typescript: `function minOperations(nums: number[], x: number): number {
+  const target = nums.reduce((a, b) => a + b, 0) - x;
+  if (target < 0) return -1;
+  let lo = 0, sum = 0, best = -1;
+  for (let hi = 0; hi < nums.length; hi++) {
+    sum += nums[hi]!;
+    while (sum > target) sum -= nums[lo++]!;
+    if (sum === target) best = Math.max(best, hi - lo + 1);
+  }
+  return best === -1 ? -1 : nums.length - best;
+}`,
+    python: `def minOperations(nums, x):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    target = sum(nums) - x
+    if target < 0: return -1
+    lo = total = best = 0; best = -1
+    for hi in range(len(nums)):
+        total += nums[hi]
+        while total > target: total -= nums[lo]; lo += 1
+        if total == target: best = max(best, hi - lo + 1)
+    return -1 if best == -1 else len(nums) - best`,
   },
   visibleTests: [
     { args: [[1, 1, 4, 2, 3], 5], expected: 2 },

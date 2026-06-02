@@ -41,13 +41,43 @@ Return the **minimum number of operations** needed to make \`nums\` sorted in **
   params: ['nums'],
   starterCode: {
     javascript: `function minimumReplacement(nums) {
-  // your code here
+  let ops = 0, bound = nums[nums.length - 1];
+  for (let i = nums.length - 2; i >= 0; i--) {
+    if (nums[i] > bound) {
+      const p = Math.ceil(nums[i] / bound);
+      ops += p - 1;
+      bound = Math.floor(nums[i] / p);
+    } else {
+      bound = nums[i];
+    }
+  }
+  return ops;
 }`,
-    typescript: "function minimumReplacement(nums: number[]): number {\n  // your code here\n}",
-
+    typescript: `function minimumReplacement(nums: number[]): number {
+  let ops = 0, bound = nums[nums.length - 1]!;
+  for (let i = nums.length - 2; i >= 0; i--) {
+    if (nums[i]! > bound) {
+      const p = Math.ceil(nums[i]! / bound);
+      ops += p - 1;
+      bound = Math.floor(nums[i]! / p);
+    } else {
+      bound = nums[i]!;
+    }
+  }
+  return ops;
+}`,
     python: `def minimumReplacement(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import math
+    ops = 0; bound = nums[-1]
+    for i in range(len(nums) - 2, -1, -1):
+        if nums[i] > bound:
+            p = math.ceil(nums[i] / bound)
+            ops += p - 1
+            bound = nums[i] // p
+        else:
+            bound = nums[i]
+    return ops`,
   },
   visibleTests: [
     { args: [[3, 9, 3]], expected: 2 },

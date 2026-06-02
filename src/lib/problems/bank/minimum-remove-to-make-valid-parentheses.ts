@@ -40,10 +40,40 @@ A string is valid if:
   functionName: 'minRemoveToMakeValid',
   params: ['s'],
   starterCode: {
-    javascript: 'function minRemoveToMakeValid(s) {\n  // your code here\n}\n',
-    typescript: "function minRemoveToMakeValid(s: string): string {\n  // your code here\n}",
-
-    python: 'def minRemoveToMakeValid(s):\n    # your code here\n    pass\n',
+    javascript: `function minRemoveToMakeValid(s) {
+  const toRemove = new Set(), stack = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') stack.push(i);
+    else if (s[i] === ')') {
+      if (stack.length) stack.pop();
+      else toRemove.add(i);
+    }
+  }
+  stack.forEach(i => toRemove.add(i));
+  return s.split('').filter((_, i) => !toRemove.has(i)).join('');
+}`,
+    typescript: `function minRemoveToMakeValid(s: string): string {
+  const toRemove = new Set<number>(), stack: number[] = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') stack.push(i);
+    else if (s[i] === ')') {
+      if (stack.length) stack.pop();
+      else toRemove.add(i);
+    }
+  }
+  stack.forEach(i => toRemove.add(i));
+  return s.split('').filter((_, i) => !toRemove.has(i)).join('');
+}`,
+    python: `def minRemoveToMakeValid(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    to_remove, stack = set(), []
+    for i, c in enumerate(s):
+        if c == '(': stack.append(i)
+        elif c == ')':
+            if stack: stack.pop()
+            else: to_remove.add(i)
+    to_remove.update(stack)
+    return ''.join(c for i, c in enumerate(s) if i not in to_remove)`,
   },
   visibleTests: [
     {

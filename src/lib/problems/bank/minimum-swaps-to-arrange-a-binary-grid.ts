@@ -50,14 +50,50 @@ where \`*\` can be \`0\` or \`1\`.`,
   params: ['grid'],
   starterCode: {
     javascript: `function minSwaps(grid) {
-  // your code here
+  const n = grid.length;
+  const zeros = grid.map(row => { let t = 0; for (let j = n-1; j >= 0 && row[j] === 0; j--) t++; return t; });
+  let swaps = 0;
+  for (let i = 0; i < n; i++) {
+    const need = n - 1 - i;
+    let j = i;
+    while (j < n && zeros[j] < need) j++;
+    if (j === n) return -1;
+    while (j > i) { [zeros[j], zeros[j-1]] = [zeros[j-1], zeros[j]]; j--; swaps++; }
+  }
+  return swaps;
 }`,
     typescript: `function minSwaps(grid: number[][]): number {
-  // your code here
+  const n = grid.length;
+  const zeros = grid.map(row => { let t = 0; for (let j = n-1; j >= 0 && row[j]! === 0; j--) t++; return t; });
+  let swaps = 0;
+  for (let i = 0; i < n; i++) {
+    const need = n - 1 - i;
+    let j = i;
+    while (j < n && zeros[j]! < need) j++;
+    if (j === n) return -1;
+    while (j > i) { [zeros[j], zeros[j-1]] = [zeros[j-1]!, zeros[j]!]; j--; swaps++; }
+  }
+  return swaps;
 }`,
     python: `def minSwaps(grid):
-    # your code here
-    pass`,
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in grid]
+    n = len(grid)
+    zeros = []
+    for row in grid:
+        t = 0
+        for j in range(n-1, -1, -1):
+            if row[j] == 0: t += 1
+            else: break
+        zeros.append(t)
+    swaps = 0
+    for i in range(n):
+        need = n - 1 - i
+        j = i
+        while j < n and zeros[j] < need: j += 1
+        if j == n: return -1
+        while j > i: zeros[j], zeros[j-1] = zeros[j-1], zeros[j]; j -= 1; swaps += 1
+    return swaps`,
   },
   visibleTests: [
     { args: [[[0,0,1],[0,1,1],[1,1,1]]], expected: -1 },

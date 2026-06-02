@@ -41,14 +41,29 @@ Return the **minimum** number of operations needed to make the elements of the a
   params: ['nums'],
   starterCode: {
     javascript: `function minimumOperations(nums) {
-  // your code here
+  const seen = new Set();
+  for (let i = nums.length - 1; i >= 0; i--) {
+    if (seen.has(nums[i])) return Math.ceil((i + 1) / 3);
+    seen.add(nums[i]);
+  }
+  return 0;
 }`,
     typescript: `function minimumOperations(nums: number[]): number {
-  // your code here
+  const seen = new Set<number>();
+  for (let i = nums.length - 1; i >= 0; i--) {
+    if (seen.has(nums[i]!)) return Math.ceil((i + 1) / 3);
+    seen.add(nums[i]!);
+  }
+  return 0;
 }`,
     python: `def minimumOperations(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    import math
+    seen = set()
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] in seen: return math.ceil((i + 1) / 3)
+        seen.add(nums[i])
+    return 0`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 2, 3, 3, 5, 7]], expected: 2 },
