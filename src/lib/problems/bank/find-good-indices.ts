@@ -41,13 +41,31 @@ Return an array of all good indices sorted in **increasing** order.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function goodIndices(nums, k) {
-
+  const n = nums.length;
+  const dec = new Array(n).fill(1), inc = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) if (nums[i] <= nums[i-1]) dec[i] = dec[i-1] + 1;
+  for (let i = n-2; i >= 0; i--) if (nums[i] <= nums[i+1]) inc[i] = inc[i+1] + 1;
+  const res = [];
+  for (let i = k; i < n - k; i++) if (dec[i-1] >= k && inc[i+1] >= k) res.push(i);
+  return res;
 }`,
     typescript: `function goodIndices(nums: number[], k: number): number[] {
-
+  const n = nums.length;
+  const dec = new Array(n).fill(1), inc = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) if (nums[i] <= nums[i-1]) dec[i] = dec[i-1] + 1;
+  for (let i = n-2; i >= 0; i--) if (nums[i] <= nums[i+1]) inc[i] = inc[i+1] + 1;
+  const res: number[] = [];
+  for (let i = k; i < n - k; i++) if (dec[i-1] >= k && inc[i+1] >= k) res.push(i);
+  return res;
 }`,
     python: `def goodIndices(nums, k):
-    pass`,
+    n = len(nums)
+    dec, inc = [1]*n, [1]*n
+    for i in range(1, n):
+        if nums[i] <= nums[i-1]: dec[i] = dec[i-1] + 1
+    for i in range(n-2, -1, -1):
+        if nums[i] <= nums[i+1]: inc[i] = inc[i+1] + 1
+    return [i for i in range(k, n-k) if dec[i-1] >= k and inc[i+1] >= k]`,
   },
   visibleTests: [
     { args: [[2, 1, 1, 1, 3, 4, 1], 2], expected: [2, 3] },

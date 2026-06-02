@@ -38,13 +38,40 @@ Return the number of **good splits** of \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: `function numSplits(s) {
-
+  const cntL = new Map(), cntR = new Map();
+  for (const c of s) cntR.set(c, (cntR.get(c) ?? 0) + 1);
+  let ans = 0;
+  for (let i = 0; i < s.length - 1; i++) {
+    const c = s[i];
+    cntL.set(c, (cntL.get(c) ?? 0) + 1);
+    const prev = cntR.get(c);
+    if (prev === 1) cntR.delete(c); else cntR.set(c, prev - 1);
+    if (cntL.size === cntR.size) ans++;
+  }
+  return ans;
 }`,
     typescript: `function numSplits(s: string): number {
-
+  const cntL = new Map<string, number>(), cntR = new Map<string, number>();
+  for (const c of s) cntR.set(c, (cntR.get(c) ?? 0) + 1);
+  let ans = 0;
+  for (let i = 0; i < s.length - 1; i++) {
+    const c = s[i];
+    cntL.set(c, (cntL.get(c) ?? 0) + 1);
+    const prev = cntR.get(c)!;
+    if (prev === 1) cntR.delete(c); else cntR.set(c, prev - 1);
+    if (cntL.size === cntR.size) ans++;
+  }
+  return ans;
 }`,
     python: `def numSplits(s):
-    pass`,
+    from collections import Counter
+    cntL, cntR = Counter(), Counter(s)
+    ans = 0
+    for i in range(len(s) - 1):
+        c = s[i]; cntL[c] += 1; cntR[c] -= 1
+        if cntR[c] == 0: del cntR[c]
+        if len(cntL) == len(cntR): ans += 1
+    return ans`,
   },
   visibleTests: [
     { args: ['aacaba'], expected: 2 },

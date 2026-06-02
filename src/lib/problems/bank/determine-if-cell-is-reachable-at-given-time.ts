@@ -36,12 +36,19 @@ Return \`true\` *if you can reach cell* \`(fx, fy)\` *after **exactly** \`t\` se
   params: ['sx', 'sy', 'fx', 'fy', 't'],
   starterCode: {
     javascript: `function isReachableAtTime(sx, sy, fx, fy, t) {
-
+  const d = Math.max(Math.abs(fx - sx), Math.abs(fy - sy));
+  if (d === 0) return t !== 1;
+  return t >= d;
 }`,
-    typescript: "function isReachableAtTime(sx: number, sy: number, fx: number, fy: number, t: number): boolean {\n\n}",
-
+    typescript: `function isReachableAtTime(sx: number, sy: number, fx: number, fy: number, t: number): boolean {
+  const d = Math.max(Math.abs(fx - sx), Math.abs(fy - sy));
+  if (d === 0) return t !== 1;
+  return t >= d;
+}`,
     python: `def isReachableAtTime(sx, sy, fx, fy, t):
-    pass`,
+    d = max(abs(fx - sx), abs(fy - sy))
+    if d == 0: return t != 1
+    return t >= d`,
   },
   visibleTests: [
     { args: [2, 4, 7, 7, 6], expected: true },

@@ -43,13 +43,25 @@ A subarray is a contiguous, non-empty sequence of elements within an array.
   params: ['nums'],
   starterCode: {
     javascript: `function xorAllSubarrays(nums) {
-
+  const n = nums.length;
+  if (n % 2 === 0) return 0;
+  let ans = 0;
+  for (let i = 0; i < n; i += 2) ans ^= nums[i];
+  return ans;
 }`,
     typescript: `function xorAllSubarrays(nums: number[]): number {
-
+  const n = nums.length;
+  if (n % 2 === 0) return 0;
+  let ans = 0;
+  for (let i = 0; i < n; i += 2) ans ^= nums[i];
+  return ans;
 }`,
     python: `def xorAllSubarrays(nums):
-    pass`,
+    n = len(nums)
+    if n % 2 == 0: return 0
+    ans = 0
+    for i in range(0, n, 2): ans ^= nums[i]
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 2 },

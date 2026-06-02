@@ -37,13 +37,19 @@ That is, return \`l XOR (l+1) XOR ... XOR r\`.`,
   params: ['l', 'r'],
   starterCode: {
     javascript: `function xorQuery(l, r) {
-
+  let ans = 0;
+  for (let i = l; i <= r; i++) ans ^= i;
+  return ans;
 }`,
     typescript: `function xorQuery(l: number, r: number): number {
-
+  let ans = 0;
+  for (let i = l; i <= r; i++) ans ^= i;
+  return ans;
 }`,
     python: `def xorQuery(l, r):
-    pass`,
+    ans = 0
+    for i in range(l, r + 1): ans ^= i
+    return ans`,
   },
   visibleTests: [
     { args: [3, 9], expected: 2 },
