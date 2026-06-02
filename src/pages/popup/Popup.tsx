@@ -380,7 +380,39 @@ export function Popup() {
         </time>
       </header>
 
-      <section className="mt-4 grid grid-cols-3 gap-2">
+      {/* Primary actions — pinned to the top for one-click access. */}
+      <section className="mt-4 space-y-2" aria-label="Quick actions">
+        <button
+          type="button"
+          onClick={() => void handleBlock()}
+          disabled={!data.currentDomain || data.alreadyBlocked}
+          className="w-full border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {blockLabel}
+        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handlePracticeNow}
+            className="flex-1 border border-accent bg-accent px-3 py-2 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          >
+            Practice now
+          </button>
+          <button
+            type="button"
+            onClick={handleOpenSettings}
+            className="flex-1 border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          >
+            Settings
+          </button>
+        </div>
+      </section>
+
+      {/* Compact summary strip — three stats sharing one bordered card. */}
+      <section
+        className="mt-4 flex divide-x divide-border border border-border bg-surface"
+        aria-label="Summary"
+      >
         <Stat label="Streak" value={data.streak.current} sub={`best ${data.streak.longest}`} />
         <Stat label="Today" value={data.solvedToday} sub="solves" />
         <Stat label="Unlocks" value={data.activeUnlocks.length} sub="active" />
@@ -404,7 +436,7 @@ export function Popup() {
       <RecentSolvesList solves={data.recentSolves} />
 
       {data.blockedDomains.size === 0 && (
-        <section className="mt-5" aria-label="Quick start">
+        <section className="mt-4" aria-label="Quick start">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
             Add a site to start
           </h2>
@@ -427,7 +459,7 @@ export function Popup() {
         </section>
       )}
 
-      <section className="mt-5">
+      <section className="mt-4">
         <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
           Active unlocks
         </h2>
@@ -475,33 +507,6 @@ export function Popup() {
             )}
           </ul>
         )}
-      </section>
-
-      <section className="mt-5 space-y-2">
-        <button
-          type="button"
-          onClick={() => void handleBlock()}
-          disabled={!data.currentDomain || data.alreadyBlocked}
-          className="w-full border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {blockLabel}
-        </button>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={handlePracticeNow}
-            className="flex-1 border border-accent bg-accent px-3 py-2 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-          >
-            Practice now
-          </button>
-          <button
-            type="button"
-            onClick={handleOpenSettings}
-            className="flex-1 border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-          >
-            Settings
-          </button>
-        </div>
       </section>
 
       <section className="mt-5 border-t border-border pt-4" role="radiogroup" aria-label="Theme">
@@ -663,10 +668,12 @@ function StreakHeatmap({ history }: { history: readonly StreakDay[] }) {
 
 function Stat({ label, value, sub }: { label: string; value: number; sub: string }) {
   return (
-    <div className="border border-border bg-surface px-3 py-3">
+    <div className="flex-1 px-3 py-2">
       <p className="font-mono text-[9px] uppercase tracking-widest text-faint">{label}</p>
-      <p className="mt-1 text-xl font-semibold tracking-tight text-text tabular-nums">{value}</p>
-      <p className="mt-0.5 font-mono text-[9px] text-faint">{sub}</p>
+      <p className="mt-0.5 flex items-baseline gap-1 leading-none">
+        <span className="text-lg font-semibold tracking-tight text-text tabular-nums">{value}</span>
+        <span className="font-mono text-[9px] text-faint">{sub}</span>
+      </p>
     </div>
   );
 }
