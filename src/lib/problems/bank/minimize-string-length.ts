@@ -41,14 +41,13 @@ function minimizedStringLength(s) {
   ],
   starterCode: {
     javascript: `function minimizedStringLength(s) {
-  // s: string of lowercase letters
-  // Return minimum possible length after operations
+  return new Set(s).size;
 }`,
-    typescript: "function minimizedStringLength(s: string): number {\n  // s: string of lowercase letters\n  // Return minimum possible length after operations\n}",
-
+    typescript: `function minimizedStringLength(s: string): number {
+  return new Set(s).size;
+}`,
     python: `def minimizedStringLength(s: str) -> int:
-    # Your code here
-    pass`,
+    return len(set(s))`,
   },
   functionName: 'minimizedStringLength',
   params: ['s'],

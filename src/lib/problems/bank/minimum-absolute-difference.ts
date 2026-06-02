@@ -38,12 +38,26 @@ Return a list of pairs in ascending order (with respect to pairs), each pair \`[
   params: ['arr'],
   starterCode: {
     javascript: `function minimumAbsDifference(arr) {
-
+  arr.sort((a, b) => a - b);
+  let minDiff = Infinity;
+  for (let i = 1; i < arr.length; i++) minDiff = Math.min(minDiff, arr[i] - arr[i-1]);
+  const result = [];
+  for (let i = 1; i < arr.length; i++) if (arr[i] - arr[i-1] === minDiff) result.push([arr[i-1], arr[i]]);
+  return result;
 }`,
-    typescript: "function minimumAbsDifference(arr: number[]): number[][] {\n\n}",
-
+    typescript: `function minimumAbsDifference(arr: number[]): number[][] {
+  arr.sort((a, b) => a - b);
+  let minDiff = Infinity;
+  for (let i = 1; i < arr.length; i++) minDiff = Math.min(minDiff, arr[i]! - arr[i-1]!);
+  const result: number[][] = [];
+  for (let i = 1; i < arr.length; i++) if (arr[i]! - arr[i-1]! === minDiff) result.push([arr[i-1]!, arr[i]!]);
+  return result;
+}`,
     python: `def minimumAbsDifference(arr):
-    pass`,
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    arr.sort()
+    min_diff = min(arr[i+1] - arr[i] for i in range(len(arr) - 1))
+    return [[arr[i], arr[i+1]] for i in range(len(arr) - 1) if arr[i+1] - arr[i] == min_diff]`,
   },
   visibleTests: [
     { args: [[4, 2, 1, 3]], expected: [[1, 2], [2, 3], [3, 4]] },

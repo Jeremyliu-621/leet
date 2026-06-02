@@ -38,13 +38,54 @@ Given the four integers \`divisor1\`, \`divisor2\`, \`uniqueCnt1\`, and \`unique
   params: ['divisor1', 'divisor2', 'uniqueCnt1', 'uniqueCnt2'],
   starterCode: {
     javascript: `function minimizeTheMaximum(divisor1, divisor2, uniqueCnt1, uniqueCnt2) {
-
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  const d1 = BigInt(divisor1), d2 = BigInt(divisor2);
+  const lcm = d1 * d2 / BigInt(gcd(divisor1, divisor2));
+  const c1 = BigInt(uniqueCnt1), c2 = BigInt(uniqueCnt2);
+  const feasible = x => {
+    const bx = BigInt(x);
+    const onlyArr1 = bx / d2 - bx / lcm;
+    const onlyArr2 = bx / d1 - bx / lcm;
+    const flexible = bx - bx / d1 - bx / d2 + bx / lcm;
+    const need = (c1 > onlyArr1 ? c1 - onlyArr1 : 0n) + (c2 > onlyArr2 ? c2 - onlyArr2 : 0n);
+    return need <= flexible;
+  };
+  let lo = 1, hi = 4_000_000_000;
+  while (lo < hi) { const mid = Math.floor((lo + hi) / 2); if (feasible(mid)) hi = mid; else lo = mid + 1; }
+  return lo;
 }`,
     typescript: `function minimizeTheMaximum(divisor1: number, divisor2: number, uniqueCnt1: number, uniqueCnt2: number): number {
-
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const d1 = BigInt(divisor1), d2 = BigInt(divisor2);
+  const lcm = d1 * d2 / BigInt(gcd(divisor1, divisor2));
+  const c1 = BigInt(uniqueCnt1), c2 = BigInt(uniqueCnt2);
+  const feasible = (x: number) => {
+    const bx = BigInt(x);
+    const onlyArr1 = bx / d2 - bx / lcm;
+    const onlyArr2 = bx / d1 - bx / lcm;
+    const flexible = bx - bx / d1 - bx / d2 + bx / lcm;
+    const need = (c1 > onlyArr1 ? c1 - onlyArr1 : 0n) + (c2 > onlyArr2 ? c2 - onlyArr2 : 0n);
+    return need <= flexible;
+  };
+  let lo = 1, hi = 4_000_000_000;
+  while (lo < hi) { const mid = Math.floor((lo + hi) / 2); if (feasible(mid)) hi = mid; else lo = mid + 1; }
+  return lo;
 }`,
     python: `def minimizeTheMaximum(divisor1: int, divisor2: int, uniqueCnt1: int, uniqueCnt2: int) -> int:
-    pass`,
+    from math import gcd
+    lcm = divisor1 * divisor2 // gcd(divisor1, divisor2)
+    def feasible(x):
+        only_arr1 = x // divisor2 - x // lcm
+        only_arr2 = x // divisor1 - x // lcm
+        flexible = x - x // divisor1 - x // divisor2 + x // lcm
+        need = max(0, uniqueCnt1 - only_arr1) + max(0, uniqueCnt2 - only_arr2)
+        return need <= flexible
+    lo, hi = 1, 4_000_000_000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if feasible(mid): hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [2, 7, 1, 3], expected: 4 },

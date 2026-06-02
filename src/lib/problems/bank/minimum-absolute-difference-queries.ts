@@ -37,15 +37,60 @@ Return an array of answers, one per query.`,
   params: ['nums', 'queries'],
   starterCode: {
     javascript: `function minDifference(nums, queries) {
-  // Build prefix count array for values 1..100.
-  // For each query [l, r], scan present values and find the min gap.
+  const n = nums.length;
+  const cnt = Array.from({length: 101}, () => new Array(n + 1).fill(0));
+  for (let i = 0; i < n; i++) {
+    for (let v = 1; v <= 100; v++) cnt[v][i+1] = cnt[v][i];
+    cnt[nums[i]][i+1]++;
+  }
+  return queries.map(([l, r]) => {
+    let ans = -1, prev = -1;
+    for (let v = 1; v <= 100; v++) {
+      if (cnt[v][r+1] - cnt[v][l] > 0) {
+        if (prev !== -1) { const d = v - prev; if (ans === -1 || d < ans) ans = d; }
+        prev = v;
+      }
+    }
+    return ans;
+  });
 }`,
-    typescript: "function minDifference(nums: number[], queries: number[][]): number[] {\n  // Build prefix count array for values 1..100.\n  // For each query [l, r], scan present values and find the min gap.\n}",
-
+    typescript: `function minDifference(nums: number[], queries: number[][]): number[] {
+  const n = nums.length;
+  const cnt = Array.from({length: 101}, () => new Array<number>(n + 1).fill(0));
+  for (let i = 0; i < n; i++) {
+    for (let v = 1; v <= 100; v++) cnt[v]![i+1] = cnt[v]![i]!;
+    cnt[nums[i]!]![i+1]!++;
+  }
+  return queries.map(([l, r]) => {
+    let ans = -1, prev = -1;
+    for (let v = 1; v <= 100; v++) {
+      if (cnt[v]![r!+1]! - cnt[v]![l!]! > 0) {
+        if (prev !== -1) { const d = v - prev; if (ans === -1 || d < ans) ans = d; }
+        prev = v;
+      }
+    }
+    return ans;
+  });
+}`,
     python: `def minDifference(nums, queries):
-    # Build prefix count array for values 1..100.
-    # For each query [l, r], scan present values and find the min gap.
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(queries, 'to_py'): queries = [[int(x) for x in (q.to_py() if hasattr(q, 'to_py') else q)] for q in queries.to_py()]
+    n = len(nums)
+    cnt = [[0] * (n + 1) for _ in range(101)]
+    for i, x in enumerate(nums):
+        for v in range(1, 101): cnt[v][i+1] = cnt[v][i]
+        cnt[x][i+1] += 1
+    res = []
+    for l, r in queries:
+        ans, prev = -1, -1
+        for v in range(1, 101):
+            if cnt[v][r+1] - cnt[v][l] > 0:
+                if prev != -1:
+                    d = v - prev
+                    if ans == -1 or d < ans: ans = d
+                prev = v
+        res.append(ans)
+    return res`,
   },
   visibleTests: [
     {

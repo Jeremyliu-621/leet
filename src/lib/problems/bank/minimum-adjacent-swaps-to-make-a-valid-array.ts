@@ -43,13 +43,29 @@ Return *the **minimum** swaps required to make \`nums\` a valid array*.`,
   params: ['nums'],
   starterCode: {
     javascript: `function minimumSwaps(nums) {
-
+  const n = nums.length;
+  const min = Math.min(...nums), max = Math.max(...nums);
+  const minIdx = nums.indexOf(min);
+  let maxIdx = n - 1;
+  while (nums[maxIdx] !== max) maxIdx--;
+  return minIdx + (n - 1 - maxIdx) - (minIdx > maxIdx ? 1 : 0);
 }`,
     typescript: `function minimumSwaps(nums: number[]): number {
-
+  const n = nums.length;
+  const minVal = Math.min(...nums), maxVal = Math.max(...nums);
+  const minIdx = nums.indexOf(minVal);
+  let maxIdx = n - 1;
+  while (nums[maxIdx] !== maxVal) maxIdx--;
+  return minIdx + (n - 1 - maxIdx) - (minIdx > maxIdx ? 1 : 0);
 }`,
     python: `def minimumSwaps(nums: list[int]) -> int:
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    min_val, max_val = min(nums), max(nums)
+    min_idx = nums.index(min_val)
+    max_idx = n - 1
+    while nums[max_idx] != max_val: max_idx -= 1
+    return min_idx + (n - 1 - max_idx) - (1 if min_idx > max_idx else 0)`,
   },
   visibleTests: [
     { args: [[3, 4, 5, 5, 3, 1]], expected: 6 },

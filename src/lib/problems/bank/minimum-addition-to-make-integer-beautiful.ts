@@ -40,13 +40,36 @@ Return the **minimum** non-negative integer \`x\` such that \`n + x\` is beautif
   params: ['n', 'target'],
   starterCode: {
     javascript: `function makeIntegerBeautiful(n, target) {
-
+  const digitSum = x => { let s = 0; while (x > 0) { s += x % 10; x = Math.floor(x / 10); } return s; };
+  let add = 0, pow = 1;
+  while (digitSum(n) > target) {
+    const rem = n % (pow * 10);
+    const inc = rem === 0 ? pow * 10 : pow * 10 - rem;
+    add += inc; n += inc; pow *= 10;
+  }
+  return add;
 }`,
     typescript: `function makeIntegerBeautiful(n: number, target: number): number {
-
+  const digitSum = (x: number) => { let s = 0; while (x > 0) { s += x % 10; x = Math.floor(x / 10); } return s; };
+  let add = 0, pow = 1;
+  while (digitSum(n) > target) {
+    const rem = n % (pow * 10);
+    const inc = rem === 0 ? pow * 10 : pow * 10 - rem;
+    add += inc; n += inc; pow *= 10;
+  }
+  return add;
 }`,
     python: `def makeIntegerBeautiful(n, target):
-    pass`,
+    def digit_sum(x):
+        s = 0
+        while x > 0: s += x % 10; x //= 10
+        return s
+    add = 0; p = 1
+    while digit_sum(n) > target:
+        rem = n % (p * 10)
+        inc = p * 10 if rem == 0 else p * 10 - rem
+        add += inc; n += inc; p *= 10
+    return add`,
   },
   visibleTests: [
     { args: [16, 6], expected: 4 },

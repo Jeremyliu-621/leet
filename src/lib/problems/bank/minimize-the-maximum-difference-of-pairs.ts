@@ -36,13 +36,47 @@ Return the **minimum** maximum difference among all \`p\` pairs. We define the m
   params: ['nums', 'p'],
   starterCode: {
     javascript: `function minimizeMax(nums, p) {
-
+  if (p === 0) return 0;
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  const canForm = d => {
+    let count = 0;
+    for (let i = 1; i < n; i++) if (nums[i] - nums[i-1] <= d) { count++; i++; }
+    return count >= p;
+  };
+  let lo = 0, hi = nums[n-1] - nums[0];
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (canForm(mid)) hi = mid; else lo = mid + 1; }
+  return lo;
 }`,
     typescript: `function minimizeMax(nums: number[], p: number): number {
-
+  if (p === 0) return 0;
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  const canForm = (d: number) => {
+    let count = 0;
+    for (let i = 1; i < n; i++) if (nums[i]! - nums[i-1]! <= d) { count++; i++; }
+    return count >= p;
+  };
+  let lo = 0, hi = nums[n-1]! - nums[0]!;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (canForm(mid)) hi = mid; else lo = mid + 1; }
+  return lo;
 }`,
     python: `def minimizeMax(nums, p):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if p == 0: return 0
+    nums.sort(); n = len(nums)
+    def can_form(d):
+        count = i = 0
+        while i < n - 1:
+            if nums[i+1] - nums[i] <= d: count += 1; i += 2
+            else: i += 1
+        return count >= p
+    lo, hi = 0, nums[-1] - nums[0]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if can_form(mid): hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[10, 1, 2, 7, 1, 3], 2], expected: 1 },

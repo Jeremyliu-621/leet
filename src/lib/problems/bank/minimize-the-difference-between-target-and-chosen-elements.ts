@@ -43,19 +43,50 @@ Return the **minimum absolute difference**.`,
   functionName: 'minimizeTheDifference',
   params: ['mat', 'target'],
   starterCode: {
-    javascript: `/**
- * @param {number[][]} mat
- * @param {number} target
- * @return {number}
- */
-function minimizeTheDifference(mat, target) {
-
+    javascript: `function minimizeTheDifference(mat, target) {
+  const MAX = 70 * 70 + 1;
+  let dp = new Uint8Array(MAX);
+  dp[0] = 1;
+  for (const row of mat) {
+    const newDp = new Uint8Array(MAX);
+    for (let j = 0; j < MAX; j++) {
+      if (!dp[j]) continue;
+      for (const v of row) if (j + v < MAX) newDp[j + v] = 1;
+    }
+    dp = newDp;
+  }
+  let ans = Infinity;
+  for (let j = 0; j < MAX; j++) if (dp[j]) ans = Math.min(ans, Math.abs(j - target));
+  return ans;
 }`,
     typescript: `function minimizeTheDifference(mat: number[][], target: number): number {
-
+  const MAX = 70 * 70 + 1;
+  let dp = new Uint8Array(MAX);
+  dp[0] = 1;
+  for (const row of mat) {
+    const newDp = new Uint8Array(MAX);
+    for (let j = 0; j < MAX; j++) {
+      if (!dp[j]) continue;
+      for (const v of row) if (j + v < MAX) newDp[j + v] = 1;
+    }
+    dp = newDp;
+  }
+  let ans = Infinity;
+  for (let j = 0; j < MAX; j++) if (dp[j]) ans = Math.min(ans, Math.abs(j - target));
+  return ans;
 }`,
     python: `def minimizeTheDifference(mat: list[list[int]], target: int) -> int:
-    `,
+    if hasattr(mat, 'to_py'): mat = [[int(x) for x in (row.to_py() if hasattr(row, 'to_py') else row)] for row in mat.to_py()]
+    MAX = 70 * 70 + 1
+    dp = [False] * MAX; dp[0] = True
+    for row in mat:
+        new_dp = [False] * MAX
+        for j in range(MAX):
+            if not dp[j]: continue
+            for v in row:
+                if j + v < MAX: new_dp[j + v] = True
+        dp = new_dp
+    return min(abs(j - target) for j in range(MAX) if dp[j])`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]], 13], expected: 0 },
