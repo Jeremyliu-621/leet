@@ -1890,7 +1890,7 @@ export function EditorPanel({
               type="button"
               onClick={onSubmit}
               onKeyDown={handleSubmitKeyDown}
-              disabled={isRunning}
+              disabled={isRunning || (attemptsRemaining !== null && attemptsRemaining <= 0)}
               aria-keyshortcuts="Control+Shift+Enter Meta+Shift+Enter"
               aria-label="Submit solution against all test cases"
               className="inline-flex items-center gap-1.5 rounded-sm bg-accent px-4 py-1.5 font-mono text-[11px] font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
