@@ -40,12 +40,81 @@ Return *the **total number** of good triplets*.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function goodTriplets(nums1, nums2) {
-
+  const n = nums1.length;
+  const pos2 = new Array(n);
+  for (let i = 0; i < n; i++) pos2[nums2[i]] = i;
+  // pos[i] = position of nums1[i] in nums2
+  const pos = nums1.map(v => pos2[v]);
+  // BIT (1-indexed, size n)
+  const bit = new Array(n + 1).fill(0);
+  const update = i => { for (i++; i <= n; i += i & -i) bit[i]++; };
+  const query = i => { let s = 0; for (i++; i > 0; i -= i & -i) s += bit[i]; return s; };
+  const leftSmaller = new Array(n);
+  for (let j = 0; j < n; j++) {
+    leftSmaller[j] = pos[j] > 0 ? query(pos[j] - 1) : 0;
+    update(pos[j]);
+  }
+  bit.fill(0);
+  let ans = 0;
+  for (let j = n - 1; j >= 0; j--) {
+    const rightLarger = (j < n - 1) ? (query(n - 1) - query(pos[j])) : 0;
+    ans += leftSmaller[j] * rightLarger;
+    update(pos[j]);
+  }
+  return ans;
 }`,
-    typescript: "function goodTriplets(nums1: number[], nums2: number[]): number {\n\n}",
-
+    typescript: `function goodTriplets(nums1: number[], nums2: number[]): number {
+  const n = nums1.length;
+  const pos2 = new Array<number>(n);
+  for (let i = 0; i < n; i++) pos2[nums2[i]!] = i;
+  const pos = nums1.map(v => pos2[v]!);
+  const bit = new Array<number>(n + 1).fill(0);
+  const update = (i: number) => { for (i++; i <= n; i += i & -i) bit[i]!++; };
+  const query = (i: number) => { let s = 0; for (i++; i > 0; i -= i & -i) s += bit[i]!; return s; };
+  const leftSmaller = new Array<number>(n);
+  for (let j = 0; j < n; j++) {
+    leftSmaller[j] = pos[j]! > 0 ? query(pos[j]! - 1) : 0;
+    update(pos[j]!);
+  }
+  bit.fill(0);
+  let ans = 0;
+  for (let j = n - 1; j >= 0; j--) {
+    const rightLarger = j < n - 1 ? query(n - 1) - query(pos[j]!) : 0;
+    ans += leftSmaller[j]! * rightLarger;
+    update(pos[j]!);
+  }
+  return ans;
+}`,
     python: `def goodTriplets(nums1, nums2):
-    pass`,
+    n = len(nums1)
+    pos2 = [0] * n
+    for i, v in enumerate(nums2):
+        pos2[v] = i
+    pos = [pos2[v] for v in nums1]
+    bit = [0] * (n + 1)
+    def update(i):
+        i += 1
+        while i <= n:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        i += 1
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    left_smaller = [0] * n
+    for j in range(n):
+        left_smaller[j] = query(pos[j] - 1) if pos[j] > 0 else 0
+        update(pos[j])
+    bit[:] = [0] * (n + 1)
+    ans = 0
+    for j in range(n - 1, -1, -1):
+        right_larger = query(n - 1) - query(pos[j]) if j < n - 1 else 0
+        ans += left_smaller[j] * right_larger
+        update(pos[j])
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 0, 1, 3], [0, 1, 2, 3]], expected: 1 },

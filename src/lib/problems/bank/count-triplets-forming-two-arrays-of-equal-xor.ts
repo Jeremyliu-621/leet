@@ -52,11 +52,36 @@ function countTriplets(arr) {
   params: ['arr'],
   starterCode: {
     javascript: `function countTriplets(arr) {
-
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    let xor = arr[i];
+    for (let k = i + 1; k < arr.length; k++) {
+      xor ^= arr[k];
+      if (xor === 0) count += k - i;
+    }
+  }
+  return count;
 }`,
-    typescript: 'function countTriplets(arr: number[]): number {\n\n}',
+    typescript: `function countTriplets(arr: number[]): number {
+  let count = 0;
+  for (let i = 0; i < arr.length; i++) {
+    let xor = arr[i]!;
+    for (let k = i + 1; k < arr.length; k++) {
+      xor ^= arr[k]!;
+      if (xor === 0) count += k - i;
+    }
+  }
+  return count;
+}`,
     python: `def countTriplets(arr):
-    pass`,
+    count = 0
+    for i in range(len(arr)):
+        xor = arr[i]
+        for k in range(i + 1, len(arr)):
+            xor ^= arr[k]
+            if xor == 0:
+                count += k - i
+    return count`,
   },
   visibleTests: [
     { args: [[2, 3, 1, 6, 7]], expected: 4 },

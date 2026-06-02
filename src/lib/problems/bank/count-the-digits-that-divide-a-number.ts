@@ -36,9 +36,18 @@ A digit \`d\` divides \`num\` if \`num % d == 0\`. Note that \`0\` does not divi
   functionName: 'countDigits',
   params: ['num'],
   starterCode: {
-    javascript: 'function countDigits(num) {\n  \n}',
-    typescript: 'function countDigits(num: number): number {\n  \n}',
-    python: 'def countDigits(num):\n    ',
+    javascript: `function countDigits(num) {
+  let n = num, count = 0;
+  while (n > 0) { const d = n % 10; if (d !== 0 && num % d === 0) count++; n = Math.floor(n / 10); }
+  return count;
+}`,
+    typescript: `function countDigits(num: number): number {
+  let n = num, count = 0;
+  while (n > 0) { const d = n % 10; if (d !== 0 && num % d === 0) count++; n = Math.floor(n / 10); }
+  return count;
+}`,
+    python: `def countDigits(num):
+    return sum(1 for d in str(num) if d != '0' and num % int(d) == 0)`,
   },
   visibleTests: [
     { args: [7], expected: 1 },

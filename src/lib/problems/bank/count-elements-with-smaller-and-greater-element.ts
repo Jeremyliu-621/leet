@@ -32,17 +32,17 @@ More formally, count the elements \`nums[i]\` such that there exist indices \`j\
   functionName: 'countElements',
   params: ['nums'],
   starterCode: {
-    javascript: `/**
- * @param {number[]} nums
- * @return {number}
- */
-function countElements(nums) {
-
+    javascript: `function countElements(nums) {
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return nums.filter(x => x > mn && x < mx).length;
 }`,
-    typescript: "function countElements(nums: number[]): number {number[]} nums\n * @return {number}\n */\nfunction countElements(nums) {\n\n}",
-
-    python: `def countElements(nums: list[int]) -> int:
-    pass`,
+    typescript: `function countElements(nums: number[]): number {
+  const mn = Math.min(...nums), mx = Math.max(...nums);
+  return nums.filter(x => x > mn && x < mx).length;
+}`,
+    python: `def countElements(nums):
+    mn, mx = min(nums), max(nums)
+    return sum(1 for x in nums if mn < x < mx)`,
   },
   hints: [
     'An element has both a smaller and a greater element if and only if it is strictly between the array minimum and maximum.',

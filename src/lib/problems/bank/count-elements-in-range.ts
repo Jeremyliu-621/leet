@@ -31,20 +31,14 @@ export const problem: Problem = {
   functionName: 'countElementsInRange',
   params: ['nums', 'lo', 'hi'],
   starterCode: {
-    javascript: `/**
- * @param {number[]} nums
- * @param {number} lo
- * @param {number} hi
- * @return {number}
- */
-function countElementsInRange(nums, lo, hi) {
-
+    javascript: `function countElementsInRange(nums, lo, hi) {
+  return nums.filter(x => x >= lo && x <= hi).length;
 }`,
     typescript: `function countElementsInRange(nums: number[], lo: number, hi: number): number {
-
+  return nums.filter(x => x >= lo && x <= hi).length;
 }`,
-    python: `def countElementsInRange(nums: list[int], lo: int, hi: int) -> int:
-    pass`,
+    python: `def countElementsInRange(nums, lo, hi):
+    return sum(1 for x in nums if lo <= x <= hi)`,
   },
   hints: [
     'Iterate through each element and check whether it falls within the inclusive range [lo, hi].',

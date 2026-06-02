@@ -48,12 +48,58 @@ A route is any sequence of cities (without running out of fuel) that starts at \
   params: ['locations', 'start', 'finish', 'fuel'],
   starterCode: {
     javascript: `function countRoutes(locations, start, finish, fuel) {
-
+  const MOD = 1000000007, n = locations.length;
+  const memo = new Map();
+  function dp(pos, rem) {
+    if (rem < 0) return 0;
+    const key = pos * (fuel + 1) + rem;
+    if (memo.has(key)) return memo.get(key);
+    let res = pos === finish ? 1 : 0;
+    for (let j = 0; j < n; j++) {
+      if (j === pos) continue;
+      const cost = Math.abs(locations[pos] - locations[j]);
+      if (cost <= rem) res = (res + dp(j, rem - cost)) % MOD;
+    }
+    memo.set(key, res);
+    return res;
+  }
+  return dp(start, fuel);
 }`,
-    typescript: "function countRoutes(locations: number[], start: number, finish: number, fuel: number): number {\n\n}",
-
-    python: `def countRoutes(locations: list[int], start: int, finish: int, fuel: int) -> int:
-    pass`,
+    typescript: `function countRoutes(locations: number[], start: number, finish: number, fuel: number): number {
+  const MOD = 1000000007, n = locations.length;
+  const memo = new Map<number, number>();
+  function dp(pos: number, rem: number): number {
+    if (rem < 0) return 0;
+    const key = pos * (fuel + 1) + rem;
+    if (memo.has(key)) return memo.get(key)!;
+    let res = pos === finish ? 1 : 0;
+    for (let j = 0; j < n; j++) {
+      if (j === pos) continue;
+      const cost = Math.abs(locations[pos]! - locations[j]!);
+      if (cost <= rem) res = (res + dp(j, rem - cost)) % MOD;
+    }
+    memo.set(key, res);
+    return res;
+  }
+  return dp(start, fuel);
+}`,
+    python: `def countRoutes(locations, start, finish, fuel):
+    MOD = 10**9 + 7
+    n = len(locations)
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(pos, rem):
+        if rem < 0:
+            return 0
+        res = 1 if pos == finish else 0
+        for j in range(n):
+            if j == pos:
+                continue
+            cost = abs(locations[pos] - locations[j])
+            if cost <= rem:
+                res = (res + dp(j, rem - cost)) % MOD
+        return res
+    return dp(start, fuel)`,
   },
   visibleTests: [
     { args: [[2, 3, 6, 8, 4], 1, 3, 5], expected: 4 },

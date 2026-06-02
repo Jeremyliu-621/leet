@@ -44,9 +44,30 @@ The naive O(n log n) approach iterates and counts bits per number. Aim for **O(l
   functionName: 'countTotalSetBits',
   params: ['n'],
   starterCode: {
-    javascript: `function countTotalSetBits(n) {\n\n}`,
-    typescript: `function countTotalSetBits(n: number): number {\n\n}`,
-    python: `def countTotalSetBits(n: int) -> int:\n    pass`,
+    javascript: `function countTotalSetBits(n) {
+  let total = 0;
+  for (let b = 1; b <= n; b <<= 1) {
+    const period = b << 1;
+    total += Math.floor((n + 1) / period) * b + Math.max(0, (n + 1) % period - b);
+  }
+  return total;
+}`,
+    typescript: `function countTotalSetBits(n: number): number {
+  let total = 0;
+  for (let b = 1; b <= n; b <<= 1) {
+    const period = b << 1;
+    total += Math.floor((n + 1) / period) * b + Math.max(0, (n + 1) % period - b);
+  }
+  return total;
+}`,
+    python: `def countTotalSetBits(n):
+    total = 0
+    b = 1
+    while b <= n:
+        period = b << 1
+        total += (n + 1) // period * b + max(0, (n + 1) % period - b)
+        b <<= 1
+    return total`,
   },
   visibleTests: [
     { args: [5], expected: 7 },
