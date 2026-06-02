@@ -34,12 +34,16 @@ Return \`true\` if both squares have the **same** color, and \`false\` otherwise
   params: ['coordinate1', 'coordinate2'],
   starterCode: {
     javascript: `function checkTwoChessboards(coordinate1, coordinate2) {
-
+  const parity = c => (c.charCodeAt(0) + Number(c[1])) % 2;
+  return parity(coordinate1) === parity(coordinate2);
 }`,
-    typescript: "function checkTwoChessboards(coordinate1: string, coordinate2: string): boolean {\n\n}",
-
+    typescript: `function checkTwoChessboards(coordinate1: string, coordinate2: string): boolean {
+  const parity = (c: string) => (c.charCodeAt(0) + Number(c[1])) % 2;
+  return parity(coordinate1) === parity(coordinate2);
+}`,
     python: `def checkTwoChessboards(coordinate1, coordinate2):
-    pass`,
+    parity = lambda c: (ord(c[0]) + int(c[1])) % 2
+    return parity(coordinate1) == parity(coordinate2)`,
   },
   visibleTests: [
     { args: ['a1', 'c3'], expected: true },

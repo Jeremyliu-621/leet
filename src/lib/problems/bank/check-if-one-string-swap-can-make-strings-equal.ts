@@ -43,12 +43,29 @@ function areAlmostEqual(s1, s2) {
   params: ['s1', 's2'],
   starterCode: {
     javascript: `function areAlmostEqual(s1, s2) {
-
+  const diffs = [];
+  for (let i = 0; i < s1.length; i++) if (s1[i] !== s2[i]) diffs.push(i);
+  if (diffs.length === 0) return true;
+  if (diffs.length !== 2) return false;
+  const [a, b] = diffs;
+  return s1[a] === s2[b] && s1[b] === s2[a];
 }`,
-    typescript: "function areAlmostEqual(s1: string, s2: string): boolean {\n\n}",
-
+    typescript: `function areAlmostEqual(s1: string, s2: string): boolean {
+  const diffs: number[] = [];
+  for (let i = 0; i < s1.length; i++) if (s1[i] !== s2[i]) diffs.push(i);
+  if (diffs.length === 0) return true;
+  if (diffs.length !== 2) return false;
+  const [a, b] = diffs as [number, number];
+  return s1[a] === s2[b] && s1[b] === s2[a];
+}`,
     python: `def areAlmostEqual(s1, s2):
-    pass`,
+    diffs = [i for i in range(len(s1)) if s1[i] != s2[i]]
+    if len(diffs) == 0:
+        return True
+    if len(diffs) != 2:
+        return False
+    a, b = diffs
+    return s1[a] == s2[b] and s1[b] == s2[a]`,
   },
   visibleTests: [
     { args: ['bank', 'kanb'], expected: true },

@@ -41,11 +41,36 @@ Given a string \`s\` representing a sentence, return \`true\` if all the numbers
   params: ['s'],
   starterCode: {
     javascript: `function areNumbersAscending(s) {
-
+  let prev = -1;
+  for (const token of s.split(' ')) {
+    if (/^\d+$/.test(token)) {
+      const n = parseInt(token, 10);
+      if (n <= prev) return false;
+      prev = n;
+    }
+  }
+  return true;
 }`,
-    typescript: 'function areNumbersAscending(s: string): boolean {\n\n}',
+    typescript: `function areNumbersAscending(s: string): boolean {
+  let prev = -1;
+  for (const token of s.split(' ')) {
+    if (/^\d+$/.test(token)) {
+      const n = parseInt(token, 10);
+      if (n <= prev) return false;
+      prev = n;
+    }
+  }
+  return true;
+}`,
     python: `def areNumbersAscending(s):
-    pass`,
+    prev = -1
+    for token in s.split():
+        if token.isdigit():
+            n = int(token)
+            if n <= prev:
+                return False
+            prev = n
+    return True`,
   },
   visibleTests: [
     { args: ['1 box has 3 blue 4 red 6 green and 12 yellow marbles'], expected: true },
