@@ -47,10 +47,46 @@ The minimum is \`4500\`.`,
   functionName: 'matrixChainOrder',
   params: ['dims'],
   starterCode: {
-    javascript: 'function matrixChainOrder(dims) {\n  // your code here\n}\n',
-    typescript: "function matrixChainOrder(dims: number[]): number {\n  // your code here\n}",
-
-    python: 'def matrixChainOrder(dims):\n    # your code here\n    pass\n',
+    javascript: `function matrixChainOrder(dims) {
+  const n = dims.length - 1;
+  const dp = Array.from({length: n + 1}, () => new Array(n + 1).fill(Infinity));
+  for (let i = 1; i <= n; i++) dp[i][i] = 0;
+  for (let len = 2; len <= n; len++) {
+    for (let i = 1; i <= n - len + 1; i++) {
+      const j = i + len - 1;
+      for (let m = i; m < j; m++) {
+        dp[i][j] = Math.min(dp[i][j], dp[i][m] + dp[m+1][j] + dims[i-1] * dims[m] * dims[j]);
+      }
+    }
+  }
+  return dp[1][n];
+}`,
+    typescript: `function matrixChainOrder(dims: number[]): number {
+  const n = dims.length - 1;
+  const dp = Array.from({length: n + 1}, () => new Array(n + 1).fill(Infinity) as number[]);
+  for (let i = 1; i <= n; i++) dp[i]![i] = 0;
+  for (let len = 2; len <= n; len++) {
+    for (let i = 1; i <= n - len + 1; i++) {
+      const j = i + len - 1;
+      for (let m = i; m < j; m++) {
+        dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![m]! + dp[m+1]![j]! + dims[i-1]! * dims[m]! * dims[j]!);
+      }
+    }
+  }
+  return dp[1]![n]!;
+}`,
+    python: `def matrixChainOrder(dims):
+    if hasattr(dims, 'to_py'): dims = dims.to_py()
+    dims = [int(x) for x in dims]
+    n = len(dims) - 1
+    dp = [[float('inf')] * (n + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1): dp[i][i] = 0
+    for length in range(2, n + 1):
+        for i in range(1, n - length + 2):
+            j = i + length - 1
+            for m in range(i, j):
+                dp[i][j] = min(dp[i][j], dp[i][m] + dp[m+1][j] + dims[i-1]*dims[m]*dims[j])
+    return dp[1][n]`,
   },
   visibleTests: [
     { args: [[10, 30, 5, 60]], expected: 4500 },

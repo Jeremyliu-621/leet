@@ -43,14 +43,54 @@ Return the **maximum** number of books you can take from all the shelves.`,
   params: ['books'],
   starterCode: {
     javascript: `function maximumBooks(books) {
-  // your code here
+  const n = books.length;
+  const dp = new Array(n).fill(0);
+  const stack = []; // indices with strictly increasing books[i]-i
+  function freeSum(j, r) {
+    const len = r - j; // j=-1 means len=r+1
+    const cnt = Math.min(len, books[r]);
+    return cnt * books[r] - cnt * (cnt - 1) / 2;
+  }
+  let ans = 0;
+  for (let r = 0; r < n; r++) {
+    while (stack.length && books[stack[stack.length-1]] - stack[stack.length-1] >= books[r] - r) stack.pop();
+    dp[r] = stack.length === 0 ? freeSum(-1, r) : dp[stack[stack.length-1]] + freeSum(stack[stack.length-1], r);
+    ans = Math.max(ans, dp[r]);
+    stack.push(r);
+  }
+  return ans;
 }`,
     typescript: `function maximumBooks(books: number[]): number {
-
+  const n = books.length;
+  const dp = new Array(n).fill(0) as number[];
+  const stack: number[] = [];
+  function freeSum(j: number, r: number): number {
+    const len = r - j;
+    const cnt = Math.min(len, books[r]!);
+    return cnt * books[r]! - cnt * (cnt - 1) / 2;
+  }
+  let ans = 0;
+  for (let r = 0; r < n; r++) {
+    while (stack.length && books[stack[stack.length-1]!]! - stack[stack.length-1]! >= books[r]! - r) stack.pop();
+    dp[r] = stack.length === 0 ? freeSum(-1, r) : dp[stack[stack.length-1]!]! + freeSum(stack[stack.length-1]!, r);
+    ans = Math.max(ans, dp[r]!);
+    stack.push(r);
+  }
+  return ans;
 }`,
     python: `def maximumBooks(books):
-    # your code here
-    pass`,
+    if hasattr(books, 'to_py'): books = books.to_py()
+    books = [int(x) for x in books]
+    n = len(books); dp = [0] * n; stack = []; ans = 0
+    def free_sum(j, r):
+        length = r - j
+        cnt = min(length, books[r])
+        return cnt * books[r] - cnt * (cnt - 1) // 2
+    for r in range(n):
+        while stack and books[stack[-1]] - stack[-1] >= books[r] - r: stack.pop()
+        dp[r] = free_sum(-1, r) if not stack else dp[stack[-1]] + free_sum(stack[-1], r)
+        ans = max(ans, dp[r]); stack.append(r)
+    return ans`,
   },
   visibleTests: [
     { args: [[8, 5, 2, 7, 9]], expected: 19 },

@@ -44,9 +44,82 @@ A **subsequence** is derived from an array by deleting some elements without cha
   functionName: 'lengthOfLIS',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function lengthOfLIS(nums, k) {\n  // your code here\n}\n',
-    typescript: 'function lengthOfLIS(nums: number[], k: number): number {\n  // your code here\n}\n',
-    python: 'def lengthOfLIS(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function lengthOfLIS(nums, k) {
+  const M = Math.max(...nums) + 1;
+  const tree = new Array(4 * M).fill(0);
+  function update(node, start, end, idx, val) {
+    if (start === end) { tree[node] = Math.max(tree[node], val); return; }
+    const mid = (start + end) >> 1;
+    if (idx <= mid) update(2*node, start, mid, idx, val);
+    else update(2*node+1, mid+1, end, idx, val);
+    tree[node] = Math.max(tree[2*node], tree[2*node+1]);
+  }
+  function query(node, start, end, l, r) {
+    if (r < start || end < l || l > r) return 0;
+    if (l <= start && end <= r) return tree[node];
+    const mid = (start + end) >> 1;
+    return Math.max(query(2*node, start, mid, l, r), query(2*node+1, mid+1, end, l, r));
+  }
+  let ans = 0;
+  for (const v of nums) {
+    const lo = Math.max(1, v - k);
+    const best = query(1, 1, M - 1, lo, v - 1);
+    const dp = best + 1;
+    ans = Math.max(ans, dp);
+    update(1, 1, M - 1, v, dp);
+  }
+  return ans;
+}`,
+    typescript: `function lengthOfLIS(nums: number[], k: number): number {
+  const M = Math.max(...nums) + 1;
+  const tree = new Array(4 * M).fill(0) as number[];
+  function update(node: number, start: number, end: number, idx: number, val: number): void {
+    if (start === end) { tree[node] = Math.max(tree[node]!, val); return; }
+    const mid = (start + end) >> 1;
+    if (idx <= mid) update(2*node, start, mid, idx, val);
+    else update(2*node+1, mid+1, end, idx, val);
+    tree[node] = Math.max(tree[2*node]!, tree[2*node+1]!);
+  }
+  function query(node: number, start: number, end: number, l: number, r: number): number {
+    if (r < start || end < l || l > r) return 0;
+    if (l <= start && end <= r) return tree[node]!;
+    const mid = (start + end) >> 1;
+    return Math.max(query(2*node, start, mid, l, r), query(2*node+1, mid+1, end, l, r));
+  }
+  let ans = 0;
+  for (const v of nums) {
+    const lo = Math.max(1, v - k);
+    const best = query(1, 1, M - 1, lo, v - 1);
+    const dp = best + 1;
+    ans = Math.max(ans, dp);
+    update(1, 1, M - 1, v, dp);
+  }
+  return ans;
+}`,
+    python: `def lengthOfLIS(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    M = max(nums) + 1
+    tree = [0] * (4 * M)
+    def update(node, start, end, idx, val):
+        if start == end: tree[node] = max(tree[node], val); return
+        mid = (start + end) >> 1
+        if idx <= mid: update(2*node, start, mid, idx, val)
+        else: update(2*node+1, mid+1, end, idx, val)
+        tree[node] = max(tree[2*node], tree[2*node+1])
+    def query(node, start, end, l, r):
+        if r < start or end < l or l > r: return 0
+        if l <= start <= end <= r: return tree[node]
+        mid = (start + end) >> 1
+        return max(query(2*node, start, mid, l, r), query(2*node+1, mid+1, end, l, r))
+    ans = 0
+    for v in nums:
+        lo = max(1, v - k)
+        best = query(1, 1, M - 1, lo, v - 1)
+        dp = best + 1; ans = max(ans, dp)
+        update(1, 1, M - 1, v, dp)
+    return ans`,
   },
   visibleTests: [
     {

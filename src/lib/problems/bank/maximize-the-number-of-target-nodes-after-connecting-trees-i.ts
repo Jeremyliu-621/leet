@@ -49,14 +49,80 @@ Return an array \`ans\` of \`n\` integers, where \`ans[i]\` is the **maximum** n
   params: ['edges1', 'edges2', 'k'],
   starterCode: {
     javascript: `function maxTargetNodes(edges1, edges2, k) {
-  // your code here
+  function buildAdj(edges, n) {
+    const adj = Array.from({length: n}, () => []);
+    for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); }
+    return adj;
+  }
+  function bfsCount(adj, src, maxDist) {
+    if (maxDist < 0) return 0;
+    const dist = new Array(adj.length).fill(-1);
+    dist[src] = 0;
+    const queue = [src]; let cnt = 1;
+    while (queue.length) {
+      const u = queue.shift();
+      if (dist[u] >= maxDist) continue;
+      for (const v of adj[u]) if (dist[v] === -1) { dist[v] = dist[u] + 1; cnt++; queue.push(v); }
+    }
+    return cnt;
+  }
+  const n = edges1.length + 1, m = edges2.length + 1;
+  const adj1 = buildAdj(edges1, n), adj2 = buildAdj(edges2, m);
+  const cnt2 = Array.from({length: m}, (_, i) => bfsCount(adj2, i, k - 1));
+  const maxCnt2 = Math.max(...cnt2);
+  return Array.from({length: n}, (_, i) => bfsCount(adj1, i, k) + maxCnt2);
 }`,
     typescript: `function maxTargetNodes(edges1: number[][], edges2: number[][], k: number): number[] {
-  // your code here
+  function buildAdj(edges: number[][], n: number): number[][] {
+    const adj: number[][] = Array.from({length: n}, () => []);
+    for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+    return adj;
+  }
+  function bfsCount(adj: number[][], src: number, maxDist: number): number {
+    if (maxDist < 0) return 0;
+    const dist = new Array(adj.length).fill(-1) as number[];
+    dist[src] = 0;
+    const queue = [src]; let cnt = 1;
+    while (queue.length) {
+      const u = queue.shift()!;
+      if (dist[u]! >= maxDist) continue;
+      for (const v of adj[u]!) if (dist[v] === -1) { dist[v] = dist[u]! + 1; cnt++; queue.push(v); }
+    }
+    return cnt;
+  }
+  const n = edges1.length + 1, m = edges2.length + 1;
+  const adj1 = buildAdj(edges1, n), adj2 = buildAdj(edges2, m);
+  const cnt2 = Array.from({length: m}, (_, i) => bfsCount(adj2, i, k - 1));
+  const maxCnt2 = Math.max(...cnt2);
+  return Array.from({length: n}, (_, i) => bfsCount(adj1, i, k) + maxCnt2);
 }`,
     python: `def maxTargetNodes(edges1, edges2, k):
-    # your code here
-    pass`,
+    if hasattr(edges1, 'to_py'): edges1 = edges1.to_py()
+    if hasattr(edges2, 'to_py'): edges2 = edges2.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    edges1 = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges1]
+    edges2 = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges2]
+    k = int(k)
+    def build_adj(edges, n):
+        adj = [[] for _ in range(n)]
+        for u, v in edges: adj[u].append(v); adj[v].append(u)
+        return adj
+    def bfs_count(adj, src, max_dist):
+        if max_dist < 0: return 0
+        from collections import deque
+        dist = [-1] * len(adj); dist[src] = 0
+        queue = deque([src]); cnt = 1
+        while queue:
+            u = queue.popleft()
+            if dist[u] >= max_dist: continue
+            for v in adj[u]:
+                if dist[v] == -1: dist[v] = dist[u]+1; cnt += 1; queue.append(v)
+        return cnt
+    n = len(edges1) + 1; m = len(edges2) + 1
+    adj1 = build_adj(edges1, n); adj2 = build_adj(edges2, m)
+    cnt2 = [bfs_count(adj2, i, k-1) for i in range(m)]
+    max_cnt2 = max(cnt2)
+    return [bfs_count(adj1, i, k) + max_cnt2 for i in range(n)]`,
   },
   visibleTests: [
     {

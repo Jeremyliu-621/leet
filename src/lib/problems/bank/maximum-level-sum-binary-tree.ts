@@ -87,10 +87,60 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   params: ['arr'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// TreeNode class and maxLevelSumRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxLevelSum(root) {\n  // your code here\n}\n',
-    typescript: "function maxLevelSumRunner(arr: (number | null)[]): number {\n  // your code here\n}",
-
-    python: '# TreeNode class and maxLevelSumRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxLevelSum(root):\n    # your code here\n    pass\n',
+    javascript: `// TreeNode class and maxLevelSumRunner wrapper are pre-defined.
+// Implement the function below:
+function maxLevelSum(root) {
+  let level = 1, ans = 1, mx = -Infinity;
+  const q = [root];
+  while (q.length) {
+    const size = q.length; let s = 0;
+    for (let i = 0; i < size; i++) {
+      const nd = q.shift();
+      s += nd.val;
+      if (nd.left) q.push(nd.left);
+      if (nd.right) q.push(nd.right);
+    }
+    if (s > mx) { mx = s; ans = level; }
+    level++;
+  }
+  return ans;
+}`,
+    typescript: `function maxLevelSumRunner(arr: (number | null)[]): number {
+  if (!arr.length) return 1;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const root = mk(arr[0] as number);
+  const bq: N[] = [root]; let idx = 1;
+  while (bq.length && idx < arr.length) {
+    const nd = bq.shift()!;
+    if (arr[idx] != null) { nd.l = mk(arr[idx] as number); bq.push(nd.l); } idx++;
+    if (idx < arr.length && arr[idx] != null) { nd.r = mk(arr[idx] as number); bq.push(nd.r); } idx++;
+  }
+  let level = 1, ans = 1, mx = -Infinity;
+  const q: N[] = [root];
+  while (q.length) {
+    const size = q.length; let s = 0;
+    for (let i = 0; i < size; i++) {
+      const nd = q.shift()!; s += nd.v;
+      if (nd.l) q.push(nd.l);
+      if (nd.r) q.push(nd.r);
+    }
+    if (s > mx) { mx = s; ans = level; }
+    level++;
+  }
+  return ans;
+}`,
+    python: `# TreeNode class and maxLevelSumRunner wrapper are pre-defined.
+# Implement the function below:
+def maxLevelSum(root):
+    level, ans, mx = 1, 1, float('-inf')
+    q = [root]
+    while q:
+        s = sum(nd.val for nd in q)
+        if s > mx: mx = s; ans = level
+        q = [child for nd in q for child in [nd.left, nd.right] if child]
+        level += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 7, 0, 7, -8, null, null]], expected: 2 },

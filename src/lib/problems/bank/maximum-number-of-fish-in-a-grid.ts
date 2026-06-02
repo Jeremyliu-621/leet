@@ -48,10 +48,42 @@ Output: 1
   functionName: 'findMaxFish',
   params: ['grid'],
   starterCode: {
-    javascript: 'function findMaxFish(grid) {\n  // your code here\n}\n',
-    typescript: "function findMaxFish(grid: number[][]): number {\n  // your code here\n}",
-
-    python: 'def findMaxFish(grid):\n    pass\n',
+    javascript: `function findMaxFish(grid) {
+  const m = grid.length, n = grid[0].length;
+  function dfs(r, c) {
+    if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] === 0) return 0;
+    const fish = grid[r][c];
+    grid[r][c] = 0;
+    return fish + dfs(r+1,c) + dfs(r-1,c) + dfs(r,c+1) + dfs(r,c-1);
+  }
+  let ans = 0;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = Math.max(ans, dfs(r, c));
+  return ans;
+}`,
+    typescript: `function findMaxFish(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  function dfs(r: number, c: number): number {
+    if (r < 0 || r >= m || c < 0 || c >= n || !grid[r]![c]) return 0;
+    const fish = grid[r]![c]!;
+    grid[r]![c] = 0;
+    return fish + dfs(r+1,c) + dfs(r-1,c) + dfs(r,c+1) + dfs(r,c-1);
+  }
+  let ans = 0;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = Math.max(ans, dfs(r, c));
+  return ans;
+}`,
+    python: `def findMaxFish(grid):
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in grid]
+    m, n = len(grid), len(grid[0])
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or grid[r][c] == 0: return 0
+        fish = grid[r][c]; grid[r][c] = 0
+        return fish + dfs(r+1,c) + dfs(r-1,c) + dfs(r,c+1) + dfs(r,c-1)
+    ans = 0
+    for r in range(m):
+        for c in range(n): ans = max(ans, dfs(r, c))
+    return ans`,
   },
   visibleTests: [
     { args: [[[0, 2, 1, 0], [4, 0, 0, 3], [1, 0, 0, 4], [0, 3, 2, 0]]], expected: 7 },

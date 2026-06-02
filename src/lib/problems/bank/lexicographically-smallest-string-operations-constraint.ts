@@ -53,9 +53,38 @@ Return the **lexicographically smallest** string that can be obtained.`,
   functionName: 'getSmallestString',
   params: ['s', 'k'],
   starterCode: {
-    javascript: 'function getSmallestString(s, k) {\n  // your code here\n}\n',
-    typescript: 'function getSmallestString(s: string, k: number): string {\n  // your code here\n}',
-    python: 'def getSmallestString(s, k):\n    # your code here\n    pass\n',
+    javascript: `function getSmallestString(s, k) {
+  const arr = s.split('');
+  for (let i = 0; i < arr.length && k > 0; i++) {
+    const d = arr[i].charCodeAt(0) - 97;
+    const cost = Math.min(d, 26 - d);
+    if (k >= cost) { arr[i] = 'a'; k -= cost; }
+    else { arr[i] = String.fromCharCode(arr[i].charCodeAt(0) - k); k = 0; }
+  }
+  return arr.join('');
+}`,
+    typescript: `function getSmallestString(s: string, k: number): string {
+  const arr = s.split('');
+  for (let i = 0; i < arr.length && k > 0; i++) {
+    const d = arr[i]!.charCodeAt(0) - 97;
+    const cost = Math.min(d, 26 - d);
+    if (k >= cost) { arr[i] = 'a'; k -= cost; }
+    else { arr[i] = String.fromCharCode(arr[i]!.charCodeAt(0) - k); k = 0; }
+  }
+  return arr.join('');
+}`,
+    python: `def getSmallestString(s, k):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    s = str(s); k = int(k)
+    arr = list(s)
+    for i in range(len(arr)):
+        if k <= 0: break
+        d = ord(arr[i]) - 97
+        cost = min(d, 26 - d)
+        if k >= cost: arr[i] = 'a'; k -= cost
+        else: arr[i] = chr(ord(arr[i]) - k); k = 0
+    return ''.join(arr)`,
   },
   visibleTests: [
     { args: ['zbbz', 3], expected: 'aaaz' },
