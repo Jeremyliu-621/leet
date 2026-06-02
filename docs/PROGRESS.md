@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2925** problems; 9135 tests green. Batches 39j–39r filled starters for 58 stub problems. ~829 stubs remaining.
+**Current focus:** Bank at **2929** problems; 9147 tests green. Batch 283 (4 new problems) pushed.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue starter backfill (batch 39s+); continued bank growth (batch 283+); UX polish.
+**Next up:** Continue starter backfill (batch 39s+); continued bank growth (batch 284+); UX polish.
+
+### feat(bank): batch 283 — double-modular-exp, max-score-node-seq, min-increment-unique, min-ops-string-sort (2026-06-02)
+Four new problems: `double-modular-exponentiation` (medium/math — compute ((a^b%10)^c)%m per variable; return indices where result=0; BigInt modpow), `maximum-score-node-sequence` (hard/graph — top-3 neighbors per node; for each edge (b,c) try all 9 (a,d) neighbor pairs; O(|E|) after preprocessing), `minimum-increment-to-make-array-unique` (medium/arrays — sort then greedily push duplicates to prev+1; O(n log n)), `minimum-number-of-operations-to-make-string-sorted` (hard/math — lexicographic rank of string among all permutations of its chars; multinomial coefficient with modular inverse via Fermat; O(n·26)). Bank at **2929**; 9147 tests.
 
 ### feat(bank): batch 282 — maximum-strong-pairs-II, minimum-lines, find-elements, make-costs (2026-06-02)
 Four new problems: `maximum-strong-pairs-in-an-array-ii` (medium/trie+sliding-window — XOR-max via trie with ref-count delete; sliding window ensures y≤2x), `minimum-number-of-lines-to-cover-points` (medium/bitmask+DP — BFS/DP over bitmask states; precompute line coverage masks; O(3^n)), `find-elements-in-a-contaminated-binary-tree` (medium/tree+design — BFS build + DFS recover into Set; O(n)), `make-costs-of-paths-equal-in-a-binary-tree` (medium/tree+greedy — bottom-up sibling equalization, ans+=abs(diff); O(n)). Also fixed JsNull handling in Python preamble for tree problems. Bank at **2925**; 9119 tests.
