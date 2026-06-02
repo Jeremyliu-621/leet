@@ -45,10 +45,39 @@ Return the **number of ways** to split \`ranges\` into two groups. Since the ans
   functionName: 'countWays',
   params: ['ranges'],
   starterCode: {
-    javascript: 'function countWays(ranges) {\n  \n}\n',
-    typescript: "function countWays(ranges: number[][]): number {\n  \n}",
-
-    python: 'def countWays(ranges):\n    pass\n',
+    javascript: `function countWays(ranges) {
+  const MOD = 1000000007;
+  ranges.sort((a, b) => a[0] - b[0]);
+  let k = 1, maxEnd = ranges[0][1];
+  for (let i = 1; i < ranges.length; i++) {
+    if (ranges[i][0] > maxEnd) k++;
+    maxEnd = Math.max(maxEnd, ranges[i][1]);
+  }
+  let ans = 1;
+  for (let i = 0; i < k; i++) ans = ans * 2 % MOD;
+  return ans;
+}`,
+    typescript: `function countWays(ranges: number[][]): number {
+  const MOD = 1000000007;
+  ranges.sort((a, b) => a[0]! - b[0]!);
+  let k = 1, maxEnd = ranges[0]![1]!;
+  for (let i = 1; i < ranges.length; i++) {
+    if (ranges[i]![0]! > maxEnd) k++;
+    maxEnd = Math.max(maxEnd, ranges[i]![1]!);
+  }
+  let ans = 1;
+  for (let i = 0; i < k; i++) ans = ans * 2 % MOD;
+  return ans;
+}`,
+    python: `def countWays(ranges):
+    MOD = 10**9 + 7
+    ranges.sort()
+    k, max_end = 1, ranges[0][1]
+    for start, end in ranges[1:]:
+        if start > max_end:
+            k += 1
+        max_end = max(max_end, end)
+    return pow(2, k, MOD)`,
   },
   visibleTests: [
     { args: [[[6, 10], [5, 15]]], expected: 2 },

@@ -41,12 +41,13 @@ Return the number of **colored cells** at the end of \`n\` minutes.`,
   params: ['n'],
   starterCode: {
     javascript: `function coloredCells(n) {
-
+  return 2 * n * n - 2 * n + 1;
 }`,
-    typescript: "function coloredCells(n: number): number {\n\n}",
-
+    typescript: `function coloredCells(n: number): number {
+  return 2 * n * n - 2 * n + 1;
+}`,
     python: `def coloredCells(n):
-    pass`,
+    return 2 * n * n - 2 * n + 1`,
   },
   visibleTests: [
     { args: [1], expected: 1 },

@@ -42,10 +42,32 @@ return count;\`\`\``
   functionName: 'waysToSplitArray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function waysToSplitArray(nums) {\n\n}\n',
-    typescript: "function waysToSplitArray(nums: number[]): number {\n\n}",
-
-    python: 'def waysToSplitArray(nums):\n    pass\n',
+    javascript: `function waysToSplitArray(nums) {
+  const total = nums.reduce((a, b) => a + b, 0);
+  let left = 0, count = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    left += nums[i];
+    if (left >= total - left) count++;
+  }
+  return count;
+}`,
+    typescript: `function waysToSplitArray(nums: number[]): number {
+  const total = nums.reduce((a, b) => a + b, 0);
+  let left = 0, count = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    left += nums[i]!;
+    if (left >= total - left) count++;
+  }
+  return count;
+}`,
+    python: `def waysToSplitArray(nums):
+    total = sum(nums)
+    left = count = 0
+    for i in range(len(nums) - 1):
+        left += nums[i]
+        if left >= total - left:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[10,4,-8,7]], expected: 2 },

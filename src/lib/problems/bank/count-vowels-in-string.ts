@@ -38,10 +38,16 @@ function countVowels(word) {
   functionName: 'countVowels',
   params: ['s'],
   starterCode: {
-    javascript: 'function countVowels(s) {\n  \n}\n',
-    typescript: "function countVowels(s: string): number {\n  \n}",
-
-    python: 'def countVowels(s):\n    pass\n',
+    javascript: `function countVowels(s) {
+  const v = new Set('aeiouAEIOU');
+  return [...s].filter(c => v.has(c)).length;
+}`,
+    typescript: `function countVowels(s: string): number {
+  const v = new Set('aeiouAEIOU');
+  return [...s].filter(c => v.has(c)).length;
+}`,
+    python: `def countVowels(s):
+    return sum(1 for c in s if c in 'aeiouAEIOU')`,
   },
   visibleTests: [
     { args: ['hello'], expected: 2 },
