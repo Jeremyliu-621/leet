@@ -48,12 +48,17 @@ function nextGreatestLetter(letters, target) {
   params: ['letters', 'target'],
   starterCode: {
     javascript: `function nextGreatestLetter(letters, target) {
-
+  for (const c of letters) if (c > target) return c;
+  return letters[0];
 }`,
-    typescript: "function nextGreatestLetter(letters: string[], target: string): string {\n\n}",
-
+    typescript: `function nextGreatestLetter(letters: string[], target: string): string {
+  for (const c of letters) if (c > target) return c;
+  return letters[0]!;
+}`,
     python: `def nextGreatestLetter(letters, target):
-    pass`,
+    for c in letters:
+        if c > target: return c
+    return letters[0]`,
   },
   visibleTests: [
     { args: [['c', 'f', 'j'], 'a'], expected: 'c' },

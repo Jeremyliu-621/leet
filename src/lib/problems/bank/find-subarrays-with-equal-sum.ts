@@ -38,12 +38,30 @@ Return \`true\` if these subarrays exist, and \`false\` otherwise.`,
   params: ['nums'],
   starterCode: {
     javascript: `function findSubarrays(nums) {
-
+  const seen = new Set();
+  for (let i = 0; i < nums.length - 1; i++) {
+    const s = nums[i] + nums[i + 1];
+    if (seen.has(s)) return true;
+    seen.add(s);
+  }
+  return false;
 }`,
-    typescript: "function findSubarrays(nums: number[]): boolean {\n\n}",
-
+    typescript: `function findSubarrays(nums: number[]): boolean {
+  const seen = new Set<number>();
+  for (let i = 0; i < nums.length - 1; i++) {
+    const s = nums[i]! + nums[i + 1]!;
+    if (seen.has(s)) return true;
+    seen.add(s);
+  }
+  return false;
+}`,
     python: `def findSubarrays(nums):
-    pass`,
+    seen = set()
+    for i in range(len(nums) - 1):
+        s = nums[i] + nums[i+1]
+        if s in seen: return True
+        seen.add(s)
+    return False`,
   },
   visibleTests: [
     { args: [[4, 2, 4]], expected: true },

@@ -39,13 +39,35 @@ Return the **maximum** cost among all substrings of \`s\`. If all substrings hav
   params: ['s', 'chars', 'vals'],
   starterCode: {
     javascript: `function maximumCostSubstring(s, chars, vals) {
-
+  const costOf = new Map();
+  for (let i = 0; i < chars.length; i++) costOf.set(chars[i], vals[i]);
+  let cur = 0, ans = 0;
+  for (const ch of s) {
+    const c = costOf.has(ch) ? costOf.get(ch) : ch.charCodeAt(0) - 96;
+    cur = Math.max(0, cur + c);
+    ans = Math.max(ans, cur);
+  }
+  return ans;
 }`,
     typescript: `function maximumCostSubstring(s: string, chars: string, vals: number[]): number {
-
+  const costOf = new Map<string, number>();
+  for (let i = 0; i < chars.length; i++) costOf.set(chars[i]!, vals[i]!);
+  let cur = 0, ans = 0;
+  for (const ch of s) {
+    const c = costOf.has(ch) ? costOf.get(ch)! : ch.charCodeAt(0) - 96;
+    cur = Math.max(0, cur + c);
+    ans = Math.max(ans, cur);
+  }
+  return ans;
 }`,
     python: `def maximumCostSubstring(s, chars, vals):
-    pass`,
+    cost_of = dict(zip(chars, vals))
+    cur = ans = 0
+    for ch in s:
+        c = cost_of[ch] if ch in cost_of else ord(ch) - 96
+        cur = max(0, cur + c)
+        ans = max(ans, cur)
+    return ans`,
   },
   visibleTests: [
     { args: ['adaa', 'd', [-1000]], expected: 2 },

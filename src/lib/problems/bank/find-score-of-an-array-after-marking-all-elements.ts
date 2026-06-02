@@ -40,12 +40,37 @@ Return the score you get after applying the above algorithm.`,
   params: ['nums'],
   starterCode: {
     javascript: `function findScore(nums) {
-
+  const n = nums.length, marked = new Array(n).fill(false);
+  const indexed = nums.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  let score = 0;
+  for (const [v, i] of indexed) {
+    if (marked[i]) continue;
+    score += v; marked[i] = true;
+    if (i > 0) marked[i - 1] = true;
+    if (i < n - 1) marked[i + 1] = true;
+  }
+  return score;
 }`,
-    typescript: "function findScore(nums: number[]): number {\n\n}",
-
+    typescript: `function findScore(nums: number[]): number {
+  const n = nums.length, marked = new Array<boolean>(n).fill(false);
+  const indexed = nums.map((v, i) => [v, i]).sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+  let score = 0;
+  for (const [v, i] of indexed) {
+    if (marked[i!]) continue;
+    score += v!; marked[i!] = true;
+    if (i! > 0) marked[i! - 1] = true;
+    if (i! < n - 1) marked[i! + 1] = true;
+  }
+  return score;
+}`,
     python: `def findScore(nums):
-    pass`,
+    n, marked, score = len(nums), [False] * len(nums), 0
+    for v, i in sorted((v, i) for i, v in enumerate(nums)):
+        if marked[i]: continue
+        score += v; marked[i] = True
+        if i > 0: marked[i-1] = True
+        if i < n-1: marked[i+1] = True
+    return score`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 4, 5, 2]], expected: 7 },

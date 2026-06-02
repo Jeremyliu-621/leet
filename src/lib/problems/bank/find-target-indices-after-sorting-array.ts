@@ -46,12 +46,20 @@ function targetIndices(nums, target) {
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function targetIndices(nums, target) {
-
+  nums.sort((a, b) => a - b);
+  const res = [];
+  for (let i = 0; i < nums.length; i++) if (nums[i] === target) res.push(i);
+  return res;
 }`,
-    typescript: "function targetIndices(nums: number[], target: number): number[] {\n\n}",
-
+    typescript: `function targetIndices(nums: number[], target: number): number[] {
+  nums.sort((a, b) => a - b);
+  const res: number[] = [];
+  for (let i = 0; i < nums.length; i++) if (nums[i] === target) res.push(i);
+  return res;
+}`,
     python: `def targetIndices(nums, target):
-    pass`,
+    nums.sort()
+    return [i for i, v in enumerate(nums) if v == target]`,
   },
   visibleTests: [
     { args: [[1, 2, 5, 2, 3], 2], expected: [1, 2] },
