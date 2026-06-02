@@ -36,12 +36,19 @@ Return a string representing the maximum odd binary number from the given combin
   params: ['s'],
   starterCode: {
     javascript: `function maximumOddBinaryNumber(s) {
-
+  const ones = s.split('').filter(c => c === '1').length;
+  const zeros = s.length - ones;
+  return '1'.repeat(ones - 1) + '0'.repeat(zeros) + '1';
 }`,
-    typescript: "function maximumOddBinaryNumber(s: string): string {\n\n}",
-
+    typescript: `function maximumOddBinaryNumber(s: string): string {
+  const ones = s.split('').filter(c => c === '1').length;
+  const zeros = s.length - ones;
+  return '1'.repeat(ones - 1) + '0'.repeat(zeros) + '1';
+}`,
     python: `def maximumOddBinaryNumber(s):
-    pass`,
+    ones = s.count('1')
+    zeros = len(s) - ones
+    return '1' * (ones - 1) + '0' * zeros + '1'`,
   },
   visibleTests: [
     { args: ['010'], expected: '001' },

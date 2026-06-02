@@ -40,11 +40,46 @@ Return the **maximum** possible value of \`nums[0] OR nums[1] OR ... OR nums[n -
   functionName: 'maximumOr',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: `function maximumOr(nums, k) {\n\n}`,
-    typescript: `function maximumOr(nums: number[], k: number): number {
-
+    javascript: `function maximumOr(nums, k) {
+  const n = nums.length;
+  const prefix = new Array(n + 1).fill(0n);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] | BigInt(nums[i]);
+  const suffix = new Array(n + 1).fill(0n);
+  for (let i = n - 1; i >= 0; i--) suffix[i] = suffix[i + 1] | BigInt(nums[i]);
+  const shift = BigInt(k);
+  let ans = 0n;
+  for (let i = 0; i < n; i++) {
+    const val = prefix[i] | (BigInt(nums[i]) << shift) | suffix[i + 1];
+    if (val > ans) ans = val;
+  }
+  return Number(ans);
 }`,
-    python: `def maximumOr(nums, k):\n    pass`,
+    typescript: `function maximumOr(nums: number[], k: number): number {
+  const n = nums.length;
+  const prefix = new Array<bigint>(n + 1).fill(0n);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! | BigInt(nums[i]!);
+  const suffix = new Array<bigint>(n + 1).fill(0n);
+  for (let i = n - 1; i >= 0; i--) suffix[i] = suffix[i + 1]! | BigInt(nums[i]!);
+  const shift = BigInt(k);
+  let ans = 0n;
+  for (let i = 0; i < n; i++) {
+    const val = prefix[i]! | (BigInt(nums[i]!) << shift) | suffix[i + 1]!;
+    if (val > ans) ans = val;
+  }
+  return Number(ans);
+}`,
+    python: `def maximumOr(nums, k):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i+1] = prefix[i] | nums[i]
+    suffix = [0] * (n + 1)
+    for i in range(n-1, -1, -1): suffix[i] = suffix[i+1] | nums[i]
+    ans = 0
+    for i in range(n):
+        val = prefix[i] | (nums[i] << k) | suffix[i+1]
+        if val > ans: ans = val
+    return ans`,
   },
   visibleTests: [
     { args: [[12, 9], 1], expected: 30 },

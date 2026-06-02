@@ -43,11 +43,44 @@ A palindrome is a string that reads the same forwards and backwards.`,
   params: ['words'],
   starterCode: {
     javascript: `function maxPalindromesAfterOperations(words) {
-
+  const freq = new Array(26).fill(0);
+  for (const w of words) for (const c of w) freq[c.charCodeAt(0) - 97]++;
+  let pairs = 0;
+  for (const f of freq) pairs += Math.floor(f / 2);
+  const lengths = words.map(w => w.length).sort((a, b) => a - b);
+  let count = 0;
+  for (const len of lengths) {
+    const need = Math.floor(len / 2);
+    if (pairs >= need) { count++; pairs -= need; }
+  }
+  return count;
 }`,
-    typescript: 'function maxPalindromesAfterOperations(words: string[]): number {\n\n}',
+    typescript: `function maxPalindromesAfterOperations(words: string[]): number {
+  const freq = new Array<number>(26).fill(0);
+  for (const w of words) for (const c of w) freq[c.charCodeAt(0) - 97]!++;
+  let pairs = 0;
+  for (const f of freq) pairs += Math.floor(f / 2);
+  const lengths = words.map(w => w.length).sort((a, b) => a - b);
+  let count = 0;
+  for (const len of lengths) {
+    const need = Math.floor(len / 2);
+    if (pairs >= need) { count++; pairs -= need; }
+  }
+  return count;
+}`,
     python: `def maxPalindromesAfterOperations(words):
-    pass`,
+    if hasattr(words, 'to_py'): words = list(words.to_py())
+    from collections import Counter
+    freq = Counter(''.join(words))
+    pairs = sum(c // 2 for c in freq.values())
+    lengths = sorted(len(w) for w in words)
+    count = 0
+    for ln in lengths:
+        need = ln // 2
+        if pairs >= need:
+            count += 1
+            pairs -= need
+    return count`,
   },
   visibleTests: [
     { args: [['abcd', 'dba', 'nac']], expected: 3 },

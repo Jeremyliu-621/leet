@@ -40,12 +40,23 @@ Once all the milestones of all the projects are finished, or if the only milesto
   params: ['milestones'],
   starterCode: {
     javascript: `function numberOfWeeks(milestones) {
-
+  const total = milestones.reduce((a, b) => a + b, 0);
+  const max = Math.max(...milestones);
+  const rest = total - max;
+  return max <= rest + 1 ? total : 2 * rest + 1;
 }`,
-    typescript: "function numberOfWeeks(milestones: number[]): number {\n\n}",
-
+    typescript: `function numberOfWeeks(milestones: number[]): number {
+  const total = milestones.reduce((a, b) => a + b, 0);
+  const max = Math.max(...milestones);
+  const rest = total - max;
+  return max <= rest + 1 ? total : 2 * rest + 1;
+}`,
     python: `def numberOfWeeks(milestones):
-    pass`,
+    if hasattr(milestones, 'to_py'): milestones = list(milestones.to_py())
+    total = sum(milestones)
+    mx = max(milestones)
+    rest = total - mx
+    return total if mx <= rest + 1 else 2 * rest + 1`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 6 },

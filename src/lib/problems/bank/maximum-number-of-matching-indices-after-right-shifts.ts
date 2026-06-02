@@ -44,13 +44,38 @@ Return the **maximum** number of matching indices obtainable after performing an
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function maximumMatchingIndices(nums1, nums2) {
-
+  const n = nums1.length;
+  let ans = 0;
+  for (let k = 0; k < n; k++) {
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      if (nums1[(i - k + n) % n] === nums2[i]) count++;
+    }
+    if (count > ans) ans = count;
+  }
+  return ans;
 }`,
     typescript: `function maximumMatchingIndices(nums1: number[], nums2: number[]): number {
-
+  const n = nums1.length;
+  let ans = 0;
+  for (let k = 0; k < n; k++) {
+    let count = 0;
+    for (let i = 0; i < n; i++) {
+      if (nums1[(i - k + n) % n] === nums2[i]) count++;
+    }
+    if (count > ans) ans = count;
+  }
+  return ans;
 }`,
     python: `def maximumMatchingIndices(nums1, nums2):
-    pass`,
+    if hasattr(nums1, 'to_py'): nums1 = list(nums1.to_py())
+    if hasattr(nums2, 'to_py'): nums2 = list(nums2.to_py())
+    n = len(nums1)
+    ans = 0
+    for k in range(n):
+        count = sum(1 for i in range(n) if nums1[(i - k) % n] == nums2[i])
+        if count > ans: ans = count
+    return ans`,
   },
   visibleTests: [
     { args: [[3, 1], [3, 1]], expected: 2 },

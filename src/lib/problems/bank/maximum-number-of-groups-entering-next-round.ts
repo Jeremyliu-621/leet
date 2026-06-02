@@ -41,13 +41,64 @@ Return the **maximum** number of groups that can be formed.`,
   params: ['grades'],
   starterCode: {
     javascript: `function numberOfGroups(grades) {
-
+  grades.sort((a, b) => b - a);
+  const n = grades.length;
+  const canForm = (k) => {
+    let i = 0, prevMax = Infinity;
+    for (let g = 1; g <= k; g++) {
+      while (i < n && grades[i] >= prevMax) i++;
+      if (i + g > n) return false;
+      prevMax = grades[i + g - 1];
+      i += g;
+    }
+    return true;
+  };
+  let lo = 0, hi = Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canForm(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     typescript: `function numberOfGroups(grades: number[]): number {
-
+  grades.sort((a, b) => b - a);
+  const n = grades.length;
+  const canForm = (k: number): boolean => {
+    let i = 0, prevMax = Infinity;
+    for (let g = 1; g <= k; g++) {
+      while (i < n && grades[i]! >= prevMax) i++;
+      if (i + g > n) return false;
+      prevMax = grades[i + g - 1]!;
+      i += g;
+    }
+    return true;
+  };
+  let lo = 0, hi = Math.floor((-1 + Math.sqrt(1 + 8 * n)) / 2);
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canForm(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     python: `def numberOfGroups(grades):
-    pass`,
+    if hasattr(grades, 'to_py'): grades = list(grades.to_py())
+    import math
+    grades.sort(reverse=True)
+    n = len(grades)
+    def can_form(k):
+        i, prev_max = 0, float('inf')
+        for g in range(1, k + 1):
+            while i < n and grades[i] >= prev_max: i += 1
+            if i + g > n: return False
+            prev_max = grades[i + g - 1]
+            i += g
+        return True
+    lo, hi = 0, int((-1 + math.sqrt(1 + 8 * n)) / 2)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_form(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [[10, 6, 12, 7, 3, 5]], expected: 3 },

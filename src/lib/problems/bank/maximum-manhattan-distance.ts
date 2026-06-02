@@ -42,13 +42,39 @@ The **Manhattan distance** from the origin is \`|x| + |y|\`.`,
   params: ['s'],
   starterCode: {
     javascript: `function maxDistance(s) {
-
+  let x = 0, y = 0, best = 0;
+  for (const c of s) {
+    if (c === 'N') y++;
+    else if (c === 'S') y--;
+    else if (c === 'E') x++;
+    else x--;
+    const d = Math.abs(x) + Math.abs(y);
+    if (d > best) best = d;
+  }
+  return best;
 }`,
     typescript: `function maxDistance(s: string): number {
-
+  let x = 0, y = 0, best = 0;
+  for (const c of s) {
+    if (c === 'N') y++;
+    else if (c === 'S') y--;
+    else if (c === 'E') x++;
+    else x--;
+    const d = Math.abs(x) + Math.abs(y);
+    if (d > best) best = d;
+  }
+  return best;
 }`,
     python: `def maxDistance(s):
-    pass`,
+    x = y = best = 0
+    for c in s:
+        if c == 'N': y += 1
+        elif c == 'S': y -= 1
+        elif c == 'E': x += 1
+        else: x -= 1
+        d = abs(x) + abs(y)
+        if d > best: best = d
+    return best`,
   },
   visibleTests: [
     { args: ['NESW'], expected: 2 },

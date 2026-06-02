@@ -41,13 +41,42 @@ If there is no way to reach index \`n - 1\`, return \`-1\`.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function maximumJumps(nums, target) {
-
+  const n = nums.length;
+  const dp = new Array(n).fill(-1);
+  dp[0] = 0;
+  for (let i = 0; i < n; i++) {
+    if (dp[i] === -1) continue;
+    for (let j = i + 1; j < n; j++) {
+      if (Math.abs(nums[j] - nums[i]) <= target)
+        dp[j] = Math.max(dp[j], dp[i] + 1);
+    }
+  }
+  return dp[n - 1];
 }`,
     typescript: `function maximumJumps(nums: number[], target: number): number {
-
+  const n = nums.length;
+  const dp = new Array<number>(n).fill(-1);
+  dp[0] = 0;
+  for (let i = 0; i < n; i++) {
+    if (dp[i] === -1) continue;
+    for (let j = i + 1; j < n; j++) {
+      if (Math.abs(nums[j]! - nums[i]!) <= target)
+        dp[j] = Math.max(dp[j]!, dp[i]! + 1);
+    }
+  }
+  return dp[n - 1]!;
 }`,
     python: `def maximumJumps(nums: list[int], target: int) -> int:
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for i in range(n):
+        if dp[i] == -1: continue
+        for j in range(i + 1, n):
+            if abs(nums[j] - nums[i]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[n - 1]`,
   },
   visibleTests: [
     { args: [[1, 3, 6, 4, 1, 2], 2], expected: 3 },
