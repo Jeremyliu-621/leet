@@ -8,12 +8,18 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2960** problems; 9252 tests green. Batch 286 complete.
+**Current focus:** Bank at **2963** problems; 9249 tests green. Batch 287 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 287+); starter backfill; UX polish.
+**Next up:** Bank growth (batch 288+); starter backfill; UX polish.
+
+### feat(bank): batch 287 — design-an-atm-machine, minimum-time-to-remove-all-cars-containing-illegal-goods, design-movie-rental-system (2026-06-02)
+Three new problems: `design-an-atm-machine` (medium/design — 5 denominations [20,50,100,200,500]; greedy withdraw largest-first; -1 if can't make exact amount; O(5) per op), `minimum-time-to-remove-all-cars-containing-illegal-goods` (hard/dp — prefix[i]=min cost to clear 1s in s[0..i] (each '1': min(prefix+2, i+1)); suffix from right; answer=min over split points of prefix[i]+suffix[i+1]; O(n)), `design-movie-rental-system` (hard/design — sorted arrays + binary-search insert/delete for unrented[movie] and rented sets; search/report return top-5 cheapest; O(n log n) per op). Bank at **2963**; 9249 tests.
 
 ### feat(bank): batch 286 — construct-min-bitwise-ii, find-valid-pair-digits, max-reward-ii, divide-subarrays-min-cost-ii (2026-06-02)
 Four new problems: `construct-the-minimum-bitwise-array-ii` (medium/bit-manipulation — O(1) formula per prime: x = p ^ (((p+1) & -(p+1)) >> 1); trailing-ones of p = trailing-zeros of p+1 = position of LSB of p+1; p=2 returns -1; handles primes up to 10^8), `find-valid-pair-of-adjacent-digits-in-string` (easy/strings+hash-map — build freq map; scan adjacent pairs (s[i], s[i+1]); valid if freq[s[i]]==int(s[i]) and freq[s[i+1]]==int(s[i+1]); return first valid pair or ""; O(n)), `maximize-total-reward-using-operations-ii` (hard/dp+bit-manipulation — BigInt bitset DP: dp |= (dp & ((1n<<r)-1n)) << r; per-step O(maxVal/64); answer = highest set bit = dp.toString(2).length-1; O(n*maxVal/64) total), `divide-an-array-into-subarrays-with-minimum-cost-ii` (hard/arrays+heap+sliding-window — layered DP: dp[t][j] = min sum of t picks from {1..j} with consecutive gap > dist; layer computed in O(n) via bestPrev pointer; O(n*(k-1)) total). Bank at **2960**; 9252 tests.
+
+### feat(bank): batch 286 — exam-room, all-oone-data-structure, minimum-number-of-people-to-teach, minimum-time-to-finish-races (2026-06-02)
+Four new problems: `exam-room` (medium/design — sorted-array seat picker; maximize min-distance to nearest neighbor; O(k) seat/leave), `all-oone-data-structure` (hard/design — doubly-linked list of count buckets + hash maps; O(1) inc/dec/getMax/getMinKey; Python uses ordered dict for insertion-order iteration), `minimum-number-of-people-to-teach` (medium/arrays — find non-communicating friend pairs; for each language count needy users lacking it; O(n*m*L)), `minimum-time-to-finish-races` (hard/dp — precompute best[j]=min single-tire cost for j consecutive laps; dp[i]=min over j of dp[i-j]+changeTime+best[j]; O(numLaps*20)). Bank at **2960**; 9228 tests.
 
 ### fix(bank): batch 275 reference solutions + expected-value corrections (2026-06-02)
 Added JS/TS/Python reference solutions for 6 batch-275 problems (k-th-ancestor, count-houses-distance, max-of-min-window, count-ways-product, wear-different-hats, circular-permutation). Fixed 6 incorrect expected values: 5 in count-number-of-houses-at-a-certain-distance (BFS always gives correct results; test cases generated with buggy algorithm had wrong values for shortcuts that change path structure) and 1 in k-th-ancestor-of-a-tree-node (expected was computed for a different tree structure). All 9192 tests green.
