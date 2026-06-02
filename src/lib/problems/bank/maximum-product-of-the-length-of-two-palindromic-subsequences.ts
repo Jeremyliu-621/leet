@@ -47,13 +47,86 @@ Return the **maximum product** of the lengths of the two palindromic subsequence
   params: ['s'],
   starterCode: {
     javascript: `function maxProduct(s) {
-
+  const n = s.length, full = (1 << n) - 1;
+  const lps = new Array(1 << n).fill(0);
+  for (let mask = 1; mask <= full; mask++) {
+    const chars = [];
+    for (let i = 0; i < n; i++) if ((mask >> i) & 1) chars.push(s[i]);
+    const m = chars.length;
+    const dp = Array.from({length: m}, (_, i) => Array.from({length: m}, (_, j) => i === j ? 1 : 0));
+    for (let len = 2; len <= m; len++) {
+      for (let i = 0; i <= m - len; i++) {
+        const j = i + len - 1;
+        if (chars[i] === chars[j]) dp[i][j] = (len === 2 ? 0 : dp[i+1][j-1]) + 2;
+        else dp[i][j] = Math.max(dp[i+1][j], dp[i][j-1]);
+      }
+    }
+    lps[mask] = m > 0 ? dp[0][m-1] : 0;
+  }
+  const maxLPS = lps.slice();
+  for (let i = 0; i < n; i++)
+    for (let mask = 0; mask <= full; mask++)
+      if ((mask >> i) & 1) maxLPS[mask] = Math.max(maxLPS[mask], maxLPS[mask ^ (1 << i)]);
+  let ans = 0;
+  for (let mask = 1; mask < full; mask++) {
+    const prod = lps[mask] * maxLPS[full ^ mask];
+    if (prod > ans) ans = prod;
+  }
+  return ans;
 }`,
     typescript: `function maxProduct(s: string): number {
-
+  const n = s.length, full = (1 << n) - 1;
+  const lps = new Array<number>(1 << n).fill(0);
+  for (let mask = 1; mask <= full; mask++) {
+    const chars: string[] = [];
+    for (let i = 0; i < n; i++) if ((mask >> i) & 1) chars.push(s[i]!);
+    const m = chars.length;
+    const dp: number[][] = Array.from({length: m}, (_, i) => Array.from({length: m}, (_, j) => i === j ? 1 : 0));
+    for (let len = 2; len <= m; len++) {
+      for (let i = 0; i <= m - len; i++) {
+        const j = i + len - 1;
+        if (chars[i] === chars[j]) dp[i]![j] = (len === 2 ? 0 : dp[i+1]![j-1]!) + 2;
+        else dp[i]![j] = Math.max(dp[i+1]![j]!, dp[i]![j-1]!);
+      }
+    }
+    lps[mask] = m > 0 ? dp[0]![m-1]! : 0;
+  }
+  const maxLPS = lps.slice();
+  for (let i = 0; i < n; i++)
+    for (let mask = 0; mask <= full; mask++)
+      if ((mask >> i) & 1) maxLPS[mask] = Math.max(maxLPS[mask]!, maxLPS[mask ^ (1 << i)]!);
+  let ans = 0;
+  for (let mask = 1; mask < full; mask++) {
+    const prod = lps[mask]! * maxLPS[full ^ mask]!;
+    if (prod > ans) ans = prod;
+  }
+  return ans;
 }`,
     python: `def maxProduct(s):
-    pass`,
+    n = len(s)
+    full = (1 << n) - 1
+    lps = [0] * (1 << n)
+    for mask in range(1, 1 << n):
+        chars = [s[i] for i in range(n) if (mask >> i) & 1]
+        m = len(chars)
+        dp = [[0]*m for _ in range(m)]
+        for i in range(m): dp[i][i] = 1
+        for length in range(2, m+1):
+            for i in range(m - length + 1):
+                j = i + length - 1
+                if chars[i] == chars[j]: dp[i][j] = (0 if length == 2 else dp[i+1][j-1]) + 2
+                else: dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+        lps[mask] = dp[0][m-1] if m > 0 else 0
+    max_lps = lps[:]
+    for i in range(n):
+        for mask in range(1 << n):
+            if (mask >> i) & 1:
+                max_lps[mask] = max(max_lps[mask], max_lps[mask ^ (1 << i)])
+    ans = 0
+    for mask in range(1, full):
+        prod = lps[mask] * max_lps[full ^ mask]
+        if prod > ans: ans = prod
+    return ans`,
   },
   visibleTests: [
     { args: ['leetcodecom'], expected: 9 },

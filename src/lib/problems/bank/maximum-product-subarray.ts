@@ -39,13 +39,36 @@ The test cases are generated so that the answer will fit in a **32-bit** integer
   params: ['nums'],
   starterCode: {
     javascript: `function maxProduct(nums) {
-
+  let curMax = nums[0], curMin = nums[0], ans = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    const n = nums[i];
+    const tmp = curMax;
+    curMax = Math.max(n, curMax * n, curMin * n);
+    curMin = Math.min(n, tmp * n, curMin * n);
+    if (curMax > ans) ans = curMax;
+  }
+  return ans;
 }`,
     typescript: `function maxProduct(nums: number[]): number {
-
+  let curMax = nums[0]!, curMin = nums[0]!, ans = nums[0]!;
+  for (let i = 1; i < nums.length; i++) {
+    const n = nums[i]!;
+    const tmp = curMax;
+    curMax = Math.max(n, curMax * n, curMin * n);
+    curMin = Math.min(n, tmp * n, curMin * n);
+    if (curMax > ans) ans = curMax;
+  }
+  return ans;
 }`,
     python: `def maxProduct(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    cur_max = cur_min = ans = nums[0]
+    for n in nums[1:]:
+        tmp = cur_max
+        cur_max = max(n, cur_max * n, cur_min * n)
+        cur_min = min(n, tmp * n, cur_min * n)
+        if cur_max > ans: ans = cur_max
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, -2, 4]], expected: 6 },

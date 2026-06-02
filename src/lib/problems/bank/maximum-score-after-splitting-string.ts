@@ -38,12 +38,38 @@ The score after splitting a string is the number of **zeros** in the **left** su
   params: ['s'],
   starterCode: {
     javascript: `function maxScore(s) {
-
+  let ones = 0;
+  for (const c of s) if (c === '1') ones++;
+  let zeros = 0, best = 0;
+  for (let i = 0; i < s.length - 1; i++) {
+    if (s[i] === '0') zeros++;
+    else ones--;
+    const score = zeros + ones;
+    if (score > best) best = score;
+  }
+  return best;
 }`,
-    typescript: "function maxScore(s: string): number {\n\n}",
-
+    typescript: `function maxScore(s: string): number {
+  let ones = 0;
+  for (const c of s) if (c === '1') ones++;
+  let zeros = 0, best = 0;
+  for (let i = 0; i < s.length - 1; i++) {
+    if (s[i] === '0') zeros++;
+    else ones--;
+    const score = zeros + ones;
+    if (score > best) best = score;
+  }
+  return best;
+}`,
     python: `def maxScore(s):
-    pass`,
+    ones = s.count('1')
+    zeros = best = 0
+    for i in range(len(s) - 1):
+        if s[i] == '0': zeros += 1
+        else: ones -= 1
+        score = zeros + ones
+        if score > best: best = score
+    return best`,
   },
   visibleTests: [
     { args: ['011101'], expected: 5 },

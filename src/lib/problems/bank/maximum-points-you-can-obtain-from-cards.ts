@@ -44,13 +44,45 @@ Given the integer array \`cardPoints\` and the integer \`k\`, return the **maxim
   params: ['cardPoints', 'k'],
   starterCode: {
     javascript: `function maxScore(cardPoints, k) {
-
+  const n = cardPoints.length;
+  const total = cardPoints.reduce((a, b) => a + b, 0);
+  if (k === n) return total;
+  const w = n - k;
+  let winSum = 0;
+  for (let i = 0; i < w; i++) winSum += cardPoints[i];
+  let minWin = winSum;
+  for (let i = w; i < n; i++) {
+    winSum += cardPoints[i] - cardPoints[i - w];
+    if (winSum < minWin) minWin = winSum;
+  }
+  return total - minWin;
 }`,
     typescript: `function maxScore(cardPoints: number[], k: number): number {
-
+  const n = cardPoints.length;
+  const total = cardPoints.reduce((a, b) => a + b, 0);
+  if (k === n) return total;
+  const w = n - k;
+  let winSum = 0;
+  for (let i = 0; i < w; i++) winSum += cardPoints[i]!;
+  let minWin = winSum;
+  for (let i = w; i < n; i++) {
+    winSum += cardPoints[i]! - cardPoints[i - w]!;
+    if (winSum < minWin) minWin = winSum;
+  }
+  return total - minWin;
 }`,
     python: `def maxScore(cardPoints, k):
-    pass`,
+    if hasattr(cardPoints, 'to_py'): cardPoints = list(cardPoints.to_py())
+    n = len(cardPoints)
+    total = sum(cardPoints)
+    if k == n: return total
+    w = n - k
+    win_sum = sum(cardPoints[:w])
+    min_win = win_sum
+    for i in range(w, n):
+        win_sum += cardPoints[i] - cardPoints[i - w]
+        if win_sum < min_win: min_win = win_sum
+    return total - min_win`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6, 1], 3], expected: 12 },

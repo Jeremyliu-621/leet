@@ -36,12 +36,28 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function maxProduct(nums) {
-
+  let m1 = 0, m2 = 0;
+  for (const n of nums) {
+    if (n > m1) { m2 = m1; m1 = n; }
+    else if (n > m2) m2 = n;
+  }
+  return (m1 - 1) * (m2 - 1);
 }`,
-    typescript: "function maxProduct(nums: number[]): number {\n\n}",
-
+    typescript: `function maxProduct(nums: number[]): number {
+  let m1 = 0, m2 = 0;
+  for (const n of nums) {
+    if (n > m1) { m2 = m1; m1 = n; }
+    else if (n > m2) m2 = n;
+  }
+  return (m1 - 1) * (m2 - 1);
+}`,
     python: `def maxProduct(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    m1 = m2 = 0
+    for n in nums:
+        if n > m1: m2, m1 = m1, n
+        elif n > m2: m2 = n
+    return (m1 - 1) * (m2 - 1)`,
   },
   visibleTests: [
     { args: [[3, 4, 5, 2]], expected: 12 },

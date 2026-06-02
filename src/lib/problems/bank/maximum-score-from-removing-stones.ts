@@ -39,13 +39,16 @@ Return the **maximum number of points** you can score.`,
   params: ['a', 'b', 'c'],
   starterCode: {
     javascript: `function maximumScore(a, b, c) {
-
+  const total = a + b + c;
+  return Math.min(Math.floor(total / 2), total - Math.max(a, b, c));
 }`,
     typescript: `function maximumScore(a: number, b: number, c: number): number {
-
+  const total = a + b + c;
+  return Math.min(Math.floor(total / 2), total - Math.max(a, b, c));
 }`,
     python: `def maximumScore(a, b, c):
-    pass`,
+    total = a + b + c
+    return min(total // 2, total - max(a, b, c))`,
   },
   visibleTests: [
     { args: [2, 4, 6], expected: 6 },

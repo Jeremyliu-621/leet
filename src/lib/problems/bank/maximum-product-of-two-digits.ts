@@ -39,13 +39,20 @@ Return the **maximum** product of any two digits in \`n\`.
   params: ['n'],
   starterCode: {
     javascript: `function maxProduct(n) {
-
+  const digits = [];
+  while (n > 0) { digits.push(n % 10); n = Math.floor(n / 10); }
+  digits.sort((a, b) => b - a);
+  return digits[0] * digits[1];
 }`,
     typescript: `function maxProduct(n: number): number {
-
+  const digits: number[] = [];
+  while (n > 0) { digits.push(n % 10); n = Math.floor(n / 10); }
+  digits.sort((a, b) => b - a);
+  return digits[0]! * digits[1]!;
 }`,
     python: `def maxProduct(n):
-    pass`,
+    digits = sorted([int(d) for d in str(n)], reverse=True)
+    return digits[0] * digits[1]`,
   },
   visibleTests: [
     { args: [31], expected: 3 },

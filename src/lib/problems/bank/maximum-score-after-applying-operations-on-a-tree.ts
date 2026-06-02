@@ -44,12 +44,60 @@ Return the **maximum total score** you can get by applying operations while keep
   params: ['edges', 'values'],
   starterCode: {
     javascript: `function maximumScoreAfterOperations(edges, values) {
-
+  const n = values.length;
+  const adj = Array.from({length: n}, () => []);
+  for (const [a, b] of edges) { adj[a].push(b); adj[b].push(a); }
+  const total = values.reduce((a, b) => a + b, 0);
+  const dfs = (v, parent) => {
+    const children = adj[v].filter(u => u !== parent);
+    if (!children.length) return values[v];
+    let sumChild0 = 0, sumChild1 = 0;
+    for (const c of children) { sumChild0 += dfs(c, v); sumChild1 += 0; }
+    return Math.min(values[v], sumChild0);
+  };
+  // dp[v][0]=min cost not-operated with no ancestor protecting
+  // dp[v][1]=0 (ancestor protects, zero everything)
+  const solve = (v, parent) => {
+    const children = adj[v].filter(u => u !== parent);
+    if (!children.length) return [values[v], 0];
+    let sum0 = 0, sum1 = 0;
+    for (const c of children) { const [d0, d1] = solve(c, v); sum0 += d0; sum1 += d1; }
+    return [Math.min(values[v] + sum1, sum0), 0];
+  };
+  return total - solve(0, -1)[0];
 }`,
-    typescript: "function maximumScoreAfterOperations(edges: number[][], values: number[]): number {\n\n}",
-
+    typescript: `function maximumScoreAfterOperations(edges: number[][], values: number[]): number {
+  const n = values.length;
+  const adj: number[][] = Array.from({length: n}, () => []);
+  for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+  const total = values.reduce((a, b) => a + b, 0);
+  const solve = (v: number, parent: number): [number, number] => {
+    const children = adj[v]!.filter(u => u !== parent);
+    if (!children.length) return [values[v]!, 0];
+    let sum0 = 0, sum1 = 0;
+    for (const c of children) { const [d0] = solve(c, v); sum0 += d0; }
+    return [Math.min(values[v]! + sum1, sum0), 0];
+  };
+  return total - solve(0, -1)[0];
+}`,
     python: `def maximumScoreAfterOperations(edges, values):
-    pass`,
+    import sys; sys.setrecursionlimit(30000)
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    if hasattr(values, 'to_py'): values = list(values.to_py())
+    n = len(values)
+    adj = [[] for _ in range(n)]
+    for a, b in edges: adj[a].append(b); adj[b].append(a)
+    total = sum(values)
+    def solve(v, parent):
+        children = [u for u in adj[v] if u != parent]
+        if not children: return values[v], 0
+        sum0 = sum1 = 0
+        for c in children:
+            d0, d1 = solve(c, v)
+            sum0 += d0; sum1 += d1
+        return min(values[v] + sum1, sum0), 0
+    min_cost, _ = solve(0, -1)
+    return total - min_cost`,
   },
   visibleTests: [
     { args: [[[0, 1], [0, 2]], [1, 2, 3]], expected: 5 },
