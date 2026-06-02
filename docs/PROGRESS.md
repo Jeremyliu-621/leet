@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2903** problems; 9038 tests green. Batch 277 (minimum-array-sum, find-x-sum-ii, max-matching-indices, max-area-rect-constraints) pushed.
+**Current focus:** Bank at **2911** problems; 9050 tests green. Batch 278 (check-if-two-events-conflict, count-good-substrings, count-words-with-prefix, first-day-all-rooms) pushed.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 278+); UX polish; terminal/verdict-panel UX improvements.
+**Next up:** Continued bank growth (batch 279+); UX polish; terminal/verdict-panel UX improvements.
+
+### feat(bank): batch 278 — check-if-two-events-conflict, count-good-substrings, count-words-with-prefix, first-day-all-rooms (2026-06-02)
+Four new problems: `check-if-two-events-have-conflict` (easy/strings — string lexicographic comparison for interval overlap: s1<=e2 && s2<=e1; O(1)), `count-good-substrings` (easy/sliding-window — slide window of 3, count if all 3 chars distinct; O(n)), `count-words-with-a-given-prefix` (easy/strings — filter words using startsWith; O(n*p)), `first-day-where-you-have-been-in-all-the-rooms` (medium/dp — dp[i]=(2*dp[i-1]-dp[nextVisit[i-1]]+2) mod 10^9+7; O(n)). Bank at **2911**; 9050 tests.
 
 ### feat(bank): batch 277 — minimum-array-sum, find-x-sum-ii, max-matching-indices, max-area-rect-constraints-i (2026-06-02)
 Four new problems: `minimum-array-sum` (medium/dp — 2D DP over (op1_used, op2_used) budgets; 4 per-element choices: none, ceil-halve, subtract-k, both combined; O(n·op1·op2)), `find-x-sum-of-all-k-long-subarrays-ii` (hard/arrays+heap+sliding-window — x-sum per window: top-x by freq-desc/value-desc; naive O(n·k) sufficient for test sizes), `maximum-number-of-matching-indices-after-right-shifts` (medium/arrays — try all n cyclic shifts; count index matches; O(n²)), `maximum-area-rectangle-with-point-constraints-i` (medium/arrays+math — O(n³) diagonal-pair sweep; all 4 corners must be input points; no input point strictly inside). Fixed test-case bugs: rect visible tests corrected (-1 not 4 for interior-point; 4 not 2 for boundary-point); hidden test 4 corrected to -1. Bank at **2903**; 9038 tests.
