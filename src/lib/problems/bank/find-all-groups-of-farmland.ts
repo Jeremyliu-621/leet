@@ -60,12 +60,50 @@ function findFarmland(land) {
   params: ['land'],
   starterCode: {
     javascript: `function findFarmland(land) {
-
+  const result = [];
+  const m = land.length, n = land[0].length;
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!land[r][c]) continue;
+      if (r > 0 && land[r-1][c]) continue;
+      if (c > 0 && land[r][c-1]) continue;
+      let r2 = r, c2 = c;
+      while (r2 + 1 < m && land[r2+1][c]) r2++;
+      while (c2 + 1 < n && land[r][c2+1]) c2++;
+      result.push([r, c, r2, c2]);
+    }
+  }
+  return result;
 }`,
-    typescript: "function findFarmland(land: number[][]): number[][] {\n\n}",
-
+    typescript: `function findFarmland(land: number[][]): number[][] {
+  const result: number[][] = [];
+  const m = land.length, n = land[0]!.length;
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < n; c++) {
+      if (!land[r]![c]) continue;
+      if (r > 0 && land[r-1]![c]) continue;
+      if (c > 0 && land[r]![c-1]) continue;
+      let r2 = r, c2 = c;
+      while (r2 + 1 < m && land[r2+1]![c]) r2++;
+      while (c2 + 1 < n && land[r]![c2+1]) c2++;
+      result.push([r, c, r2, c2]);
+    }
+  }
+  return result;
+}`,
     python: `def findFarmland(land):
-    pass`,
+    m, n = len(land), len(land[0])
+    result = []
+    for r in range(m):
+        for c in range(n):
+            if not land[r][c]: continue
+            if r > 0 and land[r-1][c]: continue
+            if c > 0 and land[r][c-1]: continue
+            r2, c2 = r, c
+            while r2 + 1 < m and land[r2+1][c]: r2 += 1
+            while c2 + 1 < n and land[r][c2+1]: c2 += 1
+            result.append([r, c, r2, c2])
+    return result`,
   },
   visibleTests: [
     { args: [[[1,0,0],[0,1,1],[0,1,1]]], expected: [[0,0,0,0],[1,1,2,2]] },

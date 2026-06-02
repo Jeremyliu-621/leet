@@ -39,13 +39,34 @@ Return *a list of all k-distant indices sorted in **increasing order***.`,
   params: ['nums', 'key', 'k'],
   starterCode: {
     javascript: `function findKDistantIndices(nums, key, k) {
-
+  const keyPos = [];
+  for (let j = 0; j < nums.length; j++) if (nums[j] === key) keyPos.push(j);
+  const result = [];
+  let p = 0;
+  for (let i = 0; i < nums.length; i++) {
+    while (p < keyPos.length && keyPos[p] < i - k) p++;
+    if (p < keyPos.length && keyPos[p] <= i + k) result.push(i);
+  }
+  return result;
 }`,
     typescript: `function findKDistantIndices(nums: number[], key: number, k: number): number[] {
-
+  const keyPos: number[] = [];
+  for (let j = 0; j < nums.length; j++) if (nums[j] === key) keyPos.push(j);
+  const result: number[] = [];
+  let p = 0;
+  for (let i = 0; i < nums.length; i++) {
+    while (p < keyPos.length && keyPos[p]! < i - k) p++;
+    if (p < keyPos.length && keyPos[p]! <= i + k) result.push(i);
+  }
+  return result;
 }`,
-    python: `def findKDistantIndices(nums: list[int], key: int, k: int) -> list[int]:
-    pass`,
+    python: `def findKDistantIndices(nums, key, k):
+    key_pos = [j for j, v in enumerate(nums) if v == key]
+    result, p = [], 0
+    for i in range(len(nums)):
+        while p < len(key_pos) and key_pos[p] < i - k: p += 1
+        if p < len(key_pos) and key_pos[p] <= i + k: result.append(i)
+    return result`,
   },
   visibleTests: [
     { args: [[3, 4, 9, 1, 3, 9, 3, 8, 4], 9, 1], expected: [1, 2, 3, 4, 5, 6] },

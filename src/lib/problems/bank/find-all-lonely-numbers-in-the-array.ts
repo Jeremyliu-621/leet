@@ -33,13 +33,27 @@ Return **all** lonely numbers in \`nums\`. You may return the answer in **any or
   params: ['nums'],
   starterCode: {
     javascript: `function findLonely(nums) {
-
+  const count = new Map();
+  for (const n of nums) count.set(n, (count.get(n) ?? 0) + 1);
+  const result = [];
+  for (const [n, c] of count) {
+    if (c === 1 && !count.has(n - 1) && !count.has(n + 1)) result.push(n);
+  }
+  return result;
 }`,
     typescript: `function findLonely(nums: number[]): number[] {
-
+  const count = new Map<number, number>();
+  for (const n of nums) count.set(n, (count.get(n) ?? 0) + 1);
+  const result: number[] = [];
+  for (const [n, c] of count) {
+    if (c === 1 && !count.has(n - 1) && !count.has(n + 1)) result.push(n);
+  }
+  return result;
 }`,
-    python: `def findLonely(nums: list[int]) -> list[int]:
-    pass`,
+    python: `def findLonely(nums):
+    from collections import Counter
+    count = Counter(nums)
+    return [x for x, c in count.items() if c == 1 and x - 1 not in count and x + 1 not in count]`,
   },
   visibleTests: [
     { args: [[10, 6, 5, 8]], expected: [8, 10] },

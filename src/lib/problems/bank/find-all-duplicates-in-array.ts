@@ -40,12 +40,32 @@ You must write an algorithm that runs in \`O(n)\` time and uses only constant ex
   params: ['nums'],
   starterCode: {
     javascript: `function findDuplicates(nums) {
-
+  const result = [];
+  for (const num of nums) {
+    const idx = Math.abs(num) - 1;
+    if (nums[idx] < 0) result.push(idx + 1);
+    else nums[idx] = -nums[idx];
+  }
+  return result;
 }`,
-    typescript: "function findDuplicates(nums: number[]): number[] {\n\n}",
-
+    typescript: `function findDuplicates(nums: number[]): number[] {
+  const result: number[] = [];
+  for (const num of nums) {
+    const idx = Math.abs(num) - 1;
+    if (nums[idx]! < 0) result.push(idx + 1);
+    else nums[idx] = -nums[idx]!;
+  }
+  return result;
+}`,
     python: `def findDuplicates(nums):
-    pass`,
+    result = []
+    for num in nums:
+        idx = abs(num) - 1
+        if nums[idx] < 0:
+            result.append(idx + 1)
+        else:
+            nums[idx] = -nums[idx]
+    return result`,
   },
   visibleTests: [
     { args: [[4, 3, 2, 7, 8, 2, 3, 1]], expected: [2, 3] },

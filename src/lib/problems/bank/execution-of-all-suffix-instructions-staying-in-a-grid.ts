@@ -38,13 +38,49 @@ When executing the \`i\`th instruction starting from position \`startPos\`, you 
   params: ['n', 'startPos', 's'],
   starterCode: {
     javascript: `function executeInstructions(n, startPos, s) {
-
+  const m = s.length;
+  const dirs = { L: [0,-1], R: [0,1], U: [-1,0], D: [1,0] };
+  const result = new Array(m);
+  for (let i = 0; i < m; i++) {
+    let r = startPos[0], c = startPos[1], cnt = 0;
+    for (let j = i; j < m; j++) {
+      const [dr, dc] = dirs[s[j]];
+      r += dr; c += dc;
+      if (r < 0 || r >= n || c < 0 || c >= n) break;
+      cnt++;
+    }
+    result[i] = cnt;
+  }
+  return result;
 }`,
     typescript: `function executeInstructions(n: number, startPos: number[], s: string): number[] {
-
+  const m = s.length;
+  const dirs: Record<string, [number, number]> = { L: [0,-1], R: [0,1], U: [-1,0], D: [1,0] };
+  const result: number[] = new Array(m);
+  for (let i = 0; i < m; i++) {
+    let r = startPos[0]!, c = startPos[1]!, cnt = 0;
+    for (let j = i; j < m; j++) {
+      const [dr, dc] = dirs[s[j]!]!;
+      r += dr; c += dc;
+      if (r < 0 || r >= n || c < 0 || c >= n) break;
+      cnt++;
+    }
+    result[i] = cnt;
+  }
+  return result;
 }`,
     python: `def executeInstructions(n, startPos, s):
-    pass`,
+    dirs = {'L': (0,-1), 'R': (0,1), 'U': (-1,0), 'D': (1,0)}
+    result = []
+    for i in range(len(s)):
+        r, c, cnt = startPos[0], startPos[1], 0
+        for j in range(i, len(s)):
+            dr, dc = dirs[s[j]]
+            r += dr; c += dc
+            if r < 0 or r >= n or c < 0 or c >= n: break
+            cnt += 1
+        result.append(cnt)
+    return result`,
   },
   visibleTests: [
     { args: [3, [0, 1], 'RRDDLU'], expected: [1, 5, 4, 3, 1, 0] },
