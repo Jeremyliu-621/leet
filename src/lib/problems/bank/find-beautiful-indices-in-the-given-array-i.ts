@@ -42,13 +42,37 @@ Return an array of **all beautiful indices** in sorted order.`,
   params: ['s', 'a', 'b', 'k'],
   starterCode: {
     javascript: `function beautifulIndices(s, a, b, k) {
-
+  const aPos = [], bPos = [];
+  for (let i = 0; i <= s.length - a.length; i++) if (s.startsWith(a, i)) aPos.push(i);
+  for (let j = 0; j <= s.length - b.length; j++) if (s.startsWith(b, j)) bPos.push(j);
+  const result = [];
+  let p = 0;
+  for (const i of aPos) {
+    while (p < bPos.length && bPos[p] < i - k) p++;
+    if (p < bPos.length && bPos[p] <= i + k) result.push(i);
+  }
+  return result;
 }`,
     typescript: `function beautifulIndices(s: string, a: string, b: string, k: number): number[] {
-
+  const aPos: number[] = [], bPos: number[] = [];
+  for (let i = 0; i <= s.length - a.length; i++) if (s.startsWith(a, i)) aPos.push(i);
+  for (let j = 0; j <= s.length - b.length; j++) if (s.startsWith(b, j)) bPos.push(j);
+  const result: number[] = [];
+  let p = 0;
+  for (const i of aPos) {
+    while (p < bPos.length && bPos[p]! < i - k) p++;
+    if (p < bPos.length && bPos[p]! <= i + k) result.push(i);
+  }
+  return result;
 }`,
     python: `def beautifulIndices(s, a, b, k):
-    pass`,
+    a_pos = [i for i in range(len(s) - len(a) + 1) if s.startswith(a, i)]
+    b_pos = [j for j in range(len(s) - len(b) + 1) if s.startswith(b, j)]
+    result, p = [], 0
+    for i in a_pos:
+        while p < len(b_pos) and b_pos[p] < i - k: p += 1
+        if p < len(b_pos) and b_pos[p] <= i + k: result.append(i)
+    return result`,
   },
   visibleTests: [
     { args: ['abcd', 'a', 'd', 3], expected: [0] },

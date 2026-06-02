@@ -39,12 +39,18 @@ function anagramMappings(nums1, nums2) {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function anagramMappings(nums1, nums2) {
-
+  const pos = {};
+  nums2.forEach((v, i) => { pos[v] = i; });
+  return nums1.map(v => pos[v]);
 }`,
-    typescript: "function anagramMappings(nums1: number[], nums2: number[]): number[] {\n\n}",
-
+    typescript: `function anagramMappings(nums1: number[], nums2: number[]): number[] {
+  const pos: Record<number, number> = {};
+  nums2.forEach((v, i) => { pos[v] = i; });
+  return nums1.map(v => pos[v]!);
+}`,
     python: `def anagramMappings(nums1, nums2):
-    pass`,
+    pos = {v: i for i, v in enumerate(nums2)}
+    return [pos[v] for v in nums1]`,
   },
   visibleTests: [
     { args: [[12, 28, 46, 32, 50], [50, 12, 32, 46, 28]], expected: [1, 4, 3, 2, 0] },

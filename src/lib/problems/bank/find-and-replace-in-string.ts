@@ -51,12 +51,45 @@ All replacement operations must occur **simultaneously**, meaning the replacemen
   params: ['s', 'indices', 'sources', 'targets'],
   starterCode: {
     javascript: `function findReplaceString(s, indices, sources, targets) {
-
+  const rep = new Map();
+  for (let i = 0; i < indices.length; i++) {
+    if (s.startsWith(sources[i], indices[i])) rep.set(indices[i], [sources[i].length, targets[i]]);
+  }
+  const result = [];
+  let i = 0;
+  while (i < s.length) {
+    const r = rep.get(i);
+    if (r !== undefined) { result.push(r[1]); i += r[0]; }
+    else { result.push(s[i++]); }
+  }
+  return result.join('');
 }`,
-    typescript: "function findReplaceString(s: string, indices: number[], sources: string[], targets: string[]): string {\n\n}",
-
+    typescript: `function findReplaceString(s: string, indices: number[], sources: string[], targets: string[]): string {
+  const rep = new Map<number, [number, string]>();
+  for (let i = 0; i < indices.length; i++) {
+    const idx = indices[i]!, src = sources[i]!, tgt = targets[i]!;
+    if (s.startsWith(src, idx)) rep.set(idx, [src.length, tgt]);
+  }
+  const result: string[] = [];
+  let i = 0;
+  while (i < s.length) {
+    const r = rep.get(i);
+    if (r !== undefined) { result.push(r[1]); i += r[0]; }
+    else { result.push(s[i]!); i++; }
+  }
+  return result.join('');
+}`,
     python: `def findReplaceString(s, indices, sources, targets):
-    pass`,
+    rep = {}
+    for idx, src, tgt in zip(indices, sources, targets):
+        if s.startswith(src, idx): rep[idx] = (len(src), tgt)
+    result, i = [], 0
+    while i < len(s):
+        if i in rep:
+            l, t = rep[i]; result.append(t); i += l
+        else:
+            result.append(s[i]); i += 1
+    return ''.join(result)`,
   },
   visibleTests: [
     {

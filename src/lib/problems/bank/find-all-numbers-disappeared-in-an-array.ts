@@ -32,13 +32,20 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function findDisappearedNumbers(nums) {
-
+  const seen = new Set(nums);
+  const result = [];
+  for (let i = 1; i <= nums.length; i++) if (!seen.has(i)) result.push(i);
+  return result;
 }`,
     typescript: `function findDisappearedNumbers(nums: number[]): number[] {
-
+  const seen = new Set(nums);
+  const result: number[] = [];
+  for (let i = 1; i <= nums.length; i++) if (!seen.has(i)) result.push(i);
+  return result;
 }`,
     python: `def findDisappearedNumbers(nums):
-    pass`,
+    seen = set(nums)
+    return [i for i in range(1, len(nums) + 1) if i not in seen]`,
   },
   visibleTests: [
     { args: [[4, 3, 2, 7, 8, 2, 3, 1]], expected: [5, 6] },

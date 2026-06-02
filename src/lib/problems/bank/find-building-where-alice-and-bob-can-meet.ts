@@ -47,13 +47,71 @@ Return an array \`ans\` where \`ans[i]\` is the **index of the leftmost building
   params: ['heights', 'queries'],
   starterCode: {
     javascript: `function leftmostBuildingQueries(heights, queries) {
-
+  const n = heights.length, q = queries.length;
+  const ans = new Array(q).fill(-1);
+  const pending = Array.from({ length: n }, () => []);
+  for (let i = 0; i < q; i++) {
+    let [a, b] = queries[i];
+    if (a > b) [a, b] = [b, a];
+    if (a === b || heights[b] > heights[a]) { ans[i] = a === b ? a : b; continue; }
+    pending[b].push([heights[a], i]);
+  }
+  const stack = []; // [height, index], monotone decreasing height
+  for (let b = n - 1; b >= 0; b--) {
+    for (const [thr, qi] of pending[b]) {
+      if (!stack.length || stack[0][0] <= thr) continue;
+      let lo = 0, hi = stack.length - 1;
+      while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (stack[mid][0] > thr) lo = mid; else hi = mid - 1; }
+      ans[qi] = stack[lo][1];
+    }
+    while (stack.length && stack[stack.length - 1][0] <= heights[b]) stack.pop();
+    stack.push([heights[b], b]);
+  }
+  return ans;
 }`,
     typescript: `function leftmostBuildingQueries(heights: number[], queries: number[][]): number[] {
-
+  const n = heights.length, q = queries.length;
+  const ans: number[] = new Array(q).fill(-1);
+  const pending: [number, number][][] = Array.from({ length: n }, () => []);
+  for (let i = 0; i < q; i++) {
+    let a = queries[i]![0]!, b = queries[i]![1]!;
+    if (a > b) [a, b] = [b, a];
+    if (a === b || heights[b]! > heights[a]!) { ans[i] = a === b ? a : b; continue; }
+    pending[b]!.push([heights[a]!, i]);
+  }
+  const stack: [number, number][] = [];
+  for (let b = n - 1; b >= 0; b--) {
+    for (const [thr, qi] of pending[b]!) {
+      if (!stack.length || stack[0]![0]! <= thr) continue;
+      let lo = 0, hi = stack.length - 1;
+      while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (stack[mid]![0]! > thr) lo = mid; else hi = mid - 1; }
+      ans[qi] = stack[lo]![1]!;
+    }
+    while (stack.length && stack[stack.length - 1]![0]! <= heights[b]!) stack.pop();
+    stack.push([heights[b]!, b]);
+  }
+  return ans;
 }`,
-    python: `def leftmostBuildingQueries(heights: list[int], queries: list[list[int]]) -> list[int]:
-    pass`,
+    python: `def leftmostBuildingQueries(heights, queries):
+    n, ans = len(heights), [-1] * len(queries)
+    pending = [[] for _ in range(n)]
+    for i, (a, b) in enumerate(queries):
+        if a > b: a, b = b, a
+        if a == b or heights[b] > heights[a]: ans[i] = a if a == b else b; continue
+        pending[b].append((heights[a], i))
+    stack = []  # (height, index), heights decreasing from stack[0]
+    for b in range(n - 1, -1, -1):
+        for thr, qi in pending[b]:
+            if not stack or stack[0][0] <= thr: continue
+            lo, hi = 0, len(stack) - 1
+            while lo < hi:
+                mid = (lo + hi + 1) // 2
+                if stack[mid][0] > thr: lo = mid
+                else: hi = mid - 1
+            ans[qi] = stack[lo][1]
+        while stack and stack[-1][0] <= heights[b]: stack.pop()
+        stack.append((heights[b], b))
+    return ans`,
   },
   visibleTests: [
     { args: [[6, 4, 8, 5, 2, 7], [[0, 1], [0, 3], [2, 4], [3, 4], [2, 2]]], expected: [2, 5, -1, 5, 2] },
