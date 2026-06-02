@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 281
+import { problem as countInterestingSubarrays } from './count-the-number-of-interesting-subarrays';
+import { problem as minimizeDeviationsInArray } from './minimize-deviations-in-array';
+import { problem as longestWordDictDeleting } from './longest-word-in-dictionary-through-deleting';
 // batch 280
 import { problem as maxStudentsExam } from './maximum-students-taking-exam';
 import { problem as maxSumTwoNoOverlapSubs } from './maximum-sum-of-elements-in-two-non-overlapping-subarrays';
@@ -6519,6 +6523,9 @@ export const problems: readonly Problem[] = [
   countDiffSubseqGCDs,
   smallestRangeKLists,
   // batch 280
+  countInterestingSubarrays,
+  minimizeDeviationsInArray,
+  longestWordDictDeleting,
   maxStudentsExam,
   maxSumTwoNoOverlapSubs,
   // batch 279

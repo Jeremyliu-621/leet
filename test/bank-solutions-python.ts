@@ -46429,6 +46429,57 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 281
+  'count-the-number-of-interesting-subarrays': `def countInterestingSubarrays(nums, modulo, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    freq[0] = 1
+    pref_cnt = 0
+    ans = 0
+    for num in nums:
+        if num % modulo == k:
+            pref_cnt += 1
+        need = (pref_cnt - k) % modulo
+        ans += freq[need]
+        freq[pref_cnt % modulo] += 1
+    return ans
+`,
+
+  'minimize-deviations-in-array': `def minimizeDeviation(nums):
+    import heapq
+    heap = []
+    global_min = float('inf')
+    for n in nums:
+        val = n * 2 if n % 2 == 1 else n
+        if val < global_min:
+            global_min = val
+        heapq.heappush(heap, -val)
+    ans = -heap[0] - global_min
+    while heap[0] % 2 == 0:
+        max_val = -heapq.heappop(heap)
+        new_val = max_val // 2
+        if new_val < global_min:
+            global_min = new_val
+        heapq.heappush(heap, -new_val)
+        ans = min(ans, -heap[0] - global_min)
+    return ans
+`,
+
+  'longest-word-in-dictionary-through-deleting': `def findLongestWord(s, dictionary):
+    def is_subseq(word):
+        i = 0
+        for c in s:
+            if i < len(word) and c == word[i]:
+                i += 1
+        return i == len(word)
+    best = ''
+    for w in dictionary:
+        if is_subseq(w):
+            if len(w) > len(best) or (len(w) == len(best) and w < best):
+                best = w
+    return best
+`,
+
   // batch 280
   'maximum-students-taking-exam': `def maxStudents(seats):
     m, n = len(seats), len(seats[0])

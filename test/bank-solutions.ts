@@ -47404,6 +47404,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 281
+  'count-the-number-of-interesting-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const modulo = args[1] as number;
+    const k = args[2] as number;
+    const freq = new Map<number, number>();
+    freq.set(0, 1);
+    let prefCnt = 0;
+    let ans = 0;
+    for (const num of nums) {
+      if (num % modulo === k) prefCnt++;
+      const need = ((prefCnt - k) % modulo + modulo) % modulo;
+      ans += freq.get(need) ?? 0;
+      freq.set(prefCnt % modulo, (freq.get(prefCnt % modulo) ?? 0) + 1);
+    }
+    return ans;
+  },
+  'minimize-deviations-in-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const heap: number[] = [];
+    let globalMin = Infinity;
+    for (const n of nums) {
+      const val = n % 2 === 1 ? n * 2 : n;
+      heap.push(val);
+      if (val < globalMin) globalMin = val;
+    }
+    heap.sort((a, b) => b - a);
+    let ans = heap[0]! - globalMin;
+    while (heap[0]! % 2 === 0) {
+      const max = heap.shift()!;
+      const newVal = max / 2;
+      if (newVal < globalMin) globalMin = newVal;
+      let lo = 0, hi = heap.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (heap[mid]! >= newVal) lo = mid + 1; else hi = mid;
+      }
+      heap.splice(lo, 0, newVal);
+      ans = Math.min(ans, heap[0]! - globalMin);
+    }
+    return ans;
+  },
+  'longest-word-in-dictionary-through-deleting': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const dictionary = args[1] as string[];
+    function isSubseq(word: string): boolean {
+      let i = 0;
+      for (let j = 0; j < s.length && i < word.length; j++) {
+        if (s[j] === word[i]) i++;
+      }
+      return i === word.length;
+    }
+    let best = '';
+    for (const w of dictionary) {
+      if (isSubseq(w)) {
+        if (w.length > best.length || (w.length === best.length && w < best)) best = w;
+      }
+    }
+    return best;
+  },
+
   // batch 280
   'maximum-students-taking-exam': (...args: unknown[]) => {
     const seats = args[0] as string[][];
