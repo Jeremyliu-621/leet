@@ -41,9 +41,73 @@ Return an array \`ans\` of length \`n\` where \`ans[i]\` is the minimum number o
   functionName: 'minReverseOperations',
   params: ['n', 'p', 'banned', 'k'],
   starterCode: {
-    javascript: 'function minReverseOperations(n, p, banned, k) {\n  // your code here\n}\n',
-    typescript: 'function minReverseOperations(n: number, p: number, banned: number[], k: number): number[] {\n  // your code here\n}\n',
-    python: 'def minReverseOperations(n, p, banned, k):\n    # your code here\n    pass\n',
+    javascript: `function minReverseOperations(n, p, banned, k) {
+  const bannedSet = new Set(banned);
+  const available = new Array(n).fill(true);
+  available[p] = false;
+  for (const b of bannedSet) available[b] = false;
+  const ans = new Array(n).fill(-1);
+  ans[p] = 0;
+  const queue = [p];
+  let qi = 0;
+  while (qi < queue.length) {
+    const cur = queue[qi++];
+    const lo = 2 * Math.max(0, cur - k + 1) + k - 1 - cur;
+    const hi = 2 * Math.min(n - k, cur) + k - 1 - cur;
+    for (let pos = lo; pos <= hi; pos += 2) {
+      if (available[pos]) {
+        available[pos] = false;
+        ans[pos] = ans[cur] + 1;
+        queue.push(pos);
+      }
+    }
+  }
+  return ans;
+}`,
+    typescript: `function minReverseOperations(n: number, p: number, banned: number[], k: number): number[] {
+  const bannedSet = new Set(banned);
+  const available = new Array<boolean>(n).fill(true);
+  available[p] = false;
+  for (const b of bannedSet) available[b] = false;
+  const ans = new Array<number>(n).fill(-1);
+  ans[p] = 0;
+  const queue: number[] = [p];
+  let qi = 0;
+  while (qi < queue.length) {
+    const cur = queue[qi++]!;
+    const lo = 2 * Math.max(0, cur - k + 1) + k - 1 - cur;
+    const hi = 2 * Math.min(n - k, cur) + k - 1 - cur;
+    for (let pos = lo; pos <= hi; pos += 2) {
+      if (available[pos]) {
+        available[pos] = false;
+        ans[pos] = ans[cur]! + 1;
+        queue.push(pos);
+      }
+    }
+  }
+  return ans;
+}`,
+    python: `def minReverseOperations(n, p, banned, k):
+    banned = list(banned.to_py()) if hasattr(banned, 'to_py') else list(banned)
+    banned_set = set(banned)
+    available = [True] * n
+    available[p] = False
+    for b in banned_set: available[b] = False
+    ans = [-1] * n; ans[p] = 0
+    from collections import deque
+    queue = deque([p])
+    while queue:
+        cur = queue.popleft()
+        lo = 2 * max(0, cur - k + 1) + k - 1 - cur
+        hi = 2 * min(n - k, cur) + k - 1 - cur
+        pos = lo
+        while pos <= hi:
+            if available[pos]:
+                available[pos] = False
+                ans[pos] = ans[cur] + 1
+                queue.append(pos)
+            pos += 2
+    return ans`,
   },
   visibleTests: [
     {

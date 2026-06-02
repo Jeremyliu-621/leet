@@ -37,11 +37,51 @@ If no such substring exists, return \`-1\`.`,
   functionName: 'minWindowAllVowels',
   params: ['s'],
   starterCode: {
-    javascript: 'function minWindowAllVowels(s) {\n  // your code here\n}\n',
-    typescript: `function minWindowAllVowels(s: string): number {
-
+    javascript: `function minWindowAllVowels(s) {
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  const freq = {};
+  let have = 0, lo = 0, best = Infinity;
+  for (let hi = 0; hi < s.length; hi++) {
+    const c = s[hi];
+    if (vowels.has(c)) { freq[c] = (freq[c] || 0) + 1; if (freq[c] === 1) have++; }
+    while (have === 5) {
+      best = Math.min(best, hi - lo + 1);
+      const lc = s[lo++];
+      if (vowels.has(lc)) { freq[lc]--; if (freq[lc] === 0) have--; }
+    }
+  }
+  return best === Infinity ? -1 : best;
 }`,
-    python: 'def minWindowAllVowels(s):\n    # your code here\n    pass\n',
+    typescript: `function minWindowAllVowels(s: string): number {
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  const freq: Record<string, number> = {};
+  let have = 0, lo = 0, best = Infinity;
+  for (let hi = 0; hi < s.length; hi++) {
+    const c = s[hi]!;
+    if (vowels.has(c)) { freq[c] = (freq[c] ?? 0) + 1; if (freq[c] === 1) have++; }
+    while (have === 5) {
+      best = Math.min(best, hi - lo + 1);
+      const lc = s[lo++]!;
+      if (vowels.has(lc)) { freq[lc]!--; if (freq[lc] === 0) have--; }
+    }
+  }
+  return best === Infinity ? -1 : best;
+}`,
+    python: `def minWindowAllVowels(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    vowels = set('aeiou')
+    freq = {}; have = 0; lo = 0; best = float('inf')
+    for hi, c in enumerate(s):
+        if c in vowels:
+            freq[c] = freq.get(c, 0) + 1
+            if freq[c] == 1: have += 1
+        while have == 5:
+            best = min(best, hi - lo + 1)
+            lc = s[lo]; lo += 1
+            if lc in vowels:
+                freq[lc] -= 1
+                if freq[lc] == 0: have -= 1
+    return -1 if best == float('inf') else best`,
   },
   visibleTests: [
     { args: ['baeioucdef'], expected: 5 },

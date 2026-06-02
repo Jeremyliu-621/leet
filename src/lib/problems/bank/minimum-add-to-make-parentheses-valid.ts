@@ -44,15 +44,31 @@ You are given a parentheses string \`s\`. In one move, you can insert a parenthe
   params: ['s'],
   starterCode: {
     javascript: `function minAddToMakeValid(s) {
-  // return minimum insertions to make parentheses valid
-
+  let open = 0, close = 0;
+  for (const c of s) {
+    if (c === '(') open++;
+    else if (open > 0) open--;
+    else close++;
+  }
+  return open + close;
 }`,
-    typescript: "function minAddToMakeValid(s: string): number {\n  // return minimum insertions to make parentheses valid\n\n}",
-
-    python: `def minAddToMakeValid(s: str) -> int:
-    # return minimum insertions to make parentheses valid
-    pass
-`,
+    typescript: `function minAddToMakeValid(s: string): number {
+  let open = 0, close = 0;
+  for (const c of s) {
+    if (c === '(') open++;
+    else if (open > 0) open--;
+    else close++;
+  }
+  return open + close;
+}`,
+    python: `def minAddToMakeValid(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    open_, close = 0, 0
+    for c in s:
+        if c == '(': open_ += 1
+        elif open_ > 0: open_ -= 1
+        else: close += 1
+    return open_ + close`,
   },
   visibleTests: [
     { args: ['())'], expected: 1 },

@@ -42,15 +42,38 @@ Return the **minimum** number of training hours required to defeat all \`n\` opp
   params: ['initialEnergy', 'initialExperience', 'energy', 'experience'],
   starterCode: {
     javascript: `function minNumberOfHours(initialEnergy, initialExperience, energy, experience) {
-  // return minimum training hours
-
+  let hours = 0;
+  const totalE = energy.reduce((a, b) => a + b, 0) + 1;
+  if (initialEnergy < totalE) { hours += totalE - initialEnergy; initialEnergy = totalE; }
+  let cur = initialExperience;
+  for (let i = 0; i < experience.length; i++) {
+    if (cur <= experience[i]) { hours += experience[i] - cur + 1; cur = experience[i] + 1; }
+    cur += experience[i];
+  }
+  return hours;
 }`,
-    typescript: "function minNumberOfHours(initialEnergy: number, initialExperience: number, energy: number[], experience: number[]): number {\n  // return minimum training hours\n\n}",
-
-    python: `def minNumberOfHours(initialEnergy: int, initialExperience: int, energy: list, experience: list) -> int:
-    # return minimum training hours
-    pass
-`,
+    typescript: `function minNumberOfHours(initialEnergy: number, initialExperience: number, energy: number[], experience: number[]): number {
+  let hours = 0;
+  const totalE = energy.reduce((a, b) => a + b, 0) + 1;
+  if (initialEnergy < totalE) { hours += totalE - initialEnergy; initialEnergy = totalE; }
+  let cur = initialExperience;
+  for (let i = 0; i < experience.length; i++) {
+    if (cur <= experience[i]!) { hours += experience[i]! - cur + 1; cur = experience[i]! + 1; }
+    cur += experience[i]!;
+  }
+  return hours;
+}`,
+    python: `def minNumberOfHours(initialEnergy, initialExperience, energy, experience):
+    energy = list(energy.to_py()) if hasattr(energy, 'to_py') else list(energy)
+    experience = list(experience.to_py()) if hasattr(experience, 'to_py') else list(experience)
+    hours = 0
+    total_e = sum(energy) + 1
+    if initialEnergy < total_e: hours += total_e - initialEnergy; initialEnergy = total_e
+    cur = initialExperience
+    for exp in experience:
+        if cur <= exp: hours += exp - cur + 1; cur = exp + 1
+        cur += exp
+    return hours`,
   },
   visibleTests: [
     { args: [5, 3, [1, 4, 3, 2], [2, 6, 3, 1]], expected: 8 },

@@ -42,15 +42,32 @@ Return the **minimum number of flips** required to make \`a OR b == c\`.
   params: ['a', 'b', 'c'],
   starterCode: {
     javascript: `function minFlips(a, b, c) {
-  // For each bit: if c=1 and a=b=0: +1. If c=0: add count of 1s in a and b.
+  let flips = 0;
+  for (let i = 0; i < 30; i++) {
+    const ba = (a >> i) & 1, bb = (b >> i) & 1, bc = (c >> i) & 1;
+    if (bc === 1) { if (ba === 0 && bb === 0) flips++; }
+    else { flips += ba + bb; }
+  }
+  return flips;
 }`,
     typescript: `function minFlips(a: number, b: number, c: number): number {
-  // For each bit: if c=1 and a=b=0: +1. If c=0: add count of 1s in a and b.
+  let flips = 0;
+  for (let i = 0; i < 30; i++) {
+    const ba = (a >> i) & 1, bb = (b >> i) & 1, bc = (c >> i) & 1;
+    if (bc === 1) { if (ba === 0 && bb === 0) flips++; }
+    else { flips += ba + bb; }
+  }
+  return flips;
 }`,
     python: `def minFlips(a, b, c):
-    # For each bit: if c=1 and a=b=0: +1. If c=0: add count of 1s in a and b.
-    pass
-`,
+    flips = 0
+    for i in range(30):
+        ba, bb, bc = (a>>i)&1, (b>>i)&1, (c>>i)&1
+        if bc == 1:
+            if ba == 0 and bb == 0: flips += 1
+        else:
+            flips += ba + bb
+    return flips`,
   },
   visibleTests: [
     { args: [2, 6, 5], expected: 3 },

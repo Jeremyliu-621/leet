@@ -43,15 +43,44 @@ Return the **minimum number of insertions** to make \`s\` balanced.
   params: ['s'],
   starterCode: {
     javascript: `function minInsertions(s) {
-  // return minimum insertions to balance (each '(' needs '))')
-
+  let open = 0, res = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') { open++; }
+    else {
+      if (i + 1 < s.length && s[i + 1] === ')') i++;
+      else res++;
+      if (open > 0) open--;
+      else res++;
+    }
+  }
+  return res + 2 * open;
 }`,
-    typescript: "function minInsertions(s: string): number {\n  // return minimum insertions to balance (each '(' needs '))')\n\n}",
-
-    python: `def minInsertions(s: str) -> int:
-    # return minimum insertions to balance (each '(' needs '))')
-    pass
-`,
+    typescript: `function minInsertions(s: string): number {
+  let open = 0, res = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') { open++; }
+    else {
+      if (i + 1 < s.length && s[i + 1] === ')') i++;
+      else res++;
+      if (open > 0) open--;
+      else res++;
+    }
+  }
+  return res + 2 * open;
+}`,
+    python: `def minInsertions(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    open_, res, i = 0, 0, 0
+    while i < len(s):
+        if s[i] == '(':
+            open_ += 1
+        else:
+            if i + 1 < len(s) and s[i+1] == ')': i += 1
+            else: res += 1
+            if open_ > 0: open_ -= 1
+            else: res += 1
+        i += 1
+    return res + 2 * open_`,
   },
   visibleTests: [
     { args: ['(()))'], expected: 1 },

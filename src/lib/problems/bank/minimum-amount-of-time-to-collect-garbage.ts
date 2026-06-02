@@ -53,15 +53,54 @@ function garbageCollection(garbage, travel) {
   params: ['garbage', 'travel'],
   starterCode: {
     javascript: `function garbageCollection(garbage, travel) {
-  // return minimum minutes to collect all garbage
-
+  const prefix = [0];
+  for (const t of travel) prefix.push(prefix[prefix.length - 1] + t);
+  let total = 0;
+  for (const type of ['M', 'P', 'G']) {
+    let lastIdx = -1;
+    for (let i = 0; i < garbage.length; i++) {
+      if (garbage[i].includes(type)) lastIdx = i;
+    }
+    if (lastIdx === -1) continue;
+    total += prefix[lastIdx];
+    for (let i = 0; i <= lastIdx; i++) {
+      for (const c of garbage[i]) if (c === type) total++;
+    }
+  }
+  return total;
 }`,
-    typescript: "function garbageCollection(garbage: string[], travel: number[]): number {\n  // return minimum minutes to collect all garbage\n\n}",
-
-    python: `def garbageCollection(garbage: list, travel: list) -> int:
-    # return minimum minutes to collect all garbage
-    pass
-`,
+    typescript: `function garbageCollection(garbage: string[], travel: number[]): number {
+  const prefix = [0];
+  for (const t of travel) prefix.push(prefix[prefix.length - 1]! + t);
+  let total = 0;
+  for (const type of ['M', 'P', 'G']) {
+    let lastIdx = -1;
+    for (let i = 0; i < garbage.length; i++) {
+      if (garbage[i]!.includes(type)) lastIdx = i;
+    }
+    if (lastIdx === -1) continue;
+    total += prefix[lastIdx]!;
+    for (let i = 0; i <= lastIdx; i++) {
+      for (const c of garbage[i]!) if (c === type) total++;
+    }
+  }
+  return total;
+}`,
+    python: `def garbageCollection(garbage, travel):
+    garbage = list(garbage.to_py()) if hasattr(garbage, 'to_py') else list(garbage)
+    travel = list(travel.to_py()) if hasattr(travel, 'to_py') else list(travel)
+    garbage = [str(g.to_py()) if hasattr(g, 'to_py') else str(g) for g in garbage]
+    prefix = [0]
+    for t in travel: prefix.append(prefix[-1] + t)
+    total = 0
+    for typ in 'MPG':
+        last = -1
+        for i, g in enumerate(garbage):
+            if typ in g: last = i
+        if last == -1: continue
+        total += prefix[last]
+        for i in range(last + 1): total += garbage[i].count(typ)
+    return total`,
   },
   visibleTests: [
     { args: [['G', 'P', 'GP', 'GG'], [2, 4, 3]], expected: 21 },

@@ -43,15 +43,45 @@ Return the **minimum number of swaps** to make both \`nums1\` and \`nums2\` **st
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function minSwap(nums1, nums2) {
-  // return minimum swaps to make both arrays strictly increasing
-
+  let keep = 0, swap = 1;
+  for (let i = 1; i < nums1.length; i++) {
+    let nk = Infinity, ns = Infinity;
+    if (nums1[i] > nums1[i - 1] && nums2[i] > nums2[i - 1]) {
+      nk = Math.min(nk, keep); ns = Math.min(ns, swap + 1);
+    }
+    if (nums1[i] > nums2[i - 1] && nums2[i] > nums1[i - 1]) {
+      nk = Math.min(nk, swap); ns = Math.min(ns, keep + 1);
+    }
+    keep = nk; swap = ns;
+  }
+  return Math.min(keep, swap);
 }`,
-    typescript: "function minSwap(nums1: number[], nums2: number[]): number {\n  // return minimum swaps to make both arrays strictly increasing\n\n}",
-
-    python: `def minSwap(nums1: list, nums2: list) -> int:
-    # return minimum swaps to make both arrays strictly increasing
-    pass
-`,
+    typescript: `function minSwap(nums1: number[], nums2: number[]): number {
+  let keep = 0, swap = 1;
+  for (let i = 1; i < nums1.length; i++) {
+    let nk = Infinity, ns = Infinity;
+    if (nums1[i]! > nums1[i - 1]! && nums2[i]! > nums2[i - 1]!) {
+      nk = Math.min(nk, keep); ns = Math.min(ns, swap + 1);
+    }
+    if (nums1[i]! > nums2[i - 1]! && nums2[i]! > nums1[i - 1]!) {
+      nk = Math.min(nk, swap); ns = Math.min(ns, keep + 1);
+    }
+    keep = nk; swap = ns;
+  }
+  return Math.min(keep, swap);
+}`,
+    python: `def minSwap(nums1, nums2):
+    nums1 = list(nums1.to_py()) if hasattr(nums1, 'to_py') else list(nums1)
+    nums2 = list(nums2.to_py()) if hasattr(nums2, 'to_py') else list(nums2)
+    keep, swap = 0, 1
+    for i in range(1, len(nums1)):
+        nk = ns = float('inf')
+        if nums1[i] > nums1[i-1] and nums2[i] > nums2[i-1]:
+            nk = min(nk, keep); ns = min(ns, swap + 1)
+        if nums1[i] > nums2[i-1] and nums2[i] > nums1[i-1]:
+            nk = min(nk, swap); ns = min(ns, keep + 1)
+        keep, swap = nk, ns
+    return min(keep, swap)`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 4], [1, 2, 3, 7]], expected: 1 },

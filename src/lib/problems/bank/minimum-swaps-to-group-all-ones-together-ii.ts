@@ -47,10 +47,41 @@ Given a **circular** binary array \`nums\` (i.e., the next element of \`nums[num
   functionName: 'minSwaps',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minSwaps(nums) {\n  // your code here\n}\n',
-    typescript: "function minSwaps(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def minSwaps(nums):\n    # your code here\n    pass\n',
+    javascript: `function minSwaps(nums) {
+  const n = nums.length;
+  const k = nums.reduce((a, b) => a + b, 0);
+  if (k === 0) return 0;
+  let ones = 0;
+  for (let i = 0; i < k; i++) ones += nums[i];
+  let maxOnes = ones;
+  for (let i = k; i < n + k; i++) {
+    ones += nums[i % n] - nums[(i - k + n) % n];
+    maxOnes = Math.max(maxOnes, ones);
+  }
+  return k - maxOnes;
+}`,
+    typescript: `function minSwaps(nums: number[]): number {
+  const n = nums.length;
+  const k = nums.reduce((a, b) => a + b, 0);
+  if (k === 0) return 0;
+  let ones = 0;
+  for (let i = 0; i < k; i++) ones += nums[i]!;
+  let maxOnes = ones;
+  for (let i = k; i < n + k; i++) {
+    ones += nums[i % n]! - nums[(i - k + n) % n]!;
+    maxOnes = Math.max(maxOnes, ones);
+  }
+  return k - maxOnes;
+}`,
+    python: `def minSwaps(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums); k = sum(nums)
+    if k == 0: return 0
+    ones = sum(nums[:k]); best = ones
+    for i in range(k, n + k):
+        ones += nums[i % n] - nums[(i - k) % n]
+        best = max(best, ones)
+    return k - best`,
   },
   visibleTests: [
     { args: [[0,1,0,1,1,0,0]], expected: 1 },

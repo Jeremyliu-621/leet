@@ -37,13 +37,28 @@ You can change the value of **two** elements of \`nums\` to any value (you can a
   params: ['nums'],
   starterCode: {
     javascript: `function minimizeSum(nums) {
-
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  return Math.min(
+    nums[n - 1] - nums[2],
+    nums[n - 2] - nums[1],
+    nums[n - 3] - nums[0]
+  );
 }`,
-    typescript: "function minimizeSum(nums: number[]): number {\n\n}",
-
+    typescript: `function minimizeSum(nums: number[]): number {
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  return Math.min(
+    nums[n - 1]! - nums[2]!,
+    nums[n - 2]! - nums[1]!,
+    nums[n - 3]! - nums[0]!
+  );
+}`,
     python: `def minimizeSum(nums):
-    pass
-`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    nums.sort()
+    n = len(nums)
+    return min(nums[n-1]-nums[2], nums[n-2]-nums[1], nums[n-3]-nums[0])`,
   },
   visibleTests: [
     { args: [[1, 4, 3]], expected: 0 },

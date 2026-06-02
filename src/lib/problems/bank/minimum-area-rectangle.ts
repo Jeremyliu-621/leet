@@ -37,17 +37,48 @@ export const problem: Problem = {
   params: ['points'],
   starterCode: {
     javascript: `function minAreaRect(points) {
-  // points: array of [x, y] pairs
-  // return the minimum area of any axis-aligned rectangle, or 0
-
+  const set = new Set(points.map(([x, y]) => x + ',' + y));
+  let min = Infinity;
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      const [x1, y1] = points[i], [x2, y2] = points[j];
+      if (x1 !== x2 && y1 !== y2 &&
+          set.has(x1 + ',' + y2) && set.has(x2 + ',' + y1)) {
+        min = Math.min(min, Math.abs(x2 - x1) * Math.abs(y2 - y1));
+      }
+    }
+  }
+  return min === Infinity ? 0 : min;
 }`,
-    typescript: "function minAreaRect(points: number[][]): number {\n  // points: array of [x, y] pairs\n  // return the minimum area of any axis-aligned rectangle, or 0\n\n}",
-
-    python: `def minAreaRect(points: list) -> int:
-    # points: list of [x, y] pairs
-    # return the minimum area of any axis-aligned rectangle, or 0
-    pass
-`,
+    typescript: `function minAreaRect(points: number[][]): number {
+  const set = new Set(points.map(p => p[0] + ',' + p[1]));
+  let min = Infinity;
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      const [x1, y1] = points[i]!, [x2, y2] = points[j]!;
+      if (x1 !== x2 && y1 !== y2 &&
+          set.has(x1 + ',' + y2) && set.has(x2 + ',' + y1)) {
+        min = Math.min(min, Math.abs(x2! - x1!) * Math.abs(y2! - y1!));
+      }
+    }
+  }
+  return min === Infinity ? 0 : min;
+}`,
+    python: `def minAreaRect(points):
+    if hasattr(points, 'to_py'): points = points.to_py()
+    pts = set()
+    arr = []
+    for p in points:
+        p = list(p.to_py()) if hasattr(p, 'to_py') else list(p)
+        arr.append(p)
+        pts.add((p[0], p[1]))
+    best = float('inf')
+    for i in range(len(arr)):
+        for j in range(i+1, len(arr)):
+            x1, y1 = arr[i]; x2, y2 = arr[j]
+            if x1 != x2 and y1 != y2 and (x1,y2) in pts and (x2,y1) in pts:
+                best = min(best, abs(x2-x1)*abs(y2-y1))
+    return 0 if best == float('inf') else best`,
   },
   visibleTests: [
     { args: [[[1,1],[1,3],[3,1],[3,3],[2,2]]], expected: 4 },

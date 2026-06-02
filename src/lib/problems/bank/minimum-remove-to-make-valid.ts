@@ -43,10 +43,53 @@ Return the resulting string.`,
   functionName: 'minRemoveForValid',
   params: ['s'],
   starterCode: {
-    javascript: 'function minRemoveForValid(s) {\n  // your code here\n}\n',
-    typescript: "function minRemoveForValid(s: string): string {\n  // your code here\n}",
-
-    python: 'def minRemoveForValid(s):\n    # your code here\n    pass\n',
+    javascript: `function minRemoveForValid(s) {
+  let open = 0, s1 = '';
+  for (const c of s) {
+    if (c === '(') { open++; s1 += c; }
+    else if (c === ')') { if (open > 0) { open--; s1 += c; } }
+    else s1 += c;
+  }
+  let close = 0, s2 = '';
+  for (let i = s1.length - 1; i >= 0; i--) {
+    const c = s1[i];
+    if (c === ')') { close++; s2 = c + s2; }
+    else if (c === '(') { if (close > 0) { close--; s2 = c + s2; } }
+    else s2 = c + s2;
+  }
+  return s2;
+}`,
+    typescript: `function minRemoveForValid(s: string): string {
+  let open = 0, s1 = '';
+  for (const c of s) {
+    if (c === '(') { open++; s1 += c; }
+    else if (c === ')') { if (open > 0) { open--; s1 += c; } }
+    else s1 += c;
+  }
+  let close = 0, s2 = '';
+  for (let i = s1.length - 1; i >= 0; i--) {
+    const c = s1[i]!;
+    if (c === ')') { close++; s2 = c + s2; }
+    else if (c === '(') { if (close > 0) { close--; s2 = c + s2; } }
+    else s2 = c + s2;
+  }
+  return s2;
+}`,
+    python: `def minRemoveForValid(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    open_ = 0; s1 = []
+    for c in s:
+        if c == '(': open_ += 1; s1.append(c)
+        elif c == ')':
+            if open_ > 0: open_ -= 1; s1.append(c)
+        else: s1.append(c)
+    close = 0; s2 = []
+    for c in reversed(s1):
+        if c == ')': close += 1; s2.append(c)
+        elif c == '(':
+            if close > 0: close -= 1; s2.append(c)
+        else: s2.append(c)
+    return ''.join(reversed(s2))`,
   },
   visibleTests: [
     { args: ['lee(t(c)o)de)'], expected: 'lee(t(c)o)de' },
