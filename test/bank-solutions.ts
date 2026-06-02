@@ -50573,6 +50573,85 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return dp[0]!;
   },
 
+  // batch 294
+  'binary-trees-with-factors': (...args: unknown[]) => {
+    const arr = [...(args[0] as number[])];
+    const MOD = 1_000_000_007n;
+    arr.sort((a, b) => a - b);
+    const dp = new Map<number, bigint>();
+    const set = new Set(arr);
+    for (const v of arr) {
+      let count = 1n;
+      for (const a of dp.keys()) {
+        if (v % a === 0 && set.has(v / a)) {
+          count = (count + dp.get(a)! * dp.get(v / a)!) % MOD;
+        }
+      }
+      dp.set(v, count);
+    }
+    let ans = 0n;
+    for (const c of dp.values()) ans = (ans + c) % MOD;
+    return Number(ans);
+  },
+
+  'rank-transform-of-a-matrix': (...args: unknown[]) => {
+    const matrix = args[0] as number[][];
+    const m = matrix.length, n = matrix[0]!.length;
+    const rowRank = new Array<number>(m).fill(0);
+    const colRank = new Array<number>(n).fill(0);
+    const rank: number[][] = Array.from({length: m}, () => new Array<number>(n).fill(0));
+    const cells: [number, number, number][] = [];
+    for (let i = 0; i < m; i++)
+      for (let j = 0; j < n; j++)
+        cells.push([matrix[i]![j]!, i, j]);
+    cells.sort((a, b) => a[0] - b[0]);
+    const parent = new Array<number>(m * n);
+    function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+    function unite(x: number, y: number) { parent[find(x)] = find(y); }
+    let idx = 0;
+    while (idx < cells.length) {
+      const val = cells[idx]![0];
+      let end = idx;
+      while (end < cells.length && cells[end]![0] === val) end++;
+      for (let k = idx; k < end; k++) { const [,i,j] = cells[k]!; parent[i*n+j] = i*n+j; }
+      const rowBest = new Map<number,number>(), colBest = new Map<number,number>();
+      for (let k = idx; k < end; k++) {
+        const [,i,j] = cells[k]!; const id = i*n+j;
+        if (rowBest.has(i)) unite(id, rowBest.get(i)!); else rowBest.set(i, id);
+        if (colBest.has(j)) unite(id, colBest.get(j)!); else colBest.set(j, id);
+      }
+      const groupRank = new Map<number,number>();
+      for (let k = idx; k < end; k++) {
+        const [,i,j] = cells[k]!; const root = find(i*n+j);
+        groupRank.set(root, Math.max(groupRank.get(root) ?? 0, rowRank[i]!, colRank[j]!));
+      }
+      for (let k = idx; k < end; k++) {
+        const [,i,j] = cells[k]!;
+        rank[i]![j] = groupRank.get(find(i*n+j))! + 1;
+        rowRank[i] = Math.max(rowRank[i]!, rank[i]![j]!);
+        colRank[j] = Math.max(colRank[j]!, rank[i]![j]!);
+      }
+      idx = end;
+    }
+    return rank;
+  },
+
+  'using-a-robot-to-print-the-lexicographically-smallest-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const suffMin: string[] = new Array(n + 1).fill('{');
+    for (let i = n - 1; i >= 0; i--)
+      suffMin[i] = s[i]! < suffMin[i + 1]! ? s[i]! : suffMin[i + 1]!;
+    const t: string[] = [], result: string[] = [];
+    for (let i = 0; i < n; i++) {
+      while (t.length > 0 && t[t.length - 1]! <= suffMin[i]!)
+        result.push(t.pop()!);
+      t.push(s[i]!);
+    }
+    while (t.length > 0) result.push(t.pop()!);
+    return result.join('');
+  },
+
   'maximum-subarray-minimum-product': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const MOD = 1_000_000_007n;

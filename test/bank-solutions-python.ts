@@ -49372,6 +49372,73 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return max(left[i] + right[i] - heights[i] for i in range(n))
 `,
 
+  // batch 294
+  'binary-trees-with-factors': `def numFactoredBinaryTrees(arr):
+    if hasattr(arr, 'to_py'): arr = arr.to_py()
+    arr = sorted(int(x) for x in arr)
+    MOD = 10**9 + 7
+    dp = {}; s = set(arr)
+    for v in arr:
+        dp[v] = 1
+        for a in dp:
+            if v % a == 0 and v // a in s:
+                dp[v] = (dp[v] + dp[a] * dp[v // a]) % MOD
+    return sum(dp.values()) % MOD
+`,
+
+  'rank-transform-of-a-matrix': `def matrixRankTransform(matrix):
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(x) for x in (row.to_py() if hasattr(row,'to_py') else row)] for row in matrix]
+    m, n = len(matrix), len(matrix[0])
+    row_rank = [0] * m; col_rank = [0] * n
+    rank = [[0]*n for _ in range(m)]
+    cells = sorted((matrix[i][j], i, j) for i in range(m) for j in range(n))
+    parent = {}
+    def find(x):
+        if parent[x] != x: parent[x] = find(parent[x])
+        return parent[x]
+    def unite(x, y): parent[find(x)] = find(y)
+    idx = 0
+    while idx < len(cells):
+        val = cells[idx][0]; end = idx
+        while end < len(cells) and cells[end][0] == val: end += 1
+        for _, i, j in cells[idx:end]: parent[(i,j)] = (i,j)
+        row_best = {}; col_best = {}
+        for _, i, j in cells[idx:end]:
+            if i in row_best: unite((i,j), row_best[i])
+            else: row_best[i] = (i,j)
+            if j in col_best: unite((i,j), col_best[j])
+            else: col_best[j] = (i,j)
+        group_rank = {}
+        for _, i, j in cells[idx:end]:
+            root = find((i,j))
+            group_rank[root] = max(group_rank.get(root, 0), row_rank[i], col_rank[j])
+        for _, i, j in cells[idx:end]:
+            root = find((i,j))
+            rank[i][j] = group_rank[root] + 1
+            row_rank[i] = max(row_rank[i], rank[i][j])
+            col_rank[j] = max(col_rank[j], rank[i][j])
+        idx = end
+    return rank
+`,
+
+  'using-a-robot-to-print-the-lexicographically-smallest-string': `def robotWithString(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    n = len(s)
+    suf = ['{'] * (n + 1)
+    for i in range(n - 1, -1, -1):
+        suf[i] = min(s[i], suf[i + 1])
+    t, result = [], []
+    for i in range(n):
+        while t and t[-1] <= suf[i]:
+            result.append(t.pop())
+        t.append(s[i])
+    while t:
+        result.append(t.pop())
+    return ''.join(result)
+`,
+
   // batch 293
   'minimum-path-sum-in-a-triangle-grid': `def minimumTotal(triangle):
     if hasattr(triangle, 'to_py'): triangle = triangle.to_py()

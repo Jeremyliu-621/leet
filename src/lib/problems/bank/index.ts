@@ -3113,6 +3113,10 @@ import { problem as largestPosIntWithNegative } from './largest-positive-integer
 // batch 293
 import { problem as minPathSumTriangleGrid } from './minimum-path-sum-in-a-triangle-grid';
 import { problem as maxSubarrayMinProduct } from './maximum-subarray-minimum-product';
+// batch 294
+import { problem as binaryTreesWithFactors } from './binary-trees-with-factors';
+import { problem as rankTransformMatrix } from './rank-transform-of-a-matrix';
+import { problem as robotWithString } from './using-a-robot-to-print-the-lexicographically-smallest-string';
 // batch 287
 import { problem as maxTargetNodesII } from './maximize-the-number-of-target-nodes-after-connecting-trees-ii';
 import { problem as minAdjSwapsKthSmallest } from './minimum-adjacent-swaps-to-reach-the-kth-smallest-number';
@@ -6969,4 +6973,7 @@ export const problems: readonly Problem[] = [
   maximumValueAtAGivenIndexInABoundedArray,
   senderWithLargestWordCount,
   lastSubstringInLexicographicalOrder,
+  binaryTreesWithFactors,
+  rankTransformMatrix,
+  robotWithString,
 ];
