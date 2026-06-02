@@ -42,13 +42,16 @@ Return the string that represents the **k<sup>th</sup> largest integer** in \`nu
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function kthLargestNumber(nums, k) {
-
+  nums.sort((a, b) => a.length !== b.length ? b.length - a.length : b.localeCompare(a));
+  return nums[k - 1];
 }`,
     typescript: `function kthLargestNumber(nums: string[], k: number): string {
-
+  nums.sort((a, b) => a.length !== b.length ? b.length - a.length : b.localeCompare(a));
+  return nums[k - 1]!;
 }`,
     python: `def kthLargestNumber(nums, k):
-    pass`,
+    nums.sort(key=lambda x: (len(x), x), reverse=True)
+    return nums[k - 1]`,
   },
   visibleTests: [
     { args: [['3', '6', '7', '10'], 4], expected: '3' },

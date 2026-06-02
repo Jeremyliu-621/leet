@@ -43,13 +43,69 @@ A substring is a contiguous **non-empty** sequence of characters within a string
   params: ['s'],
   starterCode: {
     javascript: `function maximumLength(s) {
-
+  const runs = {};
+  let i = 0;
+  while (i < s.length) {
+    let j = i;
+    while (j < s.length && s[j] === s[i]) j++;
+    if (!runs[s[i]]) runs[s[i]] = [];
+    runs[s[i]].push(j - i);
+    i = j;
+  }
+  let ans = -1;
+  for (const rr of Object.values(runs)) {
+    rr.sort((a, b) => b - a);
+    let lo = 1, hi = rr[0];
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      let count = 0;
+      for (const r of rr) { if (r < mid) break; count += r - mid + 1; if (count >= 3) break; }
+      if (count >= 3) { ans = Math.max(ans, mid); lo = mid + 1; } else hi = mid - 1;
+    }
+  }
+  return ans;
 }`,
     typescript: `function maximumLength(s: string): number {
-
+  const runs: Record<string, number[]> = {};
+  let i = 0;
+  while (i < s.length) {
+    let j = i;
+    while (j < s.length && s[j] === s[i]) j++;
+    if (!runs[s[i]!]) runs[s[i]!] = [];
+    runs[s[i]!]!.push(j - i);
+    i = j;
+  }
+  let ans = -1;
+  for (const rr of Object.values(runs)) {
+    rr.sort((a, b) => b - a);
+    let lo = 1, hi = rr[0]!;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      let count = 0;
+      for (const r of rr) { if (r < mid) break; count += r - mid + 1; if (count >= 3) break; }
+      if (count >= 3) { ans = Math.max(ans, mid); lo = mid + 1; } else hi = mid - 1;
+    }
+  }
+  return ans;
 }`,
     python: `def maximumLength(s):
-    pass`,
+    from collections import defaultdict
+    runs = defaultdict(list)
+    i = 0
+    while i < len(s):
+        j = i
+        while j < len(s) and s[j] == s[i]: j += 1
+        runs[s[i]].append(j - i); i = j
+    ans = -1
+    for rr in runs.values():
+        rr.sort(reverse=True)
+        lo, hi = 1, rr[0]
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            count = sum(r - mid + 1 for r in rr if r >= mid)
+            if count >= 3: ans = max(ans, mid); lo = mid + 1
+            else: hi = mid - 1
+    return ans`,
   },
   visibleTests: [
     { args: ['aaaa'], expected: 2 },

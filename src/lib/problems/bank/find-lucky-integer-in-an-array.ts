@@ -38,13 +38,23 @@ Return *the largest lucky integer in the array*. If there is no lucky integer, r
   params: ['arr'],
   starterCode: {
     javascript: `function findLucky(arr) {
-
+  const freq = {};
+  for (const n of arr) freq[n] = (freq[n] ?? 0) + 1;
+  let max = -1;
+  for (const [k, v] of Object.entries(freq)) if (+k === v) max = Math.max(max, +k);
+  return max;
 }`,
     typescript: `function findLucky(arr: number[]): number {
-
+  const freq: Record<number, number> = {};
+  for (const n of arr) freq[n] = (freq[n] ?? 0) + 1;
+  let max = -1;
+  for (const [k, v] of Object.entries(freq)) if (+k === v) max = Math.max(max, +k);
+  return max;
 }`,
     python: `def findLucky(arr):
-    pass`,
+    from collections import Counter
+    freq = Counter(arr)
+    return max((k for k, v in freq.items() if k == v), default=-1)`,
   },
   visibleTests: [
     { args: [[2, 2, 3, 4]], expected: 2 },

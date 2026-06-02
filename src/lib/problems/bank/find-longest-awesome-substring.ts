@@ -42,12 +42,47 @@ A **substring** is a contiguous sequence of characters within a string.`,
   params: ['s'],
   starterCode: {
     javascript: `function longestAwesome(s) {
-
+  const seen = new Array(1 << 10).fill(-2);
+  seen[0] = -1;
+  let mask = 0, ans = 0;
+  for (let i = 0; i < s.length; i++) {
+    mask ^= 1 << (s.charCodeAt(i) - 48);
+    if (seen[mask] !== -2) ans = Math.max(ans, i - seen[mask]);
+    else seen[mask] = i;
+    for (let d = 0; d < 10; d++) {
+      const t = mask ^ (1 << d);
+      if (seen[t] !== -2) ans = Math.max(ans, i - seen[t]);
+    }
+  }
+  return ans;
 }`,
-    typescript: "function longestAwesome(s: string): number {\n\n}",
-
+    typescript: `function longestAwesome(s: string): number {
+  const seen: number[] = new Array(1 << 10).fill(-2);
+  seen[0] = -1;
+  let mask = 0, ans = 0;
+  for (let i = 0; i < s.length; i++) {
+    mask ^= 1 << (s.charCodeAt(i) - 48);
+    if (seen[mask]! !== -2) ans = Math.max(ans, i - seen[mask]!);
+    else seen[mask] = i;
+    for (let d = 0; d < 10; d++) {
+      const t = mask ^ (1 << d);
+      if (seen[t]! !== -2) ans = Math.max(ans, i - seen[t]!);
+    }
+  }
+  return ans;
+}`,
     python: `def longestAwesome(s):
-    pass`,
+    seen = [-2] * (1 << 10)
+    seen[0] = -1
+    mask = ans = 0
+    for i, c in enumerate(s):
+        mask ^= 1 << (ord(c) - ord('0'))
+        if seen[mask] != -2: ans = max(ans, i - seen[mask])
+        else: seen[mask] = i
+        for d in range(10):
+            t = mask ^ (1 << d)
+            if seen[t] != -2: ans = max(ans, i - seen[t])
+    return ans`,
   },
   visibleTests: [
     { args: ['3242415'], expected: 5 },

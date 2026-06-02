@@ -46,13 +46,43 @@ Return the **maximum** possible number of marked elements.`,
   params: ['nums'],
   starterCode: {
     javascript: `function maxNumOfMarkedElements(nums) {
-
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  function canMark(k) {
+    for (let i = 0; i < k; i++) if (nums[i] * 2 > nums[n - k + i]) return false;
+    return true;
+  }
+  let lo = 0, hi = Math.floor(n / 2);
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canMark(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo * 2;
 }`,
     typescript: `function maxNumOfMarkedElements(nums: number[]): number {
-
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  function canMark(k: number): boolean {
+    for (let i = 0; i < k; i++) if (nums[i]! * 2 > nums[n - k + i]!) return false;
+    return true;
+  }
+  let lo = 0, hi = Math.floor(n / 2);
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canMark(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo * 2;
 }`,
     python: `def maxNumOfMarkedElements(nums):
-    pass`,
+    nums.sort()
+    n = len(nums)
+    def can(k): return all(nums[i] * 2 <= nums[n - k + i] for i in range(k))
+    lo, hi = 0, n // 2
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can(mid): lo = mid
+        else: hi = mid - 1
+    return lo * 2`,
   },
   visibleTests: [
     { args: [[9, 2, 5, 4]], expected: 4 },
