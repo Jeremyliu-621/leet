@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3063** problems; 9492 tests green. Batch 306 complete.
+**Current focus:** Bank at **2953** problems (92 duplicates removed); 9219 tests green. Code quality sweep in progress.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 307+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+**Next up:** Bank growth (batch 307+); starter backfill (batch 41au+, continuing from minimum-number-of-*); continue code quality fixes.
 
 ### feat(bank): batch 306 — city-discounts, cycle-distance, design-hash-set (2026-06-02)
 Three new problems: `minimum-cost-to-reach-city-with-discounts` (medium/graph — Dijkstra with state (city, discountsUsed); for each neighbor try with and without discount; O(n·k·log(n·k))), `distance-to-a-cycle-in-undirected-graph` (hard/graph — leaf-peel BFS to identify cycle nodes; multi-source BFS from all cycle nodes; O(n+E)), `design-hash-set` (easy/design — separate chaining with 769 buckets; bucket is array of keys hashing to same slot; O(1) avg). Bank at **3063**; 9492 tests.

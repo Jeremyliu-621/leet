@@ -171,3 +171,7 @@ immediately when the problem is accepted.
 ### 2026-05-26 — D_: Force-reset origin/main to canonical development branch
 
 Two unrelated git histories existed in this repo: a detached HEAD (80 commits, 1990+ problems, full-feature EditorPanel) and origin/main (50 commits, 25 problems, older EditorPanel). The detached HEAD is the canonical development line per PROGRESS.md; all prior autonomous loop work was on it. Force-pushed detached HEAD to origin/main to consolidate. The diverged origin/main history (50 commits) is superseded.
+
+### 2026-06-02 — D_: Remove 92 near-duplicate problem files from bank
+
+The bank had accumulated 89 groups of near-duplicate problem IDs that differed only by English articles/prepositions (a, the, an, of, to, in, for, from). All duplicates had identical `functionName` values confirming they were the same problem. Kept the shorter ID variant in each group; removed the longer variants (92 files total). Bank went from ~3047 to 2953 unique problems. The deduplication test in `problem-bank.test.ts` will now prevent this from recurring.
