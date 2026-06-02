@@ -38,13 +38,64 @@ Since the answer may be very large, return it **modulo 10^9 + 7**.`,
   params: ['nums'],
   starterCode: {
     javascript: `function sumOfFlooredPairs(nums) {
-
+  const MOD = 1_000_000_007n;
+  const MAX = Math.max(...nums);
+  const cnt = new Array(MAX + 1).fill(0);
+  for (const v of nums) cnt[v]++;
+  const prefix = new Array(MAX + 2).fill(0);
+  for (let i = 1; i <= MAX; i++) prefix[i] = prefix[i - 1] + cnt[i];
+  let ans = 0n;
+  for (let v = 1; v <= MAX; v++) {
+    if (!cnt[v]) continue;
+    const cv = BigInt(cnt[v]);
+    for (let m = 1; m * v <= MAX; m++) {
+      const lo = m * v, hi = Math.min((m + 1) * v - 1, MAX);
+      const inRange = prefix[hi] - prefix[lo - 1];
+      ans = (ans + cv * BigInt(m) * BigInt(inRange)) % MOD;
+    }
+  }
+  return Number(ans);
 }`,
     typescript: `function sumOfFlooredPairs(nums: number[]): number {
-
+  const MOD = 1_000_000_007n;
+  const MAX = Math.max(...nums);
+  const cnt = new Array<number>(MAX + 1).fill(0);
+  for (const v of nums) cnt[v]!++;
+  const prefix = new Array<number>(MAX + 2).fill(0);
+  for (let i = 1; i <= MAX; i++) prefix[i] = prefix[i - 1]! + cnt[i]!;
+  let ans = 0n;
+  for (let v = 1; v <= MAX; v++) {
+    if (!cnt[v]) continue;
+    const cv = BigInt(cnt[v]!);
+    for (let m = 1; m * v <= MAX; m++) {
+      const lo = m * v, hi = Math.min((m + 1) * v - 1, MAX);
+      const inRange = prefix[hi]! - prefix[lo - 1]!;
+      ans = (ans + cv * BigInt(m) * BigInt(inRange)) % MOD;
+    }
+  }
+  return Number(ans);
 }`,
     python: `def sumOfFlooredPairs(nums):
-    pass
+    MOD = 10**9 + 7
+    MAX = max(nums)
+    cnt = [0] * (MAX + 1)
+    for v in nums:
+        cnt[v] += 1
+    prefix = [0] * (MAX + 2)
+    for i in range(1, MAX + 1):
+        prefix[i] = prefix[i - 1] + cnt[i]
+    ans = 0
+    for v in range(1, MAX + 1):
+        if not cnt[v]:
+            continue
+        m = 1
+        while m * v <= MAX:
+            lo = m * v
+            hi = min((m + 1) * v - 1, MAX)
+            in_range = prefix[hi] - prefix[lo - 1]
+            ans = (ans + cnt[v] * m * in_range) % MOD
+            m += 1
+    return ans
 `,
   },
   visibleTests: [

@@ -42,14 +42,42 @@ Return the **sum of scores** of all strings.
   params: ['s'],
   starterCode: {
     javascript: `function sumScores(s) {
-  // Z-function: Z[i] = length of longest prefix of s matching s[i..].
+  const n = s.length;
+  const z = new Array(n).fill(0);
+  z[0] = n;
+  let l = 0, r = 0;
+  for (let i = 1; i < n; i++) {
+    if (i < r) z[i] = Math.min(r - i, z[i - l]);
+    while (i + z[i] < n && s[z[i]] === s[i + z[i]]) z[i]++;
+    if (i + z[i] > r) { l = i; r = i + z[i]; }
+  }
+  return z.reduce((a, b) => a + b, 0);
 }`,
     typescript: `function sumScores(s: string): number {
-  // Z-function: Z[i] = length of longest prefix of s matching s[i..].
+  const n = s.length;
+  const z = new Array<number>(n).fill(0);
+  z[0] = n;
+  let l = 0, r = 0;
+  for (let i = 1; i < n; i++) {
+    if (i < r) z[i] = Math.min(r - i, z[i - l]!);
+    while (i + z[i]! < n && s[z[i]!] === s[i + z[i]!]) z[i]!++;
+    if (i + z[i]! > r) { l = i; r = i + z[i]!; }
+  }
+  return z.reduce((a, b) => a + b, 0);
 }`,
     python: `def sumScores(s):
-    # Z-function: Z[i] = length of longest prefix of s matching s[i..].
-    pass
+    n = len(s)
+    z = [0] * n
+    z[0] = n
+    l = r = 0
+    for i in range(1, n):
+        if i < r:
+            z[i] = min(r - i, z[i - l])
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r:
+            l, r = i, i + z[i]
+    return sum(z)
 `,
   },
   visibleTests: [

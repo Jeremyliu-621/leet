@@ -39,12 +39,38 @@ The subarrays with sums divisible by 5 are: [4,5,0,-2,-3,1], [5], [5,0], [5,0,-2
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function subarraysDivByK(nums, k) {
-
+  const count = new Array(k).fill(0);
+  count[0] = 1;
+  let sum = 0, ans = 0;
+  for (const n of nums) {
+    sum = ((sum + n) % k + k) % k;
+    ans += count[sum];
+    count[sum]++;
+  }
+  return ans;
 }`,
-    typescript: "function subarraysDivByK(nums: number[], k: number): number {\n\n}",
-
+    typescript: `function subarraysDivByK(nums: number[], k: number): number {
+  const count = new Array<number>(k).fill(0);
+  count[0] = 1;
+  let sum = 0, ans = 0;
+  for (const n of nums) {
+    sum = ((sum + n) % k + k) % k;
+    ans += count[sum]!;
+    count[sum]!++;
+  }
+  return ans;
+}`,
     python: `def subarraysDivByK(nums, k):
-    pass
+    from collections import defaultdict
+    count = defaultdict(int)
+    count[0] = 1
+    prefix = 0
+    ans = 0
+    for n in nums:
+        prefix = (prefix + n) % k
+        ans += count[prefix]
+        count[prefix] += 1
+    return ans
 `,
   },
   visibleTests: [

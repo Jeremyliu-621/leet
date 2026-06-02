@@ -32,12 +32,34 @@ Do not use the built-in exponent function or operator.`,
   params: ['x'],
   starterCode: {
     javascript: `function mySqrt(x) {
-
+  if (x < 2) return x;
+  let lo = 1, hi = 46341; // floor(sqrt(2^31-1)) < 46341
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (mid * mid <= x) lo = mid;
+    else hi = mid - 1;
+  }
+  return lo;
 }`,
-    typescript: "function mySqrt(x: number): number {\n\n}",
-
+    typescript: `function mySqrt(x: number): number {
+  if (x < 2) return x;
+  let lo = 1, hi = 46341;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (mid * mid <= x) lo = mid;
+    else hi = mid - 1;
+  }
+  return lo;
+}`,
     python: `def mySqrt(x):
-    pass
+    lo, hi = 0, x
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if mid * mid <= x:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
 `,
   },
   visibleTests: [

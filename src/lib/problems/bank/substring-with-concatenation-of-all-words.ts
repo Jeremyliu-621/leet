@@ -42,12 +42,86 @@ Return an array of all starting indices in \`s\` where a concatenated string beg
   params: ['s', 'words'],
   starterCode: {
     javascript: `function findSubstring(s, words) {
-
+  if (!s || !words.length) return [];
+  const wLen = words[0].length, wCount = words.length;
+  const wordFreq = new Map();
+  for (const w of words) wordFreq.set(w, (wordFreq.get(w) || 0) + 1);
+  const result = [];
+  for (let offset = 0; offset < wLen; offset++) {
+    const cur = new Map();
+    let left = offset, count = 0;
+    for (let right = offset; right + wLen <= s.length; right += wLen) {
+      const w = s.slice(right, right + wLen);
+      if (wordFreq.has(w)) {
+        cur.set(w, (cur.get(w) || 0) + 1);
+        count++;
+        while (cur.get(w) > wordFreq.get(w)) {
+          const lw = s.slice(left, left + wLen);
+          cur.set(lw, cur.get(lw) - 1);
+          count--; left += wLen;
+        }
+        if (count === wCount) result.push(left);
+      } else {
+        cur.clear(); count = 0; left = right + wLen;
+      }
+    }
+  }
+  return result.sort((a, b) => a - b);
 }`,
-    typescript: "function findSubstring(s: string, words: string[]): number[] {\n\n}",
-
+    typescript: `function findSubstring(s: string, words: string[]): number[] {
+  if (!s || !words.length) return [];
+  const wLen = words[0]!.length, wCount = words.length;
+  const wordFreq = new Map<string, number>();
+  for (const w of words) wordFreq.set(w, (wordFreq.get(w) ?? 0) + 1);
+  const result: number[] = [];
+  for (let offset = 0; offset < wLen; offset++) {
+    const cur = new Map<string, number>();
+    let left = offset, count = 0;
+    for (let right = offset; right + wLen <= s.length; right += wLen) {
+      const w = s.slice(right, right + wLen);
+      if (wordFreq.has(w)) {
+        cur.set(w, (cur.get(w) ?? 0) + 1);
+        count++;
+        while (cur.get(w)! > wordFreq.get(w)!) {
+          const lw = s.slice(left, left + wLen);
+          cur.set(lw, cur.get(lw)! - 1);
+          count--; left += wLen;
+        }
+        if (count === wCount) result.push(left);
+      } else {
+        cur.clear(); count = 0; left = right + wLen;
+      }
+    }
+  }
+  return result.sort((a, b) => a - b);
+}`,
     python: `def findSubstring(s, words):
-    pass
+    from collections import Counter
+    if not s or not words:
+        return []
+    w_len, w_count = len(words[0]), len(words)
+    word_freq = Counter(words)
+    result = []
+    for offset in range(w_len):
+        cur = Counter()
+        left, count = offset, 0
+        for right in range(offset, len(s) - w_len + 1, w_len):
+            w = s[right:right + w_len]
+            if w in word_freq:
+                cur[w] += 1
+                count += 1
+                while cur[w] > word_freq[w]:
+                    lw = s[left:left + w_len]
+                    cur[lw] -= 1
+                    count -= 1
+                    left += w_len
+                if count == w_count:
+                    result.append(left)
+            else:
+                cur.clear()
+                count = 0
+                left = right + w_len
+    return sorted(result)
 `,
   },
   visibleTests: [

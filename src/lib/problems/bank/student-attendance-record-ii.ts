@@ -47,12 +47,64 @@ Since the answer may be very large, return it **modulo \`10^9 + 7\`**.
   params: ['n'],
   starterCode: {
     javascript: `function checkRecord(n) {
-
+  const MOD = 1_000_000_007;
+  // dp[a][l] = ways with a absences (0|1) and l trailing Ls (0|1|2)
+  let dp = [[1, 0, 0], [0, 0, 0]];
+  for (let i = 0; i < n; i++) {
+    const nd = [[0, 0, 0], [0, 0, 0]];
+    for (let a = 0; a <= 1; a++) {
+      for (let l = 0; l <= 2; l++) {
+        const v = dp[a][l];
+        if (!v) continue;
+        nd[a][0] = (nd[a][0] + v) % MOD;        // append P
+        if (l < 2) nd[a][l + 1] = (nd[a][l + 1] + v) % MOD; // append L
+        if (a < 1) nd[1][0] = (nd[1][0] + v) % MOD;          // append A
+      }
+    }
+    dp = nd;
+  }
+  let ans = 0;
+  for (const row of dp) for (const v of row) ans = (ans + v) % MOD;
+  return ans;
 }`,
-    typescript: "function checkRecord(n: number): number {\n\n}",
-
+    typescript: `function checkRecord(n: number): number {
+  const MOD = 1_000_000_007;
+  let dp: number[][] = [[1, 0, 0], [0, 0, 0]];
+  for (let i = 0; i < n; i++) {
+    const nd: number[][] = [[0, 0, 0], [0, 0, 0]];
+    for (let a = 0; a <= 1; a++) {
+      for (let l = 0; l <= 2; l++) {
+        const v = dp[a]![l]!;
+        if (!v) continue;
+        nd[a]![0] = (nd[a]![0]! + v) % MOD;
+        if (l < 2) nd[a]![l + 1] = (nd[a]![l + 1]! + v) % MOD;
+        if (a < 1) nd[1]![0] = (nd[1]![0]! + v) % MOD;
+      }
+    }
+    dp = nd;
+  }
+  let ans = 0;
+  for (const row of dp) for (const v of row) ans = (ans + v) % MOD;
+  return ans;
+}`,
     python: `def checkRecord(n):
-    pass
+    MOD = 10**9 + 7
+    # dp[a][l]: a absences (0|1), l trailing Ls (0|1|2)
+    dp = [[1, 0, 0], [0, 0, 0]]
+    for _ in range(n):
+        nd = [[0, 0, 0], [0, 0, 0]]
+        for a in range(2):
+            for l in range(3):
+                v = dp[a][l]
+                if not v:
+                    continue
+                nd[a][0] = (nd[a][0] + v) % MOD       # append P
+                if l < 2:
+                    nd[a][l + 1] = (nd[a][l + 1] + v) % MOD  # append L
+                if a < 1:
+                    nd[1][0] = (nd[1][0] + v) % MOD    # append A
+        dp = nd
+    return sum(dp[a][l] for a in range(2) for l in range(3)) % MOD
 `,
   },
   visibleTests: [

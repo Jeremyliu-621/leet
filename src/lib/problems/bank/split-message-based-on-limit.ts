@@ -48,12 +48,93 @@ Output: \`["thi<1/14>", "s i<2/14>", ..., "ge<14/14>"]\``,
   params: ['message', 'limit'],
   starterCode: {
     javascript: `function splitMessage(message, limit) {
-
+  const m = message.length;
+  const computeTotal = (n) => {
+    const dn = String(n).length;
+    let total = 0, lo = 1;
+    for (let d = 1; lo <= n; d++) {
+      const hi = Math.min(n, 10 ** d - 1);
+      const perPart = limit - d - dn - 3;
+      if (perPart > 0) total += perPart * (hi - lo + 1);
+      lo = hi + 1;
+    }
+    return total;
+  };
+  for (let n = 1; n <= m + 1; n++) {
+    if (computeTotal(n) >= m) {
+      const ns = String(n);
+      const result = [];
+      let pos = 0;
+      for (let k = 1; k <= n; k++) {
+        const suffix = '<' + k + '/' + ns + '>';
+        const chars = limit - suffix.length;
+        if (chars <= 0) return [];
+        result.push(message.slice(pos, pos + chars) + suffix);
+        pos += chars;
+      }
+      return result;
+    }
+  }
+  return [];
 }`,
-    typescript: "function splitMessage(message: string, limit: number): string[] {\n\n}",
-
+    typescript: `function splitMessage(message: string, limit: number): string[] {
+  const m = message.length;
+  const computeTotal = (n: number): number => {
+    const dn = String(n).length;
+    let total = 0, lo = 1;
+    for (let d = 1; lo <= n; d++) {
+      const hi = Math.min(n, 10 ** d - 1);
+      const perPart = limit - d - dn - 3;
+      if (perPart > 0) total += perPart * (hi - lo + 1);
+      lo = hi + 1;
+    }
+    return total;
+  };
+  for (let n = 1; n <= m + 1; n++) {
+    if (computeTotal(n) >= m) {
+      const ns = String(n);
+      const result: string[] = [];
+      let pos = 0;
+      for (let k = 1; k <= n; k++) {
+        const suffix = '<' + k + '/' + ns + '>';
+        const chars = limit - suffix.length;
+        if (chars <= 0) return [];
+        result.push(message.slice(pos, pos + chars) + suffix);
+        pos += chars;
+      }
+      return result;
+    }
+  }
+  return [];
+}`,
     python: `def splitMessage(message, limit):
-    pass
+    m = len(message)
+    def compute_total(n):
+        dn = len(str(n))
+        total, lo = 0, 1
+        d = 1
+        while lo <= n:
+            hi = min(n, 10 ** d - 1)
+            per_part = limit - d - dn - 3
+            if per_part > 0:
+                total += per_part * (hi - lo + 1)
+            lo = hi + 1
+            d += 1
+        return total
+    for n in range(1, m + 2):
+        if compute_total(n) >= m:
+            ns = str(n)
+            result = []
+            pos = 0
+            for k in range(1, n + 1):
+                suffix = f'<{k}/{ns}>'
+                chars = limit - len(suffix)
+                if chars <= 0:
+                    return []
+                result.append(message[pos:pos + chars] + suffix)
+                pos += chars
+            return result
+    return []
 `,
   },
   visibleTests: [

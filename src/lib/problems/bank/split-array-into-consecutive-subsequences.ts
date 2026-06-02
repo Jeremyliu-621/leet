@@ -42,14 +42,59 @@ For each value, prefer appending to an existing subsequence before starting a ne
   params: ['nums'],
   starterCode: {
     javascript: `function isPossible(nums) {
-  // return true if nums can be split into valid consecutive subsequences
-
+  const freq = new Map(), end = new Map();
+  for (const v of nums) freq.set(v, (freq.get(v) ?? 0) + 1);
+  for (const v of nums) {
+    if (!freq.get(v)) continue;
+    if (end.get(v)) {
+      end.set(v, end.get(v) - 1);
+      end.set(v + 1, (end.get(v + 1) ?? 0) + 1);
+    } else if (freq.get(v + 1) && freq.get(v + 2)) {
+      freq.set(v + 1, freq.get(v + 1) - 1);
+      freq.set(v + 2, freq.get(v + 2) - 1);
+      end.set(v + 3, (end.get(v + 3) ?? 0) + 1);
+    } else return false;
+    freq.set(v, freq.get(v) - 1);
+  }
+  return true;
 }`,
-    typescript: "function isPossible(nums: number[]): boolean {\n  // return true if nums can be split into valid consecutive subsequences\n\n}",
-
+    typescript: `function isPossible(nums: number[]): boolean {
+  const freq = new Map<number, number>(), end = new Map<number, number>();
+  for (const v of nums) freq.set(v, (freq.get(v) ?? 0) + 1);
+  for (const v of nums) {
+    if (!freq.get(v)) continue;
+    if (end.get(v)) {
+      end.set(v, end.get(v)! - 1);
+      end.set(v + 1, (end.get(v + 1) ?? 0) + 1);
+    } else if (freq.get(v + 1) && freq.get(v + 2)) {
+      freq.set(v + 1, freq.get(v + 1)! - 1);
+      freq.set(v + 2, freq.get(v + 2)! - 1);
+      end.set(v + 3, (end.get(v + 3) ?? 0) + 1);
+    } else return false;
+    freq.set(v, freq.get(v)! - 1);
+  }
+  return true;
+}`,
     python: `def isPossible(nums: list) -> bool:
-    # return True if nums can be split into valid consecutive subsequences
-    pass
+    from collections import defaultdict
+    freq = defaultdict(int)
+    end = defaultdict(int)
+    for v in nums:
+        freq[v] += 1
+    for v in nums:
+        if not freq[v]:
+            continue
+        if end[v]:
+            end[v] -= 1
+            end[v + 1] += 1
+        elif freq[v + 1] and freq[v + 2]:
+            freq[v + 1] -= 1
+            freq[v + 2] -= 1
+            end[v + 3] += 1
+        else:
+            return False
+        freq[v] -= 1
+    return True
 `,
   },
   visibleTests: [

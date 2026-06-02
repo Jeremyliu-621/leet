@@ -37,14 +37,38 @@ Given a string \`s\`, return *the sum of **beauty** of all of its substrings.*
   params: ['s'],
   starterCode: {
     javascript: `function beautySum(s) {
-  // return sum of beauties of all substrings
-
+  let ans = 0;
+  for (let i = 0; i < s.length; i++) {
+    const freq = new Array(26).fill(0);
+    for (let j = i; j < s.length; j++) {
+      freq[s.charCodeAt(j) - 97]++;
+      const vals = freq.filter(v => v > 0);
+      ans += Math.max(...vals) - Math.min(...vals);
+    }
+  }
+  return ans;
 }`,
-    typescript: "function beautySum(s: string): number {\n  // return sum of beauties of all substrings\n\n}",
-
+    typescript: `function beautySum(s: string): number {
+  let ans = 0;
+  for (let i = 0; i < s.length; i++) {
+    const freq = new Array<number>(26).fill(0);
+    for (let j = i; j < s.length; j++) {
+      freq[s.charCodeAt(j) - 97]!++;
+      const vals = freq.filter(v => v > 0);
+      ans += Math.max(...vals) - Math.min(...vals);
+    }
+  }
+  return ans;
+}`,
     python: `def beautySum(s: str) -> int:
-    # return sum of beauties of all substrings
-    pass
+    ans = 0
+    for i in range(len(s)):
+        freq = [0] * 26
+        for j in range(i, len(s)):
+            freq[ord(s[j]) - 97] += 1
+            vals = [v for v in freq if v > 0]
+            ans += max(vals) - min(vals)
+    return ans
 `,
   },
   visibleTests: [

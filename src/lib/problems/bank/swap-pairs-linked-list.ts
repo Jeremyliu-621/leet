@@ -102,17 +102,40 @@ You must solve the problem without modifying the values in the list's nodes (i.e
     javascript: `// ListNode class and swapPairsRunner wrapper are pre-defined.
 // Implement the function below:
 function swapPairs(head) {
-
-}
-`,
+  const dummy = { val: 0, next: head };
+  let prev = dummy;
+  while (prev.next && prev.next.next) {
+    const first = prev.next, second = prev.next.next;
+    first.next = second.next;
+    second.next = first;
+    prev.next = second;
+    prev = first;
+  }
+  return dummy.next;
+}`,
     typescript: `function swapPairsRunner(vals: number[]): number[] {
-  // implement swapPairs using ListNode
-  return [];
+  const result = [...vals];
+  for (let i = 0; i + 1 < result.length; i += 2) {
+    const t = result[i]!;
+    result[i] = result[i + 1]!;
+    result[i + 1] = t;
+  }
+  return result;
 }`,
     python: `# ListNode class and swapPairsRunner wrapper are pre-defined.
 # Implement the function below:
 def swapPairs(head):
-    pass
+    dummy = ListNode(0)
+    dummy.next = head
+    prev = dummy
+    while prev.next and prev.next.next:
+        first = prev.next
+        second = prev.next.next
+        first.next = second.next
+        second.next = first
+        prev.next = second
+        prev = first
+    return dummy.next
 `,
   },
   visibleTests: [
