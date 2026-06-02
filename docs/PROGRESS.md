@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3005** problems; 9366 tests green. Batch 294 complete (3 new problems).
+**Current focus:** Bank at **3011** problems; 9384 tests green. Batch 295 complete (3 new problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 295+); starter backfill (batch 41ab+); UX polish.
+**Next up:** Bank growth (batch 296+); starter backfill (batch 41ab+); UX polish.
+
+### feat(bank): batch 295 — rearrange-string-k-distance, paths-matrix-divisible-k, punishment-number (2026-06-02)
+Three new problems: `rearrange-string-k-distance-apart` (hard/strings+heap — O(26n) greedy: at each position, pick most-frequent char with pos-cooldown[c]≥k; impossible→""; k=0→return s), `paths-in-matrix-whose-sum-is-divisible-by-k` (hard/dp — 3D DP dp[i][j][r]=paths to (i,j) with sum%k=r; transition dp[i][j][r]=dp[i-1][j][(r-v+k)%k]+dp[i][j-1][...]; answer dp[m-1][n-1][0]), `find-punishment-number-of-an-integer` (medium/math+backtracking — for each i in [1,n], backtrack over partitions of str(i²) checking sum=i; valid i contribute i² to punishment number; O(n·7^k) total). Bank at **3011**; 9384 tests.
 
 ### feat(bank): batch 294 — binary-trees-with-factors, rank-transform-matrix, robot-smallest-string (2026-06-02)
 Three new problems: `binary-trees-with-factors` (medium/dp+hash-map — sort arr; dp[v]=1+Σdp[a]·dp[v/a] for divisors a in dp; BigInt MOD; O(n²)), `rank-transform-of-a-matrix` (hard/arrays+union-find — sort all cells by value; Union-Find groups equal-value cells sharing row/col; for each group rank=max(rowRank,colRank)+1; update rowRank/colRank; O(m·n·log(m·n))), `using-a-robot-to-print-the-lexicographically-smallest-string` (medium/strings+stack — precompute suffMin[i]=min of s[i..n-1]; greedily pop stack while top≤suffMin[i] before pushing s[i]; drain stack at end; O(n)). Bank at **3005**; 9366 tests.
