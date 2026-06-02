@@ -37,9 +37,50 @@ Points that lie on the **edges** of a rectangle are counted.`,
   functionName: 'countRectangles',
   params: ['rectangles', 'points'],
   starterCode: {
-    javascript: 'function countRectangles(rectangles, points) {\n  \n}\n',
-    typescript: 'function countRectangles(rectangles: number[][], points: number[][]): number[] {\n  \n}',
-    python: 'def countRectangles(rectangles, points):\n    pass\n',
+    javascript: `function countRectangles(rectangles, points) {
+  const buckets = Array.from({length: 101}, () => []);
+  for (const [l, h] of rectangles) buckets[h].push(l);
+  for (const b of buckets) b.sort((a, c) => a - c);
+  return points.map(([x, y]) => {
+    let count = 0;
+    for (let h = y; h <= 100; h++) {
+      const b = buckets[h];
+      let lo = 0, hi = b.length;
+      while (lo < hi) { const m = (lo + hi) >> 1; if (b[m] < x) lo = m + 1; else hi = m; }
+      count += b.length - lo;
+    }
+    return count;
+  });
+}`,
+    typescript: `function countRectangles(rectangles: number[][], points: number[][]): number[] {
+  const buckets: number[][] = Array.from({length: 101}, () => []);
+  for (const [l, h] of rectangles) buckets[h!]!.push(l!);
+  for (const b of buckets) b.sort((a, c) => a - c);
+  return points.map(([x, y]) => {
+    let count = 0;
+    for (let h = y!; h <= 100; h++) {
+      const b = buckets[h]!;
+      let lo = 0, hi = b.length;
+      while (lo < hi) { const m = (lo + hi) >> 1; if (b[m]! < x!) lo = m + 1; else hi = m; }
+      count += b.length - lo;
+    }
+    return count;
+  });
+}`,
+    python: `def countRectangles(rectangles, points):
+    from bisect import bisect_left
+    buckets = [[] for _ in range(101)]
+    for l, h in rectangles:
+        buckets[h].append(l)
+    for b in buckets:
+        b.sort()
+    result = []
+    for x, y in points:
+        count = 0
+        for h in range(y, 101):
+            count += len(buckets[h]) - bisect_left(buckets[h], x)
+        result.append(count)
+    return result`,
   },
   visibleTests: [
     { args: [[[1, 2], [2, 3], [2, 5]], [[2, 1], [1, 4]]], expected: [2, 1] },

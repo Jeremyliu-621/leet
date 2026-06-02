@@ -38,13 +38,33 @@ Return the **total number of bad pairs** in \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countBadPairs(nums) {
-
+  const n = nums.length;
+  const freq = new Map();
+  for (let i = 0; i < n; i++) {
+    const key = nums[i] - i;
+    freq.set(key, (freq.get(key) ?? 0) + 1);
+  }
+  let good = 0;
+  for (const cnt of freq.values()) good += cnt * (cnt - 1) / 2;
+  return n * (n - 1) / 2 - good;
 }`,
     typescript: `function countBadPairs(nums: number[]): number {
-
+  const n = nums.length;
+  const freq = new Map<number, number>();
+  for (let i = 0; i < n; i++) {
+    const key = nums[i]! - i;
+    freq.set(key, (freq.get(key) ?? 0) + 1);
+  }
+  let good = 0;
+  for (const cnt of freq.values()) good += cnt * (cnt - 1) / 2;
+  return n * (n - 1) / 2 - good;
 }`,
     python: `def countBadPairs(nums: list[int]) -> int:
-    pass`,
+    from collections import Counter
+    n = len(nums)
+    freq = Counter(nums[i] - i for i in range(n))
+    good = sum(cnt * (cnt - 1) // 2 for cnt in freq.values())
+    return n * (n - 1) // 2 - good`,
   },
   visibleTests: [
     { args: [[4, 1, 3, 3]], expected: 5 },

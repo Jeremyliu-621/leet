@@ -41,13 +41,43 @@ A pair \`(i, j)\` is **fair** if:
   params: ['nums', 'lower', 'upper'],
   starterCode: {
     javascript: `function countFairPairs(nums, lower, upper) {
-  // Return the count of pairs (i, j) where i < j and lower <= nums[i]+nums[j] <= upper.
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  let count = 0;
+  for (let i = 0; i < n - 1; i++) {
+    let lo = i + 1, hi = n;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (nums[m] < lower - nums[i]) lo = m + 1; else hi = m; }
+    const left = lo;
+    lo = i + 1; hi = n;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (nums[m] <= upper - nums[i]) lo = m + 1; else hi = m; }
+    count += lo - left;
+  }
+  return count;
 }`,
-    typescript: "function countFairPairs(nums: number[], lower: number, upper: number): number {\n  // Return the count of pairs (i, j) where i < j and lower <= nums[i]+nums[j] <= upper.\n}",
-
+    typescript: `function countFairPairs(nums: number[], lower: number, upper: number): number {
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  let count = 0;
+  for (let i = 0; i < n - 1; i++) {
+    let lo = i + 1, hi = n;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (nums[m]! < lower - nums[i]!) lo = m + 1; else hi = m; }
+    const left = lo;
+    lo = i + 1; hi = n;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (nums[m]! <= upper - nums[i]!) lo = m + 1; else hi = m; }
+    count += lo - left;
+  }
+  return count;
+}`,
     python: `def countFairPairs(nums: list[int], lower: int, upper: int) -> int:
-    # Return the count of pairs (i, j) where i < j and lower <= nums[i]+nums[j] <= upper.
-    pass`,
+    from bisect import bisect_left, bisect_right
+    nums.sort()
+    n = len(nums)
+    count = 0
+    for i in range(n - 1):
+        lo = bisect_left(nums, lower - nums[i], i + 1)
+        hi = bisect_right(nums, upper - nums[i], i + 1)
+        count += hi - lo
+    return count`,
   },
   visibleTests: [
     { args: [[0, 1, 7, 4, 4, 5], 3, 6], expected: 6 },

@@ -42,13 +42,48 @@ Given a string \`pressedKeys\` representing Alice's key presses, return the **to
   params: ['pressedKeys'],
   starterCode: {
     javascript: `function countTexts(pressedKeys) {
-
+  const MOD = 1_000_000_007;
+  const n = pressedKeys.length;
+  const dp = new Array(n + 1).fill(0);
+  dp[0] = 1;
+  for (let i = 1; i <= n; i++) {
+    const c = pressedKeys[i - 1];
+    const maxK = (c === '7' || c === '9') ? 4 : 3;
+    for (let k = 1; k <= Math.min(maxK, i); k++) {
+      if (pressedKeys[i - k] !== c) break;
+      dp[i] = (dp[i] + dp[i - k]) % MOD;
+    }
+  }
+  return dp[n];
 }`,
     typescript: `function countTexts(pressedKeys: string): number {
-
+  const MOD = 1_000_000_007;
+  const n = pressedKeys.length;
+  const dp = new Array(n + 1).fill(0) as number[];
+  dp[0] = 1;
+  for (let i = 1; i <= n; i++) {
+    const c = pressedKeys[i - 1];
+    const maxK = (c === '7' || c === '9') ? 4 : 3;
+    for (let k = 1; k <= Math.min(maxK, i); k++) {
+      if (pressedKeys[i - k] !== c) break;
+      dp[i] = (dp[i]! + dp[i - k]!) % MOD;
+    }
+  }
+  return dp[n]!;
 }`,
     python: `def countTexts(pressedKeys):
-    pass`,
+    MOD = 10**9 + 7
+    n = len(pressedKeys)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, n + 1):
+        c = pressedKeys[i - 1]
+        max_k = 4 if c in '79' else 3
+        for k in range(1, min(max_k, i) + 1):
+            if pressedKeys[i - k] != c:
+                break
+            dp[i] = (dp[i] + dp[i - k]) % MOD
+    return dp[n]`,
   },
   visibleTests: [
     { args: ['22233'], expected: 8 },

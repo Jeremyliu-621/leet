@@ -38,12 +38,33 @@ A string is **homogenous** if all characters in it are the same. A **substring**
   params: ['s'],
   starterCode: {
     javascript: `function countHomogenous(s) {
-
+  const MOD = 1_000_000_007;
+  let ans = 0, run = 1;
+  for (let i = 1; i <= s.length; i++) {
+    if (i < s.length && s[i] === s[i - 1]) { run++; }
+    else { ans = (ans + run * (run + 1) / 2) % MOD; run = 1; }
+  }
+  return ans;
 }`,
-    typescript: "function countHomogenous(s: string): number {\n\n}",
-
+    typescript: `function countHomogenous(s: string): number {
+  const MOD = 1_000_000_007;
+  let ans = 0, run = 1;
+  for (let i = 1; i <= s.length; i++) {
+    if (i < s.length && s[i] === s[i - 1]) { run++; }
+    else { ans = (ans + run * (run + 1) / 2) % MOD; run = 1; }
+  }
+  return ans;
+}`,
     python: `def countHomogenous(s):
-    pass`,
+    MOD = 10**9 + 7
+    ans, run = 0, 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            run += 1
+        else:
+            ans = (ans + run * (run + 1) // 2) % MOD
+            run = 1
+    return ans`,
   },
   visibleTests: [
     { args: ['abbcccaa'], expected: 13 },
