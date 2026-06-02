@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 286
+import { problem as constructMinBitwiseII } from './construct-the-minimum-bitwise-array-ii';
+import { problem as findValidPairAdjDigits } from './find-valid-pair-of-adjacent-digits-in-string';
+import { problem as maxTotalRewardII } from './maximize-total-reward-using-operations-ii';
+import { problem as divideSubarrayMinCostII } from './divide-an-array-into-subarrays-with-minimum-cost-ii';
 // batch 285
 import { problem as minOpsAllEqualToOne } from './minimum-number-of-operations-to-make-all-array-elements-equal-to-one';
 import { problem as queryKthSmallestTrimmed } from './query-kth-smallest-trimmed-number';
@@ -6569,6 +6574,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 286
+  constructMinBitwiseII,
+  findValidPairAdjDigits,
+  maxTotalRewardII,
+  divideSubarrayMinCostII,
   // batch 285
   minOpsAllEqualToOne,
   queryKthSmallestTrimmed,
