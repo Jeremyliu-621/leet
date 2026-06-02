@@ -46,10 +46,32 @@ function countKDifference(nums, k) {
   functionName: 'countKDifference',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function countKDifference(nums, k) {\n  \n}\n',
-    typescript: "function countKDifference(nums: number[], k: number): number {\n  \n}",
-
-    python: 'def countKDifference(nums, k):\n    pass\n',
+    javascript: `function countKDifference(nums, k) {
+  const freq = new Map();
+  let count = 0;
+  for (const n of nums) {
+    count += (freq.get(n - k) || 0) + (freq.get(n + k) || 0);
+    freq.set(n, (freq.get(n) || 0) + 1);
+  }
+  return count;
+}`,
+    typescript: `function countKDifference(nums: number[], k: number): number {
+  const freq = new Map<number, number>();
+  let count = 0;
+  for (const n of nums) {
+    count += (freq.get(n - k) ?? 0) + (freq.get(n + k) ?? 0);
+    freq.set(n, (freq.get(n) ?? 0) + 1);
+  }
+  return count;
+}`,
+    python: `def countKDifference(nums, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    count = 0
+    for n in nums:
+        count += freq[n - k] + freq[n + k]
+        freq[n] += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 1], 1], expected: 4 },

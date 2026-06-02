@@ -42,9 +42,77 @@ Return an array \`answers\` such that \`answers[j]\` is the answer to the \`j\`t
   functionName: 'countPairs',
   params: ['n', 'edges', 'queries'],
   starterCode: {
-    javascript: 'function countPairs(n, edges, queries) {\n  \n}\n',
-    typescript: 'function countPairs(n: number, edges: number[][], queries: number[]): number[] {\n  \n}',
-    python: 'def countPairs(n, edges, queries):\n    pass\n',
+    javascript: `function countPairs(n, edges, queries) {
+  const deg = new Array(n + 1).fill(0);
+  const edgeCnt = new Map();
+  for (const [u, v] of edges) {
+    deg[u]++; deg[v]++;
+    const key = Math.min(u,v) + ',' + Math.max(u,v);
+    edgeCnt.set(key, (edgeCnt.get(key) || 0) + 1);
+  }
+  const sortedDeg = deg.slice(1).sort((a, b) => a - b);
+  return queries.map(q => {
+    let count = 0, lo = 0, hi = n - 1;
+    while (lo < hi) {
+      if (sortedDeg[lo] + sortedDeg[hi] > q) { count += hi - lo; hi--; }
+      else lo++;
+    }
+    for (const [key, c] of edgeCnt) {
+      const [a, b] = key.split(',').map(Number);
+      const d = deg[a] + deg[b];
+      if (d > q && d - c <= q) count--;
+    }
+    return count;
+  });
+}`,
+    typescript: `function countPairs(n: number, edges: number[][], queries: number[]): number[] {
+  const deg = new Array(n + 1).fill(0);
+  const edgeCnt = new Map<string, number>();
+  for (const [u, v] of edges) {
+    deg[u!]!++; deg[v!]!++;
+    const key = Math.min(u!, v!) + ',' + Math.max(u!, v!);
+    edgeCnt.set(key, (edgeCnt.get(key) ?? 0) + 1);
+  }
+  const sortedDeg: number[] = deg.slice(1).sort((a, b) => a - b);
+  return queries.map(q => {
+    let count = 0, lo = 0, hi = n - 1;
+    while (lo < hi) {
+      if (sortedDeg[lo]! + sortedDeg[hi]! > q) { count += hi - lo; hi--; }
+      else lo++;
+    }
+    for (const [key, c] of edgeCnt) {
+      const [a, b] = key.split(',').map(Number) as [number, number];
+      const d = deg[a]! + deg[b]!;
+      if (d > q && d - c <= q) count--;
+    }
+    return count;
+  });
+}`,
+    python: `def countPairs(n, edges, queries):
+    from collections import defaultdict
+    deg = [0] * (n + 1)
+    edge_cnt = defaultdict(int)
+    for u, v in edges:
+        deg[u] += 1
+        deg[v] += 1
+        key = (min(u, v), max(u, v))
+        edge_cnt[key] += 1
+    sorted_deg = sorted(deg[1:])
+    result = []
+    for q in queries:
+        count, lo, hi = 0, 0, n - 1
+        while lo < hi:
+            if sorted_deg[lo] + sorted_deg[hi] > q:
+                count += hi - lo
+                hi -= 1
+            else:
+                lo += 1
+        for (a, b), c in edge_cnt.items():
+            d = deg[a] + deg[b]
+            if d > q and d - c <= q:
+                count -= 1
+        result.append(count)
+    return result`,
   },
   visibleTests: [
     { args: [4, [[1, 2], [2, 4], [1, 3], [2, 3]], [2, 3]], expected: [6, 2] },

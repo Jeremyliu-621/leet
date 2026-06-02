@@ -40,10 +40,91 @@ Use a modified merge sort on the prefix array. During merge, for each right-half
   functionName: 'countRangeSum',
   params: ['nums', 'lower', 'upper'],
   starterCode: {
-    javascript: 'function countRangeSum(nums, lower, upper) {\n\n}\n',
-    typescript: "function countRangeSum(nums: number[], lower: number, upper: number): number {\n\n}",
-
-    python: 'def countRangeSum(nums: list, lower: int, upper: int) -> int:\n    pass\n',
+    javascript: `function countRangeSum(nums, lower, upper) {
+  const n = nums.length;
+  const prefix = new Array(n + 1).fill(0n);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + BigInt(nums[i]);
+  const L = BigInt(lower), U = BigInt(upper);
+  let count = 0;
+  function mergeSort(lo, hi) {
+    if (hi - lo <= 1) return;
+    const mid = (lo + hi) >> 1;
+    mergeSort(lo, mid);
+    mergeSort(mid, hi);
+    let l = mid, r = mid;
+    for (let i = lo; i < mid; i++) {
+      while (l < hi && prefix[l] - prefix[i] < L) l++;
+      while (r < hi && prefix[r] - prefix[i] <= U) r++;
+      count += r - l;
+    }
+    const temp = prefix.slice(lo, hi);
+    let p = 0, q = mid - lo, k = lo;
+    while (p < mid - lo && q < hi - lo) prefix[k++] = temp[p] <= temp[q] ? temp[p++] : temp[q++];
+    while (p < mid - lo) prefix[k++] = temp[p++];
+    while (q < hi - lo) prefix[k++] = temp[q++];
+  }
+  mergeSort(0, n + 1);
+  return count;
+}`,
+    typescript: `function countRangeSum(nums: number[], lower: number, upper: number): number {
+  const n = nums.length;
+  const prefix: bigint[] = new Array(n + 1).fill(0n);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + BigInt(nums[i]!);
+  const L = BigInt(lower), U = BigInt(upper);
+  let count = 0;
+  function mergeSort(lo: number, hi: number): void {
+    if (hi - lo <= 1) return;
+    const mid = (lo + hi) >> 1;
+    mergeSort(lo, mid);
+    mergeSort(mid, hi);
+    let l = mid, r = mid;
+    for (let i = lo; i < mid; i++) {
+      while (l < hi && prefix[l]! - prefix[i]! < L) l++;
+      while (r < hi && prefix[r]! - prefix[i]! <= U) r++;
+      count += r - l;
+    }
+    const temp = prefix.slice(lo, hi);
+    let p = 0, q = mid - lo, k = lo;
+    while (p < mid - lo && q < hi - lo) prefix[k++] = temp[p]! <= temp[q]! ? temp[p++]! : temp[q++]!;
+    while (p < mid - lo) prefix[k++] = temp[p++]!;
+    while (q < hi - lo) prefix[k++] = temp[q++]!;
+  }
+  mergeSort(0, n + 1);
+  return count;
+}`,
+    python: `def countRangeSum(nums: list, lower: int, upper: int) -> int:
+    prefix = [0] * (len(nums) + 1)
+    for i, n in enumerate(nums):
+        prefix[i + 1] = prefix[i] + n
+    count = 0
+    def merge_sort(lo, hi):
+        nonlocal count
+        if hi - lo <= 1:
+            return
+        mid = (lo + hi) // 2
+        merge_sort(lo, mid)
+        merge_sort(mid, hi)
+        l = r = mid
+        for i in range(lo, mid):
+            while l < hi and prefix[l] - prefix[i] < lower:
+                l += 1
+            while r < hi and prefix[r] - prefix[i] <= upper:
+                r += 1
+            count += r - l
+        temp = prefix[lo:hi]
+        p, q, k = 0, mid - lo, lo
+        while p < mid - lo and q < hi - lo:
+            if temp[p] <= temp[q]:
+                prefix[k] = temp[p]; p += 1
+            else:
+                prefix[k] = temp[q]; q += 1
+            k += 1
+        while p < mid - lo:
+            prefix[k] = temp[p]; p += 1; k += 1
+        while q < hi - lo:
+            prefix[k] = temp[q]; q += 1; k += 1
+    merge_sort(0, len(nums) + 1)
+    return count`,
   },
   visibleTests: [
     { args: [[-2,5,-1], -2, 2], expected: 3 },

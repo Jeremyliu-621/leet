@@ -50,10 +50,49 @@ Output: 5
   functionName: 'minOperations',
   params: ['nums', 'x'],
   starterCode: {
-    javascript: 'function minOperations(nums, x) {\n\n}\n',
-    typescript: "function minOperations(nums: number[], x: number): number {\n\n}",
-
-    python: 'def minOperations(nums, x):\n    pass\n',
+    javascript: `function minOperations(nums, x) {
+  const total = nums.reduce((a, b) => a + b, 0);
+  const target = total - x;
+  if (target < 0) return -1;
+  if (target === 0) return nums.length;
+  let left = 0, sum = 0, maxLen = -1;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (sum > target) sum -= nums[left++];
+    if (sum === target) maxLen = Math.max(maxLen, right - left + 1);
+  }
+  return maxLen === -1 ? -1 : nums.length - maxLen;
+}`,
+    typescript: `function minOperations(nums: number[], x: number): number {
+  const total = nums.reduce((a, b) => a + b, 0);
+  const target = total - x;
+  if (target < 0) return -1;
+  if (target === 0) return nums.length;
+  let left = 0, sum = 0, maxLen = -1;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right]!;
+    while (sum > target) sum -= nums[left++]!;
+    if (sum === target) maxLen = Math.max(maxLen, right - left + 1);
+  }
+  return maxLen === -1 ? -1 : nums.length - maxLen;
+}`,
+    python: `def minOperations(nums, x):
+    total = sum(nums)
+    target = total - x
+    if target < 0:
+        return -1
+    if target == 0:
+        return len(nums)
+    left = cur_sum = 0
+    max_len = -1
+    for right, v in enumerate(nums):
+        cur_sum += v
+        while cur_sum > target:
+            cur_sum -= nums[left]
+            left += 1
+        if cur_sum == target:
+            max_len = max(max_len, right - left + 1)
+    return -1 if max_len == -1 else len(nums) - max_len`,
   },
   visibleTests: [
     { args: [[1, 1, 4, 2, 3], 5], expected: 2 },
