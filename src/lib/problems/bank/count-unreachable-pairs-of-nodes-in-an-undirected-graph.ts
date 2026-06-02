@@ -37,11 +37,66 @@ Return the number of **pairs** of different nodes that are **unreachable** from 
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function countPairs(n, edges) {
-
+  const parent = Array.from({ length: n }, (_, i) => i);
+  const size = new Array(n).fill(1);
+  function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
+  for (const [a, b] of edges) {
+    const ra = find(a), rb = find(b);
+    if (ra !== rb) {
+      parent[ra] = rb;
+      size[rb] += size[ra];
+    }
+  }
+  let ans = 0, cumSum = 0;
+  const seen = new Set();
+  for (let i = 0; i < n; i++) {
+    const r = find(i);
+    if (!seen.has(r)) {
+      ans += cumSum * size[r];
+      cumSum += size[r];
+      seen.add(r);
+    }
+  }
+  return ans;
 }`,
-    typescript: 'function countPairs(n: number, edges: number[][]): number {\n\n}',
+    typescript: `function countPairs(n: number, edges: number[][]): number {
+  const parent = Array.from({ length: n }, (_, i) => i);
+  const size = new Array<number>(n).fill(1);
+  function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+  for (const e of edges) {
+    const ra = find(e[0]!), rb = find(e[1]!);
+    if (ra !== rb) { parent[ra] = rb; size[rb]! += size[ra]!; }
+  }
+  let ans = 0, cumSum = 0;
+  const seen = new Set<number>();
+  for (let i = 0; i < n; i++) {
+    const r = find(i);
+    if (!seen.has(r)) { ans += cumSum * size[r]!; cumSum += size[r]!; seen.add(r); }
+  }
+  return ans;
+}`,
     python: `def countPairs(n, edges):
-    pass`,
+    parent = list(range(n))
+    size = [1] * n
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in edges:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+            size[rb] += size[ra]
+    ans, cum = 0, 0
+    seen = set()
+    for i in range(n):
+        r = find(i)
+        if r not in seen:
+            ans += cum * size[r]
+            cum += size[r]
+            seen.add(r)
+    return ans`,
   },
   visibleTests: [
     { args: [3, [[0, 1], [0, 2], [1, 2]]], expected: 0 },

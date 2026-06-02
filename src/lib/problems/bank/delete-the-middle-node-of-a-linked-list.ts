@@ -40,12 +40,16 @@ In this problem, the linked list is given as an **array** and you should return 
   params: ['head'],
   starterCode: {
     javascript: `function deleteMiddle(head) {
-
+  const mid = Math.floor(head.length / 2);
+  return [...head.slice(0, mid), ...head.slice(mid + 1)];
 }`,
-    typescript: "function deleteMiddle(head: number[]): number[] {\n\n}",
-
-    python: `def deleteMiddle(head: list[int]) -> list[int]:
-    pass`,
+    typescript: `function deleteMiddle(head: number[]): number[] {
+  const mid = Math.floor(head.length / 2);
+  return [...head.slice(0, mid), ...head.slice(mid + 1)];
+}`,
+    python: `def deleteMiddle(head):
+    mid = len(head) // 2
+    return head[:mid] + head[mid + 1:]`,
   },
   visibleTests: [
     { args: [[1, 3, 4, 7, 1, 2, 6]], expected: [1, 3, 4, 1, 2, 6] },

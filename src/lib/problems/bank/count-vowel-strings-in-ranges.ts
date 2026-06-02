@@ -38,12 +38,26 @@ Return an integer array \`ans\` of size \`queries.length\`, where \`ans[i]\` is 
   params: ['words', 'queries'],
   starterCode: {
     javascript: `function vowelStrings(words, queries) {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  const isVowel = w => vowels.has(w[0]) && vowels.has(w[w.length - 1]);
+  const prefix = new Array(words.length + 1).fill(0);
+  for (let i = 0; i < words.length; i++) prefix[i + 1] = prefix[i] + (isVowel(words[i]) ? 1 : 0);
+  return queries.map(([l, r]) => prefix[r + 1] - prefix[l]);
 }`,
-    typescript: "function vowelStrings(words: string[], queries: number[][]): number[] {\n\n}",
-
+    typescript: `function vowelStrings(words: string[], queries: number[][]): number[] {
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  const isVowel = (w: string) => vowels.has(w[0]!) && vowels.has(w[w.length - 1]!);
+  const prefix = new Array<number>(words.length + 1).fill(0);
+  for (let i = 0; i < words.length; i++) prefix[i + 1] = prefix[i]! + (isVowel(words[i]!) ? 1 : 0);
+  return queries.map(q => prefix[q[1]! + 1]! - prefix[q[0]!]!);
+}`,
     python: `def vowelStrings(words, queries):
-    pass`,
+    vowels = set('aeiou')
+    def is_vowel_word(w): return w[0] in vowels and w[-1] in vowels
+    prefix = [0] * (len(words) + 1)
+    for i, w in enumerate(words):
+        prefix[i + 1] = prefix[i] + (1 if is_vowel_word(w) else 0)
+    return [prefix[r + 1] - prefix[l] for l, r in queries]`,
   },
   visibleTests: [
     { args: [['aba', 'bcb', 'ece', 'aa', 'e'], [[0, 2], [1, 4], [1, 1]]], expected: [2, 3, 0] },

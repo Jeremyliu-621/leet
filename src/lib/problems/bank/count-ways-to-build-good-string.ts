@@ -40,12 +40,39 @@ Return the number of different good strings that can be constructed satisfying t
   params: ['low', 'high', 'zero', 'one'],
   starterCode: {
     javascript: `function countGoodStrings(low, high, zero, one) {
-
+  const MOD = 1e9 + 7;
+  const dp = new Array(high + 1).fill(0);
+  dp[0] = 1;
+  let ans = 0;
+  for (let i = 1; i <= high; i++) {
+    if (i >= zero) dp[i] = (dp[i] + dp[i - zero]) % MOD;
+    if (i >= one) dp[i] = (dp[i] + dp[i - one]) % MOD;
+    if (i >= low) ans = (ans + dp[i]) % MOD;
+  }
+  return ans;
 }`,
-    typescript: "function countGoodStrings(low: number, high: number, zero: number, one: number): number {\n\n}",
-
+    typescript: `function countGoodStrings(low: number, high: number, zero: number, one: number): number {
+  const MOD = 1_000_000_007;
+  const dp = new Array<number>(high + 1).fill(0);
+  dp[0] = 1;
+  let ans = 0;
+  for (let i = 1; i <= high; i++) {
+    if (i >= zero) dp[i] = ((dp[i]! + dp[i - zero]!) % MOD);
+    if (i >= one) dp[i] = ((dp[i]! + dp[i - one]!) % MOD);
+    if (i >= low) ans = (ans + dp[i]!) % MOD;
+  }
+  return ans;
+}`,
     python: `def countGoodStrings(low, high, zero, one):
-    pass`,
+    MOD = 10**9 + 7
+    dp = [0] * (high + 1)
+    dp[0] = 1
+    ans = 0
+    for i in range(1, high + 1):
+        if i >= zero: dp[i] = (dp[i] + dp[i - zero]) % MOD
+        if i >= one: dp[i] = (dp[i] + dp[i - one]) % MOD
+        if i >= low: ans = (ans + dp[i]) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [3, 3, 1, 1], expected: 8 },

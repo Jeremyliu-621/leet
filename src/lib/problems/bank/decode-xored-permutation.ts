@@ -37,13 +37,35 @@ Given the \`encoded\` array, return the original array \`perm\`. It is guarantee
   params: ['encoded'],
   starterCode: {
     javascript: `function decode(encoded) {
-
+  const n = encoded.length + 1;
+  let total = 0;
+  for (let i = 1; i <= n; i++) total ^= i;
+  let rest = 0;
+  for (let i = 1; i < encoded.length; i += 2) rest ^= encoded[i];
+  const perm = [total ^ rest];
+  for (let i = 0; i < encoded.length; i++) perm.push(perm[i] ^ encoded[i]);
+  return perm;
 }`,
     typescript: `function decode(encoded: number[]): number[] {
-
+  const n = encoded.length + 1;
+  let total = 0;
+  for (let i = 1; i <= n; i++) total ^= i;
+  let rest = 0;
+  for (let i = 1; i < encoded.length; i += 2) rest ^= encoded[i]!;
+  const perm: number[] = [total ^ rest];
+  for (let i = 0; i < encoded.length; i++) perm.push(perm[i]! ^ encoded[i]!);
+  return perm;
 }`,
-    python: `def decode(encoded: list[int]) -> list[int]:
-    pass`,
+    python: `def decode(encoded):
+    n = len(encoded) + 1
+    total = 0
+    for i in range(1, n + 1): total ^= i
+    rest = 0
+    for i in range(1, len(encoded), 2): rest ^= encoded[i]
+    perm = [total ^ rest]
+    for i in range(len(encoded)):
+        perm.append(perm[i] ^ encoded[i])
+    return perm`,
   },
   visibleTests: [
     { args: [[3, 1]], expected: [1, 2, 3] },
