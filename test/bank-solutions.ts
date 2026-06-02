@@ -47404,6 +47404,112 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 287
+  'maximize-the-number-of-target-nodes-after-connecting-trees-ii': (...args: unknown[]) => {
+    const edges1 = args[0] as number[][], edges2 = args[1] as number[][];
+    function twoColor(edges: number[][], n: number): Int8Array {
+      const adj: number[][] = Array.from({length: n}, () => []);
+      for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+      const color = new Int8Array(n).fill(-1);
+      color[0] = 0;
+      const queue = [0];
+      while (queue.length) {
+        const u = queue.shift()!;
+        for (const v of adj[u]!) if (color[v] === -1) { color[v] = 1 - color[u]!; queue.push(v); }
+      }
+      return color;
+    }
+    const n = edges1.length + 1, m = edges2.length + 1;
+    const c1 = twoColor(edges1, n), c2 = twoColor(edges2, m);
+    const d0 = Array.from(c2).filter(x => x === 0).length;
+    const maxTree2 = m - Math.min(d0, m - d0);
+    const cnt = [0, 0];
+    for (const c of c1) cnt[c]!++;
+    return Array.from({length: n}, (_, i) => cnt[c1[i]!]! + maxTree2);
+  },
+
+  'minimum-adjacent-swaps-to-reach-the-kth-smallest-number': (...args: unknown[]) => {
+    const num = args[0] as string, k = args[1] as number;
+    const orig = num.split('');
+    const arr = num.split('');
+    function nextPerm(a: string[]): void {
+      let i = a.length - 2;
+      while (i >= 0 && a[i]! >= a[i + 1]!) i--;
+      if (i < 0) return;
+      let j = a.length - 1;
+      while (a[j]! <= a[i]!) j--;
+      [a[i], a[j]] = [a[j]!, a[i]!];
+      let l = i + 1, r = a.length - 1;
+      while (l < r) { [a[l], a[r]] = [a[r]!, a[l]!]; l++; r--; }
+    }
+    for (let t = 0; t < k; t++) nextPerm(arr);
+    let ans = 0;
+    const temp = [...orig];
+    for (let i = 0; i < temp.length; i++) {
+      let j = i;
+      while (temp[j] !== arr[i]) j++;
+      ans += j - i;
+      while (j > i) { [temp[j], temp[j - 1]] = [temp[j - 1]!, temp[j]!]; j--; }
+    }
+    return ans;
+  },
+
+  'minimum-cost-to-make-arrays-identical': (...args: unknown[]) => {
+    const arr = args[0] as number[], brr = args[1] as number[], k = args[2] as number;
+    const n = arr.length;
+    function buildPerm(a: number[], b: number[]): number[] {
+      const posMap = new Map<number, number[]>();
+      for (let i = 0; i < n; i++) {
+        if (!posMap.has(b[i]!)) posMap.set(b[i]!, []);
+        posMap.get(b[i]!)!.push(i);
+      }
+      const idx = new Map<number, number>();
+      return a.map(v => { const c = idx.get(v) ?? 0; idx.set(v, c + 1); return posMap.get(v)![c]!; });
+    }
+    function countInv(perm: number[]): number {
+      let inv = 0;
+      function merge(a: number[], lo: number, mid: number, hi: number): void {
+        const left = a.slice(lo, mid), right = a.slice(mid, hi);
+        let i = 0, j = 0, p = lo;
+        while (i < left.length && j < right.length) {
+          if (left[i]! <= right[j]!) a[p++] = left[i++]!;
+          else { inv += left.length - i; a[p++] = right[j++]!; }
+        }
+        while (i < left.length) a[p++] = left[i++]!;
+        while (j < right.length) a[p++] = right[j++]!;
+      }
+      function sort(a: number[], lo: number, hi: number): void {
+        if (hi - lo <= 1) return;
+        const mid = (lo + hi) >> 1;
+        sort(a, lo, mid); sort(a, mid, hi); merge(a, lo, mid, hi);
+      }
+      const copy = [...perm]; sort(copy, 0, copy.length); return inv;
+    }
+    const cost1 = countInv(buildPerm(arr, brr));
+    const sorted = [...arr].sort((a, b) => a - b);
+    const cost2 = k + countInv(buildPerm(sorted, brr));
+    return Math.min(cost1, cost2);
+  },
+
+  'count-subarrays-where-elements-come-in-pairs': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let ans = 0;
+    const n = nums.length;
+    for (let l = 0; l < n; l++) {
+      const freq = new Map<number, number>();
+      let odd = 0;
+      for (let r = l; r < n; r++) {
+        const v = nums[r]!;
+        const f = (freq.get(v) ?? 0) + 1;
+        if (f > 2) break;
+        freq.set(v, f);
+        if (f % 2 === 1) odd++; else odd--;
+        if (odd === 0) ans++;
+      }
+    }
+    return ans;
+  },
+
   // batch 286
   'construct-the-minimum-bitwise-array-ii': (...args: unknown[]) => {
     const nums = args[0] as number[];

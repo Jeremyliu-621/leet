@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 287
+import { problem as maxTargetNodesII } from './maximize-the-number-of-target-nodes-after-connecting-trees-ii';
+import { problem as minAdjSwapsKthSmallest } from './minimum-adjacent-swaps-to-reach-the-kth-smallest-number';
+import { problem as minCostMakeArraysIdentical } from './minimum-cost-to-make-arrays-identical';
+import { problem as countSubarraysElementPairs } from './count-subarrays-where-elements-come-in-pairs';
 // batch 286
 import { problem as constructMinBitwiseII } from './construct-the-minimum-bitwise-array-ii';
 import { problem as findValidPairAdjDigits } from './find-valid-pair-of-adjacent-digits-in-string';
@@ -6581,6 +6586,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 287
+  maxTargetNodesII,
+  minAdjSwapsKthSmallest,
+  minCostMakeArraysIdentical,
+  countSubarraysElementPairs,
   // batch 286
   constructMinBitwiseII,
   findValidPairAdjDigits,

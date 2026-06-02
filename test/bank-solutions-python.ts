@@ -46429,6 +46429,106 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 287
+  'maximize-the-number-of-target-nodes-after-connecting-trees-ii': `def maxTargetNodes(edges1, edges2):
+    if hasattr(edges1, 'to_py'): edges1 = edges1.to_py()
+    if hasattr(edges2, 'to_py'): edges2 = edges2.to_py()
+    edges1 = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges1]
+    edges2 = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges2]
+    def two_color(edges, n):
+        adj = [[] for _ in range(n)]
+        for u, v in edges: adj[u].append(v); adj[v].append(u)
+        color = [-1] * n; color[0] = 0
+        from collections import deque
+        queue = deque([0])
+        while queue:
+            u = queue.popleft()
+            for v in adj[u]:
+                if color[v] == -1: color[v] = 1 - color[u]; queue.append(v)
+        return color
+    n = len(edges1) + 1; m = len(edges2) + 1
+    c1 = two_color(edges1, n); c2 = two_color(edges2, m)
+    d0 = c2.count(0)
+    max_tree2 = m - min(d0, m - d0)
+    cnt = [c1.count(0), c1.count(1)]
+    return [cnt[c1[i]] + max_tree2 for i in range(n)]
+`,
+
+  'minimum-adjacent-swaps-to-reach-the-kth-smallest-number': `def getMinSwaps(num, k):
+    if hasattr(num, 'to_py'): num = num.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    num = str(num); k = int(k)
+    def next_perm(a):
+        i = len(a) - 2
+        while i >= 0 and a[i] >= a[i+1]: i -= 1
+        if i < 0: return
+        j = len(a) - 1
+        while a[j] <= a[i]: j -= 1
+        a[i], a[j] = a[j], a[i]
+        a[i+1:] = reversed(a[i+1:])
+    orig = list(num); arr = list(num)
+    for _ in range(k): next_perm(arr)
+    ans = 0; temp = orig[:]
+    for i in range(len(temp)):
+        j = i
+        while temp[j] != arr[i]: j += 1
+        ans += j - i
+        while j > i: temp[j], temp[j-1] = temp[j-1], temp[j]; j -= 1
+    return ans
+`,
+
+  'minimum-cost-to-make-arrays-identical': `def minCost(arr, brr, k):
+    if hasattr(arr, 'to_py'): arr = arr.to_py()
+    if hasattr(brr, 'to_py'): brr = brr.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    arr = [int(x) for x in arr]; brr = [int(x) for x in brr]; k = int(k)
+    n = len(arr)
+    def build_perm(a, b):
+        from collections import defaultdict
+        pos_map = defaultdict(list)
+        for i, v in enumerate(b): pos_map[v].append(i)
+        idx = defaultdict(int)
+        perm = []
+        for v in a:
+            perm.append(pos_map[v][idx[v]]); idx[v] += 1
+        return perm
+    def count_inv(perm):
+        inv = [0]
+        def merge_sort(a):
+            if len(a) <= 1: return a
+            mid = len(a) // 2
+            left, right = merge_sort(a[:mid]), merge_sort(a[mid:])
+            merged = []; i = j = 0
+            while i < len(left) and j < len(right):
+                if left[i] <= right[j]: merged.append(left[i]); i += 1
+                else: inv[0] += len(left) - i; merged.append(right[j]); j += 1
+            merged.extend(left[i:]); merged.extend(right[j:])
+            return merged
+        merge_sort(perm)
+        return inv[0]
+    cost1 = count_inv(build_perm(arr, brr))
+    sorted_arr = sorted(arr)
+    cost2 = k + count_inv(build_perm(sorted_arr, brr))
+    return min(cost1, cost2)
+`,
+
+  'count-subarrays-where-elements-come-in-pairs': `def countSubarrays(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    ans = 0; n = len(nums)
+    for l in range(n):
+        freq = {}; odd = 0
+        for r in range(l, n):
+            v = nums[r]
+            f = freq.get(v, 0) + 1
+            if f > 2: break
+            freq[v] = f
+            if f % 2 == 1: odd += 1
+            else: odd -= 1
+            if odd == 0: ans += 1
+    return ans
+`,
+
   // batch 286
   'construct-the-minimum-bitwise-array-ii': `def minBitwiseArray(nums):
     result = []
