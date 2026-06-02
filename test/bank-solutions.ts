@@ -50570,4 +50570,45 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 293
+  'minimum-path-sum-in-a-triangle-grid': (...args: unknown[]) => {
+    const triangle = args[0] as number[][];
+    const dp = [...triangle[triangle.length - 1]!];
+    for (let i = triangle.length - 2; i >= 0; i--) {
+      for (let j = 0; j <= i; j++) {
+        dp[j] = triangle[i]![j]! + Math.min(dp[j]!, dp[j + 1]!);
+      }
+    }
+    return dp[0]!;
+  },
+
+  'maximum-subarray-minimum-product': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const MOD = 1_000_000_007n;
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    const left = new Array<number>(n).fill(-1);
+    const right = new Array<number>(n).fill(n);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length && nums[stack[stack.length - 1]!]! >= nums[i]!) stack.pop();
+      left[i] = stack.length ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length && nums[stack[stack.length - 1]!]! > nums[i]!) stack.pop();
+      right[i] = stack.length ? stack[stack.length - 1]! : n;
+      stack.push(i);
+    }
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      const s = BigInt(prefix[right[i]!]! - prefix[left[i]! + 1]!);
+      const prod = BigInt(nums[i]!) * s;
+      if (prod > ans) ans = prod;
+    }
+    return Number(ans % MOD);
+  },
+
 };

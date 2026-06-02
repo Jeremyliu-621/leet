@@ -49378,4 +49378,40 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return max(left[i] + right[i] - heights[i] for i in range(n))
 `,
 
+  // batch 293
+  'minimum-path-sum-in-a-triangle-grid': `def minimumTotal(triangle):
+    if hasattr(triangle, 'to_py'): triangle = triangle.to_py()
+    triangle = [[int(x) for x in (row.to_py() if hasattr(row,'to_py') else row)] for row in triangle]
+    dp = triangle[-1][:]
+    for i in range(len(triangle) - 2, -1, -1):
+        for j in range(i + 1):
+            dp[j] = triangle[i][j] + min(dp[j], dp[j + 1])
+    return dp[0]
+`,
+
+  'maximum-subarray-minimum-product': `def maxSumMinProduct(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    MOD = 10**9 + 7
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i + 1] = prefix[i] + nums[i]
+    left = [-1] * n; right = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and nums[stack[-1]] >= nums[i]: stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack = []
+    for i in range(n - 1, -1, -1):
+        while stack and nums[stack[-1]] > nums[i]: stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    ans = 0
+    for i in range(n):
+        s = prefix[right[i]] - prefix[left[i] + 1]
+        ans = max(ans, nums[i] * s)
+    return ans % MOD
+`,
+
 };
