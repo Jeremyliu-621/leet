@@ -40,13 +40,15 @@ Return the **number of indices** where \`heights[i] != expected[i]\`.`,
   params: ['heights'],
   starterCode: {
     javascript: `function heightChecker(heights) {
-
+  const sorted = [...heights].sort((a, b) => a - b);
+  return heights.filter((h, i) => h !== sorted[i]).length;
 }`,
     typescript: `function heightChecker(heights: number[]): number {
-
+  const sorted = [...heights].sort((a, b) => a - b);
+  return heights.filter((h, i) => h !== sorted[i]).length;
 }`,
     python: `def heightChecker(heights):
-    pass`,
+    return sum(a != b for a, b in zip(heights, sorted(heights)))`,
   },
   visibleTests: [
     { args: [[1, 1, 4, 2, 1, 3]], expected: 3 },

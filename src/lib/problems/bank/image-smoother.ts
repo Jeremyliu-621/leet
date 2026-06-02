@@ -45,12 +45,44 @@ Output: [[137,141,137],[141,138,141],[137,141,137]]
   params: ['img'],
   starterCode: {
     javascript: `function imageSmoother(img) {
-
+  const m = img.length, n = img[0].length;
+  const res = Array.from({length: m}, () => new Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      let sum = 0, cnt = 0;
+      for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) {
+        const ni = i + di, nj = j + dj;
+        if (ni >= 0 && ni < m && nj >= 0 && nj < n) { sum += img[ni][nj]; cnt++; }
+      }
+      res[i][j] = Math.floor(sum / cnt);
+    }
+  }
+  return res;
 }`,
-    typescript: "function imageSmoother(img: number[][]): number[][] {\n\n}",
-
+    typescript: `function imageSmoother(img: number[][]): number[][] {
+  const m = img.length, n = img[0].length;
+  const res = Array.from({length: m}, () => new Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      let sum = 0, cnt = 0;
+      for (let di = -1; di <= 1; di++) for (let dj = -1; dj <= 1; dj++) {
+        const ni = i + di, nj = j + dj;
+        if (ni >= 0 && ni < m && nj >= 0 && nj < n) { sum += img[ni][nj]; cnt++; }
+      }
+      res[i][j] = Math.floor(sum / cnt);
+    }
+  }
+  return res;
+}`,
     python: `def imageSmoother(img):
-    `,
+    m, n = len(img), len(img[0])
+    res = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            cells = [img[i+di][j+dj] for di in (-1,0,1) for dj in (-1,0,1)
+                     if 0<=i+di<m and 0<=j+dj<n]
+            res[i][j] = sum(cells) // len(cells)
+    return res`,
   },
   visibleTests: [
     { args: [[[1,1,1],[1,0,1],[1,1,1]]], expected: [[0,0,0],[0,0,0],[0,0,0]] },

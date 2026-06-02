@@ -35,12 +35,13 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: `function hammingWeight(n) {
-
+  return n.toString(2).replace(/0/g, '').length;
 }`,
-    typescript: "function hammingWeight(n: number): number {\n\n}",
-
+    typescript: `function hammingWeight(n: number): number {
+  return n.toString(2).replace(/0/g, '').length;
+}`,
     python: `def hammingWeight(n):
-    pass`,
+    return bin(n).count('1')`,
   },
   visibleTests: [
     { args: [11], expected: 3 },

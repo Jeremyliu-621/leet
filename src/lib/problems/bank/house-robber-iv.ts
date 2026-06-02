@@ -39,13 +39,44 @@ Return the **minimum** capability of the robber to steal money from at least \`k
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function minCapability(nums, k) {
-
+  const feasible = (cap) => {
+    let cnt = 0, i = 0;
+    while (i < nums.length) { if (nums[i] <= cap) { cnt++; i += 2; } else i++; }
+    return cnt >= k;
+  };
+  let lo = Math.min(...nums), hi = Math.max(...nums);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (feasible(mid)) hi = mid; else lo = mid + 1;
+  }
+  return lo;
 }`,
     typescript: `function minCapability(nums: number[], k: number): number {
-
+  const feasible = (cap: number) => {
+    let cnt = 0, i = 0;
+    while (i < nums.length) { if (nums[i] <= cap) { cnt++; i += 2; } else i++; }
+    return cnt >= k;
+  };
+  let lo = Math.min(...nums), hi = Math.max(...nums);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (feasible(mid)) hi = mid; else lo = mid + 1;
+  }
+  return lo;
 }`,
     python: `def minCapability(nums, k):
-    pass`,
+    def feasible(cap):
+        cnt = i = 0
+        while i < len(nums):
+            if nums[i] <= cap: cnt += 1; i += 2
+            else: i += 1
+        return cnt >= k
+    lo, hi = min(nums), max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if feasible(mid): hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[2, 3, 5, 9], 2], expected: 5 },

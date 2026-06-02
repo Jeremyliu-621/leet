@@ -42,13 +42,43 @@ Return the **largest** potential outlier in \`nums\`.
   params: ['nums'],
   starterCode: {
     javascript: `function largestOutlier(nums) {
-
+  const total = nums.reduce((a, b) => a + b, 0);
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = -Infinity;
+  for (const x of nums) {
+    freq.set(x, freq.get(x) - 1);
+    const rem = total - x;
+    if (rem % 2 === 0 && (freq.get(rem / 2) ?? 0) > 0) ans = Math.max(ans, x);
+    freq.set(x, freq.get(x) + 1);
+  }
+  return ans;
 }`,
     typescript: `function largestOutlier(nums: number[]): number {
-
+  const total = nums.reduce((a, b) => a + b, 0);
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = -Infinity;
+  for (const x of nums) {
+    freq.set(x, freq.get(x)! - 1);
+    const rem = total - x;
+    if (rem % 2 === 0 && (freq.get(rem / 2) ?? 0) > 0) ans = Math.max(ans, x);
+    freq.set(x, freq.get(x)! + 1);
+  }
+  return ans;
 }`,
     python: `def largestOutlier(nums):
-    pass`,
+    from collections import Counter
+    total = sum(nums)
+    freq = Counter(nums)
+    ans = float('-inf')
+    for x in nums:
+        freq[x] -= 1
+        rem = total - x
+        if rem % 2 == 0 and freq[rem // 2] > 0:
+            ans = max(ans, x)
+        freq[x] += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, 5, 10]], expected: 10 },

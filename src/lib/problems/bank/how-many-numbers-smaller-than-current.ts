@@ -40,12 +40,21 @@ function smallerNumbersThanCurrent(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function smallerNumbersThanCurrent(nums) {
-
+  const sorted = [...nums].sort((a, b) => a - b);
+  const rank = new Map();
+  for (let i = 0; i < sorted.length; i++) if (!rank.has(sorted[i])) rank.set(sorted[i], i);
+  return nums.map(n => rank.get(n));
 }`,
-    typescript: "function smallerNumbersThanCurrent(nums: number[]): number[] {\n\n}",
-
+    typescript: `function smallerNumbersThanCurrent(nums: number[]): number[] {
+  const sorted = [...nums].sort((a, b) => a - b);
+  const rank = new Map<number, number>();
+  for (let i = 0; i < sorted.length; i++) if (!rank.has(sorted[i])) rank.set(sorted[i], i);
+  return nums.map(n => rank.get(n)!);
+}`,
     python: `def smallerNumbersThanCurrent(nums):
-    pass`,
+    sorted_nums = sorted(nums)
+    rank = {v: i for i, v in enumerate(sorted_nums) if i == 0 or sorted_nums[i] != sorted_nums[i-1]}
+    return [rank[n] for n in nums]`,
   },
   visibleTests: [
     { args: [[8, 1, 2, 2, 3]], expected: [4, 0, 1, 1, 3] },

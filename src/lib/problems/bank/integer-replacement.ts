@@ -40,12 +40,33 @@ Return the minimum number of operations needed for \`n\` to become \`1\`.`,
   params: ['n'],
   starterCode: {
     javascript: `function integerReplacement(n) {
-
+  let steps = 0;
+  while (n > 1) {
+    if (n % 2 === 0) n = n / 2;
+    else if (n === 3 || (n & 3) === 1) n--;
+    else n++;
+    steps++;
+  }
+  return steps;
 }`,
-    typescript: "function integerReplacement(n: number): number {\n\n}",
-
+    typescript: `function integerReplacement(n: number): number {
+  let steps = 0;
+  while (n > 1) {
+    if (n % 2 === 0) n = n / 2;
+    else if (n === 3 || (n & 3) === 1) n--;
+    else n++;
+    steps++;
+  }
+  return steps;
+}`,
     python: `def integerReplacement(n):
-    pass`,
+    steps = 0
+    while n > 1:
+        if n % 2 == 0: n //= 2
+        elif n == 3 or n % 4 == 1: n -= 1
+        else: n += 1
+        steps += 1
+    return steps`,
   },
   visibleTests: [
     { args: [8], expected: 3 },

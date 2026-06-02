@@ -33,12 +33,19 @@ You are given an integer array \`gain\` of length \`n\` where \`gain[i]\` is the
   params: ['gain'],
   starterCode: {
     javascript: `function largestAltitude(gain) {
-
+  let alt = 0, max = 0;
+  for (const g of gain) { alt += g; if (alt > max) max = alt; }
+  return max;
 }`,
-    typescript: "function largestAltitude(gain: number[]): number {\n\n}",
-
+    typescript: `function largestAltitude(gain: number[]): number {
+  let alt = 0, max = 0;
+  for (const g of gain) { alt += g; if (alt > max) max = alt; }
+  return max;
+}`,
     python: `def largestAltitude(gain):
-    pass`,
+    alt = ans = 0
+    for g in gain: alt += g; ans = max(ans, alt)
+    return ans`,
   },
   visibleTests: [
     { args: [[-5, 1, 5, 0, -7]], expected: 1 },
