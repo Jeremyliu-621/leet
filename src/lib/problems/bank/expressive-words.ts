@@ -38,13 +38,71 @@ Given a string \`s\` and a list of query strings \`words\`, return the number of
   params: ['s', 'words'],
   starterCode: {
     javascript: `function expressiveWords(s, words) {
-
+  function rle(str) {
+    const res = [];
+    let i = 0;
+    while (i < str.length) {
+      let j = i;
+      while (j < str.length && str[j] === str[i]) j++;
+      res.push([str[i], j - i]);
+      i = j;
+    }
+    return res;
+  }
+  function stretchy(word) {
+    const ws = rle(s), ww = rle(word);
+    if (ws.length !== ww.length) return false;
+    for (let i = 0; i < ws.length; i++) {
+      const [sc, sn] = ws[i], [wc, wn] = ww[i];
+      if (sc !== wc) return false;
+      if (sn < wn) return false;
+      if (sn < 3 && sn !== wn) return false;
+    }
+    return true;
+  }
+  return words.filter(stretchy).length;
 }`,
     typescript: `function expressiveWords(s: string, words: string[]): number {
-
+  function rle(str: string): [string, number][] {
+    const res: [string, number][] = [];
+    let i = 0;
+    while (i < str.length) {
+      let j = i;
+      while (j < str.length && str[j] === str[i]) j++;
+      res.push([str[i]!, j - i]);
+      i = j;
+    }
+    return res;
+  }
+  function stretchy(word: string): boolean {
+    const ws = rle(s), ww = rle(word);
+    if (ws.length !== ww.length) return false;
+    for (let i = 0; i < ws.length; i++) {
+      const [sc, sn] = ws[i]!, [wc, wn] = ww[i]!;
+      if (sc !== wc) return false;
+      if (sn < wn) return false;
+      if (sn < 3 && sn !== wn) return false;
+    }
+    return true;
+  }
+  return words.filter(stretchy).length;
 }`,
     python: `def expressiveWords(s, words):
-    pass`,
+    def rle(t):
+        res, i = [], 0
+        while i < len(t):
+            j = i
+            while j < len(t) and t[j] == t[i]: j += 1
+            res.append((t[i], j - i)); i = j
+        return res
+    def stretchy(word):
+        ws, ww = rle(s), rle(word)
+        if len(ws) != len(ww): return False
+        for (sc, sn), (wc, wn) in zip(ws, ww):
+            if sc != wc or sn < wn: return False
+            if sn < 3 and sn != wn: return False
+        return True
+    return sum(stretchy(w) for w in words)`,
   },
   visibleTests: [
     { args: ['heeellooo', ['hello', 'hi', 'helo']], expected: 1 },

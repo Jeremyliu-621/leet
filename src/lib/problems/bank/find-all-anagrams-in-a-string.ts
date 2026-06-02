@@ -33,12 +33,43 @@ An **anagram** is a string formed by rearranging the letters of another, using a
   params: ['s', 'p'],
   starterCode: {
     javascript: `function findAnagrams(s, p) {
-
+  const pFreq = new Array(26).fill(0);
+  const wFreq = new Array(26).fill(0);
+  const a = 'a'.charCodeAt(0);
+  for (const c of p) pFreq[c.charCodeAt(0) - a]++;
+  const result = [];
+  for (let i = 0; i < s.length; i++) {
+    wFreq[s.charCodeAt(i) - a]++;
+    if (i >= p.length) wFreq[s.charCodeAt(i - p.length) - a]--;
+    if (i >= p.length - 1 && pFreq.every((v, j) => v === wFreq[j])) result.push(i - p.length + 1);
+  }
+  return result;
 }`,
-    typescript: "function findAnagrams(s: string, p: string): number[] {\n\n}",
-
+    typescript: `function findAnagrams(s: string, p: string): number[] {
+  const pFreq = new Array<number>(26).fill(0);
+  const wFreq = new Array<number>(26).fill(0);
+  const a = 'a'.charCodeAt(0);
+  for (const c of p) pFreq[c.charCodeAt(0) - a]!++;
+  const result: number[] = [];
+  for (let i = 0; i < s.length; i++) {
+    wFreq[s.charCodeAt(i) - a]!++;
+    if (i >= p.length) wFreq[s.charCodeAt(i - p.length) - a]!--;
+    if (i >= p.length - 1 && pFreq.every((v, j) => v === wFreq[j]!)) result.push(i - p.length + 1);
+  }
+  return result;
+}`,
     python: `def findAnagrams(s, p):
-    pass`,
+    from collections import Counter
+    p_cnt = Counter(p)
+    w_cnt = Counter(s[:len(p)])
+    result = [0] if w_cnt == p_cnt else []
+    for i in range(len(p), len(s)):
+        w_cnt[s[i]] += 1
+        old = s[i - len(p)]
+        w_cnt[old] -= 1
+        if w_cnt[old] == 0: del w_cnt[old]
+        if w_cnt == p_cnt: result.append(i - len(p) + 1)
+    return result`,
   },
   visibleTests: [
     { args: ['cbaebabacd', 'abc'], expected: [0, 6] },

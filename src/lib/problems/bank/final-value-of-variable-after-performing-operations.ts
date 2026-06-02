@@ -43,13 +43,13 @@ Given an array of strings \`operations\` containing a list of operations, return
   params: ['operations'],
   starterCode: {
     javascript: `function finalValueAfterOperations(operations) {
-
+  return operations.reduce((x, op) => x + (op.includes('+') ? 1 : -1), 0);
 }`,
     typescript: `function finalValueAfterOperations(operations: string[]): number {
-
+  return operations.reduce((x, op) => x + (op.includes('+') ? 1 : -1), 0);
 }`,
     python: `def finalValueAfterOperations(operations):
-    pass`,
+    return sum(1 if '+' in op else -1 for op in operations)`,
   },
   visibleTests: [
     { args: [['--X', 'X++', 'X++']], expected: 1 },

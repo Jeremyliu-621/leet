@@ -47,12 +47,16 @@ Return \`true\` if you can escape, otherwise return \`false\`.
   params: ['ghosts', 'target'],
   starterCode: {
     javascript: `function escapeGhosts(ghosts, target) {
-
+  const myDist = Math.abs(target[0]) + Math.abs(target[1]);
+  return ghosts.every(g => Math.abs(g[0] - target[0]) + Math.abs(g[1] - target[1]) > myDist);
 }`,
-    typescript: "function escapeGhosts(ghosts: number[][], target: number[]): boolean {\n\n}",
-
+    typescript: `function escapeGhosts(ghosts: number[][], target: number[]): boolean {
+  const myDist = Math.abs(target[0]!) + Math.abs(target[1]!);
+  return ghosts.every(g => Math.abs(g[0]! - target[0]!) + Math.abs(g[1]! - target[1]!) > myDist);
+}`,
     python: `def escapeGhosts(ghosts, target):
-    pass`,
+    my_dist = abs(target[0]) + abs(target[1])
+    return all(abs(g[0] - target[0]) + abs(g[1] - target[1]) > my_dist for g in ghosts)`,
   },
   visibleTests: [
     { args: [[[1, 0], [0, 3]], [0, 1]], expected: true },
