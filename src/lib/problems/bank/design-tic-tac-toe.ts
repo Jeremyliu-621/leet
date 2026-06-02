@@ -43,12 +43,44 @@ You are given an integer \`n\` and a 2D array \`moves\` where \`moves[i] = [row,
   params: ['n', 'moves'],
   starterCode: {
     javascript: `function ticTacToe(n, moves) {
-
+  const rows = [[0,0],[0,0]], cols = [[0,0],[0,0]], diag = [0,0], anti = [0,0];
+  for (const [r, c, p] of moves) {
+    const pi = p - 1;
+    rows[pi][r]++; cols[pi][c]++;
+    if (r === c) diag[pi]++;
+    if (r + c === n - 1) anti[pi]++;
+    if (rows[pi][r] === n || cols[pi][c] === n || diag[pi] === n || anti[pi] === n) return p;
+  }
+  return 0;
 }`,
-    typescript: "function ticTacToe(n: number, moves: number[][]): number {\n\n}",
-
-    python: `def ticTacToe(n: int, moves: list[list[int]]) -> int:
-    pass`,
+    typescript: `function ticTacToe(n: number, moves: number[][]): number {
+  const rows = [[new Array(n).fill(0), new Array(n).fill(0)]];
+  const cols = [[new Array(n).fill(0), new Array(n).fill(0)]];
+  const rowCnt: number[][] = [new Array(n).fill(0), new Array(n).fill(0)];
+  const colCnt: number[][] = [new Array(n).fill(0), new Array(n).fill(0)];
+  const diag = [0, 0], anti = [0, 0];
+  for (const m of moves) {
+    const r = m[0]!, c = m[1]!, pi = m[2]! - 1;
+    rowCnt[pi]![r]!++; colCnt[pi]![c]!++;
+    if (r === c) diag[pi]!++;
+    if (r + c === n - 1) anti[pi]!++;
+    if (rowCnt[pi]![r]! === n || colCnt[pi]![c]! === n || diag[pi]! === n || anti[pi]! === n) return pi + 1;
+  }
+  return 0;
+}`,
+    python: `def ticTacToe(n, moves):
+    rows = [[0]*n, [0]*n]
+    cols = [[0]*n, [0]*n]
+    diag = [0, 0]
+    anti = [0, 0]
+    for r, c, p in moves:
+        pi = p - 1
+        rows[pi][r] += 1; cols[pi][c] += 1
+        if r == c: diag[pi] += 1
+        if r + c == n - 1: anti[pi] += 1
+        if rows[pi][r] == n or cols[pi][c] == n or diag[pi] == n or anti[pi] == n:
+            return p
+    return 0`,
   },
   visibleTests: [
     { args: [3, [[0, 0, 1], [0, 2, 2], [1, 1, 1], [2, 0, 2], [2, 2, 1]]], expected: 1 },

@@ -42,12 +42,31 @@ return true;\`\`\``
   params: ['mass', 'asteroids'],
   starterCode: {
     javascript: `function asteroidsDestroyed(mass, asteroids) {
-
+  asteroids.sort((a, b) => a - b);
+  let cur = mass;
+  for (const a of asteroids) {
+    if (cur < a) return false;
+    cur += a;
+  }
+  return true;
 }`,
-    typescript: "function asteroidsDestroyed(mass: number, asteroids: number[]): boolean {\n\n}",
-
+    typescript: `function asteroidsDestroyed(mass: number, asteroids: number[]): boolean {
+  asteroids.sort((a, b) => a - b);
+  let cur = mass;
+  for (const a of asteroids) {
+    if (cur < a) return false;
+    cur += a;
+  }
+  return true;
+}`,
     python: `def asteroidsDestroyed(mass, asteroids):
-    pass`,
+    asteroids.sort()
+    cur = mass
+    for a in asteroids:
+        if cur < a:
+            return False
+        cur += a
+    return True`,
   },
   visibleTests: [
     { args: [10, [3, 9, 19, 5, 21]], expected: true },

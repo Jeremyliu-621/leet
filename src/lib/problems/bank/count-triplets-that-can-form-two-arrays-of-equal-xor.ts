@@ -34,13 +34,40 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function countTriplets(nums) {
-
+  const n = nums.length;
+  let ans = 0;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] ^ nums[i];
+  for (let i = 0; i < n - 1; i++) {
+    for (let k = i + 1; k < n; k++) {
+      if (prefix[k + 1] === prefix[i]) ans += k - i;
+    }
+  }
+  return ans;
 }`,
     typescript: `function countTriplets(nums: number[]): number {
-
+  const n = nums.length;
+  let ans = 0;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! ^ nums[i]!;
+  for (let i = 0; i < n - 1; i++) {
+    for (let k = i + 1; k < n; k++) {
+      if (prefix[k + 1]! === prefix[i]!) ans += k - i;
+    }
+  }
+  return ans;
 }`,
-    python: `def countTriplets(nums: list[int]) -> int:
-    pass`,
+    python: `def countTriplets(nums):
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] ^ nums[i]
+    ans = 0
+    for i in range(n - 1):
+        for k in range(i + 1, n):
+            if prefix[k + 1] == prefix[i]:
+                ans += k - i
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, 1, 6, 7]], expected: 4 },

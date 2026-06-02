@@ -35,13 +35,20 @@ Return \`true\` if reachable, \`false\` otherwise.`,
   params: ['sx', 'sy', 'fx', 'fy', 't'],
   starterCode: {
     javascript: `function isReachableAtTime(sx, sy, fx, fy, t) {
-
+  const dx = Math.abs(sx - fx), dy = Math.abs(sy - fy);
+  if (dx === 0 && dy === 0) return t !== 1;
+  return Math.max(dx, dy) <= t;
 }`,
     typescript: `function isReachableAtTime(sx: number, sy: number, fx: number, fy: number, t: number): boolean {
-
+  const dx = Math.abs(sx - fx), dy = Math.abs(sy - fy);
+  if (dx === 0 && dy === 0) return t !== 1;
+  return Math.max(dx, dy) <= t;
 }`,
     python: `def isReachableAtTime(sx, sy, fx, fy, t):
-    pass`,
+    dx, dy = abs(sx - fx), abs(sy - fy)
+    if dx == 0 and dy == 0:
+        return t != 1
+    return max(dx, dy) <= t`,
   },
   visibleTests: [
     { args: [2, 4, 7, 7, 6], expected: true },
