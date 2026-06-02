@@ -43,13 +43,28 @@ Return an integer array \`[i, j]\` if such a pair exists, or \`[-1, -1]\` otherw
   params: ['nums', 'indexDifference', 'valueDifference'],
   starterCode: {
     javascript: `function findIndices(nums, indexDifference, valueDifference) {
-
+  const n = nums.length;
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < n; j++)
+      if (Math.abs(i - j) >= indexDifference && Math.abs(nums[i] - nums[j]) >= valueDifference)
+        return [i, j];
+  return [-1, -1];
 }`,
     typescript: `function findIndices(nums: number[], indexDifference: number, valueDifference: number): number[] {
-
+  const n = nums.length;
+  for (let i = 0; i < n; i++)
+    for (let j = 0; j < n; j++)
+      if (Math.abs(i - j) >= indexDifference && Math.abs(nums[i]! - nums[j]!) >= valueDifference)
+        return [i, j];
+  return [-1, -1];
 }`,
     python: `def findIndices(nums, indexDifference, valueDifference):
-    `,
+    n = len(nums)
+    for i in range(n):
+        for j in range(n):
+            if abs(i - j) >= indexDifference and abs(nums[i] - nums[j]) >= valueDifference:
+                return [i, j]
+    return [-1, -1]`,
   },
   visibleTests: [
     { args: [[5, 1, 4, 1], 2, 4], expected: [0, 3] },

@@ -40,13 +40,19 @@ Return \`true\` if Alice can win, and \`false\` otherwise.`,
   params: ['nums'],
   starterCode: {
     javascript: `function canAliceWin(nums) {
-
+  const s = nums.filter(n => n < 10).reduce((a, b) => a + b, 0);
+  const d = nums.filter(n => n >= 10).reduce((a, b) => a + b, 0);
+  return s !== d;
 }`,
     typescript: `function canAliceWin(nums: number[]): boolean {
-
+  const s = nums.filter(n => n < 10).reduce((a, b) => a + b, 0);
+  const d = nums.filter(n => n >= 10).reduce((a, b) => a + b, 0);
+  return s !== d;
 }`,
     python: `def canAliceWin(nums):
-    pass`,
+    s = sum(n for n in nums if n < 10)
+    d = sum(n for n in nums if n >= 10)
+    return s != d`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 10]], expected: false },

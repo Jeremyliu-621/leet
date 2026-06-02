@@ -39,13 +39,40 @@ Return the \`k\` pairs \`(u1, v1), (u2, v2), ..., (uk, vk)\` with the smallest s
   params: ['nums1', 'nums2', 'k'],
   starterCode: {
     javascript: `function kSmallestPairs(nums1, nums2, k) {
-
+  const result = [];
+  const heap = [];
+  for (let i = 0; i < Math.min(nums1.length, k); i++) heap.push([nums1[i] + nums2[0], i, 0]);
+  while (result.length < k && heap.length) {
+    heap.sort((a, b) => a[0] - b[0]);
+    const [, i, j] = heap.shift();
+    result.push([nums1[i], nums2[j]]);
+    if (j + 1 < nums2.length) heap.push([nums1[i] + nums2[j + 1], i, j + 1]);
+  }
+  return result;
 }`,
     typescript: `function kSmallestPairs(nums1: number[], nums2: number[], k: number): number[][] {
-
+  const result: number[][] = [];
+  const heap: [number, number, number][] = [];
+  for (let i = 0; i < Math.min(nums1.length, k); i++) heap.push([nums1[i]! + nums2[0]!, i, 0]);
+  while (result.length < k && heap.length) {
+    heap.sort((a, b) => a[0] - b[0]);
+    const [, i, j] = heap.shift()!;
+    result.push([nums1[i]!, nums2[j]!]);
+    if (j + 1 < nums2.length) heap.push([nums1[i]! + nums2[j + 1]!, i, j + 1]);
+  }
+  return result;
 }`,
     python: `def kSmallestPairs(nums1, nums2, k):
-    pass`,
+    import heapq
+    result = []
+    heap = [(nums1[i] + nums2[0], i, 0) for i in range(min(len(nums1), k))]
+    heapq.heapify(heap)
+    while result.__len__() < k and heap:
+        _, i, j = heapq.heappop(heap)
+        result.append([nums1[i], nums2[j]])
+        if j + 1 < len(nums2):
+            heapq.heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))
+    return result`,
   },
   visibleTests: [
     { args: [[1, 7, 11], [2, 4, 6], 3], expected: [[1, 2], [1, 4], [1, 6]] },

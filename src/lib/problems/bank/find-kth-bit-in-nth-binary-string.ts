@@ -45,13 +45,28 @@ Return **the \`k\`-th bit** (1-indexed) in \`S_n\`.`,
   params: ['n', 'k'],
   starterCode: {
     javascript: `function findKthBit(n, k) {
-
+  if (n === 1) return '0';
+  const mid = 1 << (n - 1);
+  if (k === mid) return '1';
+  if (k < mid) return findKthBit(n - 1, k);
+  const m = findKthBit(n - 1, mid * 2 - k);
+  return m === '0' ? '1' : '0';
 }`,
     typescript: `function findKthBit(n: number, k: number): string {
-
+  if (n === 1) return '0';
+  const mid = 1 << (n - 1);
+  if (k === mid) return '1';
+  if (k < mid) return findKthBit(n - 1, k);
+  const m = findKthBit(n - 1, mid * 2 - k);
+  return m === '0' ? '1' : '0';
 }`,
     python: `def findKthBit(n, k):
-    pass`,
+    if n == 1: return '0'
+    mid = 1 << (n - 1)
+    if k == mid: return '1'
+    if k < mid: return findKthBit(n - 1, k)
+    m = findKthBit(n - 1, mid * 2 - k)
+    return '1' if m == '0' else '0'`,
   },
   visibleTests: [
     { args: [3, 1], expected: '0' },

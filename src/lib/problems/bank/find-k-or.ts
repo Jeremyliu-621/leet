@@ -56,13 +56,29 @@ function findKOr(nums, k) {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function findKOr(nums, k) {
-
+  let result = 0;
+  for (let bit = 0; bit < 31; bit++) {
+    let count = 0;
+    for (const n of nums) if ((n >> bit) & 1) count++;
+    if (count >= k) result |= 1 << bit;
+  }
+  return result;
 }`,
     typescript: `function findKOr(nums: number[], k: number): number {
-
+  let result = 0;
+  for (let bit = 0; bit < 31; bit++) {
+    let count = 0;
+    for (const n of nums) if ((n >> bit) & 1) count++;
+    if (count >= k) result |= 1 << bit;
+  }
+  return result;
 }`,
     python: `def findKOr(nums, k):
-    pass`,
+    result = 0
+    for bit in range(31):
+        if sum(1 for n in nums if (n >> bit) & 1) >= k:
+            result |= 1 << bit
+    return result`,
   },
   visibleTests: [
     { args: [[7, 12, 9, 8, 9, 15], 4], expected: 9 },
