@@ -36,13 +36,19 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function findElementsAppearingExactlyTwice(nums) {
-
+  const freq = {};
+  for (const n of nums) freq[n] = (freq[n] ?? 0) + 1;
+  return Object.keys(freq).filter(k => freq[k] === 2).map(Number).sort((a, b) => a - b);
 }`,
     typescript: `function findElementsAppearingExactlyTwice(nums: number[]): number[] {
-
+  const freq: Record<number, number> = {};
+  for (const n of nums) freq[n] = (freq[n] ?? 0) + 1;
+  return Object.keys(freq).filter(k => freq[+k] === 2).map(Number).sort((a, b) => a - b);
 }`,
-    python: `def findElementsAppearingExactlyTwice(nums: list[int]) -> list[int]:
-    pass`,
+    python: `def findElementsAppearingExactlyTwice(nums):
+    from collections import Counter
+    c = Counter(nums)
+    return sorted(k for k, v in c.items() if v == 2)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 3, 4]], expected: [2, 3] },

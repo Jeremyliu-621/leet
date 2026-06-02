@@ -42,11 +42,60 @@ Return a boolean array \`answer\` of length \`m\` where \`answer[i]\` is \`true\
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function findAnswer(n, edges) {
-
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v, w] of edges) { adj[u].push([v, w]); adj[v].push([u, w]); }
+  function dijkstra(src) {
+    const dist = new Array(n).fill(Infinity);
+    dist[src] = 0;
+    const pq = [[0, src]];
+    while (pq.length) {
+      pq.sort((a, b) => a[0] - b[0]);
+      const [d, u] = pq.shift();
+      if (d > dist[u]) continue;
+      for (const [v, w] of adj[u]) {
+        if (dist[u] + w < dist[v]) { dist[v] = dist[u] + w; pq.push([dist[v], v]); }
+      }
+    }
+    return dist;
+  }
+  const d0 = dijkstra(0), dN = dijkstra(n - 1), sp = d0[n - 1];
+  return edges.map(([u, v, w]) => d0[u] + w + dN[v] === sp || d0[v] + w + dN[u] === sp);
 }`,
-    typescript: 'function findAnswer(n: number, edges: number[][]): boolean[] {\n\n}',
+    typescript: `function findAnswer(n: number, edges: number[][]): boolean[] {
+  const adj: [number, number][][] = Array.from({length: n}, () => []);
+  for (const e of edges) { adj[e[0]!].push([e[1]!, e[2]!]); adj[e[1]!].push([e[0]!, e[2]!]); }
+  function dijkstra(src: number): number[] {
+    const dist: number[] = new Array(n).fill(Infinity);
+    dist[src] = 0;
+    const pq: [number, number][] = [[0, src]];
+    while (pq.length) {
+      pq.sort((a, b) => a[0] - b[0]);
+      const [d, u] = pq.shift()!;
+      if (d > dist[u]!) continue;
+      for (const [v, w] of adj[u]!) {
+        if (dist[u]! + w < dist[v]!) { dist[v] = dist[u]! + w; pq.push([dist[v]!, v]); }
+      }
+    }
+    return dist;
+  }
+  const d0 = dijkstra(0), dN = dijkstra(n - 1), sp = d0[n - 1]!;
+  return edges.map(e => d0[e[0]!]! + e[2]! + dN[e[1]!]! === sp || d0[e[1]!]! + e[2]! + dN[e[0]!]! === sp);
+}`,
     python: `def findAnswer(n, edges):
-    pass`,
+    import heapq
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges: adj[u].append((v, w)); adj[v].append((u, w))
+    def dijkstra(src):
+        dist = [float('inf')] * n; dist[src] = 0
+        pq = [(0, src)]
+        while pq:
+            d, u = heapq.heappop(pq)
+            if d > dist[u]: continue
+            for v, w in adj[u]:
+                if dist[u] + w < dist[v]: dist[v] = dist[u] + w; heapq.heappush(pq, (dist[v], v))
+        return dist
+    d0, dN = dijkstra(0), dijkstra(n - 1); sp = d0[n - 1]
+    return [d0[u] + w + dN[v] == sp or d0[v] + w + dN[u] == sp for u, v, w in edges]`,
   },
   visibleTests: [
     {

@@ -33,12 +33,16 @@ The greatest common divisor of two numbers is the largest positive integer that 
   params: ['nums'],
   starterCode: {
     javascript: `function findGCD(nums) {
-
+  function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+  return gcd(Math.min(...nums), Math.max(...nums));
 }`,
-    typescript: "function findGCD(nums: number[]): number {\n\n}",
-
+    typescript: `function findGCD(nums: number[]): number {
+  function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+  return gcd(Math.min(...nums), Math.max(...nums));
+}`,
     python: `def findGCD(nums):
-    pass`,
+    from math import gcd
+    return gcd(min(nums), max(nums))`,
   },
   visibleTests: [
     { args: [[2, 5, 6, 9, 10]], expected: 2 },

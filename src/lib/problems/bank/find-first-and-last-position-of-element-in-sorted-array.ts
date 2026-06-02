@@ -39,13 +39,44 @@ You must write an algorithm with \`O(log n)\` runtime complexity.`,
   params: ['nums', 'target'],
   starterCode: {
     javascript: `function searchRange(nums, target) {
-
+  function find(left) {
+    let lo = 0, hi = nums.length - 1, res = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid] === target) { res = mid; if (left) hi = mid - 1; else lo = mid + 1; }
+      else if (nums[mid] < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return res;
+  }
+  return [find(true), find(false)];
 }`,
     typescript: `function searchRange(nums: number[], target: number): number[] {
-
+  function find(left: boolean): number {
+    let lo = 0, hi = nums.length - 1, res = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (nums[mid] === target) { res = mid; if (left) hi = mid - 1; else lo = mid + 1; }
+      else if (nums[mid]! < target) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return res;
+  }
+  return [find(true), find(false)];
 }`,
     python: `def searchRange(nums, target):
-    pass`,
+    def find(left):
+        lo, hi, res = 0, len(nums) - 1, -1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if nums[mid] == target:
+                res = mid
+                if left: hi = mid - 1
+                else: lo = mid + 1
+            elif nums[mid] < target: lo = mid + 1
+            else: hi = mid - 1
+        return res
+    return [find(True), find(False)]`,
   },
   visibleTests: [
     { args: [[5, 7, 7, 8, 8, 10], 8], expected: [3, 4] },

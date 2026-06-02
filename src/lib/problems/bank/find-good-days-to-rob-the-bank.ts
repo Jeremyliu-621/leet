@@ -45,13 +45,31 @@ Return a list of **all** days that are good days to rob the bank. The order of t
   params: ['security', 'time'],
   starterCode: {
     javascript: `function goodDaysToRobBank(security, time) {
-
+  const n = security.length;
+  const left = new Array(n).fill(0), right = new Array(n).fill(0);
+  for (let i = 1; i < n; i++) if (security[i] <= security[i-1]) left[i] = left[i-1] + 1;
+  for (let i = n - 2; i >= 0; i--) if (security[i] <= security[i+1]) right[i] = right[i+1] + 1;
+  const result = [];
+  for (let i = time; i < n - time; i++) if (left[i] >= time && right[i] >= time) result.push(i);
+  return result;
 }`,
     typescript: `function goodDaysToRobBank(security: number[], time: number): number[] {
-
+  const n = security.length;
+  const left: number[] = new Array(n).fill(0), right: number[] = new Array(n).fill(0);
+  for (let i = 1; i < n; i++) if (security[i]! <= security[i-1]!) left[i] = left[i-1]! + 1;
+  for (let i = n - 2; i >= 0; i--) if (security[i]! <= security[i+1]!) right[i] = right[i+1]! + 1;
+  const result: number[] = [];
+  for (let i = time; i < n - time; i++) if (left[i]! >= time && right[i]! >= time) result.push(i);
+  return result;
 }`,
     python: `def goodDaysToRobBank(security, time):
-    pass`,
+    n = len(security)
+    left = [0] * n; right = [0] * n
+    for i in range(1, n):
+        if security[i] <= security[i-1]: left[i] = left[i-1] + 1
+    for i in range(n - 2, -1, -1):
+        if security[i] <= security[i+1]: right[i] = right[i+1] + 1
+    return [i for i in range(time, n - time) if left[i] >= time and right[i] >= time]`,
   },
   visibleTests: [
     { args: [[5, 3, 3, 3, 5, 6, 2], 2], expected: [2, 3] },
