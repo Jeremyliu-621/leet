@@ -36,9 +36,64 @@ Return the **number of k-free subsets** of \`nums\`. Since the answer may be lar
   functionName: 'countKFreeSubsets',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function countKFreeSubsets(nums, k) {\n  \n}\n',
-    typescript: 'function countKFreeSubsets(nums: number[], k: number): number {\n  \n}',
-    python: 'def countKFreeSubsets(nums, k):\n    pass\n',
+    javascript: `function countKFreeSubsets(nums, k) {
+  const MOD = 1000000007n;
+  const groups = new Map();
+  for (const n of nums) { const r = n % k; if (!groups.has(r)) groups.set(r, []); groups.get(r).push(n); }
+  let ans = 1n;
+  for (const g of groups.values()) {
+    g.sort((a, b) => a - b);
+    let i = 0;
+    while (i < g.length) {
+      let len = 1;
+      while (i + len < g.length && g[i + len] - g[i + len - 1] === k) len++;
+      let a = 1n, b = 1n;
+      for (let j = 2; j < len + 2; j++) [a, b] = [b, (a + b) % MOD];
+      ans = (ans * b) % MOD;
+      i += len;
+    }
+  }
+  return Number(ans);
+}`,
+    typescript: `function countKFreeSubsets(nums: number[], k: number): number {
+  const MOD = 1000000007n;
+  const groups = new Map<number, number[]>();
+  for (const n of nums) { const r = n % k; if (!groups.has(r)) groups.set(r, []); groups.get(r)!.push(n); }
+  let ans = 1n;
+  for (const g of groups.values()) {
+    g.sort((a, b) => a - b);
+    let i = 0;
+    while (i < g.length) {
+      let len = 1;
+      while (i + len < g.length && g[i + len]! - g[i + len - 1]! === k) len++;
+      let a = 1n, b = 1n;
+      for (let j = 2; j < len + 2; j++) [a, b] = [b, (a + b) % MOD];
+      ans = (ans * b) % MOD;
+      i += len;
+    }
+  }
+  return Number(ans);
+}`,
+    python: `def countKFreeSubsets(nums, k):
+    MOD = 10**9 + 7
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for n in nums:
+        groups[n % k].append(n)
+    ans = 1
+    for g in groups.values():
+        g.sort()
+        i = 0
+        while i < len(g):
+            length = 1
+            while i + length < len(g) and g[i + length] - g[i + length - 1] == k:
+                length += 1
+            a, b = 1, 1
+            for _ in range(length):
+                a, b = b, (a + b) % MOD
+            ans = ans * b % MOD
+            i += length
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 1], expected: 8 },

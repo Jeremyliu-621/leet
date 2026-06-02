@@ -38,9 +38,34 @@ A subarray is a contiguous **non-empty** sequence of elements within an array.`,
   functionName: 'beautifulSubarrays',
   params: ['nums'],
   starterCode: {
-    javascript: `function beautifulSubarrays(nums) {\n\n}`,
-    python: `def beautifulSubarrays(nums) -> int:\n    pass`,
-    typescript: `function beautifulSubarrays(nums: number[]): number {\n\n}`,
+    javascript: `function beautifulSubarrays(nums) {
+  const freq = new Map([[0, 1]]);
+  let xor = 0, count = 0;
+  for (const n of nums) {
+    xor ^= n;
+    count += freq.get(xor) || 0;
+    freq.set(xor, (freq.get(xor) || 0) + 1);
+  }
+  return count;
+}`,
+    typescript: `function beautifulSubarrays(nums: number[]): number {
+  const freq = new Map<number, number>([[0, 1]]);
+  let xor = 0, count = 0;
+  for (const n of nums) {
+    xor ^= n;
+    count += freq.get(xor) ?? 0;
+    freq.set(xor, (freq.get(xor) ?? 0) + 1);
+  }
+  return count;
+}`,
+    python: `def beautifulSubarrays(nums):
+    freq = {0: 1}
+    xor = count = 0
+    for n in nums:
+        xor ^= n
+        count += freq.get(xor, 0)
+        freq[xor] = freq.get(xor, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[4, 3, 1, 2, 4]], expected: 2 },

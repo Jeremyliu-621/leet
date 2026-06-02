@@ -33,9 +33,39 @@ export const problem: Problem = {
   functionName: 'countSubmatrices',
   params: ['grid', 'k'],
   starterCode: {
-    javascript: 'function countSubmatrices(grid, k) {\n  \n}\n',
-    typescript: 'function countSubmatrices(grid: number[][], k: number): number {\n  \n}',
-    python: 'def countSubmatrices(grid, k):\n    pass\n',
+    javascript: `function countSubmatrices(grid, k) {
+  const m = grid.length, n = grid[0].length;
+  const pre = grid.map(r => [...r]);
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) {
+    if (i > 0) pre[i][j] += pre[i-1][j];
+    if (j > 0) pre[i][j] += pre[i][j-1];
+    if (i > 0 && j > 0) pre[i][j] -= pre[i-1][j-1];
+  }
+  let count = 0;
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (pre[i][j] <= k) count++;
+  return count;
+}`,
+    typescript: `function countSubmatrices(grid: number[][], k: number): number {
+  const m = grid.length, n = grid[0]!.length;
+  const pre = grid.map(r => [...r]);
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) {
+    if (i > 0) pre[i]![j]! += pre[i-1]![j]!;
+    if (j > 0) pre[i]![j]! += pre[i]![j-1]!;
+    if (i > 0 && j > 0) pre[i]![j]! -= pre[i-1]![j-1]!;
+  }
+  let count = 0;
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (pre[i]![j]! <= k) count++;
+  return count;
+}`,
+    python: `def countSubmatrices(grid, k):
+    m, n = len(grid), len(grid[0])
+    pre = [row[:] for row in grid]
+    for i in range(m):
+        for j in range(n):
+            if i > 0: pre[i][j] += pre[i-1][j]
+            if j > 0: pre[i][j] += pre[i][j-1]
+            if i > 0 and j > 0: pre[i][j] -= pre[i-1][j-1]
+    return sum(1 for i in range(m) for j in range(n) if pre[i][j] <= k)`,
   },
   visibleTests: [
     { args: [[[7, 6, 3], [6, 6, 1]], 18], expected: 4 },

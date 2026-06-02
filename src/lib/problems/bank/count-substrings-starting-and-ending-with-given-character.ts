@@ -32,10 +32,17 @@ export const problem: Problem = {
   functionName: 'countSubstrings',
   params: ['s', 'c'],
   starterCode: {
-    javascript: 'function countSubstrings(s, c) {\n  \n}\n',
-    typescript: "function countSubstrings(s: string, c: string): number {\n  \n}",
-
-    python: 'def countSubstrings(s, c):\n    pass\n',
+    javascript: `function countSubstrings(s, c) {
+  const cnt = [...s].filter(ch => ch === c).length;
+  return cnt + cnt * (cnt - 1) / 2;
+}`,
+    typescript: `function countSubstrings(s: string, c: string): number {
+  const cnt = [...s].filter(ch => ch === c).length;
+  return cnt + cnt * (cnt - 1) / 2;
+}`,
+    python: `def countSubstrings(s, c):
+    cnt = s.count(c)
+    return cnt + cnt * (cnt - 1) // 2`,
   },
   visibleTests: [
     { args: ['abacaba', 'a'], expected: 10 },

@@ -41,13 +41,67 @@ A **consonant** is any letter that is not a vowel.`,
   params: ['s', 'k'],
   starterCode: {
     javascript: `function countOfSubstrings(s, k) {
-
+  const vowels = new Set(['a','e','i','o','u']);
+  function atLeast(minK) {
+    const freq = new Map();
+    let cons = 0, l = 0, count = 0;
+    for (let r = 0; r < s.length; r++) {
+      const ch = s[r];
+      if (vowels.has(ch)) freq.set(ch, (freq.get(ch) || 0) + 1);
+      else cons++;
+      while (freq.size === 5 && cons >= minK) {
+        const lch = s[l++];
+        if (vowels.has(lch)) { freq.set(lch, freq.get(lch) - 1); if (!freq.get(lch)) freq.delete(lch); }
+        else cons--;
+      }
+      count += l;
+    }
+    return count;
+  }
+  return atLeast(k) - atLeast(k + 1);
 }`,
     typescript: `function countOfSubstrings(s: string, k: number): number {
-
+  const vowels = new Set(['a','e','i','o','u']);
+  function atLeast(minK: number): number {
+    const freq = new Map<string, number>();
+    let cons = 0, l = 0, count = 0;
+    for (let r = 0; r < s.length; r++) {
+      const ch = s[r]!;
+      if (vowels.has(ch)) freq.set(ch, (freq.get(ch) ?? 0) + 1);
+      else cons++;
+      while (freq.size === 5 && cons >= minK) {
+        const lch = s[l++]!;
+        if (vowels.has(lch)) { freq.set(lch, freq.get(lch)! - 1); if (!freq.get(lch)) freq.delete(lch); }
+        else cons--;
+      }
+      count += l;
+    }
+    return count;
+  }
+  return atLeast(k) - atLeast(k + 1);
 }`,
     python: `def countOfSubstrings(s, k):
-    pass`,
+    vowels = set('aeiou')
+    def at_least(min_k):
+        freq = {}
+        cons = l = count = 0
+        for r, ch in enumerate(s):
+            if ch in vowels:
+                freq[ch] = freq.get(ch, 0) + 1
+            else:
+                cons += 1
+            while len(freq) == 5 and cons >= min_k:
+                lch = s[l]
+                if lch in vowels:
+                    freq[lch] -= 1
+                    if not freq[lch]:
+                        del freq[lch]
+                else:
+                    cons -= 1
+                l += 1
+            count += l
+        return count
+    return at_least(k) - at_least(k + 1)`,
   },
   visibleTests: [
     { args: ['aeioqu', 1], expected: 1 },

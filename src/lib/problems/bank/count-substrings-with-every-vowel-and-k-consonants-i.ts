@@ -40,11 +40,53 @@ A **consonant** is any letter that is not a vowel.`,
   functionName: 'countOfSubstrings',
   params: ['s', 'k'],
   starterCode: {
-    javascript: `function countOfSubstrings(s, k) {\n\n}`,
-    typescript: `function countOfSubstrings(s: string, k: number): number {
-
+    javascript: `function countOfSubstrings(s, k) {
+  const vowels = new Set(['a','e','i','o','u']);
+  let count = 0;
+  for (let i = 0; i < s.length; i++) {
+    const freq = new Map();
+    let consonants = 0;
+    for (let j = i; j < s.length; j++) {
+      const ch = s[j];
+      if (vowels.has(ch)) freq.set(ch, (freq.get(ch) || 0) + 1);
+      else if (++consonants > k) break;
+      if (freq.size === 5 && consonants === k) count++;
+    }
+  }
+  return count;
 }`,
-    python: `def countOfSubstrings(s: str, k: int) -> int:\n    pass`,
+    typescript: `function countOfSubstrings(s: string, k: number): number {
+  const vowels = new Set(['a','e','i','o','u']);
+  let count = 0;
+  for (let i = 0; i < s.length; i++) {
+    const freq = new Map<string, number>();
+    let consonants = 0;
+    for (let j = i; j < s.length; j++) {
+      const ch = s[j]!;
+      if (vowels.has(ch)) freq.set(ch, (freq.get(ch) ?? 0) + 1);
+      else if (++consonants > k) break;
+      if (freq.size === 5 && consonants === k) count++;
+    }
+  }
+  return count;
+}`,
+    python: `def countOfSubstrings(s, k):
+    vowels = set('aeiou')
+    count = 0
+    for i in range(len(s)):
+        freq = {}
+        consonants = 0
+        for j in range(i, len(s)):
+            ch = s[j]
+            if ch in vowels:
+                freq[ch] = freq.get(ch, 0) + 1
+            else:
+                consonants += 1
+                if consonants > k:
+                    break
+            if len(freq) == 5 and consonants == k:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: ['aeioqu', 1], expected: 1 },
