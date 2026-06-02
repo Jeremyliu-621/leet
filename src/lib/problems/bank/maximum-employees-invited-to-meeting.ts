@@ -41,11 +41,83 @@ Return the **maximum number** of employees that can be invited to the meeting.`,
   params: ['employees'],
   starterCode: {
     javascript: `function maximumInvitations(employees) {
-
+  const n = employees.length;
+  const inDeg = new Array(n).fill(0);
+  for (let i = 0; i < n; i++) inDeg[employees[i]]++;
+  const depth = new Array(n).fill(1);
+  const queue = [];
+  for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
+  while (queue.length) {
+    const v = queue.shift();
+    const u = employees[v];
+    depth[u] = Math.max(depth[u], depth[v] + 1);
+    if (--inDeg[u] === 0) queue.push(u);
+  }
+  let maxCycle = 0, pairSum = 0;
+  const visited = new Array(n).fill(false);
+  for (let i = 0; i < n; i++) {
+    if (inDeg[i] === 0 || visited[i]) continue;
+    let len = 0, cur = i;
+    while (!visited[cur]) { visited[cur] = true; cur = employees[cur]; len++; }
+    if (len === 2) pairSum += depth[i] + depth[employees[i]];
+    else maxCycle = Math.max(maxCycle, len);
+  }
+  return Math.max(maxCycle, pairSum);
 }`,
-    typescript: 'function maximumInvitations(employees: number[]): number {\n\n}',
+    typescript: `function maximumInvitations(employees: number[]): number {
+  const n = employees.length;
+  const inDeg = new Array(n).fill(0);
+  for (let i = 0; i < n; i++) inDeg[employees[i]!]++;
+  const depth = new Array(n).fill(1);
+  const queue: number[] = [];
+  for (let i = 0; i < n; i++) if (inDeg[i] === 0) queue.push(i);
+  while (queue.length) {
+    const v = queue.shift()!;
+    const u = employees[v]!;
+    depth[u] = Math.max(depth[u]!, depth[v]! + 1);
+    if (--inDeg[u]! === 0) queue.push(u);
+  }
+  let maxCycle = 0, pairSum = 0;
+  const visited = new Array(n).fill(false);
+  for (let i = 0; i < n; i++) {
+    if (inDeg[i]! === 0 || visited[i]) continue;
+    let len = 0, cur = i;
+    while (!visited[cur]) { visited[cur] = true; cur = employees[cur]!; len++; }
+    if (len === 2) pairSum += depth[i]! + depth[employees[i]!]!;
+    else maxCycle = Math.max(maxCycle, len);
+  }
+  return Math.max(maxCycle, pairSum);
+}`,
     python: `def maximumInvitations(employees):
-    pass`,
+    from collections import deque
+    n = len(employees)
+    in_deg = [0] * n
+    for x in employees:
+        in_deg[x] += 1
+    depth = [1] * n
+    q = deque(i for i in range(n) if in_deg[i] == 0)
+    while q:
+        v = q.popleft()
+        u = employees[v]
+        depth[u] = max(depth[u], depth[v] + 1)
+        in_deg[u] -= 1
+        if in_deg[u] == 0:
+            q.append(u)
+    max_cycle, pair_sum = 0, 0
+    visited = [False] * n
+    for i in range(n):
+        if in_deg[i] == 0 or visited[i]:
+            continue
+        length, cur = 0, i
+        while not visited[cur]:
+            visited[cur] = True
+            cur = employees[cur]
+            length += 1
+        if length == 2:
+            pair_sum += depth[i] + depth[employees[i]]
+        else:
+            max_cycle = max(max_cycle, length)
+    return max(max_cycle, pair_sum)`,
   },
   visibleTests: [
     { args: [[2, 2, 1, 2]], expected: 3 },

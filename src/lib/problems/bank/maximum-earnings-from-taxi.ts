@@ -43,13 +43,48 @@ Given \`n\` and \`rides\`, return the **maximum** number of dollars you can earn
   params: ['n', 'rides'],
   starterCode: {
     javascript: `function maxTaxiEarnings(n, rides) {
-
+  const dp = new Array(n + 1).fill(0);
+  const byEnd = new Map();
+  for (const [s, e, t] of rides) {
+    if (!byEnd.has(e)) byEnd.set(e, []);
+    byEnd.get(e).push([s, t]);
+  }
+  for (let pos = 1; pos <= n; pos++) {
+    dp[pos] = dp[pos - 1];
+    if (byEnd.has(pos)) {
+      for (const [s, t] of byEnd.get(pos))
+        dp[pos] = Math.max(dp[pos], dp[s] + pos - s + t);
+    }
+  }
+  return dp[n];
 }`,
     typescript: `function maxTaxiEarnings(n: number, rides: number[][]): number {
-
+  const dp = new Array(n + 1).fill(0);
+  const byEnd = new Map<number, [number, number][]>();
+  for (const [s, e, t] of rides) {
+    if (!byEnd.has(e!)) byEnd.set(e!, []);
+    byEnd.get(e!)!.push([s!, t!]);
+  }
+  for (let pos = 1; pos <= n; pos++) {
+    dp[pos] = dp[pos - 1];
+    if (byEnd.has(pos)) {
+      for (const [s, t] of byEnd.get(pos)!)
+        dp[pos] = Math.max(dp[pos], dp[s]! + pos - s + t);
+    }
+  }
+  return dp[n]!;
 }`,
     python: `def maxTaxiEarnings(n, rides):
-    pass`,
+    from collections import defaultdict
+    by_end = defaultdict(list)
+    for s, e, t in rides:
+        by_end[e].append((s, t))
+    dp = [0] * (n + 1)
+    for pos in range(1, n + 1):
+        dp[pos] = dp[pos - 1]
+        for s, t in by_end[pos]:
+            dp[pos] = max(dp[pos], dp[s] + pos - s + t)
+    return dp[n]`,
   },
   visibleTests: [
     { args: [5, [[2, 5, 4], [1, 5, 1]]], expected: 7 },

@@ -40,13 +40,36 @@ Return the **maximum total energy** you can collect.`,
   params: ['energyDrinkA', 'energyDrinkB'],
   starterCode: {
     javascript: `function maxEnergyBoost(energyDrinkA, energyDrinkB) {
-
+  const n = energyDrinkA.length;
+  let dpA = energyDrinkA[0], dpB = energyDrinkB[0], prevA = 0, prevB = 0;
+  for (let i = 1; i < n; i++) {
+    const newA = Math.max(dpA + energyDrinkA[i], prevB + energyDrinkA[i]);
+    const newB = Math.max(dpB + energyDrinkB[i], prevA + energyDrinkB[i]);
+    prevA = dpA; prevB = dpB;
+    dpA = newA; dpB = newB;
+  }
+  return Math.max(dpA, dpB);
 }`,
     typescript: `function maxEnergyBoost(energyDrinkA: number[], energyDrinkB: number[]): number {
-
+  const n = energyDrinkA.length;
+  let dpA = energyDrinkA[0]!, dpB = energyDrinkB[0]!, prevA = 0, prevB = 0;
+  for (let i = 1; i < n; i++) {
+    const newA = Math.max(dpA + energyDrinkA[i]!, prevB + energyDrinkA[i]!);
+    const newB = Math.max(dpB + energyDrinkB[i]!, prevA + energyDrinkB[i]!);
+    prevA = dpA; prevB = dpB;
+    dpA = newA; dpB = newB;
+  }
+  return Math.max(dpA, dpB);
 }`,
     python: `def maxEnergyBoost(energyDrinkA, energyDrinkB):
-    pass`,
+    n = len(energyDrinkA)
+    dp_a, dp_b, prev_a, prev_b = energyDrinkA[0], energyDrinkB[0], 0, 0
+    for i in range(1, n):
+        new_a = max(dp_a + energyDrinkA[i], prev_b + energyDrinkA[i])
+        new_b = max(dp_b + energyDrinkB[i], prev_a + energyDrinkB[i])
+        prev_a, prev_b = dp_a, dp_b
+        dp_a, dp_b = new_a, new_b
+    return max(dp_a, dp_b)`,
   },
   visibleTests: [
     { args: [[4, 1, 1], [1, 1, 3]], expected: 7 },

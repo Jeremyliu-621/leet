@@ -41,13 +41,66 @@ Return the **maximum elegance** out of all subsequences of size \`k\` in \`items
   params: ['items', 'k'],
   starterCode: {
     javascript: `function findMaximumElegance(items, k) {
-
+  items.sort((a, b) => b[0] - a[0]);
+  let totalProfit = 0, distinct = 0;
+  const seen = new Set(), dupes = [];
+  for (let i = 0; i < k; i++) {
+    const [p, c] = items[i];
+    totalProfit += p;
+    if (!seen.has(c)) { seen.add(c); distinct++; }
+    else dupes.push(p);
+  }
+  let ans = totalProfit + distinct * distinct;
+  for (let i = k; i < items.length; i++) {
+    const [p, c] = items[i];
+    if (!seen.has(c) && dupes.length) {
+      totalProfit += p - dupes.pop();
+      seen.add(c); distinct++;
+      ans = Math.max(ans, totalProfit + distinct * distinct);
+    }
+  }
+  return ans;
 }`,
     typescript: `function findMaximumElegance(items: number[][], k: number): number {
-
+  items.sort((a, b) => b[0]! - a[0]!);
+  let totalProfit = 0, distinct = 0;
+  const seen = new Set<number>(), dupes: number[] = [];
+  for (let i = 0; i < k; i++) {
+    const [p, c] = items[i]!;
+    totalProfit += p!;
+    if (!seen.has(c!)) { seen.add(c!); distinct++; }
+    else dupes.push(p!);
+  }
+  let ans = totalProfit + distinct * distinct;
+  for (let i = k; i < items.length; i++) {
+    const [p, c] = items[i]!;
+    if (!seen.has(c!) && dupes.length) {
+      totalProfit += p! - dupes.pop()!;
+      seen.add(c!); distinct++;
+      ans = Math.max(ans, totalProfit + distinct * distinct);
+    }
+  }
+  return ans;
 }`,
     python: `def findMaximumElegance(items: list[list[int]], k: int) -> int:
-    pass`,
+    items.sort(key=lambda x: -x[0])
+    total_profit, distinct = 0, 0
+    seen, dupes = set(), []
+    for i in range(k):
+        p, c = items[i]
+        total_profit += p
+        if c not in seen:
+            seen.add(c); distinct += 1
+        else:
+            dupes.append(p)
+    ans = total_profit + distinct * distinct
+    for i in range(k, len(items)):
+        p, c = items[i]
+        if c not in seen and dupes:
+            total_profit += p - dupes.pop()
+            seen.add(c); distinct += 1
+            ans = max(ans, total_profit + distinct * distinct)
+    return ans`,
   },
   visibleTests: [
     { args: [[[3,2],[5,1],[10,1]], 2], expected: 17 },
