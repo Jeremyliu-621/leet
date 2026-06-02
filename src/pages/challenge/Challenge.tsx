@@ -762,6 +762,7 @@ export function Challenge() {
   const handleSubmit = useCallback(async () => {
     if (pageState.status !== 'ready' || isRunning) return;
     const { problem, prefs } = pageState;
+    if (attempts >= prefs.maxSubmissionAttempts) return;
 
     setIsRunning(true);
     setVerdictMode('submit');
