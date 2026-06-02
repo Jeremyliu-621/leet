@@ -46623,7 +46623,45 @@ def placedCoins(edges, cost):
     return ans
 `,
 
-  // batch 289
+  // batch 292
+  'maximum-sum-score-of-array': `def maximumSumScore(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    total = sum(nums)
+    prefix = 0; ans = float('-inf')
+    for x in nums:
+        prefix += x
+        score = max(prefix, total - prefix + x)
+        if score > ans: ans = score
+    return ans
+`,
+
+  'count-the-number-of-house-placements-on-a-street': `def countHousePlacements(n):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    n = int(n)
+    MOD = 10**9 + 7
+    a, b = 1, 2
+    for _ in range(2, n + 1):
+        a, b = b, (a + b) % MOD
+    f = b if n >= 1 else a
+    return (f * f) % MOD
+`,
+
+  'maximum-number-of-jumps-to-reach-last-index': `def maximumJumps(nums, target):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(target, 'to_py'): target = target.to_py()
+    nums = [int(x) for x in nums]; target = int(target)
+    n = len(nums)
+    dp = [-1] * n
+    dp[0] = 0
+    for j in range(1, n):
+        for i in range(j):
+            if dp[i] != -1 and abs(nums[j] - nums[i]) <= target:
+                dp[j] = max(dp[j], dp[i] + 1)
+    return dp[n - 1]
+`,
+
+  // batch 289 (renamed 291)
   'count-nodes-with-maximum-score': `def countHighestScoreNodes(parents):
     if hasattr(parents, 'to_py'): parents = parents.to_py()
     parents = [int(x) for x in parents]

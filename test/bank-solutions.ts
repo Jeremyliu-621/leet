@@ -47593,7 +47593,44 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
-  // batch 289
+  // batch 292
+  'maximum-sum-score-of-array': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const total = nums.reduce((a, b) => a + b, 0);
+    let prefix = 0, ans = -Infinity;
+    for (const x of nums) {
+      prefix += x;
+      const score = Math.max(prefix, total - prefix + x);
+      if (score > ans) ans = score;
+    }
+    return ans;
+  },
+
+  'count-the-number-of-house-placements-on-a-street': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const MOD = 1_000_000_007n;
+    let a = 1n, b = 2n;
+    for (let i = 2; i <= n; i++) { const c = (a + b) % MOD; a = b; b = c; }
+    const f = n === 0 ? a : b;
+    return Number(f * f % MOD);
+  },
+
+  'maximum-number-of-jumps-to-reach-last-index': (...args: unknown[]) => {
+    const nums = args[0] as number[], target = args[1] as number;
+    const n = nums.length;
+    const dp = new Array<number>(n).fill(-1);
+    dp[0] = 0;
+    for (let j = 1; j < n; j++) {
+      for (let i = 0; i < j; i++) {
+        if (dp[i] !== -1 && Math.abs(nums[j]! - nums[i]!) <= target) {
+          dp[j] = Math.max(dp[j]!, dp[i]! + 1);
+        }
+      }
+    }
+    return dp[n - 1]!;
+  },
+
+  // batch 289 (renamed to 291)
   'count-nodes-with-maximum-score': (...args: unknown[]) => {
     const parents = args[0] as number[];
     const n = parents.length;

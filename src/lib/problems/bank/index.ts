@@ -3097,6 +3097,10 @@ import { problem as minFlipsBinaryMatrix } from './minimum-number-of-flips-to-co
 import { problem as numPairsSatisfyInequality } from './number-of-pairs-satisfying-inequality';
 import { problem as numGreatPartitions } from './number-of-great-partitions';
 import { problem as maxTotalHeightUniqueTowers } from './maximize-the-total-height-of-unique-towers';
+// batch 292
+import { problem as maximumSumScoreOfArray } from './maximum-sum-score-of-array';
+import { problem as countHousePlacementsOnStreet } from './count-the-number-of-house-placements-on-a-street';
+import { problem as maximumJumpsToLastIndex } from './maximum-number-of-jumps-to-reach-last-index';
 // batch 291
 import { problem as countNodesMaxScore } from './count-nodes-with-maximum-score';
 import { problem as minSpaceWastedKResizing } from './minimum-space-wasted-with-k-resizing';
@@ -6937,4 +6941,8 @@ export const problems: readonly Problem[] = [
   countNodesMaxScore,
   minSpaceWastedKResizing,
   largestPosIntWithNegative,
+  // batch 292
+  maximumSumScoreOfArray,
+  countHousePlacementsOnStreet,
+  maximumJumpsToLastIndex,
 ];
