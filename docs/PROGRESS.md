@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3030** problems; 9438 tests green. Batch 300 complete.
+**Current focus:** Bank at **3033** problems; 9447 tests green. Batch 301 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 301+); starter backfill (batch 41at+, continuing from minimum-index-sum*); UX polish.
+**Next up:** Bank growth (batch 302+); starter backfill (batch 41at+, continuing from minimum-index-sum*); UX polish.
+
+### feat(bank): batch 301 — shortest-path-binary-matrix, find-score, maximum-visible-points (2026-06-02)
+Three new problems: `shortest-path-binary-matrix` (medium/graph+BFS — 8-directional BFS from (0,0), return shortest clear path length or -1; O(n²)), `find-score-by-marking-elements` (medium/arrays+heap — sort (value,index), greedily take smallest unmarked, mark it and neighbors; O(n log n)), `maximum-number-of-visible-points` (hard/arrays+math — atan2 angles, sort+double for circularity, sliding window ≤ angle, add at-location count; O(n log n)). Bank at **3033**; 9447 tests.
 
 ### feat(bank): batch 300 — minimum-cost-to-fill-cups, path-sum-iv (2026-06-02)
 Two new problems: `minimum-cost-to-fill-cups` (easy/arrays+math — answer is max(max(amount), ⌈sum/2⌉); O(1)), `path-sum-iv` (medium/tree+hash-map — parse 3-digit encoding: d=hundreds, p=tens, v=units; key=d*10+p; DFS from (1,1) with left child at (d+1,2p-1) and right at (d+1,2p); leaf when neither child key exists; O(n)). Also filled in full heap-based starter code for `number-of-orders-in-the-backlog`. Bank at **3030**; 9438 tests.
