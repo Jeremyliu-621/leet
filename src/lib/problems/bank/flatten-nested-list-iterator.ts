@@ -41,11 +41,45 @@ Simulate with arrays of operations. Return results (\`null\` for constructor).`,
   params: ['ops', 'args'],
   starterCode: {
     javascript: `function flattenNestedListIterator(ops, args) {
-
+  const flatten = (v) => Array.isArray(v) ? v.flatMap(flatten) : [v];
+  let flat = [], idx = 0;
+  const res = [];
+  for (let i = 0; i < ops.length; i++) {
+    if (ops[i] === 'NestedIterator') {
+      flat = args[i][0].flatMap(flatten); idx = 0; res.push(null);
+    } else if (ops[i] === 'next') {
+      res.push(flat[idx++]);
+    } else {
+      res.push(idx < flat.length);
+    }
+  }
+  return res;
 }`,
-    typescript: 'function flattenNestedListIterator(ops: string[], args: unknown[][]): (number | boolean | null)[] {\n\n}',
+    typescript: `function flattenNestedListIterator(ops: string[], args: unknown[][]): (number | boolean | null)[] {
+  const flatten = (v: unknown): number[] => Array.isArray(v) ? v.flatMap(flatten) : [v as number];
+  let flat: number[] = [], idx = 0;
+  const res: (number | boolean | null)[] = [];
+  for (let i = 0; i < ops.length; i++) {
+    if (ops[i] === 'NestedIterator') {
+      flat = (args[i][0] as unknown[]).flatMap(flatten); idx = 0; res.push(null);
+    } else if (ops[i] === 'next') {
+      res.push(flat[idx++]);
+    } else {
+      res.push(idx < flat.length);
+    }
+  }
+  return res;
+}`,
     python: `def flattenNestedListIterator(ops, args):
-    pass`,
+    def flatten(v):
+        if isinstance(v, list): return [x for item in v for x in flatten(item)]
+        return [v]
+    flat, idx, res = [], 0, []
+    for op, a in zip(ops, args):
+        if op == 'NestedIterator': flat = flatten(a[0]); idx = 0; res.append(None)
+        elif op == 'next': res.append(flat[idx]); idx += 1
+        else: res.append(idx < len(flat))
+    return res`,
   },
   visibleTests: [
     {

@@ -42,13 +42,26 @@ Note: The first visit to room 0 is on day 0 and counts as 1 visit.`,
   params: ['nextVisit'],
   starterCode: {
     javascript: `function firstDayBeenInAllRooms(nextVisit) {
-
+  const MOD = 1_000_000_007n, n = nextVisit.length;
+  const dp = new Array(n).fill(0n);
+  for (let i = 1; i < n; i++)
+    dp[i] = (2n * dp[i - 1] - dp[nextVisit[i - 1]] + 2n + MOD) % MOD;
+  return Number(dp[n - 1]);
 }`,
     typescript: `function firstDayBeenInAllRooms(nextVisit: number[]): number {
-
+  const MOD = 1_000_000_007n, n = nextVisit.length;
+  const dp = new Array(n).fill(0n);
+  for (let i = 1; i < n; i++)
+    dp[i] = (2n * dp[i - 1] - dp[nextVisit[i - 1]] + 2n + MOD) % MOD;
+  return Number(dp[n - 1]);
 }`,
     python: `def firstDayBeenInAllRooms(nextVisit):
-    pass`,
+    MOD = 10**9 + 7
+    n = len(nextVisit)
+    dp = [0] * n
+    for i in range(1, n):
+        dp[i] = (2 * dp[i-1] - dp[nextVisit[i-1]] + 2) % MOD
+    return dp[-1]`,
   },
   visibleTests: [
     { args: [[0, 0]], expected: 2 },

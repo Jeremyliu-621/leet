@@ -47,12 +47,41 @@ Output: "-1/6"
   params: ['expression'],
   starterCode: {
     javascript: `function fractionAddition(expression) {
-
+  const gcd = (a, b) => b === 0 ? Math.abs(a) : gcd(b, a % b);
+  const fracs = expression.match(/[+-]?\\d+\\/\\d+/g) ?? [];
+  let num = 0, den = 1;
+  for (const f of fracs) {
+    const [n, d] = f.split('/').map(Number);
+    num = num * d + n * den;
+    den = den * d;
+    const g = gcd(Math.abs(num), den);
+    num /= g; den /= g;
+  }
+  return \`\${num}/\${den}\`;
 }`,
-    typescript: "function fractionAddition(expression: string): string {\n\n}",
-
+    typescript: `function fractionAddition(expression: string): string {
+  const gcd = (a: number, b: number): number => b === 0 ? Math.abs(a) : gcd(b, a % b);
+  const fracs = expression.match(/[+-]?\\d+\\/\\d+/g) ?? [];
+  let num = 0, den = 1;
+  for (const f of fracs) {
+    const [n, d] = f.split('/').map(Number);
+    num = num * d + n * den;
+    den = den * d;
+    const g = gcd(Math.abs(num), den);
+    num /= g; den /= g;
+  }
+  return \`\${num}/\${den}\`;
+}`,
     python: `def fractionAddition(expression):
-    `,
+    import re
+    from math import gcd
+    fracs = re.findall(r'[+-]?\\d+/\\d+', expression)
+    num, den = 0, 1
+    for f in fracs:
+        n, d = map(int, f.split('/'))
+        num = num * d + n * den; den *= d
+        g = gcd(abs(num), den); num //= g; den //= g
+    return f'{num}/{den}'`,
   },
   visibleTests: [
     { args: ['-1/2+1/2'], expected: '0/1' },

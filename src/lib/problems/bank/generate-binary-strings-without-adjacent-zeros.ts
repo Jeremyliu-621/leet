@@ -37,13 +37,33 @@ Return all **valid** strings with length \`n\`, in any order.`,
   params: ['n'],
   starterCode: {
     javascript: `function validStrings(n) {
-
+  const res = [];
+  const dfs = (s) => {
+    if (s.length === n) { res.push(s); return; }
+    if (s.length === 0 || s[s.length - 1] !== '0') dfs(s + '0');
+    dfs(s + '1');
+  };
+  dfs('');
+  return res;
 }`,
     typescript: `function validStrings(n: number): string[] {
-
+  const res: string[] = [];
+  const dfs = (s: string) => {
+    if (s.length === n) { res.push(s); return; }
+    if (s.length === 0 || s[s.length - 1] !== '0') dfs(s + '0');
+    dfs(s + '1');
+  };
+  dfs('');
+  return res;
 }`,
     python: `def validStrings(n):
-    pass`,
+    res = []
+    def dfs(s):
+        if len(s) == n: res.append(s); return
+        if not s or s[-1] != '0': dfs(s + '0')
+        dfs(s + '1')
+    dfs('')
+    return res`,
   },
   visibleTests: [
     { args: [1], expected: ['0', '1'] },

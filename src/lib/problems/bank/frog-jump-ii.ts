@@ -41,13 +41,22 @@ Return the **minimum** possible cost of the journey.`,
   params: ['stones'],
   starterCode: {
     javascript: `function maxJump(stones) {
-
+  let ans = stones[1] - stones[0];
+  for (let i = 2; i < stones.length; i++)
+    ans = Math.max(ans, stones[i] - stones[i - 2]);
+  return ans;
 }`,
     typescript: `function maxJump(stones: number[]): number {
-
+  let ans = stones[1] - stones[0];
+  for (let i = 2; i < stones.length; i++)
+    ans = Math.max(ans, stones[i] - stones[i - 2]);
+  return ans;
 }`,
     python: `def maxJump(stones):
-    pass`,
+    ans = stones[1] - stones[0]
+    for i in range(2, len(stones)):
+        ans = max(ans, stones[i] - stones[i - 2])
+    return ans`,
   },
   visibleTests: [
     { args: [[0, 2, 5, 6, 7]], expected: 5 },

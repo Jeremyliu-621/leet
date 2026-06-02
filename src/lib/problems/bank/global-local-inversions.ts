@@ -44,13 +44,13 @@ Return \`true\` if the number of global inversions is equal to the number of loc
   params: ['nums'],
   starterCode: {
     javascript: `function isIdealPermutation(nums) {
-
+  return nums.every((v, i) => Math.abs(v - i) <= 1);
 }`,
     typescript: `function isIdealPermutation(nums: number[]): boolean {
-
+  return nums.every((v, i) => Math.abs(v - i) <= 1);
 }`,
     python: `def isIdealPermutation(nums):
-    pass`,
+    return all(abs(v - i) <= 1 for i, v in enumerate(nums))`,
   },
   visibleTests: [
     { args: [[1, 0, 2]], expected: true },
