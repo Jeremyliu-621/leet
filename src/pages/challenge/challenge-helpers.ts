@@ -3,6 +3,10 @@
  * Extracted here so they can be unit-tested independently of React.
  */
 
+// Re-export the canonical extractDomain from blocking/matcher so the challenge
+// page doesn't have its own subtly-different copy.
+export { extractDomain } from '../../lib/blocking/matcher';
+
 /**
  * Parses the `?target=` query parameter from a URL search string and returns
  * the decoded target URL, or null if absent or malformed.
@@ -19,21 +23,6 @@ export function parseTargetParam(search: string): string | null {
     // Validate it is a real URL before returning.
     new URL(raw);
     return raw;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Extracts the hostname from a URL string. Returns null if the URL is invalid.
- *
- * @example
- * extractDomain('https://www.youtube.com/watch?v=abc') // 'www.youtube.com'
- * extractDomain('not a url')                           // null
- */
-export function extractDomain(url: string): string | null {
-  try {
-    return new URL(url).hostname;
   } catch {
     return null;
   }
