@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2956** problems; 9192 tests green. Batch 285+275 complete.
+**Current focus:** Bank at **2956** problems; 9228 tests green. Stubs remaining: ~700. Batches 41a-41e complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 286+); starter backfill; UX polish.
+**Next up:** Continue starter backfill (batch 41c+); bank growth (batch 286+); UX polish.
 
 ### fix(bank): batch 275 reference solutions + expected-value corrections (2026-06-02)
 Added JS/TS/Python reference solutions for 6 batch-275 problems (k-th-ancestor, count-houses-distance, max-of-min-window, count-ways-product, wear-different-hats, circular-permutation). Fixed 6 incorrect expected values: 5 in count-number-of-houses-at-a-certain-distance (BFS always gives correct results; test cases generated with buggy algorithm had wrong values for shortcuts that change path structure) and 1 in k-th-ancestor-of-a-tree-node (expected was computed for a different tree structure). All 9192 tests green.
