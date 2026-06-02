@@ -37,13 +37,26 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countPairsWithSameSum(nums, k) {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++)
+      if (nums[i] + nums[j] === k) count++;
+  return count;
 }`,
     typescript: `function countPairsWithSameSum(nums: number[], k: number): number {
-
+  let count = 0;
+  for (let i = 0; i < nums.length; i++)
+    for (let j = i + 1; j < nums.length; j++)
+      if (nums[i]! + nums[j]! === k) count++;
+  return count;
 }`,
     python: `def countPairsWithSameSum(nums: list[int], k: int) -> int:
-    pass`,
+    count = 0
+    for i in range(len(nums)):
+        for j in range(i + 1, len(nums)):
+            if nums[i] + nums[j] == k:
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 3], 6], expected: 2 },

@@ -35,12 +35,32 @@ Return *the number of operations performed* until either \`num1\` or \`num2\` be
   params: ['num1', 'num2'],
   starterCode: {
     javascript: `function countOperations(num1, num2) {
-
+  let ops = 0;
+  while (num1 !== 0 && num2 !== 0) {
+    if (num1 >= num2) num1 -= num2;
+    else num2 -= num1;
+    ops++;
+  }
+  return ops;
 }`,
-    typescript: "function countOperations(num1: number, num2: number): number {\n\n}",
-
+    typescript: `function countOperations(num1: number, num2: number): number {
+  let ops = 0;
+  while (num1 !== 0 && num2 !== 0) {
+    if (num1 >= num2) num1 -= num2;
+    else num2 -= num1;
+    ops++;
+  }
+  return ops;
+}`,
     python: `def countOperations(num1: int, num2: int) -> int:
-    pass`,
+    ops = 0
+    while num1 != 0 and num2 != 0:
+        if num1 >= num2:
+            num1 -= num2
+        else:
+            num2 -= num1
+        ops += 1
+    return ops`,
   },
   visibleTests: [
     { args: [2, 3], expected: 3 },
