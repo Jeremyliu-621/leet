@@ -36,13 +36,33 @@ Return the sum of lengths of all **good** strings in \`words\`.`,
   params: ['words', 'chars'],
   starterCode: {
     javascript: `function countCharacters(words, chars) {
-
+  const cc = {};
+  for (const c of chars) cc[c] = (cc[c] || 0) + 1;
+  let total = 0;
+  for (const w of words) {
+    const wc = {};
+    let ok = true;
+    for (const c of w) { wc[c] = (wc[c] || 0) + 1; if ((wc[c] || 0) > (cc[c] || 0)) { ok = false; break; } }
+    if (ok) total += w.length;
+  }
+  return total;
 }`,
     typescript: `function countCharacters(words: string[], chars: string): number {
-
+  const cc: Record<string, number> = {};
+  for (const c of chars) cc[c] = (cc[c] || 0) + 1;
+  let total = 0;
+  for (const w of words) {
+    const wc: Record<string, number> = {};
+    let ok = true;
+    for (const c of w) { wc[c] = (wc[c] || 0) + 1; if (wc[c] > (cc[c] || 0)) { ok = false; break; } }
+    if (ok) total += w.length;
+  }
+  return total;
 }`,
     python: `def countCharacters(words, chars):
-    pass`,
+    from collections import Counter
+    cc = Counter(chars)
+    return sum(len(w) for w in words if not (Counter(w) - cc))`,
   },
   visibleTests: [
     { args: [['cat', 'bt', 'hat', 'tree'], 'atach'], expected: 6 },

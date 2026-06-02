@@ -37,12 +37,15 @@ Note that \`|\` denotes the bitwise OR operator.`,
   params: ['nums'],
   starterCode: {
     javascript: `function xorBeauty(nums) {
-
+  return nums.reduce((acc, n) => acc ^ n, 0);
 }`,
-    typescript: "function xorBeauty(nums: number[]): number {\n\n}",
-
+    typescript: `function xorBeauty(nums: number[]): number {
+  return nums.reduce((acc, n) => acc ^ n, 0);
+}`,
     python: `def xorBeauty(nums):
-    pass`,
+    ans = 0
+    for n in nums: ans ^= n
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 4]], expected: 5 },

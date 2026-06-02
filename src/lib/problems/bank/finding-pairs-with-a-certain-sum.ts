@@ -45,13 +45,79 @@ Simulate with arrays of operations. Return results (\`null\` for void operations
   params: ['ops', 'args'],
   starterCode: {
     javascript: `function findSumPairsClass(ops, args) {
-
+  let nums1, nums2, freq;
+  const res = [];
+  for (let i = 0; i < ops.length; i++) {
+    const op = ops[i];
+    if (op === 'FindSumPairs') {
+      nums1 = args[i][0]; nums2 = args[i][1];
+      freq = new Map();
+      for (const v of nums2) freq.set(v, (freq.get(v) ?? 0) + 1);
+      res.push(null);
+    } else if (op === 'add') {
+      const [idx, val] = args[i];
+      const old = nums2[idx];
+      freq.set(old, freq.get(old) - 1);
+      nums2[idx] += val;
+      const nv = nums2[idx];
+      freq.set(nv, (freq.get(nv) ?? 0) + 1);
+      res.push(null);
+    } else {
+      const tot = args[i][0];
+      let cnt = 0;
+      for (const v of nums1) cnt += freq.get(tot - v) ?? 0;
+      res.push(cnt);
+    }
+  }
+  return res;
 }`,
     typescript: `function findSumPairsClass(ops: string[], args: unknown[][]): (number | null)[] {
-
+  let nums1: number[], nums2: number[], freq: Map<number, number>;
+  const res: (number | null)[] = [];
+  for (let i = 0; i < ops.length; i++) {
+    const op = ops[i];
+    if (op === 'FindSumPairs') {
+      [nums1, nums2] = args[i] as [number[], number[]];
+      freq = new Map();
+      for (const v of nums2) freq.set(v, (freq.get(v) ?? 0) + 1);
+      res.push(null);
+    } else if (op === 'add') {
+      const [idx, val] = args[i] as [number, number];
+      const old = nums2![idx];
+      freq!.set(old, freq!.get(old)! - 1);
+      nums2![idx] += val;
+      const nv = nums2![idx];
+      freq!.set(nv, (freq!.get(nv) ?? 0) + 1);
+      res.push(null);
+    } else {
+      const tot = (args[i] as [number])[0];
+      let cnt = 0;
+      for (const v of nums1!) cnt += freq!.get(tot - v) ?? 0;
+      res.push(cnt);
+    }
+  }
+  return res;
 }`,
     python: `def findSumPairsClass(ops, args):
-    pass`,
+    from collections import defaultdict
+    nums1 = nums2 = None
+    freq = defaultdict(int)
+    res = []
+    for op, a in zip(ops, args):
+        if op == 'FindSumPairs':
+            nums1, nums2 = a[0], list(a[1])
+            for v in nums2: freq[v] += 1
+            res.append(None)
+        elif op == 'add':
+            idx, val = a
+            freq[nums2[idx]] -= 1
+            nums2[idx] += val
+            freq[nums2[idx]] += 1
+            res.append(None)
+        else:
+            tot = a[0]
+            res.append(sum(freq[tot - v] for v in nums1))
+    return res`,
   },
   visibleTests: [
     {

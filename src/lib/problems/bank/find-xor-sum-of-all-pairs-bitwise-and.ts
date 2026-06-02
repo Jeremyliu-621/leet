@@ -40,13 +40,19 @@ A brute-force O(n × m) loop is too slow for large inputs. Find an O(n + m) solu
   params: ['arr1', 'arr2'],
   starterCode: {
     javascript: `function findXORSumOfAllPairBitwiseAND(arr1, arr2) {
-
+  const x1 = arr1.reduce((a, b) => a ^ b, 0);
+  const x2 = arr2.reduce((a, b) => a ^ b, 0);
+  return x1 & x2;
 }`,
     typescript: `function findXORSumOfAllPairBitwiseAND(arr1: number[], arr2: number[]): number {
-
+  const x1 = arr1.reduce((a, b) => a ^ b, 0);
+  const x2 = arr2.reduce((a, b) => a ^ b, 0);
+  return x1 & x2;
 }`,
     python: `def findXORSumOfAllPairBitwiseAND(arr1, arr2):
-    pass`,
+    from functools import reduce
+    from operator import xor
+    return reduce(xor, arr1) & reduce(xor, arr2)`,
   },
   visibleTests: [
     { args: [[1,2,3], [6,5,4]], expected: 0 },

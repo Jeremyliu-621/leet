@@ -43,13 +43,37 @@ Return an integer array \`answer\` of length \`n - k + 1\` where \`answer[i]\` i
   params: ['nums', 'k', 'x'],
   starterCode: {
     javascript: `function findXSumOfAllKLongSubarraysI(nums, k, x) {
-
+  const n = nums.length, res = [];
+  for (let i = 0; i <= n - k; i++) {
+    const freq = new Map();
+    for (let j = i; j < i + k; j++) freq.set(nums[j], (freq.get(nums[j]) ?? 0) + 1);
+    const sorted = [...freq.entries()].sort((a, b) => b[1] - a[1] || b[0] - a[0]);
+    let sum = 0;
+    for (let j = 0; j < Math.min(x, sorted.length); j++) sum += sorted[j][0] * sorted[j][1];
+    res.push(sum);
+  }
+  return res;
 }`,
     typescript: `function findXSumOfAllKLongSubarraysI(nums: number[], k: number, x: number): number[] {
-
+  const n = nums.length, res: number[] = [];
+  for (let i = 0; i <= n - k; i++) {
+    const freq = new Map<number, number>();
+    for (let j = i; j < i + k; j++) freq.set(nums[j], (freq.get(nums[j]) ?? 0) + 1);
+    const sorted = [...freq.entries()].sort((a, b) => b[1] - a[1] || b[0] - a[0]);
+    let sum = 0;
+    for (let j = 0; j < Math.min(x, sorted.length); j++) sum += sorted[j][0] * sorted[j][1];
+    res.push(sum);
+  }
+  return res;
 }`,
-    python: `def findXSumOfAllKLongSubarraysI(nums: list[int], k: int, x: int) -> list[int]:
-    pass`,
+    python: `def findXSumOfAllKLongSubarraysI(nums, k, x):
+    from collections import Counter
+    n, res = len(nums), []
+    for i in range(n - k + 1):
+        freq = Counter(nums[i:i+k])
+        top = sorted(freq.items(), key=lambda e: (e[1], e[0]), reverse=True)[:x]
+        res.append(sum(v * c for v, c in top))
+    return res`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 2, 3, 1], 6, 2], expected: [7] },

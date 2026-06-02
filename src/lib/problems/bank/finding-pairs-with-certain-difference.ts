@@ -41,11 +41,20 @@ Return the count of distinct pairs \`(num1, num2)\` satisfying \`num2 - num1 == 
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function findPairs(nums, k) {
-
+  const s = new Set(nums);
+  let count = 0;
+  for (const x of s) if (s.has(x + k)) count++;
+  return count;
 }`,
-    typescript: 'function findPairs(nums: number[], k: number): number {\n\n}',
+    typescript: `function findPairs(nums: number[], k: number): number {
+  const s = new Set(nums);
+  let count = 0;
+  for (const x of s) if (s.has(x + k)) count++;
+  return count;
+}`,
     python: `def findPairs(nums, k):
-    pass`,
+    s = set(nums)
+    return sum(1 for x in s if x + k in s)`,
   },
   visibleTests: [
     { args: [[3, 1, 4, 1, 5], 2], expected: 2 },

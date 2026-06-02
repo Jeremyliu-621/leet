@@ -46,12 +46,26 @@ function duplicateNumbersXOR(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function duplicateNumbersXOR(nums) {
-
+  const freq = {};
+  for (const n of nums) freq[n] = (freq[n] || 0) + 1;
+  let ans = 0;
+  for (const [k, c] of Object.entries(freq)) if (c === 2) ans ^= Number(k);
+  return ans;
 }`,
-    typescript: "function duplicateNumbersXOR(nums: number[]): number {\n\n}",
-
+    typescript: `function duplicateNumbersXOR(nums: number[]): number {
+  const freq: Record<number, number> = {};
+  for (const n of nums) freq[n] = (freq[n] || 0) + 1;
+  let ans = 0;
+  for (const [k, c] of Object.entries(freq)) if (c === 2) ans ^= Number(k);
+  return ans;
+}`,
     python: `def duplicateNumbersXOR(nums):
-    pass`,
+    from collections import Counter
+    freq = Counter(nums)
+    ans = 0
+    for k, c in freq.items():
+        if c == 2: ans ^= k
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 1, 3]], expected: 1 },

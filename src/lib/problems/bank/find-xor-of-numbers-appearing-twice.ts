@@ -38,13 +38,25 @@ Return the **bitwise XOR** of all elements that appear **exactly twice**, or \`0
   params: ['nums'],
   starterCode: {
     javascript: `function duplicateNumbersXOR(nums) {
-
+  const freq = {};
+  for (const n of nums) freq[n] = (freq[n] || 0) + 1;
+  let ans = 0;
+  for (const [k, c] of Object.entries(freq)) if (c === 2) ans ^= Number(k);
+  return ans;
 }`,
     typescript: `function duplicateNumbersXOR(nums: number[]): number {
-
+  const freq: Record<number, number> = {};
+  for (const n of nums) freq[n] = (freq[n] || 0) + 1;
+  let ans = 0;
+  for (const [k, c] of Object.entries(freq)) if (c === 2) ans ^= Number(k);
+  return ans;
 }`,
     python: `def duplicateNumbersXOR(nums: list[int]) -> int:
-    pass`,
+    from collections import Counter
+    ans = 0
+    for k, c in Counter(nums).items():
+        if c == 2: ans ^= k
+    return ans`,
   },
   functionName: 'duplicateNumbersXOR',
   visibleTests: [

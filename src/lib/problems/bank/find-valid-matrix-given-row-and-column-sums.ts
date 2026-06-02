@@ -48,11 +48,35 @@ function findValidMatrixGivenRowAndColumnSums(rowSum, colSum) {
   params: ['rowSum', 'colSum'],
   starterCode: {
     javascript: `function findValidMatrixGivenRowAndColumnSums(rowSum, colSum) {
-
+  const m = rowSum.length, n = colSum.length;
+  const mat = Array.from({length: m}, () => Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const val = Math.min(rowSum[i], colSum[j]);
+      mat[i][j] = val; rowSum[i] -= val; colSum[j] -= val;
+    }
+  }
+  return mat;
 }`,
-    typescript: 'function findValidMatrixGivenRowAndColumnSums(rowSum: number[], colSum: number[]): number[][] {\n\n}',
+    typescript: `function findValidMatrixGivenRowAndColumnSums(rowSum: number[], colSum: number[]): number[][] {
+  const m = rowSum.length, n = colSum.length;
+  const mat = Array.from({length: m}, () => Array(n).fill(0));
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const val = Math.min(rowSum[i], colSum[j]);
+      mat[i][j] = val; rowSum[i] -= val; colSum[j] -= val;
+    }
+  }
+  return mat;
+}`,
     python: `def findValidMatrixGivenRowAndColumnSums(rowSum, colSum):
-    pass`,
+    m, n = len(rowSum), len(colSum)
+    mat = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            val = min(rowSum[i], colSum[j])
+            mat[i][j] = val; rowSum[i] -= val; colSum[j] -= val
+    return mat`,
   },
   visibleTests: [
     { args: [[3, 8], [4, 7]], expected: [[3, 0], [1, 7]] },
