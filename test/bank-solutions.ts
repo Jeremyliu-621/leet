@@ -48156,4 +48156,84 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+
+  // batch 274
+  'find-different-binary-string': (...args: unknown[]) => {
+    const nums = args[0] as string[];
+    return nums.map((s, i) => (s[i] === '0' ? '1' : '0')).join('');
+  },
+
+  'earliest-second-to-mark-all-indices-i': (...args: unknown[]) => {
+    const nums = args[0] as number[], changeIndices = args[1] as number[];
+    const n = nums.length, m = changeIndices.length;
+    const feasible = (T: number): boolean => {
+      const lastOcc = new Array<number>(n).fill(-1);
+      for (let s = 0; s < T; s++) {
+        const idx = changeIndices[s]! - 1;
+        if (idx >= 0 && idx < n) lastOcc[idx] = s;
+      }
+      if (lastOcc.some(v => v === -1)) return false;
+      const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => lastOcc[a]! - lastOcc[b]!);
+      let available = 0, curPos = 0;
+      for (const i of order) {
+        const pos = lastOcc[i]!;
+        available += pos - curPos;
+        if (available < nums[i]!) return false;
+        available -= nums[i]!;
+        curPos = pos + 1;
+      }
+      return true;
+    };
+    if (!feasible(m)) return -1;
+    let lo = 1, hi = m;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (feasible(mid)) hi = mid;
+      else lo = mid + 1;
+    }
+    return lo;
+  },
+
+  'minimum-cost-to-split-an-array': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    const dp = new Array<number>(n + 1).fill(Infinity);
+    dp[0] = 0;
+    for (let j = 0; j < n; j++) {
+      if (dp[j] === Infinity) continue;
+      const freq: Record<number, number> = {};
+      let extra = 0;
+      for (let i = j; i < n; i++) {
+        const c = nums[i]!;
+        freq[c] = (freq[c] ?? 0) + 1;
+        if (freq[c] === 2) extra++;
+        const imp = (i - j + 1) + extra;
+        dp[i + 1] = Math.min(dp[i + 1]!, dp[j]! + imp + k);
+      }
+    }
+    return dp[n]!;
+  },
+
+  'count-the-repetitions': (...args: unknown[]) => {
+    const s1 = args[0] as string, n1 = args[1] as number;
+    const s2 = args[2] as string, n2 = args[3] as number;
+    const l2 = s2.length;
+    let j = 0, s2Count = 0;
+    const history = new Map<number, [number, number]>();
+    for (let i = 0; i < n1; i++) {
+      if (history.has(j)) {
+        const [prevI, prevCount] = history.get(j)!;
+        const cycleLen = i - prevI, cycleCount = s2Count - prevCount;
+        const remaining = n1 - i;
+        s2Count += Math.floor(remaining / cycleLen) * cycleCount;
+        const remI = remaining % cycleLen;
+        for (let r = 0; r < remI; r++)
+          for (const c of s1) { if (c === s2[j]) { j++; if (j === l2) { j = 0; s2Count++; } } }
+        return Math.floor(s2Count / n2);
+      }
+      history.set(j, [i, s2Count]);
+      for (const c of s1) { if (c === s2[j]) { j++; if (j === l2) { j = 0; s2Count++; } } }
+    }
+    return Math.floor(s2Count / n2);
+  },
 };

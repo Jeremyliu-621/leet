@@ -3298,6 +3298,10 @@ import { problem as takeKCharactersFromLeftAndRight } from './take-k-characters-
 import { problem as minimumExtraWhiteTilesAfterPlacingCarpets } from './minimum-extra-white-tiles-after-placing-carpets';
 import { problem as makeStringGreat } from './make-string-great';
 import { problem as minimumNumberOfFlipsToMakeBinaryStringAlternating } from './minimum-number-of-flips-to-make-the-binary-string-alternating';
+import { problem as findDifferentBinaryString } from './find-different-binary-string';
+import { problem as earliestSecondToMarkAllIndicesI } from './earliest-second-to-mark-all-indices-i';
+import { problem as minimumCostToSplitAnArray } from './minimum-cost-to-split-an-array';
+import { problem as countTheRepetitions } from './count-the-repetitions';
 // batch 248
 import { problem as validPalindromeIii } from './valid-palindrome-iii';
 import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
@@ -6703,4 +6707,9 @@ export const problems: readonly Problem[] = [
   // batch 273
   makeStringGreat,
   minimumNumberOfFlipsToMakeBinaryStringAlternating,
+  // batch 274
+  findDifferentBinaryString,
+  earliestSecondToMarkAllIndicesI,
+  minimumCostToSplitAnArray,
+  countTheRepetitions,
 ];

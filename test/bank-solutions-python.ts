@@ -47082,4 +47082,94 @@ def maxTotalReward(rewardValues):
         ans = min(ans, n - m, m)
     return ans
 `,
+
+  // batch 274
+  'find-different-binary-string': `def findDifferentBinaryString(nums):
+    return ''.join('1' if nums[i][i] == '0' else '0' for i in range(len(nums)))
+`,
+
+  'earliest-second-to-mark-all-indices-i': `def earliestSecondToMarkIndices(nums, changeIndices):
+    n, m = len(nums), len(changeIndices)
+
+    def feasible(T):
+        last_occ = [-1] * n
+        for s in range(T):
+            idx = changeIndices[s] - 1
+            if 0 <= idx < n:
+                last_occ[idx] = s
+        if -1 in last_occ:
+            return False
+        order = sorted(range(n), key=lambda i: last_occ[i])
+        available, cur_pos = 0, 0
+        for i in order:
+            pos = last_occ[i]
+            available += pos - cur_pos
+            if available < nums[i]:
+                return False
+            available -= nums[i]
+            cur_pos = pos + 1
+        return True
+
+    if not feasible(m):
+        return -1
+    lo, hi = 1, m
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if feasible(mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+`,
+
+  'minimum-cost-to-split-an-array': `def minCost(nums, k):
+    n = len(nums)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for j in range(n):
+        if dp[j] == float('inf'):
+            continue
+        freq = {}
+        extra = 0
+        for i in range(j, n):
+            c = nums[i]
+            freq[c] = freq.get(c, 0) + 1
+            if freq[c] == 2:
+                extra += 1
+            imp = (i - j + 1) + extra
+            dp[i + 1] = min(dp[i + 1], dp[j] + imp + k)
+    return dp[n]
+`,
+
+  'count-the-repetitions': `def getMaxRepetitions(s1, n1, s2, n2):
+    l2 = len(s2)
+    j = 0
+    s2_count = 0
+    history = {}
+    for i in range(n1):
+        if j in history:
+            prev_i, prev_count = history[j]
+            cycle_len = i - prev_i
+            cycle_count = s2_count - prev_count
+            remaining = n1 - i
+            full_cycles = remaining // cycle_len
+            rem_i = remaining % cycle_len
+            s2_count += full_cycles * cycle_count
+            for _ in range(rem_i):
+                for c in s1:
+                    if c == s2[j]:
+                        j += 1
+                        if j == l2:
+                            j = 0
+                            s2_count += 1
+            return s2_count // n2
+        history[j] = (i, s2_count)
+        for c in s1:
+            if c == s2[j]:
+                j += 1
+                if j == l2:
+                    j = 0
+                    s2_count += 1
+    return s2_count // n2
+`,
 };
