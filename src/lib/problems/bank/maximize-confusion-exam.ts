@@ -34,10 +34,42 @@ The teacher can change at most \`k\` answers. Return the **maximum** number of c
   functionName: 'maxConsecutiveAnswers',
   params: ['answerKey', 'k'],
   starterCode: {
-    javascript: 'function maxConsecutiveAnswers(answerKey, k) {\n  // your code here\n}\n',
-    typescript: "function maxConsecutiveAnswers(answerKey: string, k: number): number {\n  // your code here\n}",
-
-    python: 'def maxConsecutiveAnswers(answerKey, k):\n    # your code here\n    pass\n',
+    javascript: `function maxConsecutiveAnswers(answerKey, k) {
+  function solve(c) {
+    let l = 0, cnt = 0, ans = 0;
+    for (let r = 0; r < answerKey.length; r++) {
+      if (answerKey[r] !== c) cnt++;
+      while (cnt > k) { if (answerKey[l++] !== c) cnt--; }
+      ans = Math.max(ans, r - l + 1);
+    }
+    return ans;
+  }
+  return Math.max(solve('T'), solve('F'));
+}`,
+    typescript: `function maxConsecutiveAnswers(answerKey: string, k: number): number {
+  function solve(c: string): number {
+    let l = 0, cnt = 0, ans = 0;
+    for (let r = 0; r < answerKey.length; r++) {
+      if (answerKey[r] !== c) cnt++;
+      while (cnt > k) { if (answerKey[l++] !== c) cnt--; }
+      ans = Math.max(ans, r - l + 1);
+    }
+    return ans;
+  }
+  return Math.max(solve('T'), solve('F'));
+}`,
+    python: `def maxConsecutiveAnswers(answerKey, k):
+    if hasattr(answerKey, 'to_py'): answerKey = answerKey.to_py()
+    def solve(c):
+        l = cnt = ans = 0
+        for r in range(len(answerKey)):
+            if answerKey[r] != c: cnt += 1
+            while cnt > k:
+                if answerKey[l] != c: cnt -= 1
+                l += 1
+            ans = max(ans, r - l + 1)
+        return ans
+    return max(solve('T'), solve('F'))`,
   },
   visibleTests: [
     { args: ['TTFF', 2], expected: 4 },

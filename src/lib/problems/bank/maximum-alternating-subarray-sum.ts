@@ -42,13 +42,34 @@ Given an integer array \`nums\`, return the **maximum alternating sum** over all
   params: ['nums'],
   starterCode: {
     javascript: `function alternatingSubarraySum(nums) {
-  // your code here
+  let pos = -Infinity, neg = -Infinity, best = -Infinity;
+  for (const n of nums) {
+    const newPos = Math.max(n, neg + n);
+    const newNeg = pos - n;
+    pos = newPos; neg = newNeg;
+    best = Math.max(best, pos);
+  }
+  return best;
 }`,
-    typescript: "function alternatingSubarraySum(nums: number[]): number {\n  // your code here\n}",
-
+    typescript: `function alternatingSubarraySum(nums: number[]): number {
+  let pos = -Infinity, neg = -Infinity, best = -Infinity;
+  for (const n of nums) {
+    const newPos = Math.max(n, neg + n);
+    const newNeg = pos - n;
+    pos = newPos; neg = newNeg;
+    best = Math.max(best, pos);
+  }
+  return best;
+}`,
     python: `def alternatingSubarraySum(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    pos = neg = best = float('-inf')
+    for n in nums:
+        new_pos = max(n, neg + n)
+        new_neg = pos - n
+        pos, neg = new_pos, new_neg
+        best = max(best, pos)
+    return best`,
   },
   visibleTests: [
     { args: [[3, -1, 1, 2]], expected: 5 },

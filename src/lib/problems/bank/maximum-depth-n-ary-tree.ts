@@ -93,10 +93,36 @@ The tree is serialized as a level-order flat array where each group of children 
   params: ['root'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// Node class and maxDepthRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxDepth(root) {\n  // your code here\n}\n',
-    typescript: "function maxDepthRunner(root: (number | null)[]): number {\n  // your code here\n}",
-
-    python: '# Node class and maxDepthRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxDepth(root):\n    # your code here\n    pass\n',
+    javascript: `// Node class and maxDepthRunner wrapper are pre-defined.
+// Implement the function below:
+function maxDepth(root) {
+  if (!root) return 0;
+  if (!root.children.length) return 1;
+  return 1 + Math.max(...root.children.map(maxDepth));
+}`,
+    typescript: `function maxDepthRunner(root: (number | null)[]): number {
+  if (!root || root.length === 0) return 0;
+  class TN { val: number; children: TN[] = []; constructor(v: number) { this.val = v; } }
+  const r = new TN(root[0]!);
+  const q: TN[] = [r]; let i = 2;
+  while (i < root.length && q.length > 0) {
+    const node = q.shift()!;
+    while (i < root.length && root[i] !== null) {
+      const c = new TN(root[i]!); node.children.push(c); q.push(c); i++;
+    }
+    i++;
+  }
+  function depth(n: TN): number {
+    return n.children.length === 0 ? 1 : 1 + Math.max(...n.children.map(depth));
+  }
+  return depth(r);
+}`,
+    python: `# Node class and maxDepthRunner wrapper are pre-defined.
+# Implement the function below:
+def maxDepth(root):
+    if not root: return 0
+    if not root.children: return 1
+    return 1 + max(maxDepth(c) for c in root.children)`,
   },
   hints: [
     'If root is null/None, return 0. Otherwise, the depth is 1 + the maximum depth among all children.',

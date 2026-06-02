@@ -24,10 +24,25 @@ You must write an algorithm that runs in linear time and uses linear extra space
   functionName: 'maximumGap',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maximumGap(nums) {\n  // your code here\n}\n',
-    typescript: "function maximumGap(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def maximumGap(nums):\n    # your code here\n    pass\n',
+    javascript: `function maximumGap(nums) {
+  if (nums.length < 2) return 0;
+  nums.sort((a, b) => a - b);
+  let max = 0;
+  for (let i = 1; i < nums.length; i++) max = Math.max(max, nums[i] - nums[i - 1]);
+  return max;
+}`,
+    typescript: `function maximumGap(nums: number[]): number {
+  if (nums.length < 2) return 0;
+  nums.sort((a, b) => a - b);
+  let max = 0;
+  for (let i = 1; i < nums.length; i++) max = Math.max(max, nums[i]! - nums[i - 1]!);
+  return max;
+}`,
+    python: `def maximumGap(nums):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    if len(nums) < 2: return 0
+    nums.sort()
+    return max(nums[i] - nums[i - 1] for i in range(1, len(nums)))`,
   },
   visibleTests: [
     { args: [[3, 6, 9, 1]], expected: 3 },

@@ -46,10 +46,59 @@ Return the **maximum** number of prizes you can win.
   functionName: 'maximizeWin',
   params: ['prizePositions', 'k'],
   starterCode: {
-    javascript: 'function maximizeWin(prizePositions, k) {\n  // your code here\n}\n',
-    typescript: "function maximizeWin(prizePositions: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def maximizeWin(prizePositions, k):\n    # your code here\n    pass\n',
+    javascript: `function maximizeWin(prizePositions, k) {
+  const n = prizePositions.length;
+  const best = new Array(n + 1).fill(0);
+  let l = 0, ans = 0;
+  for (let r = 0; r < n; r++) {
+    while (prizePositions[r] - prizePositions[l] > k) l++;
+    const windowSize = r - l + 1;
+    // binary search for last j where prizePositions[j] <= prizePositions[r] - k - 1
+    let lo = 0, hi = r;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (prizePositions[mid] <= prizePositions[r] - k - 1) lo = mid;
+      else hi = mid - 1;
+    }
+    const j = prizePositions[lo] <= prizePositions[r] - k - 1 ? lo : -1;
+    ans = Math.max(ans, windowSize + (j >= 0 ? best[j + 1] : 0));
+    best[r + 1] = Math.max(best[r], windowSize);
+  }
+  return ans;
+}`,
+    typescript: `function maximizeWin(prizePositions: number[], k: number): number {
+  const n = prizePositions.length;
+  const best = new Array<number>(n + 1).fill(0);
+  let l = 0, ans = 0;
+  for (let r = 0; r < n; r++) {
+    while (prizePositions[r]! - prizePositions[l]! > k) l++;
+    const windowSize = r - l + 1;
+    let lo = 0, hi = r;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (prizePositions[mid]! <= prizePositions[r]! - k - 1) lo = mid;
+      else hi = mid - 1;
+    }
+    const j = prizePositions[lo]! <= prizePositions[r]! - k - 1 ? lo : -1;
+    ans = Math.max(ans, windowSize + (j >= 0 ? best[j + 1]! : 0));
+    best[r + 1] = Math.max(best[r]!, windowSize);
+  }
+  return ans;
+}`,
+    python: `def maximizeWin(prizePositions, k):
+    prizePositions = list(prizePositions.to_py()) if hasattr(prizePositions, 'to_py') else list(prizePositions)
+    import bisect
+    n = len(prizePositions)
+    best = [0] * (n + 1)
+    l = ans = 0
+    for r in range(n):
+        while prizePositions[r] - prizePositions[l] > k: l += 1
+        window_size = r - l + 1
+        boundary = prizePositions[r] - k - 1
+        j = bisect.bisect_right(prizePositions, boundary) - 1
+        ans = max(ans, window_size + (best[j + 1] if j >= 0 else 0))
+        best[r + 1] = max(best[r], window_size)
+    return ans`,
   },
   visibleTests: [
     { args: [[1,1,2,2,3,3,5], 2], expected: 7 },
