@@ -37,13 +37,19 @@ Given two integers \`targetX\` and \`targetY\`, return \`true\` if you can reach
   params: ['targetX', 'targetY'],
   starterCode: {
     javascript: `function isReachable(targetX, targetY) {
-
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  const g = gcd(targetX, targetY);
+  return (g & (g - 1)) === 0;
 }`,
     typescript: `function isReachable(targetX: number, targetY: number): boolean {
-
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const g = gcd(targetX, targetY);
+  return (g & (g - 1)) === 0;
 }`,
     python: `def isReachable(targetX, targetY):
-    pass`,
+    from math import gcd
+    g = gcd(targetX, targetY)
+    return (g & (g - 1)) == 0`,
   },
   visibleTests: [
     { args: [6, 9], expected: false },

@@ -40,12 +40,24 @@ Return the index of the word in \`sentence\` (1-indexed) where \`searchWord\` is
   params: ['sentence', 'searchWord'],
   starterCode: {
     javascript: `function isPrefixOfWord(sentence, searchWord) {
-
+  const words = sentence.split(' ');
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].startsWith(searchWord)) return i + 1;
+  }
+  return -1;
 }`,
-    typescript: "function isPrefixOfWord(sentence: string, searchWord: string): number {\n\n}",
-
+    typescript: `function isPrefixOfWord(sentence: string, searchWord: string): number {
+  const words = sentence.split(' ');
+  for (let i = 0; i < words.length; i++) {
+    if (words[i]!.startsWith(searchWord)) return i + 1;
+  }
+  return -1;
+}`,
     python: `def isPrefixOfWord(sentence, searchWord):
-    pass`,
+    for i, word in enumerate(sentence.split(), 1):
+        if word.startswith(searchWord):
+            return i
+    return -1`,
   },
   visibleTests: [
     { args: ['i love eating burger', 'burg'], expected: 4 },

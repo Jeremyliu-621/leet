@@ -38,12 +38,50 @@ Return \`true\` if at least one valid partition exists, otherwise return \`false
   params: ['nums'],
   starterCode: {
     javascript: `function validPartition(nums) {
-
+  const n = nums.length;
+  const dp = new Array(n + 1).fill(false);
+  dp[0] = true;
+  for (let i = 2; i <= n; i++) {
+    const a = nums[i-1], b = nums[i-2];
+    if (a === b && dp[i-2]) dp[i] = true;
+    if (i >= 3) {
+      const c = nums[i-3];
+      if (a === b && b === c && dp[i-3]) dp[i] = true;
+      if (a === b+1 && b === c+1 && dp[i-3]) dp[i] = true;
+    }
+  }
+  return dp[n];
 }`,
-    typescript: "function validPartition(nums: number[]): boolean {\n\n}",
-
+    typescript: `function validPartition(nums: number[]): boolean {
+  const n = nums.length;
+  const dp = new Array(n + 1).fill(false) as boolean[];
+  dp[0] = true;
+  for (let i = 2; i <= n; i++) {
+    const a = nums[i-1]!, b = nums[i-2]!;
+    if (a === b && dp[i-2]) dp[i] = true;
+    if (i >= 3) {
+      const c = nums[i-3]!;
+      if (a === b && b === c && dp[i-3]) dp[i] = true;
+      if (a === b+1 && b === c+1 && dp[i-3]) dp[i] = true;
+    }
+  }
+  return dp[n]!;
+}`,
     python: `def validPartition(nums):
-    pass`,
+    n = len(nums)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(2, n + 1):
+        a, b = nums[i-1], nums[i-2]
+        if a == b and dp[i-2]:
+            dp[i] = True
+        if i >= 3:
+            c = nums[i-3]
+            if a == b == c and dp[i-3]:
+                dp[i] = True
+            if a == b+1 == c+2 and dp[i-3]:
+                dp[i] = True
+    return dp[n]`,
   },
   visibleTests: [
     { args: [[4, 4, 4, 5, 6]], expected: true },

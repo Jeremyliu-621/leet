@@ -37,13 +37,34 @@ Return \`true\` if \`s\` is a valid string, or \`false\` otherwise.`,
   params: ['s'],
   starterCode: {
     javascript: `function isValid(s) {
-
+  const stack = [];
+  for (const c of s) {
+    stack.push(c);
+    const l = stack.length;
+    if (l >= 3 && stack[l-1] === 'c' && stack[l-2] === 'b' && stack[l-3] === 'a') {
+      stack.splice(l - 3, 3);
+    }
+  }
+  return stack.length === 0;
 }`,
     typescript: `function isValid(s: string): boolean {
-
+  const stack: string[] = [];
+  for (const c of s) {
+    stack.push(c);
+    const l = stack.length;
+    if (l >= 3 && stack[l-1] === 'c' && stack[l-2] === 'b' && stack[l-3] === 'a') {
+      stack.splice(l - 3, 3);
+    }
+  }
+  return stack.length === 0;
 }`,
     python: `def isValid(s):
-    pass`,
+    stack = []
+    for c in s:
+        stack.append(c)
+        if len(stack) >= 3 and stack[-3:] == ['a', 'b', 'c']:
+            del stack[-3:]
+    return len(stack) == 0`,
   },
   visibleTests: [
     { args: ['aabcbc'], expected: true },

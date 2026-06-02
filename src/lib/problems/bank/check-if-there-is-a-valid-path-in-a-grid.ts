@@ -47,13 +47,89 @@ Return \`true\` *if there is a valid path in the grid starting from the upper le
   params: ['grid'],
   starterCode: {
     javascript: `function hasValidPath(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  // For each street type, the two directions it connects [dr, dc]
+  const dirs = [
+    [],
+    [[0,-1],[0,1]],   // 1: L,R
+    [[-1,0],[1,0]],   // 2: U,D
+    [[0,-1],[1,0]],   // 3: L,D
+    [[0,1],[1,0]],    // 4: R,D
+    [[0,-1],[-1,0]],  // 5: L,U
+    [[0,1],[-1,0]],   // 6: R,U
+  ];
+  const vis = Array.from({length: m}, () => new Array(n).fill(false));
+  const q = [[0, 0]];
+  vis[0][0] = true;
+  while (q.length) {
+    const [r, c] = q.shift();
+    if (r === m-1 && c === n-1) return true;
+    for (const [dr, dc] of dirs[grid[r][c]]) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= m || nc < 0 || nc >= n || vis[nr][nc]) continue;
+      const connects = dirs[grid[nr][nc]].some(([dr2, dc2]) => dr2 === -dr && dc2 === -dc);
+      if (!connects) continue;
+      vis[nr][nc] = true;
+      q.push([nr, nc]);
+    }
+  }
+  return vis[m-1][n-1];
 }`,
     typescript: `function hasValidPath(grid: number[][]): boolean {
-
+  const m = grid.length, n = grid[0]!.length;
+  const dirs: number[][][] = [
+    [],
+    [[0,-1],[0,1]],
+    [[-1,0],[1,0]],
+    [[0,-1],[1,0]],
+    [[0,1],[1,0]],
+    [[0,-1],[-1,0]],
+    [[0,1],[-1,0]],
+  ];
+  const vis = Array.from({length: m}, () => new Array(n).fill(false)) as boolean[][];
+  const q: number[][] = [[0, 0]];
+  vis[0]![0] = true;
+  while (q.length) {
+    const [r, c] = q.shift()!;
+    if (r === m-1 && c === n-1) return true;
+    for (const [dr, dc] of dirs[grid[r]![c]!]!) {
+      const nr = r + dr!, nc = c + dc!;
+      if (nr < 0 || nr >= m || nc < 0 || nc >= n || vis[nr]![nc]) continue;
+      const connects = dirs[grid[nr]![nc]!]!.some(([dr2, dc2]) => dr2 === -dr! && dc2 === -dc!);
+      if (!connects) continue;
+      vis[nr]![nc] = true;
+      q.push([nr, nc]);
+    }
+  }
+  return vis[m-1]![n-1]!;
 }`,
     python: `def hasValidPath(grid):
-    pass`,
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    dirs = [
+        [],
+        [(0,-1),(0,1)],
+        [(-1,0),(1,0)],
+        [(0,-1),(1,0)],
+        [(0,1),(1,0)],
+        [(0,-1),(-1,0)],
+        [(0,1),(-1,0)],
+    ]
+    vis = [[False]*n for _ in range(m)]
+    q = deque([(0, 0)])
+    vis[0][0] = True
+    while q:
+        r, c = q.popleft()
+        if r == m-1 and c == n-1:
+            return True
+        for dr, dc in dirs[grid[r][c]]:
+            nr, nc = r + dr, c + dc
+            if not (0 <= nr < m and 0 <= nc < n) or vis[nr][nc]:
+                continue
+            if any(dr2 == -dr and dc2 == -dc for dr2, dc2 in dirs[grid[nr][nc]]):
+                vis[nr][nc] = True
+                q.append((nr, nc))
+    return vis[m-1][n-1]`,
   },
   visibleTests: [
     { args: [[[2, 4, 3], [6, 5, 2]]], expected: true },

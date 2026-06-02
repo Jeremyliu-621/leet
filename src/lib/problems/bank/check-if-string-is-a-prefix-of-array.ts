@@ -42,13 +42,32 @@ Return \`true\` if \`s\` is a prefix string of \`words\`, or \`false\` otherwise
   params: ['s', 'words'],
   starterCode: {
     javascript: `function isPrefixString(s, words) {
-
+  let acc = '';
+  for (const w of words) {
+    acc += w;
+    if (acc === s) return true;
+    if (acc.length >= s.length) break;
+  }
+  return false;
 }`,
     typescript: `function isPrefixString(s: string, words: string[]): boolean {
-
+  let acc = '';
+  for (const w of words) {
+    acc += w;
+    if (acc === s) return true;
+    if (acc.length >= s.length) break;
+  }
+  return false;
 }`,
     python: `def isPrefixString(s, words):
-    pass`,
+    acc = ''
+    for w in words:
+        acc += w
+        if acc == s:
+            return True
+        if len(acc) >= len(s):
+            break
+    return False`,
   },
   visibleTests: [
     { args: ['iloveleetcode', ['i', 'love', 'leetcode', 'apples']], expected: true },

@@ -46,13 +46,69 @@ Return \`true\` if there exists a valid parentheses string path in the grid, or 
   params: ['grid'],
   starterCode: {
     javascript: `function hasValidPath(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  if ((m + n) % 2 === 0) return false;
+  const maxBal = Math.floor((m + n - 1) / 2);
+  // dp[i][j] = Set of reachable balances (open count - close count)
+  const dp = Array.from({length: m}, () => Array.from({length: n}, () => new Set()));
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const delta = grid[i][j] === '(' ? 1 : -1;
+      const src = new Set();
+      if (i === 0 && j === 0) src.add(0);
+      if (i > 0) dp[i-1][j].forEach(b => src.add(b));
+      if (j > 0) dp[i][j-1].forEach(b => src.add(b));
+      src.forEach(b => {
+        const nb = b + delta;
+        if (nb >= 0 && nb <= maxBal) dp[i][j].add(nb);
+      });
+    }
+  }
+  return dp[m-1][n-1].has(0);
 }`,
     typescript: `function hasValidPath(grid: string[][]): boolean {
-
+  const m = grid.length, n = grid[0]!.length;
+  if ((m + n) % 2 === 0) return false;
+  const maxBal = Math.floor((m + n - 1) / 2);
+  const dp: Set<number>[][] = Array.from({length: m}, () =>
+    Array.from({length: n}, () => new Set<number>())
+  );
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const delta = grid[i]![j] === '(' ? 1 : -1;
+      const src = new Set<number>();
+      if (i === 0 && j === 0) src.add(0);
+      if (i > 0) dp[i-1]![j]!.forEach(b => src.add(b));
+      if (j > 0) dp[i]![j-1]!.forEach(b => src.add(b));
+      src.forEach(b => {
+        const nb = b + delta;
+        if (nb >= 0 && nb <= maxBal) dp[i]![j]!.add(nb);
+      });
+    }
+  }
+  return dp[m-1]![n-1]!.has(0);
 }`,
     python: `def hasValidPath(grid):
-    pass`,
+    m, n = len(grid), len(grid[0])
+    if (m + n) % 2 == 0:
+        return False
+    max_bal = (m + n - 1) // 2
+    dp = [[set() for _ in range(n)] for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            delta = 1 if grid[i][j] == '(' else -1
+            src = set()
+            if i == 0 and j == 0:
+                src.add(0)
+            if i > 0:
+                src |= dp[i-1][j]
+            if j > 0:
+                src |= dp[i][j-1]
+            for b in src:
+                nb = b + delta
+                if 0 <= nb <= max_bal:
+                    dp[i][j].add(nb)
+    return 0 in dp[m-1][n-1]`,
   },
   visibleTests: [
     {
