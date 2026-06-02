@@ -34,13 +34,32 @@ Return the length of the **longest semi-repetitive substring** within \`s\`.`,
   params: ['s'],
   starterCode: {
     javascript: `function longestSemiRepetitiveSubstring(s) {
-
+  let left = 0, pairs = 0, ans = 1;
+  for (let r = 1; r < s.length; r++) {
+    if (s[r] === s[r - 1]) pairs++;
+    while (pairs > 1) { if (s[left] === s[left + 1]) pairs--; left++; }
+    ans = Math.max(ans, r - left + 1);
+  }
+  return ans;
 }`,
     typescript: `function longestSemiRepetitiveSubstring(s: string): number {
-
+  let left = 0, pairs = 0, ans = 1;
+  for (let r = 1; r < s.length; r++) {
+    if (s[r] === s[r - 1]) pairs++;
+    while (pairs > 1) { if (s[left] === s[left + 1]) pairs--; left++; }
+    ans = Math.max(ans, r - left + 1);
+  }
+  return ans;
 }`,
     python: `def longestSemiRepetitiveSubstring(s):
-    pass`,
+    left = pairs = 0; ans = 1
+    for r in range(1, len(s)):
+        if s[r] == s[r-1]: pairs += 1
+        while pairs > 1:
+            if s[left] == s[left+1]: pairs -= 1
+            left += 1
+        ans = max(ans, r - left + 1)
+    return ans`,
   },
   visibleTests: [
     { args: ['52233'], expected: 4 },
