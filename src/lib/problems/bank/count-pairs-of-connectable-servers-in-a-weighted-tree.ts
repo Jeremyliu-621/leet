@@ -46,13 +46,52 @@ Return an integer array \`result\` of size \`n\` where \`result[i]\` is the numb
   params: ['edges', 'signalSpeed'],
   starterCode: {
     javascript: `function countPairsOfConnectableServers(edges, signalSpeed) {
-
+  const n = edges.length + 1;
+  // Build adjacency list: adj[u] = [[v, weight], ...]
+  const adj = Array.from({ length: n }, () => []);
+  for (const [a, b, w] of edges) {
+    adj[a].push([b, w]);
+    adj[b].push([a, w]);
+  }
+  const result = new Array(n).fill(0);
+  for (let k = 0; k < n; k++) {
+    // For each neighbor branch of k, count nodes reachable with dist % signalSpeed === 0
+    // Use running product: for each new branch count c, pairs += prev * c, prev += c
+    // TODO: DFS each branch from k (excluding k) counting valid nodes
+  }
+  return result;
 }`,
     typescript: `function countPairsOfConnectableServers(edges: number[][], signalSpeed: number): number[] {
-
+  const n = edges.length + 1;
+  // Build adjacency list: adj[u] = [[v, weight], ...]
+  const adj: [number, number][][] = Array.from({ length: n }, () => []);
+  for (const [a, b, w] of edges) {
+    adj[a].push([b, w]);
+    adj[b].push([a, w]);
+  }
+  const result = new Array(n).fill(0);
+  for (let k = 0; k < n; k++) {
+    // For each neighbor branch of k, count nodes reachable with dist % signalSpeed === 0
+    // Use running product: for each new branch count c, pairs += prev * c, prev += c
+    // TODO: DFS each branch from k (excluding k) counting valid nodes
+  }
+  return result;
 }`,
-    python: `def countPairsOfConnectableServers(edges, signalSpeed):
-    pass`,
+    python: `def countPairsOfConnectableServers(edges: list[list[int]], signal_speed: int) -> list[int]:
+    from collections import defaultdict
+    n = len(edges) + 1
+    # Build adjacency list: adj[u] = [(v, weight), ...]
+    adj = defaultdict(list)
+    for a, b, w in edges:
+        adj[a].append((b, w))
+        adj[b].append((a, w))
+    result = [0] * n
+    for k in range(n):
+        # For each neighbor branch of k, count nodes reachable with dist % signal_speed == 0
+        # Use running product: for each new branch count c, pairs += prev * c, prev += c
+        # TODO: DFS each branch from k (excluding k) counting valid nodes
+        pass
+    return result`,
   },
   visibleTests: [
     { args: [[[0, 1, 1], [1, 2, 5], [2, 3, 13], [3, 4, 9], [4, 5, 2]], 1], expected: [0, 4, 6, 6, 4, 0] },

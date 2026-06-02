@@ -42,13 +42,58 @@ You may use each card **exactly once** and you may use any parentheses arrangeme
   params: ['cards'],
   starterCode: {
     javascript: `function judgePoint24(cards) {
-
+  const EPS = 1e-6;
+  function solve(nums) {
+    if (nums.length === 1) return Math.abs(nums[0] - 24) < EPS;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = 0; j < nums.length; j++) {
+        if (i === j) continue;
+        const rest = nums.filter((_, k) => k !== i && k !== j);
+        const a = nums[i], b = nums[j];
+        const cands = [a + b, a - b, a * b];
+        if (Math.abs(b) > EPS) cands.push(a / b);
+        // TODO: recurse on each candidate combined with rest
+      }
+    }
+    return false;
+  }
+  return solve(cards.map(Number));
 }`,
     typescript: `function judgePoint24(cards: number[]): boolean {
-
+  const EPS = 1e-6;
+  function solve(nums: number[]): boolean {
+    if (nums.length === 1) return Math.abs(nums[0] - 24) < EPS;
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = 0; j < nums.length; j++) {
+        if (i === j) continue;
+        const rest = nums.filter((_, k) => k !== i && k !== j);
+        const a = nums[i], b = nums[j];
+        const cands = [a + b, a - b, a * b];
+        if (Math.abs(b) > EPS) cands.push(a / b);
+        // TODO: recurse on each candidate combined with rest
+      }
+    }
+    return false;
+  }
+  return solve(cards.map(Number));
 }`,
     python: `def judgePoint24(cards: list[int]) -> bool:
-    pass`,
+    EPS = 1e-6
+    def solve(nums):
+        if len(nums) == 1:
+            return abs(nums[0] - 24) < EPS
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                if i == j:
+                    continue
+                rest = [nums[k] for k in range(len(nums)) if k != i and k != j]
+                a, b = nums[i], nums[j]
+                cands = [a + b, a - b, a * b]
+                if abs(b) > EPS:
+                    cands.append(a / b)
+                # TODO: recurse on each candidate combined with rest
+        return False
+    return solve([float(c) for c in cards])`,
   },
   visibleTests: [
     { args: [[4, 1, 8, 7]], expected: true },

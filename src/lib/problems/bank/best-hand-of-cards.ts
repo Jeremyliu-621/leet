@@ -49,13 +49,31 @@ Return a string representing the **best** hand you can make with the given cards
   params: ['ranks', 'suits'],
   starterCode: {
     javascript: `function bestHand(ranks, suits) {
-
+  // Check Flush: all suits the same
+  const suitSet = new Set(suits);
+  // Build rank frequency map
+  const rankFreq = new Map();
+  for (const r of ranks) rankFreq.set(r, (rankFreq.get(r) || 0) + 1);
+  const maxRankFreq = Math.max(...rankFreq.values());
+  // TODO: return "Flush", "Three of a Kind", "Pair", or "High Card" in order
 }`,
     typescript: `function bestHand(ranks: number[], suits: string[]): string {
-
+  // Check Flush: all suits the same
+  const suitSet = new Set(suits);
+  // Build rank frequency map
+  const rankFreq = new Map<number, number>();
+  for (const r of ranks) rankFreq.set(r, (rankFreq.get(r) ?? 0) + 1);
+  const maxRankFreq = Math.max(...rankFreq.values());
+  // TODO: return "Flush", "Three of a Kind", "Pair", or "High Card" in order
 }`,
-    python: `def bestHand(ranks, suits):
-    pass`,
+    python: `def bestHand(ranks: list[int], suits: list[str]) -> str:
+    from collections import Counter
+    # Check Flush: all suits the same
+    suit_set = set(suits)
+    # Build rank frequency map
+    rank_freq = Counter(ranks)
+    max_rank_freq = max(rank_freq.values())
+    # TODO: return "Flush", "Three of a Kind", "Pair", or "High Card" in order`,
   },
   visibleTests: [
     { args: [[13, 2, 3, 1, 9], ['a', 'a', 'a', 'a', 'a']], expected: 'Flush' },

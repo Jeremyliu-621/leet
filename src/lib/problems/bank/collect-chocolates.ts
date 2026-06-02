@@ -37,13 +37,44 @@ Return the **minimum cost** to collect chocolates of all types, given that you c
   params: ['nums', 'x'],
   starterCode: {
     javascript: `function minCost(nums, x) {
-
+  const n = nums.length;
+  // minCost[i] = cheapest way to collect type i given j rotations so far
+  const minCol = [...nums];
+  let ans = nums.reduce((s, v) => s + v, 0); // 0 rotations
+  for (let j = 1; j < n; j++) {
+    // After j rotations, type i can also be collected from position (i-j+n)%n
+    for (let i = 0; i < n; i++) {
+      minCol[i] = Math.min(minCol[i], nums[(i - j + n) % n]);
+    }
+    // TODO: update ans = min(ans, j*x + sum(minCol))
+  }
+  return ans;
 }`,
     typescript: `function minCost(nums: number[], x: number): number {
-
+  const n = nums.length;
+  // minCol[i] = cheapest way to collect type i given j rotations so far
+  const minCol = [...nums];
+  let ans = nums.reduce((s, v) => s + v, 0); // 0 rotations
+  for (let j = 1; j < n; j++) {
+    // After j rotations, type i can also be collected from position (i-j+n)%n
+    for (let i = 0; i < n; i++) {
+      minCol[i] = Math.min(minCol[i], nums[(i - j + n) % n]);
+    }
+    // TODO: update ans = min(ans, j*x + sum(minCol))
+  }
+  return ans;
 }`,
-    python: `def minCost(nums, x):
-    pass`,
+    python: `def minCost(nums: list[int], x: int) -> int:
+    n = len(nums)
+    # min_col[i] = cheapest way to collect type i given j rotations so far
+    min_col = nums[:]
+    ans = sum(nums)  # 0 rotations
+    for j in range(1, n):
+        # After j rotations, type i can also be collected from position (i-j)%n
+        for i in range(n):
+            min_col[i] = min(min_col[i], nums[(i - j) % n])
+        # TODO: update ans = min(ans, j*x + sum(min_col))
+    return ans`,
   },
   visibleTests: [
     { args: [[20, 1, 15], 5], expected: 13 },

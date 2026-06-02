@@ -40,12 +40,47 @@ Note: A digit is **odd** if it is in \`{1, 3, 5, 7, 9}\` and **even** if it is i
   params: ['n'],
   starterCode: {
     javascript: `function closestFair(n) {
-
+  function countDigits(x) {
+    let even = 0, odd = 0;
+    while (x > 0) {
+      const d = x % 10;
+      d % 2 === 0 ? even++ : odd++;
+      x = Math.floor(x / 10);
+    }
+    return { even, odd };
+  }
+  // A fair number must have an even total digit count (equal halves)
+  // If n has odd digits, jump to 10^(numDigits) — the next even-length start
+  // Otherwise scan forward until even === odd
 }`,
     typescript: `function closestFair(n: number): number {
-
+  function countDigits(x: number) {
+    let even = 0, odd = 0;
+    while (x > 0) {
+      const d = x % 10;
+      d % 2 === 0 ? even++ : odd++;
+      x = Math.floor(x / 10);
+    }
+    return { even, odd };
+  }
+  // A fair number must have an even total digit count (equal halves)
+  // If n has odd digits, jump to 10^(numDigits) — the next even-length start
+  // Otherwise scan forward until even === odd
 }`,
-    python: `def closestFair(n):
+    python: `def closestFair(n: int) -> int:
+    def count_digits(x):
+        even = odd = 0
+        while x > 0:
+            d = x % 10
+            if d % 2 == 0:
+                even += 1
+            else:
+                odd += 1
+            x //= 10
+        return even, odd
+    # A fair number must have an even total digit count (equal halves)
+    # If n has odd digits, jump to 10^(num_digits) — the next even-length start
+    # Otherwise scan forward until even == odd
     pass`,
   },
   visibleTests: [

@@ -40,13 +40,53 @@ Return the **maximum** possible frequency score after performing at most \`k\` o
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maxFrequencyScore(nums, k) {
-
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  // prefix[i] = sum of nums[0..i-1]
+  const prefix = [0];
+  for (const x of nums) prefix.push(prefix[prefix.length - 1] + x);
+  // Cost to raise all elements in window [l,r] to nums[r]:
+  // = nums[r]*(r-l+1) - (prefix[r+1] - prefix[l])
+  let ans = 0, left = 0;
+  for (let right = 0; right < n; right++) {
+    // Shrink window while cost > k
+    // With leftover ops, we can raise target by floor(leftover / windowSize)
+    // TODO: compute score = windowSize * (nums[right] + extra) and track max
+  }
+  return ans;
 }`,
     typescript: `function maxFrequencyScore(nums: number[], k: number): number {
-
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  // prefix[i] = sum of nums[0..i-1]
+  const prefix = [0];
+  for (const x of nums) prefix.push(prefix[prefix.length - 1] + x);
+  // Cost to raise all elements in window [l,r] to nums[r]:
+  // = nums[r]*(r-l+1) - (prefix[r+1] - prefix[l])
+  let ans = 0, left = 0;
+  for (let right = 0; right < n; right++) {
+    // Shrink window while cost > k
+    // With leftover ops, raise target by floor(leftover / windowSize)
+    // TODO: compute score = windowSize * (nums[right] + extra) and track max
+  }
+  return ans;
 }`,
-    python: `def maxFrequencyScore(nums, k):
-    pass`,
+    python: `def maxFrequencyScore(nums: list[int], k: int) -> int:
+    nums.sort()
+    n = len(nums)
+    # prefix[i] = sum of nums[0..i-1]
+    prefix = [0] * (n + 1)
+    for i, x in enumerate(nums):
+        prefix[i + 1] = prefix[i] + x
+    # Cost to raise all elements in window [l,r] to nums[r]:
+    # = nums[r]*(r-l+1) - (prefix[r+1] - prefix[l])
+    ans, left = 0, 0
+    for right in range(n):
+        # Shrink window while cost > k
+        # With leftover ops, raise target by leftover // window_size
+        # TODO: compute score = window_size * (nums[right] + extra) and track max
+        pass
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 1], expected: 8 },

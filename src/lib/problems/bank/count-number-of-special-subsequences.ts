@@ -37,13 +37,45 @@ Given an integer array \`nums\` containing only \`0\`, \`1\`, and \`2\`, return 
   params: ['nums'],
   starterCode: {
     javascript: `function countSpecialSubsequences(nums) {
-
+  const MOD = 1_000_000_007n;
+  // dp0 = # non-empty subsequences of all 0s ending here
+  // dp1 = # subsequences matching 0+1+ ending here
+  // dp2 = # complete special subsequences (0+1+2+) ending here
+  let dp0 = 0n, dp1 = 0n, dp2 = 0n;
+  for (const x of nums) {
+    if (x === 0) dp0 = (2n * dp0 + 1n) % MOD;       // extend or start new 0-section
+    else if (x === 1) dp1 = (2n * dp1 + dp0) % MOD;  // extend or start 1-section
+    else /* x === 2 */ { /* TODO: update dp2 similarly */ }
+  }
+  return Number(dp2);
 }`,
     typescript: `function countSpecialSubsequences(nums: number[]): number {
-
+  const MOD = 1_000_000_007n;
+  // dp0 = # non-empty subsequences of all 0s ending here
+  // dp1 = # subsequences matching 0+1+ ending here
+  // dp2 = # complete special subsequences (0+1+2+) ending here
+  let dp0 = 0n, dp1 = 0n, dp2 = 0n;
+  for (const x of nums) {
+    if (x === 0) dp0 = (2n * dp0 + 1n) % MOD;       // extend or start new 0-section
+    else if (x === 1) dp1 = (2n * dp1 + dp0) % MOD;  // extend or start 1-section
+    else /* x === 2 */ { /* TODO: update dp2 similarly */ }
+  }
+  return Number(dp2);
 }`,
-    python: `def countSpecialSubsequences(nums):
-    pass`,
+    python: `def countSpecialSubsequences(nums: list[int]) -> int:
+    MOD = 10**9 + 7
+    # dp0 = # non-empty subsequences of all 0s ending here
+    # dp1 = # subsequences matching 0+1+ ending here
+    # dp2 = # complete special subsequences (0+1+2+) ending here
+    dp0 = dp1 = dp2 = 0
+    for x in nums:
+        if x == 0:
+            dp0 = (2 * dp0 + 1) % MOD       # extend or start new 0-section
+        elif x == 1:
+            dp1 = (2 * dp1 + dp0) % MOD     # extend or start 1-section
+        else:  # x == 2
+            pass  # TODO: update dp2 similarly
+    return dp2`,
   },
   visibleTests: [
     { args: [[0, 1, 2, 2]], expected: 3 },

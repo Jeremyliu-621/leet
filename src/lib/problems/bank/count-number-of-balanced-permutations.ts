@@ -41,12 +41,51 @@ Return the **number of distinct balanced permutations** of \`num\`, modulo \`10^
   params: ['num'],
   starterCode: {
     javascript: `function countBalancedPermutations(num) {
-
+  const MOD = 1_000_000_007n;
+  const digits = num.split('').map(Number);
+  const total = digits.reduce((s, d) => s + d, 0);
+  if (total % 2 !== 0) return 0; // odd sum can't be split equally
+  const target = total / 2;
+  const n = digits.length;
+  const nEven = Math.ceil(n / 2); // slots at even indices
+  // Count digit frequencies
+  const cnt = new Array(10).fill(0);
+  for (const d of digits) cnt[d]++;
+  // DP: dp[j][s] = ways to fill j even slots with digit sum s (divided by factorials)
+  // Precompute factorials/inverses for combination counting
+  // TODO: iterate over digits 0-9, for each try placing e copies at even positions
 }`,
     typescript: `function countBalancedPermutations(num: string): number {
-
+  const MOD = 1_000_000_007n;
+  const digits = num.split('').map(Number);
+  const total = digits.reduce((s, d) => s + d, 0);
+  if (total % 2 !== 0) return 0; // odd sum can't be split equally
+  const target = total / 2;
+  const n = digits.length;
+  const nEven = Math.ceil(n / 2); // slots at even indices
+  // Count digit frequencies
+  const cnt = new Array(10).fill(0);
+  for (const d of digits) cnt[d]++;
+  // DP: dp[j][s] = ways to fill j even slots with digit sum s (divided by factorials)
+  // Precompute factorials/inverses for combination counting
+  // TODO: iterate over digits 0-9, for each try placing e copies at even positions
+  return 0;
 }`,
-    python: `def countBalancedPermutations(num):
+    python: `def countBalancedPermutations(num: str) -> int:
+    MOD = 10**9 + 7
+    digits = [int(c) for c in num]
+    total = sum(digits)
+    if total % 2 != 0:
+        return 0  # odd sum can't be split equally
+    target = total // 2
+    n = len(digits)
+    n_even = (n + 1) // 2  # slots at even indices
+    # Count digit frequencies
+    from collections import Counter
+    cnt = Counter(digits)
+    # DP: dp[j][s] = ways to fill j even slots with digit sum s (divided by factorials)
+    # Precompute factorials/inverses for combination counting
+    # TODO: iterate over digits 0-9, for each try placing e copies at even positions
     pass`,
   },
   visibleTests: [

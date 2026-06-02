@@ -44,12 +44,48 @@ export const problem: Problem = {
   params: ['n', 'edges', 'source', 'destination'],
   starterCode: {
     javascript: `function leadsToDestination(n, edges, source, destination) {
-
+  // Build adjacency list
+  const adj = Array.from({ length: n }, () => []);
+  for (const [a, b] of edges) adj[a].push(b);
+  // 3-color DFS: 0=unvisited, 1=visiting, 2=done+valid
+  const color = new Array(n).fill(0);
+  function dfs(node) {
+    // If visiting again => cycle => false
+    // If terminal node != destination => false
+    // Mark visiting, recurse on neighbors, mark done
+    // TODO: implement and return boolean
+  }
+  return dfs(source);
 }`,
-    typescript: "function leadsToDestination(n: number, edges: number[][], source: number, destination: number): boolean {\n\n}",
-
+    typescript: `function leadsToDestination(n: number, edges: number[][], source: number, destination: number): boolean {
+  // Build adjacency list
+  const adj: number[][] = Array.from({ length: n }, () => []);
+  for (const [a, b] of edges) adj[a].push(b);
+  // 3-color DFS: 0=unvisited, 1=visiting, 2=done+valid
+  const color = new Array(n).fill(0);
+  function dfs(node: number): boolean {
+    // If visiting again => cycle => false
+    // If terminal node != destination => false
+    // Mark visiting, recurse on neighbors, mark done
+    // TODO: implement and return boolean
+    return false;
+  }
+  return dfs(source);
+}`,
     python: `def leadsToDestination(n, edges, source, destination):
-    pass`,
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in edges:
+        adj[a].append(b)
+    # 3-color DFS: 0=unvisited, 1=visiting, 2=done+valid
+    color = [0] * n
+    def dfs(node):
+        # If visiting again => cycle => False
+        # If terminal node != destination => False
+        # Mark visiting, recurse on neighbors, mark done
+        # TODO: implement and return bool
+        pass
+    return dfs(source)`,
   },
   visibleTests: [
     { args: [3, [[0,1],[0,2]], 0, 2], expected: false },
