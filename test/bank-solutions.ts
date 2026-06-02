@@ -51385,6 +51385,76 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 306
+  'minimum-cost-to-reach-city-with-discounts': (...args: unknown[]): unknown => {
+    const n = args[0] as number;
+    const highways = args[1] as number[][];
+    const discounts = args[2] as number;
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const h of highways) { const u=h[0]!,v=h[1]!,w=h[2]!; adj[u]!.push([v, w]); adj[v]!.push([u, w]); }
+    const dist = Array.from({length: n}, () => new Array(discounts + 1).fill(Infinity)) as number[][];
+    dist[0]![0] = 0;
+    const heap: [number, number, number][] = [[0, 0, 0]];
+    while (heap.length) {
+      heap.sort((a, b) => a[0] - b[0]);
+      const [cost, city, k] = heap.shift()!;
+      if (dist[city]![k]! < cost) continue;
+      if (city === n - 1) return cost;
+      for (const [nb, w] of adj[city]!) {
+        if (cost + w < dist[nb]![k]!) { dist[nb]![k] = cost + w; heap.push([cost + w, nb, k]); }
+        if (k < discounts && cost + Math.floor(w / 2) < dist[nb]![k + 1]!) {
+          dist[nb]![k + 1] = cost + Math.floor(w / 2);
+          heap.push([cost + Math.floor(w / 2), nb, k + 1]);
+        }
+      }
+    }
+    return -1;
+  },
+
+  'distance-to-a-cycle-in-undirected-graph': (...args: unknown[]): unknown => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const adj: number[][] = Array.from({length: n}, () => []);
+    const deg = new Array(n).fill(0);
+    for (const e of edges) { const u=e[0]!,v=e[1]!; adj[u]!.push(v); adj[v]!.push(u); deg[u]!++; deg[v]!++; }
+    const inCycle = new Array(n).fill(true);
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (deg[i] === 1) queue.push(i);
+    let qi = 0;
+    while (qi < queue.length) {
+      const node = queue[qi++]!;
+      inCycle[node] = false;
+      for (const nb of adj[node]!) { if (inCycle[nb]) { deg[nb]!--; if (deg[nb] === 1) queue.push(nb); } }
+    }
+    const dist = new Array(n).fill(-1);
+    const bfs: number[] = [];
+    for (let i = 0; i < n; i++) if (inCycle[i]) { dist[i] = 0; bfs.push(i); }
+    let head = 0;
+    while (head < bfs.length) {
+      const node = bfs[head++]!;
+      for (const nb of adj[node]!) { if (dist[nb] === -1) { dist[nb] = dist[node]! + 1; bfs.push(nb); } }
+    }
+    return dist;
+  },
+
+  'design-hash-set': (...args: unknown[]): unknown => {
+    const ops = args[0] as string[];
+    const argsList = args[1] as number[][];
+    const BUCKETS = 769;
+    const data: number[][] = Array.from({length: BUCKETS}, () => []);
+    const hash = (key: number) => key % BUCKETS;
+    const results: (boolean | null)[] = [];
+    for (let i = 0; i < ops.length; i++) {
+      const op = ops[i]!, a = argsList[i]!;
+      if (op === 'HashSet') { results.push(null); continue; }
+      const bucket = data[hash(a[0]!)]!;
+      if (op === 'add') { if (!bucket.includes(a[0]!)) bucket.push(a[0]!); results.push(null); }
+      else if (op === 'remove') { const idx = bucket.indexOf(a[0]!); if (idx !== -1) bucket.splice(idx, 1); results.push(null); }
+      else if (op === 'contains') { results.push(bucket.includes(a[0]!)); }
+    }
+    return results;
+  },
+
   'path-in-zigzag-labelled-binary-tree': (...args: unknown[]): unknown => {
     let label = args[0] as number;
     let level = Math.floor(Math.log2(label)) + 1;

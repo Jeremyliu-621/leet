@@ -50186,6 +50186,88 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return ans
 `,
 
+  // batch 306
+  'minimum-cost-to-reach-city-with-discounts': `def minimumCost(n, highways, discounts):
+    highways = [list(h.to_py() if hasattr(h, 'to_py') else h) for h in (highways.to_py() if hasattr(highways, 'to_py') else highways)]
+    n, discounts = int(n), int(discounts)
+    import heapq
+    adj = [[] for _ in range(n)]
+    for u, v, w in highways:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    dist = [[float('inf')] * (discounts + 1) for _ in range(n)]
+    dist[0][0] = 0
+    heap = [(0, 0, 0)]
+    while heap:
+        cost, city, k = heapq.heappop(heap)
+        if dist[city][k] < cost: continue
+        if city == n - 1: return cost
+        for nb, w in adj[city]:
+            nc = cost + w
+            if nc < dist[nb][k]:
+                dist[nb][k] = nc
+                heapq.heappush(heap, (nc, nb, k))
+            if k < discounts:
+                nc2 = cost + w // 2
+                if nc2 < dist[nb][k + 1]:
+                    dist[nb][k + 1] = nc2
+                    heapq.heappush(heap, (nc2, nb, k + 1))
+    return -1
+`,
+
+  'distance-to-a-cycle-in-undirected-graph': `def distanceToCycle(n, edges):
+    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
+    n = int(n)
+    from collections import deque
+    adj = [[] for _ in range(n)]
+    deg = [0] * n
+    for u, v in edges:
+        adj[u].append(v); adj[v].append(u)
+        deg[u] += 1; deg[v] += 1
+    in_cycle = [True] * n
+    q = deque(i for i in range(n) if deg[i] == 1)
+    while q:
+        node = q.popleft()
+        in_cycle[node] = False
+        for nb in adj[node]:
+            if in_cycle[nb]:
+                deg[nb] -= 1
+                if deg[nb] == 1: q.append(nb)
+    dist = [-1] * n
+    bfs = deque()
+    for i in range(n):
+        if in_cycle[i]: dist[i] = 0; bfs.append(i)
+    while bfs:
+        node = bfs.popleft()
+        for nb in adj[node]:
+            if dist[nb] == -1:
+                dist[nb] = dist[node] + 1
+                bfs.append(nb)
+    return dist
+`,
+
+  'design-hash-set': `def simulateHashSet(ops, args):
+    ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
+    args = [list(a.to_py() if hasattr(a, 'to_py') else a) for a in (args.to_py() if hasattr(args, 'to_py') else args)]
+    BUCKETS = 769
+    data = [[] for _ in range(BUCKETS)]
+    results = []
+    for op, a in zip(ops, args):
+        if op == 'HashSet':
+            results.append(None)
+            continue
+        bucket = data[int(a[0]) % BUCKETS]
+        if op == 'add':
+            if int(a[0]) not in bucket: bucket.append(int(a[0]))
+            results.append(None)
+        elif op == 'remove':
+            if int(a[0]) in bucket: bucket.remove(int(a[0]))
+            results.append(None)
+        elif op == 'contains':
+            results.append(int(a[0]) in bucket)
+    return results
+`,
+
   'path-in-zigzag-labelled-binary-tree': `def pathInZigZagTree(label):
     label = int(label)
     import math

@@ -3516,6 +3516,10 @@ import { problem as minimumOpsWriteLetterY } from './minimum-operations-to-write
 import { problem as connectTwoGroupsOfPoints } from './minimum-cost-to-connect-two-groups-of-points';
 import { problem as countArrayPairsDivisibleByK } from './count-array-pairs-divisible-by-k';
 import { problem as pathInZigzagTree } from './path-in-zigzag-labelled-binary-tree';
+// batch 306
+import { problem as minCostCityDiscounts } from './minimum-cost-to-reach-city-with-discounts';
+import { problem as distanceToCycleGraph } from './distance-to-a-cycle-in-undirected-graph';
+import { problem as designHashSet } from './design-hash-set';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7071,4 +7075,8 @@ export const problems: readonly Problem[] = [
   connectTwoGroupsOfPoints,
   countArrayPairsDivisibleByK,
   pathInZigzagTree,
+  // batch 306
+  minCostCityDiscounts,
+  distanceToCycleGraph,
+  designHashSet,
 ];
