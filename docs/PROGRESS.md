@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2990** problems; 9330 tests green. Batch 291 complete (3 new problems).
+**Current focus:** Bank at **2990** problems; 9309 tests green. Batch 41s starter backfill complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 292+); starter backfill; UX polish.
+**Next up:** Continue starter backfill (maximum-* stubs); bank growth (batch 292+); UX polish.
+
+### feat: starter backfill batch 41s — maximum-elegance, energy-boost, taxi-earnings, employees-meeting (2026-06-02)
+Four stubs filled: `maximum-elegance-of-a-k-length-subsequence` (hard/heap — greedy sort desc by profit, take top-k, swap duplicate-category for new-category using stack of replaceable profits), `maximum-energy-boost-from-two-drinks` (medium/dp — rolling dpA/dpB with 2-turn switch gap), `maximum-earnings-from-taxi` (medium/dp — interval DP grouped by ride end point), `maximum-employees-invited-to-meeting` (hard/graph — functional graph topological sort for chain depths; max of longest ≥3 cycle vs sum of mutual-pair contributions). 9309 tests.
 
 ### feat(bank): batch 291 — count-nodes-max-score, min-space-wasted-k-resizing, largest-pos-int-with-negative (2026-06-02)
 Three new problems: `count-nodes-with-maximum-score` (medium/tree+graph — topological leaf-to-root pass to compute subtree sizes; score(i)=product of child subtrees × (n-subtree[i]) skipping 0 components; count nodes with max score; O(n)), `minimum-space-wasted-with-k-resizing` (hard/arrays+dynamic-programming — split nums into k+1 segments; waste(l,r)=max(segment)*(r-l+1)-sum(segment); O(n²k) rolling-dp; base dp from single segment, k iterations refine splits), `largest-positive-integer-that-exists-with-its-negative` (easy/arrays+hash-map — build hash set; iterate positives; check if negation exists; return max or -1; O(n)). Bank at **2990**; 9330 tests.
