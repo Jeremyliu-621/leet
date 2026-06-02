@@ -160,6 +160,7 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
       window.removeEventListener('message', onMessage);
     }
     function onMessage(event: MessageEvent): void {
+      if (event.source !== target) return;
       const data = event.data as RunResponse | undefined;
       if (data?.type === 'result' && data.requestId === requestId) {
         cleanup();
@@ -241,6 +242,7 @@ export async function runCustomArgs(options: {
       window.removeEventListener('message', onMessage);
     }
     function onMessage(event: MessageEvent): void {
+      if (event.source !== target) return;
       const data = event.data as RunResponse | undefined;
       if (data?.type === 'result' && data.requestId === requestId) {
         cleanup();
