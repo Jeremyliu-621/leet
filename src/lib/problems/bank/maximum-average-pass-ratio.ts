@@ -40,10 +40,61 @@ Return the **maximum** possible average pass ratio after assigning the \`extraSt
   functionName: 'maxAverageRatio',
   params: ['classes', 'extraStudents'],
   starterCode: {
-    javascript: 'function maxAverageRatio(classes, extraStudents) {\n  \n}\n',
-    typescript: "function maxAverageRatio(classes: number[][], extraStudents: number): number {\n  \n}",
-
-    python: 'def maxAverageRatio(classes, extraStudents):\n    pass\n',
+    javascript: `function maxAverageRatio(classes, extraStudents) {
+  const gain = (p, t) => (p + 1) / (t + 1) - p / t;
+  const h = classes.map(([p, t]) => [gain(p, t), p, t]);
+  const sift = (i) => {
+    while (true) {
+      let m = i;
+      const l = 2*i+1, r = 2*i+2;
+      if (l < h.length && h[l][0] > h[m][0]) m = l;
+      if (r < h.length && h[r][0] > h[m][0]) m = r;
+      if (m === i) break;
+      [h[i], h[m]] = [h[m], h[i]];
+      i = m;
+    }
+  };
+  for (let i = Math.floor(h.length / 2) - 1; i >= 0; i--) sift(i);
+  for (let k = 0; k < extraStudents; k++) {
+    const [, p, t] = h[0];
+    h[0] = [gain(p + 1, t + 1), p + 1, t + 1];
+    sift(0);
+  }
+  return h.reduce((s, [, p, t]) => s + p / t, 0) / h.length;
+}`,
+    typescript: `function maxAverageRatio(classes: number[][], extraStudents: number): number {
+  const gain = (p: number, t: number) => (p + 1) / (t + 1) - p / t;
+  const h: number[][] = classes.map(([p, t]) => [gain(p!, t!), p!, t!]);
+  const sift = (i: number) => {
+    while (true) {
+      let m = i;
+      const l = 2*i+1, r = 2*i+2;
+      if (l < h.length && h[l]![0]! > h[m]![0]!) m = l;
+      if (r < h.length && h[r]![0]! > h[m]![0]!) m = r;
+      if (m === i) break;
+      [h[i], h[m]] = [h[m]!, h[i]!];
+      i = m;
+    }
+  };
+  for (let i = Math.floor(h.length / 2) - 1; i >= 0; i--) sift(i);
+  for (let k = 0; k < extraStudents; k++) {
+    const [, p, t] = h[0]!;
+    h[0] = [gain(p! + 1, t! + 1), p! + 1, t! + 1];
+    sift(0);
+  }
+  return h.reduce((s, r) => s + r[1]! / r[2]!, 0) / h.length;
+}`,
+    python: `def maxAverageRatio(classes, extraStudents):
+    import heapq
+    def gain(p, t):
+        return (p + 1) / (t + 1) - p / t
+    h = [(-gain(p, t), p, t) for p, t in classes]
+    heapq.heapify(h)
+    for _ in range(extraStudents):
+        _, p, t = heapq.heappop(h)
+        p, t = p + 1, t + 1
+        heapq.heappush(h, (-gain(p, t), p, t))
+    return sum(p / t for _, p, t in h) / len(h)`,
   },
   visibleTests: [
     { args: [[[1,2],[3,5],[2,2]], 2], expected: 0.7833333333333333 },

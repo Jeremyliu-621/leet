@@ -46,10 +46,32 @@ Return the **maximum** possible beauty of the array after applying the operation
   functionName: 'maximumBeauty',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function maximumBeauty(nums, k) {\n  \n}\n',
-    typescript: "function maximumBeauty(nums: number[], k: number): number {\n  \n}",
-
-    python: 'def maximumBeauty(nums, k):\n    pass\n',
+    javascript: `function maximumBeauty(nums, k) {
+  nums.sort((a, b) => a - b);
+  let l = 0, ans = 0;
+  for (let r = 0; r < nums.length; r++) {
+    while (nums[r] - nums[l] > 2 * k) l++;
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    typescript: `function maximumBeauty(nums: number[], k: number): number {
+  nums.sort((a, b) => a - b);
+  let l = 0, ans = 0;
+  for (let r = 0; r < nums.length; r++) {
+    while (nums[r]! - nums[l]! > 2 * k) l++;
+    ans = Math.max(ans, r - l + 1);
+  }
+  return ans;
+}`,
+    python: `def maximumBeauty(nums, k):
+    nums.sort()
+    l, ans = 0, 0
+    for r in range(len(nums)):
+        while nums[r] - nums[l] > 2 * k:
+            l += 1
+        ans = max(ans, r - l + 1)
+    return ans`,
   },
   visibleTests: [
     { args: [[4, 6, 1, 2], 2], expected: 3 },

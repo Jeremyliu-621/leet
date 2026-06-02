@@ -46,13 +46,58 @@ Return the **maximum area** of such a rectangle. If no rectangle exists, return 
   params: ['points'],
   starterCode: {
     javascript: `function maxRectangleArea(points) {
-
+  const set = new Set(points.map(([x, y]) => x + ',' + y));
+  let ans = -1;
+  for (let a = 0; a < points.length; a++) {
+    for (let b = a + 1; b < points.length; b++) {
+      const [x1, y1] = points[a], [x2, y2] = points[b];
+      if (x1 === x2 || y1 === y2) continue;
+      const [lx, rx] = x1 < x2 ? [x1, x2] : [x2, x1];
+      const [ly, ry] = y1 < y2 ? [y1, y2] : [y2, y1];
+      if (!set.has(lx+','+ly) || !set.has(lx+','+ry) || !set.has(rx+','+ly) || !set.has(rx+','+ry)) continue;
+      let valid = true;
+      for (const [px, py] of points)
+        if (px > lx && px < rx && py > ly && py < ry) { valid = false; break; }
+      if (valid) ans = Math.max(ans, (rx - lx) * (ry - ly));
+    }
+  }
+  return ans;
 }`,
     typescript: `function maxRectangleArea(points: number[][]): number {
-
+  const set = new Set(points.map(([x, y]) => x + ',' + y));
+  let ans = -1;
+  for (let a = 0; a < points.length; a++) {
+    for (let b = a + 1; b < points.length; b++) {
+      const [x1, y1] = points[a]!, [x2, y2] = points[b]!;
+      if (x1 === x2 || y1 === y2) continue;
+      const [lx, rx] = x1! < x2! ? [x1!, x2!] : [x2!, x1!];
+      const [ly, ry] = y1! < y2! ? [y1!, y2!] : [y2!, y1!];
+      if (!set.has(lx+','+ly) || !set.has(lx+','+ry) || !set.has(rx+','+ly) || !set.has(rx+','+ry)) continue;
+      let valid = true;
+      for (const [px, py] of points)
+        if (px! > lx && px! < rx && py! > ly && py! < ry) { valid = false; break; }
+      if (valid) ans = Math.max(ans, (rx - lx) * (ry - ly));
+    }
+  }
+  return ans;
 }`,
     python: `def maxRectangleArea(points):
-    pass`,
+    pt_set = set(map(tuple, points))
+    ans = -1
+    for i in range(len(points)):
+        for j in range(i + 1, len(points)):
+            x1, y1 = points[i]
+            x2, y2 = points[j]
+            if x1 == x2 or y1 == y2:
+                continue
+            lx, rx = min(x1, x2), max(x1, x2)
+            ly, ry = min(y1, y2), max(y1, y2)
+            if not all((lx,ly) in pt_set and (lx,ry) in pt_set and (rx,ly) in pt_set and (rx,ry) in pt_set for _ in [1]):
+                continue
+            valid = all(not (lx < px < rx and ly < py < ry) for px, py in points)
+            if valid:
+                ans = max(ans, (rx - lx) * (ry - ly))
+    return ans`,
   },
   visibleTests: [
     {

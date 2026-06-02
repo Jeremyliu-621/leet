@@ -32,10 +32,28 @@ Alice decides to visit all floors from floor \`bottom\` to floor \`top\` (inclus
   functionName: 'maxConsecutive',
   params: ['bottom', 'top', 'special'],
   starterCode: {
-    javascript: 'function maxConsecutive(bottom, top, special) {\n\n}\n',
-    typescript: "function maxConsecutive(bottom: number, top: number, special: number[]): number {\n\n}",
-
-    python: 'def maxConsecutive(bottom, top, special):\n    pass\n',
+    javascript: `function maxConsecutive(bottom, top, special) {
+  special = special.filter(s => s >= bottom && s <= top).sort((a, b) => a - b);
+  if (!special.length) return top - bottom + 1;
+  let ans = special[0] - bottom;
+  for (let i = 1; i < special.length; i++) ans = Math.max(ans, special[i] - special[i-1] - 1);
+  return Math.max(ans, top - special[special.length - 1]);
+}`,
+    typescript: `function maxConsecutive(bottom: number, top: number, special: number[]): number {
+  const s = special.filter(x => x >= bottom && x <= top).sort((a, b) => a - b);
+  if (!s.length) return top - bottom + 1;
+  let ans = s[0]! - bottom;
+  for (let i = 1; i < s.length; i++) ans = Math.max(ans, s[i]! - s[i-1]! - 1);
+  return Math.max(ans, top - s[s.length - 1]!);
+}`,
+    python: `def maxConsecutive(bottom, top, special):
+    s = sorted(x for x in special if bottom <= x <= top)
+    if not s:
+        return top - bottom + 1
+    ans = s[0] - bottom
+    for i in range(1, len(s)):
+        ans = max(ans, s[i] - s[i-1] - 1)
+    return max(ans, top - s[-1])`,
   },
   visibleTests: [
     { args: [6, 8, [2,9]], expected: 3 },

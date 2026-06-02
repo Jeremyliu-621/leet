@@ -45,12 +45,21 @@ Repeat until there are no more piles of coins. Return the **maximum** number of 
   params: ['piles'],
   starterCode: {
     javascript: `function maxCoins(piles) {
-
+  piles.sort((a, b) => b - a);
+  let ans = 0;
+  for (let i = 1; i < 2 * piles.length / 3; i += 2) ans += piles[i];
+  return ans;
 }`,
-    typescript: "function maxCoins(piles: number[]): number {\n\n}",
-
+    typescript: `function maxCoins(piles: number[]): number {
+  piles.sort((a, b) => b - a);
+  let ans = 0;
+  for (let i = 1; i < 2 * piles.length / 3; i += 2) ans += piles[i]!;
+  return ans;
+}`,
     python: `def maxCoins(piles):
-    pass`,
+    piles.sort(reverse=True)
+    n = len(piles) // 3
+    return sum(piles[i] for i in range(1, 2*n, 2))`,
   },
   visibleTests: [
     { args: [[2, 4, 1, 2, 7, 8]], expected: 9 },

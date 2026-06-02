@@ -39,10 +39,29 @@ A subarray \`[nums[l], nums[l+1], ..., nums[r-1], nums[r]]\` is **ascending** if
   functionName: 'maxAscendingSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maxAscendingSum(nums) {\n  \n}\n',
-    typescript: "function maxAscendingSum(nums: number[]): number {\n  \n}",
-
-    python: 'def maxAscendingSum(nums):\n    pass\n',
+    javascript: `function maxAscendingSum(nums) {
+  let cur = nums[0], best = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    cur = nums[i] > nums[i - 1] ? cur + nums[i] : nums[i];
+    if (cur > best) best = cur;
+  }
+  return best;
+}`,
+    typescript: `function maxAscendingSum(nums: number[]): number {
+  let cur = nums[0]!, best = nums[0]!;
+  for (let i = 1; i < nums.length; i++) {
+    cur = nums[i]! > nums[i - 1]! ? cur + nums[i]! : nums[i]!;
+    if (cur > best) best = cur;
+  }
+  return best;
+}`,
+    python: `def maxAscendingSum(nums):
+    cur = best = nums[0]
+    for i in range(1, len(nums)):
+        cur = cur + nums[i] if nums[i] > nums[i-1] else nums[i]
+        if cur > best:
+            best = cur
+    return best`,
   },
   visibleTests: [
     { args: [[10, 20, 30, 5, 10, 50]], expected: 65 },

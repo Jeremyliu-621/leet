@@ -51,10 +51,50 @@ Return *the **maximum possible height** of the **tallest** building.*`,
   functionName: 'maxBuilding',
   params: ['n', 'restrictions'],
   starterCode: {
-    javascript: 'function maxBuilding(n, restrictions) {\n\n}',
-    typescript: "function maxBuilding(n: number, restrictions: number[][]): number {\n\n}",
-
-    python: 'def maxBuilding(n, restrictions):\n    pass',
+    javascript: `function maxBuilding(n, restrictions) {
+  restrictions.push([1, 0]);
+  restrictions.sort((a, b) => a[0] - b[0]);
+  const m = restrictions.length;
+  for (let i = 1; i < m; i++)
+    restrictions[i][1] = Math.min(restrictions[i][1], restrictions[i-1][1] + (restrictions[i][0] - restrictions[i-1][0]));
+  for (let i = m - 2; i >= 0; i--)
+    restrictions[i][1] = Math.min(restrictions[i][1], restrictions[i+1][1] + (restrictions[i+1][0] - restrictions[i][0]));
+  let ans = restrictions[m-1][1] + (n - restrictions[m-1][0]);
+  for (let i = 0; i < m - 1; i++) {
+    const [id1, h1] = restrictions[i], [id2, h2] = restrictions[i+1];
+    ans = Math.max(ans, Math.floor((h1 + h2 + id2 - id1) / 2));
+  }
+  return ans;
+}`,
+    typescript: `function maxBuilding(n: number, restrictions: number[][]): number {
+  restrictions.push([1, 0]);
+  restrictions.sort((a, b) => a[0]! - b[0]!);
+  const m = restrictions.length;
+  for (let i = 1; i < m; i++)
+    restrictions[i]![1] = Math.min(restrictions[i]![1]!, restrictions[i-1]![1]! + (restrictions[i]![0]! - restrictions[i-1]![0]!));
+  for (let i = m - 2; i >= 0; i--)
+    restrictions[i]![1] = Math.min(restrictions[i]![1]!, restrictions[i+1]![1]! + (restrictions[i+1]![0]! - restrictions[i]![0]!));
+  let ans = restrictions[m-1]![1]! + (n - restrictions[m-1]![0]!);
+  for (let i = 0; i < m - 1; i++) {
+    const [id1, h1] = restrictions[i]!, [id2, h2] = restrictions[i+1]!;
+    ans = Math.max(ans, Math.floor((h1! + h2! + id2! - id1!) / 2));
+  }
+  return ans;
+}`,
+    python: `def maxBuilding(n, restrictions):
+    restrictions.append([1, 0])
+    restrictions.sort()
+    m = len(restrictions)
+    for i in range(1, m):
+        restrictions[i][1] = min(restrictions[i][1], restrictions[i-1][1] + (restrictions[i][0] - restrictions[i-1][0]))
+    for i in range(m-2, -1, -1):
+        restrictions[i][1] = min(restrictions[i][1], restrictions[i+1][1] + (restrictions[i+1][0] - restrictions[i][0]))
+    ans = restrictions[-1][1] + (n - restrictions[-1][0])
+    for i in range(m - 1):
+        id1, h1 = restrictions[i]
+        id2, h2 = restrictions[i+1]
+        ans = max(ans, (h1 + h2 + id2 - id1) // 2)
+    return ans`,
   },
   visibleTests: [
     { args: [5, [[2, 1], [4, 1]]], expected: 2 },
