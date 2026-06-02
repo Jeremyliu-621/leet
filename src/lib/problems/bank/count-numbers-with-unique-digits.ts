@@ -28,12 +28,30 @@ export const problem: Problem = {
   params: ['n'],
   starterCode: {
     javascript: `function countNumbersWithUniqueDigits(n) {
-
+  if (n === 0) return 1;
+  let total = 10, ways = 9;
+  for (let k = 2; k <= Math.min(n, 10); k++) {
+    ways *= (11 - k);
+    total += ways;
+  }
+  return total;
 }`,
-    typescript: "function countNumbersWithUniqueDigits(n: number): number {\n\n}",
-
+    typescript: `function countNumbersWithUniqueDigits(n: number): number {
+  if (n === 0) return 1;
+  let total = 10, ways = 9;
+  for (let k = 2; k <= Math.min(n, 10); k++) {
+    ways *= (11 - k);
+    total += ways;
+  }
+  return total;
+}`,
     python: `def countNumbersWithUniqueDigits(n):
-    pass`,
+    if n == 0: return 1
+    total, ways = 10, 9
+    for k in range(2, min(n, 10) + 1):
+        ways *= (11 - k)
+        total += ways
+    return total`,
   },
   visibleTests: [
     { args: [2], expected: 91 },

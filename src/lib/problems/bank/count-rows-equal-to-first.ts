@@ -43,7 +43,7 @@ export const problem: Problem = {
 }`,
     typescript: `function countRowsEqualToFirst(matrix: number[][]): number {
   const first = matrix[0]!;
-  return matrix.filter(row => row.every((v, i) => v === first[i])).length;
+  return matrix.filter(row => row.every((v, i) => v === first[i]!)).length;
 }`,
     python: `def countRowsEqualToFirst(matrix: list[list[int]]) -> int:
     first = matrix[0]

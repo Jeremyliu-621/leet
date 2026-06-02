@@ -40,13 +40,97 @@ The **digit sum** of a number is the sum of all its decimal digits.`,
   params: ['num1', 'num2', 'min_sum', 'max_sum'],
   starterCode: {
     javascript: `function count(num1, num2, min_sum, max_sum) {
-
+  const MOD = 1_000_000_007;
+  function f(num) {
+    const digits = num.split('').map(Number);
+    const n = digits.length;
+    const memo = new Map();
+    function dp(pos, tight, sum) {
+      if (sum > max_sum) return 0;
+      if (pos === n) return sum >= min_sum ? 1 : 0;
+      const key = tight + ',' + pos + ',' + sum;
+      if (!tight && memo.has(key)) return memo.get(key);
+      const limit = tight ? digits[pos] : 9;
+      let res = 0;
+      for (let d = 0; d <= limit; d++)
+        res = (res + dp(pos + 1, tight && d === limit, sum + d)) % MOD;
+      if (!tight) memo.set(key, res);
+      return res;
+    }
+    return dp(0, true, 0);
+  }
+  function subtractOne(s) {
+    const a = s.split('').map(Number);
+    let i = a.length - 1;
+    while (a[i] === 0) { a[i--] = 9; }
+    a[i]--;
+    let start = 0;
+    while (start < a.length - 1 && a[start] === 0) start++;
+    return a.slice(start).join('');
+  }
+  return (f(num2) - f(subtractOne(num1)) + MOD) % MOD;
 }`,
     typescript: `function count(num1: string, num2: string, min_sum: number, max_sum: number): number {
-
+  const MOD = 1_000_000_007;
+  function f(num: string): number {
+    const digits = num.split('').map(Number);
+    const n = digits.length;
+    const memo = new Map<string, number>();
+    function dp(pos: number, tight: boolean, sum: number): number {
+      if (sum > max_sum) return 0;
+      if (pos === n) return sum >= min_sum ? 1 : 0;
+      const key = tight + ',' + pos + ',' + sum;
+      if (!tight && memo.has(key)) return memo.get(key)!;
+      const limit = tight ? digits[pos]! : 9;
+      let res = 0;
+      for (let d = 0; d <= limit; d++)
+        res = (res + dp(pos + 1, tight && d === limit, sum + d)) % MOD;
+      if (!tight) memo.set(key, res);
+      return res;
+    }
+    return dp(0, true, 0);
+  }
+  function subtractOne(s: string): string {
+    const a = s.split('').map(Number);
+    let i = a.length - 1;
+    while (a[i] === 0) { a[i--] = 9; }
+    a[i]!--;
+    let start = 0;
+    while (start < a.length - 1 && a[start] === 0) start++;
+    return a.slice(start).join('');
+  }
+  return (f(num2) - f(subtractOne(num1)) + MOD) % MOD;
 }`,
     python: `def count(num1, num2, min_sum, max_sum):
-    pass`,
+    MOD = 10**9 + 7
+    from functools import lru_cache
+    def f(num):
+        digits = [int(c) for c in num]
+        n = len(digits)
+        @lru_cache(maxsize=None)
+        def dp(pos, tight, s):
+            if s > max_sum: return 0
+            if pos == n: return 1 if s >= min_sum else 0
+            limit = digits[pos] if tight else 9
+            res = 0
+            for d in range(limit + 1):
+                res = (res + dp(pos + 1, tight and d == limit, s + d)) % MOD
+            return res
+        result = dp(0, True, 0)
+        dp.cache_clear()
+        return result
+    def subtract_one(s):
+        a = list(map(int, s))
+        i = len(a) - 1
+        while a[i] == 0:
+            a[i] = 9
+            i -= 1
+        a[i] -= 1
+        start = 0
+        while start < len(a) - 1 and a[start] == 0:
+            start += 1
+        return ''.join(map(str, a[start:]))
+    return (f(num2) - f(subtract_one(num1)) + MOD) % MOD`,
   },
   visibleTests: [
     { args: ['1', '12', 1, 8], expected: 11 },

@@ -34,25 +34,21 @@ The digit sum of a positive integer is the sum of all its digits.`,
     javascript: `function countOdd(num) {
   let count = 0;
   for (let i = 1; i <= num; i++) {
-    const s = String(i).split('').reduce((a, d) => a + Number(d), 0);
-    if (s % 2 === 1) count++;
+    const digitSum = String(i).split('').reduce((s, d) => s + Number(d), 0);
+    if (digitSum % 2 === 1) count++;
   }
   return count;
 }`,
     typescript: `function countOdd(num: number): number {
   let count = 0;
   for (let i = 1; i <= num; i++) {
-    const s = String(i).split('').reduce((a, d) => a + Number(d), 0);
-    if (s % 2 === 1) count++;
+    const digitSum = String(i).split('').reduce((s, d) => s + Number(d), 0);
+    if (digitSum % 2 === 1) count++;
   }
   return count;
 }`,
     python: `def countOdd(num):
-    count = 0
-    for i in range(1, num + 1):
-        if sum(int(d) for d in str(i)) % 2 == 1:
-            count += 1
-    return count`,
+    return sum(1 for i in range(1, num + 1) if sum(int(d) for d in str(i)) % 2 == 1)`,
   },
   visibleTests: [
     { args: [7], expected: 4 },
