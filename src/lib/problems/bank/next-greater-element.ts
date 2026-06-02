@@ -34,10 +34,10 @@ A *stack* of indices waiting for their next greater value solves this in a singl
   functionName: 'nextGreaterElement',
   params: ['nums'],
   starterCode: {
-    javascript: 'function nextGreaterElement(nums) {\n  // your code here\n}\n',
-    typescript: "function nextGreaterElement(nums: number[]): number[] {\n  // your code here\n}",
+    javascript: 'function nextGreaterElement(nums) {\n  const result = new Array(nums.length).fill(-1);\n  const stack = [];\n  for (let i = 0; i < nums.length; i++) {\n    while (stack.length && nums[i] > nums[stack[stack.length - 1]]) {\n      result[stack.pop()] = nums[i];\n    }\n    stack.push(i);\n  }\n  return result;\n}\n',
+    typescript: "function nextGreaterElement(nums: number[]): number[] {\n  const result = new Array<number>(nums.length).fill(-1);\n  const stack: number[] = [];\n  for (let i = 0; i < nums.length; i++) {\n    while (stack.length && nums[i]! > nums[stack[stack.length - 1]!]!) {\n      result[stack.pop()!] = nums[i]!;\n    }\n    stack.push(i);\n  }\n  return result;\n}",
 
-    python: 'def nextGreaterElement(nums):\n    # your code here\n    pass\n',
+    python: 'def nextGreaterElement(nums):\n    if hasattr(nums, \'to_py\'): nums = nums.to_py()\n    nums = [int(x) for x in nums]\n    result = [-1] * len(nums); stack = []\n    for i, v in enumerate(nums):\n        while stack and v > nums[stack[-1]]:\n            result[stack.pop()] = v\n        stack.append(i)\n    return result\n',
   },
   visibleTests: [
     { args: [[2, 1, 3]], expected: [3, 3, -1] },

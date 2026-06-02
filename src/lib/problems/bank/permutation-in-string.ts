@@ -39,10 +39,10 @@ Use a **fixed-size sliding window** of length \`s1.length\` over \`s2\`, maintai
   functionName: 'permutationInString',
   params: ['s1', 's2'],
   starterCode: {
-    javascript: 'function permutationInString(s1, s2) {\n  // your code here\n}\n',
-    typescript: "function permutationInString(s1: string, s2: string): boolean {\n  // your code here\n}",
+    javascript: 'function permutationInString(s1, s2) {\n  if (s1.length > s2.length) return false;\n  const freq = new Array(26).fill(0);\n  for (const c of s1) freq[c.charCodeAt(0) - 97]++;\n  const w = new Array(26).fill(0);\n  const n1 = s1.length;\n  for (let i = 0; i < s2.length; i++) {\n    w[s2.charCodeAt(i) - 97]++;\n    if (i >= n1) w[s2.charCodeAt(i - n1) - 97]--;\n    if (freq.every((v, j) => v === w[j])) return true;\n  }\n  return false;\n}\n',
+    typescript: "function permutationInString(s1: string, s2: string): boolean {\n  if (s1.length > s2.length) return false;\n  const freq = new Array<number>(26).fill(0);\n  for (const c of s1) freq[c.charCodeAt(0) - 97]!++;\n  const w = new Array<number>(26).fill(0);\n  const n1 = s1.length;\n  for (let i = 0; i < s2.length; i++) {\n    w[s2.charCodeAt(i) - 97]!++;\n    if (i >= n1) w[s2.charCodeAt(i - n1) - 97]!--;\n    if (freq.every((v, j) => v === w[j])) return true;\n  }\n  return false;\n}",
 
-    python: 'def permutationInString(s1: str, s2: str) -> bool:\n    # your code here\n    pass\n',
+    python: 'def permutationInString(s1: str, s2: str) -> bool:\n    if hasattr(s1, \'to_py\'): s1 = s1.to_py()\n    if hasattr(s2, \'to_py\'): s2 = s2.to_py()\n    if len(s1) > len(s2): return False\n    from collections import Counter\n    freq = Counter(s1); w = Counter(s2[:len(s1)])\n    if freq == w: return True\n    for i in range(len(s1), len(s2)):\n        w[s2[i]] += 1\n        c = s2[i - len(s1)]; w[c] -= 1\n        if w[c] == 0: del w[c]\n        if freq == w: return True\n    return False\n',
   },
   visibleTests: [
     { args: ['ab', 'eidbaooo'], expected: true },

@@ -38,10 +38,10 @@ A **perfect square** is an integer that is the square of an integer; in other wo
   functionName: 'numSquares',
   params: ['n'] as readonly string[],
   starterCode: {
-    javascript: 'function numSquares(n) {\n  // your code here\n}\n',
-    typescript: "function numSquares(n: number): number {\n  // your code here\n}",
+    javascript: 'function numSquares(n) {\n  const dp = new Array(n + 1).fill(Infinity);\n  dp[0] = 0;\n  for (let i = 1; i <= n; i++)\n    for (let j = 1; j * j <= i; j++)\n      if (dp[i - j * j] + 1 < dp[i]) dp[i] = dp[i - j * j] + 1;\n  return dp[n];\n}\n',
+    typescript: "function numSquares(n: number): number {\n  const dp = new Array<number>(n + 1).fill(Infinity);\n  dp[0] = 0;\n  for (let i = 1; i <= n; i++)\n    for (let j = 1; j * j <= i; j++)\n      if (dp[i - j * j]! + 1 < dp[i]!) dp[i] = dp[i - j * j]! + 1;\n  return dp[n]!;\n}",
 
-    python: 'def numSquares(n: int) -> int:\n    # your code here\n    pass\n',
+    python: 'def numSquares(n: int) -> int:\n    dp = [float(\'inf\')] * (n + 1); dp[0] = 0\n    for i in range(1, n + 1):\n        j = 1\n        while j * j <= i:\n            if dp[i - j*j] + 1 < dp[i]: dp[i] = dp[i - j*j] + 1\n            j += 1\n    return dp[n]\n',
   },
   visibleTests: [
     { args: [12], expected: 3 },

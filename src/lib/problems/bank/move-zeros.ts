@@ -40,10 +40,10 @@ The original array must not be modified. A two-pointer approach processes the ar
   functionName: 'moveZeros',
   params: ['nums'],
   starterCode: {
-    javascript: 'function moveZeros(nums) {\n  // your code here\n}\n',
-    typescript: "function moveZeros(nums: number[]): number[] {\n  // your code here\n}",
+    javascript: 'function moveZeros(nums) {\n  const nz = nums.filter(n => n !== 0);\n  return [...nz, ...Array(nums.length - nz.length).fill(0)];\n}\n',
+    typescript: "function moveZeros(nums: number[]): number[] {\n  const nz = nums.filter(n => n !== 0);\n  return [...nz, ...Array(nums.length - nz.length).fill(0)];\n}",
 
-    python: 'def moveZeros(nums):\n    # your code here\n    pass\n',
+    python: 'def moveZeros(nums):\n    if hasattr(nums, \'to_py\'): nums = nums.to_py()\n    nz = [x for x in nums if x != 0]\n    return nz + [0] * (len(nums) - len(nz))\n',
   },
   visibleTests: [
     { args: [[0, 1, 0, 3, 12]], expected: [1, 3, 12, 0, 0] },

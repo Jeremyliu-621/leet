@@ -38,10 +38,10 @@ Because the array is sorted, all duplicates of a value appear consecutively. You
   functionName: 'removeDuplicatesSorted',
   params: ['nums'],
   starterCode: {
-    javascript: 'function removeDuplicatesSorted(nums) {\n  // your code here\n}\n',
-    typescript: "function removeDuplicatesSorted(nums: number[]): number[] {\n  // your code here\n}",
+    javascript: 'function removeDuplicatesSorted(nums) {\n  const out = [];\n  for (let i = 0; i < nums.length; i++) {\n    if (i === 0 || nums[i] !== nums[i - 1]) out.push(nums[i]);\n  }\n  return out;\n}\n',
+    typescript: "function removeDuplicatesSorted(nums: number[]): number[] {\n  const out: number[] = [];\n  for (let i = 0; i < nums.length; i++) {\n    if (i === 0 || nums[i] !== nums[i - 1]) out.push(nums[i]!);\n  }\n  return out;\n}",
 
-    python: 'def removeDuplicatesSorted(nums):\n    # your code here\n    pass\n',
+    python: 'def removeDuplicatesSorted(nums):\n    if hasattr(nums, \'to_py\'): nums = nums.to_py()\n    nums = [int(x) for x in nums]\n    return [x for i, x in enumerate(nums) if i == 0 or x != nums[i-1]]\n',
   },
   visibleTests: [
     { args: [[1, 1, 2]], expected: [1, 2] },

@@ -39,10 +39,10 @@ Return a list of integers representing the **size of each part**.
   functionName: 'partitionLabels',
   params: ['s'],
   starterCode: {
-    javascript: 'function partitionLabels(s) {\n  // your code here\n}\n',
-    typescript: "function partitionLabels(s: string): number[] {\n  // your code here\n}",
+    javascript: 'function partitionLabels(s) {\n  const last = {};\n  for (let i = 0; i < s.length; i++) last[s[i]] = i;\n  const result = [];\n  let start = 0, end = 0;\n  for (let i = 0; i < s.length; i++) {\n    if (last[s[i]] > end) end = last[s[i]];\n    if (i === end) { result.push(end - start + 1); start = i + 1; }\n  }\n  return result;\n}\n',
+    typescript: "function partitionLabels(s: string): number[] {\n  const last: Record<string, number> = {};\n  for (let i = 0; i < s.length; i++) last[s[i]!] = i;\n  const result: number[] = [];\n  let start = 0, end = 0;\n  for (let i = 0; i < s.length; i++) {\n    if ((last[s[i]!] ?? 0) > end) end = last[s[i]!]!;\n    if (i === end) { result.push(end - start + 1); start = i + 1; }\n  }\n  return result;\n}",
 
-    python: 'def partitionLabels(s):\n    # your code here\n    pass\n',
+    python: 'def partitionLabels(s):\n    if hasattr(s, \'to_py\'): s = s.to_py()\n    last = {c: i for i, c in enumerate(s)}\n    result = []; start = end = 0\n    for i, c in enumerate(s):\n        if last[c] > end: end = last[c]\n        if i == end: result.append(end-start+1); start = i+1\n    return result\n',
   },
   visibleTests: [
     { args: ['ababcbacadefegdehijhklij'], expected: [9, 7, 8] },

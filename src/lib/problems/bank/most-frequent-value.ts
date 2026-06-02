@@ -34,10 +34,10 @@ The input array is not modified.`,
   functionName: 'mostFrequentValue',
   params: ['nums'],
   starterCode: {
-    javascript: 'function mostFrequentValue(nums) {\n  // your code here\n}\n',
-    typescript: "function mostFrequentValue(nums: number[]): number {\n  // your code here\n}",
+    javascript: 'function mostFrequentValue(nums) {\n  const freq = new Map();\n  for (const x of nums) freq.set(x, (freq.get(x) || 0) + 1);\n  let best = nums[0], bestFreq = 0;\n  for (const [k, v] of freq) {\n    if (v > bestFreq || (v === bestFreq && k < best)) { best = k; bestFreq = v; }\n  }\n  return best;\n}\n',
+    typescript: "function mostFrequentValue(nums: number[]): number {\n  const freq = new Map<number, number>();\n  for (const x of nums) freq.set(x, (freq.get(x) ?? 0) + 1);\n  let best = nums[0]!, bestFreq = 0;\n  for (const [k, v] of freq) {\n    if (v > bestFreq || (v === bestFreq && k < best)) { best = k; bestFreq = v; }\n  }\n  return best;\n}",
 
-    python: 'def mostFrequentValue(nums):\n    # your code here\n    pass\n',
+    python: 'def mostFrequentValue(nums):\n    if hasattr(nums, \'to_py\'): nums = nums.to_py()\n    from collections import Counter\n    freq = Counter(int(x) for x in nums)\n    best_freq = max(freq.values())\n    return min(k for k, v in freq.items() if v == best_freq)\n',
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 3, 3]], expected: 3 },

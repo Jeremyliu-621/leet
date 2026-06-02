@@ -43,10 +43,10 @@ Return the modified array.`,
   functionName: 'nextPermutation',
   params: ['nums'] as readonly string[],
   starterCode: {
-    javascript: 'function nextPermutation(nums) {\n  // your code here\n}\n',
-    typescript: "function nextPermutation(nums: number[]): number[] {\n  // your code here\n}",
+    javascript: 'function nextPermutation(nums) {\n  let i = nums.length - 2;\n  while (i >= 0 && nums[i] >= nums[i + 1]) i--;\n  if (i >= 0) {\n    let j = nums.length - 1;\n    while (nums[j] <= nums[i]) j--;\n    [nums[i], nums[j]] = [nums[j], nums[i]];\n  }\n  let l = i + 1, r = nums.length - 1;\n  while (l < r) { [nums[l], nums[r]] = [nums[r], nums[l]]; l++; r--; }\n  return nums;\n}\n',
+    typescript: "function nextPermutation(nums: number[]): number[] {\n  let i = nums.length - 2;\n  while (i >= 0 && nums[i]! >= nums[i + 1]!) i--;\n  if (i >= 0) {\n    let j = nums.length - 1;\n    while (nums[j]! <= nums[i]!) j--;\n    [nums[i], nums[j]] = [nums[j]!, nums[i]!];\n  }\n  let l = i + 1, r = nums.length - 1;\n  while (l < r) { [nums[l], nums[r]] = [nums[r]!, nums[l]!]; l++; r--; }\n  return nums;\n}",
 
-    python: 'def nextPermutation(nums: list[int]) -> list[int]:\n    # your code here\n    pass\n',
+    python: 'def nextPermutation(nums):\n    if hasattr(nums, \'to_py\'): nums = list(nums.to_py())\n    else: nums = list(nums)\n    nums = [int(x) for x in nums]\n    i = len(nums) - 2\n    while i >= 0 and nums[i] >= nums[i+1]: i -= 1\n    if i >= 0:\n        j = len(nums) - 1\n        while nums[j] <= nums[i]: j -= 1\n        nums[i], nums[j] = nums[j], nums[i]\n    l, r = i+1, len(nums)-1\n    while l < r: nums[l], nums[r] = nums[r], nums[l]; l += 1; r -= 1\n    return nums\n',
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: [1, 3, 2] },
