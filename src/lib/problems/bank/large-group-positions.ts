@@ -44,13 +44,34 @@ Return the intervals of every **large** group sorted in increasing order by star
   params: ['s'],
   starterCode: {
     javascript: `function largeGroupPositions(s) {
-
+  const res = [];
+  let start = 0;
+  for (let i = 1; i <= s.length; i++) {
+    if (i === s.length || s[i] !== s[start]) {
+      if (i - start >= 3) res.push([start, i - 1]);
+      start = i;
+    }
+  }
+  return res;
 }`,
     typescript: `function largeGroupPositions(s: string): number[][] {
-
+  const res: number[][] = [];
+  let start = 0;
+  for (let i = 1; i <= s.length; i++) {
+    if (i === s.length || s[i] !== s[start]) {
+      if (i - start >= 3) res.push([start, i - 1]);
+      start = i;
+    }
+  }
+  return res;
 }`,
-    python: `def largeGroupPositions(s: str) -> list[list[int]]:
-    pass`,
+    python: `def largeGroupPositions(s):
+    res, start = [], 0
+    for i in range(1, len(s) + 1):
+        if i == len(s) or s[i] != s[start]:
+            if i - start >= 3: res.append([start, i - 1])
+            start = i
+    return res`,
   },
   visibleTests: [
     { args: ['abbxxxxzzy'], expected: [[3, 6]] },

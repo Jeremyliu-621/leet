@@ -29,12 +29,23 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function largestPerimeter(nums) {
-
+  const s = [...nums].sort((a, b) => b - a);
+  for (let i = 0; i < s.length - 2; i++)
+    if (s[i+1] + s[i+2] > s[i]) return s[i] + s[i+1] + s[i+2];
+  return 0;
 }`,
-    typescript: "function largestPerimeter(nums: number[]): number {\n\n}",
-
+    typescript: `function largestPerimeter(nums: number[]): number {
+  const s = [...nums].sort((a, b) => b - a);
+  for (let i = 0; i < s.length - 2; i++)
+    if (s[i+1] + s[i+2] > s[i]) return s[i] + s[i+1] + s[i+2];
+  return 0;
+}`,
     python: `def largestPerimeter(nums):
-    pass`,
+    nums = sorted(nums, reverse=True)
+    for i in range(len(nums) - 2):
+        if nums[i+1] + nums[i+2] > nums[i]:
+            return nums[i] + nums[i+1] + nums[i+2]
+    return 0`,
   },
   visibleTests: [
     { args: [[2, 1, 2]], expected: 5 },

@@ -40,12 +40,22 @@ Determine whether the largest element in the array is **at least twice** as much
   params: ['nums'],
   starterCode: {
     javascript: `function dominantIndex(nums) {
-
+  let maxIdx = 0;
+  for (let i = 1; i < nums.length; i++) if (nums[i] > nums[maxIdx]) maxIdx = i;
+  for (let i = 0; i < nums.length; i++) if (i !== maxIdx && nums[maxIdx] < 2 * nums[i]) return -1;
+  return maxIdx;
 }`,
-    typescript: "function dominantIndex(nums: number[]): number {\n\n}",
-
+    typescript: `function dominantIndex(nums: number[]): number {
+  let maxIdx = 0;
+  for (let i = 1; i < nums.length; i++) if (nums[i] > nums[maxIdx]) maxIdx = i;
+  for (let i = 0; i < nums.length; i++) if (i !== maxIdx && nums[maxIdx] < 2 * nums[i]) return -1;
+  return maxIdx;
+}`,
     python: `def dominantIndex(nums):
-    pass`,
+    max_idx = nums.index(max(nums))
+    if all(nums[max_idx] >= 2 * nums[i] for i in range(len(nums)) if i != max_idx):
+        return max_idx
+    return -1`,
   },
   visibleTests: [
     { args: [[3, 6, 1, 0]], expected: 1 },

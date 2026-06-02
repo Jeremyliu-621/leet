@@ -43,12 +43,32 @@ Explanation: It is not valid to have leading zeros, so "9" is returned.
   params: ['num'],
   starterCode: {
     javascript: `function largestPalindromic(num) {
-
+  const freq = new Array(10).fill(0);
+  for (const c of num) freq[+c]++;
+  let half = '';
+  for (let d = 9; d >= 0; d--) half += String(d).repeat(Math.floor(freq[d] / 2));
+  let center = '';
+  for (let d = 9; d >= 0; d--) { if (freq[d] % 2 === 1) { center = String(d); break; } }
+  if (half.startsWith('0')) return center || '0';
+  return half + center + half.split('').reverse().join('');
 }`,
-    typescript: "function largestPalindromic(num: string): string {\n\n}",
-
+    typescript: `function largestPalindromic(num: string): string {
+  const freq = new Array(10).fill(0);
+  for (const c of num) freq[+c]++;
+  let half = '';
+  for (let d = 9; d >= 0; d--) half += String(d).repeat(Math.floor(freq[d] / 2));
+  let center = '';
+  for (let d = 9; d >= 0; d--) { if (freq[d] % 2 === 1) { center = String(d); break; } }
+  if (half.startsWith('0')) return center || '0';
+  return half + center + half.split('').reverse().join('');
+}`,
     python: `def largestPalindromic(num):
-    `,
+    freq = [0] * 10
+    for c in num: freq[int(c)] += 1
+    half = ''.join(str(d) * (freq[d] // 2) for d in range(9, -1, -1))
+    center = next((str(d) for d in range(9, -1, -1) if freq[d] % 2 == 1), '')
+    if half.startswith('0'): return center or '0'
+    return half + center + half[::-1]`,
   },
   visibleTests: [
     { args: ['444947137'], expected: '7449447' },

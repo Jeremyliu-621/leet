@@ -37,13 +37,28 @@ Return *the **maximum** value of an element in \`nums\` after performing any num
   params: ['nums'],
   starterCode: {
     javascript: `function largestElementAfterMergeOperations(nums) {
-
+  let cur = nums[nums.length - 1], ans = cur;
+  for (let i = nums.length - 2; i >= 0; i--) {
+    if (nums[i] <= cur) cur += nums[i]; else cur = nums[i];
+    if (cur > ans) ans = cur;
+  }
+  return ans;
 }`,
     typescript: `function largestElementAfterMergeOperations(nums: number[]): number {
-
+  let cur = nums[nums.length - 1], ans = cur;
+  for (let i = nums.length - 2; i >= 0; i--) {
+    if (nums[i] <= cur) cur += nums[i]; else cur = nums[i];
+    if (cur > ans) ans = cur;
+  }
+  return ans;
 }`,
     python: `def largestElementAfterMergeOperations(nums):
-    pass`,
+    cur = ans = nums[-1]
+    for i in range(len(nums) - 2, -1, -1):
+        if nums[i] <= cur: cur += nums[i]
+        else: cur = nums[i]
+        ans = max(ans, cur)
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, 7, 9, 3]], expected: 21 },

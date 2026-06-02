@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['matrix'],
   starterCode: {
     javascript: `function largestElementInEachRow(matrix) {
-
+  return matrix.map(row => Math.max(...row));
 }`,
     typescript: `function largestElementInEachRow(matrix: number[][]): number[] {
-
+  return matrix.map(row => Math.max(...row));
 }`,
-    python: `def largestElementInEachRow(matrix: list[list[int]]) -> list[int]:
-    pass`,
+    python: `def largestElementInEachRow(matrix):
+    return [max(row) for row in matrix]`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]], expected: [3, 6, 9] },

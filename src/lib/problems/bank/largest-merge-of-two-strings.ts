@@ -35,12 +35,28 @@ Return the lexicographically largest \`merge\` you can construct.`,
   params: ['word1', 'word2'],
   starterCode: {
     javascript: `function largestMerge(word1, word2) {
-
+  let merge = '', i = 0, j = 0;
+  while (i < word1.length && j < word2.length) {
+    if (word1.slice(i) >= word2.slice(j)) merge += word1[i++];
+    else merge += word2[j++];
+  }
+  return merge + word1.slice(i) + word2.slice(j);
 }`,
-    typescript: "function largestMerge(word1: string, word2: string): string {\n\n}",
-
+    typescript: `function largestMerge(word1: string, word2: string): string {
+  let merge = '', i = 0, j = 0;
+  while (i < word1.length && j < word2.length) {
+    if (word1.slice(i) >= word2.slice(j)) merge += word1[i++];
+    else merge += word2[j++];
+  }
+  return merge + word1.slice(i) + word2.slice(j);
+}`,
     python: `def largestMerge(word1, word2):
-    pass`,
+    merge = []
+    i, j = 0, 0
+    while i < len(word1) and j < len(word2):
+        if word1[i:] >= word2[j:]: merge.append(word1[i]); i += 1
+        else: merge.append(word2[j]); j += 1
+    return ''.join(merge) + word1[i:] + word2[j:]`,
   },
   visibleTests: [
     { args: ['cabaa', 'bcaaa'], expected: 'cbcabaaaaa' },

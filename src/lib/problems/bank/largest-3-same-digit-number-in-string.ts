@@ -48,12 +48,25 @@ function largestGoodInteger(num) {
   params: ['num'],
   starterCode: {
     javascript: `function largestGoodInteger(num) {
-
+  let best = '';
+  for (let i = 0; i <= num.length - 3; i++)
+    if (num[i] === num[i+1] && num[i+1] === num[i+2] && num.slice(i, i+3) > best)
+      best = num.slice(i, i+3);
+  return best;
 }`,
-    typescript: "function largestGoodInteger(num: string): string {\n\n}",
-
+    typescript: `function largestGoodInteger(num: string): string {
+  let best = '';
+  for (let i = 0; i <= num.length - 3; i++)
+    if (num[i] === num[i+1] && num[i+1] === num[i+2] && num.slice(i, i+3) > best)
+      best = num.slice(i, i+3);
+  return best;
+}`,
     python: `def largestGoodInteger(num):
-    pass`,
+    best = ''
+    for i in range(len(num) - 2):
+        if num[i] == num[i+1] == num[i+2] and num[i:i+3] > best:
+            best = num[i:i+3]
+    return best`,
   },
   visibleTests: [
     { args: ['6777133339'], expected: '777' },
