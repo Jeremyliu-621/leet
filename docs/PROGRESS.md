@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2979** problems; 9297 tests green. Batch 287b (our session) + Batch 289 complete.
+**Current focus:** Bank at **2979** problems; 9297 tests green. Starter backfill batch 41p (15 maximize-* stubs) complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 290+); starter backfill; UX polish.
+**Next up:** Starter backfill continues (maximum-* range); bank growth (batch 290+); UX polish.
+
+### feat: starter-fill batch 41p — 15 maximize-* stubs (2026-06-02)
+Filled starter code (JS/TS/Python) for 15 problems in the maximize-* range: `maximize-area-of-square-hole-in-grid` (consecutive-run → side²), `maximize-consecutive-elements-in-an-array-after-modification` (sort + DP map keep/inc), `maximize-distance-to-closest-person` (gap scan, leading/trailing edges), `maximize-greatness-of-an-array` (sorted two-pointer greedy), `maximize-happiness-of-selected-children` (sort desc, subtract index i), `maximize-minimum-powered-city` (binary search + diff-array greedy), `maximize-number-of-nice-divisors` (split-into-3s + modpow), `maximize-number-of-subsequences-in-a-string` (prefix count c0/c1), `maximize-number-of-tasks-you-can-assign` (binary search + sorted worker slice), `maximize-score-after-n-operations` (bitmask DP + GCD table), `maximize-score-of-numbers-in-ranges` (binary search + greedy), `maximize-score-removing-substrings` (greedy stack removal, higher-value first), `maximize-sum-of-array-after-k-negations` (sort-by-abs + negate negatives), `maximize-the-profit-as-the-salesman` (interval DP grouped by end index), `maximize-total-cost-of-alternating-subarrays` (DP pos/neg sign tracking). 9297 tests green.
 
 ### feat(bank): batch 287b — num-different-integers, max-elegance-k-subseq, min-time-remove-cars, min-buckets-rainwater (2026-06-02)
 Four new problems: `number-of-different-integers-in-a-string` (easy/strings+hash-map, LC 1805 — split on non-digits, strip leading zeros, Set dedup; O(n)), `maximum-elegance-of-a-k-length-subsequence` (hard/arrays+heap, LC 2813 — sort desc by profit; greedily take top-k; swap duplicate-category items for new-category ones from remaining; O(n log n)), `minimum-time-to-remove-all-cars-containing-illegal-goods` (hard/strings+dynamic-programming, LC 2167 — left/right DP: left[i]=min(left[i-1]+2*(s[i]=='1'), i+1); split-point minimization; O(n)), `minimum-number-of-buckets-required-to-collect-rainwater` (medium/strings+simulation, LC 2086 — greedy left-to-right; prefer placing bucket to right of each house; O(n)). Bank at **2979**; 9297 tests.
