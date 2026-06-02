@@ -37,12 +37,21 @@ function areOccurrencesEqual(s) {
   params: ['s'],
   starterCode: {
     javascript: `function areOccurrencesEqual(s) {
-
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c] || 0) + 1;
+  const vals = Object.values(freq);
+  return vals.every(v => v === vals[0]);
 }`,
-    typescript: "function areOccurrencesEqual(s: string): boolean {\n\n}",
-
+    typescript: `function areOccurrencesEqual(s: string): boolean {
+  const freq: Record<string, number> = {};
+  for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+  const vals = Object.values(freq);
+  return vals.every(v => v === vals[0]);
+}`,
     python: `def areOccurrencesEqual(s):
-    pass`,
+    from collections import Counter
+    counts = list(Counter(s).values())
+    return len(set(counts)) == 1`,
   },
   visibleTests: [
     { args: ['abacbc'], expected: true },

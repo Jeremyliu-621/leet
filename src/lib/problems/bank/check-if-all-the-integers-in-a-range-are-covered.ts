@@ -42,11 +42,22 @@ function isCovered(ranges, left, right) {
   params: ['ranges', 'left', 'right'],
   starterCode: {
     javascript: `function isCovered(ranges, left, right) {
-
+  for (let i = left; i <= right; i++) {
+    if (!ranges.some(([s, e]) => s <= i && i <= e)) return false;
+  }
+  return true;
 }`,
-    typescript: 'function isCovered(ranges: number[][], left: number, right: number): boolean {\n\n}',
+    typescript: `function isCovered(ranges: number[][], left: number, right: number): boolean {
+  for (let i = left; i <= right; i++) {
+    if (!ranges.some(([s, e]) => s <= i && i <= e)) return false;
+  }
+  return true;
+}`,
     python: `def isCovered(ranges, left, right):
-    pass`,
+    for i in range(left, right + 1):
+        if not any(s <= i <= e for s, e in ranges):
+            return False
+    return True`,
   },
   visibleTests: [
     { args: [[[1,2],[3,4],[5,6]], 2, 5], expected: true },

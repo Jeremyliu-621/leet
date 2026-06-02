@@ -44,13 +44,13 @@ Return \`true\` if it is possible to select two or more elements whose bitwise \
   params: ['nums'],
   starterCode: {
     javascript: `function hasTrailingZeros(nums) {
-
+  return nums.filter(n => n % 2 === 0).length >= 2;
 }`,
     typescript: `function hasTrailingZeros(nums: number[]): boolean {
-
+  return nums.filter(n => n % 2 === 0).length >= 2;
 }`,
     python: `def hasTrailingZeros(nums):
-    pass`,
+    return sum(1 for n in nums if n % 2 == 0) >= 2`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: true },

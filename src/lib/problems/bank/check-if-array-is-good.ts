@@ -47,12 +47,25 @@ function isGood(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function isGood(nums) {
-
+  nums.sort((a, b) => a - b);
+  const n = nums.length - 1;
+  if (nums[n] !== nums[n - 1]) return false;
+  for (let i = 0; i < n - 1; i++) if (nums[i] !== i + 1) return false;
+  return true;
 }`,
-    typescript: "function isGood(nums: number[]): boolean {\n\n}",
-
+    typescript: `function isGood(nums: number[]): boolean {
+  nums.sort((a, b) => a - b);
+  const n = nums.length - 1;
+  if (nums[n] !== nums[n - 1]) return false;
+  for (let i = 0; i < n - 1; i++) if (nums[i] !== i + 1) return false;
+  return true;
+}`,
     python: `def isGood(nums):
-    pass`,
+    nums.sort()
+    n = len(nums) - 1
+    if nums[n] != nums[n - 1]:
+        return False
+    return all(nums[i] == i + 1 for i in range(n - 1))`,
   },
   visibleTests: [
     { args: [[2, 1, 3]], expected: false },

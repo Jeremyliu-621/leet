@@ -44,12 +44,29 @@ return true;\`\`\``,
   params: ['root'],
   starterCode: {
     javascript: `function isCompleteTree(root) {
-
+  let seenNull = false;
+  for (const v of root) {
+    if (v === null) { seenNull = true; continue; }
+    if (seenNull) return false;
+  }
+  return true;
 }`,
-    typescript: "function isCompleteTree(root: number[]): boolean {\n\n}",
-
+    typescript: `function isCompleteTree(root: (number | null)[]): boolean {
+  let seenNull = false;
+  for (const v of root) {
+    if (v === null) { seenNull = true; continue; }
+    if (seenNull) return false;
+  }
+  return true;
+}`,
     python: `def isCompleteTree(root):
-    pass`,
+    seen_null = False
+    for v in root:
+        if v is None:
+            seen_null = True
+        elif seen_null:
+            return False
+    return True`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6]], expected: true },
