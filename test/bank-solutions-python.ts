@@ -49408,4 +49408,53 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return ans % MOD
 `,
 
+  // batch 294
+  'maximum-value-at-a-given-index-in-a-bounded-array': `def maxValue(n, index, maxSum):
+    def min_cost(v, length):
+        if v >= length:
+            return (2 * v - length + 1) * length // 2
+        return v * (v + 1) // 2 + (length - v)
+    lo, hi = 1, maxSum
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        total = min_cost(mid, index + 1) + min_cost(mid, n - index) - mid
+        if total <= maxSum:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+`,
+
+  'sender-with-largest-word-count': `def largestWordCount(messages, senders):
+    if hasattr(messages, 'to_py'): messages = messages.to_py()
+    if hasattr(senders, 'to_py'): senders = senders.to_py()
+    count = {}
+    for msg, sender in zip(messages, senders):
+        count[sender] = count.get(sender, 0) + len(msg.split())
+    best = ''
+    best_count = 0
+    for sender, c in count.items():
+        if c > best_count or (c == best_count and sender > best):
+            best = sender
+            best_count = c
+    return best
+`,
+
+  'last-substring-in-lexicographical-order': `def lastSubstring(s):
+    n = len(s)
+    i, j, k = 0, 1, 0
+    while j + k < n:
+        if i + k >= n:
+            i = j; j += 1; k = 0
+        elif s[i + k] == s[j + k]:
+            k += 1
+        elif s[i + k] < s[j + k]:
+            i = max(i + k + 1, j + 1); k = 0
+        else:
+            j = j + k + 1; k = 0
+        if i == j:
+            j += 1
+    return s[i:]
+`,
+
 };

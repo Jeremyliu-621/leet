@@ -50602,4 +50602,59 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Number(ans % MOD);
   },
 
+  // batch 294
+  'maximum-value-at-a-given-index-in-a-bounded-array': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const index = args[1] as number;
+    const maxSum = args[2] as number;
+    function minCost(v: number, len: number): bigint {
+      if (v >= len) return (2n * BigInt(v) - BigInt(len) + 1n) * BigInt(len) / 2n;
+      return BigInt(v) * (BigInt(v) + 1n) / 2n + BigInt(len - v);
+    }
+    let lo = 1, hi = maxSum;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      const total = minCost(mid, index + 1) + minCost(mid, n - index) - BigInt(mid);
+      if (total <= BigInt(maxSum)) lo = mid;
+      else hi = mid - 1;
+    }
+    return lo;
+  },
+
+  'sender-with-largest-word-count': (...args: unknown[]) => {
+    const messages = args[0] as string[];
+    const senders = args[1] as string[];
+    const count = new Map<string, number>();
+    for (let i = 0; i < messages.length; i++) {
+      const words = messages[i]!.split(' ').length;
+      count.set(senders[i]!, (count.get(senders[i]!) ?? 0) + words);
+    }
+    let best = '', bestCount = 0;
+    for (const [sender, c] of count) {
+      if (c > bestCount || (c === bestCount && sender > best)) {
+        best = sender; bestCount = c;
+      }
+    }
+    return best;
+  },
+
+  'last-substring-in-lexicographical-order': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let i = 0, j = 1, k = 0;
+    const n = s.length;
+    while (j + k < n) {
+      if (i + k >= n) {
+        i = j; j++; k = 0;
+      } else if (s[i + k] === s[j + k]) {
+        k++;
+      } else if (s[i + k]! < s[j + k]!) {
+        i = Math.max(i + k + 1, j + 1); k = 0;
+      } else {
+        j = j + k + 1; k = 0;
+      }
+      if (i === j) j++;
+    }
+    return s.slice(i);
+  },
+
 };

@@ -3460,6 +3460,10 @@ import { problem as checkIfValidPartitionForArray } from './check-if-there-is-va
 import { problem as maximumAreaCakeAfterCuts } from './maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts';
 import { problem as capacityToShipPackagesWithinDDays } from './capacity-to-ship-packages-within-d-days';
 import { problem as maximumSumOfHeightsMountain } from './maximum-sum-of-heights-of-a-mountain';
+// batch 294
+import { problem as maximumValueAtAGivenIndexInABoundedArray } from './maximum-value-at-a-given-index-in-a-bounded-array';
+import { problem as senderWithLargestWordCount } from './sender-with-largest-word-count';
+import { problem as lastSubstringInLexicographicalOrder } from './last-substring-in-lexicographical-order';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6961,4 +6965,8 @@ export const problems: readonly Problem[] = [
   // batch 293
   minPathSumTriangleGrid,
   maxSubarrayMinProduct,
+  // batch 294
+  maximumValueAtAGivenIndexInABoundedArray,
+  senderWithLargestWordCount,
+  lastSubstringInLexicographicalOrder,
 ];
