@@ -1,6 +1,6 @@
 import { getValue, setValue } from '../lib/storage/store';
 import { buildDynamicRules, challengePageUrl } from '../lib/blocking/dnr';
-import { activeDomains, nextExpiry, pruneTokens } from '../lib/unlock/tokens';
+import { nextExpiry, pruneTokens } from '../lib/unlock/tokens';
 import { nextApply, pickApplicable } from '../lib/cooldown/cooldown';
 import { applyAll } from '../lib/cooldown/apply';
 import { damageStreak } from '../lib/streak/streak';
@@ -42,7 +42,7 @@ export async function reconcile(now: number = Date.now()): Promise<void> {
   }
 
   // 4. Rebuild the live DNR dynamic rule set.
-  const unlockedDomains = activeDomains(pruned, now);
+  const unlockedDomains = new Set(pruned.map((t) => t.domain));
   const desiredRules = buildDynamicRules({
     blockRules,
     keywordRules,
