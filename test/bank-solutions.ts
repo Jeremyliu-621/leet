@@ -47404,6 +47404,89 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 290
+  'minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix': (...args: unknown[]) => {
+    const mat = args[0] as number[][];
+    const m = mat.length, n = mat[0]!.length;
+    let start = 0;
+    for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (mat[i]![j]) start |= 1 << (i*n+j);
+    if (start === 0) return 0;
+    const visited = new Set([start]);
+    let queue = [start];
+    let steps = 0;
+    while (queue.length > 0) {
+      steps++;
+      const nextQueue: number[] = [];
+      for (const state of queue) {
+        for (let i = 0; i < m; i++) {
+          for (let j = 0; j < n; j++) {
+            let next = state ^ (1 << (i*n+j));
+            if (i > 0) next ^= 1 << ((i-1)*n+j);
+            if (i < m-1) next ^= 1 << ((i+1)*n+j);
+            if (j > 0) next ^= 1 << (i*n+j-1);
+            if (j < n-1) next ^= 1 << (i*n+j+1);
+            if (next === 0) return steps;
+            if (!visited.has(next)) { visited.add(next); nextQueue.push(next); }
+          }
+        }
+      }
+      queue = nextQueue;
+    }
+    return -1;
+  },
+  'number-of-pairs-satisfying-inequality': (...args: unknown[]) => {
+    const nums1 = args[0] as number[], nums2 = args[1] as number[], diff = args[2] as number;
+    const n = nums1.length;
+    const c = nums1.map((v, i) => v - nums2[i]!);
+    const vals = [...new Set([...c, ...c.map(v => v + diff)])].sort((a, b) => a - b);
+    const rank = new Map<number, number>(vals.map((v, i) => [v, i + 1]));
+    const N = vals.length;
+    const bit = new Array(N + 2).fill(0);
+    const upd = (i: number) => { for (; i <= N; i += i & -i) bit[i]++; };
+    const qry = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    const lrank = (v: number) => {
+      let lo = 0, hi = N;
+      while (lo < hi) { const m = (lo + hi + 1) >> 1; if (vals[m-1]! <= v) lo = m; else hi = m - 1; }
+      return lo;
+    };
+    let ans = 0;
+    for (let j = 0; j < n; j++) {
+      ans += qry(lrank(c[j]! + diff));
+      upd(rank.get(c[j]!)!);
+    }
+    return ans;
+  },
+  'maximize-the-total-height-of-unique-towers': (...args: unknown[]) => {
+    const maximumHeight = args[0] as number[];
+    const sorted = [...maximumHeight].sort((a, b) => b - a);
+    let total = sorted[0]!, prev = sorted[0]!;
+    for (let i = 1; i < sorted.length; i++) {
+      const h = Math.min(sorted[i]!, prev - 1);
+      if (h <= 0) return -1;
+      total += h;
+      prev = h;
+    }
+    return total;
+  },
+  'number-of-great-partitions': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const MOD = 1_000_000_007n;
+    const total = nums.reduce((s, x) => s + x, 0);
+    if (total < 2 * k) return 0;
+    const dp = new Array(k).fill(0n);
+    dp[0] = 1n;
+    for (const num of nums) {
+      for (let j = k-1; j >= 0; j--) {
+        if (dp[j] === 0n) continue;
+        const nj = j + num;
+        if (nj < k) dp[nj] = (dp[nj]! + dp[j]!) % MOD;
+      }
+    }
+    const badCount = dp.reduce((s, v) => (s + v) % MOD, 0n);
+    let pow2 = 1n;
+    for (let i = 0; i < nums.length; i++) pow2 = (pow2 * 2n) % MOD;
+    return Number((pow2 - 2n * badCount % MOD + 2n * MOD) % MOD);
+  },
   // batch 287
   'maximize-the-number-of-target-nodes-after-connecting-trees-ii': (...args: unknown[]) => {
     const edges1 = args[0] as number[][], edges2 = args[1] as number[][];

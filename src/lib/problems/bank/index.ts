@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 290
+import { problem as minFlipsBinaryMatrix } from './minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix';
+import { problem as numPairsSatisfyInequality } from './number-of-pairs-satisfying-inequality';
+import { problem as numGreatPartitions } from './number-of-great-partitions';
+import { problem as maxTotalHeightUniqueTowers } from './maximize-the-total-height-of-unique-towers';
 // batch 287
 import { problem as maxTargetNodesII } from './maximize-the-number-of-target-nodes-after-connecting-trees-ii';
 import { problem as minAdjSwapsKthSmallest } from './minimum-adjacent-swaps-to-reach-the-kth-smallest-number';
@@ -6594,6 +6599,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 290
+  minFlipsBinaryMatrix,
+  numPairsSatisfyInequality,
+  numGreatPartitions,
+  maxTotalHeightUniqueTowers,
   // batch 287
   maxTargetNodesII,
   minAdjSwapsKthSmallest,

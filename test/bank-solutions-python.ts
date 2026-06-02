@@ -46429,6 +46429,100 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 290
+  'minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix': `def minFlips(mat):
+    from collections import deque
+    m, n = len(mat), len(mat[0])
+    start = 0
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j]:
+                start |= 1 << (i*n+j)
+    if start == 0:
+        return 0
+    visited = {start}
+    queue = deque([start])
+    steps = 0
+    while queue:
+        steps += 1
+        for _ in range(len(queue)):
+            state = queue.popleft()
+            for i in range(m):
+                for j in range(n):
+                    nxt = state ^ (1 << (i*n+j))
+                    if i > 0: nxt ^= 1 << ((i-1)*n+j)
+                    if i < m-1: nxt ^= 1 << ((i+1)*n+j)
+                    if j > 0: nxt ^= 1 << (i*n+j-1)
+                    if j < n-1: nxt ^= 1 << (i*n+j+1)
+                    if nxt == 0:
+                        return steps
+                    if nxt not in visited:
+                        visited.add(nxt)
+                        queue.append(nxt)
+    return -1
+`,
+
+  'number-of-pairs-satisfying-inequality': `def numberOfPairs(nums1, nums2, diff):
+    n = len(nums1)
+    c = [nums1[i] - nums2[i] for i in range(n)]
+    # Coordinate compress all values c[i] and c[i]+diff
+    vals = sorted(set(c + [v + diff for v in c]))
+    rank = {v: i+1 for i, v in enumerate(vals)}
+    N = len(vals)
+    bit = [0] * (N + 2)
+    def update(i):
+        while i <= N:
+            bit[i] += 1
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    def lrank(v):
+        lo, hi = 0, N
+        while lo < hi:
+            mid = (lo + hi + 1) >> 1
+            if vals[mid-1] <= v: lo = mid
+            else: hi = mid - 1
+        return lo
+    ans = 0
+    for j in range(n):
+        ans += query(lrank(c[j] + diff))
+        update(rank[c[j]])
+    return ans
+`,
+
+
+  'maximize-the-total-height-of-unique-towers': `def maximumTotalSum(maximumHeight):
+    s = sorted(maximumHeight, reverse=True)
+    total = prev = s[0]
+    for i in range(1, len(s)):
+        h = min(s[i], prev - 1)
+        if h <= 0:
+            return -1
+        total += h
+        prev = h
+    return total
+`,
+
+  'number-of-great-partitions': `def countPartitions(nums, k):
+    MOD = 10**9 + 7
+    total = sum(nums)
+    if total < 2 * k:
+        return 0
+    dp = [0] * k
+    dp[0] = 1
+    for num in nums:
+        for j in range(k-1, -1, -1):
+            if dp[j] and j + num < k:
+                dp[j + num] = (dp[j + num] + dp[j]) % MOD
+    bad = sum(dp) % MOD
+    pow2 = pow(2, len(nums), MOD)
+    return (pow2 - 2 * bad) % MOD
+`,
+
   // batch 287
   'maximize-the-number-of-target-nodes-after-connecting-trees-ii': `def maxTargetNodes(edges1, edges2):
     if hasattr(edges1, 'to_py'): edges1 = edges1.to_py()

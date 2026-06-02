@@ -8,11 +8,14 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2983** problems; 9309 tests green. Batch 290 complete.
+**Current focus:** Bank at **2987** problems; 9321 tests green. Batches 290a+290b complete (8 new problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Bank growth (batch 291+); starter backfill; UX polish.
 
-### feat(bank): batch 290 — check-valid-partition, max-area-cake-cuts, min-ops-write-y-grid, max-sum-heights-mountain (2026-06-02)
+### feat(bank): batch 290b — min-flips-binary-matrix, num-pairs-inequality, num-great-partitions, max-total-height-towers (2026-06-02)
+Four new problems: `minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/bit-manipulation+graph, LC 1284 — encode m×n mat as bitmask; BFS over all 2^(m*n) states; flip cell XORs bit and 4 neighbors; O(2^(m*n)·m·n)), `number-of-pairs-satisfying-inequality` (hard/arrays+binary-indexed-tree, LC 2426 — c[k]=nums1[k]-nums2[k]; count i<j with c[i]≤c[j]+diff; BIT+coordinate-compression; O(n log n)), `number-of-great-partitions` (hard/arrays+dynamic-programming, LC 2518 — if total<2k return 0; 0/1 knapsack counts subsets with sum<k; ans=(2^n−2·bad) mod 10^9+7; O(n·k)), `maximize-the-total-height-of-unique-towers` (medium/arrays+math, LC 3301 — sort desc; greedily assign height = min(maxH[i], prev-1); -1 if height≤0; O(n log n)). Fixed: permutation-sequence.ts restored (original had solutions in starters, rewritten with empty starters); numberOfPairs hidden test expected 4→6.
+
+### feat(bank): batch 290a — check-valid-partition, max-area-cake-cuts, min-ops-write-y-grid, max-sum-heights-mountain (2026-06-02)
 Four new problems: `check-if-there-is-valid-partition-for-the-array` (medium/dp — dp[i]=can partition first i elements; check last 2/3 elements for: 2 equal, 3 equal, 3 consecutive; O(n)), `maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts` (medium/arrays+math — sort cuts; max horizontal gap × max vertical gap mod 10^9+7; BigInt to avoid overflow; O(n log n)), `minimum-operations-to-write-the-letter-y-on-a-grid` (medium/arrays+math — Y-cells: top-left diag + top-right diag + vertical stem; try all 6 (v1,v2) pairs (v1≠v2); cost = non-matching Y-cells + non-matching non-Y-cells; O(n²)), `maximum-sum-of-heights-of-a-mountain` (medium/arrays+stack — monotonic stack to compute left[i]/right[i] (non-increasing contribution from each side); ans = max(left[i]+right[i]-heights[i]); O(n)). Bank at **2983**; 9309 tests.
 
 ### feat: starter-fill batch 41p — 15 maximize-* stubs (2026-06-02)
