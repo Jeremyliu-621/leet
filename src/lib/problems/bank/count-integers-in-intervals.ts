@@ -44,22 +44,74 @@ The input is an array of operations where each operation is either \`["add", lef
   params: ['operations'],
   starterCode: {
     javascript: `function countIntegersInIntervals(operations) {
-  // operations: array of ["add", left, right] or ["count"]
-  // return all results from "count" operations as an array
   const results = [];
-  // your code here
+  let total = 0;
+  const intervals = []; // sorted by start
+  for (const op of operations) {
+    if (op[0] === 'count') {
+      results.push(total);
+    } else {
+      let [, l, r] = op;
+      let newL = l, newR = r;
+      const next = [];
+      for (const [s, e] of intervals) {
+        if (e < l || s > r) { next.push([s, e]); }
+        else { total -= (e - s + 1); newL = Math.min(newL, s); newR = Math.max(newR, e); }
+      }
+      total += (newR - newL + 1);
+      let pos = 0;
+      while (pos < next.length && next[pos][0] < newL) pos++;
+      next.splice(pos, 0, [newL, newR]);
+      intervals.length = 0;
+      for (const iv of next) intervals.push(iv);
+    }
+  }
   return results;
 }`,
     typescript: `function countIntegersInIntervals(operations: (["add", number, number] | ["count"])[]): number[] {
   const results: number[] = [];
-  // your code here
+  let total = 0;
+  const intervals: [number, number][] = [];
+  for (const op of operations) {
+    if (op[0] === 'count') {
+      results.push(total);
+    } else {
+      const [, l, r] = op;
+      let newL = l, newR = r;
+      const next: [number, number][] = [];
+      for (const [s, e] of intervals) {
+        if (e < l || s > r) { next.push([s, e]); }
+        else { total -= (e - s + 1); newL = Math.min(newL, s); newR = Math.max(newR, e); }
+      }
+      total += (newR - newL + 1);
+      let pos = 0;
+      while (pos < next.length && next[pos]![0] < newL) pos++;
+      next.splice(pos, 0, [newL, newR]);
+      intervals.length = 0;
+      for (const iv of next) intervals.push(iv);
+    }
+  }
   return results;
 }`,
     python: `def countIntegersInIntervals(operations):
-    # operations: list of ["add", left, right] or ["count"]
-    # return all count() results as a list
-    results = []
-    # your code here
+    if hasattr(operations, 'to_py'): operations = operations.to_py()
+    ops = [[x.to_py() if hasattr(x, 'to_py') else x for x in op] for op in operations]
+    results = []; total = 0; intervals = []
+    for op in ops:
+        if op[0] == 'count':
+            results.append(total)
+        else:
+            l, r = int(op[1]), int(op[2])
+            new_l, new_r = l, r; nxt = []
+            for s, e in intervals:
+                if e < l or s > r: nxt.append((s, e))
+                else:
+                    total -= (e - s + 1); new_l = min(new_l, s); new_r = max(new_r, e)
+            total += (new_r - new_l + 1)
+            pos = 0
+            while pos < len(nxt) and nxt[pos][0] < new_l: pos += 1
+            nxt.insert(pos, (new_l, new_r))
+            intervals = nxt
     return results`,
   },
   visibleTests: [

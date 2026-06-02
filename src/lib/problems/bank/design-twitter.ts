@@ -42,55 +42,102 @@ args = [[],[1,5],[1],[1,2],[2,6],[1],[1,2],[1]]`,
     javascript: `function twitterRunner(ops, args) {
   const results = [null];
   let time = 0;
-  const tweets = new Map();   // userId -> [{time, tweetId}]
-  const following = new Map(); // userId -> Set of followeeIds
-
+  const tweets = new Map();
+  const following = new Map();
   function getFollowing(userId) {
     if (!following.has(userId)) following.set(userId, new Set());
     return following.get(userId);
   }
-
   for (let i = 1; i < ops.length; i++) {
     const op = ops[i];
     const a = args[i];
     if (op === 'postTweet') {
-      // your code here
+      const [userId, tweetId] = a;
+      if (!tweets.has(userId)) tweets.set(userId, []);
+      tweets.get(userId).push({ time: ++time, tweetId });
+      results.push(null);
     } else if (op === 'getNewsFeed') {
-      // your code here — push result into results
+      const [userId] = a;
+      const feed = [];
+      for (const uid of [userId, ...getFollowing(userId)]) {
+        if (tweets.has(uid)) feed.push(...tweets.get(uid));
+      }
+      feed.sort((x, y) => y.time - x.time);
+      results.push(feed.slice(0, 10).map(t => t.tweetId));
     } else if (op === 'follow') {
-      // your code here
+      getFollowing(a[0]).add(a[1]);
+      results.push(null);
     } else if (op === 'unfollow') {
-      // your code here
+      getFollowing(a[0]).delete(a[1]);
+      results.push(null);
     }
   }
   return results;
 }
 `,
     typescript: `function twitterRunner(ops: string[], args: unknown[][]): unknown[] {
-
+  const results: unknown[] = [null];
+  let time = 0;
+  const tweets = new Map<number, {time: number; tweetId: number}[]>();
+  const following = new Map<number, Set<number>>();
+  function getFollowing(uid: number): Set<number> {
+    if (!following.has(uid)) following.set(uid, new Set());
+    return following.get(uid)!;
+  }
+  for (let i = 1; i < ops.length; i++) {
+    const op = ops[i]!;
+    const a = args[i] as number[];
+    if (op === 'postTweet') {
+      const [userId, tweetId] = a as [number, number];
+      if (!tweets.has(userId)) tweets.set(userId, []);
+      tweets.get(userId)!.push({time: ++time, tweetId});
+      results.push(null);
+    } else if (op === 'getNewsFeed') {
+      const userId = a[0]!;
+      const feed: {time: number; tweetId: number}[] = [];
+      for (const uid of [userId, ...getFollowing(userId)]) {
+        const t = tweets.get(uid);
+        if (t) feed.push(...t);
+      }
+      feed.sort((x, y) => y.time - x.time);
+      results.push(feed.slice(0, 10).map(t => t.tweetId));
+    } else if (op === 'follow') {
+      getFollowing(a[0]!).add(a[1]!);
+      results.push(null);
+    } else if (op === 'unfollow') {
+      getFollowing(a[0]!).delete(a[1]!);
+      results.push(null);
+    }
+  }
+  return results;
 }`,
     python: `def twitterRunner(ops, args):
-    results = [None]
-    time = 0
-    tweets = {}    # userId -> list of (time, tweetId)
-    following = {} # userId -> set of followeeIds
-
-    def get_following(user_id):
-        if user_id not in following:
-            following[user_id] = set()
-        return following[user_id]
-
+    if hasattr(ops, 'to_py'): ops = ops.to_py()
+    if hasattr(args, 'to_py'): args = args.to_py()
+    ops = [str(o) for o in ops]
+    results = [None]; tc = [0]
+    tweets = {}; following = {}
+    def get_following(uid):
+        if uid not in following: following[uid] = set()
+        return following[uid]
     for i in range(1, len(ops)):
         op = ops[i]
-        a = list(args[i].to_py() if hasattr(args[i], 'to_py') else args[i])
+        a_raw = args[i]
+        a = [int(x) for x in (a_raw.to_py() if hasattr(a_raw, 'to_py') else list(a_raw))]
         if op == 'postTweet':
-            pass  # your code here
+            uid, tid = a[0], a[1]
+            if uid not in tweets: tweets[uid] = []
+            tc[0] += 1; tweets[uid].append((tc[0], tid)); results.append(None)
         elif op == 'getNewsFeed':
-            pass  # your code here — append result
+            uid = a[0]; feed = []
+            for u in [uid] + list(get_following(uid)):
+                if u in tweets: feed.extend(tweets[u])
+            feed.sort(key=lambda x: -x[0])
+            results.append([t[1] for t in feed[:10]])
         elif op == 'follow':
-            pass  # your code here
+            get_following(a[0]).add(a[1]); results.append(None)
         elif op == 'unfollow':
-            pass  # your code here
+            get_following(a[0]).discard(a[1]); results.append(None)
     return results
 `,
   },

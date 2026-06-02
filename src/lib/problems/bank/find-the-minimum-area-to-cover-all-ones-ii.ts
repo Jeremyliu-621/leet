@@ -35,9 +35,78 @@ Note that the rectangles are allowed to cover cells that do not contain 1s, and 
   functionName: 'minimumSum',
   params: ['grid'],
   starterCode: {
-    javascript: 'function minimumSum(grid) {\n  // your code here\n}\n',
-    typescript: 'function minimumSum(grid: number[][]): number {\n  // your code here\n}\n',
-    python: 'def minimumSum(grid):\n    # your code here\n    pass\n',
+    javascript: `function minimumSum(grid) {
+  const m = grid.length, n = grid[0].length;
+  function minBox(r1, c1, r2, c2) {
+    let minR = Infinity, maxR = -1, minC = Infinity, maxC = -1;
+    for (let r = r1; r <= r2; r++) for (let c = c1; c <= c2; c++) if (grid[r][c]) {
+      if (r < minR) minR = r; if (r > maxR) maxR = r;
+      if (c < minC) minC = c; if (c > maxC) maxC = c;
+    }
+    return maxR < 0 ? 0 : (maxR - minR + 1) * (maxC - minC + 1);
+  }
+  let ans = Infinity;
+  for (let i = 0; i < m - 2; i++) for (let j = i + 1; j < m - 1; j++)
+    ans = Math.min(ans, minBox(0,0,i,n-1) + minBox(i+1,0,j,n-1) + minBox(j+1,0,m-1,n-1));
+  for (let i = 0; i < n - 2; i++) for (let j = i + 1; j < n - 1; j++)
+    ans = Math.min(ans, minBox(0,0,m-1,i) + minBox(0,i+1,m-1,j) + minBox(0,j+1,m-1,n-1));
+  for (let i = 0; i < m - 1; i++) for (let j = 0; j < n - 1; j++) {
+    ans = Math.min(ans, minBox(0,0,i,n-1) + minBox(i+1,0,m-1,j) + minBox(i+1,j+1,m-1,n-1));
+    ans = Math.min(ans, minBox(0,0,i,j) + minBox(0,j+1,i,n-1) + minBox(i+1,0,m-1,n-1));
+    ans = Math.min(ans, minBox(0,0,m-1,j) + minBox(0,j+1,i,n-1) + minBox(i+1,j+1,m-1,n-1));
+    ans = Math.min(ans, minBox(0,0,i,j) + minBox(i+1,0,m-1,j) + minBox(0,j+1,m-1,n-1));
+  }
+  return ans;
+}
+`,
+    typescript: `function minimumSum(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  function minBox(r1: number, c1: number, r2: number, c2: number): number {
+    let minR = Infinity, maxR = -1, minC = Infinity, maxC = -1;
+    for (let r = r1; r <= r2; r++) for (let c = c1; c <= c2; c++) if (grid[r]![c]) {
+      if (r < minR) minR = r; if (r > maxR) maxR = r;
+      if (c < minC) minC = c; if (c > maxC) maxC = c;
+    }
+    return maxR < 0 ? 0 : (maxR - minR + 1) * (maxC - minC + 1);
+  }
+  let ans = Infinity;
+  for (let i = 0; i < m - 2; i++) for (let j = i + 1; j < m - 1; j++)
+    ans = Math.min(ans, minBox(0,0,i,n-1) + minBox(i+1,0,j,n-1) + minBox(j+1,0,m-1,n-1));
+  for (let i = 0; i < n - 2; i++) for (let j = i + 1; j < n - 1; j++)
+    ans = Math.min(ans, minBox(0,0,m-1,i) + minBox(0,i+1,m-1,j) + minBox(0,j+1,m-1,n-1));
+  for (let i = 0; i < m - 1; i++) for (let j = 0; j < n - 1; j++) {
+    ans = Math.min(ans, minBox(0,0,i,n-1) + minBox(i+1,0,m-1,j) + minBox(i+1,j+1,m-1,n-1));
+    ans = Math.min(ans, minBox(0,0,i,j) + minBox(0,j+1,i,n-1) + minBox(i+1,0,m-1,n-1));
+    ans = Math.min(ans, minBox(0,0,m-1,j) + minBox(0,j+1,i,n-1) + minBox(i+1,j+1,m-1,n-1));
+    ans = Math.min(ans, minBox(0,0,i,j) + minBox(i+1,0,m-1,j) + minBox(0,j+1,m-1,n-1));
+  }
+  return ans;
+}
+`,
+    python: `def minimumSum(grid):
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in grid]
+    m, n = len(grid), len(grid[0])
+    def min_box(r1, c1, r2, c2):
+        pts = [(r,c) for r in range(r1,r2+1) for c in range(c1,c2+1) if grid[r][c]]
+        if not pts: return 0
+        rs = [p[0] for p in pts]; cs = [p[1] for p in pts]
+        return (max(rs)-min(rs)+1)*(max(cs)-min(cs)+1)
+    ans = float('inf')
+    for i in range(m-2):
+        for j in range(i+1, m-1):
+            ans = min(ans, min_box(0,0,i,n-1)+min_box(i+1,0,j,n-1)+min_box(j+1,0,m-1,n-1))
+    for i in range(n-2):
+        for j in range(i+1, n-1):
+            ans = min(ans, min_box(0,0,m-1,i)+min_box(0,i+1,m-1,j)+min_box(0,j+1,m-1,n-1))
+    for i in range(m-1):
+        for j in range(n-1):
+            ans = min(ans, min_box(0,0,i,n-1)+min_box(i+1,0,m-1,j)+min_box(i+1,j+1,m-1,n-1))
+            ans = min(ans, min_box(0,0,i,j)+min_box(0,j+1,i,n-1)+min_box(i+1,0,m-1,n-1))
+            ans = min(ans, min_box(0,0,m-1,j)+min_box(0,j+1,i,n-1)+min_box(i+1,j+1,m-1,n-1))
+            ans = min(ans, min_box(0,0,i,j)+min_box(i+1,0,m-1,j)+min_box(0,j+1,m-1,n-1))
+    return ans
+`,
   },
   visibleTests: [
     {

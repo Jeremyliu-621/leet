@@ -75,14 +75,98 @@ function countCompleteSubstrings(word, k) {
   params: ['word', 'k'],
   starterCode: {
     javascript: `function countCompleteSubstrings(word, k) {
-  // your code here
+  let total = 0;
+  const n = word.length;
+  function countSeg(seg) {
+    for (let t = 1; t <= 26; t++) {
+      const len = t * k;
+      if (len > seg.length) break;
+      const freq = new Array(26).fill(0);
+      let exactK = 0;
+      for (let j = 0; j < seg.length; j++) {
+        const c = seg.charCodeAt(j) - 97;
+        freq[c]++;
+        if (freq[c] === k) exactK++;
+        else if (freq[c] === k + 1) exactK--;
+        if (j >= len) {
+          const old = seg.charCodeAt(j - len) - 97;
+          if (freq[old] === k) exactK--;
+          else if (freq[old] === k + 1) exactK++;
+          freq[old]--;
+        }
+        if (j >= len - 1 && exactK === t) total++;
+      }
+    }
+  }
+  let start = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i === n || Math.abs(word.charCodeAt(i) - word.charCodeAt(i - 1)) > 2) {
+      countSeg(word.slice(start, i));
+      start = i;
+    }
+  }
+  return total;
 }`,
     typescript: `function countCompleteSubstrings(word: string, k: number): number {
-  // your code here
+  let total = 0;
+  const n = word.length;
+  function countSeg(seg: string): void {
+    for (let t = 1; t <= 26; t++) {
+      const len = t * k;
+      if (len > seg.length) break;
+      const freq = new Array(26).fill(0) as number[];
+      let exactK = 0;
+      for (let j = 0; j < seg.length; j++) {
+        const c = seg.charCodeAt(j) - 97;
+        freq[c]!++;
+        if (freq[c] === k) exactK++;
+        else if (freq[c] === k + 1) exactK--;
+        if (j >= len) {
+          const old = seg.charCodeAt(j - len) - 97;
+          if (freq[old] === k) exactK--;
+          else if (freq[old] === k + 1) exactK++;
+          freq[old]!--;
+        }
+        if (j >= len - 1 && exactK === t) total++;
+      }
+    }
+  }
+  let start = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i === n || Math.abs(word.charCodeAt(i) - word.charCodeAt(i - 1)) > 2) {
+      countSeg(word.slice(start, i));
+      start = i;
+    }
+  }
+  return total;
 }`,
     python: `def countCompleteSubstrings(word, k):
-    # your code here
-    pass`,
+    if hasattr(word, 'to_py'): word = word.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    word = str(word); k = int(k)
+    total = 0; n = len(word)
+    def count_seg(seg):
+        nonlocal total
+        for t in range(1, 27):
+            length = t * k
+            if length > len(seg): break
+            freq = [0] * 26; exact_k = 0
+            for j in range(len(seg)):
+                c = ord(seg[j]) - 97
+                freq[c] += 1
+                if freq[c] == k: exact_k += 1
+                elif freq[c] == k + 1: exact_k -= 1
+                if j >= length:
+                    old = ord(seg[j - length]) - 97
+                    if freq[old] == k: exact_k -= 1
+                    elif freq[old] == k + 1: exact_k += 1
+                    freq[old] -= 1
+                if j >= length - 1 and exact_k == t: total += 1
+    start = 0
+    for i in range(1, n + 1):
+        if i == n or abs(ord(word[i]) - ord(word[i-1])) > 2:
+            count_seg(word[start:i]); start = i
+    return total`,
   },
   visibleTests: [
     { args: ['igigee', 2], expected: 3 },

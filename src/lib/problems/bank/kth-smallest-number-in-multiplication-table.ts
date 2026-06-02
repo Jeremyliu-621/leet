@@ -41,14 +41,44 @@ Sorted: 1, 2, 2, 3, 3, 4, 6, 6, 9. The 5th smallest is **3**.`,
   params: ['m', 'n', 'k'],
   starterCode: {
     javascript: `function findKthNumber(m, n, k) {
-  // your code here
+  function count(v) {
+    let cnt = 0;
+    for (let i = 1; i <= m; i++) cnt += Math.min(Math.floor(v / i), n);
+    return cnt;
+  }
+  let lo = 1, hi = m * n;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (count(mid) >= k) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
 }`,
     typescript: `function findKthNumber(m: number, n: number, k: number): number {
-  // your code here
+  function count(v: number): number {
+    let cnt = 0;
+    for (let i = 1; i <= m; i++) cnt += Math.min(Math.floor(v / i), n);
+    return cnt;
+  }
+  let lo = 1, hi = m * n;
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    if (count(mid) >= k) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
 }`,
     python: `def findKthNumber(m, n, k):
-    # your code here
-    pass`,
+    if hasattr(m, 'to_py'): m = m.to_py()
+    m, n, k = int(m), int(n), int(k)
+    def count(v):
+        return sum(min(v // i, n) for i in range(1, m + 1))
+    lo, hi = 1, m * n
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if count(mid) >= k: hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [3, 3, 5], expected: 3 },

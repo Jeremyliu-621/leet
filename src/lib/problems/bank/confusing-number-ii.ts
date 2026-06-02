@@ -43,14 +43,66 @@ Given an integer \`n\`, return the count of confusing numbers in the range \`[1,
   params: ['n'],
   starterCode: {
     javascript: `function confusingNumberII(n) {
-  // your code here
+  const rot = {0:0,1:1,6:9,8:8,9:6};
+  const digits = [0,1,6,8,9];
+  let count = 0;
+  function isConfusing(num) {
+    let orig = num, r = 0, tmp = num;
+    while (tmp > 0) { r = r * 10 + rot[tmp % 10]; tmp = Math.floor(tmp / 10); }
+    return r !== orig;
+  }
+  function dfs(cur) {
+    if (cur !== 0 && isConfusing(cur)) count++;
+    for (const d of digits) {
+      if (cur === 0 && d === 0) continue;
+      const next = cur * 10 + d;
+      if (next > n) break;
+      dfs(next);
+    }
+  }
+  dfs(0);
+  return count;
 }`,
     typescript: `function confusingNumberII(n: number): number {
-  // your code here
+  const rot: Record<number, number> = {0:0,1:1,6:9,8:8,9:6};
+  const digits = [0,1,6,8,9];
+  let count = 0;
+  function isConfusing(num: number): boolean {
+    let orig = num, r = 0, tmp = num;
+    while (tmp > 0) { r = r * 10 + rot[tmp % 10]!; tmp = Math.floor(tmp / 10); }
+    return r !== orig;
+  }
+  function dfs(cur: number): void {
+    if (cur !== 0 && isConfusing(cur)) count++;
+    for (const d of digits) {
+      if (cur === 0 && d === 0) continue;
+      const next = cur * 10 + d;
+      if (next > n) break;
+      dfs(next);
+    }
+  }
+  dfs(0);
+  return count;
 }`,
     python: `def confusingNumberII(n):
-    # your code here
-    pass`,
+    if hasattr(n, 'to_py'): n = n.to_py()
+    n = int(n)
+    rot = {0:0,1:1,6:9,8:8,9:6}
+    digits = [0,1,6,8,9]
+    count = [0]
+    def is_confusing(num):
+        orig, r, tmp = num, 0, num
+        while tmp > 0: r = r * 10 + rot[tmp % 10]; tmp //= 10
+        return r != orig
+    def dfs(cur):
+        if cur != 0 and is_confusing(cur): count[0] += 1
+        for d in digits:
+            if cur == 0 and d == 0: continue
+            nxt = cur * 10 + d
+            if nxt > n: break
+            dfs(nxt)
+    dfs(0)
+    return count[0]`,
   },
   visibleTests: [
     { args: [20], expected: 6 },

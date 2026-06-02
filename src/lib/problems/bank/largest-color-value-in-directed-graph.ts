@@ -61,13 +61,76 @@ Explanation: There is a self-loop (cycle).
   params: ['colors', 'edges'],
   starterCode: {
     javascript: `function largestPathValue(colors, edges) {
-  // your code here
+  const n = colors.length;
+  const adj = Array.from({length: n}, () => []);
+  const indeg = new Array(n).fill(0);
+  for (const [u, v] of edges) { adj[u].push(v); indeg[v]++; }
+  const dp = Array.from({length: n}, (_, i) => {
+    const row = new Array(26).fill(0);
+    row[colors.charCodeAt(i) - 97] = 1;
+    return row;
+  });
+  const queue = [];
+  for (let i = 0; i < n; i++) if (indeg[i] === 0) queue.push(i);
+  let processed = 0, ans = 0;
+  while (queue.length) {
+    const u = queue.shift();
+    processed++;
+    for (const c of dp[u]) ans = Math.max(ans, c);
+    for (const v of adj[u]) {
+      const cv = colors.charCodeAt(v) - 97;
+      for (let c = 0; c < 26; c++) dp[v][c] = Math.max(dp[v][c], dp[u][c] + (c === cv ? 1 : 0));
+      if (--indeg[v] === 0) queue.push(v);
+    }
+  }
+  return processed < n ? -1 : ans;
 }`,
-    typescript: "function largestPathValue(colors: string, edges: number[][]): number {\n  // your code here\n}",
-
-    python: `def largestPathValue(colors: str, edges: list) -> int:
-    # your code here
-    pass`,
+    typescript: `function largestPathValue(colors: string, edges: number[][]): number {
+  const n = colors.length;
+  const adj: number[][] = Array.from({length: n}, () => []);
+  const indeg = new Array(n).fill(0) as number[];
+  for (const e of edges) { adj[e[0]!]!.push(e[1]!); indeg[e[1]!]!++; }
+  const dp: number[][] = Array.from({length: n}, (_, i) => {
+    const row = new Array(26).fill(0) as number[];
+    row[colors.charCodeAt(i) - 97] = 1;
+    return row;
+  });
+  const queue: number[] = [];
+  for (let i = 0; i < n; i++) if (indeg[i] === 0) queue.push(i);
+  let processed = 0, ans = 0;
+  while (queue.length) {
+    const u = queue.shift()!;
+    processed++;
+    for (const c of dp[u]!) ans = Math.max(ans, c);
+    for (const v of adj[u]!) {
+      const cv = colors.charCodeAt(v) - 97;
+      for (let c = 0; c < 26; c++) dp[v]![c] = Math.max(dp[v]![c]!, dp[u]![c]! + (c === cv ? 1 : 0));
+      if (--indeg[v]! === 0) queue.push(v);
+    }
+  }
+  return processed < n ? -1 : ans;
+}`,
+    python: `def largestPathValue(colors, edges):
+    if hasattr(colors, 'to_py'): colors = colors.to_py()
+    if hasattr(edges, 'to_py'): edges = edges.to_py()
+    colors = str(colors)
+    edges = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges]
+    n = len(colors)
+    adj = [[] for _ in range(n)]; indeg = [0]*n
+    for u, v in edges: adj[u].append(v); indeg[v] += 1
+    dp = [[0]*26 for _ in range(n)]
+    for i in range(n): dp[i][ord(colors[i])-97] = 1
+    from collections import deque
+    queue = deque(i for i in range(n) if indeg[i] == 0)
+    processed = 0; ans = 0
+    while queue:
+        u = queue.popleft(); processed += 1; ans = max(ans, max(dp[u]))
+        for v in adj[u]:
+            cv = ord(colors[v]) - 97
+            for c in range(26): dp[v][c] = max(dp[v][c], dp[u][c] + (1 if c == cv else 0))
+            indeg[v] -= 1
+            if indeg[v] == 0: queue.append(v)
+    return -1 if processed < n else ans`,
   },
   visibleTests: [
     { args: ['abaca', [[0, 1], [0, 2], [2, 3], [3, 4]]], expected: 3 },

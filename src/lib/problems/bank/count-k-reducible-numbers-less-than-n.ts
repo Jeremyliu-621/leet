@@ -49,14 +49,77 @@ Return the number of positive integers **strictly less than** \`N\` that are k-r
   params: ['s', 'k'],
   starterCode: {
     javascript: `function countKReducibleNumbers(s, k) {
-  // your code here
+  const MOD = 1000000007;
+  const n = s.length;
+  function popcount(x) { let c = 0; while (x > 0) { c += x & 1; x >>= 1; } return c; }
+  const steps = new Array(n + 1).fill(0);
+  for (let c = 2; c <= n; c++) steps[c] = 1 + steps[popcount(c)];
+  const C = Array.from({length: n + 1}, () => new Array(n + 1).fill(0));
+  C[0][0] = 1;
+  for (let i = 1; i <= n; i++) {
+    C[i][0] = 1;
+    for (let j = 1; j <= i; j++) C[i][j] = (C[i-1][j-1] + C[i-1][j]) % MOD;
+  }
+  const count = new Array(n + 1).fill(0);
+  let ones = 0;
+  for (let i = 0; i < n; i++) {
+    if (s[i] === '1') {
+      const rem = n - 1 - i;
+      for (let c = ones; c <= ones + rem; c++) count[c] = (count[c] + C[rem][c - ones]) % MOD;
+      ones++;
+    }
+  }
+  let ans = 0;
+  for (let c = 1; c <= n; c++) if (steps[c] <= k - 1) ans = (ans + count[c]) % MOD;
+  return ans;
 }`,
     typescript: `function countKReducibleNumbers(s: string, k: number): number {
-
+  const MOD = 1000000007;
+  const n = s.length;
+  function popcount(x: number): number { let c = 0; while (x > 0) { c += x & 1; x >>= 1; } return c; }
+  const steps = new Array(n + 1).fill(0) as number[];
+  for (let c = 2; c <= n; c++) steps[c] = 1 + steps[popcount(c)]!;
+  const C = Array.from({length: n + 1}, () => new Array(n + 1).fill(0) as number[]);
+  C[0]![0] = 1;
+  for (let i = 1; i <= n; i++) {
+    C[i]![0] = 1;
+    for (let j = 1; j <= i; j++) C[i]![j] = (C[i-1]![j-1]! + C[i-1]![j]!) % MOD;
+  }
+  const count = new Array(n + 1).fill(0) as number[];
+  let ones = 0;
+  for (let i = 0; i < n; i++) {
+    if (s[i] === '1') {
+      const rem = n - 1 - i;
+      for (let c = ones; c <= ones + rem; c++) count[c] = (count[c]! + C[rem]![c - ones]!) % MOD;
+      ones++;
+    }
+  }
+  let ans = 0;
+  for (let c = 1; c <= n; c++) if (steps[c]! <= k - 1) ans = (ans + count[c]!) % MOD;
+  return ans;
 }`,
     python: `def countKReducibleNumbers(s, k):
-    # your code here
-    pass`,
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    s = str(s); k = int(k)
+    MOD = 10**9 + 7; n = len(s)
+    steps = [0] * (n + 1)
+    for c in range(2, n + 1): steps[c] = 1 + steps[bin(c).count('1')]
+    C = [[0] * (n + 1) for _ in range(n + 1)]
+    C[0][0] = 1
+    for i in range(1, n + 1):
+        C[i][0] = 1
+        for j in range(1, i + 1): C[i][j] = (C[i-1][j-1] + C[i-1][j]) % MOD
+    count = [0] * (n + 1); ones = 0
+    for i in range(n):
+        if s[i] == '1':
+            rem = n - 1 - i
+            for c in range(ones, ones + rem + 1): count[c] = (count[c] + C[rem][c - ones]) % MOD
+            ones += 1
+    ans = 0
+    for c in range(1, n + 1):
+        if steps[c] <= k - 1: ans = (ans + count[c]) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: ['111', 1], expected: 3 },
