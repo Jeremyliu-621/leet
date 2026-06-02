@@ -44,12 +44,22 @@ The **frequency** of a letter \`x\` is the number of times it occurs in the stri
   params: ['word1', 'word2'],
   starterCode: {
     javascript: `function checkAlmostEquivalent(word1, word2) {
-
+  const freq = {};
+  for (const c of word1) freq[c] = (freq[c] || 0) + 1;
+  for (const c of word2) freq[c] = (freq[c] || 0) - 1;
+  return Object.values(freq).every(v => Math.abs(v) <= 3);
 }`,
-    typescript: "function checkAlmostEquivalent(word1: string, word2: string): boolean {\n\n}",
-
+    typescript: `function checkAlmostEquivalent(word1: string, word2: string): boolean {
+  const freq: Record<string, number> = {};
+  for (const c of word1) freq[c] = (freq[c] ?? 0) + 1;
+  for (const c of word2) freq[c] = (freq[c] ?? 0) - 1;
+  return Object.values(freq).every(v => Math.abs(v) <= 3);
+}`,
     python: `def checkAlmostEquivalent(word1, word2):
-    pass`,
+    from collections import Counter
+    freq = Counter(word1)
+    freq.subtract(Counter(word2))
+    return all(abs(v) <= 3 for v in freq.values())`,
   },
   visibleTests: [
     { args: ['aaaa', 'bccb'], expected: false },

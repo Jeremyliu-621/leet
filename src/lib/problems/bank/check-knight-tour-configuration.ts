@@ -39,13 +39,46 @@ Return \`true\` if \`grid\` represents a valid knight tour configuration or \`fa
   params: ['grid'],
   starterCode: {
     javascript: `function checkValidGrid(grid) {
-
+  const n = grid.length;
+  const pos = new Array(n * n);
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) pos[grid[r][c]] = [r, c];
+  if (pos[0][0] !== 0 || pos[0][1] !== 0) return false;
+  for (let k = 0; k < n * n - 1; k++) {
+    const [r1, c1] = pos[k], [r2, c2] = pos[k + 1];
+    const dr = Math.abs(r2 - r1), dc = Math.abs(c2 - c1);
+    if (!((dr === 1 && dc === 2) || (dr === 2 && dc === 1))) return false;
+  }
+  return true;
 }`,
     typescript: `function checkValidGrid(grid: number[][]): boolean {
-
+  const n = grid.length;
+  const pos: number[][] = new Array(n * n);
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) pos[grid[r]![c]!] = [r, c];
+  if (pos[0]![0] !== 0 || pos[0]![1] !== 0) return false;
+  for (let k = 0; k < n * n - 1; k++) {
+    const [r1, c1] = pos[k]!, [r2, c2] = pos[k + 1]!;
+    const dr = Math.abs(r2 - r1), dc = Math.abs(c2 - c1);
+    if (!((dr === 1 && dc === 2) || (dr === 2 && dc === 1))) return false;
+  }
+  return true;
 }`,
     python: `def checkValidGrid(grid):
-    pass`,
+    n = len(grid)
+    pos = [None] * (n * n)
+    for r in range(n):
+        for c in range(n):
+            pos[grid[r][c]] = (r, c)
+    if pos[0] != (0, 0):
+        return False
+    for k in range(n * n - 1):
+        r1, c1 = pos[k]
+        r2, c2 = pos[k + 1]
+        dr, dc = abs(r2-r1), abs(c2-c1)
+        if not ((dr == 1 and dc == 2) or (dr == 2 and dc == 1)):
+            return False
+    return True`,
   },
   visibleTests: [
     { args: [[[0,11,16,5,20],[17,4,19,10,15],[12,1,8,21,6],[3,18,23,14,9],[24,13,2,7,22]]], expected: true },

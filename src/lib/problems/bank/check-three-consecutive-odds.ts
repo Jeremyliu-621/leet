@@ -36,11 +36,31 @@ export const problem: Problem = {
   params: ['arr'],
   starterCode: {
     javascript: `function threeConsecutiveOdds(arr) {
-
+  let count = 0;
+  for (const x of arr) {
+    if (x % 2 === 1) { if (++count >= 3) return true; }
+    else count = 0;
+  }
+  return false;
 }`,
-    typescript: 'function threeConsecutiveOdds(arr: number[]): boolean {\n\n}',
+    typescript: `function threeConsecutiveOdds(arr: number[]): boolean {
+  let count = 0;
+  for (const x of arr) {
+    if (x % 2 === 1) { if (++count >= 3) return true; }
+    else count = 0;
+  }
+  return false;
+}`,
     python: `def threeConsecutiveOdds(arr):
-    pass`,
+    count = 0
+    for x in arr:
+        if x % 2 == 1:
+            count += 1
+            if count >= 3:
+                return True
+        else:
+            count = 0
+    return False`,
   },
   visibleTests: [
     { args: [[2, 6, 4, 1]], expected: false },
