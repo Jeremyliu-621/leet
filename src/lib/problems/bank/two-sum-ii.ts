@@ -32,10 +32,34 @@ Your solution must use only constant extra space.`,
   functionName: 'twoSumII',
   params: ['numbers', 'target'],
   starterCode: {
-    javascript: 'function twoSumII(numbers, target) {\n  // your code here\n}\n',
-    typescript: "function twoSumII(numbers: number[], target: number): number[] {\n  // your code here\n}",
-
-    python: 'def twoSumII(numbers, target):\n    # your code here\n    pass\n',
+    javascript: `function twoSumII(numbers, target) {
+  let lo = 0, hi = numbers.length - 1;
+  while (lo < hi) {
+    const s = numbers[lo] + numbers[hi];
+    if (s === target) return [lo + 1, hi + 1];
+    if (s < target) lo++; else hi--;
+  }
+  return [];
+}`,
+    typescript: `function twoSumII(numbers: number[], target: number): number[] {
+  let lo = 0, hi = numbers.length - 1;
+  while (lo < hi) {
+    const s = numbers[lo]! + numbers[hi]!;
+    if (s === target) return [lo + 1, hi + 1];
+    if (s < target) lo++; else hi--;
+  }
+  return [];
+}`,
+    python: `def twoSumII(numbers, target):
+    if hasattr(numbers, 'to_py'): numbers = numbers.to_py()
+    numbers = [int(x) for x in numbers]; target = int(target)
+    lo, hi = 0, len(numbers) - 1
+    while lo < hi:
+        s = numbers[lo] + numbers[hi]
+        if s == target: return [lo + 1, hi + 1]
+        if s < target: lo += 1
+        else: hi -= 1
+    return []`,
   },
   visibleTests: [
     { args: [[2, 7, 11, 15], 9], expected: [1, 2] },

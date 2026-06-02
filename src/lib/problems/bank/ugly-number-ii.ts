@@ -31,10 +31,39 @@ Given an integer \`n\`, return the \`n\`th **ugly number**.`,
   functionName: 'nthUglyNumber',
   params: ['n'],
   starterCode: {
-    javascript: 'function nthUglyNumber(n) {\n  // your code here\n}\n',
-    typescript: "function nthUglyNumber(n: number): number {\n  // your code here\n}",
-
-    python: 'def nthUglyNumber(n):\n    # your code here\n    pass\n',
+    javascript: `function nthUglyNumber(n) {
+  const dp = [1]; let i2 = 0, i3 = 0, i5 = 0;
+  for (let i = 1; i < n; i++) {
+    const nx = Math.min(dp[i2]*2, dp[i3]*3, dp[i5]*5);
+    dp.push(nx);
+    if (nx === dp[i2]*2) i2++;
+    if (nx === dp[i3]*3) i3++;
+    if (nx === dp[i5]*5) i5++;
+  }
+  return dp[n-1];
+}`,
+    typescript: `function nthUglyNumber(n: number): number {
+  const dp = [1]; let i2 = 0, i3 = 0, i5 = 0;
+  for (let i = 1; i < n; i++) {
+    const nx = Math.min(dp[i2]!*2, dp[i3]!*3, dp[i5]!*5);
+    dp.push(nx);
+    if (nx === dp[i2]!*2) i2++;
+    if (nx === dp[i3]!*3) i3++;
+    if (nx === dp[i5]!*5) i5++;
+  }
+  return dp[n-1]!;
+}`,
+    python: `def nthUglyNumber(n):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    n = int(n)
+    dp = [1]; i2 = i3 = i5 = 0
+    for _ in range(1, n):
+        nx = min(dp[i2]*2, dp[i3]*3, dp[i5]*5)
+        dp.append(nx)
+        if nx == dp[i2]*2: i2 += 1
+        if nx == dp[i3]*3: i3 += 1
+        if nx == dp[i5]*5: i5 += 1
+    return dp[n-1]`,
   },
   visibleTests: [
     { args: [10], expected: 12 },

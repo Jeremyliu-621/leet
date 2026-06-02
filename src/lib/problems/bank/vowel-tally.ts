@@ -35,10 +35,17 @@ export const problem: Problem = {
   functionName: 'vowelTally',
   params: ['text'],
   starterCode: {
-    javascript: 'function vowelTally(text) {\n  // your code here\n}\n',
-    typescript: "function vowelTally(text: string): number {\n  // your code here\n}",
-
-    python: 'def vowelTally(text):\n    # your code here\n    pass\n',
+    javascript: `function vowelTally(text) {
+  const v = new Set(['a','e','i','o','u']);
+  return [...text.toLowerCase()].filter(c => v.has(c)).length;
+}`,
+    typescript: `function vowelTally(text: string): number {
+  const v = new Set(['a','e','i','o','u']);
+  return [...text.toLowerCase()].filter(c => v.has(c)).length;
+}`,
+    python: `def vowelTally(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    return sum(1 for c in str(text).lower() if c in 'aeiou')`,
   },
   visibleTests: [
     { args: ['hello'], expected: 2 },

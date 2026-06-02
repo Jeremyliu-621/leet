@@ -33,10 +33,22 @@ Return the **minimum cost** to fly every person to a city such that exactly \`n\
   functionName: 'twoCitySchedCost',
   params: ['costs'],
   starterCode: {
-    javascript: 'function twoCitySchedCost(costs) {\n  // your code here\n}\n',
-    typescript: "function twoCitySchedCost(costs: number[][]): number {\n  // your code here\n}",
-
-    python: 'def twoCitySchedCost(costs):\n    # your code here\n    pass\n',
+    javascript: `function twoCitySchedCost(costs) {
+  costs.sort((a, b) => (a[0] - a[1]) - (b[0] - b[1]));
+  const n = costs.length / 2;
+  return costs.reduce((s, c, i) => s + (i < n ? c[0] : c[1]), 0);
+}`,
+    typescript: `function twoCitySchedCost(costs: number[][]): number {
+  costs.sort((a, b) => (a[0]! - a[1]!) - (b[0]! - b[1]!));
+  const n = costs.length / 2;
+  return costs.reduce((s, c, i) => s + (i < n ? c[0]! : c[1]!), 0);
+}`,
+    python: `def twoCitySchedCost(costs):
+    if hasattr(costs, 'to_py'): costs = costs.to_py()
+    costs = [[int(v) for v in (c.to_py() if hasattr(c,'to_py') else c)] for c in costs]
+    costs.sort(key=lambda c: c[0] - c[1])
+    n = len(costs) // 2
+    return sum(costs[i][0] if i < n else costs[i][1] for i in range(len(costs)))`,
   },
   visibleTests: [
     { args: [[[10, 20], [30, 200], [400, 50], [30, 20]]], expected: 110 },

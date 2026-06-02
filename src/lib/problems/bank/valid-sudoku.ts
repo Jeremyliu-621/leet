@@ -37,10 +37,53 @@ You do **not** need to solve the puzzle — just validate it. A partially-filled
   functionName: 'isValidSudoku',
   params: ['board'] as readonly string[],
   starterCode: {
-    javascript: 'function isValidSudoku(board) {\n  // your code here\n}\n',
-    typescript: "function isValidSudoku(board: string[][]): boolean {\n  // your code here\n}",
-
-    python: 'def isValidSudoku(board: list[list[str]]) -> bool:\n    # your code here\n    pass\n',
+    javascript: `function isValidSudoku(board) {
+  for (let i = 0; i < 9; i++) {
+    const row = new Set(), col = new Set(), box = new Set();
+    for (let j = 0; j < 9; j++) {
+      const r = board[i][j], c = board[j][i];
+      const br = 3*Math.floor(i/3)+Math.floor(j/3), bc = 3*(i%3)+(j%3);
+      const b = board[br][bc];
+      if (r !== '.') { if (row.has(r)) return false; row.add(r); }
+      if (c !== '.') { if (col.has(c)) return false; col.add(c); }
+      if (b !== '.') { if (box.has(b)) return false; box.add(b); }
+    }
+  }
+  return true;
+}`,
+    typescript: `function isValidSudoku(board: string[][]): boolean {
+  for (let i = 0; i < 9; i++) {
+    const row = new Set<string>(), col = new Set<string>(), box = new Set<string>();
+    for (let j = 0; j < 9; j++) {
+      const r = board[i]![j]!, c = board[j]![i]!;
+      const br = 3*Math.floor(i/3)+Math.floor(j/3), bc = 3*(i%3)+(j%3);
+      const b = board[br]![bc]!;
+      if (r !== '.') { if (row.has(r)) return false; row.add(r); }
+      if (c !== '.') { if (col.has(c)) return false; col.add(c); }
+      if (b !== '.') { if (box.has(b)) return false; box.add(b); }
+    }
+  }
+  return true;
+}`,
+    python: `def isValidSudoku(board: list[list[str]]) -> bool:
+    if hasattr(board, 'to_py'): board = board.to_py()
+    board = [[(v.to_py() if hasattr(v,'to_py') else str(v)) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in board]
+    for i in range(9):
+        row, col, box = set(), set(), set()
+        for j in range(9):
+            r, c = board[i][j], board[j][i]
+            br, bc = 3*(i//3)+j//3, 3*(i%3)+j%3
+            b = board[br][bc]
+            if r != '.':
+                if r in row: return False
+                row.add(r)
+            if c != '.':
+                if c in col: return False
+                col.add(c)
+            if b != '.':
+                if b in box: return False
+                box.add(b)
+    return True`,
   },
   visibleTests: [
     {

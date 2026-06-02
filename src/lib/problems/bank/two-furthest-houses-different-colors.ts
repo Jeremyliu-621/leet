@@ -36,10 +36,27 @@ The distance between the \`i\`th and \`j\`th houses is \`|i - j|\`.`,
   functionName: 'maxDistance',
   params: ['colors'],
   starterCode: {
-    javascript: 'function maxDistance(colors) {\n  // your code here\n}\n',
-    typescript: "function maxDistance(colors: number[]): number {\n  // your code here\n}",
-
-    python: 'def maxDistance(colors):\n    # your code here\n    pass\n',
+    javascript: `function maxDistance(colors) {
+  const n = colors.length; let ans = 0;
+  for (let j = n - 1; j > 0; j--) if (colors[0] !== colors[j]) { ans = j; break; }
+  for (let i = 0; i < n - 1; i++) if (colors[i] !== colors[n - 1]) { ans = Math.max(ans, n - 1 - i); break; }
+  return ans;
+}`,
+    typescript: `function maxDistance(colors: number[]): number {
+  const n = colors.length; let ans = 0;
+  for (let j = n - 1; j > 0; j--) if (colors[0]! !== colors[j]!) { ans = j; break; }
+  for (let i = 0; i < n - 1; i++) if (colors[i]! !== colors[n - 1]!) { ans = Math.max(ans, n - 1 - i); break; }
+  return ans;
+}`,
+    python: `def maxDistance(colors):
+    if hasattr(colors, 'to_py'): colors = colors.to_py()
+    colors = [int(x) for x in colors]
+    n = len(colors); ans = 0
+    for j in range(n-1, 0, -1):
+        if colors[0] != colors[j]: ans = j; break
+    for i in range(n-1):
+        if colors[i] != colors[n-1]: ans = max(ans, n-1-i); break
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 1, 1, 6, 1, 1, 1]], expected: 3 },

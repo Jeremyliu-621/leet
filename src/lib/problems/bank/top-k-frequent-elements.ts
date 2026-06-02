@@ -38,10 +38,22 @@ If multiple elements have the same frequency, prefer the element with the **smal
   functionName: 'topKFrequent',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function topKFrequent(nums, k) {\n  // your code here\n}\n',
-    typescript: "function topKFrequent(nums: number[], k: number): number[] {\n  // your code here\n}",
-
-    python: 'def topKFrequent(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function topKFrequent(nums, k) {
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  return [...freq.keys()].sort((a, b) => freq.get(b) - freq.get(a) || a - b).slice(0, k).sort((a, b) => a - b);
+}`,
+    typescript: `function topKFrequent(nums: number[], k: number): number[] {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  return [...freq.keys()].sort((a, b) => freq.get(b)! - freq.get(a)! || a - b).slice(0, k).sort((a, b) => a - b);
+}`,
+    python: `def topKFrequent(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    from collections import Counter
+    freq = Counter(nums)
+    return sorted(x for x, _ in freq.most_common(k))`,
   },
   visibleTests: [
     { args: [[1, 1, 1, 2, 2, 3], 2], expected: [1, 2] },

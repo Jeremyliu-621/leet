@@ -40,10 +40,22 @@ For example, \`[1, 3]\` is a subsequence of \`[1, 2, 3, 4]\` because you can pic
   functionName: 'isSubsequence',
   params: ['seq', 'arr'],
   starterCode: {
-    javascript: 'function isSubsequence(seq, arr) {\n  // your code here\n}\n',
-    typescript: "function isSubsequence(seq: number[], arr: number[]): boolean {\n  // your code here\n}",
-
-    python: 'def isSubsequence(seq, arr):\n    # your code here\n    pass\n',
+    javascript: `function isSubsequence(seq, arr) {
+  let i = 0; for (const v of arr) if (i < seq.length && v === seq[i]) i++;
+  return i === seq.length;
+}`,
+    typescript: `function isSubsequence(seq: number[], arr: number[]): boolean {
+  let i = 0; for (const v of arr) if (i < seq.length && v === seq[i]!) i++;
+  return i === seq.length;
+}`,
+    python: `def isSubsequence(seq, arr):
+    if hasattr(seq, 'to_py'): seq = seq.to_py()
+    if hasattr(arr, 'to_py'): arr = arr.to_py()
+    seq = [int(x) for x in seq]; arr = [int(x) for x in arr]
+    i = 0
+    for v in arr:
+        if i < len(seq) and v == seq[i]: i += 1
+    return i == len(seq)`,
   },
   visibleTests: [
     { args: [[1, 3], [1, 2, 3, 4]], expected: true },

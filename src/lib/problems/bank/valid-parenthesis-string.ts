@@ -43,10 +43,39 @@ Return \`true\` if \`s\` is valid, otherwise return \`false\`.`,
   functionName: 'validParenthesisString',
   params: ['s'],
   starterCode: {
-    javascript: 'function validParenthesisString(s) {\n  // your code here\n}\n',
-    typescript: "function validParenthesisString(s: string): boolean {\n  // your code here\n}",
-
-    python: 'def validParenthesisString(s):\n    # your code here\n    pass\n',
+    javascript: `function validParenthesisString(s) {
+  let minOpen = 0, maxOpen = 0;
+  for (const c of s) {
+    if (c === '(') { minOpen++; maxOpen++; }
+    else if (c === ')') { minOpen--; maxOpen--; }
+    else { minOpen--; maxOpen++; }
+    if (maxOpen < 0) return false;
+    if (minOpen < 0) minOpen = 0;
+  }
+  return minOpen === 0;
+}`,
+    typescript: `function validParenthesisString(s: string): boolean {
+  let minOpen = 0, maxOpen = 0;
+  for (const c of s) {
+    if (c === '(') { minOpen++; maxOpen++; }
+    else if (c === ')') { minOpen--; maxOpen--; }
+    else { minOpen--; maxOpen++; }
+    if (maxOpen < 0) return false;
+    if (minOpen < 0) minOpen = 0;
+  }
+  return minOpen === 0;
+}`,
+    python: `def validParenthesisString(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    min_open = max_open = 0
+    for c in s:
+        if c == '(': min_open += 1; max_open += 1
+        elif c == ')': min_open -= 1; max_open -= 1
+        else: min_open -= 1; max_open += 1
+        if max_open < 0: return False
+        if min_open < 0: min_open = 0
+    return min_open == 0`,
   },
   visibleTests: [
     { args: ['()'], expected: true },

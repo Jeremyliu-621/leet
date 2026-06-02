@@ -41,10 +41,55 @@ Return \`true\` if the data represents a valid UTF-8 encoding.`,
   functionName: 'validUtf8',
   params: ['data'],
   starterCode: {
-    javascript: 'function validUtf8(data) {\n  // your code here\n}\n',
-    typescript: "function validUtf8(data: number[]): boolean {\n  // your code here\n}",
-
-    python: 'def validUtf8(data):\n    # your code here\n    pass\n',
+    javascript: `function validUtf8(data) {
+  let i = 0;
+  while (i < data.length) {
+    const b = data[i] & 0xFF;
+    let cnt;
+    if ((b >> 7) === 0) cnt = 0;
+    else if ((b >> 5) === 0b110) cnt = 1;
+    else if ((b >> 4) === 0b1110) cnt = 2;
+    else if ((b >> 3) === 0b11110) cnt = 3;
+    else return false;
+    for (let j = 1; j <= cnt; j++) {
+      if (i + j >= data.length || (data[i + j] & 0xC0) !== 0x80) return false;
+    }
+    i += cnt + 1;
+  }
+  return true;
+}`,
+    typescript: `function validUtf8(data: number[]): boolean {
+  let i = 0;
+  while (i < data.length) {
+    const b = data[i]! & 0xFF;
+    let cnt;
+    if ((b >> 7) === 0) cnt = 0;
+    else if ((b >> 5) === 0b110) cnt = 1;
+    else if ((b >> 4) === 0b1110) cnt = 2;
+    else if ((b >> 3) === 0b11110) cnt = 3;
+    else return false;
+    for (let j = 1; j <= cnt; j++) {
+      if (i + j >= data.length || (data[i + j]! & 0xC0) !== 0x80) return false;
+    }
+    i += cnt + 1;
+  }
+  return true;
+}`,
+    python: `def validUtf8(data):
+    if hasattr(data, 'to_py'): data = data.to_py()
+    data = [int(x) & 0xFF for x in data]
+    i = 0
+    while i < len(data):
+        b = data[i]
+        if b >> 7 == 0: cnt = 0
+        elif b >> 5 == 0b110: cnt = 1
+        elif b >> 4 == 0b1110: cnt = 2
+        elif b >> 3 == 0b11110: cnt = 3
+        else: return False
+        for j in range(1, cnt + 1):
+            if i + j >= len(data) or (data[i+j] & 0xC0) != 0x80: return False
+        i += cnt + 1
+    return True`,
   },
   visibleTests: [
     { args: [[197, 130, 1]], expected: true },

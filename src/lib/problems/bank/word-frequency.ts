@@ -39,10 +39,20 @@ Words are separated by single spaces. Treat the input as case-sensitive (so \`"T
   functionName: 'wordFrequency',
   params: ['text'],
   starterCode: {
-    javascript: 'function wordFrequency(text) {\n  // your code here\n}\n',
-    typescript: "function wordFrequency(text: string): unknown {\n  // your code here\n}",
-
-    python: 'def wordFrequency(text):\n    # your code here\n    pass\n',
+    javascript: `function wordFrequency(text) {
+  const freq = {};
+  for (const w of text.split(' ')) freq[w] = (freq[w] ?? 0) + 1;
+  return freq;
+}`,
+    typescript: `function wordFrequency(text: string): unknown {
+  const freq: Record<string, number> = {};
+  for (const w of text.split(' ')) freq[w] = (freq[w] ?? 0) + 1;
+  return freq;
+}`,
+    python: `def wordFrequency(text):
+    if hasattr(text, 'to_py'): text = text.to_py()
+    from collections import Counter
+    return dict(Counter(str(text).split(' ')))`,
   },
   visibleTests: [
     { args: ['the cat sat on the mat'], expected: { the: 2, cat: 1, sat: 1, on: 1, mat: 1 } },

@@ -42,10 +42,32 @@ The same word from the dictionary may be reused multiple times in the segmentati
   functionName: 'wordBreak',
   params: ['s', 'wordDict'],
   starterCode: {
-    javascript: 'function wordBreak(s, wordDict) {\n  // your code here\n}\n',
-    typescript: "function wordBreak(s: string, wordDict: string[]): boolean {\n  // your code here\n}",
-
-    python: 'def wordBreak(s, wordDict):\n    # your code here\n    pass\n',
+    javascript: `function wordBreak(s, wordDict) {
+  const ws = new Set(wordDict);
+  const dp = new Array(s.length + 1).fill(false); dp[0] = true;
+  for (let i = 1; i <= s.length; i++)
+    for (let j = 0; j < i; j++)
+      if (dp[j] && ws.has(s.slice(j, i))) { dp[i] = true; break; }
+  return dp[s.length];
+}`,
+    typescript: `function wordBreak(s: string, wordDict: string[]): boolean {
+  const ws = new Set(wordDict);
+  const dp = new Array(s.length + 1).fill(false) as boolean[]; dp[0] = true;
+  for (let i = 1; i <= s.length; i++)
+    for (let j = 0; j < i; j++)
+      if (dp[j]! && ws.has(s.slice(j, i))) { dp[i] = true; break; }
+  return dp[s.length]!;
+}`,
+    python: `def wordBreak(s, wordDict):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s)
+    if hasattr(wordDict, 'to_py'): wordDict = wordDict.to_py()
+    ws = set(str(w) for w in wordDict)
+    dp = [False] * (len(s) + 1); dp[0] = True
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in ws: dp[i] = True; break
+    return dp[len(s)]`,
   },
   visibleTests: [
     { args: ['leetcode', ['leet', 'code']], expected: true },

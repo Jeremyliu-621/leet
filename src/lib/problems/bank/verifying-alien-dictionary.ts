@@ -42,10 +42,50 @@ Given a list of \`words\` in this alien language, return \`true\` if the words a
   functionName: 'isAlienSorted',
   params: ['words', 'order'],
   starterCode: {
-    javascript: 'function isAlienSorted(words, order) {\n  // your code here\n}\n',
-    typescript: "function isAlienSorted(words: string[], order: string): boolean {\n  // your code here\n}",
-
-    python: 'def isAlienSorted(words, order):\n    # your code here\n    pass\n',
+    javascript: `function isAlienSorted(words, order) {
+  const rank = new Map(); for (let i = 0; i < order.length; i++) rank.set(order[i], i);
+  for (let i = 0; i < words.length - 1; i++) {
+    const a = words[i], b = words[i + 1];
+    let ok = false;
+    for (let j = 0; j < Math.max(a.length, b.length); j++) {
+      if (j >= a.length) { ok = true; break; }
+      if (j >= b.length) return false;
+      if (rank.get(a[j]) < rank.get(b[j])) { ok = true; break; }
+      if (rank.get(a[j]) > rank.get(b[j])) return false;
+    }
+    if (!ok && a.length > b.length) return false;
+  }
+  return true;
+}`,
+    typescript: `function isAlienSorted(words: string[], order: string): boolean {
+  const rank = new Map<string, number>(); for (let i = 0; i < order.length; i++) rank.set(order[i]!, i);
+  for (let i = 0; i < words.length - 1; i++) {
+    const a = words[i]!, b = words[i + 1]!;
+    let ok = false;
+    for (let j = 0; j < Math.max(a.length, b.length); j++) {
+      if (j >= a.length) { ok = true; break; }
+      if (j >= b.length) return false;
+      if (rank.get(a[j]!)! < rank.get(b[j]!)!) { ok = true; break; }
+      if (rank.get(a[j]!)! > rank.get(b[j]!)!) return false;
+    }
+    if (!ok && a.length > b.length) return false;
+  }
+  return true;
+}`,
+    python: `def isAlienSorted(words, order):
+    if hasattr(words, 'to_py'): words = words.to_py()
+    words = [str(w) for w in words]
+    if hasattr(order, 'to_py'): order = order.to_py()
+    order = str(order)
+    rank = {c: i for i, c in enumerate(order)}
+    for i in range(len(words) - 1):
+        a, b = words[i], words[i+1]
+        for j in range(max(len(a), len(b))):
+            if j >= len(a): break
+            if j >= len(b): return False
+            if rank[a[j]] < rank[b[j]]: break
+            if rank[a[j]] > rank[b[j]]: return False
+    return True`,
   },
   visibleTests: [
     { args: [['hello', 'leetcode'], 'hlabcdefgijkmnopqrstuvwxyz'], expected: true },

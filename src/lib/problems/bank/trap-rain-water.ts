@@ -41,10 +41,32 @@ Solve this using O(n) extra space — precompute prefix-maximum arrays from the 
   functionName: 'trapRainWater',
   params: ['height'],
   starterCode: {
-    javascript: 'function trapRainWater(height) {\n  // your code here\n}\n',
-    typescript: "function trapRainWater(height: number[]): number {\n  // your code here\n}",
-
-    python: 'def trapRainWater(height):\n    # your code here\n    pass\n',
+    javascript: `function trapRainWater(height) {
+  const n = height.length;
+  const lMax = new Array(n).fill(0), rMax = new Array(n).fill(0);
+  lMax[0] = height[0]; for (let i = 1; i < n; i++) lMax[i] = Math.max(lMax[i-1], height[i]);
+  rMax[n-1] = height[n-1]; for (let i = n-2; i >= 0; i--) rMax[i] = Math.max(rMax[i+1], height[i]);
+  let w = 0; for (let i = 0; i < n; i++) w += Math.max(0, Math.min(lMax[i], rMax[i]) - height[i]);
+  return w;
+}`,
+    typescript: `function trapRainWater(height: number[]): number {
+  const n = height.length;
+  const lMax = new Array(n).fill(0) as number[], rMax = new Array(n).fill(0) as number[];
+  lMax[0] = height[0]!; for (let i = 1; i < n; i++) lMax[i] = Math.max(lMax[i-1]!, height[i]!);
+  rMax[n-1] = height[n-1]!; for (let i = n-2; i >= 0; i--) rMax[i] = Math.max(rMax[i+1]!, height[i]!);
+  let w = 0; for (let i = 0; i < n; i++) w += Math.max(0, Math.min(lMax[i]!, rMax[i]!) - height[i]!);
+  return w;
+}`,
+    python: `def trapRainWater(height):
+    if hasattr(height, 'to_py'): height = height.to_py()
+    height = [int(x) for x in height]
+    n = len(height)
+    lmax = [0]*n; rmax = [0]*n
+    lmax[0] = height[0]
+    for i in range(1, n): lmax[i] = max(lmax[i-1], height[i])
+    rmax[n-1] = height[n-1]
+    for i in range(n-2, -1, -1): rmax[i] = max(rmax[i+1], height[i])
+    return sum(max(0, min(lmax[i], rmax[i]) - height[i]) for i in range(n))`,
   },
   visibleTests: [
     { args: [[0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]], expected: 6 },

@@ -47,10 +47,55 @@ Return the **maximum Euclidean distance squared** (\`x² + y²\`) from the origi
   functionName: 'robotSim',
   params: ['commands', 'obstacles'],
   starterCode: {
-    javascript: 'function robotSim(commands, obstacles) {\n  // your code here\n}\n',
-    typescript: "function robotSim(commands: number[], obstacles: unknown[]): number {\n  // your code here\n}",
-
-    python: 'def robotSim(commands, obstacles):\n    # your code here\n    pass\n',
+    javascript: `function robotSim(commands, obstacles) {
+  const obs = new Set(obstacles.map(o => o[0]+','+o[1]));
+  const dirs = [[0,1],[1,0],[0,-1],[-1,0]];
+  let x = 0, y = 0, d = 0, best = 0;
+  for (const cmd of commands) {
+    if (cmd === -2) d = (d + 3) % 4;
+    else if (cmd === -1) d = (d + 1) % 4;
+    else { for (let s = 0; s < cmd; s++) {
+      const nx = x + dirs[d][0], ny = y + dirs[d][1];
+      if (obs.has(nx+','+ny)) break;
+      x = nx; y = ny; best = Math.max(best, x*x+y*y);
+    }}
+  }
+  return best;
+}`,
+    typescript: `function robotSim(commands: number[], obstacles: unknown[]): number {
+  const obs = new Set((obstacles as number[][]).map(o => o[0]+','+o[1]));
+  const dirs: [number,number][] = [[0,1],[1,0],[0,-1],[-1,0]];
+  let x = 0, y = 0, d = 0, best = 0;
+  for (const cmd of commands) {
+    if (cmd === -2) d = (d + 3) % 4;
+    else if (cmd === -1) d = (d + 1) % 4;
+    else { for (let s = 0; s < cmd; s++) {
+      const nx = x + dirs[d]![0]!, ny = y + dirs[d]![1]!;
+      if (obs.has(nx+','+ny)) break;
+      x = nx; y = ny; best = Math.max(best, x*x+y*y);
+    }}
+  }
+  return best;
+}`,
+    python: `def robotSim(commands, obstacles):
+    if hasattr(commands, 'to_py'): commands = commands.to_py()
+    commands = [int(x) for x in commands]
+    if hasattr(obstacles, 'to_py'): obstacles = obstacles.to_py()
+    obs = set()
+    for o in obstacles:
+        if hasattr(o, 'to_py'): o = o.to_py()
+        obs.add((int(o[0]), int(o[1])))
+    dirs = [(0,1),(1,0),(0,-1),(-1,0)]
+    x = y = d = 0; best = 0
+    for cmd in commands:
+        if cmd == -2: d = (d+3)%4
+        elif cmd == -1: d = (d+1)%4
+        else:
+            for _ in range(cmd):
+                nx, ny = x+dirs[d][0], y+dirs[d][1]
+                if (nx, ny) in obs: break
+                x, y = nx, ny; best = max(best, x*x+y*y)
+    return best`,
   },
   visibleTests: [
     { args: [[4, -1, 3], []], expected: 25 },

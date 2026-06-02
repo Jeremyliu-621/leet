@@ -51,10 +51,73 @@ Output: **4**`,
   functionName: 'trapRainWaterII',
   params: ['heightMap'],
   starterCode: {
-    javascript: 'function trapRainWaterII(heightMap) {\n  // your code here\n}\n',
-    typescript: "function trapRainWaterII(heightMap: number[][]): number {\n  // your code here\n}",
-
-    python: 'def trapRainWaterII(heightMap):\n    # your code here\n    pass\n',
+    javascript: `function trapRainWaterII(heightMap) {
+  const m = heightMap.length, n = heightMap[0].length;
+  if (m < 3 || n < 3) return 0;
+  // Min-heap as sorted array (small enough for test inputs)
+  const heap = [], visited = Array.from({length: m}, () => new Array(n).fill(false));
+  const push = (h, r, c) => { heap.push([h, r, c]); heap.sort((a, b) => a[0] - b[0]); };
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++)
+    if (r === 0 || r === m-1 || c === 0 || c === n-1) { push(heightMap[r][c], r, c); visited[r][c] = true; }
+  let water = 0;
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (heap.length) {
+    const [h, r, c] = heap.shift();
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= m || nc < 0 || nc >= n || visited[nr][nc]) continue;
+      visited[nr][nc] = true;
+      water += Math.max(0, h - heightMap[nr][nc]);
+      push(Math.max(h, heightMap[nr][nc]), nr, nc);
+    }
+  }
+  return water;
+}`,
+    typescript: `function trapRainWaterII(heightMap: number[][]): number {
+  const m = heightMap.length, n = heightMap[0]!.length;
+  if (m < 3 || n < 3) return 0;
+  const heap: [number, number, number][] = [];
+  const visited: boolean[][] = Array.from({length: m}, () => new Array(n).fill(false));
+  const push = (h: number, r: number, c: number) => { heap.push([h, r, c]); heap.sort((a, b) => a[0] - b[0]); };
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++)
+    if (r === 0 || r === m-1 || c === 0 || c === n-1) { push(heightMap[r]![c]!, r, c); visited[r]![c] = true; }
+  let water = 0;
+  const dirs: [number,number][] = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (heap.length) {
+    const [h, r, c] = heap.shift()!;
+    for (const [dr, dc] of dirs) {
+      const nr = r + dr, nc = c + dc;
+      if (nr < 0 || nr >= m || nc < 0 || nc >= n || visited[nr]![nc]) continue;
+      visited[nr]![nc] = true;
+      water += Math.max(0, h - heightMap[nr]![nc]!);
+      push(Math.max(h, heightMap[nr]![nc]!), nr, nc);
+    }
+  }
+  return water;
+}`,
+    python: `def trapRainWaterII(heightMap):
+    if hasattr(heightMap, 'to_py'): heightMap = heightMap.to_py()
+    heightMap = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in heightMap]
+    import heapq
+    m, n = len(heightMap), len(heightMap[0])
+    if m < 3 or n < 3: return 0
+    visited = [[False]*n for _ in range(m)]
+    heap = []
+    for r in range(m):
+        for c in range(n):
+            if r == 0 or r == m-1 or c == 0 or c == n-1:
+                heapq.heappush(heap, (heightMap[r][c], r, c)); visited[r][c] = True
+    water = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while heap:
+        h, r, c = heapq.heappop(heap)
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc]:
+                visited[nr][nc] = True
+                water += max(0, h - heightMap[nr][nc])
+                heapq.heappush(heap, (max(h, heightMap[nr][nc]), nr, nc))
+    return water`,
   },
   visibleTests: [
     {

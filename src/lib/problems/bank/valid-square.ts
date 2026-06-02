@@ -40,14 +40,29 @@ A **valid square** has four equal sides with positive length and four equal angl
   params: ['p1', 'p2', 'p3', 'p4'],
   starterCode: {
     javascript: `function validSquare(p1, p2, p3, p4) {
-  // your code here
+  const d2 = (a, b) => (a[0]-b[0])**2 + (a[1]-b[1])**2;
+  const pts = [p1, p2, p3, p4];
+  const dists = [];
+  for (let i = 0; i < 4; i++) for (let j = i+1; j < 4; j++) dists.push(d2(pts[i], pts[j]));
+  dists.sort((a, b) => a - b);
+  const [s, , , , d1, d2_] = dists;
+  return s > 0 && dists[0]===dists[1] && dists[1]===dists[2] && dists[2]===dists[3] && dists[4]===dists[5];
 }`,
     typescript: `function validSquare(p1: number[], p2: number[], p3: number[], p4: number[]): boolean {
-  // your code here
+  const d2 = (a: number[], b: number[]) => (a[0]!-b[0]!)**2 + (a[1]!-b[1]!)**2;
+  const pts = [p1, p2, p3, p4];
+  const dists: number[] = [];
+  for (let i = 0; i < 4; i++) for (let j = i+1; j < 4; j++) dists.push(d2(pts[i]!, pts[j]!));
+  dists.sort((a, b) => a - b);
+  return dists[0]! > 0 && dists[0]===dists[1] && dists[1]===dists[2] && dists[2]===dists[3] && dists[4]===dists[5];
 }`,
     python: `def validSquare(p1, p2, p3, p4):
-    # your code here
-    pass`,
+    def d2(a, b): return (a[0]-b[0])**2 + (a[1]-b[1])**2
+    pts = [p1, p2, p3, p4]
+    if any(hasattr(p, 'to_py') for p in pts):
+        pts = [[int(v) for v in (p.to_py() if hasattr(p,'to_py') else p)] for p in pts]
+    dists = sorted(d2(pts[i], pts[j]) for i in range(4) for j in range(i+1, 4))
+    return dists[0] > 0 and dists[0]==dists[1]==dists[2]==dists[3] and dists[4]==dists[5]`,
   },
   visibleTests: [
     { args: [[0,0],[1,1],[1,0],[0,1]], expected: true },

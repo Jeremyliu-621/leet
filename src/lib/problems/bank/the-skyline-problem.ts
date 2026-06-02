@@ -51,10 +51,53 @@ The skyline is a list of **key points** \`[x, height]\` that mark every point wh
   functionName: 'getSkyline',
   params: ['buildings'],
   starterCode: {
-    javascript: 'function getSkyline(buildings) {\n  // your code here\n}\n',
-    typescript: "function getSkyline(buildings: number[][]): number[][] {\n  // your code here\n}",
-
-    python: 'def getSkyline(buildings):\n    # your code here\n    pass\n',
+    javascript: `function getSkyline(buildings) {
+  const events = [];
+  for (const [l, r, h] of buildings) { events.push([l, -h]); events.push([r, h]); }
+  events.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] - b[1]);
+  const freq = new Map([[0, 1]]);
+  let prevMax = 0;
+  const res = [];
+  for (const [x, h] of events) {
+    if (h < 0) { freq.set(-h, (freq.get(-h) ?? 0) + 1); }
+    else { const c = freq.get(h) - 1; if (c === 0) freq.delete(h); else freq.set(h, c); }
+    const curMax = Math.max(...freq.keys());
+    if (curMax !== prevMax) { res.push([x, curMax]); prevMax = curMax; }
+  }
+  return res;
+}`,
+    typescript: `function getSkyline(buildings: number[][]): number[][] {
+  const events: [number, number][] = [];
+  for (const b of buildings) { events.push([b[0]!, -b[2]!]); events.push([b[1]!, b[2]!]); }
+  events.sort((a, b) => a[0]! !== b[0]! ? a[0]! - b[0]! : a[1]! - b[1]!);
+  const freq = new Map([[0, 1]]);
+  let prevMax = 0;
+  const res: number[][] = [];
+  for (const [x, h] of events) {
+    if (h < 0) { freq.set(-h, (freq.get(-h) ?? 0) + 1); }
+    else { const c = freq.get(h)! - 1; if (c === 0) freq.delete(h); else freq.set(h, c); }
+    const curMax = Math.max(...freq.keys());
+    if (curMax !== prevMax) { res.push([x, curMax]); prevMax = curMax; }
+  }
+  return res;
+}`,
+    python: `def getSkyline(buildings):
+    if hasattr(buildings, 'to_py'): buildings = buildings.to_py()
+    buildings = [[int(v) for v in (b.to_py() if hasattr(b,'to_py') else b)] for b in buildings]
+    events = []
+    for l, r, h in buildings: events.append((l, -h)); events.append((r, h))
+    events.sort()
+    from collections import defaultdict
+    freq = defaultdict(int); freq[0] = 1
+    prev_max = 0; result = []
+    for x, h in events:
+        if h < 0: freq[-h] += 1
+        else:
+            freq[h] -= 1
+            if freq[h] == 0: del freq[h]
+        cur_max = max(freq.keys())
+        if cur_max != prev_max: result.append([x, cur_max]); prev_max = cur_max
+    return result`,
   },
   visibleTests: [
     {

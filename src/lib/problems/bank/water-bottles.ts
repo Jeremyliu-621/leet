@@ -34,10 +34,33 @@ Return the **maximum** number of water bottles you can drink.`,
   functionName: 'numWaterBottles',
   params: ['numBottles', 'numExchange'],
   starterCode: {
-    javascript: 'function numWaterBottles(numBottles, numExchange) {\n  // your code here\n}\n',
-    typescript: "function numWaterBottles(numBottles: number, numExchange: number): number {\n  // your code here\n}",
-
-    python: 'def numWaterBottles(numBottles, numExchange):\n    # your code here\n    pass\n',
+    javascript: `function numWaterBottles(numBottles, numExchange) {
+  let total = numBottles, empty = 0;
+  while (numBottles > 0) {
+    empty += numBottles; const newFull = Math.floor(empty / numExchange);
+    empty %= numExchange; total += newFull; numBottles = newFull;
+  }
+  return total;
+}`,
+    typescript: `function numWaterBottles(numBottles: number, numExchange: number): number {
+  let total = numBottles, empty = 0;
+  while (numBottles > 0) {
+    empty += numBottles; const newFull = Math.floor(empty / numExchange);
+    empty %= numExchange; total += newFull; numBottles = newFull;
+  }
+  return total;
+}`,
+    python: `def numWaterBottles(numBottles, numExchange):
+    if hasattr(numBottles, 'to_py'): numBottles = numBottles.to_py()
+    if hasattr(numExchange, 'to_py'): numExchange = numExchange.to_py()
+    numBottles, numExchange = int(numBottles), int(numExchange)
+    total = numBottles; empty = 0
+    while numBottles > 0:
+        empty += numBottles
+        new_full = empty // numExchange
+        empty %= numExchange
+        total += new_full; numBottles = new_full
+    return total`,
   },
   visibleTests: [
     { args: [9, 3], expected: 13 },

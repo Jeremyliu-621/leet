@@ -45,14 +45,46 @@ Return the **number of times** either person has to refill their watering can.`,
   params: ['plants', 'capacityA', 'capacityB'],
   starterCode: {
     javascript: `function minimumRefill(plants, capacityA, capacityB) {
-  // your code here
+  let i = 0, j = plants.length - 1, wa = capacityA, wb = capacityB, refills = 0;
+  while (i < j) {
+    if (wa < plants[i]) { refills++; wa = capacityA; } wa -= plants[i++];
+    if (wb < plants[j]) { refills++; wb = capacityB; } wb -= plants[j--];
+  }
+  if (i === j) {
+    if (wa >= wb) { if (wa < plants[i]) refills++; }
+    else { if (wb < plants[i]) refills++; }
+  }
+  return refills;
 }`,
     typescript: `function minimumRefill(plants: number[], capacityA: number, capacityB: number): number {
-  // your code here
+  let i = 0, j = plants.length - 1, wa = capacityA, wb = capacityB, refills = 0;
+  while (i < j) {
+    if (wa < plants[i]!) { refills++; wa = capacityA; } wa -= plants[i++]!;
+    if (wb < plants[j]!) { refills++; wb = capacityB; } wb -= plants[j--]!;
+  }
+  if (i === j) {
+    if (wa >= wb) { if (wa < plants[i]!) refills++; }
+    else { if (wb < plants[i]!) refills++; }
+  }
+  return refills;
 }`,
     python: `def minimumRefill(plants, capacityA, capacityB):
-    # your code here
-    pass`,
+    if hasattr(plants, 'to_py'): plants = plants.to_py()
+    plants = [int(x) for x in plants]
+    capacityA, capacityB = int(capacityA), int(capacityB)
+    i, j = 0, len(plants) - 1
+    wa, wb, refills = capacityA, capacityB, 0
+    while i < j:
+        if wa < plants[i]: refills += 1; wa = capacityA
+        wa -= plants[i]; i += 1
+        if wb < plants[j]: refills += 1; wb = capacityB
+        wb -= plants[j]; j -= 1
+    if i == j:
+        if wa >= wb:
+            if wa < plants[i]: refills += 1
+        else:
+            if wb < plants[i]: refills += 1
+    return refills`,
   },
   visibleTests: [
     { args: [[2, 2, 3, 3], 5, 5], expected: 1 },

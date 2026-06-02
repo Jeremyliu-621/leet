@@ -51,14 +51,52 @@ The board is a \`3 × 3\` grid where each cell is \`'X'\`, \`'O'\`, or \`' '\`.`
   params: ['board'],
   starterCode: {
     javascript: `function validTicTacToe(board) {
-  // your code here
+  const flat = board.join('');
+  const xs = flat.split('X').length - 1, os = flat.split('O').length - 1;
+  if (os > xs || xs > os + 1) return false;
+  const wins = p => {
+    for (let i = 0; i < 3; i++) {
+      if (board[i][0]===p&&board[i][1]===p&&board[i][2]===p) return true;
+      if (board[0][i]===p&&board[1][i]===p&&board[2][i]===p) return true;
+    }
+    return (board[0][0]===p&&board[1][1]===p&&board[2][2]===p)||(board[0][2]===p&&board[1][1]===p&&board[2][0]===p);
+  };
+  if (wins('X') && xs !== os + 1) return false;
+  if (wins('O') && xs !== os) return false;
+  if (wins('X') && wins('O')) return false;
+  return true;
 }`,
     typescript: `function validTicTacToe(board: string[]): boolean {
-  // your code here
+  const flat = board.join('');
+  const xs = flat.split('X').length - 1, os = flat.split('O').length - 1;
+  if (os > xs || xs > os + 1) return false;
+  const wins = (p: string) => {
+    for (let i = 0; i < 3; i++) {
+      if (board[i]![0]===p&&board[i]![1]===p&&board[i]![2]===p) return true;
+      if (board[0]![i]===p&&board[1]![i]===p&&board[2]![i]===p) return true;
+    }
+    return (board[0]![0]===p&&board[1]![1]===p&&board[2]![2]===p)||(board[0]![2]===p&&board[1]![1]===p&&board[2]![0]===p);
+  };
+  if (wins('X') && xs !== os + 1) return false;
+  if (wins('O') && xs !== os) return false;
+  if (wins('X') && wins('O')) return false;
+  return true;
 }`,
     python: `def validTicTacToe(board):
-    # your code here
-    pass`,
+    if hasattr(board, 'to_py'): board = board.to_py()
+    board = [str(r) for r in board]
+    flat = ''.join(board)
+    xs, os = flat.count('X'), flat.count('O')
+    if os > xs or xs > os + 1: return False
+    def wins(p):
+        for i in range(3):
+            if board[i][0]==p==board[i][1]==board[i][2]: return True
+            if board[0][i]==p==board[1][i]==board[2][i]: return True
+        return (board[0][0]==p==board[1][1]==board[2][2]) or (board[0][2]==p==board[1][1]==board[2][0])
+    if wins('X') and xs != os + 1: return False
+    if wins('O') and xs != os: return False
+    if wins('X') and wins('O'): return False
+    return True`,
   },
   visibleTests: [
     { args: [['O  ', '   ', '   ']], expected: false },

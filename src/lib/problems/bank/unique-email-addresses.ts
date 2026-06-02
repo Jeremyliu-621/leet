@@ -39,10 +39,21 @@ Given an array of strings \`emails\`, return the number of **unique** email addr
   functionName: 'numUniqueEmails',
   params: ['emails'],
   starterCode: {
-    javascript: 'function numUniqueEmails(emails) {\n  // your code here\n}\n',
-    typescript: "function numUniqueEmails(emails: string[]): number {\n  // your code here\n}",
-
-    python: 'def numUniqueEmails(emails):\n    # your code here\n    pass\n',
+    javascript: `function numUniqueEmails(emails) {
+  const normalize = e => { const [l, d] = e.split('@'); return l.split('+')[0].replace(/\./g, '') + '@' + d; };
+  return new Set(emails.map(normalize)).size;
+}`,
+    typescript: `function numUniqueEmails(emails: string[]): number {
+  const normalize = (e: string) => { const [l, d] = e.split('@'); return l!.split('+')[0]!.replace(/\./g, '') + '@' + d; };
+  return new Set(emails.map(normalize)).size;
+}`,
+    python: `def numUniqueEmails(emails):
+    if hasattr(emails, 'to_py'): emails = emails.to_py()
+    emails = [str(e) for e in emails]
+    def norm(e):
+        local, domain = e.split('@')
+        return local.split('+')[0].replace('.', '') + '@' + domain
+    return len(set(norm(e) for e in emails))`,
   },
   visibleTests: [
     {

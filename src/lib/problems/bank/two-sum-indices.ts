@@ -34,10 +34,33 @@ A value at one index may not be paired with itself; the two indices must be diff
   functionName: 'pairSumIndices',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function pairSumIndices(nums, target) {\n  // your code here\n}\n',
-    typescript: "function pairSumIndices(nums: number[], target: number): number[] {\n  // your code here\n}",
-
-    python: 'def pairSumIndices(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function pairSumIndices(nums, target) {
+  const seen = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const comp = target - nums[i];
+    if (seen.has(comp)) return [seen.get(comp), i];
+    seen.set(nums[i], i);
+  }
+  return [];
+}`,
+    typescript: `function pairSumIndices(nums: number[], target: number): number[] {
+  const seen = new Map<number, number>();
+  for (let i = 0; i < nums.length; i++) {
+    const comp = target - nums[i]!;
+    if (seen.has(comp)) return [seen.get(comp)!, i];
+    seen.set(nums[i]!, i);
+  }
+  return [];
+}`,
+    python: `def pairSumIndices(nums, target):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; target = int(target)
+    seen = {}
+    for i, v in enumerate(nums):
+        comp = target - v
+        if comp in seen: return [seen[comp], i]
+        seen[v] = i
+    return []`,
   },
   visibleTests: [
     { args: [[2, 7, 11, 15], 9], expected: [0, 1] },

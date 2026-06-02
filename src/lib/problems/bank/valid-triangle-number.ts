@@ -29,10 +29,31 @@ export const problem: Problem = {
   functionName: 'triangleNumber',
   params: ['nums'],
   starterCode: {
-    javascript: 'function triangleNumber(nums) {\n  // your code here\n}\n',
-    typescript: "function triangleNumber(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def triangleNumber(nums):\n    # your code here\n    pass\n',
+    javascript: `function triangleNumber(nums) {
+  nums.sort((a, b) => a - b); let cnt = 0;
+  for (let k = nums.length - 1; k >= 2; k--) {
+    let l = 0, r = k - 1;
+    while (l < r) { if (nums[l] + nums[r] > nums[k]) { cnt += r - l; r--; } else l++; }
+  }
+  return cnt;
+}`,
+    typescript: `function triangleNumber(nums: number[]): number {
+  nums.sort((a, b) => a - b); let cnt = 0;
+  for (let k = nums.length - 1; k >= 2; k--) {
+    let l = 0, r = k - 1;
+    while (l < r) { if (nums[l]! + nums[r]! > nums[k]!) { cnt += r - l; r--; } else l++; }
+  }
+  return cnt;
+}`,
+    python: `def triangleNumber(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = sorted(int(x) for x in nums); cnt = 0
+    for k in range(len(nums)-1, 1, -1):
+        l, r = 0, k - 1
+        while l < r:
+            if nums[l] + nums[r] > nums[k]: cnt += r - l; r -= 1
+            else: l += 1
+    return cnt`,
   },
   visibleTests: [
     { args: [[2, 2, 3, 4]], expected: 3 },

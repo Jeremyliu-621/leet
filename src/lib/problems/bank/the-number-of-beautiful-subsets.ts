@@ -37,9 +37,56 @@ Note that two subsets are different if they contain a different set of elements 
   functionName: 'beautifulSubsets',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function beautifulSubsets(nums, k) {\n  // your code here\n}\n',
-    typescript: 'function beautifulSubsets(nums: number[], k: number): number {\n  // your code here\n}',
-    python: 'def beautifulSubsets(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function beautifulSubsets(nums, k) {
+  nums.sort((a, b) => a - b);
+  const freq = new Map();
+  let count = 0;
+  function bt(idx) {
+    for (let i = idx; i < nums.length; i++) {
+      if (!freq.get(nums[i] - k)) {
+        freq.set(nums[i], (freq.get(nums[i]) ?? 0) + 1);
+        count++;
+        bt(i + 1);
+        const v = freq.get(nums[i]) - 1;
+        if (v === 0) freq.delete(nums[i]); else freq.set(nums[i], v);
+      }
+    }
+  }
+  bt(0);
+  return count;
+}`,
+    typescript: `function beautifulSubsets(nums: number[], k: number): number {
+  nums.sort((a, b) => a - b);
+  const freq = new Map<number, number>();
+  let count = 0;
+  function bt(idx: number): void {
+    for (let i = idx; i < nums.length; i++) {
+      if (!freq.get(nums[i]! - k)) {
+        freq.set(nums[i]!, (freq.get(nums[i]!) ?? 0) + 1);
+        count++;
+        bt(i + 1);
+        const v = freq.get(nums[i]!)! - 1;
+        if (v === 0) freq.delete(nums[i]!); else freq.set(nums[i]!, v);
+      }
+    }
+  }
+  bt(0);
+  return count;
+}`,
+    python: `def beautifulSubsets(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = sorted(int(x) for x in nums); k = int(k)
+    freq = {}; count = [0]
+    def bt(idx):
+        for i in range(idx, len(nums)):
+            if not freq.get(nums[i] - k):
+                freq[nums[i]] = freq.get(nums[i], 0) + 1
+                count[0] += 1
+                bt(i + 1)
+                freq[nums[i]] -= 1
+                if freq[nums[i]] == 0: del freq[nums[i]]
+    bt(0)
+    return count[0]`,
   },
   visibleTests: [
     { args: [[2, 4, 6], 2], expected: 4 },

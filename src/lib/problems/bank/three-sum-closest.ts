@@ -40,10 +40,47 @@ You may assume that each input would have exactly one solution.
   functionName: 'threeSumClosest',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function threeSumClosest(nums, target) {\n  // your code here\n}\n',
-    typescript: "function threeSumClosest(nums: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def threeSumClosest(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function threeSumClosest(nums, target) {
+  nums.sort((a, b) => a - b);
+  let closest = nums[0] + nums[1] + nums[2];
+  for (let i = 0; i < nums.length - 2; i++) {
+    let l = i + 1, r = nums.length - 1;
+    while (l < r) {
+      const s = nums[i] + nums[l] + nums[r];
+      if (Math.abs(s - target) < Math.abs(closest - target)) closest = s;
+      if (s === target) return s;
+      if (s < target) l++; else r--;
+    }
+  }
+  return closest;
+}`,
+    typescript: `function threeSumClosest(nums: number[], target: number): number {
+  nums.sort((a, b) => a - b);
+  let closest = nums[0]! + nums[1]! + nums[2]!;
+  for (let i = 0; i < nums.length - 2; i++) {
+    let l = i + 1, r = nums.length - 1;
+    while (l < r) {
+      const s = nums[i]! + nums[l]! + nums[r]!;
+      if (Math.abs(s - target) < Math.abs(closest - target)) closest = s;
+      if (s === target) return s;
+      if (s < target) l++; else r--;
+    }
+  }
+  return closest;
+}`,
+    python: `def threeSumClosest(nums, target):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = sorted(int(x) for x in nums); target = int(target)
+    closest = nums[0] + nums[1] + nums[2]
+    for i in range(len(nums) - 2):
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            s = nums[i] + nums[l] + nums[r]
+            if abs(s - target) < abs(closest - target): closest = s
+            if s == target: return s
+            if s < target: l += 1
+            else: r -= 1
+    return closest`,
   },
   visibleTests: [
     { args: [[-1, 2, 1, -4], 1], expected: 2 },
