@@ -41,10 +41,33 @@ This is the classic **Dutch National Flag** problem.`,
   functionName: 'sortColors',
   params: ['nums'],
   starterCode: {
-    javascript: 'function sortColors(nums) {\n  // your code here\n}\n',
-    typescript: "function sortColors(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def sortColors(nums):\n    # your code here\n    pass\n',
+    javascript: `function sortColors(nums) {
+  let lo = 0, mid = 0, hi = nums.length - 1;
+  while (mid <= hi) {
+    if (nums[mid] === 0) { [nums[lo], nums[mid]] = [nums[mid], nums[lo]]; lo++; mid++; }
+    else if (nums[mid] === 2) { [nums[mid], nums[hi]] = [nums[hi], nums[mid]]; hi--; }
+    else mid++;
+  }
+  return nums;
+}`,
+    typescript: `function sortColors(nums: number[]): number[] {
+  let lo = 0, mid = 0, hi = nums.length - 1;
+  while (mid <= hi) {
+    if (nums[mid]! === 0) { [nums[lo], nums[mid]] = [nums[mid]!, nums[lo]!]; lo++; mid++; }
+    else if (nums[mid]! === 2) { [nums[mid], nums[hi]] = [nums[hi]!, nums[mid]!]; hi--; }
+    else mid++;
+  }
+  return nums;
+}`,
+    python: `def sortColors(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    lo, mid, hi = 0, 0, len(nums)-1
+    while mid <= hi:
+        if nums[mid] == 0: nums[lo], nums[mid] = nums[mid], nums[lo]; lo += 1; mid += 1
+        elif nums[mid] == 2: nums[mid], nums[hi] = nums[hi], nums[mid]; hi -= 1
+        else: mid += 1
+    return nums`,
   },
   visibleTests: [
     { args: [[2, 0, 2, 1, 1, 0]], expected: [0, 0, 1, 1, 2, 2] },

@@ -38,14 +38,29 @@ The **digit product** of a positive integer is the product of all its digits.`,
   params: ['n', 't'],
   starterCode: {
     javascript: `function smallestDivisibleDigitProductI(n, t) {
-  // your code here
+  for (let x = n; ; x++) {
+    let prod = 1;
+    for (const d of String(x)) prod *= parseInt(d);
+    if (prod % t === 0) return x;
+  }
 }`,
     typescript: `function smallestDivisibleDigitProductI(n: number, t: number): number {
-  // your code here
+  for (let x = n; ; x++) {
+    let prod = 1;
+    for (const d of String(x)) prod *= parseInt(d, 10);
+    if (prod % t === 0) return x;
+  }
 }`,
     python: `def smallestDivisibleDigitProductI(n, t):
-    # your code here
-    pass`,
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    n = int(n); t = int(t)
+    x = n
+    while True:
+        prod = 1
+        for d in str(x): prod *= int(d)
+        if prod % t == 0: return x
+        x += 1`,
   },
   visibleTests: [
     { args: [10, 2], expected: 10 },

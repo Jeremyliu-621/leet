@@ -38,14 +38,38 @@ Return the **smallest** missing non-negative integer after performing the operat
   params: ['nums', 'value'],
   starterCode: {
     javascript: `function findSmallestInteger(nums, value) {
-  // your code here
+  if (value === 0) {
+    const s = new Set(nums.filter(x => x >= 0));
+    let i = 0; while (s.has(i)) i++; return i;
+  }
+  const freq = new Array(value).fill(0);
+  for (const n of nums) freq[((n % value) + value) % value]++;
+  for (let x = 0; ; x++) { if (freq[x % value]-- <= 0) return x; }
 }`,
     typescript: `function findSmallestInteger(nums: number[], value: number): number {
-  // your code here
+  if (value === 0) {
+    const s = new Set(nums.filter(x => x >= 0));
+    let i = 0; while (s.has(i)) i++; return i;
+  }
+  const freq = new Array(value).fill(0) as number[];
+  for (const n of nums) freq[((n % value) + value) % value]!++;
+  for (let x = 0; ; x++) { if (freq[x % value]!-- <= 0) return x; }
 }`,
     python: `def findSmallestInteger(nums, value):
-    # your code here
-    pass`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(value, 'to_py'): value = value.to_py()
+    nums = [int(x) for x in nums]; value = int(value)
+    if value == 0:
+        s = set(x for x in nums if x >= 0)
+        i = 0
+        while i in s: i += 1
+        return i
+    freq = [0]*value
+    for n in nums: freq[((n % value) + value) % value] += 1
+    x = 0
+    while True:
+        if freq[x % value] <= 0: return x
+        freq[x % value] -= 1; x += 1`,
   },
   visibleTests: [
     { args: [[0, 1, 2, 3, 4], 1], expected: 5 },

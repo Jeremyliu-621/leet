@@ -36,10 +36,22 @@ Return \`names\` sorted in **descending** order by the people's heights.`,
   functionName: 'sortPeople',
   params: ['names', 'heights'],
   starterCode: {
-    javascript: 'function sortPeople(names, heights) {\n  // your code here\n}\n',
-    typescript: "function sortPeople(names: string[], heights: number[]): string[] {\n  // your code here\n}",
-
-    python: 'def sortPeople(names, heights):\n    # your code here\n    pass\n',
+    javascript: `function sortPeople(names, heights) {
+  return names.map((n, i) => [n, heights[i]])
+    .sort((a, b) => b[1] - a[1])
+    .map(p => p[0]);
+}`,
+    typescript: `function sortPeople(names: string[], heights: number[]): string[] {
+  return names.map((n, i) => [n, heights[i]!] as [string, number])
+    .sort((a, b) => b[1] - a[1])
+    .map(p => p[0]);
+}`,
+    python: `def sortPeople(names, heights):
+    if hasattr(names, 'to_py'): names = names.to_py()
+    if hasattr(heights, 'to_py'): heights = heights.to_py()
+    names = [str(n) for n in names]; heights = [int(h) for h in heights]
+    paired = sorted(zip(heights, names), reverse=True)
+    return [n for _, n in paired]`,
   },
   visibleTests: [
     { args: [['Mary', 'John', 'Emma'], [180, 165, 170]], expected: ['Mary', 'Emma', 'John'] },

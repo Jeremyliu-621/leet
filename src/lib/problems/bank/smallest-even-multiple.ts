@@ -19,10 +19,16 @@ export const problem: Problem = {
   functionName: 'smallestEvenMultiple',
   params: ['n'],
   starterCode: {
-    javascript: 'function smallestEvenMultiple(n) {\n  // your code here\n}\n',
-    typescript: "function smallestEvenMultiple(n: number): number {\n  // your code here\n}",
-
-    python: 'def smallestEvenMultiple(n):\n    # your code here\n    pass\n',
+    javascript: `function smallestEvenMultiple(n) {
+  return n % 2 === 0 ? n : 2 * n;
+}`,
+    typescript: `function smallestEvenMultiple(n: number): number {
+  return n % 2 === 0 ? n : 2 * n;
+}`,
+    python: `def smallestEvenMultiple(n):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    n = int(n)
+    return n if n % 2 == 0 else 2 * n`,
   },
   visibleTests: [
     { args: [5], expected: 10 },

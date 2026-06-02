@@ -45,14 +45,64 @@ Return:
   params: ['equation'],
   starterCode: {
     javascript: `function solveEquation(equation) {
-  // your code here
+  function parse(s) {
+    let xc = 0, c = 0, i = 0;
+    while (i < s.length) {
+      let sign = 1;
+      if (s[i] === '+') i++;
+      else if (s[i] === '-') { sign = -1; i++; }
+      let num = 0, hasNum = false;
+      while (i < s.length && s[i] >= '0' && s[i] <= '9') { num = num*10 + parseInt(s[i]); hasNum = true; i++; }
+      if (i < s.length && s[i] === 'x') { xc += sign*(hasNum?num:1); i++; } else c += sign*num;
+    }
+    return [xc, c];
+  }
+  const parts = equation.split('=');
+  const [lx, lc] = parse(parts[0]);
+  const [rx, rc] = parse(parts[1]);
+  const cx = lx - rx, cr = rc - lc;
+  if (cx === 0) return cr === 0 ? 'Infinite solutions' : 'No solution';
+  return \`x=\${cr/cx}\`;
 }`,
     typescript: `function solveEquation(equation: string): string {
-  // your code here
+  function parse(s: string): [number, number] {
+    let xc = 0, c = 0, i = 0;
+    while (i < s.length) {
+      let sign = 1;
+      if (s[i] === '+') i++;
+      else if (s[i] === '-') { sign = -1; i++; }
+      let num = 0, hasNum = false;
+      while (i < s.length && s[i]! >= '0' && s[i]! <= '9') { num = num*10 + parseInt(s[i]!); hasNum = true; i++; }
+      if (i < s.length && s[i] === 'x') { xc += sign*(hasNum?num:1); i++; } else c += sign*num;
+    }
+    return [xc, c];
+  }
+  const [lhs, rhs] = equation.split('=') as [string, string];
+  const [lx, lc] = parse(lhs);
+  const [rx, rc] = parse(rhs);
+  const cx = lx - rx, cr = rc - lc;
+  if (cx === 0) return cr === 0 ? 'Infinite solutions' : 'No solution';
+  return \`x=\${cr/cx}\`;
 }`,
     python: `def solveEquation(equation):
-    # your code here
-    pass`,
+    if hasattr(equation, 'to_py'): equation = equation.to_py()
+    equation = str(equation)
+    def parse(s):
+        xc = 0; c = 0; i = 0; n = len(s)
+        while i < n:
+            sign = 1
+            if s[i] == '+': i += 1
+            elif s[i] == '-': sign = -1; i += 1
+            num = 0; has_num = False
+            while i < n and s[i].isdigit(): num = num*10+int(s[i]); has_num = True; i += 1
+            if i < n and s[i] == 'x': xc += sign*(num if has_num else 1); i += 1
+            else: c += sign*num
+        return xc, c
+    lhs, rhs = equation.split('=')
+    lx, lc = parse(lhs); rx, rc = parse(rhs)
+    cx = lx - rx; cr = rc - lc
+    if cx == 0: return 'Infinite solutions' if cr == 0 else 'No solution'
+    return f'x={cr//cx}'`,
   },
   visibleTests: [
     { args: ['x+5-3+x=6+x-2'], expected: 'x=2' },

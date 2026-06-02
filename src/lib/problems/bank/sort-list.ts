@@ -30,10 +30,45 @@ export const problem: Problem = {
   functionName: 'sortArray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function sortArray(nums) {\n  // your code here\n}\n',
-    typescript: "function sortArray(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def sortArray(nums: list) -> list:\n    # your code here\n    pass\n',
+    javascript: `function sortArray(nums) {
+  function merge(a, b) {
+    let i=0,j=0,r=[];
+    while(i<a.length&&j<b.length) r.push(a[i]<=b[j]?a[i++]:b[j++]);
+    return r.concat(a.slice(i),b.slice(j));
+  }
+  function ms(a) {
+    if(a.length<=1)return a;
+    const m=a.length>>1;
+    return merge(ms(a.slice(0,m)),ms(a.slice(m)));
+  }
+  return ms(nums);
+}`,
+    typescript: `function sortArray(nums: number[]): number[] {
+  function merge(a: number[], b: number[]): number[] {
+    let i=0,j=0; const r:number[]=[];
+    while(i<a.length&&j<b.length) r.push(a[i]!<=b[j]!?a[i++]!:b[j++]!);
+    return r.concat(a.slice(i),b.slice(j));
+  }
+  function ms(a: number[]): number[] {
+    if(a.length<=1)return a;
+    const m=a.length>>1;
+    return merge(ms(a.slice(0,m)),ms(a.slice(m)));
+  }
+  return ms(nums);
+}`,
+    python: `def sortArray(nums: list) -> list:
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    def ms(a):
+        if len(a) <= 1: return a
+        m = len(a)//2
+        l, r = ms(a[:m]), ms(a[m:])
+        res = []; i = j = 0
+        while i < len(l) and j < len(r):
+            if l[i] <= r[j]: res.append(l[i]); i += 1
+            else: res.append(r[j]); j += 1
+        return res + l[i:] + r[j:]
+    return ms(nums)`,
   },
   visibleTests: [
     { args: [[5, 2, 3, 1]], expected: [1, 2, 3, 5] },
