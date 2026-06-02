@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 275
+import { problem as groupsOfStrings } from './groups-of-strings';
+import { problem as findGoodDaysToRobBank } from './find-good-days-to-rob-bank';
+import { problem as minimumCoinsForFruitsII } from './minimum-number-of-coins-for-fruits-ii';
 // batch 274
 import { problem as minSwapsBalance } from './minimum-swaps-to-balance';
 import { problem as scoreRemovingSubstrings } from './score-by-removing-substrings';
@@ -6485,6 +6489,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 275
+  groupsOfStrings,
+  findGoodDaysToRobBank,
+  minimumCoinsForFruitsII,
   // batch 274
   minSwapsBalance,
   scoreRemovingSubstrings,

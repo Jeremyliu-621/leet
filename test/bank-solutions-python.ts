@@ -46429,6 +46429,50 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 275
+  'groups-of-strings': `def groupStrings(words):
+    parent = {}
+    rank = {}
+    def find(x):
+        if x not in parent: return x
+        parent[x] = find(parent[x])
+        return parent[x]
+    def union(x, y):
+        rx, ry = find(x), find(y)
+        if rx == ry: return
+        rk, rky = rank.get(rx, 0), rank.get(ry, 0)
+        if rk < rky: parent[rx] = ry
+        elif rk > rky: parent[ry] = rx
+        else:
+            parent[ry] = rx
+            rank[rx] = rk + 1
+    mask_map = {}
+    for word in words:
+        mask = 0
+        for c in word: mask |= 1 << (ord(c) - 97)
+        if mask not in mask_map: mask_map[mask] = mask
+        else: union(mask, mask_map[mask])
+    for m in list(mask_map.keys()):
+        for i in range(26):
+            t = m ^ (1 << i)
+            if t in mask_map: union(m, t)
+        for i in range(26):
+            if not (m >> i & 1): continue
+            for j in range(26):
+                if m >> j & 1: continue
+                t = m ^ (1 << i) ^ (1 << j)
+                if t in mask_map: union(m, t)
+    group_sizes = {}
+    for word in words:
+        mask = 0
+        for c in word: mask |= 1 << (ord(c) - 97)
+        root = find(mask_map[mask])
+        group_sizes[root] = group_sizes.get(root, 0) + 1
+    groups = len(group_sizes)
+    max_size = max(group_sizes.values())
+    return [groups, max_size]
+`,
+
   // batch 274
   'minimum-swaps-to-balance': `def minSwaps(s):
     open_count, swaps = 0, 0
@@ -46499,17 +46543,19 @@ def placedCoins(edges, cost):
 
   'count-anagrams': `def countAnagrams(s):
     MOD = 10**9 + 7
-    def mod_inv(a): return pow(a, MOD - 2, MOD)
+    words = s.split()
+    max_len = max(len(w) for w in words)
+    fact = [1] * (max_len + 1)
+    for i in range(1, max_len + 1):
+        fact[i] = fact[i - 1] * i % MOD
+    from collections import Counter
     ans = 1
-    for word in s.split():
-        from collections import Counter
+    for word in words:
         freq = Counter(word)
-        n = len(word)
-        count = 1
-        for i in range(1, n + 1): count = count * i % MOD
-        for f in freq.values():
-            for i in range(1, f + 1): count = count * mod_inv(i) % MOD
-        ans = ans * count % MOD
+        val = fact[len(word)]
+        for cnt in freq.values():
+            val = val * pow(fact[cnt], MOD - 2, MOD) % MOD
+        ans = ans * val % MOD
     return ans
 `,
 
@@ -46566,6 +46612,36 @@ def placedCoins(edges, cost):
         total = j * x + sum(min_cost)
         if total < ans: ans = total
     return ans
+`,
+
+  'find-good-days-to-rob-bank': `def goodDaysToRobBank(security, time):
+    n = len(security)
+    dec = [0] * n
+    inc = [0] * n
+    for i in range(1, n):
+        if security[i] <= security[i - 1]:
+            dec[i] = dec[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if security[i] <= security[i + 1]:
+            inc[i] = inc[i + 1] + 1
+    return [i for i in range(n) if dec[i] >= time and inc[i] >= time]
+`,
+
+  'minimum-number-of-coins-for-fruits-ii': `def minimumCoins(prices):
+    from collections import deque
+    n = len(prices)
+    f = [0] * (n + 1)
+    dq = deque()
+    for i in range(1, n + 1):
+        gi = f[i - 1] + prices[i - 1]
+        while dq and dq[-1][1] >= gi:
+            dq.pop()
+        dq.append((i, gi))
+        left = (i + 1) // 2
+        while dq[0][0] < left:
+            dq.popleft()
+        f[i] = dq[0][1]
+    return f[n]
 `,
 
   // batch 271

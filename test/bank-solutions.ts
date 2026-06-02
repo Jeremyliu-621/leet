@@ -47404,6 +47404,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 275
+  'groups-of-strings': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const parent = new Map<number, number>(), rank = new Map<number, number>();
+    const find = (x: number): number => {
+      if (!parent.has(x)) return x;
+      const root = find(parent.get(x)!);
+      parent.set(x, root);
+      return root;
+    };
+    const union = (x: number, y: number) => {
+      const rx = find(x), ry = find(y);
+      if (rx === ry) return;
+      const rk = rank.get(rx) ?? 0, rkk = rank.get(ry) ?? 0;
+      if (rk < rkk) parent.set(rx, ry);
+      else if (rk > rkk) parent.set(ry, rx);
+      else { parent.set(ry, rx); rank.set(rx, rk + 1); }
+    };
+    const maskMap = new Map<number, number>();
+    for (const word of words) {
+      let mask = 0;
+      for (const c of word) mask |= 1 << (c.charCodeAt(0) - 97);
+      if (!maskMap.has(mask)) maskMap.set(mask, mask);
+      else union(mask, maskMap.get(mask)!);
+    }
+    for (const m of maskMap.keys()) {
+      for (let i = 0; i < 26; i++) {
+        const t = m ^ (1 << i);
+        if (maskMap.has(t)) union(m, t);
+      }
+      for (let i = 0; i < 26; i++) {
+        if (!(m >> i & 1)) continue;
+        for (let j = 0; j < 26; j++) {
+          if (m >> j & 1) continue;
+          const t = m ^ (1 << i) ^ (1 << j);
+          if (maskMap.has(t)) union(m, t);
+        }
+      }
+    }
+    const groupSizes = new Map<number, number>();
+    for (const word of words) {
+      let mask = 0;
+      for (const c of word) mask |= 1 << (c.charCodeAt(0) - 97);
+      const root = find(maskMap.get(mask) ?? mask);
+      groupSizes.set(root, (groupSizes.get(root) ?? 0) + 1);
+    }
+    let groups = groupSizes.size, maxSize = 0;
+    for (const v of groupSizes.values()) maxSize = Math.max(maxSize, v);
+    return [groups, maxSize];
+  },
+
   // batch 274
   'minimum-swaps-to-balance': (...args: unknown[]) => {
     const s = args[0] as string;
@@ -47486,22 +47537,23 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
   'count-anagrams': (...args: unknown[]) => {
     const s = args[0] as string;
     const MOD = 1000000007n;
-    function modPow(b: bigint, e: bigint, m: bigint): bigint {
+    const words = s.split(' ');
+    const maxLen = words.reduce((m, w) => Math.max(m, w.length), 0);
+    const fact: bigint[] = new Array(maxLen + 1).fill(1n);
+    for (let i = 1; i <= maxLen; i++) fact[i] = fact[i - 1]! * BigInt(i) % MOD;
+    const modpow = (b: bigint, e: bigint, m: bigint): bigint => {
       let r = 1n; b %= m;
       while (e > 0n) { if (e & 1n) r = r * b % m; b = b * b % m; e >>= 1n; }
       return r;
-    }
+    };
+    const inv = (x: bigint) => modpow(x, MOD - 2n, MOD);
     let ans = 1n;
-    for (const word of s.split(' ')) {
-      const wn = word.length;
+    for (const word of words) {
       const freq = new Map<string, number>();
       for (const c of word) freq.set(c, (freq.get(c) ?? 0) + 1);
-      let count = 1n;
-      for (let i = 1; i <= wn; i++) count = count * BigInt(i) % MOD;
-      for (const f of freq.values()) {
-        for (let i = 1; i <= f; i++) count = count * modPow(BigInt(i), MOD - 2n, MOD) % MOD;
-      }
-      ans = ans * count % MOD;
+      let val = fact[word.length]!;
+      for (const cnt of freq.values()) val = val * inv(fact[cnt]!) % MOD;
+      ans = ans * val % MOD;
     }
     return Number(ans);
   },
@@ -47570,6 +47622,41 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       if (total < ans) ans = total;
     }
     return ans;
+  },
+
+  'find-good-days-to-rob-bank': (...args: unknown[]) => {
+    const security = args[0] as number[];
+    const time = args[1] as number;
+    const n = security.length;
+    const dec = new Array<number>(n).fill(0);
+    const inc = new Array<number>(n).fill(0);
+    for (let i = 1; i < n; i++) {
+      if (security[i]! <= security[i - 1]!) dec[i] = dec[i - 1]! + 1;
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      if (security[i]! <= security[i + 1]!) inc[i] = inc[i + 1]! + 1;
+    }
+    const result: number[] = [];
+    for (let i = 0; i < n; i++) {
+      if (dec[i]! >= time && inc[i]! >= time) result.push(i);
+    }
+    return result;
+  },
+
+  'minimum-number-of-coins-for-fruits-ii': (...args: unknown[]) => {
+    const prices = args[0] as number[];
+    const n = prices.length;
+    const f = new Array<number>(n + 1).fill(0);
+    const deq: { idx: number; val: number }[] = [];
+    for (let i = 1; i <= n; i++) {
+      const gi = f[i - 1]! + prices[i - 1]!;
+      while (deq.length && deq[deq.length - 1]!.val >= gi) deq.pop();
+      deq.push({ idx: i, val: gi });
+      const left = Math.ceil(i / 2);
+      while (deq[0]!.idx < left) deq.shift();
+      f[i] = deq[0]!.val;
+    }
+    return f[n]!;
   },
 
   // batch 271
