@@ -37,12 +37,69 @@ Return the answers to all queries. If a single answer does not exist, return \`-
   params: ['equations', 'values', 'queries'],
   starterCode: {
     javascript: `function calcEquation(equations, values, queries) {
-
+  const graph = new Map();
+  for (let i = 0; i < equations.length; i++) {
+    const [a, b] = equations[i], v = values[i];
+    if (!graph.has(a)) graph.set(a, []);
+    if (!graph.has(b)) graph.set(b, []);
+    graph.get(a).push([b, v]);
+    graph.get(b).push([a, 1 / v]);
+  }
+  const bfs = (src, dst) => {
+    if (!graph.has(src) || !graph.has(dst)) return -1.0;
+    if (src === dst) return 1.0;
+    const visited = new Set([src]);
+    const q = [[src, 1.0]];
+    for (const [node, prod] of q) {
+      for (const [next, w] of graph.get(node)) {
+        if (next === dst) return prod * w;
+        if (!visited.has(next)) { visited.add(next); q.push([next, prod * w]); }
+      }
+    }
+    return -1.0;
+  };
+  return queries.map(([a, b]) => bfs(a, b));
 }`,
-    typescript: "function calcEquation(equations: string[][], values: number[], queries: string[][]): number[] {\n\n}",
-
+    typescript: `function calcEquation(equations: string[][], values: number[], queries: string[][]): number[] {
+  const graph = new Map<string, [string, number][]>();
+  for (let i = 0; i < equations.length; i++) {
+    const [a, b] = equations[i], v = values[i];
+    if (!graph.has(a)) graph.set(a, []);
+    if (!graph.has(b)) graph.set(b, []);
+    graph.get(a)!.push([b, v]);
+    graph.get(b)!.push([a, 1 / v]);
+  }
+  const bfs = (src: string, dst: string): number => {
+    if (!graph.has(src) || !graph.has(dst)) return -1.0;
+    if (src === dst) return 1.0;
+    const visited = new Set([src]);
+    const q: [string, number][] = [[src, 1.0]];
+    for (const [node, prod] of q) {
+      for (const [next, w] of graph.get(node)!) {
+        if (next === dst) return prod * w;
+        if (!visited.has(next)) { visited.add(next); q.push([next, prod * w]); }
+      }
+    }
+    return -1.0;
+  };
+  return queries.map(([a, b]) => bfs(a, b));
+}`,
     python: `def calcEquation(equations, values, queries):
-    pass`,
+    from collections import defaultdict, deque
+    graph = defaultdict(list)
+    for (a, b), v in zip(equations, values):
+        graph[a].append((b, v)); graph[b].append((a, 1 / v))
+    def bfs(src, dst):
+        if src not in graph or dst not in graph: return -1.0
+        if src == dst: return 1.0
+        visited, q = {src}, deque([(src, 1.0)])
+        while q:
+            node, prod = q.popleft()
+            for nxt, w in graph[node]:
+                if nxt == dst: return prod * w
+                if nxt not in visited: visited.add(nxt); q.append((nxt, prod * w))
+        return -1.0
+    return [bfs(a, b) for a, b in queries]`,
   },
   visibleTests: [
     {

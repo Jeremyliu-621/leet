@@ -41,10 +41,41 @@ Return an array \`ans\` of length \`n\`, where \`ans[i]\` is the length of the *
   functionName: 'longestObstacleCourseAtEachPosition',
   params: ['obstacles'],
   starterCode: {
-    javascript: 'function longestObstacleCourseAtEachPosition(obstacles) {\n  \n}\n',
-    typescript: "function longestObstacleCourseAtEachPosition(obstacles: number[]): number[] {\n  \n}",
-
-    python: 'def longestObstacleCourseAtEachPosition(obstacles):\n    pass\n',
+    javascript: `function longestObstacleCourseAtEachPosition(obstacles) {
+  const tails = [], result = [];
+  for (const x of obstacles) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (tails[mid] <= x) lo = mid + 1; else hi = mid;
+    }
+    tails[lo] = x;
+    result.push(lo + 1);
+  }
+  return result;
+}`,
+    typescript: `function longestObstacleCourseAtEachPosition(obstacles: number[]): number[] {
+  const tails: number[] = [], result: number[] = [];
+  for (const x of obstacles) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (tails[mid] <= x) lo = mid + 1; else hi = mid;
+    }
+    tails[lo] = x;
+    result.push(lo + 1);
+  }
+  return result;
+}`,
+    python: `def longestObstacleCourseAtEachPosition(obstacles):
+    import bisect
+    tails, result = [], []
+    for x in obstacles:
+        pos = bisect.bisect_right(tails, x)
+        if pos == len(tails): tails.append(x)
+        else: tails[pos] = x
+        result.append(pos + 1)
+    return result`,
   },
   visibleTests: [
     { args: [[3, 1, 5, 6, 4, 2]], expected: [1, 1, 2, 3, 2, 2] },
