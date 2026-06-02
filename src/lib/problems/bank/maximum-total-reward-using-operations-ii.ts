@@ -43,11 +43,29 @@ Return an integer denoting the **maximum** total reward you can collect by perfo
   params: ['rewardValues'],
   starterCode: {
     javascript: `function maxTotalReward(rewardValues) {
-
+  const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+  let dp = 1n;
+  for (const v of sorted) {
+    const bv = BigInt(v);
+    dp |= (dp & ((1n << bv) - 1n)) << bv;
+  }
+  return dp.toString(2).length - 1;
 }`,
-    typescript: 'function maxTotalReward(rewardValues: number[]): number {\n\n}',
+    typescript: `function maxTotalReward(rewardValues: number[]): number {
+  const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+  let dp = 1n;
+  for (const v of sorted) {
+    const bv = BigInt(v);
+    dp |= (dp & ((1n << bv) - 1n)) << bv;
+  }
+  return dp.toString(2).length - 1;
+}`,
     python: `def maxTotalReward(rewardValues):
-    pass`,
+    if hasattr(rewardValues, 'to_py'): rewardValues = list(rewardValues.to_py())
+    dp = 1
+    for v in sorted(set(rewardValues)):
+        dp |= (dp & ((1 << v) - 1)) << v
+    return dp.bit_length() - 1`,
   },
   visibleTests: [
     { args: [[1, 1, 3, 3]], expected: 4 },

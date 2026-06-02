@@ -43,13 +43,103 @@ Trailing zeros in an integer are the number of times the integer is divisible by
   params: ['grid'],
   starterCode: {
     javascript: `function maxTrailingZeros(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  const cnt = (v, p) => { let c = 0; while (v % p === 0) { c++; v /= p; } return c; };
+  const r2 = [], r5 = [], c2 = [], c5 = [];
+  for (let i = 0; i < m; i++) {
+    r2[i] = new Array(n + 1).fill(0); r5[i] = new Array(n + 1).fill(0);
+    for (let j = 0; j < n; j++) {
+      r2[i][j + 1] = r2[i][j] + cnt(grid[i][j], 2);
+      r5[i][j + 1] = r5[i][j] + cnt(grid[i][j], 5);
+    }
+  }
+  for (let j = 0; j < n; j++) {
+    c2[j] = new Array(m + 1).fill(0); c5[j] = new Array(m + 1).fill(0);
+    for (let i = 0; i < m; i++) {
+      c2[j][i + 1] = c2[j][i] + cnt(grid[i][j], 2);
+      c5[j][i + 1] = c5[j][i] + cnt(grid[i][j], 5);
+    }
+  }
+  let ans = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const g2 = cnt(grid[i][j], 2), g5 = cnt(grid[i][j], 5);
+      const combos = [
+        [r2[i][j+1] + c2[j][i+1] - g2,   r5[i][j+1] + c5[j][i+1] - g5],
+        [r2[i][j+1] + c2[j][m] - c2[j][i] - g2, r5[i][j+1] + c5[j][m] - c5[j][i] - g5],
+        [r2[i][n] - r2[i][j] + c2[j][i+1] - g2, r5[i][n] - r5[i][j] + c5[j][i+1] - g5],
+        [r2[i][n] - r2[i][j] + c2[j][m] - c2[j][i] - g2, r5[i][n] - r5[i][j] + c5[j][m] - c5[j][i] - g5],
+      ];
+      for (const [tw, fi] of combos) { const z = Math.min(tw, fi); if (z > ans) ans = z; }
+    }
+  }
+  return ans;
 }`,
     typescript: `function maxTrailingZeros(grid: number[][]): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  const cnt = (v: number, p: number) => { let c = 0; while (v % p === 0) { c++; v /= p; } return c; };
+  const r2: number[][] = [], r5: number[][] = [], c2: number[][] = [], c5: number[][] = [];
+  for (let i = 0; i < m; i++) {
+    r2[i] = new Array(n + 1).fill(0); r5[i] = new Array(n + 1).fill(0);
+    for (let j = 0; j < n; j++) {
+      r2[i]![j + 1] = r2[i]![j]! + cnt(grid[i]![j]!, 2);
+      r5[i]![j + 1] = r5[i]![j]! + cnt(grid[i]![j]!, 5);
+    }
+  }
+  for (let j = 0; j < n; j++) {
+    c2[j] = new Array(m + 1).fill(0); c5[j] = new Array(m + 1).fill(0);
+    for (let i = 0; i < m; i++) {
+      c2[j]![i + 1] = c2[j]![i]! + cnt(grid[i]![j]!, 2);
+      c5[j]![i + 1] = c5[j]![i]! + cnt(grid[i]![j]!, 5);
+    }
+  }
+  let ans = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      const g2 = cnt(grid[i]![j]!, 2), g5 = cnt(grid[i]![j]!, 5);
+      const combos: [number, number][] = [
+        [r2[i]![j+1]! + c2[j]![i+1]! - g2,   r5[i]![j+1]! + c5[j]![i+1]! - g5],
+        [r2[i]![j+1]! + c2[j]![m]! - c2[j]![i]! - g2, r5[i]![j+1]! + c5[j]![m]! - c5[j]![i]! - g5],
+        [r2[i]![n]! - r2[i]![j]! + c2[j]![i+1]! - g2, r5[i]![n]! - r5[i]![j]! + c5[j]![i+1]! - g5],
+        [r2[i]![n]! - r2[i]![j]! + c2[j]![m]! - c2[j]![i]! - g2, r5[i]![n]! - r5[i]![j]! + c5[j]![m]! - c5[j]![i]! - g5],
+      ];
+      for (const [tw, fi] of combos) { const z = Math.min(tw, fi); if (z > ans) ans = z; }
+    }
+  }
+  return ans;
 }`,
     python: `def maxTrailingZeros(grid):
-    pass`,
+    if hasattr(grid, 'to_py'): grid = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in grid.to_py()]
+    def cnt(v, p):
+        c = 0
+        while v % p == 0: c += 1; v //= p
+        return c
+    m, n = len(grid), len(grid[0])
+    r2 = [[0]*(n+1) for _ in range(m)]
+    r5 = [[0]*(n+1) for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            r2[i][j+1] = r2[i][j] + cnt(grid[i][j], 2)
+            r5[i][j+1] = r5[i][j] + cnt(grid[i][j], 5)
+    c2 = [[0]*(m+1) for _ in range(n)]
+    c5 = [[0]*(m+1) for _ in range(n)]
+    for j in range(n):
+        for i in range(m):
+            c2[j][i+1] = c2[j][i] + cnt(grid[i][j], 2)
+            c5[j][i+1] = c5[j][i] + cnt(grid[i][j], 5)
+    ans = 0
+    for i in range(m):
+        for j in range(n):
+            g2, g5 = cnt(grid[i][j], 2), cnt(grid[i][j], 5)
+            for tw, fi in [
+                (r2[i][j+1]+c2[j][i+1]-g2, r5[i][j+1]+c5[j][i+1]-g5),
+                (r2[i][j+1]+c2[j][m]-c2[j][i]-g2, r5[i][j+1]+c5[j][m]-c5[j][i]-g5),
+                (r2[i][n]-r2[i][j]+c2[j][i+1]-g2, r5[i][n]-r5[i][j]+c5[j][i+1]-g5),
+                (r2[i][n]-r2[i][j]+c2[j][m]-c2[j][i]-g2, r5[i][n]-r5[i][j]+c5[j][m]-c5[j][i]-g5),
+            ]:
+                z = min(tw, fi)
+                if z > ans: ans = z
+    return ans`,
   },
   visibleTests: [
     {

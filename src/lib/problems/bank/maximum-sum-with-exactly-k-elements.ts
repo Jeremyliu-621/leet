@@ -41,13 +41,17 @@ Return the **maximum** score after exactly \`k\` operations.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximizeSum(nums, k) {
-
+  const m = Math.max(...nums);
+  return k * m + k * (k - 1) / 2;
 }`,
     typescript: `function maximizeSum(nums: number[], k: number): number {
-
+  const m = Math.max(...nums);
+  return k * m + k * (k - 1) / 2;
 }`,
     python: `def maximizeSum(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    m = max(nums)
+    return k * m + k * (k - 1) // 2`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 3], expected: 18 },

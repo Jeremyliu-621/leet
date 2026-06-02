@@ -42,12 +42,59 @@ Each week, the employee may stay in the same city or fly to a different city at 
   params: ['flights', 'days'],
   starterCode: {
     javascript: `function maxVacationDays(flights, days) {
-
+  const n = flights.length, K = days[0].length;
+  let dp = new Array(n).fill(-Infinity);
+  dp[0] = 0;
+  for (let w = 0; w < K; w++) {
+    const next = new Array(n).fill(-Infinity);
+    for (let c = 0; c < n; c++) {
+      if (dp[c] === -Infinity) continue;
+      for (let nc = 0; nc < n; nc++) {
+        if (nc === c || flights[c][nc] === 1) {
+          const v = dp[c] + days[nc][w];
+          if (v > next[nc]) next[nc] = v;
+        }
+      }
+    }
+    dp = next;
+  }
+  return Math.max(...dp);
 }`,
-    typescript: "function maxVacationDays(flights: number[][], days: number[][]): number {\n\n}",
-
+    typescript: `function maxVacationDays(flights: number[][], days: number[][]): number {
+  const n = flights.length, K = days[0]!.length;
+  let dp = new Array<number>(n).fill(-Infinity);
+  dp[0] = 0;
+  for (let w = 0; w < K; w++) {
+    const next = new Array<number>(n).fill(-Infinity);
+    for (let c = 0; c < n; c++) {
+      if (dp[c]! === -Infinity) continue;
+      for (let nc = 0; nc < n; nc++) {
+        if (nc === c || flights[c]![nc]! === 1) {
+          const v = dp[c]! + days[nc]![w]!;
+          if (v > next[nc]!) next[nc] = v;
+        }
+      }
+    }
+    dp = next;
+  }
+  return Math.max(...dp);
+}`,
     python: `def maxVacationDays(flights, days):
-    pass`,
+    if hasattr(flights, 'to_py'): flights = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in flights.to_py()]
+    if hasattr(days, 'to_py'): days = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in days.to_py()]
+    n, K = len(flights), len(days[0])
+    dp = [-float('inf')] * n
+    dp[0] = 0
+    for w in range(K):
+        nxt = [-float('inf')] * n
+        for c in range(n):
+            if dp[c] == -float('inf'): continue
+            for nc in range(n):
+                if nc == c or flights[c][nc] == 1:
+                    v = dp[c] + days[nc][w]
+                    if v > nxt[nc]: nxt[nc] = v
+        dp = nxt
+    return max(dp)`,
   },
   visibleTests: [
     {

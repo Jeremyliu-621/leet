@@ -39,13 +39,37 @@ Return the **maximum** total number of **units** that can be put on the truck.`,
   params: ['boxTypes', 'truckSize'],
   starterCode: {
     javascript: `function maximumUnits(boxTypes, truckSize) {
-
+  boxTypes.sort((a, b) => b[1] - a[1]);
+  let units = 0;
+  for (const [count, unitsPerBox] of boxTypes) {
+    const take = Math.min(count, truckSize);
+    units += take * unitsPerBox;
+    truckSize -= take;
+    if (truckSize === 0) break;
+  }
+  return units;
 }`,
     typescript: `function maximumUnits(boxTypes: number[][], truckSize: number): number {
-
+  boxTypes.sort((a, b) => b[1]! - a[1]!);
+  let units = 0;
+  for (const box of boxTypes) {
+    const take = Math.min(box[0]!, truckSize);
+    units += take * box[1]!;
+    truckSize -= take;
+    if (truckSize === 0) break;
+  }
+  return units;
 }`,
     python: `def maximumUnits(boxTypes, truckSize):
-    pass`,
+    if hasattr(boxTypes, 'to_py'): boxTypes = [[int(x) for x in (b.to_py() if hasattr(b, 'to_py') else b)] for b in boxTypes.to_py()]
+    boxTypes.sort(key=lambda b: -b[1])
+    units = 0
+    for count, upb in boxTypes:
+        take = min(count, truckSize)
+        units += take * upb
+        truckSize -= take
+        if truckSize == 0: break
+    return units`,
   },
   visibleTests: [
     { args: [[[1, 3], [2, 2], [3, 1]], 4], expected: 8 },

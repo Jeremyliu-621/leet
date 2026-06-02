@@ -57,11 +57,37 @@ function maxValue(n, x) {
   params: ['n', 'x'],
   starterCode: {
     javascript: `function maxValue(n, x) {
-
+  const neg = n[0] === '-';
+  const digits = neg ? n.slice(1) : n;
+  let i = 0;
+  while (i < digits.length) {
+    if (neg ? parseInt(digits[i]) > x : parseInt(digits[i]) < x) break;
+    i++;
+  }
+  const inserted = digits.slice(0, i) + x + digits.slice(i);
+  return neg ? '-' + inserted : inserted;
 }`,
-    typescript: 'function maxValue(n: string, x: number): string {\n\n}',
+    typescript: `function maxValue(n: string, x: number): string {
+  const neg = n[0] === '-';
+  const digits = neg ? n.slice(1) : n;
+  let i = 0;
+  while (i < digits.length) {
+    if (neg ? parseInt(digits[i]!) > x : parseInt(digits[i]!) < x) break;
+    i++;
+  }
+  const inserted = digits.slice(0, i) + x + digits.slice(i);
+  return neg ? '-' + inserted : inserted;
+}`,
     python: `def maxValue(n: str, x: int) -> str:
-    pass`,
+    neg = n[0] == '-'
+    digits = n[1:] if neg else n
+    i = 0
+    while i < len(digits):
+        if neg and int(digits[i]) > x: break
+        if not neg and int(digits[i]) < x: break
+        i += 1
+    inserted = digits[:i] + str(x) + digits[i:]
+    return ('-' + inserted) if neg else inserted`,
   },
   visibleTests: [
     { args: ['99', 9], expected: '999' },

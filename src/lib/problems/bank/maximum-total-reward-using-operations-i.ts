@@ -38,12 +38,47 @@ Return an integer denoting the **maximum** total reward you can collect by perfo
   params: ['rewardValues'],
   starterCode: {
     javascript: `function maxTotalReward(rewardValues) {
-
+  const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+  const maxVal = sorted[sorted.length - 1];
+  const dp = new Uint8Array(2 * maxVal).fill(0);
+  dp[0] = 1;
+  for (const v of sorted) {
+    for (let j = Math.min(2 * v - 1, 2 * maxVal - 1); j >= v; j--) {
+      if (dp[j - v]) dp[j] = 1;
+    }
+  }
+  for (let j = 2 * maxVal - 1; j >= 0; j--) {
+    if (dp[j]) return j;
+  }
+  return 0;
 }`,
-    typescript: "function maxTotalReward(rewardValues: number[]): number {\n\n}",
-
+    typescript: `function maxTotalReward(rewardValues: number[]): number {
+  const sorted = [...new Set(rewardValues)].sort((a, b) => a - b);
+  const maxVal = sorted[sorted.length - 1]!;
+  const dp = new Uint8Array(2 * maxVal).fill(0);
+  dp[0] = 1;
+  for (const v of sorted) {
+    for (let j = Math.min(2 * v - 1, 2 * maxVal - 1); j >= v; j--) {
+      if (dp[j - v]!) dp[j] = 1;
+    }
+  }
+  for (let j = 2 * maxVal - 1; j >= 0; j--) {
+    if (dp[j]!) return j;
+  }
+  return 0;
+}`,
     python: `def maxTotalReward(rewardValues):
-    pass`,
+    if hasattr(rewardValues, 'to_py'): rewardValues = list(rewardValues.to_py())
+    sorted_vals = sorted(set(rewardValues))
+    max_val = sorted_vals[-1]
+    dp = [0] * (2 * max_val)
+    dp[0] = 1
+    for v in sorted_vals:
+        for j in range(min(2 * v - 1, 2 * max_val - 1), v - 1, -1):
+            if dp[j - v]: dp[j] = 1
+    for j in range(2 * max_val - 1, -1, -1):
+        if dp[j]: return j
+    return 0`,
   },
   visibleTests: [
     { args: [[1, 1, 3, 3]], expected: 4 },

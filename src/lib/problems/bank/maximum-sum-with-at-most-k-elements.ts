@@ -48,13 +48,36 @@ Return the **maximum possible sum** of the selected elements.`,
   params: ['grid', 'limits', 'k'],
   starterCode: {
     javascript: `function maxSum(grid, limits, k) {
-
+  const candidates = [];
+  for (let i = 0; i < grid.length; i++) {
+    const row = grid[i].slice().sort((a, b) => b - a);
+    for (let j = 0; j < limits[i]; j++) candidates.push(row[j]);
+  }
+  candidates.sort((a, b) => b - a);
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += candidates[i];
+  return sum;
 }`,
     typescript: `function maxSum(grid: number[][], limits: number[], k: number): number {
-
+  const candidates: number[] = [];
+  for (let i = 0; i < grid.length; i++) {
+    const row = grid[i]!.slice().sort((a, b) => b - a);
+    for (let j = 0; j < limits[i]!; j++) candidates.push(row[j]!);
+  }
+  candidates.sort((a, b) => b - a);
+  let sum = 0;
+  for (let i = 0; i < k; i++) sum += candidates[i]!;
+  return sum;
 }`,
     python: `def maxSum(grid, limits, k):
-    pass`,
+    if hasattr(grid, 'to_py'): grid = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in grid.to_py()]
+    if hasattr(limits, 'to_py'): limits = list(limits.to_py())
+    candidates = []
+    for i, row in enumerate(grid):
+        for v in sorted(row, reverse=True)[:limits[i]]:
+            candidates.append(v)
+    candidates.sort(reverse=True)
+    return sum(candidates[:k])`,
   },
   visibleTests: [
     { args: [[[1, 2], [3, 4]], [1, 2], 2], expected: 7 },
