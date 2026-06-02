@@ -42,13 +42,25 @@ Return the shortest distance between the given \`source\` and \`destination\` st
   params: ['distance', 'source', 'destination'],
   starterCode: {
     javascript: `function distanceBetweenBusStops(distance, source, destination) {
-
+  if (source > destination) [source, destination] = [destination, source];
+  let cw = 0;
+  for (let i = source; i < destination; i++) cw += distance[i];
+  const total = distance.reduce((a, b) => a + b, 0);
+  return Math.min(cw, total - cw);
 }`,
     typescript: `function distanceBetweenBusStops(distance: number[], source: number, destination: number): number {
-
+  if (source > destination) [source, destination] = [destination, source];
+  let cw = 0;
+  for (let i = source; i < destination; i++) cw += distance[i]!;
+  const total = distance.reduce((a, b) => a + b, 0);
+  return Math.min(cw, total - cw);
 }`,
     python: `def distanceBetweenBusStops(distance: list[int], source: int, destination: int) -> int:
-    pass`,
+    if source > destination:
+        source, destination = destination, source
+    cw = sum(distance[source:destination])
+    total = sum(distance)
+    return min(cw, total - cw)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4], 0, 1], expected: 1 },
