@@ -3097,6 +3097,9 @@ import { problem as maximumStrongPairsII } from './maximum-strong-pairs-in-an-ar
 import { problem as minimumLinesToCoverPoints } from './minimum-number-of-lines-to-cover-points';
 import { problem as findElementsContaminatedTree } from './find-elements-in-a-contaminated-binary-tree';
 import { problem as makeCostsPathsEqual } from './make-costs-of-paths-equal-in-a-binary-tree';
+import { problem as bestHandOfCards } from './best-hand-of-cards';
+import { problem as countPairsCompleteDay } from './count-pairs-that-form-a-complete-day';
+import { problem as canMakeSubsequenceCyclic } from './make-a-string-a-subsequence-using-cyclic-increments';
 // batch 281
 import { problem as countInterestingSubarrays } from './count-the-number-of-interesting-subarrays';
 import { problem as minimizeDeviationsInArray } from './minimize-deviations-in-array';
@@ -6532,6 +6535,9 @@ export const problems: readonly Problem[] = [
   minimumLinesToCoverPoints,
   findElementsContaminatedTree,
   makeCostsPathsEqual,
+  bestHandOfCards,
+  countPairsCompleteDay,
+  canMakeSubsequenceCyclic,
   // batch 281
   countInterestingSubarrays,
   minimizeDeviationsInArray,
