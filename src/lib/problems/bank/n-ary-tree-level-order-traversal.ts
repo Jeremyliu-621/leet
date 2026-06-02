@@ -93,10 +93,50 @@ Return a list of lists, where each inner list contains the values of nodes at th
   params: ['root'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// Node class and levelOrderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction levelOrder(root) {\n  // your code here\n}\n',
-    typescript: "function levelOrderRunner(root: (number | null)[]): number[][] {\n  // your code here\n}",
-
-    python: '# Node class and levelOrderRunner wrapper are pre-defined.\n# Implement the function below:\ndef levelOrder(root):\n    # your code here\n    pass\n',
+    javascript: `// Node class and levelOrderRunner wrapper are pre-defined.
+// Implement the function below:
+function levelOrder(root) {
+  if (!root) return [];
+  const result = [], queue = [root];
+  while (queue.length) {
+    const size = queue.length, level = [];
+    for (let i = 0; i < size; i++) {
+      const nd = queue.shift();
+      level.push(nd.val);
+      for (const child of nd.children) queue.push(child);
+    }
+    result.push(level);
+  }
+  return result;
+}`,
+    typescript: `function levelOrderRunner(root: (number | null)[]): number[][] {
+  if (!root.length) return [];
+  type N = { v: number; children: N[] };
+  const mk = (v: number): N => ({v, children: []});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 2;
+  while (i < root.length && q.length) {
+    const nd = q.shift()!;
+    while (i < root.length && root[i] != null) { const c = mk(root[i] as number); nd.children.push(c); q.push(c); i++; }
+    i++;
+  }
+  const result: number[][] = [], bq: N[] = [r];
+  while (bq.length) {
+    const size = bq.length, level: number[] = [];
+    for (let j = 0; j < size; j++) { const nd = bq.shift()!; level.push(nd.v); for (const c of nd.children) bq.push(c); }
+    result.push(level);
+  }
+  return result;
+}`,
+    python: `# Node class and levelOrderRunner wrapper are pre-defined.
+# Implement the function below:
+def levelOrder(root):
+    if root is None: return []
+    result = []; queue = [root]
+    while queue:
+        result.append([nd.val for nd in queue])
+        queue = [child for nd in queue for child in nd.children]
+    return result`,
   },
   hints: [
     'Use a queue (BFS). Start with the root in the queue. For each level, process all nodes currently in the queue, collect their values, and enqueue their children.',

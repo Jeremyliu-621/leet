@@ -46,14 +46,54 @@ Return the **maximum number of components** in any valid split.`,
   params: ['n', 'edges', 'values', 'k'],
   starterCode: {
     javascript: `function maxKDivisibleComponents(n, edges, values, k) {
-  // your code here
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); }
+  let count = 0;
+  function dfs(node, parent) {
+    let sum = values[node] % k;
+    for (const child of adj[node]) {
+      if (child !== parent) sum = (sum + dfs(child, node)) % k;
+    }
+    if (sum === 0) { count++; return 0; }
+    return sum;
+  }
+  dfs(0, -1);
+  return count;
 }`,
     typescript: `function maxKDivisibleComponents(n: number, edges: number[][], values: number[], k: number): number {
-  // your code here
+  const adj: number[][] = Array.from({length: n}, () => []);
+  for (const e of edges) { adj[e[0]!]!.push(e[1]!); adj[e[1]!]!.push(e[0]!); }
+  let count = 0;
+  function dfs(node: number, parent: number): number {
+    let sum = values[node]! % k;
+    for (const child of adj[node]!) {
+      if (child !== parent) sum = (sum + dfs(child, node)) % k;
+    }
+    if (sum === 0) { count++; return 0; }
+    return sum;
+  }
+  dfs(0, -1);
+  return count;
 }`,
     python: `def maxKDivisibleComponents(n, edges, values, k):
-    # your code here
-    pass`,
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(edges, 'to_py'): edges = edges.to_py()
+    if hasattr(values, 'to_py'): values = values.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    n = int(n); k = int(k)
+    edges = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges]
+    values = [int(x) for x in values]
+    adj = [[] for _ in range(n)]
+    for u, v in edges: adj[u].append(v); adj[v].append(u)
+    count = [0]
+    def dfs(node, parent):
+        s = values[node] % k
+        for child in adj[node]:
+            if child != parent: s = (s + dfs(child, node)) % k
+        if s == 0: count[0] += 1; return 0
+        return s
+    dfs(0, -1)
+    return count[0]`,
   },
   visibleTests: [
     { args: [5, [[0,1],[1,2],[1,3],[3,4]], [1,3,1,1,2], 3], expected: 1 },

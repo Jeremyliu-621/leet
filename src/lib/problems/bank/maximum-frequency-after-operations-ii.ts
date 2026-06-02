@@ -46,14 +46,65 @@ Return the **maximum possible frequency** of any element value in \`nums\` after
   params: ['nums', 'k', 'numOperations'],
   starterCode: {
     javascript: `function maxFrequencyII(nums, k, numOperations) {
-  // your code here
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  function bisectLeft(t) {
+    let lo = 0, hi = n;
+    while (lo < hi) { const mid = (lo+hi)>>1; if (nums[mid] < t) lo = mid+1; else hi = mid; }
+    return lo;
+  }
+  function bisectRight(t) {
+    let lo = 0, hi = n;
+    while (lo < hi) { const mid = (lo+hi)>>1; if (nums[mid] <= t) lo = mid+1; else hi = mid; }
+    return lo;
+  }
+  const candidates = new Set();
+  for (const v of nums) { candidates.add(v); candidates.add(v + k); candidates.add(v - k); }
+  let ans = 0;
+  for (const t of candidates) {
+    const eq = bisectRight(t) - bisectLeft(t);
+    const reach = bisectRight(t + k) - bisectLeft(t - k) - eq;
+    ans = Math.max(ans, eq + Math.min(reach, numOperations));
+  }
+  return ans;
 }`,
     typescript: `function maxFrequencyII(nums: number[], k: number, numOperations: number): number {
-  // your code here
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+  function bisectLeft(t: number): number {
+    let lo = 0, hi = n;
+    while (lo < hi) { const mid = (lo+hi)>>1; if (nums[mid]! < t) lo = mid+1; else hi = mid; }
+    return lo;
+  }
+  function bisectRight(t: number): number {
+    let lo = 0, hi = n;
+    while (lo < hi) { const mid = (lo+hi)>>1; if (nums[mid]! <= t) lo = mid+1; else hi = mid; }
+    return lo;
+  }
+  const candidates = new Set<number>();
+  for (const v of nums) { candidates.add(v); candidates.add(v + k); candidates.add(v - k); }
+  let ans = 0;
+  for (const t of candidates) {
+    const eq = bisectRight(t) - bisectLeft(t);
+    const reach = bisectRight(t + k) - bisectLeft(t - k) - eq;
+    ans = Math.max(ans, eq + Math.min(reach, numOperations));
+  }
+  return ans;
 }`,
     python: `def maxFrequencyII(nums, k, numOperations):
-    # your code here
-    pass`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    if hasattr(numOperations, 'to_py'): numOperations = numOperations.to_py()
+    nums = sorted(int(x) for x in nums); k = int(k); numOperations = int(numOperations)
+    import bisect
+    candidates = set()
+    for v in nums: candidates.add(v); candidates.add(v+k); candidates.add(v-k)
+    ans = 0
+    for t in candidates:
+        eq = bisect.bisect_right(nums, t) - bisect.bisect_left(nums, t)
+        reach = bisect.bisect_right(nums, t+k) - bisect.bisect_left(nums, t-k) - eq
+        ans = max(ans, eq + min(reach, numOperations))
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 4, 5], 1, 2], expected: 2 },

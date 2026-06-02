@@ -41,9 +41,47 @@ Return the **maximum** total points you can earn over all \`n\` days.`,
   functionName: 'maxPoints',
   params: ['stayScore', 'travelScore'],
   starterCode: {
-    javascript: 'function maxPoints(stayScore, travelScore) {\n  // your code here\n}\n',
-    typescript: 'function maxPoints(stayScore: number[][], travelScore: number[][]): number {\n  // your code here\n}\n',
-    python: 'def maxPoints(stayScore, travelScore):\n    # your code here\n    pass\n',
+    javascript: `function maxPoints(stayScore, travelScore) {
+  const n = stayScore.length, m = travelScore.length;
+  let dp = new Array(m).fill(0);
+  for (let day = 0; day < n; day++) {
+    const ndp = new Array(m).fill(0);
+    for (let c = 0; c < m; c++) {
+      ndp[c] = dp[c] + stayScore[day][c];
+      for (let c2 = 0; c2 < m; c2++) if (c2 !== c) ndp[c] = Math.max(ndp[c], dp[c2] + travelScore[c2][c]);
+    }
+    dp = ndp;
+  }
+  return Math.max(...dp);
+}`,
+    typescript: `function maxPoints(stayScore: number[][], travelScore: number[][]): number {
+  const n = stayScore.length, m = travelScore.length;
+  let dp = new Array(m).fill(0) as number[];
+  for (let day = 0; day < n; day++) {
+    const ndp = new Array(m).fill(0) as number[];
+    for (let c = 0; c < m; c++) {
+      ndp[c] = dp[c]! + stayScore[day]![c]!;
+      for (let c2 = 0; c2 < m; c2++) if (c2 !== c) ndp[c] = Math.max(ndp[c]!, dp[c2]! + travelScore[c2]![c]!);
+    }
+    dp = ndp;
+  }
+  return Math.max(...dp);
+}`,
+    python: `def maxPoints(stayScore, travelScore):
+    if hasattr(stayScore, 'to_py'): stayScore = stayScore.to_py()
+    if hasattr(travelScore, 'to_py'): travelScore = travelScore.to_py()
+    stayScore = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in stayScore]
+    travelScore = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in travelScore]
+    n, m = len(stayScore), len(travelScore)
+    dp = [0] * m
+    for day in range(n):
+        ndp = [0] * m
+        for c in range(m):
+            ndp[c] = dp[c] + stayScore[day][c]
+            for c2 in range(m):
+                if c2 != c: ndp[c] = max(ndp[c], dp[c2] + travelScore[c2][c])
+        dp = ndp
+    return max(dp)`,
   },
   visibleTests: [
     {

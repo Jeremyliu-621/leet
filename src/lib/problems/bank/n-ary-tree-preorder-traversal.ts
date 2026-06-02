@@ -93,10 +93,45 @@ The tree is serialized as a flat array in level-order format where groups of chi
   params: ['root'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// Node class and preorderRunner wrapper are pre-defined.\n// Implement the function below:\nfunction preorder(root) {\n  // your code here\n}\n',
-    typescript: "function preorderRunner(root: (number | null)[]): number[] {\n  // your code here\n}",
-
-    python: '# Node class and preorderRunner wrapper are pre-defined.\n# Implement the function below:\ndef preorder(root):\n    # your code here\n    pass\n',
+    javascript: `// Node class and preorderRunner wrapper are pre-defined.
+// Implement the function below:
+function preorder(root) {
+  if (!root) return [];
+  const result = [], stack = [root];
+  while (stack.length) {
+    const nd = stack.pop();
+    result.push(nd.val);
+    for (let i = nd.children.length - 1; i >= 0; i--) stack.push(nd.children[i]);
+  }
+  return result;
+}`,
+    typescript: `function preorderRunner(root: (number | null)[]): number[] {
+  if (!root.length) return [];
+  type N = { v: number; children: N[] };
+  const mk = (v: number): N => ({v, children: []});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 2;
+  while (i < root.length && q.length) {
+    const nd = q.shift()!;
+    while (i < root.length && root[i] != null) { const c = mk(root[i] as number); nd.children.push(c); q.push(c); i++; }
+    i++;
+  }
+  const result: number[] = [], stk: N[] = [r];
+  while (stk.length) {
+    const nd = stk.pop()!; result.push(nd.v);
+    for (let j = nd.children.length - 1; j >= 0; j--) stk.push(nd.children[j]!);
+  }
+  return result;
+}`,
+    python: `# Node class and preorderRunner wrapper are pre-defined.
+# Implement the function below:
+def preorder(root):
+    if root is None: return []
+    result = []; stack = [root]
+    while stack:
+        nd = stack.pop(); result.append(nd.val)
+        for child in reversed(nd.children): stack.append(child)
+    return result`,
   },
   hints: [
     'Recursion is the simplest approach: append the current node\'s value, then recursively call preorder on each child.',

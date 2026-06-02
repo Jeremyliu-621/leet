@@ -42,9 +42,67 @@ A **palindrome** is a string that reads the same forward and backward.`,
   functionName: 'maxProduct',
   params: ['s'],
   starterCode: {
-    javascript: 'function maxProduct(s) {\n  // your code here\n}\n',
-    typescript: 'function maxProduct(s: string): number {\n  // your code here\n}\n',
-    python: 'def maxProduct(s):\n    # your code here\n    pass\n',
+    javascript: `function maxProduct(s) {
+  const n = s.length, total = 1 << n;
+  function popcount(x) { let c = 0; while (x) { c += x & 1; x >>= 1; } return c; }
+  function isPalin(mask) {
+    const chars = [];
+    for (let i = 0; i < n; i++) if (mask >> i & 1) chars.push(s[i]);
+    for (let l = 0, r = chars.length - 1; l < r; l++, r--) if (chars[l] !== chars[r]) return false;
+    return true;
+  }
+  const plen = new Array(total).fill(0);
+  for (let mask = 1; mask < total; mask++) if (isPalin(mask)) plen[mask] = popcount(mask);
+  let ans = 0;
+  const all = total - 1;
+  for (let mask1 = 1; mask1 < total; mask1++) {
+    if (!plen[mask1]) continue;
+    const comp = all & ~mask1;
+    for (let mask2 = comp; mask2 > 0; mask2 = (mask2 - 1) & comp) {
+      if (plen[mask2]) ans = Math.max(ans, plen[mask1] * plen[mask2]);
+    }
+  }
+  return ans;
+}`,
+    typescript: `function maxProduct(s: string): number {
+  const n = s.length, total = 1 << n;
+  function popcount(x: number): number { let c = 0; while (x) { c += x & 1; x >>= 1; } return c; }
+  function isPalin(mask: number): boolean {
+    const chars: string[] = [];
+    for (let i = 0; i < n; i++) if (mask >> i & 1) chars.push(s[i]!);
+    for (let l = 0, r = chars.length - 1; l < r; l++, r--) if (chars[l] !== chars[r]) return false;
+    return true;
+  }
+  const plen = new Array(total).fill(0) as number[];
+  for (let mask = 1; mask < total; mask++) if (isPalin(mask)) plen[mask] = popcount(mask);
+  let ans = 0;
+  const all = total - 1;
+  for (let mask1 = 1; mask1 < total; mask1++) {
+    if (!plen[mask1]) continue;
+    const comp = all & ~mask1;
+    for (let mask2 = comp; mask2 > 0; mask2 = (mask2 - 1) & comp) {
+      if (plen[mask2]) ans = Math.max(ans, plen[mask1]! * plen[mask2]!);
+    }
+  }
+  return ans;
+}`,
+    python: `def maxProduct(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s); n = len(s); total = 1 << n
+    def is_palin(mask):
+        chars = [s[i] for i in range(n) if mask >> i & 1]
+        return chars == chars[::-1]
+    plen = [0] * total
+    for mask in range(1, total):
+        if is_palin(mask): plen[mask] = bin(mask).count('1')
+    ans = 0; full = total - 1
+    for mask1 in range(1, total):
+        if not plen[mask1]: continue
+        comp = full & ~mask1; mask2 = comp
+        while mask2 > 0:
+            if plen[mask2]: ans = max(ans, plen[mask1] * plen[mask2])
+            mask2 = (mask2 - 1) & comp
+    return ans`,
   },
   visibleTests: [
     {

@@ -45,10 +45,37 @@ Output: [9,9,9]
   functionName: 'maximumSumQueries',
   params: ['nums1', 'nums2', 'queries'],
   starterCode: {
-    javascript: 'function maximumSumQueries(nums1, nums2, queries) {\n  // your code here\n}\n',
-    typescript: "function maximumSumQueries(nums1: number[], nums2: number[], queries: number[][]): number[] {\n  // your code here\n}",
-
-    python: 'def maximumSumQueries(nums1, nums2, queries):\n    pass\n',
+    javascript: `function maximumSumQueries(nums1, nums2, queries) {
+  const n = nums1.length;
+  return queries.map(([x, y]) => {
+    let best = -1;
+    for (let j = 0; j < n; j++) if (nums1[j] >= x && nums2[j] >= y) best = Math.max(best, nums1[j] + nums2[j]);
+    return best;
+  });
+}`,
+    typescript: `function maximumSumQueries(nums1: number[], nums2: number[], queries: number[][]): number[] {
+  const n = nums1.length;
+  return queries.map(q => {
+    const [x, y] = q as [number, number];
+    let best = -1;
+    for (let j = 0; j < n; j++) if (nums1[j]! >= x && nums2[j]! >= y) best = Math.max(best, nums1[j]! + nums2[j]!);
+    return best;
+  });
+}`,
+    python: `def maximumSumQueries(nums1, nums2, queries):
+    if hasattr(nums1, 'to_py'): nums1 = nums1.to_py()
+    if hasattr(nums2, 'to_py'): nums2 = nums2.to_py()
+    if hasattr(queries, 'to_py'): queries = queries.to_py()
+    nums1 = [int(x) for x in nums1]; nums2 = [int(x) for x in nums2]
+    queries = [[int(v) for v in (q.to_py() if hasattr(q,'to_py') else q)] for q in queries]
+    n = len(nums1)
+    result = []
+    for x, y in queries:
+        best = -1
+        for j in range(n):
+            if nums1[j] >= x and nums2[j] >= y: best = max(best, nums1[j] + nums2[j])
+        result.append(best)
+    return result`,
   },
   visibleTests: [
     { args: [[4, 3, 1, 2], [2, 4, 9, 5], [[4, 1], [1, 3], [2, 5]]], expected: [6, 10, 7] },
