@@ -40,12 +40,17 @@ Return \`true\` if you can make the array contain only \`1\`, otherwise return \
   params: ['nums'],
   starterCode: {
     javascript: `function isGoodArray(nums) {
-
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  return nums.reduce(gcd) === 1;
 }`,
-    typescript: "function isGoodArray(nums: number[]): boolean {\n\n}",
-
+    typescript: `function isGoodArray(nums: number[]): boolean {
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  return nums.reduce(gcd) === 1;
+}`,
     python: `def isGoodArray(nums):
-    pass`,
+    from math import gcd
+    from functools import reduce
+    return reduce(gcd, nums) == 1`,
   },
   visibleTests: [
     { args: [[12, 5, 7, 23]], expected: true },

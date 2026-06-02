@@ -37,13 +37,28 @@ Return \`true\` if the two remaining digits are **equal**, or \`false\` otherwis
   params: ['s'],
   starterCode: {
     javascript: `function hasSameDigits(s) {
-
+  let arr = s.split('').map(Number);
+  while (arr.length > 2) {
+    const next = [];
+    for (let i = 0; i < arr.length - 1; i++) next.push((arr[i] + arr[i + 1]) % 10);
+    arr = next;
+  }
+  return arr[0] === arr[1];
 }`,
     typescript: `function hasSameDigits(s: string): boolean {
-
+  let arr = s.split('').map(Number);
+  while (arr.length > 2) {
+    const next: number[] = [];
+    for (let i = 0; i < arr.length - 1; i++) next.push((arr[i]! + arr[i + 1]!) % 10);
+    arr = next;
+  }
+  return arr[0] === arr[1];
 }`,
     python: `def hasSameDigits(s):
-    pass`,
+    arr = list(map(int, s))
+    while len(arr) > 2:
+        arr = [(arr[i] + arr[i+1]) % 10 for i in range(len(arr)-1)]
+    return arr[0] == arr[1]`,
   },
   visibleTests: [
     { args: ['3902'], expected: true },

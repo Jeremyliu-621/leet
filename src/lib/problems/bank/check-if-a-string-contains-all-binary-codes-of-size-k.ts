@@ -37,11 +37,25 @@ export const problem: Problem = {
   params: ['s', 'k'],
   starterCode: {
     javascript: `function hasAllCodes(s, k) {
-
+  const needed = 1 << k;
+  if (s.length < needed) return false;
+  const seen = new Set();
+  for (let i = 0; i <= s.length - k; i++) seen.add(s.slice(i, i + k));
+  return seen.size === needed;
 }`,
-    typescript: 'function hasAllCodes(s: string, k: number): boolean {\n\n}',
+    typescript: `function hasAllCodes(s: string, k: number): boolean {
+  const needed = 1 << k;
+  if (s.length < needed) return false;
+  const seen = new Set<string>();
+  for (let i = 0; i <= s.length - k; i++) seen.add(s.slice(i, i + k));
+  return seen.size === needed;
+}`,
     python: `def hasAllCodes(s, k):
-    pass`,
+    needed = 1 << k
+    if len(s) < needed:
+        return False
+    seen = {s[i:i+k] for i in range(len(s) - k + 1)}
+    return len(seen) == needed`,
   },
   visibleTests: [
     { args: ['00110110', 2], expected: true },

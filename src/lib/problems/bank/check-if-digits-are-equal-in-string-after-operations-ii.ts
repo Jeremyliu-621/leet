@@ -36,13 +36,56 @@ Return \`true\` if the two remaining digits are **equal**, or \`false\` otherwis
   params: ['s'],
   starterCode: {
     javascript: `function hasSameDigits(s) {
-
+  const n = s.length, m = n - 2;
+  const digits = Array.from(s, c => Number(c));
+  // C(a,b) mod 5 for 0<=a,b<=4
+  const C5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]];
+  const mod2 = (n, k) => (k & n) === k ? 1 : 0;
+  const mod5 = (n, k) => k === 0 ? 1 : (C5[n%5][k%5] * mod5(Math.floor(n/5), Math.floor(k/5))) % 5;
+  const cMod10 = (n, k) => k > n ? 0 : (5 * mod2(n, k) + 6 * mod5(n, k)) % 10;
+  let d0 = 0, d1 = 0;
+  for (let i = 0; i <= m; i++) {
+    const c = cMod10(m, i);
+    d0 = (d0 + c * digits[i]) % 10;
+    d1 = (d1 + c * digits[i + 1]) % 10;
+  }
+  return d0 === d1;
 }`,
     typescript: `function hasSameDigits(s: string): boolean {
-
+  const n = s.length, m = n - 2;
+  const digits = Array.from(s, c => Number(c));
+  const C5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]];
+  const mod2 = (n: number, k: number): number => (k & n) === k ? 1 : 0;
+  const mod5 = (n: number, k: number): number =>
+    k === 0 ? 1 : (C5[n % 5]![k % 5]! * mod5(Math.floor(n / 5), Math.floor(k / 5))) % 5;
+  const cMod10 = (n: number, k: number): number =>
+    k > n ? 0 : (5 * mod2(n, k) + 6 * mod5(n, k)) % 10;
+  let d0 = 0, d1 = 0;
+  for (let i = 0; i <= m; i++) {
+    const c = cMod10(m, i);
+    d0 = (d0 + c * digits[i]!) % 10;
+    d1 = (d1 + c * digits[i + 1]!) % 10;
+  }
+  return d0 === d1;
 }`,
     python: `def hasSameDigits(s):
-    pass`,
+    n = len(s)
+    m = n - 2
+    digits = list(map(int, s))
+    C5 = [[1,0,0,0,0],[1,1,0,0,0],[1,2,1,0,0],[1,3,3,1,0],[1,4,1,4,1]]
+    def mod2(n, k): return 1 if (k & n) == k else 0
+    def mod5(n, k):
+        if k == 0: return 1
+        return (C5[n%5][k%5] * mod5(n//5, k//5)) % 5
+    def c_mod10(n, k):
+        if k > n: return 0
+        return (5 * mod2(n, k) + 6 * mod5(n, k)) % 10
+    d0 = d1 = 0
+    for i in range(m + 1):
+        c = c_mod10(m, i)
+        d0 = (d0 + c * digits[i]) % 10
+        d1 = (d1 + c * digits[i+1]) % 10
+    return d0 == d1`,
   },
   visibleTests: [
     { args: ['3902'], expected: true },

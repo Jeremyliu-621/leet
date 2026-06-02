@@ -41,13 +41,34 @@ Return \`true\` if the grid satisfies all the conditions. Otherwise, return \`fa
   params: ['grid'],
   starterCode: {
     javascript: `function satisfiesConditions(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i + 1 < m && grid[i][j] !== grid[i + 1][j]) return false;
+      if (j + 1 < n && grid[i][j] === grid[i][j + 1]) return false;
+    }
+  }
+  return true;
 }`,
     typescript: `function satisfiesConditions(grid: number[][]): boolean {
-
+  const m = grid.length, n = grid[0]!.length;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i + 1 < m && grid[i]![j] !== grid[i + 1]![j]) return false;
+      if (j + 1 < n && grid[i]![j] === grid[i]![j + 1]) return false;
+    }
+  }
+  return true;
 }`,
     python: `def satisfiesConditions(grid):
-    pass`,
+    m, n = len(grid), len(grid[0])
+    for i in range(m):
+        for j in range(n):
+            if i + 1 < m and grid[i][j] != grid[i+1][j]:
+                return False
+            if j + 1 < n and grid[i][j] == grid[i][j+1]:
+                return False
+    return True`,
   },
   visibleTests: [
     { args: [[[1, 0, 2], [1, 0, 2]]], expected: true },
