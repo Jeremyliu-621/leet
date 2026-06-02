@@ -40,11 +40,30 @@ Return an integer array denoting the **final state** of \`nums\` after performin
   params: ['nums', 'k', 'multiplier'],
   starterCode: {
     javascript: `function getFinalState(nums, k, multiplier) {
-
+  for (let op = 0; op < k; op++) {
+    let minIdx = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i] < nums[minIdx]) minIdx = i;
+    }
+    nums[minIdx] *= multiplier;
+  }
+  return nums;
 }`,
-    typescript: 'function getFinalState(nums: number[], k: number, multiplier: number): number[] {\n\n}',
+    typescript: `function getFinalState(nums: number[], k: number, multiplier: number): number[] {
+  for (let op = 0; op < k; op++) {
+    let minIdx = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! < nums[minIdx]!) minIdx = i;
+    }
+    nums[minIdx]! *= multiplier;
+  }
+  return nums;
+}`,
     python: `def getFinalState(nums, k, multiplier):
-    pass`,
+    for _ in range(k):
+        min_idx = nums.index(min(nums))
+        nums[min_idx] *= multiplier
+    return nums`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 5, 6], 5, 2], expected: [8, 4, 6, 5, 6] },

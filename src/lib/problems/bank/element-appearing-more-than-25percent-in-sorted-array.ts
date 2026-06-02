@@ -30,13 +30,28 @@ export const problem: Problem = {
   params: ['arr'],
   starterCode: {
     javascript: `function findSpecialInteger(arr) {
-
+  const n = arr.length;
+  const quarter = Math.floor(n / 4);
+  for (let i = 0; i + quarter < n; i++) {
+    if (arr[i] === arr[i + quarter]) return arr[i];
+  }
+  return arr[0];
 }`,
     typescript: `function findSpecialInteger(arr: number[]): number {
-
+  const n = arr.length;
+  const quarter = Math.floor(n / 4);
+  for (let i = 0; i + quarter < n; i++) {
+    if (arr[i] === arr[i + quarter]) return arr[i]!;
+  }
+  return arr[0]!;
 }`,
     python: `def findSpecialInteger(arr):
-    pass`,
+    n = len(arr)
+    quarter = n // 4
+    for i in range(n - quarter):
+        if arr[i] == arr[i + quarter]:
+            return arr[i]
+    return arr[0]`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 6, 6, 6, 6, 7, 10]], expected: 6 },

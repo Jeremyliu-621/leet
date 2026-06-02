@@ -36,12 +36,48 @@ Return the final string that will be present on your laptop screen.`,
   params: ['s'],
   starterCode: {
     javascript: `function finalString(s) {
-
+  const res = [];
+  let reversed = false;
+  for (const c of s) {
+    if (c === 'i') {
+      reversed = !reversed;
+    } else if (reversed) {
+      res.unshift(c);
+    } else {
+      res.push(c);
+    }
+  }
+  if (reversed) res.reverse();
+  return res.join('');
 }`,
-    typescript: "function finalString(s: string): string {\n\n}",
-
+    typescript: `function finalString(s: string): string {
+  const res: string[] = [];
+  let reversed = false;
+  for (const c of s) {
+    if (c === 'i') {
+      reversed = !reversed;
+    } else if (reversed) {
+      res.unshift(c);
+    } else {
+      res.push(c);
+    }
+  }
+  if (reversed) res.reverse();
+  return res.join('');
+}`,
     python: `def finalString(s):
-    pass`,
+    res = []
+    reversed_flag = False
+    for c in s:
+        if c == 'i':
+            reversed_flag = not reversed_flag
+        elif reversed_flag:
+            res.insert(0, c)
+        else:
+            res.append(c)
+    if reversed_flag:
+        res.reverse()
+    return ''.join(res)`,
   },
   visibleTests: [
     { args: ['string'], expected: 'rtsng' },

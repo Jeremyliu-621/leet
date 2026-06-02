@@ -43,12 +43,27 @@ function differenceOfSums(n, m) {
   params: ['n', 'm'],
   starterCode: {
     javascript: `function differenceOfSums(n, m) {
-
+  let num1 = 0, num2 = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i % m !== 0) num1 += i; else num2 += i;
+  }
+  return num1 - num2;
 }`,
-    typescript: "function differenceOfSums(n: number, m: number): number {\n\n}",
-
+    typescript: `function differenceOfSums(n: number, m: number): number {
+  let num1 = 0, num2 = 0;
+  for (let i = 1; i <= n; i++) {
+    if (i % m !== 0) num1 += i; else num2 += i;
+  }
+  return num1 - num2;
+}`,
     python: `def differenceOfSums(n, m):
-    pass`,
+    num1, num2 = 0, 0
+    for i in range(1, n + 1):
+        if i % m != 0:
+            num1 += i
+        else:
+            num2 += i
+    return num1 - num2`,
   },
   visibleTests: [
     { args: [10, 3], expected: 19 },

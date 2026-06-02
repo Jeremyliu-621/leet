@@ -40,13 +40,33 @@ Since they are friends, they would like to exchange one candy box each so that a
   params: ['aliceSizes', 'bobSizes'],
   starterCode: {
     javascript: `function fairCandySwap(aliceSizes, bobSizes) {
-
+  const sumA = aliceSizes.reduce((a, b) => a + b, 0);
+  const sumB = bobSizes.reduce((a, b) => a + b, 0);
+  const diff = (sumB - sumA) / 2;
+  const bobSet = new Set(bobSizes);
+  for (const a of aliceSizes) {
+    if (bobSet.has(a + diff)) return [a, a + diff];
+  }
+  return [];
 }`,
     typescript: `function fairCandySwap(aliceSizes: number[], bobSizes: number[]): number[] {
-
+  const sumA = aliceSizes.reduce((a, b) => a + b, 0);
+  const sumB = bobSizes.reduce((a, b) => a + b, 0);
+  const diff = (sumB - sumA) / 2;
+  const bobSet = new Set(bobSizes);
+  for (const a of aliceSizes) {
+    if (bobSet.has(a + diff)) return [a, a + diff];
+  }
+  return [];
 }`,
     python: `def fairCandySwap(aliceSizes: list[int], bobSizes: list[int]) -> list[int]:
-    pass`,
+    sum_a, sum_b = sum(aliceSizes), sum(bobSizes)
+    diff = (sum_b - sum_a) // 2
+    bob_set = set(bobSizes)
+    for a in aliceSizes:
+        if a + diff in bob_set:
+            return [a, a + diff]
+    return []`,
   },
   visibleTests: [
     { args: [[1, 1], [2, 2]], expected: [1, 2] },

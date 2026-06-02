@@ -42,13 +42,16 @@ Return the **minimum** possible sum of the cost of these subarrays.`,
   params: ['nums'],
   starterCode: {
     javascript: `function minimumCost(nums) {
-
+  const rest = nums.slice(1).sort((a, b) => a - b);
+  return nums[0] + rest[0] + rest[1];
 }`,
     typescript: `function minimumCost(nums: number[]): number {
-
+  const rest = nums.slice(1).sort((a, b) => a - b);
+  return nums[0] + rest[0]! + rest[1]!;
 }`,
     python: `def minimumCost(nums: list[int]) -> int:
-    pass`,
+    rest = sorted(nums[1:])
+    return nums[0] + rest[0] + rest[1]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 12, 5]], expected: 6 },

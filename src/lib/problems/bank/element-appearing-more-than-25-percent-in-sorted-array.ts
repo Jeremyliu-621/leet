@@ -47,11 +47,32 @@ function findSpecialInteger(arr) {
   params: ['arr'],
   starterCode: {
     javascript: `function findSpecialInteger(arr) {
-
+  const n = arr.length;
+  const quarter = Math.floor(n / 4);
+  for (const cand of [arr[quarter], arr[2 * quarter], arr[3 * quarter]]) {
+    let count = 0;
+    for (const x of arr) if (x === cand) count++;
+    if (count > quarter) return cand;
+  }
+  return arr[0];
 }`,
-    typescript: 'function findSpecialInteger(arr: number[]): number {\n\n}',
+    typescript: `function findSpecialInteger(arr: number[]): number {
+  const n = arr.length;
+  const quarter = Math.floor(n / 4);
+  for (const cand of [arr[quarter]!, arr[2 * quarter]!, arr[3 * quarter]!]) {
+    let count = 0;
+    for (const x of arr) if (x === cand) count++;
+    if (count > quarter) return cand;
+  }
+  return arr[0]!;
+}`,
     python: `def findSpecialInteger(arr):
-    pass`,
+    n = len(arr)
+    quarter = n // 4
+    for cand in [arr[quarter], arr[2 * quarter], arr[3 * quarter]]:
+        if arr.count(cand) > quarter:
+            return cand
+    return arr[0]`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 6, 6, 6, 6, 7, 10]], expected: 6 },

@@ -43,12 +43,24 @@ AB -> 28
   params: ['columnTitle'],
   starterCode: {
     javascript: `function titleToNumber(columnTitle) {
-
+  let result = 0;
+  for (const c of columnTitle) {
+    result = result * 26 + (c.charCodeAt(0) - 64);
+  }
+  return result;
 }`,
-    typescript: "function titleToNumber(columnTitle: string): number {\n\n}",
-
+    typescript: `function titleToNumber(columnTitle: string): number {
+  let result = 0;
+  for (const c of columnTitle) {
+    result = result * 26 + (c.charCodeAt(0) - 64);
+  }
+  return result;
+}`,
     python: `def titleToNumber(columnTitle):
-    pass`,
+    result = 0
+    for c in columnTitle:
+        result = result * 26 + (ord(c) - 64)
+    return result`,
   },
   visibleTests: [
     { args: ['A'], expected: 1 },
