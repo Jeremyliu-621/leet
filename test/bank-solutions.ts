@@ -50418,6 +50418,124 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 291
+  'sum-of-remoteness-of-all-cells': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    const dirs: [number, number][] = [[0,1],[0,-1],[1,0],[-1,0]];
+    const visited = Array.from({length: n}, () => new Array(n).fill(false));
+    const total = grid.flat().filter(v => v !== -1).reduce((a, b) => a + b, 0);
+    let ans = 0;
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
+        if (grid[r]![c] === -1 || visited[r]![c]) continue;
+        const queue: [number, number][] = [[r, c]];
+        visited[r]![c] = true;
+        let cellCount = 0;
+        let compSum = 0;
+        while (queue.length) {
+          const [cr, cc] = queue.shift()!;
+          cellCount++;
+          compSum += grid[cr]![cc]!;
+          for (const [dr, dc] of dirs) {
+            const nr = cr + dr, nc = cc + dc;
+            if (nr >= 0 && nr < n && nc >= 0 && nc < n && !visited[nr]![nc] && grid[nr]![nc] !== -1) {
+              visited[nr]![nc] = true;
+              queue.push([nr, nc]);
+            }
+          }
+        }
+        ans += cellCount * (total - compSum);
+      }
+    }
+    return ans;
+  },
+
+  'minimum-edge-weight-equilibrium-queries-in-a-tree': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const queries = args[2] as number[][];
+    const adj: [number, number][][] = Array.from({length: n}, () => []);
+    for (const edge of edges) { const [u, v, w] = edge as [number, number, number]; adj[u]!.push([v, w]); adj[v]!.push([u, w]); }
+    const LOG = Math.ceil(Math.log2(n + 2)) + 1;
+    const depth = new Array<number>(n).fill(0);
+    const up = Array.from({length: n}, () => new Array<number>(LOG).fill(0));
+    const cnt = Array.from({length: n}, () => new Array<number>(27).fill(0));
+    const visited = new Array<boolean>(n).fill(false);
+    const queue: number[] = [0]; visited[0] = true;
+    while (queue.length) {
+      const u = queue.shift()!;
+      for (const [v, w] of adj[u]!) {
+        if (!visited[v]) {
+          visited[v] = true;
+          depth[v] = depth[u]! + 1;
+          for (let x = 1; x <= 26; x++) cnt[v]![x] = cnt[u]![x]!;
+          cnt[v]![w]!++;
+          up[v]![0] = u;
+          queue.push(v);
+        }
+      }
+    }
+    for (let k = 1; k < LOG; k++) for (let v = 0; v < n; v++) up[v]![k] = up[up[v]![k-1]!]![k-1]!;
+    const lca = (u: number, v: number): number => {
+      if (depth[u]! < depth[v]!) [u, v] = [v, u];
+      let diff = depth[u]! - depth[v]!;
+      for (let k = 0; k < LOG; k++) if ((diff >> k) & 1) u = up[u]![k]!;
+      if (u === v) return u;
+      for (let k = LOG - 1; k >= 0; k--) if (up[u]![k] !== up[v]![k]) { u = up[u]![k]!; v = up[v]![k]!; }
+      return up[u]![0]!;
+    };
+    return queries.map(([u, v, w]) => {
+      const l = lca(u!, v!);
+      const pathLen = depth[u!]! + depth[v!]! - 2 * depth[l]!;
+      const wCount = cnt[u!]![w!]! + cnt[v!]![w!]! - 2 * cnt[l]![w!]!;
+      return pathLen - wCount;
+    });
+  },
+
+  'kth-largest-sum-in-binary-tree': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const k = args[1] as number;
+    const root = _buildTree(arr);
+    if (!root) return -1;
+    const sums: number[] = [];
+    const queue: _TN[] = [root];
+    while (queue.length) {
+      let len = queue.length;
+      let sum = 0;
+      while (len--) {
+        const node = queue.shift()!;
+        sum += node.v;
+        if (node.l) queue.push(node.l);
+        if (node.r) queue.push(node.r);
+      }
+      sums.push(sum);
+    }
+    if (k > sums.length) return -1;
+    sums.sort((a, b) => b - a);
+    return sums[k - 1];
+  },
+
+  'number-of-good-leaf-nodes-pairs': (...args: unknown[]) => {
+    const arr = args[0] as (number | null)[];
+    const distance = args[1] as number;
+    const root = _buildTree(arr);
+    let ans = 0;
+    const dfs = (node: _TN | null): number[] => {
+      if (!node) return [];
+      if (!node.l && !node.r) return [1];
+      const left = dfs(node.l);
+      const right = dfs(node.r);
+      for (const l of left) for (const r of right) if (l + r <= distance) ans++;
+      const res: number[] = [];
+      for (const d of left) if (d + 1 <= distance) res.push(d + 1);
+      for (const d of right) if (d + 1 <= distance) res.push(d + 1);
+      return res;
+    };
+    dfs(root);
+    return ans;
+  },
+
   'maximum-sum-of-heights-of-a-mountain': (...args: unknown[]) => {
     const heights = args[0] as number[];
     const n = heights.length;

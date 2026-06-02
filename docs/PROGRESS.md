@@ -8,7 +8,7 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2993** problems; 9339 tests green. Batch 292 complete (3 new problems).
+**Current focus:** Bank at **2997** problems; 9351 tests green. Batches 291/292 complete (7 new problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Bank growth (batch 293+); starter backfill; UX polish.
 
@@ -18,8 +18,11 @@ Three new problems: `maximum-sum-score-of-array` (medium/arrays — O(n) prefix 
 ### feat: starter backfill batch 41s — maximum-elegance, energy-boost, taxi-earnings, employees-meeting (2026-06-02)
 Four stubs filled: `maximum-elegance-of-a-k-length-subsequence` (hard/heap — greedy sort desc by profit, take top-k, swap duplicate-category for new-category using stack of replaceable profits), `maximum-energy-boost-from-two-drinks` (medium/dp — rolling dpA/dpB with 2-turn switch gap), `maximum-earnings-from-taxi` (medium/dp — interval DP grouped by ride end point), `maximum-employees-invited-to-meeting` (hard/graph — functional graph topological sort for chain depths; max of longest ≥3 cycle vs sum of mutual-pair contributions). 9309 tests.
 
-### feat(bank): batch 291 — count-nodes-max-score, min-space-wasted-k-resizing, largest-pos-int-with-negative (2026-06-02)
+### feat(bank): batch 291b — count-nodes-max-score, min-space-wasted-k-resizing, largest-pos-int-with-negative (2026-06-02)
 Three new problems: `count-nodes-with-maximum-score` (medium/tree+graph — topological leaf-to-root pass to compute subtree sizes; score(i)=product of child subtrees × (n-subtree[i]) skipping 0 components; count nodes with max score; O(n)), `minimum-space-wasted-with-k-resizing` (hard/arrays+dynamic-programming — split nums into k+1 segments; waste(l,r)=max(segment)*(r-l+1)-sum(segment); O(n²k) rolling-dp; base dp from single segment, k iterations refine splits), `largest-positive-integer-that-exists-with-its-negative` (easy/arrays+hash-map — build hash set; iterate positives; check if negation exists; return max or -1; O(n)). Bank at **2990**; 9330 tests.
+
+### feat(bank): batch 291a — sum-of-remoteness, min-edge-weight-equilibrium-queries, kth-largest-sum-binary-tree, num-good-leaf-pairs (2026-06-02)
+Four new problems: `sum-of-remoteness-of-all-cells` (medium/arrays+graph, LC 2852 — BFS/DFS connected components; remoteness = total - compSum; each component of size sz contributes sz*(total-compSum); O(n²)), `minimum-edge-weight-equilibrium-queries-in-a-tree` (hard/tree+graph, LC 2846 — binary lifting LCA; prefix weight-count arrays cnt[v][w]=count of w-edges on root-to-v path; answer = pathLen - w_count_on_path; O(n log n + q log n)), `kth-largest-sum-in-binary-tree` (medium/tree+heap, LC 2583 — BFS level-order traversal; collect all level sums; sort desc; return kth or -1; O(n + L log L)), `number-of-good-leaf-nodes-pairs` (medium/tree+dynamic-programming, LC 1530 — post-order DFS returns leaf-distance list; cross-product all (l,r) pairs with l+r<=distance; prune distances > distance; O(n·distance²)). Bank at **2991**; 9333 tests.
 
 ### feat(bank): batch 290b — min-flips-binary-matrix, num-pairs-inequality, num-great-partitions, max-total-height-towers (2026-06-02)
 Four new problems: `minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/bit-manipulation+graph, LC 1284 — encode m×n mat as bitmask; BFS over all 2^(m*n) states; flip cell XORs bit and 4 neighbors; O(2^(m*n)·m·n)), `number-of-pairs-satisfying-inequality` (hard/arrays+binary-indexed-tree, LC 2426 — c[k]=nums1[k]-nums2[k]; count i<j with c[i]≤c[j]+diff; BIT+coordinate-compression; O(n log n)), `number-of-great-partitions` (hard/arrays+dynamic-programming, LC 2518 — if total<2k return 0; 0/1 knapsack counts subsets with sum<k; ans=(2^n−2·bad) mod 10^9+7; O(n·k)), `maximize-the-total-height-of-unique-towers` (medium/arrays+math, LC 3301 — sort desc; greedily assign height = min(maxH[i], prev-1); -1 if height≤0; O(n log n)). Fixed: permutation-sequence.ts restored (original had solutions in starters, rewritten with empty starters); numberOfPairs hidden test expected 4→6.

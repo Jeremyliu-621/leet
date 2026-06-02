@@ -49221,6 +49221,135 @@ def minimumOperationsToWriteY(grid: list[list[int]]) -> int:
     return ans
 `,
 
+  // batch 291
+  'sum-of-remoteness-of-all-cells': `def sumRemoteness(grid):
+    from collections import deque
+    n = len(grid)
+    visited = [[False]*n for _ in range(n)]
+    total = sum(v for row in grid for v in row if v != -1)
+    ans = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    for r in range(n):
+        for c in range(n):
+            if grid[r][c] == -1 or visited[r][c]:
+                continue
+            q = deque([(r, c)])
+            visited[r][c] = True
+            cell_count = 0
+            comp_sum = 0
+            while q:
+                cr, cc = q.popleft()
+                cell_count += 1
+                comp_sum += grid[cr][cc]
+                for dr, dc in dirs:
+                    nr, nc = cr+dr, cc+dc
+                    if 0<=nr<n and 0<=nc<n and not visited[nr][nc] and grid[nr][nc] != -1:
+                        visited[nr][nc] = True
+                        q.append((nr, nc))
+            ans += cell_count * (total - comp_sum)
+    return ans
+`,
+
+  'minimum-edge-weight-equilibrium-queries-in-a-tree': `def minOperationsQueries(n, edges, queries):
+    import math
+    from collections import deque
+    edges = [[int(x) for x in e] for e in edges]
+    queries = [[int(x) for x in q] for q in queries]
+    adj = [[] for _ in range(n)]
+    for u, v, w in edges:
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+    LOG = max(2, math.ceil(math.log2(n + 2)) + 1)
+    depth = [0] * n
+    up = [[0] * LOG for _ in range(n)]
+    cnt = [[0] * 27 for _ in range(n)]
+    visited = [False] * n
+    q = deque([0])
+    visited[0] = True
+    while q:
+        u = q.popleft()
+        for v, w in adj[u]:
+            if not visited[v]:
+                visited[v] = True
+                depth[v] = depth[u] + 1
+                cnt[v] = cnt[u][:]
+                cnt[v][w] += 1
+                up[v][0] = u
+                q.append(v)
+    for k in range(1, LOG):
+        for v in range(n):
+            up[v][k] = up[up[v][k-1]][k-1]
+    def lca(u, v):
+        if depth[u] < depth[v]:
+            u, v = v, u
+        diff = depth[u] - depth[v]
+        for k in range(LOG):
+            if (diff >> k) & 1:
+                u = up[u][k]
+        if u == v:
+            return u
+        for k in range(LOG-1, -1, -1):
+            if up[u][k] != up[v][k]:
+                u = up[u][k]
+                v = up[v][k]
+        return up[u][0]
+    result = []
+    for u, v, w in queries:
+        l = lca(u, v)
+        path_len = depth[u] + depth[v] - 2 * depth[l]
+        w_count = cnt[u][w] + cnt[v][w] - 2 * cnt[l][w]
+        result.append(path_len - w_count)
+    return result
+`,
+
+  'kth-largest-sum-in-binary-tree': `def kthLargestLevelSum(root, k):
+    from collections import deque
+    if not root:
+        return -1
+    sums = []
+    q = deque([root])
+    while q:
+        level_sum = 0
+        for _ in range(len(q)):
+            node = q.popleft()
+            level_sum += node.val
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        sums.append(level_sum)
+    if k > len(sums):
+        return -1
+    sums.sort(reverse=True)
+    return sums[k - 1]
+`,
+
+  'number-of-good-leaf-nodes-pairs': `def countPairs(root, distance):
+    ans = 0
+    def dfs(node):
+        nonlocal ans
+        if not node:
+            return []
+        if not node.left and not node.right:
+            return [1]
+        left = dfs(node.left)
+        right = dfs(node.right)
+        for l in left:
+            for r in right:
+                if l + r <= distance:
+                    ans += 1
+        res = []
+        for d in left:
+            if d + 1 <= distance:
+                res.append(d + 1)
+        for d in right:
+            if d + 1 <= distance:
+                res.append(d + 1)
+        return res
+    dfs(root)
+    return ans
+`,
+
   'maximum-sum-of-heights-of-a-mountain': `
 def maximumSumOfHeights(heights: list[int]) -> int:
     n = len(heights)

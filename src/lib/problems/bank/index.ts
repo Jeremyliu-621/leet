@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 291
+import { problem as sumOfRemotenessAllCells } from './sum-of-remoteness-of-all-cells';
+import { problem as minEdgeWeightEquilibriumQueries } from './minimum-edge-weight-equilibrium-queries-in-a-tree';
+import { problem as kthLargestSumBinaryTree } from './kth-largest-sum-in-binary-tree';
+import { problem as numberOfGoodLeafNodePairs } from './number-of-good-leaf-nodes-pairs';
 // batch 290
 import { problem as minFlipsBinaryMatrix } from './minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix';
 import { problem as numPairsSatisfyInequality } from './number-of-pairs-satisfying-inequality';
@@ -6945,4 +6950,9 @@ export const problems: readonly Problem[] = [
   maximumSumScoreOfArray,
   countHousePlacementsOnStreet,
   maximumJumpsToLastIndex,
+  // batch 291 (session)
+  sumOfRemotenessAllCells,
+  minEdgeWeightEquilibriumQueries,
+  kthLargestSumBinaryTree,
+  numberOfGoodLeafNodePairs,
 ];
