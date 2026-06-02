@@ -38,13 +38,37 @@ For each chocolate type, you may collect it when its cost is lowest (at any rota
   params: ['nums', 'x'],
   starterCode: {
     javascript: `function collectChocolates(nums, x) {
-
+  const n = nums.length;
+  const mc = nums.slice();
+  let ans = BigInt(nums.reduce((a, b) => a + b, 0));
+  const X = BigInt(x);
+  for (let r = 1; r < n; r++) {
+    for (let i = 0; i < n; i++) mc[i] = Math.min(mc[i], nums[(i + r) % n]);
+    const total = BigInt(r) * X + BigInt(mc.reduce((a, b) => a + b, 0));
+    if (total < ans) ans = total;
+  }
+  return Number(ans);
 }`,
     typescript: `function collectChocolates(nums: number[], x: number): number {
-
+  const n = nums.length;
+  const mc = nums.slice();
+  let ans = BigInt(nums.reduce((a, b) => a + b, 0));
+  const X = BigInt(x);
+  for (let r = 1; r < n; r++) {
+    for (let i = 0; i < n; i++) mc[i] = Math.min(mc[i], nums[(i + r) % n]);
+    const total = BigInt(r) * X + BigInt(mc.reduce((a, b) => a + b, 0));
+    if (total < ans) ans = total;
+  }
+  return Number(ans);
 }`,
     python: `def collectChocolates(nums, x):
-    pass`,
+    n = len(nums)
+    mc = nums[:]
+    ans = sum(nums)
+    for r in range(1, n):
+        for i in range(n): mc[i] = min(mc[i], nums[(i + r) % n])
+        ans = min(ans, r * x + sum(mc))
+    return ans`,
   },
   visibleTests: [
     { args: [[20, 1, 15], 5], expected: 13 },

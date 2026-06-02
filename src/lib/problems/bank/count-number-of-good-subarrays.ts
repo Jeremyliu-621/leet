@@ -36,13 +36,52 @@ A **subarray** is a contiguous non-empty sequence of elements within an array.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function countGoodSubarrays(nums, k) {
-
+  const freq = new Map();
+  let pairs = 0, ans = 0, left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    const x = nums[right];
+    pairs += freq.get(x) ?? 0;
+    freq.set(x, (freq.get(x) ?? 0) + 1);
+    while (pairs >= k) {
+      const y = nums[left];
+      freq.set(y, freq.get(y) - 1);
+      pairs -= freq.get(y);
+      left++;
+    }
+    ans += left;
+  }
+  return ans;
 }`,
     typescript: `function countGoodSubarrays(nums: number[], k: number): number {
-
+  const freq = new Map<number, number>();
+  let pairs = 0, ans = 0, left = 0;
+  for (let right = 0; right < nums.length; right++) {
+    const x = nums[right];
+    pairs += freq.get(x) ?? 0;
+    freq.set(x, (freq.get(x) ?? 0) + 1);
+    while (pairs >= k) {
+      const y = nums[left];
+      freq.set(y, freq.get(y)! - 1);
+      pairs -= freq.get(y)!;
+      left++;
+    }
+    ans += left;
+  }
+  return ans;
 }`,
     python: `def countGoodSubarrays(nums, k):
-    pass`,
+    from collections import defaultdict
+    freq = defaultdict(int)
+    pairs, ans, left = 0, 0, 0
+    for x in nums:
+        pairs += freq[x]
+        freq[x] += 1
+        while pairs >= k:
+            freq[nums[left]] -= 1
+            pairs -= freq[nums[left]]
+            left += 1
+        ans += left
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 1, 1, 1, 1], 10], expected: 1 },

@@ -41,13 +41,35 @@ Return *an array* \`answer\` *of length* \`m\` *where* \`answer[i]\` *is the ans
   params: ['n', 'queries'],
   starterCode: {
     javascript: `function cycleLengthQueries(n, queries) {
-
+  return queries.map(([a, b]) => {
+    let len = 1;
+    while (a !== b) {
+      if (a > b) a >>= 1; else b >>= 1;
+      len++;
+    }
+    return len;
+  });
 }`,
     typescript: `function cycleLengthQueries(n: number, queries: number[][]): number[] {
-
+  return queries.map(([a, b]) => {
+    let len = 1;
+    while (a !== b) {
+      if (a > b) a >>= 1; else b >>= 1;
+      len++;
+    }
+    return len;
+  });
 }`,
     python: `def cycleLengthQueries(n, queries):
-    pass`,
+    result = []
+    for a, b in queries:
+        length = 1
+        while a != b:
+            if a > b: a >>= 1
+            else: b >>= 1
+            length += 1
+        result.append(length)
+    return result`,
   },
   visibleTests: [
     { args: [3, [[5, 3]]], expected: [4] },

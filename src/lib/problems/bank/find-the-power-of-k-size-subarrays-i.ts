@@ -42,11 +42,33 @@ Return an integer array \`results\` of size \`n - k + 1\`, where \`results[i]\` 
   functionName: 'resultsArray',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: `function resultsArray(nums, k) {\n\n}`,
-    typescript: `function resultsArray(nums: number[], k: number): number[] {
-
+    javascript: `function resultsArray(nums, k) {
+  if (k === 1) return nums.slice();
+  const n = nums.length, res = [];
+  let streak = 1;
+  for (let i = 1; i < n; i++) {
+    if (nums[i] === nums[i - 1] + 1) streak++; else streak = 1;
+    if (i >= k - 1) res.push(streak >= k ? nums[i] : -1);
+  }
+  return res;
 }`,
-    python: `def resultsArray(nums: list[int], k: int) -> list[int]:\n    pass`,
+    typescript: `function resultsArray(nums: number[], k: number): number[] {
+  if (k === 1) return nums.slice();
+  const n = nums.length, res: number[] = [];
+  let streak = 1;
+  for (let i = 1; i < n; i++) {
+    if (nums[i] === nums[i - 1] + 1) streak++; else streak = 1;
+    if (i >= k - 1) res.push(streak >= k ? nums[i] : -1);
+  }
+  return res;
+}`,
+    python: `def resultsArray(nums, k):
+    if k == 1: return nums[:]
+    n, res, streak = len(nums), [], 1
+    for i in range(1, n):
+        streak = streak + 1 if nums[i] == nums[i-1] + 1 else 1
+        if i >= k - 1: res.append(nums[i] if streak >= k else -1)
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 3, 2, 5], 3], expected: [3, 4, -1, -1, -1] },
