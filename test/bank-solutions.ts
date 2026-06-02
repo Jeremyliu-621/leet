@@ -48444,4 +48444,130 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return Math.floor(s2Count / n2);
   },
+
+  'range-sum-query-segment-tree': (...args: unknown[]) => {
+    const nums = (args[0] as number[]).slice();
+    const ops = args[1] as (string | number)[][];
+    const n = nums.length;
+    const tree = new Array(4 * n).fill(0);
+    function build(node: number, start: number, end: number) {
+      if (start === end) { tree[node] = nums[start]!; return; }
+      const mid = (start + end) >> 1;
+      build(2 * node, start, mid);
+      build(2 * node + 1, mid + 1, end);
+      tree[node] = tree[2 * node]! + tree[2 * node + 1]!;
+    }
+    function update(node: number, start: number, end: number, idx: number, val: number) {
+      if (start === end) { tree[node] = val; return; }
+      const mid = (start + end) >> 1;
+      if (idx <= mid) update(2 * node, start, mid, idx, val);
+      else update(2 * node + 1, mid + 1, end, idx, val);
+      tree[node] = tree[2 * node]! + tree[2 * node + 1]!;
+    }
+    function query(node: number, start: number, end: number, l: number, r: number): number {
+      if (r < start || end < l) return 0;
+      if (l <= start && end <= r) return tree[node]!;
+      const mid = (start + end) >> 1;
+      return query(2 * node, start, mid, l, r) + query(2 * node + 1, mid + 1, end, l, r);
+    }
+    build(1, 0, n - 1);
+    const results: number[] = [];
+    for (const op of ops) {
+      if (op[0] === 'update') {
+        const idx = op[1] as number;
+        const val = op[2] as number;
+        nums[idx] = val;
+        update(1, 0, n - 1, idx, val);
+      } else {
+        results.push(query(1, 0, n - 1, op[1] as number, op[2] as number));
+      }
+    }
+    return results;
+  },
+
+  'range-min-query-segment-tree': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = nums.length;
+    const tree = new Array(4 * n).fill(Infinity);
+    function build(i: number, lo: number, hi: number) {
+      if (lo === hi) { tree[i] = nums[lo]!; return; }
+      const mid = (lo + hi) >> 1;
+      build(2 * i, lo, mid); build(2 * i + 1, mid + 1, hi);
+      tree[i] = Math.min(tree[2 * i]!, tree[2 * i + 1]!);
+    }
+    function query(i: number, lo: number, hi: number, l: number, r: number): number {
+      if (r < lo || hi < l) return Infinity;
+      if (l <= lo && hi <= r) return tree[i]!;
+      const mid = (lo + hi) >> 1;
+      return Math.min(query(2 * i, lo, mid, l, r), query(2 * i + 1, mid + 1, hi, l, r));
+    }
+    build(1, 0, n - 1);
+    return queries.map(([l, r]) => query(1, 0, n - 1, l!, r!));
+  },
+
+  'count-inversions-bit': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const sorted = [...new Set(nums)].sort((a, b) => a - b);
+    const rank = new Map(sorted.map((v, i) => [v, i + 1]));
+    const sz = sorted.length;
+    const bit = new Array(sz + 1).fill(0);
+    const upd = (i: number, d: number) => { for (; i <= sz; i += i & -i) bit[i] += d; };
+    const qry = (i: number) => { let s = 0; for (; i > 0; i -= i & -i) s += bit[i]!; return s; };
+    let inv = 0;
+    for (let i = nums.length - 1; i >= 0; i--) {
+      const r = rank.get(nums[i]!)!;
+      inv += qry(r - 1);
+      upd(r, 1);
+    }
+    return inv;
+  },
+
+  'prefix-count-trie': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    const prefixes = args[1] as string[];
+    const root: Record<string, unknown> = {};
+    for (const w of words) {
+      let node = root;
+      for (const ch of w) {
+        if (!node[ch]) node[ch] = { _count: 0 };
+        const child = node[ch]! as Record<string, number>;
+        child['_count'] = (child['_count'] ?? 0) + 1;
+        node = child as unknown as Record<string, unknown>;
+      }
+    }
+    return prefixes.map(p => {
+      let node = root;
+      for (const ch of p) {
+        if (!node[ch]) return 0;
+        node = node[ch] as Record<string, unknown>;
+      }
+      return (node as Record<string, number>)['_count'] ?? 0;
+    });
+  },
+
+  'longest-common-prefix-trie': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    if (words.length === 0) return '';
+    const root: Record<string, unknown> = {};
+    for (const w of words) {
+      let node = root;
+      for (const ch of w) {
+        if (!node[ch]) node[ch] = { _count: 0 };
+        const child = node[ch]! as Record<string, number>;
+        child['_count'] = (child['_count'] ?? 0) + 1;
+        node = child as unknown as Record<string, unknown>;
+      }
+    }
+    let prefix = '', node = root;
+    while (true) {
+      const keys = Object.keys(node).filter(k => k !== '_count');
+      if (keys.length !== 1) break;
+      const ch = keys[0]!;
+      if ((node[ch] as Record<string, number>)['_count'] !== words.length) break;
+      prefix += ch;
+      node = node[ch] as Record<string, unknown>;
+    }
+    return prefix;
+  },
 };
