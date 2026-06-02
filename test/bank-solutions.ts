@@ -49796,4 +49796,111 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return dp[numLaps]!;
   },
+
+  'design-an-atm-machine': (...args: unknown[]) => {
+    const ops = args[0] as (string | number[] | (string | number[])[])[];
+    const denoms = [20, 50, 100, 200, 500];
+    const counts = [0, 0, 0, 0, 0];
+    const result: number[][] = [];
+    for (const op of ops) {
+      const opArr = op as (string | number[])[];
+      if (opArr[0] === 'deposit') {
+        const banknotes = opArr[1] as number[];
+        for (let i = 0; i < 5; i++) counts[i]! += banknotes[i]!;
+      } else {
+        let amount = opArr[1] as unknown as number;
+        const used = [0, 0, 0, 0, 0];
+        for (let i = 4; i >= 0; i--) {
+          const take = Math.min(counts[i]!, Math.floor(amount / denoms[i]!));
+          used[i] = take;
+          amount -= take * denoms[i]!;
+        }
+        if (amount === 0) {
+          for (let i = 0; i < 5; i++) counts[i]! -= used[i]!;
+          result.push([...used]);
+        } else {
+          result.push([-1]);
+        }
+      }
+    }
+    return result;
+  },
+
+  'minimum-time-to-remove-all-cars-containing-illegal-goods': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const prefix = new Array<number>(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      const prev = i > 0 ? prefix[i - 1]! : 0;
+      prefix[i] = s[i] === '1' ? Math.min(prev + 2, i + 1) : prev;
+    }
+    const suffix = new Array<number>(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+      const nxt = i < n - 1 ? suffix[i + 1]! : 0;
+      suffix[i] = s[i] === '1' ? Math.min(nxt + 2, n - i) : nxt;
+    }
+    let ans = suffix[0]!;
+    for (let i = 0; i < n - 1; i++) {
+      ans = Math.min(ans, prefix[i]! + suffix[i + 1]!);
+    }
+    return Math.min(ans, prefix[n - 1]!);
+  },
+
+  'design-movie-rental-system': (...args: unknown[]) => {
+    const n = args[0] as number;
+    void n;
+    const entries = args[1] as number[][];
+    const ops = args[2] as (string | (string | number[] | number)[])[];
+    const priceMap = new Map<string, number>();
+    const unrented = new Map<number, number[][]>();
+    const rented: number[][] = [];
+    function cmpPS(a: number[], b: number[]): number { return a[0]! !== b[0]! ? a[0]! - b[0]! : a[1]! - b[1]!; }
+    function cmpPSM(a: number[], b: number[]): number {
+      if (a[0]! !== b[0]!) return a[0]! - b[0]!;
+      if (a[1]! !== b[1]!) return a[1]! - b[1]!;
+      return a[2]! - b[2]!;
+    }
+    function insSort(arr: number[][], item: number[], cmp: (a: number[], b: number[]) => number): void {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (cmp(arr[mid]!, item) < 0) lo = mid + 1; else hi = mid; }
+      arr.splice(lo, 0, item);
+    }
+    function delSort(arr: number[][], item: number[], cmp: (a: number[], b: number[]) => number): void {
+      let lo = 0, hi = arr.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        const c = cmp(arr[mid]!, item);
+        if (c < 0) lo = mid + 1; else if (c > 0) hi = mid; else { arr.splice(mid, 1); return; }
+      }
+    }
+    for (const entry of entries) {
+      const shop = entry[0]!, movie = entry[1]!, price = entry[2]!;
+      priceMap.set(shop + ',' + movie, price);
+      if (!unrented.has(movie)) unrented.set(movie, []);
+      insSort(unrented.get(movie)!, [price, shop], cmpPS);
+    }
+    const result: (number[] | number[][])[] = [];
+    for (const op of ops) {
+      const opArr = op as (string | number | number[])[];
+      if (opArr[0] === 'search') {
+        const movie = opArr[1] as number;
+        const arr = unrented.get(movie) ?? [];
+        result.push(arr.slice(0, 5).map(([, s]) => s!));
+      } else if (opArr[0] === 'rent') {
+        const [shop, movie] = opArr[1] as number[];
+        const price = priceMap.get(shop + ',' + movie)!;
+        delSort(unrented.get(movie!)!, [price, shop!], cmpPS);
+        insSort(rented, [price, shop!, movie!], cmpPSM);
+      } else if (opArr[0] === 'drop') {
+        const [shop, movie] = opArr[1] as number[];
+        const price = priceMap.get(shop + ',' + movie)!;
+        delSort(rented, [price, shop!, movie!], cmpPSM);
+        if (!unrented.has(movie!)) unrented.set(movie!, []);
+        insSort(unrented.get(movie!)!, [price, shop!], cmpPS);
+      } else {
+        result.push(rented.slice(0, 5).map(([, s, m]) => [s!, m!]));
+      }
+    }
+    return result;
+  },
 };

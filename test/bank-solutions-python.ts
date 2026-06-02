@@ -48623,4 +48623,91 @@ def minimumFinishTime(tires, changeTime, numLaps):
                 dp[i] = min(dp[i], dp[i - j] + (0 if i == j else changeTime) + best[j])
     return dp[numLaps]
 `,
+
+  'design-an-atm-machine': `
+def atmMachine(ops: list) -> list[list[int]]:
+    denoms = [20, 50, 100, 200, 500]
+    counts = [0, 0, 0, 0, 0]
+    result = []
+    for raw_op in ops:
+        op = raw_op.to_py() if hasattr(raw_op, 'to_py') else raw_op
+        if op[0] == 'deposit':
+            banknotes = list(op[1]) if not isinstance(op[1], list) else op[1]
+            for i in range(5):
+                counts[i] += int(banknotes[i])
+        else:
+            amount = int(op[1])
+            used = [0, 0, 0, 0, 0]
+            for i in range(4, -1, -1):
+                take = min(counts[i], amount // denoms[i])
+                used[i] = take
+                amount -= take * denoms[i]
+            if amount == 0:
+                for i in range(5):
+                    counts[i] -= used[i]
+                result.append(used[:])
+            else:
+                result.append([-1])
+    return result
+`,
+
+  'minimum-time-to-remove-all-cars-containing-illegal-goods': `
+def minimumTime(s: str) -> int:
+    n = len(s)
+    prefix = [0] * n
+    for i in range(n):
+        prev = prefix[i - 1] if i > 0 else 0
+        prefix[i] = min(prev + 2, i + 1) if s[i] == '1' else prev
+    suffix = [0] * n
+    for i in range(n - 1, -1, -1):
+        nxt = suffix[i + 1] if i < n - 1 else 0
+        suffix[i] = min(nxt + 2, n - i) if s[i] == '1' else nxt
+    ans = suffix[0]
+    for i in range(n - 1):
+        ans = min(ans, prefix[i] + suffix[i + 1])
+    return min(ans, prefix[n - 1])
+`,
+
+  'design-movie-rental-system': `
+def movieRentalSystem(n: int, entries: list[list[int]], ops: list) -> list:
+    import bisect
+    price_map = {}
+    unrented = {}
+    rented = []
+    for shop, movie, price in entries:
+        price_map[(shop, movie)] = price
+        if movie not in unrented:
+            unrented[movie] = []
+        bisect.insort(unrented[movie], (price, shop))
+    result = []
+    for raw_op in ops:
+        op = raw_op.to_py() if hasattr(raw_op, 'to_py') else raw_op
+        if op[0] == 'search':
+            movie = int(op[1])
+            arr = unrented.get(movie, [])
+            result.append([s for _, s in arr[:5]])
+        elif op[0] == 'rent':
+            params = list(op[1]) if not isinstance(op[1], list) else op[1]
+            shop, movie = int(params[0]), int(params[1])
+            price = price_map[(shop, movie)]
+            entry = (price, shop)
+            idx = bisect.bisect_left(unrented.get(movie, []), entry)
+            if movie in unrented and idx < len(unrented[movie]) and unrented[movie][idx] == entry:
+                unrented[movie].pop(idx)
+            bisect.insort(rented, (price, shop, movie))
+        elif op[0] == 'drop':
+            params = list(op[1]) if not isinstance(op[1], list) else op[1]
+            shop, movie = int(params[0]), int(params[1])
+            price = price_map[(shop, movie)]
+            entry = (price, shop, movie)
+            idx = bisect.bisect_left(rented, entry)
+            if idx < len(rented) and rented[idx] == entry:
+                rented.pop(idx)
+            if movie not in unrented:
+                unrented[movie] = []
+            bisect.insort(unrented[movie], (price, shop))
+        else:
+            result.append([[s, m] for _, s, m in rented[:5]])
+    return result
+`,
 };

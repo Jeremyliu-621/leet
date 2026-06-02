@@ -3419,6 +3419,9 @@ import { problem as examRoom } from './exam-room';
 import { problem as allOoneDataStructure } from './all-oone-data-structure';
 import { problem as minimumNumberOfPeopleToTeach } from './minimum-number-of-people-to-teach';
 import { problem as minimumTimeToFinishRaces } from './minimum-time-to-finish-races';
+import { problem as designAnAtmMachine } from './design-an-atm-machine';
+import { problem as minimumTimeToRemoveCarsIllegalGoods } from './minimum-time-to-remove-all-cars-containing-illegal-goods';
+import { problem as designMovieRentalSystem } from './design-movie-rental-system';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6875,4 +6878,8 @@ export const problems: readonly Problem[] = [
   allOoneDataStructure,
   minimumNumberOfPeopleToTeach,
   minimumTimeToFinishRaces,
+  // batch 287
+  designAnAtmMachine,
+  minimumTimeToRemoveCarsIllegalGoods,
+  designMovieRentalSystem,
 ];
