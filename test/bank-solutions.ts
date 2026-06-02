@@ -49606,4 +49606,137 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     for (let i = 0; i < size; i++) result[i] = (i ^ (i >> 1)) ^ start;
     return result;
   },
+
+  'exam-room': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const ops = args[1] as (string | (string | number)[])[];
+    const seated: number[] = [];
+    const result: number[] = [];
+    for (const op of ops) {
+      if (op === 'seat' || (Array.isArray(op) && op[0] === 'seat')) {
+        let bestSeat = 0;
+        let bestDist = seated.length === 0 ? Infinity : seated[0]!;
+        for (let i = 1; i < seated.length; i++) {
+          const dist = Math.floor((seated[i]! - seated[i - 1]!) / 2);
+          if (dist > bestDist) { bestDist = dist; bestSeat = seated[i - 1]! + dist; }
+        }
+        if (seated.length > 0 && n - 1 - seated[seated.length - 1]! > bestDist) {
+          bestSeat = n - 1;
+        }
+        const idx = seated.findIndex(s => s > bestSeat);
+        if (idx === -1) seated.push(bestSeat);
+        else seated.splice(idx, 0, bestSeat);
+        result.push(bestSeat);
+      } else {
+        const p = (op as (string | number)[])[1] as number;
+        const idx = seated.indexOf(p);
+        if (idx !== -1) seated.splice(idx, 1);
+      }
+    }
+    return result;
+  },
+
+  'all-oone-data-structure': (...args: unknown[]) => {
+    const ops = args[0] as string[];
+    interface Bucket { count: number; keys: Set<string>; prev: Bucket | null; next: Bucket | null; }
+    const dummy_min: Bucket = { count: 0, keys: new Set(), prev: null, next: null };
+    const dummy_max: Bucket = { count: Infinity, keys: new Set(), prev: null, next: null };
+    dummy_min.next = dummy_max;
+    dummy_max.prev = dummy_min;
+    const keyCount = new Map<string, number>();
+    const countBucket = new Map<number, Bucket>();
+    function insertBucketAfter(node: Bucket, count: number): Bucket {
+      const nb: Bucket = { count, keys: new Set(), prev: node, next: node.next };
+      node.next!.prev = nb; node.next = nb;
+      countBucket.set(count, nb); return nb;
+    }
+    function removeBucket(node: Bucket): void {
+      node.prev!.next = node.next; node.next!.prev = node.prev;
+      countBucket.delete(node.count);
+    }
+    const result: string[] = [];
+    for (const op of ops) {
+      if (op === 'getMaxKey') {
+        const tail = dummy_max.prev!;
+        result.push(tail === dummy_min ? '' : [...tail.keys][0]!);
+      } else if (op === 'getMinKey') {
+        const head = dummy_min.next!;
+        result.push(head === dummy_max ? '' : [...head.keys][0]!);
+      } else {
+        const [cmd, key] = op.split(' ') as [string, string];
+        const curCount = keyCount.get(key) ?? 0;
+        const newCount = cmd === 'inc' ? curCount + 1 : curCount - 1;
+        if (curCount > 0) {
+          const curBucket = countBucket.get(curCount)!;
+          curBucket.keys.delete(key);
+          if (curBucket.keys.size === 0) removeBucket(curBucket);
+        }
+        if (newCount > 0) {
+          keyCount.set(key, newCount);
+          if (!countBucket.has(newCount)) {
+            let node: Bucket = dummy_min;
+            while (node.next !== dummy_max && node.next!.count < newCount) node = node.next!;
+            insertBucketAfter(node, newCount);
+          }
+          countBucket.get(newCount)!.keys.add(key);
+        } else {
+          keyCount.delete(key);
+        }
+      }
+    }
+    return result;
+  },
+
+  'minimum-number-of-people-to-teach': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const languages = args[1] as number[][];
+    const friendships = args[2] as number[][];
+    const langSets = languages.map(l => new Set(l));
+    const needTeaching = new Set<number>();
+    for (const [u, v] of friendships) {
+      let share = false;
+      for (const lang of langSets[u! - 1]!) {
+        if (langSets[v! - 1]!.has(lang)) { share = true; break; }
+      }
+      if (!share) { needTeaching.add(u! - 1); needTeaching.add(v! - 1); }
+    }
+    if (needTeaching.size === 0) return 0;
+    let ans = needTeaching.size;
+    for (let lang = 1; lang <= n; lang++) {
+      let teach = 0;
+      for (const userIdx of needTeaching) {
+        if (!langSets[userIdx]!.has(lang)) teach++;
+      }
+      ans = Math.min(ans, teach);
+    }
+    return ans;
+  },
+
+  'minimum-time-to-finish-races': (...args: unknown[]) => {
+    const tires = args[0] as number[][];
+    const changeTime = args[1] as number;
+    const numLaps = args[2] as number;
+    const INF = Infinity;
+    const MAX_CONSEC = Math.min(numLaps, 20);
+    const best = new Array<number>(MAX_CONSEC + 1).fill(INF);
+    for (const [f, r] of tires) {
+      let lapCost = f!, totalCost = 0;
+      for (let j = 1; j <= MAX_CONSEC; j++) {
+        totalCost += lapCost;
+        if (totalCost >= INF || lapCost > numLaps * (changeTime + f!)) break;
+        best[j] = Math.min(best[j]!, totalCost);
+        lapCost = Math.round(lapCost * r!);
+      }
+    }
+    const dp = new Array<number>(numLaps + 1).fill(INF);
+    dp[0] = 0;
+    for (let i = 1; i <= numLaps; i++) {
+      for (let j = 1; j <= Math.min(i, MAX_CONSEC); j++) {
+        if (best[j]! < INF) {
+          dp[i] = Math.min(dp[i]!, dp[i - j]! + (i === j ? 0 : changeTime) + best[j]!);
+        }
+      }
+    }
+    return dp[numLaps]!;
+  },
 };

@@ -3410,6 +3410,10 @@ import { problem as maximumOfMinimumForEveryWindowSize } from './maximum-of-mini
 import { problem as countWaysToMakeArrayWithProduct } from './count-ways-to-make-array-with-product';
 import { problem as numberOfWaysToWearDifferentHats } from './number-of-ways-to-wear-different-hats';
 import { problem as circularPermutationBinaryRepresentation } from './circular-permutation-in-binary-representation';
+import { problem as examRoom } from './exam-room';
+import { problem as allOoneDataStructure } from './all-oone-data-structure';
+import { problem as minimumNumberOfPeopleToTeach } from './minimum-number-of-people-to-teach';
+import { problem as minimumTimeToFinishRaces } from './minimum-time-to-finish-races';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6856,4 +6860,9 @@ export const problems: readonly Problem[] = [
   countWaysToMakeArrayWithProduct,
   numberOfWaysToWearDifferentHats,
   circularPermutationBinaryRepresentation,
+  // batch 286
+  examRoom,
+  allOoneDataStructure,
+  minimumNumberOfPeopleToTeach,
+  minimumTimeToFinishRaces,
 ];

@@ -48449,4 +48449,124 @@ def circularPermutation(n, start):
     size = 1 << n
     return [(i ^ (i >> 1)) ^ start for i in range(size)]
 `,
+  'exam-room': `
+def examRoom(n, ops):
+    import bisect
+    seated = []
+    result = []
+    for raw_op in ops:
+        # Convert JsProxy to Python if needed
+        op = raw_op.to_py() if hasattr(raw_op, 'to_py') else raw_op
+        op_list = list(op) if not isinstance(op, (str, list)) else op
+        is_seat = op_list[0] == 'seat' if isinstance(op_list, list) else op_list == 'seat'
+        if is_seat:
+            best_seat = 0
+            best_dist = seated[0] if seated else float('inf')
+            for i in range(1, len(seated)):
+                dist = (seated[i] - seated[i - 1]) // 2
+                if dist > best_dist:
+                    best_dist = dist
+                    best_seat = seated[i - 1] + dist
+            if seated and n - 1 - seated[-1] > best_dist:
+                best_seat = n - 1
+            bisect.insort(seated, best_seat)
+            result.append(best_seat)
+        else:
+            p = int(op_list[1])
+            idx = bisect.bisect_left(seated, p)
+            if idx < len(seated) and seated[idx] == p:
+                seated.pop(idx)
+    return result
+`,
+  'all-oone-data-structure': `
+def allOone(ops):
+    class Bucket:
+        def __init__(self, count):
+            self.count = count
+            self.keys = {}  # Use dict as ordered set (insertion-order preserved)
+            self.prev = self.next = None
+    dummy_min = Bucket(0)
+    dummy_max = Bucket(float('inf'))
+    dummy_min.next = dummy_max
+    dummy_max.prev = dummy_min
+    key_count = {}
+    count_bucket = {}
+    def insert_after(node, count):
+        nb = Bucket(count)
+        nb.prev, nb.next = node, node.next
+        node.next.prev = nb
+        node.next = nb
+        count_bucket[count] = nb
+        return nb
+    def remove_bucket(node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        del count_bucket[node.count]
+    result = []
+    for op in ops:
+        if op == 'getMaxKey':
+            tail = dummy_max.prev
+            result.append(next(iter(tail.keys)) if tail is not dummy_min else '')
+        elif op == 'getMinKey':
+            head = dummy_min.next
+            result.append(next(iter(head.keys)) if head is not dummy_max else '')
+        else:
+            cmd, key = op.split()
+            cur = key_count.get(key, 0)
+            nxt = cur + 1 if cmd == 'inc' else cur - 1
+            if cur > 0:
+                b = count_bucket[cur]
+                b.keys.pop(key, None)
+                if not b.keys:
+                    remove_bucket(b)
+            if nxt > 0:
+                key_count[key] = nxt
+                if nxt not in count_bucket:
+                    node = dummy_min
+                    while node.next is not dummy_max and node.next.count < nxt:
+                        node = node.next
+                    insert_after(node, nxt)
+                count_bucket[nxt].keys[key] = None
+            else:
+                key_count.pop(key, None)
+    return result
+`,
+  'minimum-number-of-people-to-teach': `
+def minimumTeachings(n, languages, friendships):
+    lang_sets = [set(l) for l in languages]
+    need_teaching = set()
+    for u, v in friendships:
+        if not lang_sets[u - 1] & lang_sets[v - 1]:
+            need_teaching.add(u - 1)
+            need_teaching.add(v - 1)
+    if not need_teaching:
+        return 0
+    ans = len(need_teaching)
+    for lang in range(1, n + 1):
+        teach = sum(1 for i in need_teaching if lang not in lang_sets[i])
+        ans = min(ans, teach)
+    return ans
+`,
+  'minimum-time-to-finish-races': `
+def minimumFinishTime(tires, changeTime, numLaps):
+    INF = float('inf')
+    MAX_CONSEC = min(numLaps, 20)
+    best = [INF] * (MAX_CONSEC + 1)
+    for f, r in tires:
+        lap_cost = f
+        total = 0
+        for j in range(1, MAX_CONSEC + 1):
+            total += lap_cost
+            if total >= INF or lap_cost > numLaps * (changeTime + f):
+                break
+            best[j] = min(best[j], total)
+            lap_cost = lap_cost * r
+    dp = [INF] * (numLaps + 1)
+    dp[0] = 0
+    for i in range(1, numLaps + 1):
+        for j in range(1, min(i, MAX_CONSEC) + 1):
+            if best[j] < INF:
+                dp[i] = min(dp[i], dp[i - j] + (0 if i == j else changeTime) + best[j])
+    return dp[numLaps]
+`,
 };
