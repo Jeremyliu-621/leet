@@ -39,12 +39,62 @@ Return the length of the **longest path** in the graph such that all characters 
   params: ['edges', 'n', 's'],
   starterCode: {
     javascript: `function longestPath(edges, n, s) {
-
+  const adj = Array.from({length: n}, () => []);
+  const indegree = new Array(n).fill(0);
+  for (const [u, v] of edges) { adj[u].push(v); indegree[v]++; }
+  const dp = new Array(n).fill(1);
+  const queue = [];
+  for (let i = 0; i < n; i++) if (indegree[i] === 0) queue.push(i);
+  let ans = 1, head = 0;
+  while (head < queue.length) {
+    const u = queue[head++];
+    for (const v of adj[u]) {
+      if (s.charCodeAt(v) === s.charCodeAt(u) + 1) {
+        dp[v] = Math.max(dp[v], dp[u] + 1);
+        ans = Math.max(ans, dp[v]);
+      }
+      if (--indegree[v] === 0) queue.push(v);
+    }
+  }
+  return ans;
 }`,
-    typescript: "function longestPath(edges: number[][], n: number, s: string): number {\n\n}",
-
+    typescript: `function longestPath(edges: number[][], n: number, s: string): number {
+  const adj: number[][] = Array.from({length: n}, () => []);
+  const indegree = new Array(n).fill(0);
+  for (const [u, v] of edges) { adj[u].push(v); indegree[v]++; }
+  const dp = new Array(n).fill(1);
+  const queue: number[] = [];
+  for (let i = 0; i < n; i++) if (indegree[i] === 0) queue.push(i);
+  let ans = 1, head = 0;
+  while (head < queue.length) {
+    const u = queue[head++];
+    for (const v of adj[u]) {
+      if (s.charCodeAt(v) === s.charCodeAt(u) + 1) {
+        dp[v] = Math.max(dp[v], dp[u] + 1);
+        ans = Math.max(ans, dp[v]);
+      }
+      if (--indegree[v] === 0) queue.push(v);
+    }
+  }
+  return ans;
+}`,
     python: `def longestPath(edges, n, s):
-    pass`,
+    from collections import deque, defaultdict
+    adj = defaultdict(list)
+    indegree = [0] * n
+    for u, v in edges: adj[u].append(v); indegree[v] += 1
+    dp = [1] * n
+    q = deque(i for i in range(n) if indegree[i] == 0)
+    ans = 1
+    while q:
+        u = q.popleft()
+        for v in adj[u]:
+            if ord(s[v]) == ord(s[u]) + 1:
+                dp[v] = max(dp[v], dp[u] + 1)
+                ans = max(ans, dp[v])
+            indegree[v] -= 1
+            if indegree[v] == 0: q.append(v)
+    return ans`,
   },
   visibleTests: [
     { args: [[[0, 1], [1, 2]], 3, 'abc'], expected: 3 },

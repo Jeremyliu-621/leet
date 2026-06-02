@@ -41,12 +41,53 @@ The path must be strictly increasing.`,
   params: ['matrix'],
   starterCode: {
     javascript: `function longestIncreasingPath(matrix) {
-
+  const m = matrix.length, n = matrix[0].length;
+  const memo = Array.from({length: m}, () => new Array(n).fill(0));
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  const dfs = (r, c) => {
+    if (memo[r][c]) return memo[r][c];
+    let best = 1;
+    for (const [dr, dc] of dirs) {
+      const nr = r+dr, nc = c+dc;
+      if (nr>=0&&nr<m&&nc>=0&&nc<n&&matrix[nr][nc]>matrix[r][c])
+        best = Math.max(best, 1 + dfs(nr, nc));
+    }
+    return memo[r][c] = best;
+  };
+  let ans = 1;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = Math.max(ans, dfs(r, c));
+  return ans;
 }`,
-    typescript: "function longestIncreasingPath(matrix: number[][]): number {\n\n}",
-
+    typescript: `function longestIncreasingPath(matrix: number[][]): number {
+  const m = matrix.length, n = matrix[0].length;
+  const memo = Array.from({length: m}, () => new Array(n).fill(0));
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  const dfs = (r: number, c: number): number => {
+    if (memo[r][c]) return memo[r][c];
+    let best = 1;
+    for (const [dr, dc] of dirs) {
+      const nr = r+dr, nc = c+dc;
+      if (nr>=0&&nr<m&&nc>=0&&nc<n&&matrix[nr][nc]>matrix[r][c])
+        best = Math.max(best, 1 + dfs(nr, nc));
+    }
+    return memo[r][c] = best;
+  };
+  let ans = 1;
+  for (let r = 0; r < m; r++) for (let c = 0; c < n; c++) ans = Math.max(ans, dfs(r, c));
+  return ans;
+}`,
     python: `def longestIncreasingPath(matrix):
-    pass`,
+    m, n = len(matrix), len(matrix[0])
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dfs(r, c):
+        best = 1
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r+dr, c+dc
+            if 0<=nr<m and 0<=nc<n and matrix[nr][nc]>matrix[r][c]:
+                best = max(best, 1+dfs(nr,nc))
+        return best
+    return max(dfs(r,c) for r in range(m) for c in range(n))`,
   },
   visibleTests: [
     { args: [[[9, 9, 4], [6, 6, 8], [2, 1, 1]]], expected: 4 },

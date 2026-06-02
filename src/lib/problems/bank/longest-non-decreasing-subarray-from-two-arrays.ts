@@ -43,12 +43,42 @@ A **subarray** is a contiguous part of an array.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function maxNonDecreasingLength(nums1, nums2) {
-
+  let dp1 = 1, dp2 = 1, ans = 1;
+  for (let i = 1; i < nums1.length; i++) {
+    let n1 = 1, n2 = 1;
+    if (nums1[i-1] <= nums1[i]) n1 = Math.max(n1, dp1 + 1);
+    if (nums2[i-1] <= nums1[i]) n1 = Math.max(n1, dp2 + 1);
+    if (nums1[i-1] <= nums2[i]) n2 = Math.max(n2, dp1 + 1);
+    if (nums2[i-1] <= nums2[i]) n2 = Math.max(n2, dp2 + 1);
+    dp1 = n1; dp2 = n2;
+    ans = Math.max(ans, dp1, dp2);
+  }
+  return ans;
 }`,
-    typescript: "function maxNonDecreasingLength(nums1: number[], nums2: number[]): number {\n\n}",
-
+    typescript: `function maxNonDecreasingLength(nums1: number[], nums2: number[]): number {
+  let dp1 = 1, dp2 = 1, ans = 1;
+  for (let i = 1; i < nums1.length; i++) {
+    let n1 = 1, n2 = 1;
+    if (nums1[i-1] <= nums1[i]) n1 = Math.max(n1, dp1 + 1);
+    if (nums2[i-1] <= nums1[i]) n1 = Math.max(n1, dp2 + 1);
+    if (nums1[i-1] <= nums2[i]) n2 = Math.max(n2, dp1 + 1);
+    if (nums2[i-1] <= nums2[i]) n2 = Math.max(n2, dp2 + 1);
+    dp1 = n1; dp2 = n2;
+    ans = Math.max(ans, dp1, dp2);
+  }
+  return ans;
+}`,
     python: `def maxNonDecreasingLength(nums1, nums2):
-    pass`,
+    dp1 = dp2 = ans = 1
+    for i in range(1, len(nums1)):
+        n1, n2 = 1, 1
+        if nums1[i-1] <= nums1[i]: n1 = max(n1, dp1 + 1)
+        if nums2[i-1] <= nums1[i]: n1 = max(n1, dp2 + 1)
+        if nums1[i-1] <= nums2[i]: n2 = max(n2, dp1 + 1)
+        if nums2[i-1] <= nums2[i]: n2 = max(n2, dp2 + 1)
+        dp1, dp2 = n1, n2
+        ans = max(ans, dp1, dp2)
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, 1], [1, 2, 1]], expected: 2 },

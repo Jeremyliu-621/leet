@@ -42,12 +42,30 @@ function longestPalindrome(s) {
   params: ['s'],
   starterCode: {
     javascript: `function longestPalindrome(s) {
-
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c] || 0) + 1;
+  let len = 0, hasOdd = false;
+  for (const v of Object.values(freq)) {
+    len += v - (v % 2);
+    if (v % 2 === 1) hasOdd = true;
+  }
+  return len + (hasOdd ? 1 : 0);
 }`,
-    typescript: "function longestPalindrome(s: string): number {\n\n}",
-
+    typescript: `function longestPalindrome(s: string): number {
+  const freq: Record<string, number> = {};
+  for (const c of s) freq[c] = (freq[c] || 0) + 1;
+  let len = 0, hasOdd = false;
+  for (const v of Object.values(freq)) {
+    len += v - (v % 2);
+    if (v % 2 === 1) hasOdd = true;
+  }
+  return len + (hasOdd ? 1 : 0);
+}`,
     python: `def longestPalindrome(s):
-    pass`,
+    from collections import Counter
+    freq = Counter(s)
+    has_odd = any(v % 2 == 1 for v in freq.values())
+    return sum(v - v % 2 for v in freq.values()) + (1 if has_odd else 0)`,
   },
   visibleTests: [
     { args: ['abccccdd'], expected: 7 },

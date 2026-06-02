@@ -37,12 +37,27 @@ return max;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: `function findLengthOfLCIS(nums) {
-
+  let best = 1, cur = 1;
+  for (let i = 1; i < nums.length; i++) {
+    cur = nums[i] > nums[i-1] ? cur + 1 : 1;
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
-    typescript: "function findLengthOfLCIS(nums: number[]): number {\n\n}",
-
+    typescript: `function findLengthOfLCIS(nums: number[]): number {
+  let best = 1, cur = 1;
+  for (let i = 1; i < nums.length; i++) {
+    cur = nums[i] > nums[i-1] ? cur + 1 : 1;
+    if (cur > best) best = cur;
+  }
+  return best;
+}`,
     python: `def findLengthOfLCIS(nums):
-    pass`,
+    best = cur = 1
+    for i in range(1, len(nums)):
+        cur = cur + 1 if nums[i] > nums[i-1] else 1
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 4, 7]], expected: 3 },

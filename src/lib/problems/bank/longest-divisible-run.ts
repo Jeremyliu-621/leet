@@ -38,13 +38,33 @@ Return the **length** of the longest divisible run in \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function longestDivisibleRun(nums) {
-
+  let best = 1, cur = 1;
+  for (let i = 1; i < nums.length; i++) {
+    const a = nums[i-1], b = nums[i];
+    if (a % b === 0 || b % a === 0) cur++;
+    else cur = 1;
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
     typescript: `function longestDivisibleRun(nums: number[]): number {
-
+  let best = 1, cur = 1;
+  for (let i = 1; i < nums.length; i++) {
+    const a = nums[i-1], b = nums[i];
+    if (a % b === 0 || b % a === 0) cur++;
+    else cur = 1;
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
     python: `def longestDivisibleRun(nums):
-    pass`,
+    best = cur = 1
+    for i in range(1, len(nums)):
+        a, b = nums[i-1], nums[i]
+        if a % b == 0 or b % a == 0: cur += 1
+        else: cur = 1
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: [[3, 6, 4, 2, 8]], expected: 3 },

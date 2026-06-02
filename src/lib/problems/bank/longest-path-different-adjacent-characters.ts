@@ -47,13 +47,62 @@ Return the length of the **longest path** in the tree such that no pair of **adj
   params: ['parent', 's'],
   starterCode: {
     javascript: `function longestPath(parent, s) {
-
+  const n = parent.length;
+  const children = Array.from({length: n}, () => []);
+  for (let i = 1; i < n; i++) children[parent[i]].push(i);
+  let ans = 1;
+  const dfs = (u) => {
+    let best1 = 0, best2 = 0;
+    for (const v of children[u]) {
+      const len = dfs(v);
+      if (s[v] !== s[u]) {
+        if (len > best1) { best2 = best1; best1 = len; }
+        else if (len > best2) best2 = len;
+      }
+    }
+    ans = Math.max(ans, 1 + best1 + best2);
+    return 1 + best1;
+  };
+  dfs(0);
+  return ans;
 }`,
     typescript: `function longestPath(parent: number[], s: string): number {
-
+  const n = parent.length;
+  const children: number[][] = Array.from({length: n}, () => []);
+  for (let i = 1; i < n; i++) children[parent[i]].push(i);
+  let ans = 1;
+  const dfs = (u: number): number => {
+    let best1 = 0, best2 = 0;
+    for (const v of children[u]) {
+      const len = dfs(v);
+      if (s[v] !== s[u]) {
+        if (len > best1) { best2 = best1; best1 = len; }
+        else if (len > best2) best2 = len;
+      }
+    }
+    ans = Math.max(ans, 1 + best1 + best2);
+    return 1 + best1;
+  };
+  dfs(0);
+  return ans;
 }`,
     python: `def longestPath(parent, s):
-    pass`,
+    from collections import defaultdict
+    n = len(parent)
+    children = defaultdict(list)
+    for i in range(1, n): children[parent[i]].append(i)
+    ans = [1]
+    def dfs(u):
+        best1 = best2 = 0
+        for v in children[u]:
+            length = dfs(v)
+            if s[v] != s[u]:
+                if length > best1: best2, best1 = best1, length
+                elif length > best2: best2 = length
+        ans[0] = max(ans[0], 1 + best1 + best2)
+        return 1 + best1
+    dfs(0)
+    return ans[0]`,
   },
   visibleTests: [
     { args: [[-1, 0, 0, 1, 1, 2], 'abacbe'], expected: 3 },

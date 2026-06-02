@@ -44,12 +44,55 @@ A cycle is a path that starts and ends at the **same node**.`,
   params: ['edges'],
   starterCode: {
     javascript: `function longestCycle(edges) {
-
+  const n = edges.length;
+  const visited = new Uint8Array(n);
+  const time = new Int32Array(n).fill(-1);
+  let ans = -1, t = 0;
+  for (let i = 0; i < n; i++) {
+    if (visited[i]) continue;
+    let curr = i;
+    while (curr !== -1 && !visited[curr]) {
+      visited[curr] = 1; time[curr] = t++; curr = edges[curr];
+    }
+    if (curr !== -1 && visited[curr] === 1) ans = Math.max(ans, t - time[curr]);
+    curr = i;
+    while (curr !== -1 && visited[curr] === 1) { visited[curr] = 2; curr = edges[curr]; }
+  }
+  return ans;
 }`,
-    typescript: "function longestCycle(edges: number[]): number {\n\n}",
-
+    typescript: `function longestCycle(edges: number[]): number {
+  const n = edges.length;
+  const visited = new Uint8Array(n);
+  const time = new Int32Array(n).fill(-1);
+  let ans = -1, t = 0;
+  for (let i = 0; i < n; i++) {
+    if (visited[i]) continue;
+    let curr = i;
+    while (curr !== -1 && !visited[curr]) {
+      visited[curr] = 1; time[curr] = t++; curr = edges[curr];
+    }
+    if (curr !== -1 && visited[curr] === 1) ans = Math.max(ans, t - time[curr]);
+    curr = i;
+    while (curr !== -1 && visited[curr] === 1) { visited[curr] = 2; curr = edges[curr]; }
+  }
+  return ans;
+}`,
     python: `def longestCycle(edges):
-    pass`,
+    n = len(edges)
+    visited = [0] * n  # 0=unvisited, 1=in_current, 2=done
+    time = [-1] * n
+    ans = -1; t = 0
+    for i in range(n):
+        if visited[i]: continue
+        curr = i
+        while curr != -1 and not visited[curr]:
+            visited[curr] = 1; time[curr] = t; t += 1; curr = edges[curr]
+        if curr != -1 and visited[curr] == 1:
+            ans = max(ans, t - time[curr])
+        curr = i
+        while curr != -1 and visited[curr] == 1:
+            visited[curr] = 2; curr = edges[curr]
+    return ans`,
   },
   visibleTests: [
     { args: [[3,3,4,2,3]], expected: 3 },
