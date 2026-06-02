@@ -3,7 +3,6 @@ import { matchUrl } from '../lib/blocking/matcher';
 import {
   activeDomains,
   createToken,
-  pruneTokens,
   upsertToken,
 } from '../lib/unlock/tokens';
 import { recordFail, recordSolve } from '../lib/streak/streak';
@@ -150,7 +149,7 @@ async function openChallenge(
     getValue('unlockTokens'),
   ]);
   const now = Date.now();
-  const unlocked = activeDomains(pruneTokens(tokens, now), now);
+  const unlocked = activeDomains(tokens, now);
   const match = matchUrl(request.blockedUrl, { blockRules, keywordRules });
   if (match === null || unlocked.has(match.domain)) {
     return { ok: true };
@@ -197,7 +196,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(async (details) => {
     getValue('keywordRules'),
     getValue('unlockTokens'),
   ]);
-  const unlocked = activeDomains(pruneTokens(tokens, now), now);
+  const unlocked = activeDomains(tokens, now);
   const match = matchUrl(details.url, { blockRules, keywordRules });
   if (match === null || unlocked.has(match.domain)) return;
 

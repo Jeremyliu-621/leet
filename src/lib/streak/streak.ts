@@ -23,7 +23,7 @@ export function daysBetween(a: string, b: string): number {
   if (!DATE_RE.test(a) || !DATE_RE.test(b)) return NaN;
   const aMs = new Date(`${a}T00:00:00`).getTime();
   const bMs = new Date(`${b}T00:00:00`).getTime();
-  if (isNaN(aMs) || isNaN(bMs)) return NaN;
+  if (Number.isNaN(aMs) || Number.isNaN(bMs)) return NaN;
   return Math.round((aMs - bMs) / (24 * 60 * 60 * 1000));
 }
 
