@@ -37,12 +37,33 @@ Note that \`abs(x)\` is defined as follows:
   params: ['nums'],
   starterCode: {
     javascript: `function maxAbsoluteSum(nums) {
-
+  let maxSum = 0, minSum = 0, maxCur = 0, minCur = 0;
+  for (const x of nums) {
+    maxCur = Math.max(0, maxCur + x);
+    minCur = Math.min(0, minCur + x);
+    maxSum = Math.max(maxSum, maxCur);
+    minSum = Math.min(minSum, minCur);
+  }
+  return Math.max(maxSum, -minSum);
 }`,
-    typescript: "function maxAbsoluteSum(nums: number[]): number {\n\n}",
-
+    typescript: `function maxAbsoluteSum(nums: number[]): number {
+  let maxSum = 0, minSum = 0, maxCur = 0, minCur = 0;
+  for (const x of nums) {
+    maxCur = Math.max(0, maxCur + x);
+    minCur = Math.min(0, minCur + x);
+    maxSum = Math.max(maxSum, maxCur);
+    minSum = Math.min(minSum, minCur);
+  }
+  return Math.max(maxSum, -minSum);
+}`,
     python: `def maxAbsoluteSum(nums):
-    pass`,
+    max_sum = min_sum = max_cur = min_cur = 0
+    for x in nums:
+        max_cur = max(0, max_cur + x)
+        min_cur = min(0, min_cur + x)
+        max_sum = max(max_sum, max_cur)
+        min_sum = min(min_sum, min_cur)
+    return max(max_sum, -min_sum)`,
   },
   visibleTests: [
     { args: [[1, -3, 2, 3, -4]], expected: 5 },

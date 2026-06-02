@@ -41,12 +41,13 @@ function maximum69Number(num) {
   params: ['num'],
   starterCode: {
     javascript: `function maximum69Number(num) {
-
+  return Number(String(num).replace('6', '9'));
 }`,
-    typescript: "function maximum69Number(num: number): number {\n\n}",
-
+    typescript: `function maximum69Number(num: number): number {
+  return Number(String(num).replace('6', '9'));
+}`,
     python: `def maximum69Number(num):
-    pass`,
+    return int(str(num).replace('6', '9', 1))`,
   },
   visibleTests: [
     { args: [9669], expected: 9969 },

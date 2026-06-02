@@ -39,11 +39,66 @@ Return the **maximum** total coins the robot can collect.`,
   functionName: 'maximumAmount',
   params: ['coins'],
   starterCode: {
-    javascript: `function maximumAmount(coins) {\n\n}`,
-    typescript: `function maximumAmount(coins: number[][]): number {
-
+    javascript: `function maximumAmount(coins) {
+  const n = coins.length, m = coins[0].length;
+  const NEG = -Infinity;
+  const dp = Array.from({length: n}, () => Array.from({length: m}, () => [NEG, NEG, NEG]));
+  dp[0][0][0] = coins[0][0];
+  if (coins[0][0] < 0) dp[0][0][1] = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (i === 0 && j === 0) continue;
+      const c = coins[i][j], prevs = [];
+      if (i > 0) prevs.push(dp[i-1][j]);
+      if (j > 0) prevs.push(dp[i][j-1]);
+      for (let k = 0; k <= 2; k++) {
+        for (const p of prevs) if (p[k] !== NEG) dp[i][j][k] = Math.max(dp[i][j][k], p[k] + c);
+        if (c < 0 && k >= 1) for (const p of prevs) if (p[k-1] !== NEG) dp[i][j][k] = Math.max(dp[i][j][k], p[k-1]);
+      }
+    }
+  }
+  return Math.max(...dp[n-1][m-1]);
 }`,
-    python: `def maximumAmount(coins: list[list[int]]) -> int:\n    pass`,
+    typescript: `function maximumAmount(coins: number[][]): number {
+  const n = coins.length, m = coins[0]!.length;
+  const NEG = -Infinity;
+  const dp = Array.from({length: n}, () => Array.from({length: m}, () => [NEG, NEG, NEG] as [number,number,number]));
+  dp[0]![0]![0] = coins[0]![0]!;
+  if (coins[0]![0]! < 0) dp[0]![0]![1] = 0;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      if (i === 0 && j === 0) continue;
+      const c = coins[i]![j]!, prevs: [number,number,number][] = [];
+      if (i > 0) prevs.push(dp[i-1]![j]!);
+      if (j > 0) prevs.push(dp[i]![j-1]!);
+      for (let k = 0; k <= 2; k++) {
+        for (const p of prevs) if (p[k] !== NEG) dp[i]![j]![k] = Math.max(dp[i]![j]![k], p[k] + c);
+        if (c < 0 && k >= 1) for (const p of prevs) if (p[k-1] !== NEG) dp[i]![j]![k] = Math.max(dp[i]![j]![k], p[k-1]);
+      }
+    }
+  }
+  return Math.max(...dp[n-1]![m-1]!);
+}`,
+    python: `def maximumAmount(coins: list[list[int]]) -> int:
+    n, m = len(coins), len(coins[0])
+    NEG = float('-inf')
+    dp = [[[NEG]*3 for _ in range(m)] for _ in range(n)]
+    dp[0][0][0] = coins[0][0]
+    if coins[0][0] < 0: dp[0][0][1] = 0
+    for i in range(n):
+        for j in range(m):
+            if i == 0 and j == 0: continue
+            c = coins[i][j]
+            prevs = []
+            if i > 0: prevs.append(dp[i-1][j])
+            if j > 0: prevs.append(dp[i][j-1])
+            for k in range(3):
+                for p in prevs:
+                    if p[k] != NEG: dp[i][j][k] = max(dp[i][j][k], p[k] + c)
+                if c < 0 and k >= 1:
+                    for p in prevs:
+                        if p[k-1] != NEG: dp[i][j][k] = max(dp[i][j][k], p[k-1])
+    return max(dp[n-1][m-1])`,
   },
   visibleTests: [
     { args: [[[1, 2], [3, 4]]], expected: 8 },

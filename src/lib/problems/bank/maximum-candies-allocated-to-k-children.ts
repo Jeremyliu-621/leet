@@ -36,12 +36,31 @@ Given an integer \`k\`, return the **maximum** number of candies each child can 
   params: ['candies', 'k'],
   starterCode: {
     javascript: `function maximumCandies(candies, k) {
-
+  let lo = 0, hi = Math.max(...candies);
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    const can = candies.reduce((sum, c) => sum + Math.floor(c / mid), 0);
+    if (can >= k) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
-    typescript: "function maximumCandies(candies: number[], k: number): number {\n\n}",
-
+    typescript: `function maximumCandies(candies: number[], k: number): number {
+  let lo = 0, hi = Math.max(...candies);
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    const can = candies.reduce((sum, c) => sum + Math.floor(c / mid), 0);
+    if (can >= k) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
     python: `def maximumCandies(candies, k):
-    pass`,
+    lo, hi = 0, max(candies)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        can = sum(c // mid for c in candies)
+        if can >= k: lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [[5, 8, 6], 3], expected: 5 },

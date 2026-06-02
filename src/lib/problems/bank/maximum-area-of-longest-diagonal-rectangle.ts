@@ -36,13 +36,29 @@ Return the **area** of the rectangle having the **longest** diagonal. If there a
   params: ['dimensions'],
   starterCode: {
     javascript: `function areaOfMaxDiagonal(dimensions) {
-
+  let bestDiag = 0, bestArea = 0;
+  for (const [l, w] of dimensions) {
+    const diag = l * l + w * w, area = l * w;
+    if (diag > bestDiag || (diag === bestDiag && area > bestArea)) { bestDiag = diag; bestArea = area; }
+  }
+  return bestArea;
 }`,
     typescript: `function areaOfMaxDiagonal(dimensions: number[][]): number {
-
+  let bestDiag = 0, bestArea = 0;
+  for (const d of dimensions) {
+    const [l, w] = [d[0]!, d[1]!];
+    const diag = l * l + w * w, area = l * w;
+    if (diag > bestDiag || (diag === bestDiag && area > bestArea)) { bestDiag = diag; bestArea = area; }
+  }
+  return bestArea;
 }`,
     python: `def areaOfMaxDiagonal(dimensions: list[list[int]]) -> int:
-    pass`,
+    best_diag = best_area = 0
+    for l, w in dimensions:
+        diag, area = l*l + w*w, l*w
+        if diag > best_diag or (diag == best_diag and area > best_area):
+            best_diag, best_area = diag, area
+    return best_area`,
   },
   visibleTests: [
     { args: [[[9, 3], [8, 6]]], expected: 48 },

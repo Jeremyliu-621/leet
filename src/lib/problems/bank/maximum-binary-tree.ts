@@ -83,10 +83,26 @@ Return the **maximum binary tree** built from \`nums\`. Return the tree as a lev
   params: ['nums'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// maximumBinaryTreeRunner is pre-defined and converts your TreeNode to an array.\nfunction constructMaximumBinaryTree(nums) {\n  // Build TreeNode objects: { val, left, right }\n}\n',
-    typescript: "function maximumBinaryTreeRunner(nums: number[]): (number | null)[] {\n  // Build TreeNode objects: { val, left, right }\n}",
-
-    python: '# maximumBinaryTreeRunner is pre-defined. TreeNode is available.\ndef constructMaximumBinaryTree(nums):\n    pass\n',
+    javascript: `// maximumBinaryTreeRunner is pre-defined and converts your TreeNode to an array.
+function constructMaximumBinaryTree(nums) {
+  if (!nums.length) return null;
+  const maxI = nums.indexOf(Math.max(...nums));
+  return { val: nums[maxI], left: constructMaximumBinaryTree(nums.slice(0, maxI)), right: constructMaximumBinaryTree(nums.slice(maxI + 1)) };
+}`,
+    typescript: `// maximumBinaryTreeRunner is pre-defined and converts your TreeNode to an array.
+function constructMaximumBinaryTree(nums: number[]): { val: number, left: unknown, right: unknown } | null {
+  if (!nums.length) return null;
+  const maxI = nums.indexOf(Math.max(...nums));
+  return { val: nums[maxI]!, left: constructMaximumBinaryTree(nums.slice(0, maxI)), right: constructMaximumBinaryTree(nums.slice(maxI + 1)) };
+}`,
+    python: `# maximumBinaryTreeRunner is pre-defined. TreeNode is available.
+def constructMaximumBinaryTree(nums):
+    if not nums: return None
+    max_i = nums.index(max(nums))
+    node = TreeNode(nums[max_i])
+    node.left = constructMaximumBinaryTree(nums[:max_i])
+    node.right = constructMaximumBinaryTree(nums[max_i+1:])
+    return node`,
   },
   visibleTests: [
     { args: [[3, 2, 1, 6, 0, 5]], expected: [6, 3, 5, null, 2, 0, null, null, 1] },

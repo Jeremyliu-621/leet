@@ -42,13 +42,28 @@ Return the **maximum number of bags** that you can fill to **full capacity**.
   params: ['capacity', 'rocks', 'additionalRocks'],
   starterCode: {
     javascript: `function maximumBags(capacity, rocks, additionalRocks) {
-  // Return the maximum number of bags filled to full capacity
+  const rem = capacity.map((c, i) => c - rocks[i]).sort((a, b) => a - b);
+  let ans = 0;
+  for (const r of rem) {
+    if (additionalRocks >= r) { additionalRocks -= r; ans++; } else break;
+  }
+  return ans;
 }`,
-    typescript: "function maximumBags(capacity: number[], rocks: number[], additionalRocks: number): number {\n  // Return the maximum number of bags filled to full capacity\n}",
-
+    typescript: `function maximumBags(capacity: number[], rocks: number[], additionalRocks: number): number {
+  const rem = capacity.map((c, i) => c - rocks[i]!).sort((a, b) => a - b);
+  let ans = 0;
+  for (const r of rem) {
+    if (additionalRocks >= r) { additionalRocks -= r; ans++; } else break;
+  }
+  return ans;
+}`,
     python: `def maximumBags(capacity: list[int], rocks: list[int], additionalRocks: int) -> int:
-    # Return the maximum number of bags filled to full capacity
-    pass`,
+    rem = sorted(c - r for c, r in zip(capacity, rocks))
+    ans = 0
+    for r in rem:
+        if additionalRocks >= r: additionalRocks -= r; ans += 1
+        else: break
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, 4, 5], [1, 2, 4, 4], 2], expected: 3 },

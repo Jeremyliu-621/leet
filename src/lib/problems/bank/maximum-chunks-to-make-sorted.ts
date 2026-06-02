@@ -37,13 +37,27 @@ Return the **largest** number of chunks we can make to sort the array.`,
   params: ['arr'],
   starterCode: {
     javascript: `function maxChunksToSorted(arr) {
-
+  let maxSeen = 0, ans = 0;
+  for (let i = 0; i < arr.length; i++) {
+    maxSeen = Math.max(maxSeen, arr[i]);
+    if (maxSeen === i) ans++;
+  }
+  return ans;
 }`,
     typescript: `function maxChunksToSorted(arr: number[]): number {
-
+  let maxSeen = 0, ans = 0;
+  for (let i = 0; i < arr.length; i++) {
+    maxSeen = Math.max(maxSeen, arr[i]!);
+    if (maxSeen === i) ans++;
+  }
+  return ans;
 }`,
     python: `def maxChunksToSorted(arr):
-    pass`,
+    max_seen = ans = 0
+    for i, v in enumerate(arr):
+        max_seen = max(max_seen, v)
+        if max_seen == i: ans += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[4, 3, 2, 1, 0]], expected: 1 },
