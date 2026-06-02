@@ -94,12 +94,49 @@ Trees are given as BFS level-order arrays with \`null\` for missing nodes.`,
   params: ['root'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript:
-      '// TreeNode class and maxAncestorDiffRunner wrapper are pre-defined.\n// Implement the function below:\nfunction maxAncestorDiff(root) {\n  \n}\n',
-    typescript: "function maxAncestorDiffRunner(root: (number | null)[]): number {\n  \n}",
-
-    python:
-      '# TreeNode class and maxAncestorDiffRunner wrapper are pre-defined.\n# Implement the function below:\ndef maxAncestorDiff(root):\n    pass\n',
+    javascript: `// TreeNode class and maxAncestorDiffRunner wrapper are pre-defined.
+// Implement the function below:
+function maxAncestorDiff(root) {
+  function dfs(node, mn, mx) {
+    if (!node) return mx - mn;
+    mn = Math.min(mn, node.val);
+    mx = Math.max(mx, node.val);
+    return Math.max(dfs(node.left, mn, mx), dfs(node.right, mn, mx));
+  }
+  return dfs(root, root.val, root.val);
+}`,
+    typescript: `function maxAncestorDiffRunner(root: (number | null)[]): number {
+  if (!root.length || root[0] == null) return 0;
+  const n = root.length;
+  const lc = new Int32Array(n).fill(-1);
+  const rc = new Int32Array(n).fill(-1);
+  const q: number[] = [0];
+  let p = 1;
+  for (let qi = 0; qi < q.length; qi++) {
+    const nd = q[qi]!;
+    if (p < n && root[p] != null) { lc[nd] = p; q.push(p); }
+    p++;
+    if (p < n && root[p] != null) { rc[nd] = p; q.push(p); }
+    p++;
+  }
+  const dfs = (i: number, mn: number, mx: number): number => {
+    if (i === -1) return mx - mn;
+    const v = root[i] as number;
+    mn = Math.min(mn, v); mx = Math.max(mx, v);
+    return Math.max(dfs(lc[i]!, mn, mx), dfs(rc[i]!, mn, mx));
+  };
+  return dfs(0, root[0] as number, root[0] as number);
+}`,
+    python: `# TreeNode class and maxAncestorDiffRunner wrapper are pre-defined.
+# Implement the function below:
+def maxAncestorDiff(root):
+    def dfs(node, mn, mx):
+        if not node:
+            return mx - mn
+        mn = min(mn, node.val)
+        mx = max(mx, node.val)
+        return max(dfs(node.left, mn, mx), dfs(node.right, mn, mx))
+    return dfs(root, root.val, root.val)`,
   },
   visibleTests: [
     { args: [[8, 3, 10, 1, 6, null, 14, null, null, 4, 7, 13]], expected: 7 },

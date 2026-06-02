@@ -41,12 +41,19 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function maximumCount(nums) {
-
+  const neg = nums.filter(x => x < 0).length;
+  const pos = nums.filter(x => x > 0).length;
+  return Math.max(neg, pos);
 }`,
-    typescript: "function maximumCount(nums: number[]): number {\n\n}",
-
+    typescript: `function maximumCount(nums: number[]): number {
+  const neg = nums.filter(x => x < 0).length;
+  const pos = nums.filter(x => x > 0).length;
+  return Math.max(neg, pos);
+}`,
     python: `def maximumCount(nums):
-    pass`,
+    neg = sum(1 for x in nums if x < 0)
+    pos = sum(1 for x in nums if x > 0)
+    return max(neg, pos)`,
   },
   visibleTests: [
     { args: [[-2, -1, -1, 1, 2, 3]], expected: 3 },

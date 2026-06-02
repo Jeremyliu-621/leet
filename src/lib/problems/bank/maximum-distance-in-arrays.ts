@@ -38,10 +38,38 @@ Return the maximum distance.`,
   functionName: 'maxDistance',
   params: ['arrays'],
   starterCode: {
-    javascript: 'function maxDistance(arrays) {\n\n}\n',
-    typescript: "function maxDistance(arrays: number[][]): number {\n\n}",
-
-    python: 'def maxDistance(arrays):\n    pass\n',
+    javascript: `function maxDistance(arrays) {
+  let globalMin = arrays[0][0], globalMax = arrays[0][arrays[0].length - 1], ans = 0;
+  for (let i = 1; i < arrays.length; i++) {
+    const arr = arrays[i];
+    const first = arr[0], last = arr[arr.length - 1];
+    ans = Math.max(ans, last - globalMin, globalMax - first);
+    globalMin = Math.min(globalMin, first);
+    globalMax = Math.max(globalMax, last);
+  }
+  return ans;
+}`,
+    typescript: `function maxDistance(arrays: number[][]): number {
+  let globalMin = arrays[0]![0]!, globalMax = arrays[0]![arrays[0]!.length - 1]!, ans = 0;
+  for (let i = 1; i < arrays.length; i++) {
+    const arr = arrays[i]!;
+    const first = arr[0]!, last = arr[arr.length - 1]!;
+    ans = Math.max(ans, last - globalMin, globalMax - first);
+    globalMin = Math.min(globalMin, first);
+    globalMax = Math.max(globalMax, last);
+  }
+  return ans;
+}`,
+    python: `def maxDistance(arrays):
+    global_min = arrays[0][0]
+    global_max = arrays[0][-1]
+    ans = 0
+    for arr in arrays[1:]:
+        first, last = arr[0], arr[-1]
+        ans = max(ans, last - global_min, global_max - first)
+        global_min = min(global_min, first)
+        global_max = max(global_max, last)
+    return ans`,
   },
   visibleTests: [
     { args: [[[1,2,3],[4,5],[1,2,3]]], expected: 4 },

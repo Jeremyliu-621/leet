@@ -44,13 +44,28 @@ Return this **maximum** difference. It is guaranteed that there exists at least 
   params: ['s'],
   starterCode: {
     javascript: `function maxDifference(s) {
-
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c] || 0) + 1;
+  const vals = Object.values(freq);
+  const maxOdd = Math.max(...vals.filter(f => f % 2 === 1));
+  const minEven = Math.min(...vals.filter(f => f % 2 === 0));
+  return maxOdd - minEven;
 }`,
     typescript: `function maxDifference(s: string): number {
-
+  const freq: Record<string, number> = {};
+  for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+  const vals = Object.values(freq);
+  const maxOdd = Math.max(...vals.filter(f => f % 2 === 1));
+  const minEven = Math.min(...vals.filter(f => f % 2 === 0));
+  return maxOdd - minEven;
 }`,
     python: `def maxDifference(s):
-    pass`,
+    from collections import Counter
+    freq = Counter(s)
+    vals = list(freq.values())
+    max_odd = max(f for f in vals if f % 2 == 1)
+    min_even = min(f for f in vals if f % 2 == 0)
+    return max_odd - min_even`,
   },
   visibleTests: [
     { args: ['aaaaabbc'], expected: 3 },

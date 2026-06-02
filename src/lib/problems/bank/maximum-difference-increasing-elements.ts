@@ -44,12 +44,28 @@ return ans;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: `function maximumDifference(nums) {
-
+  let min = nums[0], ans = -1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > min) ans = Math.max(ans, nums[i] - min);
+    min = Math.min(min, nums[i]);
+  }
+  return ans;
 }`,
-    typescript: "function maximumDifference(nums: number[]): number {\n\n}",
-
+    typescript: `function maximumDifference(nums: number[]): number {
+  let min = nums[0]!, ans = -1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i]! > min) ans = Math.max(ans, nums[i]! - min);
+    min = Math.min(min, nums[i]!);
+  }
+  return ans;
+}`,
     python: `def maximumDifference(nums):
-    pass`,
+    min_val, ans = nums[0], -1
+    for x in nums[1:]:
+        if x > min_val:
+            ans = max(ans, x - min_val)
+        min_val = min(min_val, x)
+    return ans`,
   },
   visibleTests: [
     { args: [[7, 1, 5, 4]], expected: 4 },

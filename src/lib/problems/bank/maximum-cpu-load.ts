@@ -40,10 +40,50 @@ Jobs may overlap. Return \`0\` if the input is empty.`,
   functionName: 'findMaxCPULoad',
   params: ['jobs'],
   starterCode: {
-    javascript: `function findMaxCPULoad(jobs) {\n  \n}`,
-    typescript: "function findMaxCPULoad(jobs: number[][]): number {\n  \n}",
-
-    python: `def findMaxCPULoad(jobs):\n    pass`,
+    javascript: `function findMaxCPULoad(jobs) {
+  if (!jobs.length) return 0;
+  const events = [];
+  for (const [s, e, c] of jobs) {
+    events.push([s, 1, c]);
+    events.push([e, -1, c]);
+  }
+  events.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] - b[1]);
+  let load = 0, maxLoad = 0;
+  for (const [, type, c] of events) {
+    load += type * c;
+    if (load > maxLoad) maxLoad = load;
+  }
+  return maxLoad;
+}`,
+    typescript: `function findMaxCPULoad(jobs: number[][]): number {
+  if (!jobs.length) return 0;
+  const events: number[][] = [];
+  for (const [s, e, c] of jobs) {
+    events.push([s!, 1, c!]);
+    events.push([e!, -1, c!]);
+  }
+  events.sort((a, b) => a[0]! !== b[0]! ? a[0]! - b[0]! : a[1]! - b[1]!);
+  let load = 0, maxLoad = 0;
+  for (const [, type, c] of events) {
+    load += type! * c!;
+    if (load > maxLoad) maxLoad = load;
+  }
+  return maxLoad;
+}`,
+    python: `def findMaxCPULoad(jobs):
+    if not jobs:
+        return 0
+    events = []
+    for s, e, c in jobs:
+        events.append((s, 1, c))
+        events.append((e, -1, c))
+    events.sort(key=lambda x: (x[0], x[1]))
+    load = max_load = 0
+    for _, t, c in events:
+        load += t * c
+        if load > max_load:
+            max_load = load
+    return max_load`,
   },
   visibleTests: [
     { args: [[[1,4,3],[2,5,4],[7,9,6]]], expected: 7 },
