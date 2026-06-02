@@ -48,9 +48,11 @@ export function matchUrl(url: string, rules: RuleSet): BlockMatch | null {
     return null;
   }
 
+  const lowerUrl = url.toLowerCase();
+
   for (const rule of rules.blockRules) {
     if (!rule.enabled) continue;
-    if (rule.kind === 'url' && url.startsWith(rule.pattern) && rule.pattern.length > 0) {
+    if (rule.kind === 'url' && rule.pattern.length > 0 && lowerUrl.startsWith(rule.pattern.toLowerCase())) {
       return { ruleId: rule.id, ruleKind: 'block-url', pattern: rule.pattern, domain };
     }
   }
@@ -62,7 +64,6 @@ export function matchUrl(url: string, rules: RuleSet): BlockMatch | null {
     }
   }
 
-  const lowerUrl = url.toLowerCase();
   for (const rule of rules.keywordRules) {
     if (!rule.enabled) continue;
     const keyword = rule.keyword.toLowerCase().trim();

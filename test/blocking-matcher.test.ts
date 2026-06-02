@@ -110,6 +110,15 @@ describe('matchUrl edge cases', () => {
     expect(matchUrl('https://youtube.com/', rules)).toBeNull();
   });
 
+  it('matches URL rules case-insensitively to match DNR behavior', () => {
+    const rules = {
+      blockRules: [urlRule('https://x.com/Explore')],
+      keywordRules: [],
+    };
+    const m = matchUrl('https://x.com/explore/trending', rules);
+    expect(m?.ruleKind).toBe('block-url');
+  });
+
   it('URL rules take priority over domain rules for the same site', () => {
     const rules = {
       blockRules: [urlRule('https://youtube.com/shorts'), domainRule('youtube.com')],
