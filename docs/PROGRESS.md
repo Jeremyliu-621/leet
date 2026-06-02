@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2946** problems; 9171 tests green. Batch 284 (local+remote, 9 total) complete.
+**Current focus:** Bank at **2950** problems; 9198 tests green. Batch 285 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 285+); starter backfill; UX polish.
+**Next up:** Bank growth (batch 286+); starter backfill; UX polish.
+
+### feat(bank): batch 285 — min-ops-all-equal-one, query-kth-trimmed, min-deletions-divisible, finding-visible-mountains (2026-06-02)
+Four new problems: `minimum-number-of-operations-to-make-all-array-elements-equal-to-one` (medium/arrays+math — if any 1 exists: n-count(1s); else find shortest subarray with GCD=1 (length L): L+n-2 ops total; if impossible -1; O(n²)), `query-kth-smallest-trimmed-number` (medium/arrays+strings — for each query, build (trimmed, idx) pairs, sort lex by trimmed then by idx, return k-th idx; O(q·n log n)), `minimum-deletions-to-make-array-divisible` (hard/arrays+math — compute g=GCD(numsDivide); sort nums; first i with g%nums[i]==0 gives i deletions; else -1; O(n log n + |d| log |d|)), `finding-the-number-of-visible-mountains` (medium/arrays+stack — convert peak [x,y] to interval [x-y,x+y]; sort by l asc/r desc; track maxR; duplicates (same [l,r]) hide each other; count intervals with r>maxR and freq=1; O(n log n)). Bank at **2950**; 9198 tests.
 
 ### feat(bank): batch 284 (local) — find-good-ways-split-string, count-good-subarrays, min-cost-flip-expression, find-good-indices (2026-06-02)
 Four new problems: `find-number-of-good-ways-to-split-a-string` (medium/strings+hash-map — O(n) prefix/suffix distinct char count arrays; count positions where counts match), `count-number-of-good-subarrays` (medium/arrays+hash-map+two-pointers — sliding window; cnt+=freq[nums[r]] before incrementing; shrink left while cnt>=k; ans+=l), `minimum-cost-to-change-final-value-of-expression` (hard/stack+DP — recursive descent parseAtom/parseExpr; per-subexpr (cost_to_make_0, cost_to_make_1) DP with operator-flip cost of +1), `find-good-indices` (medium/arrays+DP — decLen[i] = non-increasing run length ending at i; incLen[i] from right; good iff decLen[i-1]>=k and incLen[i+1]>=k). Bank at **2946**; 9171 tests.
