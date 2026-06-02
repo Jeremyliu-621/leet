@@ -46,6 +46,7 @@ import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/sea
 import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
+import { normalizeIndentation } from '../../../lib/editor/indent';
 import type { JudgeResult } from '../../../lib/judge';
 import { LANGUAGE_LABEL, JS_SYNTAX_ONLY_LANGUAGES } from '../../../lib/types';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
@@ -1095,7 +1096,9 @@ export function EditorPanel({
     });
 
     const state = EditorState.create({
-      doc: starterCode,
+      // Reflow the bank's 4-space starter to the active indent size so loaded
+      // code matches what Enter/Tab insert from here on.
+      doc: normalizeIndentation(starterCode, indentSize),
       extensions: [
         // Vim mode (when enabled) MUST come before every other keymap so
         // its modal handlers take precedence. The Compartment lets us
@@ -1164,7 +1167,10 @@ export function EditorPanel({
                   changes: {
                     from: 0,
                     to: view.state.doc.length,
-                    insert: starterCodeRef.current,
+                    insert: normalizeIndentation(
+                      starterCodeRef.current,
+                      indentSizeRef.current,
+                    ),
                   },
                 }),
               );
@@ -1306,7 +1312,11 @@ export function EditorPanel({
     const view = viewRef.current;
     if (!view) return;
     view.dispatch({
-      changes: { from: 0, to: view.state.doc.length, insert: starterCode },
+      changes: {
+        from: 0,
+        to: view.state.doc.length,
+        insert: normalizeIndentation(starterCode, indentSizeRef.current),
+      },
     });
   }, [starterCode]);
 
