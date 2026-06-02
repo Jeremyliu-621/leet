@@ -45,14 +45,28 @@ Return the **minimum** number of elements to delete to make \`nums\` beautiful.`
   params: ['nums'],
   starterCode: {
     javascript: `function minDeletion(nums) {
-  // your code here
+  let del = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    if ((i - del) % 2 === 0 && nums[i] === nums[i + 1]) del++;
+  }
+  if ((nums.length - del) % 2 === 1) del++;
+  return del;
 }`,
     typescript: `function minDeletion(nums: number[]): number {
-  // your code here
+  let del = 0;
+  for (let i = 0; i < nums.length - 1; i++) {
+    if ((i - del) % 2 === 0 && nums[i]! === nums[i + 1]!) del++;
+  }
+  if ((nums.length - del) % 2 === 1) del++;
+  return del;
 }`,
     python: `def minDeletion(nums):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    d = 0
+    for i in range(len(nums) - 1):
+        if (i - d) % 2 == 0 and nums[i] == nums[i + 1]: d += 1
+    if (len(nums) - d) % 2 == 1: d += 1
+    return d`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 3, 5]], expected: 1 },

@@ -42,10 +42,31 @@ Return the **minimum number of coins** of **any value** that need to be added to
   functionName: 'minimumAddedCoins',
   params: ['coins', 'target'],
   starterCode: {
-    javascript: 'function minimumAddedCoins(coins, target) {\n  // your code here\n}\n',
-    typescript: "function minimumAddedCoins(coins: number[], target: number): number {\n  // your code here\n}",
-
-    python: 'def minimumAddedCoins(coins, target):\n    # your code here\n    pass\n',
+    javascript: `function minimumAddedCoins(coins, target) {
+  coins.sort((a, b) => a - b);
+  let reach = 0, ops = 0, i = 0;
+  while (reach < target) {
+    if (i < coins.length && coins[i] <= reach + 1) reach += coins[i++];
+    else { reach += reach + 1; ops++; }
+  }
+  return ops;
+}`,
+    typescript: `function minimumAddedCoins(coins: number[], target: number): number {
+  coins.sort((a, b) => a - b);
+  let reach = 0, ops = 0, i = 0;
+  while (reach < target) {
+    if (i < coins.length && coins[i]! <= reach + 1) reach += coins[i++]!;
+    else { reach += reach + 1; ops++; }
+  }
+  return ops;
+}`,
+    python: `def minimumAddedCoins(coins, target):
+    coins = sorted(coins.to_py() if hasattr(coins, 'to_py') else coins)
+    reach = ops = i = 0
+    while reach < target:
+        if i < len(coins) and coins[i] <= reach + 1: reach += coins[i]; i += 1
+        else: reach += reach + 1; ops += 1
+    return ops`,
   },
   visibleTests: [
     { args: [[1, 4, 10], 19], expected: 2 },
