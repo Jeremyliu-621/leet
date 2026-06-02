@@ -42,12 +42,22 @@ function maxFrequencyElements(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function maxFrequencyElements(nums) {
-
+  const freq = {};
+  for (const n of nums) freq[n] = (freq[n] || 0) + 1;
+  const maxF = Math.max(...Object.values(freq));
+  return Object.values(freq).filter(f => f === maxF).reduce((a, b) => a + b, 0);
 }`,
-    typescript: "function maxFrequencyElements(nums: number[]): number {\n\n}",
-
+    typescript: `function maxFrequencyElements(nums: number[]): number {
+  const freq: Record<number, number> = {};
+  for (const n of nums) freq[n] = (freq[n] ?? 0) + 1;
+  const maxF = Math.max(...Object.values(freq));
+  return Object.values(freq).filter(f => f === maxF).reduce((a, b) => a + b, 0);
+}`,
     python: `def maxFrequencyElements(nums):
-    pass`,
+    from collections import Counter
+    freq = Counter(nums)
+    max_f = max(freq.values())
+    return sum(f for f in freq.values() if f == max_f)`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 3, 1, 4]], expected: 4 },

@@ -39,13 +39,34 @@ Return the number of groups that have the **largest** size.`,
   params: ['n'],
   starterCode: {
     javascript: `function countLargestGroup(n) {
-
+  const digitSum = x => String(x).split('').reduce((s, d) => s + Number(d), 0);
+  const freq = new Map();
+  for (let i = 1; i <= n; i++) {
+    const ds = digitSum(i);
+    freq.set(ds, (freq.get(ds) || 0) + 1);
+  }
+  const maxF = Math.max(...freq.values());
+  let count = 0;
+  for (const f of freq.values()) if (f === maxF) count++;
+  return count;
 }`,
     typescript: `function countLargestGroup(n: number): number {
-
+  const digitSum = (x: number) => String(x).split('').reduce((s, d) => s + Number(d), 0);
+  const freq = new Map<number, number>();
+  for (let i = 1; i <= n; i++) {
+    const ds = digitSum(i);
+    freq.set(ds, (freq.get(ds) ?? 0) + 1);
+  }
+  const maxF = Math.max(...freq.values());
+  let count = 0;
+  for (const f of freq.values()) if (f === maxF) count++;
+  return count;
 }`,
     python: `def countLargestGroup(n: int) -> int:
-    pass`,
+    from collections import Counter
+    freq = Counter(sum(int(d) for d in str(i)) for i in range(1, n + 1))
+    max_f = max(freq.values())
+    return sum(1 for f in freq.values() if f == max_f)`,
   },
   visibleTests: [
     { args: [13], expected: 4 },

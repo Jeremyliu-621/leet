@@ -47,12 +47,35 @@ return ans;\`\`\``
   params: ['nums'],
   starterCode: {
     javascript: `function countNicePairs(nums) {
-
+  const MOD = 1_000_000_007;
+  const rev = n => Number(String(n).split('').reverse().join(''));
+  const freq = new Map();
+  for (const n of nums) {
+    const diff = n - rev(n);
+    freq.set(diff, (freq.get(diff) || 0) + 1);
+  }
+  let ans = 0;
+  for (const cnt of freq.values()) ans = (ans + Math.floor(cnt * (cnt - 1) / 2)) % MOD;
+  return ans;
 }`,
-    typescript: "function countNicePairs(nums: number[]): number {\n\n}",
-
+    typescript: `function countNicePairs(nums: number[]): number {
+  const MOD = 1_000_000_007;
+  const rev = (n: number) => Number(String(n).split('').reverse().join(''));
+  const freq = new Map<number, number>();
+  for (const n of nums) {
+    const diff = n - rev(n);
+    freq.set(diff, (freq.get(diff) ?? 0) + 1);
+  }
+  let ans = 0;
+  for (const cnt of freq.values()) ans = (ans + Math.floor(cnt * (cnt - 1) / 2)) % MOD;
+  return ans;
+}`,
     python: `def countNicePairs(nums):
-    pass`,
+    MOD = 10**9 + 7
+    def rev(n): return int(str(n)[::-1])
+    from collections import Counter
+    freq = Counter(n - rev(n) for n in nums)
+    return sum(cnt * (cnt - 1) // 2 % MOD for cnt in freq.values()) % MOD`,
   },
   visibleTests: [
     { args: [[42, 11, 1, 97]], expected: 2 },

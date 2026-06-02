@@ -37,13 +37,35 @@ export const problem: Problem = {
   params: ['circles'],
   starterCode: {
     javascript: `function countLatticePoints(circles) {
-
+  const points = new Set();
+  for (const [cx, cy, r] of circles) {
+    for (let x = cx - r; x <= cx + r; x++) {
+      for (let y = cy - r; y <= cy + r; y++) {
+        if ((x - cx) ** 2 + (y - cy) ** 2 <= r * r) points.add(x + ',' + y);
+      }
+    }
+  }
+  return points.size;
 }`,
     typescript: `function countLatticePoints(circles: number[][]): number {
-
+  const points = new Set<string>();
+  for (const [cx, cy, r] of circles) {
+    for (let x = cx! - r!; x <= cx! + r!; x++) {
+      for (let y = cy! - r!; y <= cy! + r!; y++) {
+        if ((x - cx!) ** 2 + (y - cy!) ** 2 <= r! * r!) points.add(x + ',' + y);
+      }
+    }
+  }
+  return points.size;
 }`,
     python: `def countLatticePoints(circles):
-    pass`,
+    points = set()
+    for cx, cy, r in circles:
+        for x in range(cx - r, cx + r + 1):
+            for y in range(cy - r, cy + r + 1):
+                if (x - cx) ** 2 + (y - cy) ** 2 <= r * r:
+                    points.add((x, y))
+    return len(points)`,
   },
   visibleTests: [
     { args: [[[2, 2, 1]]], expected: 5 },

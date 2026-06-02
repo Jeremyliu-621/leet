@@ -36,12 +36,42 @@ Return the count of integers in the range \`[l, r]\` that are **not special**.
   params: ['l', 'r'],
   starterCode: {
     javascript: `function nonSpecialCount(l, r) {
-
+  const sqrtR = Math.floor(Math.sqrt(r));
+  const isPrime = new Array(sqrtR + 1).fill(true);
+  isPrime[0] = isPrime[1] = false;
+  for (let i = 2; i * i <= sqrtR; i++) {
+    if (isPrime[i]) for (let j = i * i; j <= sqrtR; j += i) isPrime[j] = false;
+  }
+  let special = 0;
+  for (let p = 2; p <= sqrtR; p++) {
+    if (isPrime[p] && p * p >= l && p * p <= r) special++;
+  }
+  return r - l + 1 - special;
 }`,
-    typescript: "function nonSpecialCount(l: number, r: number): number {\n\n}",
-
+    typescript: `function nonSpecialCount(l: number, r: number): number {
+  const sqrtR = Math.floor(Math.sqrt(r));
+  const isPrime = new Array(sqrtR + 1).fill(true) as boolean[];
+  isPrime[0] = isPrime[1] = false;
+  for (let i = 2; i * i <= sqrtR; i++) {
+    if (isPrime[i]) for (let j = i * i; j <= sqrtR; j += i) isPrime[j] = false;
+  }
+  let special = 0;
+  for (let p = 2; p <= sqrtR; p++) {
+    if (isPrime[p] && p * p >= l && p * p <= r) special++;
+  }
+  return r - l + 1 - special;
+}`,
     python: `def nonSpecialCount(l, r):
-    pass`,
+    import math
+    sqrt_r = int(math.isqrt(r))
+    is_prime = [True] * (sqrt_r + 1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(sqrt_r**0.5) + 1):
+        if is_prime[i]:
+            for j in range(i*i, sqrt_r + 1, i):
+                is_prime[j] = False
+    special = sum(1 for p in range(2, sqrt_r + 1) if is_prime[p] and l <= p*p <= r)
+    return r - l + 1 - special`,
   },
   visibleTests: [
     { args: [5, 7], expected: 3 },
