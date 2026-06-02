@@ -30,10 +30,26 @@ export const problem: Problem = {
   functionName: 'judgeCircle',
   params: ['moves'],
   starterCode: {
-    javascript: `function judgeCircle(moves) {\n  // your code here\n}\n`,
-    typescript: "function judgeCircle(moves: string): boolean {\n  // your code here\n}",
-
-    python: `def judgeCircle(moves):\n    # your code here\n    pass\n`,
+    javascript: `function judgeCircle(moves) {
+  let x = 0, y = 0;
+  for (const c of moves) {
+    if (c === 'U') y++; else if (c === 'D') y--;
+    else if (c === 'L') x--; else if (c === 'R') x++;
+  }
+  return x === 0 && y === 0;
+}`,
+    typescript: `function judgeCircle(moves: string): boolean {
+  let x = 0, y = 0;
+  for (const c of moves) {
+    if (c === 'U') y++; else if (c === 'D') y--;
+    else if (c === 'L') x--; else if (c === 'R') x++;
+  }
+  return x === 0 && y === 0;
+}`,
+    python: `def judgeCircle(moves):
+    if hasattr(moves, 'to_py'): moves = moves.to_py()
+    moves = str(moves)
+    return moves.count('U') == moves.count('D') and moves.count('L') == moves.count('R')`,
   },
   visibleTests: [
     { args: ['UD'], expected: true },

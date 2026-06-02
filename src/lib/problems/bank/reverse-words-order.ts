@@ -36,10 +36,15 @@ export const problem: Problem = {
   functionName: 'reverseWordOrder',
   params: ['sentence'],
   starterCode: {
-    javascript: 'function reverseWordOrder(sentence) {\n  // your code here\n}\n',
-    typescript: "function reverseWordOrder(sentence: string): string {\n  // your code here\n}",
-
-    python: 'def reverseWordOrder(sentence):\n    # your code here\n    pass\n',
+    javascript: `function reverseWordOrder(sentence) {
+  return sentence.split(' ').reverse().join(' ');
+}`,
+    typescript: `function reverseWordOrder(sentence: string): string {
+  return sentence.split(' ').reverse().join(' ');
+}`,
+    python: `def reverseWordOrder(sentence):
+    if hasattr(sentence, 'to_py'): sentence = sentence.to_py()
+    return ' '.join(str(sentence).split(' ')[::-1])`,
   },
   visibleTests: [
     { args: ['the sky is blue'], expected: 'blue is sky the' },

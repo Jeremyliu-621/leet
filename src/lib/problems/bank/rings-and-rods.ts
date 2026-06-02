@@ -41,10 +41,33 @@ Return the number of rods that have **all three colors** of rings on them.`,
   functionName: 'countPoints',
   params: ['rings'],
   starterCode: {
-    javascript: 'function countPoints(rings) {\n  // your code here\n}\n',
-    typescript: "function countPoints(rings: string): number {\n  // your code here\n}",
-
-    python: 'def countPoints(rings):\n    # your code here\n    pass\n',
+    javascript: `function countPoints(rings) {
+  const m = new Map();
+  for (let i = 0; i < rings.length; i += 2) {
+    const c = rings[i], r = rings[i + 1];
+    if (!m.has(r)) m.set(r, new Set());
+    m.get(r).add(c);
+  }
+  return [...m.values()].filter(s => s.size === 3).length;
+}`,
+    typescript: `function countPoints(rings: string): number {
+  const m = new Map<string, Set<string>>();
+  for (let i = 0; i < rings.length; i += 2) {
+    const c = rings[i]!, r = rings[i + 1]!;
+    if (!m.has(r)) m.set(r, new Set());
+    m.get(r)!.add(c);
+  }
+  return [...m.values()].filter(s => s.size === 3).length;
+}`,
+    python: `def countPoints(rings):
+    if hasattr(rings, 'to_py'): rings = rings.to_py()
+    rings = str(rings)
+    m = {}
+    for i in range(0, len(rings), 2):
+        c, r = rings[i], rings[i+1]
+        if r not in m: m[r] = set()
+        m[r].add(c)
+    return sum(1 for s in m.values() if len(s) == 3)`,
   },
   visibleTests: [
     { args: ['B0B6G0R6R0R6G9'], expected: 1 },

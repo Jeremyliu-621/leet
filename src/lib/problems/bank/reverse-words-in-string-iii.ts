@@ -34,10 +34,15 @@ Words in \`s\` are separated by a single space. The string does not contain any 
   functionName: 'reverseWords',
   params: ['s'],
   starterCode: {
-    javascript: 'function reverseWords(s) {\n  // your code here\n}\n',
-    typescript: "function reverseWords(s: string): string {\n  // your code here\n}",
-
-    python: 'def reverseWords(s):\n    # your code here\n    pass\n',
+    javascript: `function reverseWords(s) {
+  return s.split(' ').map(w => w.split('').reverse().join('')).join(' ');
+}`,
+    typescript: `function reverseWords(s: string): string {
+  return s.split(' ').map(w => w.split('').reverse().join('')).join(' ');
+}`,
+    python: `def reverseWords(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    return ' '.join(w[::-1] for w in str(s).split(' '))`,
   },
   visibleTests: [
     { args: ["Let's take LeetCode contest"], expected: "s'teL ekat edoCteeL tsetnoc" },

@@ -39,10 +39,15 @@ export const problem: Problem = {
   functionName: 'reverseWordsInSentence',
   params: ['s'],
   starterCode: {
-    javascript: 'function reverseWordsInSentence(s) {\n  // your code here\n}\n',
-    typescript: "function reverseWordsInSentence(s: string): string {\n  // your code here\n}",
-
-    python: 'def reverseWordsInSentence(s):\n    # your code here\n    pass\n',
+    javascript: `function reverseWordsInSentence(s) {
+  return s.trim().split(/\s+/).reverse().join(' ');
+}`,
+    typescript: `function reverseWordsInSentence(s: string): string {
+  return s.trim().split(/\s+/).reverse().join(' ');
+}`,
+    python: `def reverseWordsInSentence(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    return ' '.join(str(s).split()[::-1])`,
   },
   visibleTests: [
     { args: ['the sky is blue'], expected: 'blue is sky the' },

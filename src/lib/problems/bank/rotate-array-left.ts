@@ -40,9 +40,22 @@ For example, rotating \`[1,2,3,4,5]\` left by 2 gives \`[3,4,5,1,2]\`.`,
   functionName: 'rotateArrayLeft',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function rotateArrayLeft(nums, k) {\n  // your code here\n}\n',
-    typescript: 'function rotateArrayLeft(nums: number[], k: number): number[] {\n  // your code here\n}',
-    python: 'def rotateArrayLeft(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function rotateArrayLeft(nums, k) {
+  const n = nums.length;
+  const steps = k % n;
+  return [...nums.slice(steps), ...nums.slice(0, steps)];
+}`,
+    typescript: `function rotateArrayLeft(nums: number[], k: number): number[] {
+  const n = nums.length;
+  const steps = k % n;
+  return [...nums.slice(steps), ...nums.slice(0, steps)];
+}`,
+    python: `def rotateArrayLeft(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    n = len(nums); steps = k % n if n else 0
+    return nums[steps:] + nums[:steps]`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6, 7], 3], expected: [4, 5, 6, 7, 1, 2, 3] },
