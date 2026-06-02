@@ -39,13 +39,38 @@ export const problem: Problem = {
   params: ['s', 'k'],
   starterCode: {
     javascript: `function maxVowels(s, k) {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  let count = 0;
+  for (let i = 0; i < k; i++) if (vowels.has(s[i])) count++;
+  let best = count;
+  for (let i = k; i < s.length; i++) {
+    if (vowels.has(s[i])) count++;
+    if (vowels.has(s[i - k])) count--;
+    if (count > best) best = count;
+  }
+  return best;
 }`,
     typescript: `function maxVowels(s: string, k: number): number {
-
+  const vowels = new Set(['a', 'e', 'i', 'o', 'u']);
+  let count = 0;
+  for (let i = 0; i < k; i++) if (vowels.has(s[i]!)) count++;
+  let best = count;
+  for (let i = k; i < s.length; i++) {
+    if (vowels.has(s[i]!)) count++;
+    if (vowels.has(s[i - k]!)) count--;
+    if (count > best) best = count;
+  }
+  return best;
 }`,
     python: `def maxVowels(s, k):
-    pass`,
+    vowels = set('aeiou')
+    count = sum(1 for c in s[:k] if c in vowels)
+    best = count
+    for i in range(k, len(s)):
+        if s[i] in vowels: count += 1
+        if s[i - k] in vowels: count -= 1
+        if count > best: best = count
+    return best`,
   },
   visibleTests: [
     { args: ['abciiidef', 3], expected: 3 },

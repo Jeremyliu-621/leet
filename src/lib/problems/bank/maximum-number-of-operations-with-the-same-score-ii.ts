@@ -43,18 +43,66 @@ Return the **maximum** number of operations you can perform.`,
   functionName: 'maxOperations',
   params: ['nums'],
   starterCode: {
-    javascript: `/**
- * @param {number[]} nums
- * @return {number}
- */
-function maxOperations(nums) {
-
+    javascript: `function maxOperations(nums) {
+  const n = nums.length;
+  const solve = (target) => {
+    const memo = new Map();
+    const dp = (l, r) => {
+      if (r - l < 1) return 0;
+      const key = l * 2001 + r;
+      if (memo.has(key)) return memo.get(key);
+      let best = 0;
+      if (nums[l] + nums[l + 1] === target) best = Math.max(best, 1 + dp(l + 2, r));
+      if (nums[r - 1] + nums[r] === target) best = Math.max(best, 1 + dp(l, r - 2));
+      if (nums[l] + nums[r] === target) best = Math.max(best, 1 + dp(l + 1, r - 1));
+      memo.set(key, best);
+      return best;
+    };
+    return dp(0, n - 1);
+  };
+  const targets = new Set([nums[0] + nums[1], nums[n - 2] + nums[n - 1], nums[0] + nums[n - 1]]);
+  let ans = 0;
+  for (const t of targets) ans = Math.max(ans, solve(t));
+  return ans;
 }`,
     typescript: `function maxOperations(nums: number[]): number {
-
+  const n = nums.length;
+  const solve = (target: number): number => {
+    const memo = new Map<number, number>();
+    const dp = (l: number, r: number): number => {
+      if (r - l < 1) return 0;
+      const key = l * 2001 + r;
+      if (memo.has(key)) return memo.get(key)!;
+      let best = 0;
+      if (nums[l]! + nums[l + 1]! === target) best = Math.max(best, 1 + dp(l + 2, r));
+      if (nums[r - 1]! + nums[r]! === target) best = Math.max(best, 1 + dp(l, r - 2));
+      if (nums[l]! + nums[r]! === target) best = Math.max(best, 1 + dp(l + 1, r - 1));
+      memo.set(key, best);
+      return best;
+    };
+    return dp(0, n - 1);
+  };
+  const targets = new Set([nums[0]! + nums[1]!, nums[n - 2]! + nums[n - 1]!, nums[0]! + nums[n - 1]!]);
+  let ans = 0;
+  for (const t of targets) ans = Math.max(ans, solve(t));
+  return ans;
 }`,
     python: `def maxOperations(nums: list[int]) -> int:
-    `,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums)
+    def solve(target):
+        from functools import lru_cache
+        @lru_cache(maxsize=None)
+        def dp(l, r):
+            if r - l < 1: return 0
+            best = 0
+            if nums[l] + nums[l+1] == target: best = max(best, 1 + dp(l+2, r))
+            if nums[r-1] + nums[r] == target: best = max(best, 1 + dp(l, r-2))
+            if nums[l] + nums[r] == target: best = max(best, 1 + dp(l+1, r-1))
+            return best
+        return dp(0, n-1)
+    targets = {nums[0]+nums[1], nums[n-2]+nums[n-1], nums[0]+nums[n-1]}
+    return max(solve(t) for t in targets)`,
   },
   visibleTests: [
     { args: [[3, 2, 1, 4, 5]], expected: 2 },

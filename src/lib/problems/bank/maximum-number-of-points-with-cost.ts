@@ -36,12 +36,51 @@ Return the **maximum** number of points you can achieve.`,
   params: ['points'],
   starterCode: {
     javascript: `function maxPoints(points) {
-
+  const m = points.length, n = points[0].length;
+  let dp = points[0].slice();
+  for (let i = 1; i < m; i++) {
+    const left = new Array(n);
+    const right = new Array(n);
+    left[0] = dp[0];
+    for (let j = 1; j < n; j++) left[j] = Math.max(left[j - 1], dp[j] + j);
+    right[n - 1] = dp[n - 1] - (n - 1);
+    for (let j = n - 2; j >= 0; j--) right[j] = Math.max(right[j + 1], dp[j] - j);
+    const ndp = new Array(n);
+    for (let j = 0; j < n; j++) ndp[j] = points[i][j] + Math.max(left[j] - j, right[j] + j);
+    dp = ndp;
+  }
+  return Math.max(...dp);
 }`,
-    typescript: "function maxPoints(points: number[][]): number {\n\n}",
-
+    typescript: `function maxPoints(points: number[][]): number {
+  const m = points.length, n = points[0]!.length;
+  let dp = points[0]!.slice();
+  for (let i = 1; i < m; i++) {
+    const left = new Array<number>(n);
+    const right = new Array<number>(n);
+    left[0] = dp[0]!;
+    for (let j = 1; j < n; j++) left[j] = Math.max(left[j - 1]!, dp[j]! + j);
+    right[n - 1] = dp[n - 1]! - (n - 1);
+    for (let j = n - 2; j >= 0; j--) right[j] = Math.max(right[j + 1]!, dp[j]! - j);
+    const ndp = new Array<number>(n);
+    for (let j = 0; j < n; j++) ndp[j] = points[i]![j]! + Math.max(left[j]! - j, right[j]! + j);
+    dp = ndp;
+  }
+  return Math.max(...dp);
+}`,
     python: `def maxPoints(points):
-    pass`,
+    if hasattr(points, 'to_py'): points = points.to_py()
+    points = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in points]
+    m, n = len(points), len(points[0])
+    dp = points[0][:]
+    for i in range(1, m):
+        left = [0] * n
+        right = [0] * n
+        left[0] = dp[0]
+        for j in range(1, n): left[j] = max(left[j-1], dp[j] + j)
+        right[n-1] = dp[n-1] - (n-1)
+        for j in range(n-2, -1, -1): right[j] = max(right[j+1], dp[j] - j)
+        dp = [points[i][j] + max(left[j] - j, right[j] + j) for j in range(n)]
+    return max(dp)`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [1, 5, 1], [3, 1, 1]]], expected: 9 },

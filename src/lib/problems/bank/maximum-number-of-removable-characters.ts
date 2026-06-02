@@ -46,10 +46,59 @@ A string \`t\` is a subsequence of a string \`s\` if every character of \`t\` ap
   functionName: 'maximumRemovals',
   params: ['s', 'p', 'removable'],
   starterCode: {
-    javascript: 'function maximumRemovals(s, p, removable) {\n  \n}\n',
-    typescript: "function maximumRemovals(s: string, p: string, removable: number[]): number {\n  \n}",
-
-    python: 'def maximumRemovals(s, p, removable):\n    pass\n',
+    javascript: `function maximumRemovals(s, p, removable) {
+  const n = s.length;
+  const check = (k) => {
+    const removed = new Uint8Array(n);
+    for (let i = 0; i < k; i++) removed[removable[i]] = 1;
+    let j = 0;
+    for (let i = 0; i < n && j < p.length; i++) {
+      if (!removed[i] && s[i] === p[j]) j++;
+    }
+    return j === p.length;
+  };
+  let lo = 0, hi = removable.length;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (check(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
+    typescript: `function maximumRemovals(s: string, p: string, removable: number[]): number {
+  const n = s.length;
+  const check = (k: number): boolean => {
+    const removed = new Uint8Array(n);
+    for (let i = 0; i < k; i++) removed[removable[i]!] = 1;
+    let j = 0;
+    for (let i = 0; i < n && j < p.length; i++) {
+      if (!removed[i] && s[i] === p[j]) j++;
+    }
+    return j === p.length;
+  };
+  let lo = 0, hi = removable.length;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (check(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
+    python: `def maximumRemovals(s, p, removable):
+    if hasattr(removable, 'to_py'): removable = list(removable.to_py())
+    n = len(s)
+    def check(k):
+        removed = bytearray(n)
+        for i in range(k): removed[removable[i]] = 1
+        j = 0
+        for i in range(n):
+            if j == len(p): break
+            if not removed[i] and s[i] == p[j]: j += 1
+        return j == len(p)
+    lo, hi = 0, len(removable)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if check(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: ['abcacb', 'ab', [3, 1, 0]], expected: 2 },

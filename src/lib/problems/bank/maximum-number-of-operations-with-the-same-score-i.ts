@@ -44,13 +44,33 @@ Return the **maximum number of operations** you can perform.
   params: ['nums'],
   starterCode: {
     javascript: `function maxOperations(nums) {
-
+  const score = nums[0] + nums[1];
+  let count = 0;
+  for (let i = 0; i + 1 < nums.length; i += 2) {
+    if (nums[i] + nums[i + 1] === score) count++;
+    else break;
+  }
+  return count;
 }`,
     typescript: `function maxOperations(nums: number[]): number {
-
+  const score = nums[0]! + nums[1]!;
+  let count = 0;
+  for (let i = 0; i + 1 < nums.length; i += 2) {
+    if (nums[i]! + nums[i + 1]! === score) count++;
+    else break;
+  }
+  return count;
 }`,
     python: `def maxOperations(nums: list[int]) -> int:
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    score = nums[0] + nums[1]
+    count = 0
+    i = 0
+    while i + 1 < len(nums):
+        if nums[i] + nums[i + 1] == score: count += 1
+        else: break
+        i += 2
+    return count`,
   },
   functionName: 'maxOperations',
   visibleTests: [

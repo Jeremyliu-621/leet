@@ -43,12 +43,25 @@ Return a **0-indexed** integer array \`answer\` of size \`2\` where \`answer[0]\
   params: ['nums'],
   starterCode: {
     javascript: `function numberOfPairs(nums) {
-
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) || 0) + 1);
+  let pairs = 0;
+  for (const c of freq.values()) pairs += Math.floor(c / 2);
+  return [pairs, nums.length - pairs * 2];
 }`,
-    typescript: "function numberOfPairs(nums: number[]): number[] {\n\n}",
-
+    typescript: `function numberOfPairs(nums: number[]): number[] {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let pairs = 0;
+  for (const c of freq.values()) pairs += Math.floor(c / 2);
+  return [pairs, nums.length - pairs * 2];
+}`,
     python: `def numberOfPairs(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    from collections import Counter
+    freq = Counter(nums)
+    pairs = sum(c // 2 for c in freq.values())
+    return [pairs, len(nums) - pairs * 2]`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 1, 3, 2, 2]], expected: [3, 1] },

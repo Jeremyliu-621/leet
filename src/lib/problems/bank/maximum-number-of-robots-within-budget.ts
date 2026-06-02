@@ -33,14 +33,76 @@ export const problem: Problem = {
   params: ['chargeTimes', 'runningCosts', 'budget'],
   starterCode: {
     javascript: `function maximumRobots(chargeTimes, runningCosts, budget) {
-  // Binary search on k + sliding window with deque for max
+  const n = chargeTimes.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + runningCosts[i];
+  const canFit = (k) => {
+    const dq = [];
+    for (let i = 0; i < n; i++) {
+      while (dq.length && chargeTimes[dq[dq.length - 1]] <= chargeTimes[i]) dq.pop();
+      dq.push(i);
+      if (dq[0] <= i - k) dq.shift();
+      if (i >= k - 1) {
+        const cost = chargeTimes[dq[0]] + k * (prefix[i + 1] - prefix[i - k + 1]);
+        if (cost <= budget) return true;
+      }
+    }
+    return false;
+  };
+  let lo = 0, hi = n;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canFit(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     typescript: `function maximumRobots(chargeTimes: number[], runningCosts: number[], budget: number): number {
-  // Binary search on k + sliding window with deque for max
+  const n = chargeTimes.length;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + runningCosts[i]!;
+  const canFit = (k: number): boolean => {
+    const dq: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (dq.length && chargeTimes[dq[dq.length - 1]!]! <= chargeTimes[i]!) dq.pop();
+      dq.push(i);
+      if (dq[0]! <= i - k) dq.shift();
+      if (i >= k - 1) {
+        const cost = chargeTimes[dq[0]!]! + k * (prefix[i + 1]! - prefix[i - k + 1]!);
+        if (cost <= budget) return true;
+      }
+    }
+    return false;
+  };
+  let lo = 0, hi = n;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canFit(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     python: `def maximumRobots(chargeTimes, runningCosts, budget):
-    # Binary search on k + sliding window with deque for max
-    pass`,
+    if hasattr(chargeTimes, 'to_py'): chargeTimes = list(chargeTimes.to_py())
+    if hasattr(runningCosts, 'to_py'): runningCosts = list(runningCosts.to_py())
+    n = len(chargeTimes)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i+1] = prefix[i] + runningCosts[i]
+    from collections import deque
+    def can_fit(k):
+        dq = deque()
+        for i in range(n):
+            while dq and chargeTimes[dq[-1]] <= chargeTimes[i]: dq.pop()
+            dq.append(i)
+            if dq[0] <= i - k: dq.popleft()
+            if i >= k - 1:
+                cost = chargeTimes[dq[0]] + k * (prefix[i+1] - prefix[i-k+1])
+                if cost <= budget: return True
+        return False
+    lo, hi = 0, n
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_fit(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [[3,6,1,3,4], [2,1,3,4,5], 25], expected: 3 },
