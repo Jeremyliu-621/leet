@@ -3092,6 +3092,9 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 280
+import { problem as maxStudentsExam } from './maximum-students-taking-exam';
+import { problem as maxSumTwoNoOverlapSubs } from './maximum-sum-of-elements-in-two-non-overlapping-subarrays';
 // batch 279
 import { problem as shiftDistanceTwoStrings } from './shift-distance-between-two-strings';
 // batch 278
@@ -6515,6 +6518,9 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 280
+  maxStudentsExam,
+  maxSumTwoNoOverlapSubs,
   // batch 279
   shiftDistanceTwoStrings,
   // batch 278

@@ -46429,6 +46429,56 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 280
+  'maximum-students-taking-exam': `def maxStudents(seats):
+    m, n = len(seats), len(seats[0])
+    row_masks = []
+    for row in seats:
+        mask = 0
+        for i, c in enumerate(row):
+            if c == '.': mask |= 1 << i
+        row_masks.append(mask)
+    full = (1 << n) - 1
+    dp = [-1] * (full + 1)
+    dp[0] = 0
+    for r in range(m):
+        avail = row_masks[r]
+        ndp = [-1] * (full + 1)
+        for prev_mask in range(full + 1):
+            if dp[prev_mask] < 0: continue
+            mask = avail
+            while True:
+                if not (mask & (mask >> 1)) and not (mask & (prev_mask << 1)) and not (mask & (prev_mask >> 1)):
+                    val = dp[prev_mask] + bin(mask).count('1')
+                    if val > ndp[mask]: ndp[mask] = val
+                if mask == 0: break
+                mask = (mask - 1) & avail
+        dp = ndp
+    return max((x for x in dp if x >= 0), default=0)
+`,
+
+  'maximum-sum-of-elements-in-two-non-overlapping-subarrays': `def maxSumTwoNoOverlap(nums, firstLen, secondLen):
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+    def window(start, length):
+        return prefix[start + length] - prefix[start]
+    max_f = [0] * n
+    max_s = [0] * n
+    for i in range(firstLen - 1, n):
+        v = window(i - firstLen + 1, firstLen)
+        max_f[i] = max(max_f[i - 1], v) if i > firstLen - 1 else v
+    for i in range(secondLen - 1, n):
+        v = window(i - secondLen + 1, secondLen)
+        max_s[i] = max(max_s[i - 1], v) if i > secondLen - 1 else v
+    best = 0
+    for i in range(firstLen + secondLen - 1, n):
+        best = max(best, max_f[i - secondLen] + window(i - secondLen + 1, secondLen))
+        best = max(best, max_s[i - firstLen] + window(i - firstLen + 1, firstLen))
+    return best
+`,
+
   // batch 278
   'check-if-two-events-have-conflict': `def haveConflict(event1, event2):
     return event1[0] <= event2[1] and event2[0] <= event1[1]

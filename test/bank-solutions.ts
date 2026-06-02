@@ -47404,6 +47404,62 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 280
+  'maximum-students-taking-exam': (...args: unknown[]) => {
+    const seats = args[0] as string[][];
+    const m = seats.length, n = seats[0]!.length;
+    const rowMasks = seats.map(row => {
+      let mask = 0;
+      for (let i = 0; i < n; i++) if (row[i] === '.') mask |= 1 << i;
+      return mask;
+    });
+    const popcount = (x: number) => { let c = 0; while (x) { c += x & 1; x >>>= 1; } return c; };
+    const full = (1 << n) - 1;
+    let dp = new Array<number>(full + 1).fill(-1);
+    dp[0] = 0;
+    for (let r = 0; r < m; r++) {
+      const avail = rowMasks[r]!;
+      const ndp = new Array<number>(full + 1).fill(-1);
+      for (let prevMask = 0; prevMask <= full; prevMask++) {
+        if ((dp[prevMask] ?? -1) < 0) continue;
+        let mask = avail;
+        do {
+          if (!(mask & (mask >> 1)) && !(mask & (prevMask << 1)) && !(mask & (prevMask >> 1))) {
+            const val = (dp[prevMask] ?? 0) + popcount(mask);
+            if (val > (ndp[mask] ?? -1)) ndp[mask] = val;
+          }
+          if (mask === 0) break;
+          mask = (mask - 1) & avail;
+        } while (true);
+      }
+      dp = ndp;
+    }
+    return Math.max(0, ...dp.filter(x => x >= 0));
+  },
+
+  'maximum-sum-of-elements-in-two-non-overlapping-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[], firstLen = args[1] as number, secondLen = args[2] as number;
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    const win = (start: number, len: number) => prefix[start + len]! - prefix[start]!;
+    const maxF = new Array<number>(n).fill(0), maxS = new Array<number>(n).fill(0);
+    for (let i = firstLen - 1; i < n; i++) {
+      const v = win(i - firstLen + 1, firstLen);
+      maxF[i] = i > firstLen - 1 ? Math.max(maxF[i - 1]!, v) : v;
+    }
+    for (let i = secondLen - 1; i < n; i++) {
+      const v = win(i - secondLen + 1, secondLen);
+      maxS[i] = i > secondLen - 1 ? Math.max(maxS[i - 1]!, v) : v;
+    }
+    let best = 0;
+    for (let i = firstLen + secondLen - 1; i < n; i++) {
+      best = Math.max(best, maxF[i - secondLen]! + win(i - secondLen + 1, secondLen));
+      best = Math.max(best, maxS[i - firstLen]! + win(i - firstLen + 1, firstLen));
+    }
+    return best;
+  },
+
   // batch 278
   'check-if-two-events-have-conflict': (...args: unknown[]) => {
     const event1 = args[0] as string[], event2 = args[1] as string[];
