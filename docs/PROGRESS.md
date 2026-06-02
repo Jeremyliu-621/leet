@@ -6,11 +6,14 @@
 
 ---
 
-**Last updated:** 2026-06-01
+**Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2886** problems; 8978 tests green. Starter backfill ongoing (~600 stubs filled so far).
+**Current focus:** Bank at **2890** problems; 8990 tests green. Starter backfill ongoing (~600 stubs filled so far).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 274+; continued starter backfill; UX polish.
+**Next up:** Batch 275+; continued starter backfill; UX polish.
+
+### feat(bank): batch 274 — min-swaps-balance, score-removing-substrings, count-words-one-letter, count-homogeneous-substrings (2026-06-02)
+Four new problems: `minimum-swaps-to-balance` (medium/stack, LC 1963 — stack open-count: unmatched ']' triggers swap+open++; O(n)), `score-by-removing-substrings` (medium/stack, LC 1717 — greedy two-pass: remove higher-value pair first with stack; O(n)), `count-words-consisting-only-of-one-distinct-letter` (easy/strings, LC 2262 — set size = 1 check per word; O(n)), `count-number-of-homogeneous-substrings` (easy/strings+math, LC 1759 — run-length scan: run of k gives k*(k+1)/2; mod 10^9+7; O(n)). Bank at **2890**; 8990 tests.
 
 ### feat(bank): batch 273 — kth-factor-of-n, last-moment-ants, count-anagrams, min-refuel-stops (2026-06-01)
 Four new problems: `the-kth-factor-of-n` (easy/math, LC 1492 — iterate 1..n counting divisors; return kth; O(n)), `last-moment-before-all-ants-fall-off-a-plank` (medium/arrays+simulation, LC 1503 — passing-through insight: treat collisions as pass-throughs; answer=max(max(left), max(n−right[i])); O(n)), `count-anagrams` (hard/strings+math+hash-map, LC 2514 — for each word: n!/prod(freq_c!) using modular inverse via Fermat's little theorem; multiply across words; BigInt mod 10^9+7; O(n)), `minimum-number-of-refueling-stops` (hard/arrays+heap+dp, LC 871 — greedy max-heap: push passed stations; when out of fuel pop largest; if heap empty return -1; O(n log n)). Bank at **2886**; 8978 tests.
