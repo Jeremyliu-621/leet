@@ -35,12 +35,14 @@ Can you solve it without sorting?`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function findKthLargest(nums, k) {
-
+  return nums.sort((a, b) => b - a)[k - 1];
 }`,
-    typescript: "function findKthLargest(nums: number[], k: number): number {\n\n}",
-
+    typescript: `function findKthLargest(nums: number[], k: number): number {
+  return nums.sort((a, b) => b - a)[k - 1];
+}`,
     python: `def findKthLargest(nums, k):
-    pass`,
+    nums.sort(reverse=True)
+    return nums[k - 1]`,
   },
   visibleTests: [
     { args: [[3, 2, 1, 5, 6, 4], 2], expected: 5 },

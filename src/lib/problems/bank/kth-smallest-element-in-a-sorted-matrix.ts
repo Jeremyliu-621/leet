@@ -37,12 +37,45 @@ You must find a solution with a memory complexity better than \`O(n^2)\`.`,
   params: ['matrix', 'k'],
   starterCode: {
     javascript: `function kthSmallest(matrix, k) {
-
+  const n = matrix.length;
+  let lo = matrix[0][0], hi = matrix[n-1][n-1];
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    let count = 0;
+    for (let r = 0; r < n; r++) {
+      let l = 0, rr = n;
+      while (l < rr) { const m2 = (l+rr)>>1; if (matrix[r][m2] <= mid) l = m2+1; else rr = m2; }
+      count += l;
+    }
+    if (count >= k) hi = mid; else lo = mid + 1;
+  }
+  return lo;
 }`,
-    typescript: "function kthSmallest(matrix: number[][], k: number): number {\n\n}",
-
-    python: `def kthSmallest(matrix: list[list[int]], k: int) -> int:
-    pass`,
+    typescript: `function kthSmallest(matrix: number[][], k: number): number {
+  const n = matrix.length;
+  let lo = matrix[0][0], hi = matrix[n-1][n-1];
+  while (lo < hi) {
+    const mid = lo + Math.floor((hi - lo) / 2);
+    let count = 0;
+    for (let r = 0; r < n; r++) {
+      let l = 0, rr = n;
+      while (l < rr) { const m2 = (l+rr)>>1; if (matrix[r][m2] <= mid) l = m2+1; else rr = m2; }
+      count += l;
+    }
+    if (count >= k) hi = mid; else lo = mid + 1;
+  }
+  return lo;
+}`,
+    python: `def kthSmallest(matrix, k):
+    n = len(matrix)
+    import bisect
+    lo, hi = matrix[0][0], matrix[n-1][n-1]
+    while lo < hi:
+        mid = (lo + hi) // 2
+        count = sum(bisect.bisect_right(row, mid) for row in matrix)
+        if count >= k: hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   visibleTests: [
     { args: [[[1, 5, 9], [10, 11, 13], [12, 13, 15]], 8], expected: 13 },

@@ -44,13 +44,25 @@ The answer is an array of two integers: \`[arr[i], arr[j]]\`.`,
   params: ['arr', 'k'],
   starterCode: {
     javascript: `function kthSmallestPrimeFraction(arr, k) {
-
+  const fracs = [];
+  for (let i = 0; i < arr.length; i++)
+    for (let j = i + 1; j < arr.length; j++)
+      fracs.push([arr[i], arr[j]]);
+  fracs.sort((a, b) => a[0] * b[1] - b[0] * a[1]);
+  return fracs[k - 1];
 }`,
     typescript: `function kthSmallestPrimeFraction(arr: number[], k: number): number[] {
-
+  const fracs: number[][] = [];
+  for (let i = 0; i < arr.length; i++)
+    for (let j = i + 1; j < arr.length; j++)
+      fracs.push([arr[i], arr[j]]);
+  fracs.sort((a, b) => a[0] * b[1] - b[0] * a[1]);
+  return fracs[k - 1];
 }`,
     python: `def kthSmallestPrimeFraction(arr, k):
-    pass`,
+    fracs = [(arr[i], arr[j]) for i in range(len(arr)) for j in range(i+1, len(arr))]
+    fracs.sort(key=lambda f: f[0]/f[1])
+    return list(fracs[k-1])`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 5], 3], expected: [2, 5] },

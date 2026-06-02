@@ -48,12 +48,28 @@ function kthDistinct(arr, k) {
   params: ['arr', 'k'],
   starterCode: {
     javascript: `function kthDistinct(arr, k) {
-
+  const freq = {};
+  for (const s of arr) freq[s] = (freq[s] || 0) + 1;
+  let count = 0;
+  for (const s of arr) if (freq[s] === 1 && ++count === k) return s;
+  return '';
 }`,
-    typescript: "function kthDistinct(arr: string[], k: number): string {\n\n}",
-
+    typescript: `function kthDistinct(arr: string[], k: number): string {
+  const freq: Record<string, number> = {};
+  for (const s of arr) freq[s] = (freq[s] || 0) + 1;
+  let count = 0;
+  for (const s of arr) if (freq[s] === 1 && ++count === k) return s;
+  return '';
+}`,
     python: `def kthDistinct(arr, k):
-    pass`,
+    from collections import Counter
+    freq = Counter(arr)
+    count = 0
+    for s in arr:
+        if freq[s] == 1:
+            count += 1
+            if count == k: return s
+    return ''`,
   },
   visibleTests: [
     { args: [['d', 'b', 'c', 'b', 'c', 'a'], 2], expected: 'a' },

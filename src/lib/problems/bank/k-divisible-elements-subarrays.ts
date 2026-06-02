@@ -40,13 +40,46 @@ Two arrays \`arr1\` and \`arr2\` are considered **distinct** if and only if ther
   params: ['nums', 'k', 'p'],
   starterCode: {
     javascript: `function countDistinct(nums, k, p) {
-
+  const seen = new Set();
+  const n = nums.length;
+  for (let i = 0; i < n; i++) {
+    let cnt = 0;
+    const parts = [];
+    for (let j = i; j < n; j++) {
+      if (nums[j] % p === 0) cnt++;
+      if (cnt > k) break;
+      parts.push(nums[j]);
+      seen.add(parts.join(','));
+    }
+  }
+  return seen.size;
 }`,
     typescript: `function countDistinct(nums: number[], k: number, p: number): number {
-
+  const seen = new Set<string>();
+  const n = nums.length;
+  for (let i = 0; i < n; i++) {
+    let cnt = 0;
+    const parts: number[] = [];
+    for (let j = i; j < n; j++) {
+      if (nums[j] % p === 0) cnt++;
+      if (cnt > k) break;
+      parts.push(nums[j]);
+      seen.add(parts.join(','));
+    }
+  }
+  return seen.size;
 }`,
     python: `def countDistinct(nums, k, p):
-    pass`,
+    seen = set()
+    n = len(nums)
+    for i in range(n):
+        cnt, parts = 0, []
+        for j in range(i, n):
+            if nums[j] % p == 0: cnt += 1
+            if cnt > k: break
+            parts.append(nums[j])
+            seen.add(tuple(parts))
+    return len(seen)`,
   },
   visibleTests: [
     { args: [[2, 3, 3, 2, 2], 2, 2], expected: 11 },

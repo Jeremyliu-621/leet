@@ -40,13 +40,85 @@ Return an integer array \`results\` where \`results[i]\` is the k-th nearest obs
   params: ['queries', 'k'],
   starterCode: {
     javascript: `function resultsArray(queries, k) {
-
+  const heap = [];
+  const push = (x) => {
+    heap.push(x);
+    let i = heap.length - 1;
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (heap[p] < heap[i]) { [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } else break;
+    }
+  };
+  const pop = () => {
+    const top = heap[0], last = heap.pop();
+    if (heap.length > 0) {
+      heap[0] = last;
+      let i = 0;
+      while (true) {
+        let m = i, l = 2*i+1, r = 2*i+2;
+        if (l < heap.length && heap[l] > heap[m]) m = l;
+        if (r < heap.length && heap[r] > heap[m]) m = r;
+        if (m === i) break;
+        [heap[i], heap[m]] = [heap[m], heap[i]]; i = m;
+      }
+    }
+    return top;
+  };
+  const res = [];
+  for (const [x, y] of queries) {
+    const d = Math.abs(x) + Math.abs(y);
+    if (heap.length < k) push(d);
+    else if (d < heap[0]) { pop(); push(d); }
+    res.push(heap.length < k ? -1 : heap[0]);
+  }
+  return res;
 }`,
     typescript: `function resultsArray(queries: number[][], k: number): number[] {
-
+  const heap: number[] = [];
+  const push = (x: number) => {
+    heap.push(x);
+    let i = heap.length - 1;
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (heap[p] < heap[i]) { [heap[p], heap[i]] = [heap[i], heap[p]]; i = p; } else break;
+    }
+  };
+  const pop = () => {
+    const top = heap[0], last = heap.pop()!;
+    if (heap.length > 0) {
+      heap[0] = last;
+      let i = 0;
+      while (true) {
+        let m = i, l = 2*i+1, r = 2*i+2;
+        if (l < heap.length && heap[l] > heap[m]) m = l;
+        if (r < heap.length && heap[r] > heap[m]) m = r;
+        if (m === i) break;
+        [heap[i], heap[m]] = [heap[m], heap[i]]; i = m;
+      }
+    }
+    return top;
+  };
+  const res: number[] = [];
+  for (const [x, y] of queries) {
+    const d = Math.abs(x) + Math.abs(y);
+    if (heap.length < k) push(d);
+    else if (d < heap[0]) { pop(); push(d); }
+    res.push(heap.length < k ? -1 : heap[0]);
+  }
+  return res;
 }`,
     python: `def resultsArray(queries, k):
-    pass`,
+    import heapq
+    heap = []  # max-heap via negation
+    res = []
+    for x, y in queries:
+        d = abs(x) + abs(y)
+        if len(heap) < k:
+            heapq.heappush(heap, -d)
+        elif d < -heap[0]:
+            heapq.heapreplace(heap, -d)
+        res.append(-heap[0] if len(heap) == k else -1)
+    return res`,
   },
   visibleTests: [
     { args: [[[1, 2], [3, 4], [2, 3], [-3, 0]], 2], expected: [-1, 7, 5, 3] },

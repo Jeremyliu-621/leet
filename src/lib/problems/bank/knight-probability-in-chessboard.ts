@@ -32,12 +32,54 @@ export const problem: Problem = {
   params: ['n', 'k', 'row', 'column'],
   starterCode: {
     javascript: `function knightProbability(n, k, row, column) {
-
+  const dirs = [[1,2],[1,-2],[-1,2],[-1,-2],[2,1],[2,-1],[-2,1],[-2,-1]];
+  let dp = Array.from({length: n}, () => new Array(n).fill(0));
+  dp[row][column] = 1;
+  for (let m = 0; m < k; m++) {
+    const ndp = Array.from({length: n}, () => new Array(n).fill(0));
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+      if (dp[r][c] === 0) continue;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n) ndp[nr][nc] += dp[r][c] / 8;
+      }
+    }
+    dp = ndp;
+  }
+  return dp.reduce((s, row) => s + row.reduce((a, b) => a + b, 0), 0);
 }`,
-    typescript: "function knightProbability(n: number, k: number, row: number, column: number): number {\n\n}",
-
+    typescript: `function knightProbability(n: number, k: number, row: number, column: number): number {
+  const dirs = [[1,2],[1,-2],[-1,2],[-1,-2],[2,1],[2,-1],[-2,1],[-2,-1]];
+  let dp = Array.from({length: n}, () => new Array(n).fill(0));
+  dp[row][column] = 1;
+  for (let m = 0; m < k; m++) {
+    const ndp = Array.from({length: n}, () => new Array(n).fill(0));
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+      if (dp[r][c] === 0) continue;
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (nr >= 0 && nr < n && nc >= 0 && nc < n) ndp[nr][nc] += dp[r][c] / 8;
+      }
+    }
+    dp = ndp;
+  }
+  return dp.reduce((s, row) => s + row.reduce((a: number, b: number) => a + b, 0), 0);
+}`,
     python: `def knightProbability(n, k, row, column):
-    pass`,
+    dirs = [(1,2),(1,-2),(-1,2),(-1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]
+    dp = [[0.0]*n for _ in range(n)]
+    dp[row][column] = 1.0
+    for _ in range(k):
+        ndp = [[0.0]*n for _ in range(n)]
+        for r in range(n):
+            for c in range(n):
+                if dp[r][c] == 0: continue
+                for dr, dc in dirs:
+                    nr, nc = r+dr, c+dc
+                    if 0 <= nr < n and 0 <= nc < n:
+                        ndp[nr][nc] += dp[r][c] / 8
+        dp = ndp
+    return sum(dp[r][c] for r in range(n) for c in range(n))`,
   },
   visibleTests: [
     { args: [3, 2, 0, 0], expected: 0.0625 },

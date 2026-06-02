@@ -27,11 +27,46 @@ export const problem: Problem = {
   params: ['n', 'k'],
   starterCode: {
     javascript: `function findKthNumber(n, k) {
-
+  const countSteps = (n, curr, next) => {
+    let steps = 0;
+    while (curr <= n) { steps += Math.min(n + 1, next) - curr; curr *= 10; next *= 10; }
+    return steps;
+  };
+  let curr = 1;
+  k--;
+  while (k > 0) {
+    const steps = countSteps(n, curr, curr + 1);
+    if (steps <= k) { k -= steps; curr++; } else { k--; curr *= 10; }
+  }
+  return curr;
 }`,
-    typescript: 'function findKthNumber(n: number, k: number): number {\n\n}',
+    typescript: `function findKthNumber(n: number, k: number): number {
+  const countSteps = (n: number, curr: number, next: number): number => {
+    let steps = 0;
+    while (curr <= n) { steps += Math.min(n + 1, next) - curr; curr *= 10; next *= 10; }
+    return steps;
+  };
+  let curr = 1;
+  k--;
+  while (k > 0) {
+    const steps = countSteps(n, curr, curr + 1);
+    if (steps <= k) { k -= steps; curr++; } else { k--; curr *= 10; }
+  }
+  return curr;
+}`,
     python: `def findKthNumber(n, k):
-    pass`,
+    def count_steps(n, curr, nxt):
+        steps = 0
+        while curr <= n:
+            steps += min(n + 1, nxt) - curr
+            curr *= 10; nxt *= 10
+        return steps
+    curr, k = 1, k - 1
+    while k > 0:
+        steps = count_steps(n, curr, curr + 1)
+        if steps <= k: k -= steps; curr += 1
+        else: k -= 1; curr *= 10
+    return curr`,
   },
   visibleTests: [
     { args: [13, 2], expected: 10 },
