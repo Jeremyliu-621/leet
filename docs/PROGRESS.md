@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2956** problems; 9228 tests green. Stubs remaining: ~700. Batches 41a-41e complete.
+**Current focus:** Bank at **2960** problems; 9252 tests green. Batch 286 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue starter backfill (batch 41f+); bank growth (batch 286+); UX polish.
+**Next up:** Bank growth (batch 287+); starter backfill; UX polish.
+
+### feat(bank): batch 286 — construct-min-bitwise-ii, find-valid-pair-digits, max-reward-ii, divide-subarrays-min-cost-ii (2026-06-02)
+Four new problems: `construct-the-minimum-bitwise-array-ii` (medium/bit-manipulation — O(1) formula per prime: x = p ^ (((p+1) & -(p+1)) >> 1); trailing-ones of p = trailing-zeros of p+1 = position of LSB of p+1; p=2 returns -1; handles primes up to 10^8), `find-valid-pair-of-adjacent-digits-in-string` (easy/strings+hash-map — build freq map; scan adjacent pairs (s[i], s[i+1]); valid if freq[s[i]]==int(s[i]) and freq[s[i+1]]==int(s[i+1]); return first valid pair or ""; O(n)), `maximize-total-reward-using-operations-ii` (hard/dp+bit-manipulation — BigInt bitset DP: dp |= (dp & ((1n<<r)-1n)) << r; per-step O(maxVal/64); answer = highest set bit = dp.toString(2).length-1; O(n*maxVal/64) total), `divide-an-array-into-subarrays-with-minimum-cost-ii` (hard/arrays+heap+sliding-window — layered DP: dp[t][j] = min sum of t picks from {1..j} with consecutive gap > dist; layer computed in O(n) via bestPrev pointer; O(n*(k-1)) total). Bank at **2960**; 9252 tests.
 
 ### fix(bank): batch 275 reference solutions + expected-value corrections (2026-06-02)
 Added JS/TS/Python reference solutions for 6 batch-275 problems (k-th-ancestor, count-houses-distance, max-of-min-window, count-ways-product, wear-different-hats, circular-permutation). Fixed 6 incorrect expected values: 5 in count-number-of-houses-at-a-certain-distance (BFS always gives correct results; test cases generated with buggy algorithm had wrong values for shortcuts that change path structure) and 1 in k-th-ancestor-of-a-tree-node (expected was computed for a different tree structure). All 9192 tests green.
