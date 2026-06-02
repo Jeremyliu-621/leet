@@ -3121,6 +3121,10 @@ import { problem as robotWithString } from './using-a-robot-to-print-the-lexicog
 import { problem as rearrangeStringKDistanceApart } from './rearrange-string-k-distance-apart';
 import { problem as pathsInMatrixDivisibleByK } from './paths-in-matrix-whose-sum-is-divisible-by-k';
 import { problem as findPunishmentNumber } from './find-punishment-number-of-an-integer';
+// batch 296
+import { problem as maximumProfitTradingStocks } from './maximum-profit-from-trading-stocks';
+import { problem as minimizeLengthArrayOps } from './minimize-length-of-array-using-operations';
+import { problem as countHousesCertainDistance } from './count-the-number-of-houses-at-a-certain-distance-i';
 // batch 287
 import { problem as maxTargetNodesII } from './maximize-the-number-of-target-nodes-after-connecting-trees-ii';
 import { problem as minAdjSwapsKthSmallest } from './minimum-adjacent-swaps-to-reach-the-kth-smallest-number';
@@ -6994,4 +6998,7 @@ export const problems: readonly Problem[] = [
   minimumTimeToMakeArraySumAtMostX,
   differenceOfSumAndDigitSum,
   countMentionsPerUser,
+  maximumProfitTradingStocks,
+  minimizeLengthArrayOps,
+  countHousesCertainDistance,
 ];

@@ -50723,6 +50723,57 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 296
+  'maximum-profit-from-trading-stocks': (...args: unknown[]) => {
+    const present = args[0] as number[];
+    const future = args[1] as number[];
+    const budget = args[2] as number;
+    const dp = new Array<number>(budget + 1).fill(0);
+    for (let i = 0; i < present.length; i++) {
+      const w = present[i]!, profit = future[i]! - present[i]!;
+      if (profit <= 0) continue;
+      for (let c = budget; c >= w; c--)
+        dp[c] = Math.max(dp[c]!, dp[c - w]! + profit);
+    }
+    return dp[budget]!;
+  },
+
+  'minimize-length-of-array-using-operations': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+    let g = nums[0]!;
+    for (const x of nums) g = gcd(g, x);
+    let count = 0;
+    for (const x of nums) if (x === g) count++;
+    return Math.max(1, count);
+  },
+
+  'count-the-number-of-houses-at-a-certain-distance-i': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const x = args[1] as number;
+    const y = args[2] as number;
+    const result = new Array<number>(n).fill(0);
+    for (let start = 1; start <= n; start++) {
+      const dist = new Array<number>(n + 1).fill(-1);
+      dist[start] = 0;
+      const queue: number[] = [start];
+      for (let qi = 0; qi < queue.length; qi++) {
+        const u = queue[qi]!;
+        const neighbors: number[] = [];
+        if (u > 1) neighbors.push(u - 1);
+        if (u < n) neighbors.push(u + 1);
+        if (u === x) neighbors.push(y);
+        if (u === y) neighbors.push(x);
+        for (const v of neighbors) {
+          if (dist[v] === -1) { dist[v] = dist[u]! + 1; queue.push(v); }
+        }
+      }
+      for (let end = 1; end <= n; end++)
+        if (end !== start) result[dist[end]! - 1]!++;
+    }
+    return result;
+  },
+
   'maximum-subarray-minimum-product': (...args: unknown[]) => {
     const nums = args[0] as number[];
     const MOD = 1_000_000_007n;

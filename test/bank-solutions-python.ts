@@ -49502,6 +49502,55 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return ans
 `,
 
+  // batch 296
+  'maximum-profit-from-trading-stocks': `def maximumProfit(present, future, budget):
+    if hasattr(present, 'to_py'): present = present.to_py()
+    if hasattr(future, 'to_py'): future = future.to_py()
+    present = [int(x) for x in present]; future = [int(x) for x in future]
+    budget = int(budget)
+    dp = [0] * (budget + 1)
+    for w, f in zip(present, future):
+        profit = f - w
+        if profit <= 0: continue
+        for c in range(budget, w - 1, -1):
+            dp[c] = max(dp[c], dp[c - w] + profit)
+    return dp[budget]
+`,
+
+  'minimize-length-of-array-using-operations': `def minimizeArrayLength(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    from math import gcd
+    g = nums[0]
+    for x in nums: g = gcd(g, x)
+    count = nums.count(g)
+    return max(1, count)
+`,
+
+  'count-the-number-of-houses-at-a-certain-distance-i': `def countOfPairs(n, x, y):
+    n = int(n); x = int(x); y = int(y)
+    result = [0] * n
+    for start in range(1, n + 1):
+        dist = [-1] * (n + 1)
+        dist[start] = 0
+        queue = [start]; qi = 0
+        while qi < len(queue):
+            u = queue[qi]; qi += 1
+            neighbors = []
+            if u > 1: neighbors.append(u - 1)
+            if u < n: neighbors.append(u + 1)
+            if u == x: neighbors.append(y)
+            if u == y: neighbors.append(x)
+            for v in neighbors:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    queue.append(v)
+        for end in range(1, n + 1):
+            if end != start:
+                result[dist[end] - 1] += 1
+    return result
+`,
+
   // batch 293
   'minimum-path-sum-in-a-triangle-grid': `def minimumTotal(triangle):
     if hasattr(triangle, 'to_py'): triangle = triangle.to_py()
