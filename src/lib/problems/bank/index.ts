@@ -3097,6 +3097,10 @@ import { problem as minFlipsBinaryMatrix } from './minimum-number-of-flips-to-co
 import { problem as numPairsSatisfyInequality } from './number-of-pairs-satisfying-inequality';
 import { problem as numGreatPartitions } from './number-of-great-partitions';
 import { problem as maxTotalHeightUniqueTowers } from './maximize-the-total-height-of-unique-towers';
+// batch 291
+import { problem as countNodesMaxScore } from './count-nodes-with-maximum-score';
+import { problem as minSpaceWastedKResizing } from './minimum-space-wasted-with-k-resizing';
+import { problem as largestPosIntWithNegative } from './largest-positive-integer-that-exists-with-its-negative';
 // batch 287
 import { problem as maxTargetNodesII } from './maximize-the-number-of-target-nodes-after-connecting-trees-ii';
 import { problem as minAdjSwapsKthSmallest } from './minimum-adjacent-swaps-to-reach-the-kth-smallest-number';
@@ -6929,4 +6933,8 @@ export const problems: readonly Problem[] = [
   maximumAreaCakeAfterCuts,
   minimumOperationsWriteLetterY,
   maximumSumOfHeightsMountain,
+  // batch 291
+  countNodesMaxScore,
+  minSpaceWastedKResizing,
+  largestPosIntWithNegative,
 ];

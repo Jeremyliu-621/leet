@@ -46623,6 +46623,76 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 289
+  'count-nodes-with-maximum-score': `def countHighestScoreNodes(parents):
+    if hasattr(parents, 'to_py'): parents = parents.to_py()
+    parents = [int(x) for x in parents]
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    size = [1] * n
+    deg = [len(children[i]) for i in range(n)]
+    queue = [i for i in range(n) if deg[i] == 0]
+    while queue:
+        u = queue.pop()
+        if parents[u] != -1:
+            size[parents[u]] += size[u]
+            deg[parents[u]] -= 1
+            if deg[parents[u]] == 0:
+                queue.append(parents[u])
+    max_score = 0; count = 0
+    for i in range(n):
+        score = 1
+        for c in children[i]:
+            score *= size[c]
+        up = n - size[i]
+        if up > 0:
+            score *= up
+        if score > max_score:
+            max_score = score; count = 1
+        elif score == max_score:
+            count += 1
+    return count
+`,
+
+  'minimum-space-wasted-with-k-resizing': `def minSpaceWastedKResizing(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    n = len(nums)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i + 1] = prefix[i] + nums[i]
+    INF = float('inf')
+    dp = [INF] * n
+    mx = 0
+    for i in range(n):
+        mx = max(mx, nums[i])
+        dp[i] = mx * (i + 1) - prefix[i + 1]
+    for j in range(k):
+        ndp = [INF] * n
+        for i in range(n):
+            rmx = 0
+            for p in range(i, j, -1):
+                rmx = max(rmx, nums[p])
+                w = rmx * (i - p + 1) - (prefix[i + 1] - prefix[p])
+                if dp[p - 1] + w < ndp[i]:
+                    ndp[i] = dp[p - 1] + w
+        dp = ndp
+    return dp[n - 1]
+`,
+
+  'largest-positive-integer-that-exists-with-its-negative': `def findMaxK(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    s = set(nums)
+    ans = -1
+    for x in nums:
+        if x > 0 and -x in s:
+            ans = max(ans, x)
+    return ans
+`,
+
   // batch 286
   'construct-the-minimum-bitwise-array-ii': `def minBitwiseArray(nums):
     result = []

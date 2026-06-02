@@ -47593,6 +47593,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 289
+  'count-nodes-with-maximum-score': (...args: unknown[]) => {
+    const parents = args[0] as number[];
+    const n = parents.length;
+    const children: number[][] = Array.from({length: n}, () => []);
+    for (let i = 1; i < n; i++) children[parents[i]!]!.push(i);
+    const size = new Array<number>(n).fill(1);
+    const deg = children.map(c => c.length);
+    const queue: number[] = [];
+    for (let i = 0; i < n; i++) if (deg[i] === 0) queue.push(i);
+    while (queue.length) {
+      const u = queue.pop()!;
+      if (parents[u] !== -1) {
+        size[parents[u]!]! += size[u]!;
+        if (--deg[parents[u]!]! === 0) queue.push(parents[u]!);
+      }
+    }
+    let maxScore = 0, count = 0;
+    for (let i = 0; i < n; i++) {
+      let score = 1;
+      for (const c of children[i]!) score *= size[c]!;
+      const up = n - size[i]!;
+      if (up > 0) score *= up;
+      if (score > maxScore) { maxScore = score; count = 1; }
+      else if (score === maxScore) count++;
+    }
+    return count;
+  },
+
+  'minimum-space-wasted-with-k-resizing': (...args: unknown[]) => {
+    const nums = args[0] as number[], k = args[1] as number;
+    const n = nums.length;
+    const prefix = new Array<number>(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + nums[i]!;
+    let dp = new Array<number>(n).fill(1e15);
+    let mx = 0;
+    for (let i = 0; i < n; i++) {
+      mx = Math.max(mx, nums[i]!);
+      dp[i] = mx * (i + 1) - prefix[i + 1]!;
+    }
+    for (let j = 0; j < k; j++) {
+      const ndp = new Array<number>(n).fill(1e15);
+      for (let i = 0; i < n; i++) {
+        let rmx = 0;
+        for (let p = i; p >= j + 1; p--) {
+          rmx = Math.max(rmx, nums[p]!);
+          const w = rmx * (i - p + 1) - (prefix[i + 1]! - prefix[p]!);
+          if (dp[p - 1]! + w < ndp[i]!) ndp[i] = dp[p - 1]! + w;
+        }
+      }
+      dp = ndp;
+    }
+    return dp[n - 1]!;
+  },
+
+  'largest-positive-integer-that-exists-with-its-negative': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const set = new Set(nums);
+    let ans = -1;
+    for (const x of nums) if (x > 0 && set.has(-x)) ans = Math.max(ans, x);
+    return ans;
+  },
+
   // batch 286
   'construct-the-minimum-bitwise-array-ii': (...args: unknown[]) => {
     const nums = args[0] as number[];
