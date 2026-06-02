@@ -39,10 +39,52 @@ Traverse: right across the top row, down the right column, left across the botto
   functionName: 'spiralOrder',
   params: ['matrix'] as readonly string[],
   starterCode: {
-    javascript: 'function spiralOrder(matrix) {\n  // your code here\n}\n',
-    typescript: "function spiralOrder(matrix: number[][]): number[] {\n  // your code here\n}",
-
-    python: 'def spiralOrder(matrix: list[list[int]]) -> list[int]:\n    # your code here\n    pass\n',
+    javascript: `function spiralOrder(matrix) {
+  const m = matrix.length, n = matrix[0].length;
+  let top = 0, bottom = m - 1, left = 0, right = n - 1;
+  const res = [];
+  while (top <= bottom && left <= right) {
+    for (let c = left; c <= right; c++) res.push(matrix[top][c]);
+    top++;
+    for (let r = top; r <= bottom; r++) res.push(matrix[r][right]);
+    right--;
+    if (top <= bottom) { for (let c = right; c >= left; c--) res.push(matrix[bottom][c]); bottom--; }
+    if (left <= right) { for (let r = bottom; r >= top; r--) res.push(matrix[r][left]); left++; }
+  }
+  return res;
+}`,
+    typescript: `function spiralOrder(matrix: number[][]): number[] {
+  const m = matrix.length, n = matrix[0]!.length;
+  let top = 0, bottom = m - 1, left = 0, right = n - 1;
+  const res: number[] = [];
+  while (top <= bottom && left <= right) {
+    for (let c = left; c <= right; c++) res.push(matrix[top]![c]!);
+    top++;
+    for (let r = top; r <= bottom; r++) res.push(matrix[r]![right]!);
+    right--;
+    if (top <= bottom) { for (let c = right; c >= left; c--) res.push(matrix[bottom]![c]!); bottom--; }
+    if (left <= right) { for (let r = bottom; r >= top; r--) res.push(matrix[r]![left]!); left++; }
+  }
+  return res;
+}`,
+    python: `def spiralOrder(matrix: list[list[int]]) -> list[int]:
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in matrix]
+    m, n = len(matrix), len(matrix[0])
+    top, bottom, left, right = 0, m-1, 0, n-1
+    res = []
+    while top <= bottom and left <= right:
+        for c in range(left, right+1): res.append(matrix[top][c])
+        top += 1
+        for r in range(top, bottom+1): res.append(matrix[r][right])
+        right -= 1
+        if top <= bottom:
+            for c in range(right, left-1, -1): res.append(matrix[bottom][c])
+            bottom -= 1
+        if left <= right:
+            for r in range(bottom, top-1, -1): res.append(matrix[r][left])
+            left += 1
+    return res`,
   },
   visibleTests: [
     { args: [[[1,2,3],[4,5,6],[7,8,9]]], expected: [1,2,3,6,9,8,7,4,5] },

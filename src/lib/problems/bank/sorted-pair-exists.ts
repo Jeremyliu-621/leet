@@ -36,10 +36,34 @@ export const problem: Problem = {
   functionName: 'sortedPairExists',
   params: ['nums', 'target'],
   starterCode: {
-    javascript: 'function sortedPairExists(nums, target) {\n  // your code here\n}\n',
-    typescript: "function sortedPairExists(nums: number[], target: number): boolean {\n  // your code here\n}",
-
-    python: 'def sortedPairExists(nums, target):\n    # your code here\n    pass\n',
+    javascript: `function sortedPairExists(nums, target) {
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const s = nums[lo] + nums[hi];
+    if (s === target) return true;
+    if (s < target) lo++; else hi--;
+  }
+  return false;
+}`,
+    typescript: `function sortedPairExists(nums: number[], target: number): boolean {
+  let lo = 0, hi = nums.length - 1;
+  while (lo < hi) {
+    const s = nums[lo]! + nums[hi]!;
+    if (s === target) return true;
+    if (s < target) lo++; else hi--;
+  }
+  return false;
+}`,
+    python: `def sortedPairExists(nums, target):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; target = int(target)
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        s = nums[lo] + nums[hi]
+        if s == target: return True
+        if s < target: lo += 1
+        else: hi -= 1
+    return False`,
   },
   visibleTests: [
     { args: [[1, 2, 4, 7], 6], expected: true },

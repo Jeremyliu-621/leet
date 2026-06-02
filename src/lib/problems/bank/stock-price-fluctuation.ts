@@ -58,13 +58,35 @@ Explanation: After updates: timestamp 1→5 (corrected), timestamp 2→20. Curre
   params: ['updates', 'queries'],
   starterCode: {
     javascript: `function stockPriceFluctuation(updates, queries) {
-  // your code here
+  const prices = new Map();
+  let maxTs = 0;
+  for (const [ts, price] of updates) { prices.set(ts, price); if (ts > maxTs) maxTs = ts; }
+  const vals = [...prices.values()];
+  return queries.map(q => q === 'current' ? prices.get(maxTs) : q === 'maximum' ? Math.max(...vals) : Math.min(...vals));
 }`,
-    typescript: "function stockPriceFluctuation(updates: number[][], queries: string[]): number[] {\n  // your code here\n}",
-
+    typescript: `function stockPriceFluctuation(updates: number[][], queries: string[]): number[] {
+  const prices = new Map<number, number>();
+  let maxTs = 0;
+  for (const row of updates) { const ts = row[0]!, price = row[1]!; prices.set(ts, price); if (ts > maxTs) maxTs = ts; }
+  const vals = [...prices.values()];
+  return queries.map(q => q === 'current' ? prices.get(maxTs)! : q === 'maximum' ? Math.max(...vals) : Math.min(...vals));
+}`,
     python: `def stockPriceFluctuation(updates: list, queries: list) -> list:
-    # your code here
-    pass`,
+    if hasattr(updates, 'to_py'): updates = updates.to_py()
+    updates = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in updates]
+    if hasattr(queries, 'to_py'): queries = queries.to_py()
+    queries = [str(q) for q in queries]
+    prices = {}; max_ts = 0
+    for ts, price in updates:
+        prices[ts] = price
+        if ts > max_ts: max_ts = ts
+    vals = list(prices.values())
+    res = []
+    for q in queries:
+        if q == 'current': res.append(prices[max_ts])
+        elif q == 'maximum': res.append(max(vals))
+        else: res.append(min(vals))
+    return res`,
   },
   visibleTests: [
     {

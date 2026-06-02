@@ -39,10 +39,37 @@ Return the **minimum** possible sum of \`num1\` and \`num2\`.
   functionName: 'splitNum',
   params: ['num'],
   starterCode: {
-    javascript: 'function splitNum(num) {\n  // your code here\n}\n',
-    typescript: "function splitNum(num: number): number {\n  // your code here\n}",
-
-    python: 'def splitNum(num):\n    # your code here\n    pass\n',
+    javascript: `function splitNum(num) {
+  const d = String(num).split('').map(Number).sort((a, b) => a - b);
+  let n1 = 0, n2 = 0, p = 1;
+  for (let i = d.length - 1; i >= 0; i -= 2) {
+    n1 += d[i] * p;
+    if (i - 1 >= 0) n2 += d[i - 1] * p;
+    p *= 10;
+  }
+  return n1 + n2;
+}`,
+    typescript: `function splitNum(num: number): number {
+  const d = String(num).split('').map(Number).sort((a, b) => a - b);
+  let n1 = 0, n2 = 0, p = 1;
+  for (let i = d.length - 1; i >= 0; i -= 2) {
+    n1 += d[i]! * p;
+    if (i - 1 >= 0) n2 += d[i - 1]! * p;
+    p *= 10;
+  }
+  return n1 + n2;
+}`,
+    python: `def splitNum(num):
+    if hasattr(num, 'to_py'): num = num.to_py()
+    num = int(num)
+    d = sorted(int(c) for c in str(num))
+    n1, n2, p = 0, 0, 1
+    i = len(d) - 1
+    while i >= 0:
+        n1 += d[i] * p
+        if i - 1 >= 0: n2 += d[i-1] * p
+        p *= 10; i -= 2
+    return n1 + n2`,
   },
   visibleTests: [
     { args: [4325], expected: 59 },

@@ -25,10 +25,27 @@ Return \`x\` if the array is special, otherwise, return \`-1\`. It can be proven
   functionName: 'specialArray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function specialArray(nums) {\n  // your code here\n}\n',
-    typescript: "function specialArray(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def specialArray(nums):\n    # your code here\n    pass\n',
+    javascript: `function specialArray(nums) {
+  const n = nums.length;
+  for (let x = 0; x <= n; x++) {
+    if (nums.filter(v => v >= x).length === x) return x;
+  }
+  return -1;
+}`,
+    typescript: `function specialArray(nums: number[]): number {
+  const n = nums.length;
+  for (let x = 0; x <= n; x++) {
+    if (nums.filter(v => v >= x).length === x) return x;
+  }
+  return -1;
+}`,
+    python: `def specialArray(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    for x in range(n + 1):
+        if sum(1 for v in nums if v >= x) == x: return x
+    return -1`,
   },
   visibleTests: [
     { args: [[3, 5]], expected: 2 },

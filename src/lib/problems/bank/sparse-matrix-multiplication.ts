@@ -32,10 +32,38 @@ The product matrix \`result[i][j] = sum over p of mat1[i][p] * mat2[p][j]\`.`,
   functionName: 'multiply',
   params: ['mat1', 'mat2'],
   starterCode: {
-    javascript: 'function multiply(mat1, mat2) {\n  // your code here\n}\n',
-    typescript: "function multiply(mat1: number[][], mat2: number[][]): number[][] {\n  // your code here\n}",
-
-    python: 'def multiply(mat1, mat2):\n    # your code here\n    pass\n',
+    javascript: `function multiply(mat1, mat2) {
+  const m = mat1.length, k = mat1[0].length, n = mat2[0].length;
+  const res = Array.from({length: m}, () => new Array(n).fill(0));
+  for (let i = 0; i < m; i++)
+    for (let p = 0; p < k; p++) {
+      if (mat1[i][p] === 0) continue;
+      for (let j = 0; j < n; j++) res[i][j] += mat1[i][p] * mat2[p][j];
+    }
+  return res;
+}`,
+    typescript: `function multiply(mat1: number[][], mat2: number[][]): number[][] {
+  const m = mat1.length, k = mat1[0]!.length, n = mat2[0]!.length;
+  const res: number[][] = Array.from({length: m}, () => new Array(n).fill(0));
+  for (let i = 0; i < m; i++)
+    for (let p = 0; p < k; p++) {
+      if (mat1[i]![p]! === 0) continue;
+      for (let j = 0; j < n; j++) res[i]![j]! += mat1[i]![p]! * mat2[p]![j]!;
+    }
+  return res;
+}`,
+    python: `def multiply(mat1, mat2):
+    if hasattr(mat1, 'to_py'): mat1 = mat1.to_py()
+    mat1 = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in mat1]
+    if hasattr(mat2, 'to_py'): mat2 = mat2.to_py()
+    mat2 = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in mat2]
+    m, k, n = len(mat1), len(mat1[0]), len(mat2[0])
+    res = [[0]*n for _ in range(m)]
+    for i in range(m):
+        for p in range(k):
+            if mat1[i][p] == 0: continue
+            for j in range(n): res[i][j] += mat1[i][p] * mat2[p][j]
+    return res`,
   },
   hints: [
     'The naive O(m*k*n) triple-nested loop works within the constraints. For each cell result[i][j], accumulate mat1[i][p] * mat2[p][j] for all p.',

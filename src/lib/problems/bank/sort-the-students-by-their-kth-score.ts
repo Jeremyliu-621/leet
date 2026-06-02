@@ -38,9 +38,17 @@ Return the matrix after sorting it.`,
   functionName: 'sortTheStudents',
   params: ['score', 'k'],
   starterCode: {
-    javascript: 'function sortTheStudents(score, k) {\n  // your code here\n}\n',
-    typescript: 'function sortTheStudents(score: number[][], k: number): number[][] {\n  // your code here\n}\n',
-    python: 'def sortTheStudents(score, k):\n    # your code here\n    pass\n',
+    javascript: `function sortTheStudents(score, k) {
+  return score.sort((a, b) => b[k] - a[k]);
+}`,
+    typescript: `function sortTheStudents(score: number[][], k: number): number[][] {
+  return score.sort((a, b) => b[k]! - a[k]!);
+}`,
+    python: `def sortTheStudents(score, k):
+    if hasattr(score, 'to_py'): score = score.to_py()
+    score = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in score]
+    k = int(k)
+    return sorted(score, key=lambda row: row[k], reverse=True)`,
   },
   visibleTests: [
     {

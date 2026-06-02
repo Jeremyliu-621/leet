@@ -38,10 +38,48 @@ export const problem: Problem = {
   functionName: 'multiplyStrings',
   params: ['num1', 'num2'],
   starterCode: {
-    javascript: 'function multiplyStrings(num1, num2) {\n  // your code here\n}\n',
-    typescript: "function multiplyStrings(num1: string, num2: string): string {\n  // your code here\n}",
-
-    python: 'def multiplyStrings(num1, num2):\n    # your code here\n    pass\n',
+    javascript: `function multiplyStrings(num1, num2) {
+  const m = num1.length, n = num2.length;
+  const res = new Array(m + n).fill(0);
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) {
+      const mul = (+num1[i]) * (+num2[j]);
+      res[i+j+1] += mul;
+      res[i+j] += Math.floor(res[i+j+1] / 10);
+      res[i+j+1] %= 10;
+    }
+  }
+  const str = res.join('').replace(/^0+/, '');
+  return str || '0';
+}`,
+    typescript: `function multiplyStrings(num1: string, num2: string): string {
+  const m = num1.length, n = num2.length;
+  const res = new Array(m + n).fill(0) as number[];
+  for (let i = m - 1; i >= 0; i--) {
+    for (let j = n - 1; j >= 0; j--) {
+      const mul = (+num1[i]!) * (+num2[j]!);
+      res[i+j+1]! += mul;
+      res[i+j]! += Math.floor(res[i+j+1]! / 10);
+      res[i+j+1]! %= 10;
+    }
+  }
+  const str = res.join('').replace(/^0+/, '');
+  return str || '0';
+}`,
+    python: `def multiplyStrings(num1, num2):
+    if hasattr(num1, 'to_py'): num1 = num1.to_py()
+    if hasattr(num2, 'to_py'): num2 = num2.to_py()
+    num1, num2 = str(num1), str(num2)
+    m, n = len(num1), len(num2)
+    res = [0] * (m + n)
+    for i in range(m - 1, -1, -1):
+        for j in range(n - 1, -1, -1):
+            mul = int(num1[i]) * int(num2[j])
+            res[i+j+1] += mul
+            res[i+j] += res[i+j+1] // 10
+            res[i+j+1] %= 10
+    s = ''.join(map(str, res)).lstrip('0')
+    return s or '0'`,
   },
   visibleTests: [
     { args: ['2', '3'], expected: '6' },

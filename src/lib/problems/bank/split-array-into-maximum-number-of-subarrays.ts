@@ -43,13 +43,27 @@ Return the **maximum number of subarrays** you can split \`nums\` into while kee
   params: ['nums'],
   starterCode: {
     javascript: `function maxSubarrays(nums) {
-  // your code here
+  const totalAnd = nums.reduce((a, b) => a & b, ~0);
+  let count = 0, run = ~0;
+  for (const n of nums) { run &= n; if (run === totalAnd) { count++; run = ~0; } }
+  return Math.max(1, count);
 }`,
-    typescript: "function maxSubarrays(nums: number[]): number {\n  // your code here\n}",
-
+    typescript: `function maxSubarrays(nums: number[]): number {
+  const totalAnd = nums.reduce((a, b) => a & b, ~0);
+  let count = 0, run = ~0;
+  for (const n of nums) { run &= n; if (run === totalAnd) { count++; run = ~0; } }
+  return Math.max(1, count);
+}`,
     python: `def maxSubarrays(nums):
-    # your code here
-    pass`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    total_and = nums[0]
+    for x in nums[1:]: total_and &= x
+    count = 0; run = ~0
+    for n in nums:
+        run &= n
+        if run == total_and: count += 1; run = ~0
+    return max(1, count)`,
   },
   visibleTests: [
     { args: [[1, 0, 2, 1]], expected: 2 },

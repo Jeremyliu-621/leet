@@ -55,13 +55,52 @@ Explanation: 4 'a's and 1 'b', no "aaa" substring.
   params: ['a', 'b'],
   starterCode: {
     javascript: `function strWithout3a3b(a, b) {
-  // your code here
+  let res = '';
+  while (a > 0 || b > 0) {
+    if (a > b) {
+      res += 'a'; a--;
+      if (a > b) { res += 'a'; a--; }
+      if (b > 0) { res += 'b'; b--; }
+    } else if (b > a) {
+      res += 'b'; b--;
+      if (b > a) { res += 'b'; b--; }
+      if (a > 0) { res += 'a'; a--; }
+    } else { res += 'a'; a--; res += 'b'; b--; }
+  }
+  return res;
 }`,
-    typescript: "function strWithout3a3b(a: number, b: number): string {\n  // your code here\n}",
-
+    typescript: `function strWithout3a3b(a: number, b: number): string {
+  let res = '';
+  while (a > 0 || b > 0) {
+    if (a > b) {
+      res += 'a'; a--;
+      if (a > b) { res += 'a'; a--; }
+      if (b > 0) { res += 'b'; b--; }
+    } else if (b > a) {
+      res += 'b'; b--;
+      if (b > a) { res += 'b'; b--; }
+      if (a > 0) { res += 'a'; a--; }
+    } else { res += 'a'; a--; res += 'b'; b--; }
+  }
+  return res;
+}`,
     python: `def strWithout3a3b(a: int, b: int) -> str:
-    # your code here
-    pass`,
+    if hasattr(a, 'to_py'): a = a.to_py()
+    if hasattr(b, 'to_py'): b = b.to_py()
+    a, b = int(a), int(b)
+    res = []
+    while a > 0 or b > 0:
+        if a > b:
+            res.append('a'); a -= 1
+            if a > b: res.append('a'); a -= 1
+            if b > 0: res.append('b'); b -= 1
+        elif b > a:
+            res.append('b'); b -= 1
+            if b > a: res.append('b'); b -= 1
+            if a > 0: res.append('a'); a -= 1
+        else:
+            res.append('a'); a -= 1; res.append('b'); b -= 1
+    return ''.join(res)`,
   },
   visibleTests: [
     // Greedy: b=2>a=1. Push 'b'(b=1,a=1 now equal, no second b). Push 'a'(a=0). Then b=1: push 'b'. → "bab"
