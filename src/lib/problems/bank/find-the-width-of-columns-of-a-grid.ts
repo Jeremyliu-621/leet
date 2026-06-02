@@ -37,13 +37,26 @@ Return an integer array \`ans\` of size \`n\` where \`ans[i]\` is the width of t
   params: ['grid'],
   starterCode: {
     javascript: `function findColumnWidth(grid) {
-
+  const n = grid[0].length, res = new Array(n).fill(0);
+  for (const row of grid)
+    for (let j = 0; j < n; j++)
+      res[j] = Math.max(res[j], String(row[j]).length);
+  return res;
 }`,
     typescript: `function findColumnWidth(grid: number[][]): number[] {
-
+  const n = grid[0].length, res = new Array(n).fill(0);
+  for (const row of grid)
+    for (let j = 0; j < n; j++)
+      res[j] = Math.max(res[j], String(row[j]).length);
+  return res;
 }`,
     python: `def findColumnWidth(grid):
-    pass`,
+    n = len(grid[0])
+    res = [0] * n
+    for row in grid:
+        for j in range(n):
+            res[j] = max(res[j], len(str(row[j])))
+    return res`,
   },
   visibleTests: [
     { args: [[[1], [22], [333]]], expected: [3] },

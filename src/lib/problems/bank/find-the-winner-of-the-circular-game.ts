@@ -32,12 +32,19 @@ export const problem: Problem = {
   params: ['n', 'k'],
   starterCode: {
     javascript: `function findTheWinner(n, k) {
-
+  let pos = 0;
+  for (let i = 2; i <= n; i++) pos = (pos + k) % i;
+  return pos + 1;
 }`,
-    typescript: "function findTheWinner(n: number, k: number): number {\n\n}",
-
+    typescript: `function findTheWinner(n: number, k: number): number {
+  let pos = 0;
+  for (let i = 2; i <= n; i++) pos = (pos + k) % i;
+  return pos + 1;
+}`,
     python: `def findTheWinner(n: int, k: int) -> int:
-    pass`,
+    pos = 0
+    for i in range(2, n + 1): pos = (pos + k) % i
+    return pos + 1`,
   },
   visibleTests: [
     { args: [5, 2], expected: 3 },

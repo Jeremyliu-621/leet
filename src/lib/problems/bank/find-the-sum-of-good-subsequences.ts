@@ -41,13 +41,42 @@ Return the **sum of all elements** across every good subsequence of \`nums\`, mo
   params: ['nums'],
   starterCode: {
     javascript: `function sumOfGoodSubsequences(nums) {
-
+  const MOD = 1_000_000_007n;
+  const cnt = new Map(), dp = new Map();
+  for (const x of nums) {
+    const X = BigInt(x);
+    const nc = (1n + (cnt.get(x-1) ?? 0n) + (cnt.get(x) ?? 0n) + (cnt.get(x+1) ?? 0n)) % MOD;
+    const ns = (X * nc + (dp.get(x-1) ?? 0n) + (dp.get(x) ?? 0n) + (dp.get(x+1) ?? 0n)) % MOD;
+    cnt.set(x, ((cnt.get(x) ?? 0n) + nc) % MOD);
+    dp.set(x, ((dp.get(x) ?? 0n) + ns) % MOD);
+  }
+  let ans = 0n;
+  for (const v of dp.values()) ans = (ans + v) % MOD;
+  return Number(ans);
 }`,
     typescript: `function sumOfGoodSubsequences(nums: number[]): number {
-
+  const MOD = 1_000_000_007n;
+  const cnt = new Map<number, bigint>(), dp = new Map<number, bigint>();
+  for (const x of nums) {
+    const X = BigInt(x);
+    const nc = (1n + (cnt.get(x-1) ?? 0n) + (cnt.get(x) ?? 0n) + (cnt.get(x+1) ?? 0n)) % MOD;
+    const ns = (X * nc + (dp.get(x-1) ?? 0n) + (dp.get(x) ?? 0n) + (dp.get(x+1) ?? 0n)) % MOD;
+    cnt.set(x, ((cnt.get(x) ?? 0n) + nc) % MOD);
+    dp.set(x, ((dp.get(x) ?? 0n) + ns) % MOD);
+  }
+  let ans = 0n;
+  for (const v of dp.values()) ans = (ans + v) % MOD;
+  return Number(ans);
 }`,
     python: `def sumOfGoodSubsequences(nums):
-    pass`,
+    MOD = 10**9 + 7
+    cnt, dp = {}, {}
+    for x in nums:
+        nc = (1 + cnt.get(x-1, 0) + cnt.get(x, 0) + cnt.get(x+1, 0)) % MOD
+        ns = (x * nc + dp.get(x-1, 0) + dp.get(x, 0) + dp.get(x+1, 0)) % MOD
+        cnt[x] = (cnt.get(x, 0) + nc) % MOD
+        dp[x] = (dp.get(x, 0) + ns) % MOD
+    return sum(dp.values()) % MOD`,
   },
   visibleTests: [
     { args: [[1, 2, 1]], expected: 16 },

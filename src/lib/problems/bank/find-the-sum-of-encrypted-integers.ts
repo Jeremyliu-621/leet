@@ -33,12 +33,25 @@ Return the **sum** of encrypted elements.`,
   params: ['nums'],
   starterCode: {
     javascript: `function sumOfEncryptedInt(nums) {
-
+  return nums.reduce((sum, x) => {
+    const s = String(x);
+    const maxD = Math.max(...s.split('').map(Number));
+    return sum + maxD * Number('1'.repeat(s.length));
+  }, 0);
 }`,
-    typescript: "function sumOfEncryptedInt(nums: number[]): number {\n\n}",
-
+    typescript: `function sumOfEncryptedInt(nums: number[]): number {
+  return nums.reduce((sum, x) => {
+    const s = String(x);
+    const maxD = Math.max(...s.split('').map(Number));
+    return sum + maxD * Number('1'.repeat(s.length));
+  }, 0);
+}`,
     python: `def sumOfEncryptedInt(nums):
-    pass`,
+    total = 0
+    for x in nums:
+        s = str(x)
+        total += max(int(d) for d in s) * int('1' * len(s))
+    return total`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 6 },

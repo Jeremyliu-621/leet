@@ -39,13 +39,30 @@ It is **guaranteed** there will be a winner of the game.`,
   params: ['arr', 'k'],
   starterCode: {
     javascript: `function getWinner(arr, k) {
-
+  let cur = arr[0], streak = 0;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > cur) { cur = arr[i]; streak = 1; }
+    else streak++;
+    if (streak >= k) return cur;
+  }
+  return cur;
 }`,
     typescript: `function getWinner(arr: number[], k: number): number {
-
+  let cur = arr[0], streak = 0;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > cur) { cur = arr[i]; streak = 1; }
+    else streak++;
+    if (streak >= k) return cur;
+  }
+  return cur;
 }`,
     python: `def getWinner(arr, k):
-    pass`,
+    cur, streak = arr[0], 0
+    for i in range(1, len(arr)):
+        if arr[i] > cur: cur = arr[i]; streak = 1
+        else: streak += 1
+        if streak >= k: return cur
+    return cur`,
   },
   visibleTests: [
     { args: [[2, 1, 3, 5, 4, 6, 7], 2], expected: 5 },
