@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2999** problems; 9357 tests green. Starter backfill batch 41v complete (6 more maximum-* stubs).
+**Current focus:** Bank at **3002** problems; 9366 tests green. Batch 294 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 294+); starter backfill (batch 41w+); UX polish.
+**Next up:** Bank growth (batch 295+); starter backfill (batch 41w+); UX polish.
+
+### feat(bank): batch 294 — max-value-bounded-array, sender-word-count, last-substring-lex (2026-06-02)
+Three new problems: `maximum-value-at-a-given-index-in-a-bounded-array` (medium/binary-search+math — binary search on v in [1,maxSum]; minCost(v,len)=arithmetic series sum; BigInt for overflow safety; O(log(maxSum))), `sender-with-largest-word-count` (medium/strings+hash-map — word count per sender via Map; O(n·w)), `last-substring-in-lexicographical-order` (hard/strings+two-pointers — O(n) two-pointer: compare suffixes at i and j; advance slower suffix; critical bug fixed: when i+k>=n while j+k<n, suffix j wins so set i=j). Bank at **3002**; 9366 tests.
 
 ### feat: starter backfill batch 41v — 6 maximum-* stubs (2026-06-02)
 Six stubs filled: `maximum-events-attended-with-k-events` (hard/dp+binary-search — sort by start, 2D DP dp[j][i]=max value using ≤j events from first i; binary search for last compatible event), `maximum-fruits-harvested-after-at-most-k-steps` (hard/arrays+sliding-window — prefix sums + sliding window; steps formula = min(2*leftDist+rightDist, 2*rightDist+leftDist)), `maximum-good-subarray-sum` (medium/arrays+hash-map — minPrefix map for nums[r]±k; look up before inserting to avoid l=r), `maximum-height-by-stacking-cuboids` (hard/dp — sort each cuboid dims ascending; sort cuboids; O(n²) LIS-style DP), `maximum-height-of-a-triangle` (easy/simulation — try red-first and blue-first; sim(a,b) consumes a in odd rows, b in even rows), `maximum-ice-cream-bars` (medium/arrays — sort costs, greedy buy cheapest first). 9357 tests.
