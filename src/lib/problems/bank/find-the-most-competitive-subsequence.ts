@@ -36,13 +36,32 @@ We define that a subsequence \`a\` is **more competitive** than a subsequence \`
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function mostCompetitive(nums, k) {
-
+  const n = nums.length, stack = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && stack[stack.length - 1] > nums[i] && stack.length - 1 + n - i >= k) {
+      stack.pop();
+    }
+    stack.push(nums[i]);
+  }
+  return stack.slice(0, k);
 }`,
     typescript: `function mostCompetitive(nums: number[], k: number): number[] {
-
+  const n = nums.length, stack: number[] = [];
+  for (let i = 0; i < n; i++) {
+    while (stack.length && stack[stack.length - 1] > nums[i] && stack.length - 1 + n - i >= k) {
+      stack.pop();
+    }
+    stack.push(nums[i]);
+  }
+  return stack.slice(0, k);
 }`,
     python: `def mostCompetitive(nums, k):
-    pass`,
+    n, stack = len(nums), []
+    for i, v in enumerate(nums):
+        while stack and stack[-1] > v and len(stack) - 1 + n - i >= k:
+            stack.pop()
+        stack.append(v)
+    return stack[:k]`,
   },
   visibleTests: [
     { args: [[3, 5, 2, 6], 2], expected: [2, 6] },

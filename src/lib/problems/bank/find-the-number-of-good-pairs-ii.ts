@@ -51,11 +51,39 @@ function numberOfPairs(nums1, nums2, k) {
   params: ['nums1', 'nums2', 'k'],
   starterCode: {
     javascript: `function numberOfPairs(nums1, nums2, k) {
-
+  const freq = new Map();
+  for (const x of nums1) freq.set(x, (freq.get(x) ?? 0) + 1);
+  const maxN1 = Math.max(...nums1);
+  let ans = 0;
+  for (const x of nums2) {
+    const v = x * k;
+    for (let mult = v; mult <= maxN1; mult += v) ans += freq.get(mult) ?? 0;
+  }
+  return ans;
 }`,
-    typescript: 'function numberOfPairs(nums1: number[], nums2: number[], k: number): number {\n\n}',
+    typescript: `function numberOfPairs(nums1: number[], nums2: number[], k: number): number {
+  const freq = new Map<number, number>();
+  for (const x of nums1) freq.set(x, (freq.get(x) ?? 0) + 1);
+  const maxN1 = Math.max(...nums1);
+  let ans = 0;
+  for (const x of nums2) {
+    const v = x * k;
+    for (let mult = v; mult <= maxN1; mult += v) ans += freq.get(mult) ?? 0;
+  }
+  return ans;
+}`,
     python: `def numberOfPairs(nums1, nums2, k):
-    pass`,
+    from collections import Counter
+    freq = Counter(nums1)
+    max_n1 = max(nums1)
+    ans = 0
+    for x in nums2:
+        v = x * k
+        mult = v
+        while mult <= max_n1:
+            ans += freq.get(mult, 0)
+            mult += v
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 4], [1, 3, 4], 1], expected: 5 },

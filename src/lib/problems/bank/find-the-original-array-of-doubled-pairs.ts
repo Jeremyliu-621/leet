@@ -62,11 +62,61 @@ function findOriginalArray(changed) {
   params: ['changed'],
   starterCode: {
     javascript: `function findOriginalArray(changed) {
-
+  if (changed.length % 2 !== 0) return [];
+  changed.sort((a, b) => a - b);
+  const freq = new Map();
+  for (const x of changed) freq.set(x, (freq.get(x) || 0) + 1);
+  const result = [];
+  for (const x of changed) {
+    if ((freq.get(x) || 0) === 0) continue;
+    if (x === 0) {
+      if (freq.get(0) % 2 !== 0) return [];
+      const half = freq.get(0) / 2;
+      for (let i = 0; i < half; i++) result.push(0);
+      freq.set(0, 0); continue;
+    }
+    if ((freq.get(2 * x) || 0) === 0) return [];
+    result.push(x);
+    freq.set(x, freq.get(x) - 1);
+    freq.set(2 * x, freq.get(2 * x) - 1);
+  }
+  return result;
 }`,
-    typescript: 'function findOriginalArray(changed: number[]): number[] {\n\n}',
+    typescript: `function findOriginalArray(changed: number[]): number[] {
+  if (changed.length % 2 !== 0) return [];
+  changed.sort((a, b) => a - b);
+  const freq = new Map<number, number>();
+  for (const x of changed) freq.set(x, (freq.get(x) || 0) + 1);
+  const result: number[] = [];
+  for (const x of changed) {
+    if ((freq.get(x) || 0) === 0) continue;
+    if (x === 0) {
+      if (freq.get(0)! % 2 !== 0) return [];
+      const half = freq.get(0)! / 2;
+      for (let i = 0; i < half; i++) result.push(0);
+      freq.set(0, 0); continue;
+    }
+    if ((freq.get(2 * x) || 0) === 0) return [];
+    result.push(x);
+    freq.set(x, freq.get(x)! - 1);
+    freq.set(2 * x, freq.get(2 * x)! - 1);
+  }
+  return result;
+}`,
     python: `def findOriginalArray(changed):
-    pass`,
+    from collections import Counter
+    if len(changed) % 2 != 0: return []
+    changed.sort()
+    freq = Counter(changed)
+    result = []
+    for x in changed:
+        if freq[x] == 0: continue
+        if x == 0:
+            if freq[0] % 2 != 0: return []
+            result.extend([0] * (freq[0] // 2)); freq[0] = 0; continue
+        if freq[2 * x] == 0: return []
+        result.append(x); freq[x] -= 1; freq[2 * x] -= 1
+    return result`,
   },
   visibleTests: [
     { args: [[1,3,4,2,6,8]], expected: [1,3,4] },

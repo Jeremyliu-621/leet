@@ -46,11 +46,21 @@ function numberOfPairs(nums1, nums2, k) {
   params: ['nums1', 'nums2', 'k'],
   starterCode: {
     javascript: `function numberOfPairs(nums1, nums2, k) {
-
+  let count = 0;
+  for (const a of nums1)
+    for (const b of nums2)
+      if (a % (b * k) === 0) count++;
+  return count;
 }`,
-    typescript: 'function numberOfPairs(nums1: number[], nums2: number[], k: number): number {\n\n}',
+    typescript: `function numberOfPairs(nums1: number[], nums2: number[], k: number): number {
+  let count = 0;
+  for (const a of nums1)
+    for (const b of nums2)
+      if (a % (b * k) === 0) count++;
+  return count;
+}`,
     python: `def numberOfPairs(nums1, nums2, k):
-    pass`,
+    return sum(1 for a in nums1 for b in nums2 if a % (b * k) == 0)`,
   },
   visibleTests: [
     { args: [[1, 3, 4], [1, 3, 4], 1], expected: 5 },

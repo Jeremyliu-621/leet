@@ -43,13 +43,45 @@ A subarray is any contiguous part of an array (a single element is always valid)
   params: ['nums'],
   starterCode: {
     javascript: `function numberOfSubarrays(nums) {
-
+  const stack = []; // [value, count]
+  let ans = 0;
+  for (const v of nums) {
+    while (stack.length && stack[stack.length - 1][0] < v) stack.pop();
+    if (stack.length && stack[stack.length - 1][0] === v) {
+      ans += stack[stack.length - 1][1] + 1;
+      stack[stack.length - 1][1]++;
+    } else {
+      stack.push([v, 1]);
+      ans += 1;
+    }
+  }
+  return ans;
 }`,
     typescript: `function numberOfSubarrays(nums: number[]): number {
-
+  const stack: [number, number][] = [];
+  let ans = 0;
+  for (const v of nums) {
+    while (stack.length && stack[stack.length - 1][0] < v) stack.pop();
+    if (stack.length && stack[stack.length - 1][0] === v) {
+      ans += stack[stack.length - 1][1] + 1;
+      stack[stack.length - 1][1]++;
+    } else {
+      stack.push([v, 1]);
+      ans += 1;
+    }
+  }
+  return ans;
 }`,
     python: `def numberOfSubarrays(nums: list[int]) -> int:
-    pass`,
+    stack = []  # [value, count]
+    ans = 0
+    for v in nums:
+        while stack and stack[-1][0] < v: stack.pop()
+        if stack and stack[-1][0] == v:
+            ans += stack[-1][1] + 1; stack[-1][1] += 1
+        else:
+            stack.append([v, 1]); ans += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 4, 3, 3, 2]], expected: 6 },

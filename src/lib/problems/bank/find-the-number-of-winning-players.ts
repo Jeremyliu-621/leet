@@ -43,13 +43,28 @@ Return the number of players who win.`,
   params: ['n', 'pick'],
   starterCode: {
     javascript: `function winningPlayerCount(n, pick) {
-
+  const count = Array.from({length: n}, () => new Map());
+  for (const [x, y] of pick) count[x].set(y, (count[x].get(y) ?? 0) + 1);
+  let wins = 0;
+  for (let i = 0; i < n; i++) {
+    if (Math.max(0, ...count[i].values()) > i) wins++;
+  }
+  return wins;
 }`,
     typescript: `function winningPlayerCount(n: number, pick: number[][]): number {
-
+  const count: Map<number, number>[] = Array.from({length: n}, () => new Map());
+  for (const [x, y] of pick) count[x].set(y, (count[x].get(y) ?? 0) + 1);
+  let wins = 0;
+  for (let i = 0; i < n; i++) {
+    if (Math.max(0, ...count[i].values()) > i) wins++;
+  }
+  return wins;
 }`,
     python: `def winningPlayerCount(n, pick):
-    pass`,
+    from collections import defaultdict
+    count = [defaultdict(int) for _ in range(n)]
+    for x, y in pick: count[x][y] += 1
+    return sum(1 for i in range(n) if (max(count[i].values(), default=0)) > i)`,
   },
   visibleTests: [
     { args: [3, [[0, 0], [1, 0], [1, 0], [2, 0], [2, 0], [2, 0]]], expected: 3 },
