@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3054** problems; 9483 tests green. Batch 305 complete.
+**Current focus:** Bank at **3063** problems; 9492 tests green. Batch 306 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 306+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+**Next up:** Bank growth (batch 307+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+
+### feat(bank): batch 306 — city-discounts, cycle-distance, design-hash-set (2026-06-02)
+Three new problems: `minimum-cost-to-reach-city-with-discounts` (medium/graph — Dijkstra with state (city, discountsUsed); for each neighbor try with and without discount; O(n·k·log(n·k))), `distance-to-a-cycle-in-undirected-graph` (hard/graph — leaf-peel BFS to identify cycle nodes; multi-source BFS from all cycle nodes; O(n+E)), `design-hash-set` (easy/design — separate chaining with 769 buckets; bucket is array of keys hashing to same slot; O(1) avg). Bank at **3063**; 9492 tests.
 
 ### feat(bank): batch 305 — connect-groups, pairs-divisible-k, zigzag-path (2026-06-02)
 Three new problems: `minimum-cost-to-connect-two-groups-of-points` (hard/dp+bitmask — DP over group2 coverage mask; for each group1 point try connecting to each group2 point; after all group1 done add min remaining group2 costs; O(n·m·2^m)), `count-array-pairs-divisible-by-k` (hard/math — gcd(nums[i],k) grouping; pair (d1,d2) valid iff (d1*d2)%k==0; O(n+D²) where D=divisor count of k), `path-in-zigzag-labelled-binary-tree` (medium/math — mirror label within level (min+max-label), then halve to get parent; alternate directions cancel out; O(log n)). Bank at **3054**; 9483 tests.
