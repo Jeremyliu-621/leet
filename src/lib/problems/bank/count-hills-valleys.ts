@@ -39,10 +39,33 @@ Return the number of hills and valleys in \`nums\`.
   functionName: 'countHillValley',
   params: ['nums'],
   starterCode: {
-    javascript: 'function countHillValley(nums) {\n  \n}\n',
-    typescript: "function countHillValley(nums: number[]): number {\n  \n}",
-
-    python: 'def countHillValley(nums):\n    pass\n',
+    javascript: `function countHillValley(nums) {
+  const a = nums.filter((v, i) => i === 0 || v !== nums[i - 1]);
+  let count = 0;
+  for (let i = 1; i < a.length - 1; i++) {
+    if (a[i] > a[i-1] && a[i] > a[i+1]) count++;
+    else if (a[i] < a[i-1] && a[i] < a[i+1]) count++;
+  }
+  return count;
+}`,
+    typescript: `function countHillValley(nums: number[]): number {
+  const a = nums.filter((v, i) => i === 0 || v !== nums[i - 1]);
+  let count = 0;
+  for (let i = 1; i < a.length - 1; i++) {
+    if (a[i]! > a[i-1]! && a[i]! > a[i+1]!) count++;
+    else if (a[i]! < a[i-1]! && a[i]! < a[i+1]!) count++;
+  }
+  return count;
+}`,
+    python: `def countHillValley(nums):
+    a = [v for i, v in enumerate(nums) if i == 0 or v != nums[i - 1]]
+    count = 0
+    for i in range(1, len(a) - 1):
+        if a[i] > a[i-1] and a[i] > a[i+1]:
+            count += 1
+        elif a[i] < a[i-1] and a[i] < a[i+1]:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[2, 4, 1, 1, 6, 5]], expected: 3 },

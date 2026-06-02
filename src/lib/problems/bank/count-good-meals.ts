@@ -38,10 +38,40 @@ Note that items with different indices are considered different even if they hav
   functionName: 'countPairs',
   params: ['deliciousness'],
   starterCode: {
-    javascript: 'function countPairs(deliciousness) {\n  \n}\n',
-    typescript: "function countPairs(deliciousness: number[]): number {\n  \n}",
-
-    python: 'def countPairs(deliciousness):\n    pass\n',
+    javascript: `function countPairs(deliciousness) {
+  const MOD = 1_000_000_007;
+  const seen = new Map();
+  let count = 0;
+  for (const d of deliciousness) {
+    for (let p = 1; p <= (1 << 21); p <<= 1) {
+      count = (count + (seen.get(p - d) || 0)) % MOD;
+    }
+    seen.set(d, (seen.get(d) || 0) + 1);
+  }
+  return count;
+}`,
+    typescript: `function countPairs(deliciousness: number[]): number {
+  const MOD = 1_000_000_007;
+  const seen = new Map<number, number>();
+  let count = 0;
+  for (const d of deliciousness) {
+    for (let p = 1; p <= (1 << 21); p <<= 1) {
+      count = (count + (seen.get(p - d) ?? 0)) % MOD;
+    }
+    seen.set(d, (seen.get(d) ?? 0) + 1);
+  }
+  return count;
+}`,
+    python: `def countPairs(deliciousness):
+    MOD = 10**9 + 7
+    seen = {}
+    count = 0
+    for d in deliciousness:
+        for k in range(22):
+            p = 1 << k
+            count = (count + seen.get(p - d, 0)) % MOD
+        seen[d] = seen.get(d, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[1,3,5,7,9]], expected: 4 },

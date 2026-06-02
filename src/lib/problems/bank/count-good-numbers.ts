@@ -40,10 +40,45 @@ A digit string is a string consisting of digits \`0\` through \`9\` that may con
   functionName: 'countGoodNumbers',
   params: ['n'],
   starterCode: {
-    javascript: 'function countGoodNumbers(n) {\n  \n}\n',
-    typescript: "function countGoodNumbers(n: number): number {\n  \n}",
-
-    python: 'def countGoodNumbers(n):\n    pass\n',
+    javascript: `function countGoodNumbers(n) {
+  const MOD = 1_000_000_007n;
+  function modpow(base, exp, mod) {
+    let result = 1n;
+    base %= mod;
+    while (exp > 0n) {
+      if (exp % 2n === 1n) result = result * base % mod;
+      base = base * base % mod;
+      exp /= 2n;
+    }
+    return result;
+  }
+  const bigN = BigInt(n);
+  const evenPos = (bigN + 1n) / 2n;
+  const oddPos = bigN / 2n;
+  return Number(modpow(5n, evenPos, MOD) * modpow(4n, oddPos, MOD) % MOD);
+}`,
+    typescript: `function countGoodNumbers(n: number): number {
+  const MOD = 1_000_000_007n;
+  function modpow(base: bigint, exp: bigint, mod: bigint): bigint {
+    let result = 1n;
+    base %= mod;
+    while (exp > 0n) {
+      if (exp % 2n === 1n) result = result * base % mod;
+      base = base * base % mod;
+      exp /= 2n;
+    }
+    return result;
+  }
+  const bigN = BigInt(n);
+  const evenPos = (bigN + 1n) / 2n;
+  const oddPos = bigN / 2n;
+  return Number(modpow(5n, evenPos, MOD) * modpow(4n, oddPos, MOD) % MOD);
+}`,
+    python: `def countGoodNumbers(n):
+    MOD = 10**9 + 7
+    even_pos = (n + 1) // 2
+    odd_pos = n // 2
+    return pow(5, even_pos, MOD) * pow(4, odd_pos, MOD) % MOD`,
   },
   visibleTests: [
     { args: [1], expected: 5 },

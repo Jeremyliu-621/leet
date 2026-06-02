@@ -38,10 +38,71 @@ A subsequence is obtained by deleting some characters from \`s\` without changin
   functionName: 'countPalindromicSubsequences',
   params: ['s'],
   starterCode: {
-    javascript: 'function countPalindromicSubsequences(s) {\n\n}\n',
-    typescript: "function countPalindromicSubsequences(s: string): number {\n\n}",
-
-    python: 'def countPalindromicSubsequences(s: str) -> int:\n    pass\n',
+    javascript: `function countPalindromicSubsequences(s) {
+  const MOD = 1_000_000_007;
+  const n = s.length;
+  const dp = Array.from({length: n}, () => new Array(n).fill(0));
+  for (let i = 0; i < n; i++) dp[i][i] = 1;
+  for (let len = 2; len <= n; len++) {
+    for (let i = 0; i <= n - len; i++) {
+      const j = i + len - 1;
+      for (const c of 'abcd') {
+        let l = i, r = j;
+        while (l <= j && s[l] !== c) l++;
+        while (r >= i && s[r] !== c) r--;
+        if (l > r) continue;
+        if (l === r) { dp[i][j]++; continue; }
+        if (l + 1 === r) { dp[i][j] = (dp[i][j] + 2) % MOD; continue; }
+        dp[i][j] = (dp[i][j] + dp[l+1][r-1] + 2) % MOD;
+      }
+    }
+  }
+  return dp[0][n-1];
+}`,
+    typescript: `function countPalindromicSubsequences(s: string): number {
+  const MOD = 1_000_000_007;
+  const n = s.length;
+  const dp: number[][] = Array.from({length: n}, () => new Array(n).fill(0));
+  for (let i = 0; i < n; i++) dp[i]![i] = 1;
+  for (let len = 2; len <= n; len++) {
+    for (let i = 0; i <= n - len; i++) {
+      const j = i + len - 1;
+      for (const c of 'abcd') {
+        let l = i, r = j;
+        while (l <= j && s[l] !== c) l++;
+        while (r >= i && s[r] !== c) r--;
+        if (l > r) continue;
+        if (l === r) { dp[i]![j]!++; continue; }
+        if (l + 1 === r) { dp[i]![j] = (dp[i]![j]! + 2) % MOD; continue; }
+        dp[i]![j] = (dp[i]![j]! + dp[l+1]![r-1]! + 2) % MOD;
+      }
+    }
+  }
+  return dp[0]![n-1]!;
+}`,
+    python: `def countPalindromicSubsequences(s: str) -> int:
+    MOD = 10**9 + 7
+    n = len(s)
+    dp = [[0] * n for _ in range(n)]
+    for i in range(n):
+        dp[i][i] = 1
+    for length in range(2, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            for c in 'abcd':
+                l, r = i, j
+                while l <= j and s[l] != c:
+                    l += 1
+                while r >= i and s[r] != c:
+                    r -= 1
+                if l > r:
+                    continue
+                if l == r:
+                    dp[i][j] += 1
+                elif l + 1 == r:
+                    dp[i][j] = (dp[i][j] + 2) % MOD
+                else:
+                    dp[i][j] = (dp[i][j] + dp[l+1][r-1] + 2) % MOD`,
   },
   visibleTests: [
     { args: ['bccb'], expected: 6 },

@@ -42,10 +42,55 @@ Note the unusual ordering: the *third* index (k) must hold a value **between** t
   functionName: 'countQuadruplets',
   params: ['nums'],
   starterCode: {
-    javascript: 'function countQuadruplets(nums) {\n  \n}\n',
-    typescript: "function countQuadruplets(nums: number[]): number {\n  \n}",
-
-    python: 'def countQuadruplets(nums: list[int]) -> int:\n    pass\n',
+    javascript: `function countQuadruplets(nums) {
+  const n = nums.length;
+  let ans = 0;
+  for (let k = 1; k < n - 1; k++) {
+    const freq = new Array(n + 2).fill(0);
+    for (let l = k + 1; l < n; l++) freq[nums[l]]++;
+    const rg = new Array(n + 2).fill(0);
+    for (let v = n; v >= 0; v--) rg[v] = rg[v + 1] + (freq[v + 1] || 0);
+    let lc = 0;
+    for (let j = 0; j < k; j++) {
+      if (nums[j] > nums[k]) ans += lc * rg[nums[j]];
+      else if (nums[j] < nums[k]) lc++;
+    }
+  }
+  return ans;
+}`,
+    typescript: `function countQuadruplets(nums: number[]): number {
+  const n = nums.length;
+  let ans = 0;
+  for (let k = 1; k < n - 1; k++) {
+    const freq = new Array(n + 2).fill(0);
+    for (let l = k + 1; l < n; l++) freq[nums[l]!]++;
+    const rg = new Array(n + 2).fill(0);
+    for (let v = n; v >= 0; v--) rg[v] = rg[v + 1]! + (freq[v + 1] ?? 0);
+    let lc = 0;
+    for (let j = 0; j < k; j++) {
+      if (nums[j]! > nums[k]!) ans += lc * rg[nums[j]!]!;
+      else if (nums[j]! < nums[k]!) lc++;
+    }
+  }
+  return ans;
+}`,
+    python: `def countQuadruplets(nums: list[int]) -> int:
+    n = len(nums)
+    ans = 0
+    for k in range(1, n - 1):
+        freq = [0] * (n + 2)
+        for l in range(k + 1, n):
+            freq[nums[l]] += 1
+        rg = [0] * (n + 2)
+        for v in range(n, -1, -1):
+            rg[v] = rg[v + 1] + freq[v + 1]
+        lc = 0
+        for j in range(k):
+            if nums[j] > nums[k]:
+                ans += lc * rg[nums[j]]
+            elif nums[j] < nums[k]:
+                lc += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 4]], expected: 1 },

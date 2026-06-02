@@ -30,9 +30,14 @@ Return *the number of **distinct** integers on the board after \`n\` days*.`,
   functionName: 'distinctIntegers',
   params: ['n'],
   starterCode: {
-    javascript: 'function distinctIntegers(n) {\n\n}\n',
-    typescript: 'function distinctIntegers(n: number): number {\n\n}\n',
-    python: 'def distinctIntegers(n):\n    pass\n',
+    javascript: `function distinctIntegers(n) {
+  return n === 1 ? 1 : n - 1;
+}`,
+    typescript: `function distinctIntegers(n: number): number {
+  return n === 1 ? 1 : n - 1;
+}`,
+    python: `def distinctIntegers(n):
+    return 1 if n == 1 else n - 1`,
   },
   visibleTests: [
     { args: [5], expected: 4 },
