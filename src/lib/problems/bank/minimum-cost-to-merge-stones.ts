@@ -38,10 +38,49 @@ Return the minimum cost to merge all piles of stones into **one pile**. If it is
   functionName: 'mergeStones',
   params: ['stones', 'k'],
   starterCode: {
-    javascript: 'function mergeStones(stones, k) {\n\n}\n',
-    typescript: "function mergeStones(stones: number[], k: number): number {\n\n}",
-
-    python: 'def mergeStones(stones: list, k: int) -> int:\n    pass\n',
+    javascript: `function mergeStones(stones, k) {
+  const n = stones.length;
+  if ((n - 1) % (k - 1) !== 0) return -1;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i+1] = prefix[i] + stones[i];
+  const dp = Array.from({length: n}, () => new Array(n).fill(0));
+  for (let len = k; len <= n; len++) {
+    for (let i = 0; i + len - 1 < n; i++) {
+      const j = i + len - 1; dp[i][j] = Infinity;
+      for (let m = i; m < j; m += k - 1) dp[i][j] = Math.min(dp[i][j], dp[i][m] + dp[m+1][j]);
+      if ((j - i) % (k - 1) === 0) dp[i][j] += prefix[j+1] - prefix[i];
+    }
+  }
+  return dp[0][n-1];
+}`,
+    typescript: `function mergeStones(stones: number[], k: number): number {
+  const n = stones.length;
+  if ((n - 1) % (k - 1) !== 0) return -1;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i+1] = prefix[i]! + stones[i]!;
+  const dp = Array.from({length: n}, () => new Array<number>(n).fill(0));
+  for (let len = k; len <= n; len++) {
+    for (let i = 0; i + len - 1 < n; i++) {
+      const j = i + len - 1; dp[i]![j] = Infinity;
+      for (let m = i; m < j; m += k - 1) dp[i]![j] = Math.min(dp[i]![j]!, dp[i]![m]! + dp[m+1]![j]!);
+      if ((j - i) % (k - 1) === 0) dp[i]![j] = dp[i]![j]! + prefix[j+1]! - prefix[i]!;
+    }
+  }
+  return dp[0]![n-1]!;
+}`,
+    python: `def mergeStones(stones: list, k: int) -> int:
+    if hasattr(stones, 'to_py'): stones = list(stones.to_py())
+    n = len(stones)
+    if (n - 1) % (k - 1) != 0: return -1
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i+1] = prefix[i] + stones[i]
+    dp = [[0] * n for _ in range(n)]
+    for length in range(k, n + 1):
+        for i in range(n - length + 1):
+            j = i + length - 1; dp[i][j] = float('inf')
+            for m in range(i, j, k - 1): dp[i][j] = min(dp[i][j], dp[i][m] + dp[m+1][j])
+            if (j - i) % (k - 1) == 0: dp[i][j] += prefix[j+1] - prefix[i]
+    return dp[0][n-1]`,
   },
   visibleTests: [
     { args: [[3,2,4,1], 2], expected: 20 },

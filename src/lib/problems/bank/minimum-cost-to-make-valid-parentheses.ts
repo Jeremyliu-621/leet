@@ -42,10 +42,24 @@ Output: 3
   functionName: 'minAddToMakeValid',
   params: ['s'],
   starterCode: {
-    javascript: 'function minAddToMakeValid(s) {\n\n}\n',
-    typescript: "function minAddToMakeValid(s: string): number {\n\n}",
-
-    python: 'def minAddToMakeValid(s):\n    pass\n',
+    javascript: `function minAddToMakeValid(s) {
+  let open = 0, close = 0;
+  for (const c of s) { if (c === '(') open++; else if (open > 0) open--; else close++; }
+  return open + close;
+}`,
+    typescript: `function minAddToMakeValid(s: string): number {
+  let open = 0, close = 0;
+  for (const c of s) { if (c === '(') open++; else if (open > 0) open--; else close++; }
+  return open + close;
+}`,
+    python: `def minAddToMakeValid(s):
+    if hasattr(s, 'to_py'): s = str(s)
+    open_ = close = 0
+    for c in s:
+        if c == '(': open_ += 1
+        elif open_ > 0: open_ -= 1
+        else: close += 1
+    return open_ + close`,
   },
   visibleTests: [
     { args: ['())'], expected: 1 },

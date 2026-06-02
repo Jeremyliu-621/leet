@@ -44,14 +44,17 @@ Return the **minimum cost** to move all chips to the same position.
   params: ['position'],
   starterCode: {
     javascript: `function minCostToMoveChips(position) {
-  // Return the minimum cost to move all chips to one position
+  const odd = position.filter(p => p % 2 !== 0).length;
+  return Math.min(odd, position.length - odd);
 }`,
-    typescript: "function minCostToMoveChips(position: number[]): number {\n  // Return the minimum cost to move all chips to one position\n}",
-
+    typescript: `function minCostToMoveChips(position: number[]): number {
+  const odd = position.filter(p => p % 2 !== 0).length;
+  return Math.min(odd, position.length - odd);
+}`,
     python: `def minCostToMoveChips(position) -> int:
-    position = list(position)
-    # Return the minimum cost to move all chips to one position
-    pass`,
+    if hasattr(position, 'to_py'): position = list(position.to_py())
+    odd = sum(1 for p in position if p % 2 != 0)
+    return min(odd, len(position) - odd)`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 1 },
