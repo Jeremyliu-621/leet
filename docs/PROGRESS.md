@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3002** problems; 9357 tests green. Batches 41z+41aa complete (15 more stubs).
+**Current focus:** Bank at **3005** problems; 9366 tests green. Batch 294 complete (3 new problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Bank growth (batch 295+); starter backfill (batch 41ab+); UX polish.
+
+### feat(bank): batch 294 — binary-trees-with-factors, rank-transform-matrix, robot-smallest-string (2026-06-02)
+Three new problems: `binary-trees-with-factors` (medium/dp+hash-map — sort arr; dp[v]=1+Σdp[a]·dp[v/a] for divisors a in dp; BigInt MOD; O(n²)), `rank-transform-of-a-matrix` (hard/arrays+union-find — sort all cells by value; Union-Find groups equal-value cells sharing row/col; for each group rank=max(rowRank,colRank)+1; update rowRank/colRank; O(m·n·log(m·n))), `using-a-robot-to-print-the-lexicographically-smallest-string` (medium/strings+stack — precompute suffMin[i]=min of s[i..n-1]; greedily pop stack while top≤suffMin[i] before pushing s[i]; drain stack at end; O(n)). Bank at **3005**; 9366 tests.
 
 ### feat: starter backfill batches 41z+41aa — 15 maximum-* stubs (2026-06-02)
 Batch 41z (7 stubs): `maximum-number-of-operations-with-the-same-score-i` (easy — iterate pairs checking fixed first-pair sum), `maximum-number-of-operations-with-the-same-score-ii` (medium/dp — try 3 target scores; top-down memoized dp(l,r)), `maximum-number-of-pairs-in-array` (easy — freq count → pairs=Σfloor(c/2)), `maximum-number-of-points-with-cost` (medium/dp — O(mn) DP with left/right sweep for O(n) row transitions), `maximum-number-of-removable-characters` (medium/binary-search — binary search on k + O(|s|) subsequence check), `maximum-number-of-robots-within-budget` (hard — binary search on k + monotonic deque for window max chargeTimes), `maximum-number-of-vowels-in-a-substring-of-given-length` (medium — sliding window of size k tracking vowel count). Batch 41aa (8 stubs): `maximum-manhattan-distance` (easy — simulate x/y, track max |x|+|y|), `maximum-number-of-groups-entering-next-round` (medium — sort desc + binary search with greedy canForm), `maximum-number-of-matching-indices-after-right-shifts` (medium — O(n²) try all n rotations), `maximum-number-of-jumps-to-reach-the-last-index` (medium — O(n²) DP), `maximum-number-of-weeks-for-which-you-can-work` (medium — max vs rest+1 formula), `maximum-odd-binary-number` (easy — (ones-1) '1's + zeros + trailing '1'), `maximum-palindromes-after-operations` (medium — pool char pairs, greedily assign to shortest words), `maximum-or` (medium — prefix/suffix OR + apply all k doublings to one element; BigInt). 9357 tests.
