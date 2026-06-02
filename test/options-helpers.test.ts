@@ -337,12 +337,12 @@ describe('isReducingUnlockDuration', () => {
 });
 
 describe('isReducingTimeLimitSec', () => {
-  it('returns true when challengeTimeLimitSec is decreasing', () => {
-    expect(isReducingTimeLimitSec({ ...basePrefs, challengeTimeLimitSec: 600 }, { challengeTimeLimitSec: 300 })).toBe(true);
+  it('returns true when challengeTimeLimitSec is increasing (strictness-reducing)', () => {
+    expect(isReducingTimeLimitSec({ ...basePrefs, challengeTimeLimitSec: 300 }, { challengeTimeLimitSec: 600 })).toBe(true);
   });
 
-  it('returns false when challengeTimeLimitSec is increasing', () => {
-    expect(isReducingTimeLimitSec({ ...basePrefs, challengeTimeLimitSec: 300 }, { challengeTimeLimitSec: 600 })).toBe(false);
+  it('returns false when challengeTimeLimitSec is decreasing (strictness-increasing)', () => {
+    expect(isReducingTimeLimitSec({ ...basePrefs, challengeTimeLimitSec: 600 }, { challengeTimeLimitSec: 300 })).toBe(false);
   });
 
   it('returns false when the key is absent', () => {

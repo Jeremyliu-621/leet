@@ -101,7 +101,10 @@ export function isReducingTimeLimitSec(
   next: Partial<UserPreferences>,
 ): boolean {
   if (next.challengeTimeLimitSec === undefined) return false;
-  return next.challengeTimeLimitSec < prev.challengeTimeLimitSec;
+  // Increasing the time limit is strictness-reducing (user gets more time to
+  // solve). Decreasing makes it harder, which is strictness-increasing and
+  // does NOT need deferral.
+  return next.challengeTimeLimitSec > prev.challengeTimeLimitSec;
 }
 
 export function isIncreasingMaxAttempts(
