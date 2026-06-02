@@ -8,9 +8,16 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2918** problems; 9074 tests green. Batch 279 (shift-distance) and batch 280 (maximum-students, max-sum-two-non-overlapping) pushed. ~2100+ stubs remaining.
+**Current focus:** Bank at **2918** problems; 9074 tests green. Starter backfill batches 6b–9 complete (~60 stubs filled). ~2040+ stubs remaining.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 281+); starter backfill (batch 39+); UX polish.
+**Next up:** Continued starter backfill (batch 40+); bank growth (batch 281+); UX polish.
+
+### feat(bank): starter-fill batches 6b–9 — 60 stubs (2026-06-02)
+Filled JS/TS/Python starters for 60 problems across batches 6b–9:
+- **Batch 6b**: distance-between-bus-stops, divide-subarrays-min-cost-i, divisible-non-divisible-sums, element-appearing-25pct (×2), excel-column-number/title, fair-candy-swap, faulty-keyboard, final-array-state-k-multiplications-i.
+- **Batch 7**: find-n-unique-integers-sum-zero, find-k-weakest-rows, find-min-area-cover-ones, largest-number-parity-swaps, longest-harmonious-subsequence, kth-largest-each-insertion, find-if-array-can-be-sorted, find-closest-node-two-nodes, house-robber-iii, linked-list-cycle-ii.
+- **Batch 8**: longest-word-dict-deleting, magic-squares-in-grid, max-enemy-forts, max-words-type, max-total-cost-alternating-subarrays, max-distance-pair-values, max-occurrences-substring, max-points-cards, max-binary-string-after-change, max-AND-value.
+- **Batch 9**: monotone-increasing-digits, most-common-word, num-pairs-concat-target, number-of-recent-calls, rectangles-largest-square, steps-binary-to-one, max-sum-any-permutation, my-calendar-i, subarrays-bounded-max, max-running-time-n-computers.
 
 ### feat(bank): batch 280 — maximum-students-taking-exam, max-sum-two-non-overlapping-subarrays (2026-06-02)
 Two new problems: `maximum-students-taking-exam` (hard/dp+bit-manipulation — bitmask row-profile DP; submask enumeration trick: mask=(mask-1)&avail; O(3^n·m)), `maximum-sum-of-elements-in-two-non-overlapping-subarrays` (medium/arrays+dp+sliding-window — prefix sums + maxF/maxS prefix-max arrays; try both orderings; O(n)). Bank at **2918**; 9074 tests.
