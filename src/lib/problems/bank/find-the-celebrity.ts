@@ -45,12 +45,33 @@ Return the label of the celebrity if one exists, or \`-1\` if no celebrity is fo
   params: ['knows'],
   starterCode: {
     javascript: `function findCelebrity(knows) {
-
+  const n = knows.length;
+  let cand = 0;
+  for (let i = 1; i < n; i++) if (knows[cand][i]) cand = i;
+  for (let i = 0; i < n; i++) {
+    if (i === cand) continue;
+    if (knows[cand][i] || !knows[i][cand]) return -1;
+  }
+  return cand;
 }`,
-    typescript: "function findCelebrity(knows: number[][]): number {\n\n}",
-
+    typescript: `function findCelebrity(knows: number[][]): number {
+  const n = knows.length;
+  let cand = 0;
+  for (let i = 1; i < n; i++) if (knows[cand]![i]) cand = i;
+  for (let i = 0; i < n; i++) {
+    if (i === cand) continue;
+    if (knows[cand]![i] || !knows[i]![cand]) return -1;
+  }
+  return cand;
+}`,
     python: `def findCelebrity(knows):
-    pass`,
+    n, cand = len(knows), 0
+    for i in range(1, n):
+        if knows[cand][i]: cand = i
+    for i in range(n):
+        if i == cand: continue
+        if knows[cand][i] or not knows[i][cand]: return -1
+    return cand`,
   },
   visibleTests: [
     { args: [[[0, 1, 0], [0, 0, 0], [0, 1, 0]]], expected: 1 },

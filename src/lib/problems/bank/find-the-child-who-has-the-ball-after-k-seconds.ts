@@ -44,13 +44,19 @@ After **k** seconds, return the number of the child holding the ball.`,
   params: ['n', 'k'],
   starterCode: {
     javascript: `function numberOfChild(n, k) {
-
+  const period = 2 * (n - 1);
+  const pos = k % period;
+  return pos <= n - 1 ? pos : period - pos;
 }`,
     typescript: `function numberOfChild(n: number, k: number): number {
-
+  const period = 2 * (n - 1);
+  const pos = k % period;
+  return pos <= n - 1 ? pos : period - pos;
 }`,
     python: `def numberOfChild(n: int, k: int) -> int:
-    pass`,
+    period = 2 * (n - 1)
+    pos = k % period
+    return pos if pos <= n - 1 else period - pos`,
   },
   visibleTests: [
     { args: [3, 5], expected: 1 },

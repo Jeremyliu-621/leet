@@ -34,12 +34,68 @@ The closest is defined as the absolute difference minimized between two integers
   params: ['n'],
   starterCode: {
     javascript: `function nearestPalindromic(n) {
-
+  const len = n.length, num = BigInt(n), halfLen = Math.ceil(len / 2);
+  const mid = BigInt(n.slice(0, halfLen));
+  function makePalin(half) {
+    const s = String(half), rev = s.split('').reverse().join('');
+    const full = len % 2 === 0 ? s + rev : s + rev.slice(1);
+    return BigInt(full.replace(/^0+/, '') || '0');
+  }
+  const candidates = [
+    makePalin(mid), makePalin(mid - 1n), makePalin(mid + 1n),
+    10n ** BigInt(len - 1) - 1n, 10n ** BigInt(len) + 1n,
+  ];
+  let best = null;
+  for (const cand of candidates) {
+    if (cand === num || cand < 0n) continue;
+    const diff = cand > num ? cand - num : num - cand;
+    if (best === null) { best = cand; continue; }
+    const bd = best > num ? best - num : num - best;
+    if (diff < bd || (diff === bd && cand < best)) best = cand;
+  }
+  return String(best);
 }`,
-    typescript: "function nearestPalindromic(n: string): string {\n\n}",
-
+    typescript: `function nearestPalindromic(n: string): string {
+  const len = n.length, num = BigInt(n), halfLen = Math.ceil(len / 2);
+  const mid = BigInt(n.slice(0, halfLen));
+  function makePalin(half: bigint): bigint {
+    const s = String(half), rev = s.split('').reverse().join('');
+    const full = len % 2 === 0 ? s + rev : s + rev.slice(1);
+    return BigInt(full.replace(/^0+/, '') || '0');
+  }
+  const candidates: bigint[] = [
+    makePalin(mid), makePalin(mid - 1n), makePalin(mid + 1n),
+    10n ** BigInt(len - 1) - 1n, 10n ** BigInt(len) + 1n,
+  ];
+  let best: bigint | null = null;
+  for (const cand of candidates) {
+    if (cand === num || cand < 0n) continue;
+    const diff = cand > num ? cand - num : num - cand;
+    if (best === null) { best = cand; continue; }
+    const bd = best > num ? best - num : num - best;
+    if (diff < bd || (diff === bd && cand < best)) best = cand;
+  }
+  return String(best);
+}`,
     python: `def nearestPalindromic(n):
-    pass`,
+    length, num = len(n), int(n)
+    half_len = (length + 1) // 2
+    mid = int(n[:half_len])
+    def make_palin(half):
+        s = str(half); rev = s[::-1]
+        full = s + (rev[1:] if length % 2 else rev)
+        return int(full) if full else 0
+    candidates = [
+        make_palin(mid), make_palin(mid - 1), make_palin(mid + 1),
+        10 ** (length - 1) - 1, 10 ** length + 1,
+    ]
+    best = None
+    for cand in candidates:
+        if cand == num or cand < 0: continue
+        diff = abs(cand - num)
+        if best is None or diff < abs(best - num) or (diff == abs(best - num) and cand < best):
+            best = cand
+    return str(best)`,
   },
   visibleTests: [
     { args: ['123'], expected: '121' },

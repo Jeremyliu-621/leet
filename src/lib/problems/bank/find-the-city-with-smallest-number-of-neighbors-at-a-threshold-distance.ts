@@ -41,12 +41,46 @@ A city \`a\` can be reached from city \`b\` if there exists a path with total di
   params: ['n', 'edges', 'distanceThreshold'],
   starterCode: {
     javascript: `function findTheCity(n, edges, distanceThreshold) {
-
+  const dist = Array.from({length: n}, (_, i) => Array.from({length: n}, (_, j) => i === j ? 0 : Infinity));
+  for (const [u, v, w] of edges) { dist[u][v] = w; dist[v][u] = w; }
+  for (let k = 0; k < n; k++)
+    for (let i = 0; i < n; i++)
+      for (let j = 0; j < n; j++)
+        if (dist[i][k] + dist[k][j] < dist[i][j]) dist[i][j] = dist[i][k] + dist[k][j];
+  let ans = -1, minCount = n;
+  for (let i = 0; i < n; i++) {
+    const cnt = dist[i].filter(d => d <= distanceThreshold).length - 1;
+    if (cnt <= minCount) { minCount = cnt; ans = i; }
+  }
+  return ans;
 }`,
-    typescript: "function findTheCity(n: number, edges: number[][], distanceThreshold: number): number {\n\n}",
-
+    typescript: `function findTheCity(n: number, edges: number[][], distanceThreshold: number): number {
+  const dist: number[][] = Array.from({length: n}, (_, i) => Array.from({length: n}, (_, j) => i === j ? 0 : Infinity));
+  for (const [u, v, w] of edges) { dist[u]![v!] = w!; dist[v!]![u!] = w!; }
+  for (let k = 0; k < n; k++)
+    for (let i = 0; i < n; i++)
+      for (let j = 0; j < n; j++)
+        if (dist[i]![k]! + dist[k]![j]! < dist[i]![j]!) dist[i]![j] = dist[i]![k]! + dist[k]![j]!;
+  let ans = -1, minCount = n;
+  for (let i = 0; i < n; i++) {
+    const cnt = dist[i]!.filter(d => d <= distanceThreshold).length - 1;
+    if (cnt <= minCount) { minCount = cnt; ans = i; }
+  }
+  return ans;
+}`,
     python: `def findTheCity(n, edges, distanceThreshold):
-    pass`,
+    INF = float('inf')
+    dist = [[0 if i == j else INF for j in range(n)] for i in range(n)]
+    for u, v, w in edges: dist[u][v] = dist[v][u] = w
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]: dist[i][j] = dist[i][k] + dist[k][j]
+    ans, min_cnt = -1, n
+    for i in range(n):
+        cnt = sum(1 for d in dist[i] if d <= distanceThreshold) - 1
+        if cnt <= min_cnt: min_cnt, ans = cnt, i
+    return ans`,
   },
   visibleTests: [
     { args: [4, [[0,1,3],[1,2,1],[1,3,4],[2,3,1]], 4], expected: 3 },

@@ -43,11 +43,51 @@ Since the answer may be very large, return it **modulo** \`10^9 + 7\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function countOfPairs(nums) {
-
+  const MOD = 1_000_000_007n, m = Math.max(...nums);
+  let dp = new Array(m + 1).fill(0n);
+  for (let v = 0; v <= nums[0]; v++) dp[v] = 1n;
+  for (let i = 1; i < nums.length; i++) {
+    const diff = Math.max(0, nums[i] - nums[i - 1]);
+    const prefix = new Array(m + 2).fill(0n);
+    for (let v = 0; v <= m; v++) prefix[v + 1] = (prefix[v] + dp[v]) % MOD;
+    const newDp = new Array(m + 1).fill(0n);
+    for (let v2 = 0; v2 <= nums[i]; v2++) {
+      const maxV = v2 - diff;
+      if (maxV >= 0) newDp[v2] = prefix[Math.min(maxV, m) + 1];
+    }
+    dp = newDp;
+  }
+  return Number(dp.reduce((a, b) => (a + b) % MOD, 0n));
 }`,
-    typescript: 'function countOfPairs(nums: number[]): number {\n\n}',
+    typescript: `function countOfPairs(nums: number[]): number {
+  const MOD = 1_000_000_007n, m = Math.max(...nums);
+  let dp: bigint[] = new Array(m + 1).fill(0n);
+  for (let v = 0; v <= nums[0]!; v++) dp[v] = 1n;
+  for (let i = 1; i < nums.length; i++) {
+    const diff = Math.max(0, nums[i]! - nums[i - 1]!);
+    const prefix: bigint[] = new Array(m + 2).fill(0n);
+    for (let v = 0; v <= m; v++) prefix[v + 1] = (prefix[v]! + dp[v]!) % MOD;
+    const newDp: bigint[] = new Array(m + 1).fill(0n);
+    for (let v2 = 0; v2 <= nums[i]!; v2++) {
+      const maxV = v2 - diff;
+      if (maxV >= 0) newDp[v2] = prefix[Math.min(maxV, m) + 1]!;
+    }
+    dp = newDp;
+  }
+  return Number(dp.reduce((a, b) => (a + b) % MOD, 0n));
+}`,
     python: `def countOfPairs(nums):
-    pass`,
+    MOD, m = 10**9 + 7, max(nums)
+    dp = [1 if v <= nums[0] else 0 for v in range(m + 1)]
+    for i in range(1, len(nums)):
+        diff = max(0, nums[i] - nums[i-1])
+        prefix = [0] * (m + 2)
+        for v in range(m + 1): prefix[v+1] = (prefix[v] + dp[v]) % MOD
+        dp = [0] * (m + 1)
+        for v2 in range(nums[i] + 1):
+            maxV = v2 - diff
+            if maxV >= 0: dp[v2] = prefix[min(maxV, m) + 1]
+    return sum(dp) % MOD`,
   },
   visibleTests: [
     { args: [[2, 2, 2]], expected: 10 },

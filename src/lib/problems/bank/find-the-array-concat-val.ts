@@ -39,12 +39,30 @@ Return the **concatenation value** of \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function findTheArrayConcVal(nums) {
-
+  let lo = 0, hi = nums.length - 1, val = 0;
+  while (lo < hi) {
+    val += Number(String(nums[lo]) + String(nums[hi]));
+    lo++; hi--;
+  }
+  if (lo === hi) val += nums[lo];
+  return val;
 }`,
-    typescript: "function findTheArrayConcVal(nums: number[]): number {\n\n}",
-
+    typescript: `function findTheArrayConcVal(nums: number[]): number {
+  let lo = 0, hi = nums.length - 1, val = 0;
+  while (lo < hi) {
+    val += Number(String(nums[lo]) + String(nums[hi]));
+    lo++; hi--;
+  }
+  if (lo === hi) val += nums[lo]!;
+  return val;
+}`,
     python: `def findTheArrayConcVal(nums):
-    pass`,
+    lo, hi, val = 0, len(nums) - 1, 0
+    while lo < hi:
+        val += int(str(nums[lo]) + str(nums[hi]))
+        lo += 1; hi -= 1
+    if lo == hi: val += nums[lo]
+    return val`,
   },
   visibleTests: [
     { args: [[7, 52, 2, 4]], expected: 596 },
