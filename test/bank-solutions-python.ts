@@ -46429,6 +46429,67 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 276
+  'number-of-ways-to-paint-the-fence': `def numWays(n, k):
+    if k == 0:
+        return 0
+    if n == 1:
+        return k
+    same, diff = k, k * (k - 1)
+    for _ in range(n - 2):
+        same, diff = diff, (same + diff) * (k - 1)
+    return same + diff
+`,
+
+  'maximum-score-words-formed-by-letters': `def maxScoreWords(words, letters, score):
+    from collections import Counter
+    freq = Counter(letters)
+    best = 0
+    def bt(i, avail, cur):
+        nonlocal best
+        best = max(best, cur)
+        for j in range(i, len(words)):
+            wf = Counter(words[j])
+            if all(wf[c] <= avail.get(c, 0) for c in wf):
+                ws = sum(score[ord(c) - ord('a')] * cnt for c, cnt in wf.items())
+                na = dict(avail)
+                for c, cnt in wf.items():
+                    na[c] = na.get(c, 0) - cnt
+                bt(j + 1, na, cur + ws)
+    bt(0, dict(freq), 0)
+    return best
+`,
+
+  'escape-a-large-maze': `def isEscapePossible(blocked, source, target):
+    blocked = [list(b) for b in blocked]
+    source = list(source)
+    target = list(target)
+    if not blocked:
+        return True
+    LIMIT = len(blocked) * len(blocked) // 2
+    blocked_set = set(map(tuple, blocked))
+    def bfs(start, end):
+        sr, sc = start
+        er, ec = end
+        visited = {(sr, sc)}
+        queue = [(sr, sc)]
+        head = 0
+        while head < len(queue):
+            r, c = queue[head]; head += 1
+            if r == er and c == ec:
+                return True
+            if len(visited) > LIMIT:
+                return True
+            for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+                nr, nc = r + dr, c + dc
+                if 0 <= nr < 1000000 and 0 <= nc < 1000000:
+                    if (nr, nc) not in blocked_set and (nr, nc) not in visited:
+                        visited.add((nr, nc))
+                        queue.append((nr, nc))
+        return len(visited) > LIMIT
+    return bfs(source, target) and bfs(target, source)
+`,
+
   // batch 275
   'groups-of-strings': `def groupStrings(words):
     parent = {}

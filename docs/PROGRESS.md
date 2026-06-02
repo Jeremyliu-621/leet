@@ -8,15 +8,18 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2893** problems; 8996 tests green. Batch 274 complete; duplicate cleanup done.
+**Current focus:** Bank at **2899** problems; 9014 tests green. Batch 276 (paint-fence, max-score-words, escape-large-maze) pushed.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Batch 275+; continued starter backfill; UX polish.
+**Next up:** Continued bank growth (batch 277+); UX polish.
 
 ### fix(bank): remove batch-273 duplicate imports and solution entries (2026-06-02)
 makeStringGreat and minimumNumberOfFlipsToMakeBinaryStringAlternating were new additions; maximumSplitOfPositiveEvenIntegers (line 771) and minimumOperationsToMakeArrayAlternating (line 1315) were already in the bank — removed duplicate imports from index.ts and duplicate entries from bank-solutions.ts / bank-solutions-python.ts. Typecheck and 8984 tests green.
 
 ### feat(bank): batch 274 — find-different-binary, earliest-second-mark-i, min-cost-split, count-repetitions (2026-06-02)
 Four new problems: `find-different-binary-string` (easy/strings — Cantor diagonal: flip nums[i][i]; O(n)), `earliest-second-to-mark-all-indices-i` (medium/arrays+binary-search, LC 3048 — binary search on T; feasibility via last-occurrence greedy with available-slot sweep; O((n+m) log m)), `minimum-cost-to-split-an-array` (hard/arrays+dp+hash-map, LC 2547 — O(n²) DP; expand right tracking freq; importance=len+extra; O(n²)), `count-the-repetitions` (hard/strings+hash-map+simulation, LC 466 — cycle detection on s2-position after each s1 copy; extrapolate; O(l1·l2) before cycle). Bank at **2893**; 8996 tests.
+
+### feat(bank): batch 276 — paint-fence, max-score-words, escape-large-maze (2026-06-02)
+Three new problems: `number-of-ways-to-paint-the-fence` (dp/medium — same/diff DP states, no 3 consecutive same), `maximum-score-words-formed-by-letters` (backtracking/hard — letter-freq backtracking over word subsets), `escape-a-large-maze` (graph/hard — BFS with n²/2 area limit to detect enclosed regions). Bank at **2899**; 9014 tests.
 
 ### feat(bank): batches 26–33 — starter backfill (2026-06-02)
 Filled starters (JS/TS/Python) for 40 stub problems across 8 batches:

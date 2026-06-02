@@ -47404,6 +47404,72 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 276
+  'number-of-ways-to-paint-the-fence': (...args: unknown[]) => {
+    const n = args[0] as number, k = args[1] as number;
+    if (k === 0) return 0;
+    if (n === 1) return k;
+    let same = k, diff = k * (k - 1);
+    for (let i = 2; i < n; i++) {
+      [same, diff] = [diff, (same + diff) * (k - 1)];
+    }
+    return same + diff;
+  },
+
+  'maximum-score-words-formed-by-letters': (...args: unknown[]) => {
+    const words = args[0] as string[], letters = args[1] as string[], score = args[2] as number[];
+    const freq: number[] = new Array<number>(26).fill(0);
+    for (const c of letters) { const idx = c.charCodeAt(0) - 97; freq[idx] = (freq[idx] ?? 0) + 1; }
+    let best = 0;
+    function bt(i: number, avail: number[], cur: number): void {
+      best = Math.max(best, cur);
+      for (let j = i; j < words.length; j++) {
+        const word = words[j] ?? '';
+        const wf: number[] = new Array<number>(26).fill(0);
+        for (const c of word) { const idx = c.charCodeAt(0) - 97; wf[idx] = (wf[idx] ?? 0) + 1; }
+        let ws = 0, valid = true;
+        const na = avail.slice();
+        for (let kk = 0; kk < 26; kk++) {
+          if ((wf[kk] ?? 0) > (na[kk] ?? 0)) { valid = false; break; }
+          na[kk] = (na[kk] ?? 0) - (wf[kk] ?? 0);
+          ws += (wf[kk] ?? 0) * (score[kk] ?? 0);
+        }
+        if (valid) bt(j + 1, na, cur + ws);
+      }
+    }
+    bt(0, freq, 0);
+    return best;
+  },
+
+  'escape-a-large-maze': (...args: unknown[]) => {
+    const blocked = args[0] as number[][], source = args[1] as number[], target = args[2] as number[];
+    if (!blocked.length) return true;
+    const LIMIT = Math.floor(blocked.length * blocked.length / 2);
+    const blockedSet = new Set(blocked.map(([r, c]) => `${r},${c}`));
+    function bfs(start: number[], end: number[]): boolean {
+      const sr = start[0]!, sc = start[1]!, er = end[0]!, ec = end[1]!;
+      const visited = new Set([`${sr},${sc}`]);
+      const queue: number[][] = [[sr, sc]];
+      while (queue.length) {
+        const row = queue.shift()!;
+        const r = row[0]!, c = row[1]!;
+        if (r === er && c === ec) return true;
+        if (visited.size > LIMIT) return true;
+        for (const d of [[-1, 0], [1, 0], [0, -1], [0, 1]]) {
+          const nr = r + d[0]!, nc = c + d[1]!;
+          if (nr < 0 || nr >= 1000000 || nc < 0 || nc >= 1000000) continue;
+          const key = `${nr},${nc}`;
+          if (!blockedSet.has(key) && !visited.has(key)) {
+            visited.add(key);
+            queue.push([nr, nc]);
+          }
+        }
+      }
+      return visited.size > LIMIT;
+    }
+    return bfs(source, target) && bfs(target, source);
+  },
+
   // batch 275
   'groups-of-strings': (...args: unknown[]) => {
     const words = args[0] as string[];

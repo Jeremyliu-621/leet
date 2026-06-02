@@ -3092,6 +3092,10 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 276
+import { problem as numWaysPaintFence } from './number-of-ways-to-paint-the-fence';
+import { problem as maxScoreWordsLetters } from './maximum-score-words-formed-by-letters';
+import { problem as escapeALargeMaze } from './escape-a-large-maze';
 // batch 275
 import { problem as groupsOfStrings } from './groups-of-strings';
 import { problem as findGoodDaysToRobBank } from './find-good-days-to-rob-bank';
@@ -6493,6 +6497,10 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 276
+  numWaysPaintFence,
+  maxScoreWordsLetters,
+  escapeALargeMaze,
   // batch 275
   groupsOfStrings,
   findGoodDaysToRobBank,
