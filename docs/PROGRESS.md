@@ -8,9 +8,9 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2925** problems; 9134 tests green. Batches 39j–39p filled starters for 44 stub problems. ~805 stubs remaining.
+**Current focus:** Bank at **2925** problems; 9128 tests green. Batches 39j–39p + 46 filled starters for 52 stub problems. ~797 stubs remaining.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continue starter backfill (batch 39q+); continued bank growth (batch 283+); UX polish.
+**Next up:** Continue starter backfill (batch 47+); continued bank growth (batch 283+); UX polish.
 
 ### feat(bank): batch 282 — maximum-strong-pairs-II, minimum-lines, find-elements, make-costs (2026-06-02)
 Four new problems: `maximum-strong-pairs-in-an-array-ii` (medium/trie+sliding-window — XOR-max via trie with ref-count delete; sliding window ensures y≤2x), `minimum-number-of-lines-to-cover-points` (medium/bitmask+DP — BFS/DP over bitmask states; precompute line coverage masks; O(3^n)), `find-elements-in-a-contaminated-binary-tree` (medium/tree+design — BFS build + DFS recover into Set; O(n)), `make-costs-of-paths-equal-in-a-binary-tree` (medium/tree+greedy — bottom-up sibling equalization, ans+=abs(diff); O(n)). Also fixed JsNull handling in Python preamble for tree problems. Bank at **2925**; 9119 tests.
