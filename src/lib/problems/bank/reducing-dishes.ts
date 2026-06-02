@@ -40,15 +40,34 @@ Return the **maximum sum of like-time coefficients** you can achieve after cooki
   params: ['satisfaction'],
   starterCode: {
     javascript: `function maxSatisfaction(satisfaction) {
-  // return max sum of like-time coefficients
-
+  satisfaction.sort((a, b) => b - a);
+  let total = 0, curr = 0;
+  for (const s of satisfaction) {
+    curr += s;
+    if (curr <= 0) break;
+    total += curr;
+  }
+  return total;
 }`,
-    typescript: "function maxSatisfaction(satisfaction: number[]): number {\n  // return max sum of like-time coefficients\n\n}",
-
+    typescript: `function maxSatisfaction(satisfaction: number[]): number {
+  satisfaction.sort((a, b) => b - a);
+  let total = 0, curr = 0;
+  for (const s of satisfaction) {
+    curr += s;
+    if (curr <= 0) break;
+    total += curr;
+  }
+  return total;
+}`,
     python: `def maxSatisfaction(satisfaction: list) -> int:
-    # return max sum of like-time coefficients
-    pass
-`,
+    satisfaction.sort(reverse=True)
+    total, curr = 0, 0
+    for s in satisfaction:
+        curr += s
+        if curr <= 0:
+            break
+        total += curr
+    return total`,
   },
   visibleTests: [
     { args: [[-1, -8, 0, 5, -9]], expected: 14 },

@@ -37,14 +37,45 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: `function removeDuplicateLetters(s) {
-  // return smallest lexicographic string with each letter appearing once
-
+  const last = {};
+  for (let i = 0; i < s.length; i++) last[s[i]] = i;
+  const stack = [], inStack = new Set();
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (inStack.has(c)) continue;
+    while (stack.length && stack[stack.length - 1] > c && last[stack[stack.length - 1]] > i)
+      inStack.delete(stack.pop());
+    stack.push(c);
+    inStack.add(c);
+  }
+  return stack.join('');
 }`,
-    typescript: "function removeDuplicateLetters(s: string): string {\n  // return smallest lexicographic string with each letter appearing once\n\n}",
+    typescript: `function removeDuplicateLetters(s: string): string {
+  const last: Record<string, number> = {};
+  for (let i = 0; i < s.length; i++) last[s[i]] = i;
+  const stack: string[] = [], inStack = new Set<string>();
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]!;
+    if (inStack.has(c)) continue;
+    while (stack.length && stack[stack.length - 1]! > c && last[stack[stack.length - 1]!]! > i)
+      inStack.delete(stack.pop()!);
+    stack.push(c);
+    inStack.add(c);
+  }
+  return stack.join('');
+}`,
 
     python: `def removeDuplicateLetters(s: str) -> str:
-    # return smallest lexicographic string with each letter appearing once
-    pass
+    last = {c: i for i, c in enumerate(s)}
+    stack, in_stack = [], set()
+    for i, c in enumerate(s):
+        if c in in_stack:
+            continue
+        while stack and stack[-1] > c and last[stack[-1]] > i:
+            in_stack.discard(stack.pop())
+        stack.append(c)
+        in_stack.add(c)
+    return ''.join(stack)
 `,
   },
   visibleTests: [

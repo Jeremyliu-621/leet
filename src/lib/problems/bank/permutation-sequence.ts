@@ -46,13 +46,44 @@ Given \`n\` and \`k\`, return the \`k\`-th permutation sequence.
   params: ['n', 'k'],
   starterCode: {
     javascript: `function getPermutation(n, k) {
-
+  const fact = [1];
+  for (let i = 1; i <= n; i++) fact.push(fact[i - 1] * i);
+  const digits = Array.from({ length: n }, (_, i) => i + 1);
+  let result = '';
+  k--;
+  for (let i = n - 1; i >= 0; i--) {
+    const idx = Math.floor(k / fact[i]);
+    result += digits[idx];
+    digits.splice(idx, 1);
+    k %= fact[i];
+  }
+  return result;
 }`,
-    typescript: "function getPermutation(n: number, k: number): string {\n\n}",
-
+    typescript: `function getPermutation(n: number, k: number): string {
+  const fact = [1];
+  for (let i = 1; i <= n; i++) fact.push(fact[i - 1]! * i);
+  const digits = Array.from({ length: n }, (_, i) => i + 1);
+  let result = '';
+  k--;
+  for (let i = n - 1; i >= 0; i--) {
+    const idx = Math.floor(k / fact[i]!);
+    result += digits[idx];
+    digits.splice(idx, 1);
+    k %= fact[i]!;
+  }
+  return result;
+}`,
     python: `def getPermutation(n, k):
-    pass
-`,
+    import math
+    digits = list(range(1, n + 1))
+    result = ''
+    k -= 1
+    for i in range(n - 1, -1, -1):
+        idx = k // math.factorial(i)
+        result += str(digits[idx])
+        digits.pop(idx)
+        k %= math.factorial(i)
+    return result`,
   },
   visibleTests: [
     { args: [3, 3], expected: '213' },

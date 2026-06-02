@@ -45,15 +45,30 @@ function peakIndexInMountainArray(arr) {
   params: ['arr'],
   starterCode: {
     javascript: `function peakIndexInMountainArray(arr) {
-  // return the index of the peak element in O(log n) time
-
+  let l = 0, r = arr.length - 1;
+  while (l < r) {
+    const mid = (l + r) >> 1;
+    if (arr[mid] < arr[mid + 1]) l = mid + 1; else r = mid;
+  }
+  return l;
 }`,
-    typescript: "function peakIndexInMountainArray(arr: number[]): number {\n  // return the index of the peak element in O(log n) time\n\n}",
-
+    typescript: `function peakIndexInMountainArray(arr: number[]): number {
+  let l = 0, r = arr.length - 1;
+  while (l < r) {
+    const mid = (l + r) >> 1;
+    if (arr[mid]! < arr[mid + 1]!) l = mid + 1; else r = mid;
+  }
+  return l;
+}`,
     python: `def peakIndexInMountainArray(arr: list) -> int:
-    # return the index of the peak element in O(log n) time
-    pass
-`,
+    l, r = 0, len(arr) - 1
+    while l < r:
+        mid = (l + r) // 2
+        if arr[mid] < arr[mid + 1]:
+            l = mid + 1
+        else:
+            r = mid
+    return l`,
   },
   visibleTests: [
     { args: [[0, 1, 0]], expected: 1 },

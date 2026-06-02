@@ -37,8 +37,10 @@ Implement the \`StockSpanner\` class:
   const spanner = new StockSpanner();
   return prices.map(p => spanner.next(p));
 }`,
-    typescript: "function stockSpannerRunner(prices: number[]): number[] {\n  constructor() {\n\n  }\n\n  next(price) {\n\n  }\n}",
-
+    typescript: `function stockSpannerRunner(prices: number[]): number[] {
+  const spanner = new StockSpanner();
+  return prices.map(p => spanner.next(p));
+}`,
     python: `def stockSpannerRunner(prices):
     spanner = StockSpanner()
     return [spanner.next(p) for p in prices]
@@ -48,30 +50,38 @@ Implement the \`StockSpanner\` class:
     javascript: `// stockSpannerRunner is pre-defined and calls your class below.
 class StockSpanner {
   constructor() {
-
+    this.stack = [];
   }
-
   next(price) {
-
+    let span = 1;
+    while (this.stack.length > 0 && this.stack[this.stack.length - 1][0] <= price)
+      span += this.stack.pop()[1];
+    this.stack.push([price, span]);
+    return span;
   }
 }`,
     typescript: `// stockSpannerRunner is pre-defined and calls your class below.
 class StockSpanner {
-  constructor() {
-
-  }
-
+  private stack: [number, number][] = [];
   next(price: number): number {
-
+    let span = 1;
+    while (this.stack.length > 0 && this.stack[this.stack.length - 1]![0] <= price)
+      span += this.stack.pop()![1];
+    this.stack.push([price, span]);
+    return span;
   }
 }`,
     python: `# stockSpannerRunner is pre-defined and calls your class below.
 class StockSpanner:
     def __init__(self):
-        pass
+        self.stack = []
 
     def next(self, price: int) -> int:
-        pass`,
+        span = 1
+        while self.stack and self.stack[-1][0] <= price:
+            span += self.stack.pop()[1]
+        self.stack.append((price, span))
+        return span`,
   },
   visibleTests: [
     { args: [[100, 80, 60, 70, 60, 75, 85]], expected: [1, 1, 1, 2, 1, 4, 6] },

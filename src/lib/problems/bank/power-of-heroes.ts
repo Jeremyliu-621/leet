@@ -43,15 +43,33 @@ Return the **sum** of the power of all **non-empty** groups of heroes possible. 
   params: ['nums'],
   starterCode: {
     javascript: `function sumOfPower(nums) {
-  // return sum of power of all non-empty groups, modulo 1e9+7
-
+  const MOD = 1_000_000_007n;
+  const arr = [...nums].sort((a, b) => a - b).map(BigInt);
+  let ans = 0n, s = 0n;
+  for (const x of arr) {
+    ans = (ans + x * x * (s + x)) % MOD;
+    s = (2n * s + x) % MOD;
+  }
+  return Number(ans);
 }`,
-    typescript: "function sumOfPower(nums: number[]): number {\n  // return sum of power of all non-empty groups, modulo 1e9+7\n\n}",
-
+    typescript: `function sumOfPower(nums: number[]): number {
+  const MOD = 1_000_000_007n;
+  const arr = [...nums].sort((a, b) => a - b).map(BigInt);
+  let ans = 0n, s = 0n;
+  for (const x of arr) {
+    ans = (ans + x * x * (s + x)) % MOD;
+    s = (2n * s + x) % MOD;
+  }
+  return Number(ans);
+}`,
     python: `def sumOfPower(nums: list) -> int:
-    # return sum of power of all non-empty groups, modulo 1e9+7
-    pass
-`,
+    MOD = 10**9 + 7
+    arr = sorted(nums)
+    ans, s = 0, 0
+    for x in arr:
+        ans = (ans + x * x * (s + x)) % MOD
+        s = (2 * s + x) % MOD
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 1, 4]], expected: 141 },

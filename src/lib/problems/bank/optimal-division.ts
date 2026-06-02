@@ -42,15 +42,21 @@ Return the addition of parentheses in \`nums\` such that the value of this expre
   params: ['nums'],
   starterCode: {
     javascript: `function optimalDivision(nums) {
-  // return string expression maximizing value
-
+  if (nums.length === 1) return \`\${nums[0]}\`;
+  if (nums.length === 2) return \`\${nums[0]}/\${nums[1]}\`;
+  return \`\${nums[0]}/(\${nums.slice(1).join('/')})\`;
 }`,
-    typescript: "function optimalDivision(nums: number[]): string {\n  // return string expression maximizing value\n\n}",
-
+    typescript: `function optimalDivision(nums: number[]): string {
+  if (nums.length === 1) return \`\${nums[0]}\`;
+  if (nums.length === 2) return \`\${nums[0]}/\${nums[1]}\`;
+  return \`\${nums[0]}/(\${nums.slice(1).join('/')})\`;
+}`,
     python: `def optimalDivision(nums: list) -> str:
-    # return string expression maximizing value
-    pass
-`,
+    if len(nums) == 1:
+        return str(nums[0])
+    if len(nums) == 2:
+        return f"{nums[0]}/{nums[1]}"
+    return f"{nums[0]}/({'/'.join(str(n) for n in nums[1:])})"`,
   },
   visibleTests: [
     { args: [[1000, 100, 10, 2]], expected: '1000/(100/10/2)' },

@@ -45,14 +45,36 @@ Return an array of the recorded positions.`,
   params: ['queries', 'm'],
   starterCode: {
     javascript: `function processQueries(queries, m) {
-
+  const perm = Array.from({ length: m }, (_, i) => i + 1);
+  const result = [];
+  for (const q of queries) {
+    const pos = perm.indexOf(q);
+    result.push(pos);
+    perm.splice(pos, 1);
+    perm.unshift(q);
+  }
+  return result;
 }`,
     typescript: `function processQueries(queries: number[], m: number): number[] {
-
+  const perm = Array.from({ length: m }, (_, i) => i + 1);
+  const result: number[] = [];
+  for (const q of queries) {
+    const pos = perm.indexOf(q);
+    result.push(pos);
+    perm.splice(pos, 1);
+    perm.unshift(q);
+  }
+  return result;
 }`,
     python: `def processQueries(queries, m):
-    pass
-`,
+    perm = list(range(1, m + 1))
+    result = []
+    for q in queries:
+        pos = perm.index(q)
+        result.append(pos)
+        perm.pop(pos)
+        perm.insert(0, q)
+    return result`,
   },
   visibleTests: [
     { args: [[3, 1, 2, 1], 5], expected: [2, 1, 2, 1] },

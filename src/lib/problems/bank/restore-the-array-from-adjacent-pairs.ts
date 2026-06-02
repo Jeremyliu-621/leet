@@ -42,14 +42,54 @@ Return the **original array** \`nums\`. There is always exactly one valid answer
   params: ['adjacentPairs'],
   starterCode: {
     javascript: `function restoreArray(adjacentPairs) {
-  // return the original array given its adjacent pairs
-
+  const adj = new Map();
+  for (const [a, b] of adjacentPairs) {
+    if (!adj.has(a)) adj.set(a, []);
+    if (!adj.has(b)) adj.set(b, []);
+    adj.get(a).push(b);
+    adj.get(b).push(a);
+  }
+  let start;
+  for (const [k, v] of adj) if (v.length === 1) { start = k; break; }
+  const n = adjacentPairs.length + 1, res = [start];
+  for (let i = 1; i < n; i++) {
+    const nbrs = adj.get(res[i - 1]);
+    res.push(nbrs[0] === res[i - 2] ? nbrs[1] : nbrs[0]);
+  }
+  return res;
 }`,
-    typescript: "function restoreArray(adjacentPairs: number[][]): number[] {\n  // return the original array given its adjacent pairs\n\n}",
+    typescript: `function restoreArray(adjacentPairs: number[][]): number[] {
+  const adj = new Map<number, number[]>();
+  for (const pair of adjacentPairs) {
+    const a = pair[0]!, b = pair[1]!;
+    if (!adj.has(a)) adj.set(a, []);
+    if (!adj.has(b)) adj.set(b, []);
+    adj.get(a)!.push(b);
+    adj.get(b)!.push(a);
+  }
+  let start = 0;
+  for (const [k, v] of adj) if (v.length === 1) { start = k; break; }
+  const n = adjacentPairs.length + 1, res = [start];
+  for (let i = 1; i < n; i++) {
+    const nbrs = adj.get(res[i - 1]!)!;
+    res.push(nbrs[0] === res[i - 2] ? nbrs[1]! : nbrs[0]!);
+  }
+  return res;
+}`,
 
     python: `def restoreArray(adjacentPairs: list) -> list:
-    # return the original array given its adjacent pairs
-    pass
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for a, b in adjacentPairs:
+        adj[a].append(b)
+        adj[b].append(a)
+    start = next(k for k, v in adj.items() if len(v) == 1)
+    n = len(adjacentPairs) + 1
+    res = [start]
+    for i in range(1, n):
+        nbrs = adj[res[i - 1]]
+        res.append(nbrs[1] if nbrs[0] == (res[i - 2] if i >= 2 else None) else nbrs[0])
+    return res
 `,
   },
   visibleTests: [

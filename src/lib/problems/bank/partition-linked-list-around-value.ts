@@ -98,20 +98,55 @@ You must **preserve the original relative order** of nodes in each partition.
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript: `// ListNode class and partitionListRunner wrapper are pre-defined.
-// Implement the function below:
 function partitionList(head, x) {
-
-}
-`,
+  const lo = new ListNode(0), hi = new ListNode(0);
+  let lt = lo, gte = hi, cur = head;
+  while (cur) {
+    if (cur.val < x) { lt.next = cur; lt = lt.next; }
+    else { gte.next = cur; gte = gte.next; }
+    cur = cur.next;
+  }
+  gte.next = null;
+  lt.next = hi.next;
+  return lo.next;
+}`,
     typescript: `function partitionListRunner(vals: number[], x: number): number[] {
-  // implement partitionList using ListNode
-  return [];
+  type N = { val: number; next: N | null };
+  const mk = (v: number): N => ({ val: v, next: null });
+  let head: N | null = null, tail: N | null = null;
+  for (const v of vals) {
+    const node = mk(v);
+    if (!head) head = tail = node; else { tail!.next = node; tail = node; }
+  }
+  const lo = mk(0), hi = mk(0);
+  let lt = lo, gte = hi, cur = head;
+  while (cur) {
+    if (cur.val < x) { lt.next = cur; lt = lt.next; }
+    else { gte.next = cur; gte = gte.next; }
+    cur = cur.next;
+  }
+  gte.next = null; lt.next = hi.next;
+  const result: number[] = [];
+  let n: N | null = lo.next;
+  while (n) { result.push(n.val); n = n.next; }
+  return result;
 }`,
     python: `# ListNode class and partitionListRunner wrapper are pre-defined.
-# Implement the function below:
 def partitionList(head, x):
-    pass
-`,
+    lo_dummy = ListNode(0)
+    hi_dummy = ListNode(0)
+    lt, gte, cur = lo_dummy, hi_dummy, head
+    while cur:
+        if cur.val < x:
+            lt.next = cur
+            lt = lt.next
+        else:
+            gte.next = cur
+            gte = gte.next
+        cur = cur.next
+    gte.next = None
+    lt.next = hi_dummy.next
+    return lo_dummy.next`,
   },
   visibleTests: [
     { args: [[1, 4, 3, 2, 5, 2], 3], expected: [1, 2, 2, 4, 3, 5] },
