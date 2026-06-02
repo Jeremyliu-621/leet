@@ -36,13 +36,27 @@ Return the **minimum number of moves** to make every value in \`nums\` **unique*
   params: ['nums'],
   starterCode: {
     javascript: `function minIncrementForUnique(nums) {
-
+  nums = [...nums].sort((a, b) => a - b);
+  let moves = 0;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] <= nums[i-1]) { moves += nums[i-1] + 1 - nums[i]; nums[i] = nums[i-1] + 1; }
+  }
+  return moves;
 }`,
     typescript: `function minIncrementForUnique(nums: number[]): number {
-
+  const sorted = [...nums].sort((a, b) => a - b);
+  let moves = 0;
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i]! <= sorted[i-1]!) { moves += sorted[i-1]! + 1 - sorted[i]!; sorted[i] = sorted[i-1]! + 1; }
+  }
+  return moves;
 }`,
     python: `def minIncrementForUnique(nums: list[int]) -> int:
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(nums); moves = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i-1]: moves += nums[i-1] + 1 - nums[i]; nums[i] = nums[i-1] + 1
+    return moves`,
   },
   visibleTests: [
     { args: [[1, 2, 2]], expected: 1 },

@@ -41,13 +41,51 @@ You may return the answer in **any order**. The result is sorted before comparis
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function findMinHeightTrees(n, edges) {
-  // Return sorted array of MHT root node labels
+  if (n === 1) return [0];
+  const degree = new Array(n).fill(0);
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); degree[u]++; degree[v]++; }
+  let leaves = [];
+  for (let i = 0; i < n; i++) if (degree[i] === 1) leaves.push(i);
+  let remaining = n;
+  while (remaining > 2) {
+    remaining -= leaves.length;
+    const next = [];
+    for (const leaf of leaves) for (const nb of adj[leaf]) if (--degree[nb] === 1) next.push(nb);
+    leaves = next;
+  }
+  return leaves.sort((a, b) => a - b);
 }`,
-    typescript: "function findMinHeightTrees(n: number, edges: number[][]): number[] {\n  // Return sorted array of MHT root node labels\n}",
-
+    typescript: `function findMinHeightTrees(n: number, edges: number[][]): number[] {
+  if (n === 1) return [0];
+  const degree = new Array<number>(n).fill(0);
+  const adj: number[][] = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) { adj[u!]!.push(v!); adj[v!]!.push(u!); degree[u!]!++; degree[v!]!++; }
+  let leaves: number[] = [];
+  for (let i = 0; i < n; i++) if (degree[i]! === 1) leaves.push(i);
+  let remaining = n;
+  while (remaining > 2) {
+    remaining -= leaves.length;
+    const next: number[] = [];
+    for (const leaf of leaves) for (const nb of adj[leaf]!) if (--degree[nb]! === 1) next.push(nb);
+    leaves = next;
+  }
+  return leaves.sort((a, b) => a - b);
+}`,
     python: `def findMinHeightTrees(n, edges):
-    # Return sorted list of MHT root node labels
-    pass`,
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    if n == 1: return [0]
+    degree = [0]*n; adj = [[] for _ in range(n)]
+    for u, v in edges: adj[u].append(v); adj[v].append(u); degree[u] += 1; degree[v] += 1
+    leaves = [i for i in range(n) if degree[i] == 1]; remaining = n
+    while remaining > 2:
+        remaining -= len(leaves); nxt = []
+        for leaf in leaves:
+            for nb in adj[leaf]:
+                degree[nb] -= 1
+                if degree[nb] == 1: nxt.append(nb)
+        leaves = nxt
+    return sorted(leaves)`,
   },
   visibleTests: [
     { args: [4, [[1, 0], [1, 2], [1, 3]]], expected: [1] },

@@ -38,12 +38,37 @@ Return the **minimum** index of a valid split. If no valid split exists, return 
   params: ['nums'],
   starterCode: {
     javascript: `function minimumIndex(nums) {
-
+  const n = nums.length, freq = {};
+  let dom = -1, domFreq = 0;
+  for (const v of nums) { freq[v] = (freq[v] || 0) + 1; if (freq[v] > domFreq) { dom = v; domFreq = freq[v]; } }
+  let lCount = 0;
+  for (let i = 0; i < n - 1; i++) {
+    if (nums[i] === dom) lCount++;
+    if (lCount * 2 > (i + 1) && (domFreq - lCount) * 2 > (n - i - 1)) return i;
+  }
+  return -1;
 }`,
-    typescript: "function minimumIndex(nums: number[]): number {\n\n}",
-
+    typescript: `function minimumIndex(nums: number[]): number {
+  const n = nums.length, freq: Record<number, number> = {};
+  let dom = -1, domFreq = 0;
+  for (const v of nums) { freq[v] = (freq[v] ?? 0) + 1; if (freq[v]! > domFreq) { dom = v; domFreq = freq[v]!; } }
+  let lCount = 0;
+  for (let i = 0; i < n - 1; i++) {
+    if (nums[i]! === dom) lCount++;
+    if (lCount * 2 > (i + 1) && (domFreq - lCount) * 2 > (n - i - 1)) return i;
+  }
+  return -1;
+}`,
     python: `def minimumIndex(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    from collections import Counter
+    n = len(nums); freq = Counter(nums)
+    dom = max(freq, key=freq.get); dom_freq = freq[dom]
+    l_count = 0
+    for i in range(n - 1):
+        if nums[i] == dom: l_count += 1
+        if l_count * 2 > (i + 1) and (dom_freq - l_count) * 2 > (n - i - 1): return i
+    return -1`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 2]], expected: 2 },

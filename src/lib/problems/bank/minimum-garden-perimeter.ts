@@ -39,12 +39,24 @@ Return the **minimum perimeter** of a plot such that **at least** \`neededApples
   params: ['neededApples'],
   starterCode: {
     javascript: `function minimumPerimeter(neededApples) {
-
+  const f = n => 2n * n * (n + 1n) * (2n * n + 1n);
+  let lo = 1n, hi = 200000n, target = BigInt(neededApples);
+  while (lo < hi) { const mid = (lo + hi) / 2n; if (f(mid) >= target) hi = mid; else lo = mid + 1n; }
+  return Number(8n * lo);
 }`,
-    typescript: "function minimumPerimeter(neededApples: number): number {\n\n}",
-
+    typescript: `function minimumPerimeter(neededApples: number): number {
+  const f = (n: bigint) => 2n * n * (n + 1n) * (2n * n + 1n);
+  let lo = 1n, hi = 200000n; const target = BigInt(neededApples);
+  while (lo < hi) { const mid = (lo + hi) / 2n; if (f(mid) >= target) hi = mid; else lo = mid + 1n; }
+  return Number(8n * lo);
+}`,
     python: `def minimumPerimeter(neededApples):
-    pass`,
+    lo, hi = 1, 200000
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if 2 * mid * (mid + 1) * (2 * mid + 1) >= neededApples: hi = mid
+        else: lo = mid + 1
+    return 8 * lo`,
   },
   visibleTests: [
     { args: [1], expected: 8 },

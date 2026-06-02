@@ -36,13 +36,22 @@ Return the **minimum positive integer** that is **not expressible** from \`nums\
   params: ['nums'],
   starterCode: {
     javascript: `function minImpossibleOR(nums) {
-
+  const set = new Set(nums);
+  let x = 1;
+  while (set.has(x)) x *= 2;
+  return x;
 }`,
     typescript: `function minImpossibleOR(nums: number[]): number {
-
+  const set = new Set(nums);
+  let x = 1;
+  while (set.has(x)) x *= 2;
+  return x;
 }`,
     python: `def minImpossibleOR(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    s = set(nums); x = 1
+    while x in s: x *= 2
+    return x`,
   },
   visibleTests: [
     { args: [[2, 1]], expected: 4 },

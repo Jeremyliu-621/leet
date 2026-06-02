@@ -49,13 +49,32 @@ Return the **minimum** number of training hours required to defeat all opponents
   params: ['initialEnergy', 'initialExperience', 'energy', 'experience'],
   starterCode: {
     javascript: `function minNumberOfHours(initialEnergy, initialExperience, energy, experience) {
-
+  let hours = 0, curE = initialEnergy, curX = initialExperience;
+  for (let i = 0; i < energy.length; i++) {
+    if (curE <= energy[i]) { hours += energy[i] + 1 - curE; curE = energy[i] + 1; }
+    if (curX <= experience[i]) { hours += experience[i] + 1 - curX; curX = experience[i] + 1; }
+    curE -= energy[i]; curX += experience[i];
+  }
+  return hours;
 }`,
     typescript: `function minNumberOfHours(initialEnergy: number, initialExperience: number, energy: number[], experience: number[]): number {
-
+  let hours = 0, curE = initialEnergy, curX = initialExperience;
+  for (let i = 0; i < energy.length; i++) {
+    if (curE <= energy[i]!) { hours += energy[i]! + 1 - curE; curE = energy[i]! + 1; }
+    if (curX <= experience[i]!) { hours += experience[i]! + 1 - curX; curX = experience[i]! + 1; }
+    curE -= energy[i]!; curX += experience[i]!;
+  }
+  return hours;
 }`,
     python: `def minNumberOfHours(initialEnergy, initialExperience, energy, experience):
-    pass`,
+    if hasattr(energy, 'to_py'): energy = list(energy.to_py())
+    if hasattr(experience, 'to_py'): experience = list(experience.to_py())
+    hours = 0; cur_e = initialEnergy; cur_x = initialExperience
+    for e, x in zip(energy, experience):
+        if cur_e <= e: hours += e + 1 - cur_e; cur_e = e + 1
+        if cur_x <= x: hours += x + 1 - cur_x; cur_x = x + 1
+        cur_e -= e; cur_x += x
+    return hours`,
   },
   visibleTests: [
     { args: [5, 3, [1, 4, 3, 2], [2, 6, 3, 1]], expected: 8 },

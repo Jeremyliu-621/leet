@@ -43,13 +43,35 @@ Return the **minimum number of white tiles still visible** after optimally placi
   params: ['floor', 'numCarpets', 'carpetLen'],
   starterCode: {
     javascript: `function minimumWhiteTiles(floor, numCarpets, carpetLen) {
-
+  const n = floor.length;
+  const dp = Array.from({length: n + 1}, () => new Array(numCarpets + 1).fill(0));
+  for (let i = 1; i <= n; i++) {
+    for (let j = 0; j <= numCarpets; j++) {
+      dp[i][j] = dp[i-1][j] + (floor[i-1] === '1' ? 1 : 0);
+      if (j > 0) dp[i][j] = Math.min(dp[i][j], dp[Math.max(0, i - carpetLen)][j-1]);
+    }
+  }
+  return dp[n][numCarpets];
 }`,
     typescript: `function minimumWhiteTiles(floor: string, numCarpets: number, carpetLen: number): number {
-
+  const n = floor.length;
+  const dp: number[][] = Array.from({length: n + 1}, () => new Array(numCarpets + 1).fill(0));
+  for (let i = 1; i <= n; i++) {
+    for (let j = 0; j <= numCarpets; j++) {
+      dp[i]![j] = dp[i-1]![j]! + (floor[i-1] === '1' ? 1 : 0);
+      if (j > 0) dp[i]![j] = Math.min(dp[i]![j]!, dp[Math.max(0, i - carpetLen)]![j-1]!);
+    }
+  }
+  return dp[n]![numCarpets]!;
 }`,
     python: `def minimumWhiteTiles(floor, numCarpets, carpetLen):
-    pass`,
+    n = len(floor)
+    dp = [[0] * (numCarpets + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        for j in range(numCarpets + 1):
+            dp[i][j] = dp[i-1][j] + (1 if floor[i-1] == '1' else 0)
+            if j > 0: dp[i][j] = min(dp[i][j], dp[max(0, i - carpetLen)][j-1])
+    return dp[n][numCarpets]`,
   },
   visibleTests: [
     { args: ['10110101', 2, 2], expected: 2 },

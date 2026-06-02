@@ -41,13 +41,99 @@ Return an array \`answer\` of length \`m\` where \`answer[i]\` is the answer to 
   params: ['n', 'edges', 'queries'],
   starterCode: {
     javascript: `function minOperationsQueries(n, edges, queries) {
-
+  const LOG = 14;
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v, w] of edges) { adj[u].push([v, w]); adj[v].push([u, w]); }
+  const depth = new Array(n).fill(0);
+  const up = Array.from({length: LOG}, () => new Array(n).fill(0));
+  const cnt = Array.from({length: n}, () => new Array(27).fill(0));
+  const visited = new Array(n).fill(false);
+  const queue = [0]; visited[0] = true; let qi = 0;
+  while (qi < queue.length) {
+    const u = queue[qi++];
+    for (const [v, w] of adj[u]) {
+      if (!visited[v]) {
+        visited[v] = true; depth[v] = depth[u] + 1; up[0][v] = u;
+        for (let k = 1; k < LOG; k++) up[k][v] = up[k-1][up[k-1][v]];
+        for (let c = 1; c <= 26; c++) cnt[v][c] = cnt[u][c];
+        cnt[v][w]++; queue.push(v);
+      }
+    }
+  }
+  const lca = (u, v) => {
+    if (depth[u] < depth[v]) [u, v] = [v, u];
+    let diff = depth[u] - depth[v];
+    for (let k = 0; k < LOG; k++) if ((diff >> k) & 1) u = up[k][u];
+    if (u === v) return u;
+    for (let k = LOG-1; k >= 0; k--) if (up[k][u] !== up[k][v]) { u = up[k][u]; v = up[k][v]; }
+    return up[0][u];
+  };
+  return queries.map(([a, b, w]) => {
+    const l = lca(a, b);
+    return depth[a] + depth[b] - 2*depth[l] - (cnt[a][w] + cnt[b][w] - 2*cnt[l][w]);
+  });
 }`,
     typescript: `function minOperationsQueries(n: number, edges: number[][], queries: number[][]): number[] {
-
+  const LOG = 14;
+  const adj: [number, number][][] = Array.from({length: n}, () => []);
+  for (const [u, v, w] of edges) { adj[u!]!.push([v!, w!]); adj[v!]!.push([u!, w!]); }
+  const depth = new Array<number>(n).fill(0);
+  const up: number[][] = Array.from({length: LOG}, () => new Array<number>(n).fill(0));
+  const cnt: number[][] = Array.from({length: n}, () => new Array<number>(27).fill(0));
+  const visited = new Array<boolean>(n).fill(false);
+  const queue = [0]; visited[0] = true; let qi = 0;
+  while (qi < queue.length) {
+    const u = queue[qi++]!;
+    for (const [v, w] of adj[u]!) {
+      if (!visited[v]!) {
+        visited[v] = true; depth[v] = depth[u]! + 1; up[0]![v] = u;
+        for (let k = 1; k < LOG; k++) up[k]![v] = up[k-1]![up[k-1]![v]!]!;
+        for (let c = 1; c <= 26; c++) cnt[v]![c] = cnt[u]![c]!;
+        cnt[v]![w!]!++; queue.push(v);
+      }
+    }
+  }
+  const lca = (u: number, v: number): number => {
+    if (depth[u]! < depth[v]!) [u, v] = [v, u];
+    let diff = depth[u]! - depth[v]!;
+    for (let k = 0; k < LOG; k++) if ((diff >> k) & 1) u = up[k]![u]!;
+    if (u === v) return u;
+    for (let k = LOG-1; k >= 0; k--) if (up[k]![u]! !== up[k]![v]!) { u = up[k]![u]!; v = up[k]![v]!; }
+    return up[0]![u]!;
+  };
+  return queries.map(([a, b, w]) => {
+    const l = lca(a!, b!);
+    return depth[a!]! + depth[b!]! - 2*depth[l]! - (cnt[a!]![w!]! + cnt[b!]![w!]! - 2*cnt[l]![w!]!);
+  });
 }`,
     python: `def minOperationsQueries(n: int, edges: list[list[int]], queries: list[list[int]]) -> list[int]:
-    pass`,
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    if hasattr(queries, 'to_py'): queries = [[int(x) for x in (q.to_py() if hasattr(q, 'to_py') else q)] for q in queries.to_py()]
+    LOG = 14; adj = [[] for _ in range(n)]
+    for u, v, w in edges: adj[u].append((v, w)); adj[v].append((u, w))
+    depth = [0]*n; up = [[0]*n for _ in range(LOG)]; cnt = [[0]*27 for _ in range(n)]
+    visited = [False]*n; queue = [0]; visited[0] = True; qi = 0
+    while qi < len(queue):
+        u = queue[qi]; qi += 1
+        for v, w in adj[u]:
+            if not visited[v]:
+                visited[v] = True; depth[v] = depth[u]+1; up[0][v] = u
+                for k in range(1, LOG): up[k][v] = up[k-1][up[k-1][v]]
+                cnt[v] = cnt[u][:]; cnt[v][w] += 1; queue.append(v)
+    def lca(u, v):
+        if depth[u] < depth[v]: u, v = v, u
+        diff = depth[u]-depth[v]
+        for k in range(LOG):
+            if (diff >> k) & 1: u = up[k][u]
+        if u == v: return u
+        for k in range(LOG-1, -1, -1):
+            if up[k][u] != up[k][v]: u = up[k][u]; v = up[k][v]
+        return up[0][u]
+    res = []
+    for a, b, w in queries:
+        l = lca(a, b)
+        res.append(depth[a]+depth[b]-2*depth[l]-(cnt[a][w]+cnt[b][w]-2*cnt[l][w]))
+    return res`,
   },
   visibleTests: [
     { args: [7, [[0,1,1],[1,2,1],[2,3,1],[3,4,2],[4,5,2],[5,6,2]], [[0,3,1],[0,3,2],[0,6,1],[0,6,2]]], expected: [0,3,3,3] },

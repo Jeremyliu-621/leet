@@ -37,12 +37,31 @@ Return the **minimum** number of extra characters left over if you break up \`s\
   params: ['s', 'dictionary'],
   starterCode: {
     javascript: `function minExtraChar(s, dictionary) {
-
+  const n = s.length, dict = new Set(dictionary);
+  const dp = new Array(n + 1).fill(0);
+  for (let i = 1; i <= n; i++) {
+    dp[i] = dp[i-1] + 1;
+    for (let j = 0; j < i; j++) if (dict.has(s.slice(j, i))) dp[i] = Math.min(dp[i], dp[j]);
+  }
+  return dp[n];
 }`,
-    typescript: "function minExtraChar(s: string, dictionary: string[]): number {\n\n}",
-
+    typescript: `function minExtraChar(s: string, dictionary: string[]): number {
+  const n = s.length, dict = new Set(dictionary);
+  const dp = new Array<number>(n + 1).fill(0);
+  for (let i = 1; i <= n; i++) {
+    dp[i] = dp[i-1]! + 1;
+    for (let j = 0; j < i; j++) if (dict.has(s.slice(j, i))) dp[i] = Math.min(dp[i]!, dp[j]!);
+  }
+  return dp[n]!;
+}`,
     python: `def minExtraChar(s: str, dictionary: list[str]) -> int:
-    pass`,
+    if hasattr(dictionary, 'to_py'): dictionary = list(dictionary.to_py())
+    n = len(s); d = set(dictionary); dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = dp[i-1] + 1
+        for j in range(i):
+            if s[j:i] in d: dp[i] = min(dp[i], dp[j])
+    return dp[n]`,
   },
   visibleTests: [
     { args: ['leetscode', ['leet', 'code', 'leetcode']], expected: 1 },

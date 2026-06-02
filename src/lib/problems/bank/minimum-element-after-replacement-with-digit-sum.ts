@@ -36,12 +36,14 @@ function minElement(nums) {
   params: ['nums'],
   starterCode: {
     javascript: `function minElement(nums) {
-
+  return Math.min(...nums.map(v => String(v).split('').reduce((s, d) => s + +d, 0)));
 }`,
-    typescript: "function minElement(nums: number[]): number {\n\n}",
-
+    typescript: `function minElement(nums: number[]): number {
+  return Math.min(...nums.map(v => String(v).split('').reduce((s, d) => s + +d, 0)));
+}`,
     python: `def minElement(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    return min(sum(int(d) for d in str(v)) for v in nums)`,
   },
   visibleTests: [
     { args: [[10, 12, 13, 14]], expected: 1 },

@@ -44,13 +44,38 @@ A string is called **alternating** if no two adjacent characters are equal. For 
   params: ['s'],
   starterCode: {
     javascript: `function minFlips(s) {
-
+  const n = s.length, t = s + s;
+  let cost0 = 0;
+  for (let i = 0; i < n; i++) cost0 += (t[i] !== '01'[i % 2] ? 1 : 0);
+  let ans = Math.min(cost0, n - cost0);
+  for (let i = 0; i < n; i++) {
+    cost0 -= (t[i] !== '01'[i % 2] ? 1 : 0);
+    cost0 += (t[i + n] !== '01'[(i + n) % 2] ? 1 : 0);
+    ans = Math.min(ans, cost0, n - cost0);
+  }
+  return ans;
 }`,
     typescript: `function minFlips(s: string): number {
-
+  const n = s.length, t = s + s;
+  let cost0 = 0;
+  for (let i = 0; i < n; i++) cost0 += (t[i] !== '01'[i % 2] ? 1 : 0);
+  let ans = Math.min(cost0, n - cost0);
+  for (let i = 0; i < n; i++) {
+    cost0 -= (t[i] !== '01'[i % 2] ? 1 : 0);
+    cost0 += (t[i + n] !== '01'[(i + n) % 2] ? 1 : 0);
+    ans = Math.min(ans, cost0, n - cost0);
+  }
+  return ans;
 }`,
     python: `def minFlips(s):
-    pass`,
+    n = len(s); t = s + s
+    cost0 = sum(1 for i in range(n) if t[i] != '01'[i % 2])
+    ans = min(cost0, n - cost0)
+    for i in range(n):
+        cost0 -= (t[i] != '01'[i % 2])
+        cost0 += (t[i + n] != '01'[(i + n) % 2])
+        ans = min(ans, cost0, n - cost0)
+    return ans`,
   },
   visibleTests: [
     { args: ['111000'], expected: 2 },
