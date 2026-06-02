@@ -145,7 +145,7 @@ export function computeStringDiff(
  */
 export function computeNumberDiff(expected: unknown, actual: unknown): string | null {
   if (typeof expected !== 'number' || typeof actual !== 'number') return null;
-  if (!isFinite(expected) || !isFinite(actual) || expected === actual) return null;
+  if (!Number.isFinite(expected) || !Number.isFinite(actual) || expected === actual) return null;
   const diff = actual - expected;
   const sign = diff > 0 ? '+' : '';
   return `off by ${sign}${diff}`;
