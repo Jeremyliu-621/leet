@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['matrix'],
   starterCode: {
     javascript: `function countRowsWithAllZeros(matrix) {
-
+  return matrix.filter(row => row.every(v => v === 0)).length;
 }`,
     typescript: `function countRowsWithAllZeros(matrix: number[][]): number {
-
+  return matrix.filter(row => row.every(v => v === 0)).length;
 }`,
     python: `def countRowsWithAllZeros(matrix: list[list[int]]) -> int:
-    pass`,
+    return sum(1 for row in matrix if all(v == 0 for v in row))`,
   },
   visibleTests: [
     { args: [[[0, 0, 0], [1, 2, 3], [0, 0, 0]]], expected: 2 },

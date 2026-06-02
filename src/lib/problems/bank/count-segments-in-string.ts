@@ -35,12 +35,13 @@ Note that a string with only spaces has zero segments.`,
   params: ['s'],
   starterCode: {
     javascript: `function countSegments(s) {
-
+  return s.split(' ').filter(x => x.length > 0).length;
 }`,
-    typescript: "function countSegments(s: string): number {\n\n}",
-
+    typescript: `function countSegments(s: string): number {
+  return s.split(' ').filter(x => x.length > 0).length;
+}`,
     python: `def countSegments(s: str) -> int:
-    pass`,
+    return len(s.split())`,
   },
   visibleTests: [
     { args: ['Hello, my name is John'], expected: 5 },

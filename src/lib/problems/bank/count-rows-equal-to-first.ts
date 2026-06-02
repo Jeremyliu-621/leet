@@ -38,13 +38,16 @@ export const problem: Problem = {
   params: ['matrix'],
   starterCode: {
     javascript: `function countRowsEqualToFirst(matrix) {
-
+  const first = matrix[0];
+  return matrix.filter(row => row.every((v, i) => v === first[i])).length;
 }`,
     typescript: `function countRowsEqualToFirst(matrix: number[][]): number {
-
+  const first = matrix[0]!;
+  return matrix.filter(row => row.every((v, i) => v === first[i])).length;
 }`,
     python: `def countRowsEqualToFirst(matrix: list[list[int]]) -> int:
-    pass`,
+    first = matrix[0]
+    return sum(1 for row in matrix if row == first)`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [1, 2, 3], [4, 5, 6]]], expected: 2 },

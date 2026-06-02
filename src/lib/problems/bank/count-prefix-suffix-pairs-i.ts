@@ -45,13 +45,26 @@ Return an integer denoting the number of index pairs \`(i, j)\` such that \`i < 
   params: ['words'],
   starterCode: {
     javascript: `function countPrefixSuffixPairs(words) {
-
+  let count = 0;
+  for (let i = 0; i < words.length; i++)
+    for (let j = i + 1; j < words.length; j++)
+      if (words[j].startsWith(words[i]) && words[j].endsWith(words[i])) count++;
+  return count;
 }`,
     typescript: `function countPrefixSuffixPairs(words: string[]): number {
-
+  let count = 0;
+  for (let i = 0; i < words.length; i++)
+    for (let j = i + 1; j < words.length; j++)
+      if (words[j]!.startsWith(words[i]!) && words[j]!.endsWith(words[i]!)) count++;
+  return count;
 }`,
     python: `def countPrefixSuffixPairs(words):
-    pass`,
+    count = 0
+    for i in range(len(words)):
+        for j in range(i + 1, len(words)):
+            if words[j].startswith(words[i]) and words[j].endswith(words[i]):
+                count += 1
+    return count`,
   },
   visibleTests: [
     { args: [['a', 'aba', 'ababa', 'aa']], expected: 4 },
