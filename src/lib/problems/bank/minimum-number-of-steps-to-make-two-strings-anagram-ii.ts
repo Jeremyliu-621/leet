@@ -34,9 +34,25 @@ An **anagram** of a string is a string that contains the same characters with th
   functionName: 'minSteps',
   params: ['s', 't'],
   starterCode: {
-    javascript: 'function minSteps(s, t) {\n  // your code here\n}\n',
-    typescript: 'function minSteps(s: string, t: string): number {\n  // your code here\n}',
-    python: 'def minSteps(s, t):\n    # your code here\n    pass\n',
+    javascript: `function minSteps(s, t) {
+  const cnt = new Array(26).fill(0);
+  for (const c of s) cnt[c.charCodeAt(0) - 97]++;
+  for (const c of t) cnt[c.charCodeAt(0) - 97]--;
+  return cnt.reduce((sum, v) => sum + Math.abs(v), 0);
+}`,
+    typescript: `function minSteps(s: string, t: string): number {
+  const cnt = new Array<number>(26).fill(0);
+  for (const c of s) cnt[c.charCodeAt(0) - 97]!++;
+  for (const c of t) cnt[c.charCodeAt(0) - 97]!--;
+  return cnt.reduce((sum, v) => sum + Math.abs(v), 0);
+}`,
+    python: `def minSteps(s, t):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    cnt = [0] * 26
+    for c in s: cnt[ord(c) - 97] += 1
+    for c in t: cnt[ord(c) - 97] -= 1
+    return sum(abs(v) for v in cnt)`,
   },
   visibleTests: [
     { args: ['leetcode', 'coats'], expected: 7 },

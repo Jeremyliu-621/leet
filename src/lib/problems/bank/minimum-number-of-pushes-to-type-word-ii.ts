@@ -52,10 +52,23 @@ There are 8 keys, so:
   functionName: 'minimumPushes',
   params: ['word'],
   starterCode: {
-    javascript: 'function minimumPushes(word) {\n  // your code here\n}\n',
-    typescript: "function minimumPushes(word: string): number {\n  // your code here\n}",
-
-    python: 'def minimumPushes(word):\n    # your code here\n    pass\n',
+    javascript: `function minimumPushes(word) {
+  const freq = new Array(26).fill(0);
+  for (const c of word) freq[c.charCodeAt(0) - 97]++;
+  freq.sort((a, b) => b - a);
+  return freq.reduce((s, f, i) => s + f * (Math.floor(i / 8) + 1), 0);
+}`,
+    typescript: `function minimumPushes(word: string): number {
+  const freq = new Array<number>(26).fill(0);
+  for (const c of word) freq[c.charCodeAt(0) - 97]!++;
+  freq.sort((a, b) => b - a);
+  return freq.reduce((s, f, i) => s + f * (Math.floor(i / 8) + 1), 0);
+}`,
+    python: `def minimumPushes(word):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    from collections import Counter
+    freqs = sorted(Counter(word).values(), reverse=True)
+    return sum(f * (i // 8 + 1) for i, f in enumerate(freqs))`,
   },
   visibleTests: [
     { args: ['aabbccdd'], expected: 8 },

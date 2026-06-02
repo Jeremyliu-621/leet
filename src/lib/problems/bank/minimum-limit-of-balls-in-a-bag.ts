@@ -31,10 +31,35 @@ Your goal is to minimize the maximum number of balls in a bag. Return the minimu
   functionName: 'minimumSize',
   params: ['nums', 'maxOperations'],
   starterCode: {
-    javascript: 'function minimumSize(nums, maxOperations) {\n  // your code here\n}\n',
-    typescript: "function minimumSize(nums: number[], maxOperations: number): number {\n  // your code here\n}",
-
-    python: 'def minimumSize(nums, maxOperations):\n    # your code here\n    pass\n',
+    javascript: `function minimumSize(nums, maxOperations) {
+  let lo = 1, hi = Math.max(...nums);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    const ops = nums.reduce((s, n) => s + Math.floor((n - 1) / mid), 0);
+    if (ops <= maxOperations) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
+    typescript: `function minimumSize(nums: number[], maxOperations: number): number {
+  let lo = 1, hi = Math.max(...nums);
+  while (lo < hi) {
+    const mid = (lo + hi) >> 1;
+    const ops = nums.reduce((s, n) => s + Math.floor((n - 1) / mid), 0);
+    if (ops <= maxOperations) hi = mid;
+    else lo = mid + 1;
+  }
+  return lo;
+}`,
+    python: `def minimumSize(nums, maxOperations):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    lo, hi = 1, max(nums)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        ops = sum((n - 1) // mid for n in nums)
+        if ops <= maxOperations: hi = mid
+        else: lo = mid + 1
+    return lo`,
   },
   hints: [
     'Binary search on the answer: what is the minimum possible "maximum bag size" after operations?',

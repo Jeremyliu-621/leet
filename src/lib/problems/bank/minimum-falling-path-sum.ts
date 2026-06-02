@@ -33,10 +33,40 @@ A **falling path** starts at any element in the first row and chooses the elemen
   functionName: 'minFallingPathSum',
   params: ['matrix'],
   starterCode: {
-    javascript: 'function minFallingPathSum(matrix) {\n  // your code here\n}\n',
-    typescript: "function minFallingPathSum(matrix: number[][]): number {\n  // your code here\n}",
-
-    python: 'def minFallingPathSum(matrix):\n    # your code here\n    pass\n',
+    javascript: `function minFallingPathSum(matrix) {
+  for (let i = 1; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      const prev = [matrix[i - 1][j]];
+      if (j > 0) prev.push(matrix[i - 1][j - 1]);
+      if (j < matrix[i].length - 1) prev.push(matrix[i - 1][j + 1]);
+      matrix[i][j] += Math.min(...prev);
+    }
+  }
+  return Math.min(...matrix[matrix.length - 1]);
+}`,
+    typescript: `function minFallingPathSum(matrix: number[][]): number {
+  const n = matrix.length;
+  for (let i = 1; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const prev = [matrix[i - 1]![j]!];
+      if (j > 0) prev.push(matrix[i - 1]![j - 1]!);
+      if (j < n - 1) prev.push(matrix[i - 1]![j + 1]!);
+      matrix[i]![j] = matrix[i]![j]! + Math.min(...prev);
+    }
+  }
+  return Math.min(...matrix[n - 1]!);
+}`,
+    python: `def minFallingPathSum(matrix):
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in matrix]
+    n = len(matrix)
+    for i in range(1, n):
+        for j in range(n):
+            prev = [matrix[i-1][j]]
+            if j > 0: prev.append(matrix[i-1][j-1])
+            if j < n-1: prev.append(matrix[i-1][j+1])
+            matrix[i][j] += min(prev)
+    return min(matrix[-1])`,
   },
   visibleTests: [
     { args: [[[2, 1, 3], [6, 5, 4], [7, 8, 9]]], expected: 13 },

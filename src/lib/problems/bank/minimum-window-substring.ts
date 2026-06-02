@@ -40,10 +40,56 @@ A **window** is a contiguous substring of \`s\`. The characters from \`t\` do no
   functionName: 'minWindow',
   params: ['s', 't'],
   starterCode: {
-    javascript: 'function minWindow(s, t) {\n  // your code here\n}\n',
-    typescript: "function minWindow(s: string, t: string): string {\n  // your code here\n}",
-
-    python: 'def minWindow(s, t):\n    # your code here\n    pass\n',
+    javascript: `function minWindow(s, t) {
+  const need = {}, have = {};
+  for (const c of t) need[c] = (need[c] || 0) + 1;
+  const required = Object.keys(need).length;
+  let formed = 0, l = 0, best = [Infinity, 0, 0];
+  for (let r = 0; r < s.length; r++) {
+    have[s[r]] = (have[s[r]] || 0) + 1;
+    if (need[s[r]] && have[s[r]] === need[s[r]]) formed++;
+    while (formed === required) {
+      if (r - l + 1 < best[0]) best = [r - l + 1, l, r];
+      have[s[l]]--;
+      if (need[s[l]] && have[s[l]] < need[s[l]]) formed--;
+      l++;
+    }
+  }
+  return best[0] === Infinity ? '' : s.slice(best[1], best[2] + 1);
+}`,
+    typescript: `function minWindow(s: string, t: string): string {
+  const need: Record<string, number> = {}, have: Record<string, number> = {};
+  for (const c of t) need[c] = (need[c] ?? 0) + 1;
+  const required = Object.keys(need).length;
+  let formed = 0, l = 0, best: [number, number, number] = [Infinity, 0, 0];
+  for (let r = 0; r < s.length; r++) {
+    have[s[r]!] = (have[s[r]!] ?? 0) + 1;
+    if (need[s[r]!] && have[s[r]!] === need[s[r]!]) formed++;
+    while (formed === required) {
+      if (r - l + 1 < best[0]) best = [r - l + 1, l, r];
+      have[s[l]!]!--;
+      if (need[s[l]!] && have[s[l]!]! < need[s[l]!]!) formed--;
+      l++;
+    }
+  }
+  return best[0] === Infinity ? '' : s.slice(best[1], best[2] + 1);
+}`,
+    python: `def minWindow(s, t):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    if hasattr(t, 'to_py'): t = t.to_py()
+    from collections import Counter
+    need = Counter(t); have = {}
+    required = len(need); formed = 0; l = 0
+    best = (float('inf'), 0, 0)
+    for r, c in enumerate(s):
+        have[c] = have.get(c, 0) + 1
+        if c in need and have[c] == need[c]: formed += 1
+        while formed == required:
+            if r - l + 1 < best[0]: best = (r - l + 1, l, r)
+            have[s[l]] -= 1
+            if s[l] in need and have[s[l]] < need[s[l]]: formed -= 1
+            l += 1
+    return '' if best[0] == float('inf') else s[best[1]:best[2]+1]`,
   },
   visibleTests: [
     { args: ['ADOBECODEBANC', 'ABC'], expected: 'BANC' },
