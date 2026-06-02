@@ -47467,6 +47467,7 @@ def findXSum(nums, k, x):
     return s2_count // n2
 `,
 
+
   'range-sum-query-segment-tree': `def rangeSumSegTree(nums, ops):
     n = len(nums)
     tree = [0] * (4 * n)
@@ -47596,5 +47597,137 @@ def findXSum(nums, k, x):
         prefix += ch
         node = node[ch]
     return prefix
+`,
+
+  // batch 282
+  'maximum-strong-pairs-in-an-array-ii': `
+def maximumStrongPairXorII(nums):
+    nums = sorted(nums)
+    n = len(nums)
+    BITS = 20
+    children = []
+    cnt = []
+    node_count = 0
+
+    def new_node():
+        nonlocal node_count
+        children.append(-1)
+        children.append(-1)
+        cnt.append(0)
+        idx = node_count
+        node_count += 1
+        return idx
+
+    new_node()  # root = 0
+
+    def update(num, delta):
+        node = 0
+        for b in range(BITS, -1, -1):
+            bit = (num >> b) & 1
+            if children[node * 2 + bit] == -1:
+                children[node * 2 + bit] = new_node()
+            node = children[node * 2 + bit]
+            cnt[node] += delta
+
+    def query(num):
+        node = 0
+        result = 0
+        for b in range(BITS, -1, -1):
+            bit = (num >> b) & 1
+            want = 1 - bit
+            wc = children[node * 2 + want]
+            if wc != -1 and cnt[wc] > 0:
+                result |= (1 << b)
+                node = wc
+            else:
+                oc = children[node * 2 + bit]
+                if oc != -1:
+                    node = oc
+                else:
+                    break
+        return result
+
+    left = 0
+    ans = 0
+    for right in range(n):
+        update(nums[right], 1)
+        while nums[left] * 2 < nums[right]:
+            update(nums[left], -1)
+            left += 1
+        ans = max(ans, query(nums[right]))
+    return ans
+`,
+  'minimum-number-of-lines-to-cover-points': `
+def minimumLines(points, numLines):
+    points = [list(p) for p in points]
+    n = len(points)
+
+    def on_line(ax, ay, bx, by, cx, cy):
+        return (by - ay) * (cx - ax) == (cy - ay) * (bx - ax)
+
+    all_masks = []
+    for i in range(n):
+        all_masks.append(1 << i)
+    for i in range(n):
+        for j in range(i + 1, n):
+            mask = (1 << i) | (1 << j)
+            for k in range(n):
+                if k != i and k != j and on_line(
+                    points[i][0], points[i][1],
+                    points[j][0], points[j][1],
+                    points[k][0], points[k][1]
+                ):
+                    mask |= (1 << k)
+            all_masks.append(mask)
+
+    full = (1 << n) - 1
+    dist = [float('inf')] * (full + 1)
+    dist[0] = 0
+    queue = [0]
+    qi = 0
+    while qi < len(queue):
+        cur = queue[qi]
+        qi += 1
+        d = dist[cur]
+        if d >= numLines:
+            continue
+        for m in all_masks:
+            nxt = cur | m
+            if dist[nxt] == float('inf'):
+                dist[nxt] = d + 1
+                if nxt == full:
+                    return True
+                queue.append(nxt)
+    return dist[full] <= numLines
+`,
+  'find-elements-in-a-contaminated-binary-tree': `
+class FindElements:
+    def __init__(self, root):
+        self.recovered = set()
+        self._recover(root, 0)
+
+    def _recover(self, node, val):
+        if node is None:
+            return
+        node.val = val
+        self.recovered.add(val)
+        self._recover(node.left, 2 * val + 1)
+        self._recover(node.right, 2 * val + 2)
+
+    def find(self, target):
+        return target in self.recovered
+`,
+  'make-costs-of-paths-equal-in-a-binary-tree': `
+def minIncrements(n, cost):
+    cost = list(cost)
+    ans = 0
+    i = n // 2
+    while i >= 1:
+        l = cost[2 * i - 1]
+        r = cost[2 * i]
+        ans += abs(l - r)
+        cost[i - 1] += max(l, r)
+        i -= 1
+    return ans
 `,
 };

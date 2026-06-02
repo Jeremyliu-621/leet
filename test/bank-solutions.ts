@@ -48590,6 +48590,7 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return Math.floor(s2Count / n2);
   },
 
+
   'range-sum-query-segment-tree': (...args: unknown[]) => {
     const nums = (args[0] as number[]).slice();
     const ops = args[1] as (string | number)[][];
@@ -48714,5 +48715,138 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
       node = node[ch] as Record<string, unknown>;
     }
     return prefix;
+  },
+
+  // batch 282
+  'maximum-strong-pairs-in-an-array-ii': (...args: unknown[]) => {
+    const input = args[0] as number[];
+    const nums = [...input].sort((a, b) => a - b);
+    const n = nums.length;
+    const BITS = 20;
+    const children: number[] = [];
+    const cnt: number[] = [];
+    let nodeCount = 0;
+    const newNode = () => { children.push(-1, -1); cnt.push(0); return nodeCount++; };
+    newNode();
+    const update = (num: number, delta: number) => {
+      let node = 0;
+      for (let b = BITS; b >= 0; b--) {
+        const bit = (num >> b) & 1;
+        if (children[node * 2 + bit]! === -1) children[node * 2 + bit] = newNode();
+        node = children[node * 2 + bit]!;
+        cnt[node] = (cnt[node] ?? 0) + delta;
+      }
+    };
+    const query = (num: number) => {
+      let node = 0, result = 0;
+      for (let b = BITS; b >= 0; b--) {
+        const bit = (num >> b) & 1;
+        const want = 1 - bit;
+        const wc = children[node * 2 + want]!;
+        if (wc !== -1 && (cnt[wc] ?? 0) > 0) { result |= (1 << b); node = wc; }
+        else { const oc = children[node * 2 + bit]!; if (oc !== -1) node = oc; else break; }
+      }
+      return result;
+    };
+    let left = 0, ans = 0;
+    for (let right = 0; right < n; right++) {
+      update(nums[right]!, 1);
+      while (nums[left]! * 2 < nums[right]!) { update(nums[left]!, -1); left++; }
+      ans = Math.max(ans, query(nums[right]!));
+    }
+    return ans;
+  },
+  'minimum-number-of-lines-to-cover-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const numLines = args[1] as number;
+    const n = points.length;
+    const allMasks: number[] = [];
+    // Each point is always covered by a line through itself alone.
+    for (let i = 0; i < n; i++) allMasks.push(1 << i);
+    // Lines through pairs of points.
+    const onLine = (ax: number, ay: number, bx: number, by: number, cx: number, cy: number) =>
+      (by - ay) * (cx - ax) === (cy - ay) * (bx - ax);
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        let mask = (1 << i) | (1 << j);
+        for (let k = 0; k < n; k++) {
+          if (k !== i && k !== j &&
+            onLine(points[i]![0]!, points[i]![1]!, points[j]![0]!, points[j]![1]!, points[k]![0]!, points[k]![1]!)) {
+            mask |= (1 << k);
+          }
+        }
+        allMasks.push(mask);
+      }
+    }
+    // BFS: find min lines to cover all n points (all-bits mask).
+    const full = (1 << n) - 1;
+    const dist = new Array<number>(full + 1).fill(Infinity);
+    dist[0] = 0;
+    const queue: number[] = [0];
+    let qi = 0;
+    while (qi < queue.length) {
+      const cur = queue[qi++]!;
+      const d = dist[cur]!;
+      if (d >= numLines) continue;
+      for (const m of allMasks) {
+        const next = cur | m;
+        if (dist[next] === Infinity) {
+          dist[next] = d + 1;
+          if (next === full) return true;
+          queue.push(next);
+        }
+      }
+    }
+    return (dist[full] ?? Infinity) <= numLines;
+  },
+  'find-elements-in-a-contaminated-binary-tree': (...args: unknown[]) => {
+    const treeArr = args[0] as (number | null)[];
+    const queries = args[1] as number[];
+    // Build tree from BFS array, then recover it.
+    interface _N { val: number; left: _N | null; right: _N | null }
+    const buildTree = (arr: (number | null)[]): _N | null => {
+      if (!arr.length || arr[0] === null) return null;
+      const root: _N = { val: arr[0]!, left: null, right: null };
+      const q: _N[] = [root];
+      let i = 1;
+      while (q.length && i < arr.length) {
+        const node = q.shift()!;
+        if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+          node.left = { val: arr[i]!, left: null, right: null }; q.push(node.left);
+        }
+        i++;
+        if (i < arr.length && arr[i] !== null && arr[i] !== undefined) {
+          node.right = { val: arr[i]!, left: null, right: null }; q.push(node.right);
+        }
+        i++;
+      }
+      return root;
+    };
+    const root = buildTree(treeArr);
+    const recovered = new Set<number>();
+    const recover = (node: _N | null, val: number) => {
+      if (!node) return;
+      node.val = val;
+      recovered.add(val);
+      recover(node.left, 2 * val + 1);
+      recover(node.right, 2 * val + 2);
+    };
+    recover(root, 0);
+    return queries.map(q => recovered.has(q));
+  },
+  'make-costs-of-paths-equal-in-a-binary-tree': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const costInput = args[1] as number[];
+    const cost = [...costInput]; // 0-indexed; node i uses cost[i-1]
+    let ans = 0;
+    // Process all internal nodes from bottom-level up to root.
+    // For 1-indexed node i, children are 2i and 2i+1 (indices 2i-1 and 2i in 0-based).
+    for (let i = Math.floor(n / 2); i >= 1; i--) {
+      const l = cost[2 * i - 1]!;   // left child (1-indexed: 2i, 0-indexed: 2i-1)
+      const r = cost[2 * i]!;       // right child (1-indexed: 2i+1, 0-indexed: 2i)
+      ans += Math.abs(l - r);
+      cost[i - 1]! += Math.max(l, r); // propagate max to parent (0-indexed: i-1)
+    }
+    return ans;
   },
 };

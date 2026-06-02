@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 282
+import { problem as maximumStrongPairsII } from './maximum-strong-pairs-in-an-array-ii';
+import { problem as minimumLinesToCoverPoints } from './minimum-number-of-lines-to-cover-points';
+import { problem as findElementsContaminatedTree } from './find-elements-in-a-contaminated-binary-tree';
+import { problem as makeCostsPathsEqual } from './make-costs-of-paths-equal-in-a-binary-tree';
 // batch 281
 import { problem as countInterestingSubarrays } from './count-the-number-of-interesting-subarrays';
 import { problem as minimizeDeviationsInArray } from './minimize-deviations-in-array';
@@ -6522,10 +6527,16 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
-  // batch 280
+  // batch 282
+  maximumStrongPairsII,
+  minimumLinesToCoverPoints,
+  findElementsContaminatedTree,
+  makeCostsPathsEqual,
+  // batch 281
   countInterestingSubarrays,
   minimizeDeviationsInArray,
   longestWordDictDeleting,
+  // batch 280
   maxStudentsExam,
   maxSumTwoNoOverlapSubs,
   // batch 279
