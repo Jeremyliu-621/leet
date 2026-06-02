@@ -31,12 +31,30 @@ export const problem: Problem = {
   params: ['s'],
   starterCode: {
     javascript: `function countLetters(s) {
-
+  let ans = 0, run = 1;
+  for (let i = 1; i <= s.length; i++) {
+    if (i < s.length && s[i] === s[i - 1]) { run++; }
+    else { ans += run * (run + 1) / 2; run = 1; }
+  }
+  return ans;
 }`,
-    typescript: "function countLetters(s: string): number {\n\n}",
-
+    typescript: `function countLetters(s: string): number {
+  let ans = 0, run = 1;
+  for (let i = 1; i <= s.length; i++) {
+    if (i < s.length && s[i] === s[i - 1]) { run++; }
+    else { ans += run * (run + 1) / 2; run = 1; }
+  }
+  return ans;
+}`,
     python: `def countLetters(s):
-    pass`,
+    ans, run = 0, 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            run += 1
+        else:
+            ans += run * (run + 1) // 2
+            run = 1
+    return ans`,
   },
   visibleTests: [
     { args: ['aaaba'], expected: 8 },

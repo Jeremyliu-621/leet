@@ -40,13 +40,23 @@ Return an integer denoting the number of devices that will be tested after perfo
   params: ['batteryPercentages'],
   starterCode: {
     javascript: `function countTestedDevices(batteryPercentages) {
-
+  let tested = 0;
+  for (const b of batteryPercentages)
+    if (b > tested) tested++;
+  return tested;
 }`,
     typescript: `function countTestedDevices(batteryPercentages: number[]): number {
-
+  let tested = 0;
+  for (const b of batteryPercentages)
+    if (b > tested) tested++;
+  return tested;
 }`,
     python: `def countTestedDevices(batteryPercentages):
-    pass`,
+    tested = 0
+    for b in batteryPercentages:
+        if b > tested:
+            tested += 1
+    return tested`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 1, 3]], expected: 3 },

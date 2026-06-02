@@ -40,13 +40,39 @@ Return the number of **substrings** of \`word\` that contain **at least one** vo
   params: ['word'],
   starterCode: {
     javascript: `function countOfSubstrings(word) {
-
+  const isVowel = c => 'aeiou'.includes(c);
+  const n = word.length;
+  const total = n * (n + 1) / 2;
+  let mono = 0, run = 1;
+  for (let i = 1; i <= n; i++) {
+    if (i < n && isVowel(word[i]) === isVowel(word[i - 1])) { run++; }
+    else { mono += run * (run + 1) / 2; run = 1; }
+  }
+  return total - mono;
 }`,
     typescript: `function countOfSubstrings(word: string): number {
-
+  const isVowel = (c: string) => 'aeiou'.includes(c);
+  const n = word.length;
+  const total = n * (n + 1) / 2;
+  let mono = 0, run = 1;
+  for (let i = 1; i <= n; i++) {
+    if (i < n && isVowel(word[i]!) === isVowel(word[i - 1]!)) { run++; }
+    else { mono += run * (run + 1) / 2; run = 1; }
+  }
+  return total - mono;
 }`,
     python: `def countOfSubstrings(word):
-    pass`,
+    vowels = set('aeiou')
+    n = len(word)
+    total = n * (n + 1) // 2
+    mono, run = 0, 1
+    for i in range(1, n + 1):
+        if i < n and (word[i] in vowels) == (word[i-1] in vowels):
+            run += 1
+        else:
+            mono += run * (run + 1) // 2
+            run = 1
+    return total - mono`,
   },
   visibleTests: [
     { args: ['abc'], expected: 2 },

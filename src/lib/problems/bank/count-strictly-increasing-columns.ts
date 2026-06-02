@@ -40,13 +40,36 @@ A column is strictly increasing if every element is strictly greater than the el
   params: ['matrix'],
   starterCode: {
     javascript: `function countIncreasingColumns(matrix) {
-
+  const m = matrix.length, n = matrix[0].length;
+  let count = 0;
+  for (let j = 0; j < n; j++) {
+    let increasing = true;
+    for (let i = 1; i < m; i++) {
+      if (matrix[i][j] <= matrix[i - 1][j]) { increasing = false; break; }
+    }
+    if (increasing) count++;
+  }
+  return count;
 }`,
     typescript: `function countIncreasingColumns(matrix: number[][]): number {
-
+  const m = matrix.length, n = matrix[0]!.length;
+  let count = 0;
+  for (let j = 0; j < n; j++) {
+    let increasing = true;
+    for (let i = 1; i < m; i++) {
+      if (matrix[i]![j]! <= matrix[i - 1]![j]!) { increasing = false; break; }
+    }
+    if (increasing) count++;
+  }
+  return count;
 }`,
     python: `def countIncreasingColumns(matrix):
-    pass`,
+    m, n = len(matrix), len(matrix[0])
+    count = 0
+    for j in range(n):
+        if all(matrix[i][j] > matrix[i-1][j] for i in range(1, m)):
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[[3,2,1],[6,5,4],[9,8,7]]], expected: 3 },

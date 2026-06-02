@@ -38,13 +38,13 @@ export const problem: Problem = {
   params: ['words', 'k'],
   starterCode: {
     javascript: `function countStringsOfLengthK(words, k) {
-
+  return words.filter(w => w.length === k).length;
 }`,
     typescript: `function countStringsOfLengthK(words: string[], k: number): number {
-
+  return words.filter(w => w.length === k).length;
 }`,
     python: `def countStringsOfLengthK(words: list[str], k: int) -> int:
-    pass`,
+    return sum(1 for w in words if len(w) == k)`,
   },
   visibleTests: [
     { args: [['cat', 'dog', 'bird', 'ant'], 3], expected: 3 },

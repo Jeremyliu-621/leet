@@ -39,12 +39,34 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function countQuadruplets(nums) {
-
+  let count = 0;
+  const n = nums.length;
+  for (let a = 0; a < n - 3; a++)
+    for (let b = a + 1; b < n - 2; b++)
+      for (let c = b + 1; c < n - 1; c++)
+        for (let d = c + 1; d < n; d++)
+          if (nums[a] + nums[b] + nums[c] === nums[d]) count++;
+  return count;
 }`,
-    typescript: "function countQuadruplets(nums: number[]): number {\n\n}",
-
+    typescript: `function countQuadruplets(nums: number[]): number {
+  let count = 0;
+  const n = nums.length;
+  for (let a = 0; a < n - 3; a++)
+    for (let b = a + 1; b < n - 2; b++)
+      for (let c = b + 1; c < n - 1; c++)
+        for (let d = c + 1; d < n; d++)
+          if (nums[a]! + nums[b]! + nums[c]! === nums[d]!) count++;
+  return count;
+}`,
     python: `def countQuadruplets(nums):
-    pass`,
+    count, n = 0, len(nums)
+    for a in range(n - 3):
+        for b in range(a + 1, n - 2):
+            for c in range(b + 1, n - 1):
+                for d in range(c + 1, n):
+                    if nums[a] + nums[b] + nums[c] == nums[d]:
+                        count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 6]], expected: 1 },

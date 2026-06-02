@@ -38,12 +38,13 @@ An integer \`val\` divides \`nums\` if \`nums % val == 0\`.`,
   params: ['num'],
   starterCode: {
     javascript: `function countDigits(num) {
-
+  return String(num).split('').filter(d => num % Number(d) === 0).length;
 }`,
-    typescript: "function countDigits(num: number): number {\n\n}",
-
+    typescript: `function countDigits(num: number): number {
+  return String(num).split('').filter(d => num % Number(d) === 0).length;
+}`,
     python: `def countDigits(num):
-    pass`,
+    return sum(1 for d in str(num) if num % int(d) == 0)`,
   },
   visibleTests: [
     { args: [7], expected: 1 },

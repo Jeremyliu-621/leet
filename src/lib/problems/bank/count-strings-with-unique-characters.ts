@@ -37,13 +37,13 @@ export const problem: Problem = {
   params: ['words'],
   starterCode: {
     javascript: `function countStringsWithUniqueChars(words) {
-
+  return words.filter(w => new Set(w).size === w.length).length;
 }`,
     typescript: `function countStringsWithUniqueChars(words: string[]): number {
-
+  return words.filter(w => new Set(w).size === w.length).length;
 }`,
     python: `def countStringsWithUniqueChars(words):
-    pass`,
+    return sum(1 for w in words if len(set(w)) == len(w))`,
   },
   visibleTests: [
     { args: [['abc', 'aab', 'bcd', 'aaa']], expected: 2 },

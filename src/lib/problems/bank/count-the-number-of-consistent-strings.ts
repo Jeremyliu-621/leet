@@ -41,13 +41,16 @@ Return the number of **consistent** strings in the array \`words\`.`,
   params: ['allowed', 'words'],
   starterCode: {
     javascript: `function countConsistentStrings(allowed, words) {
-
+  const set = new Set(allowed);
+  return words.filter(w => [...w].every(c => set.has(c))).length;
 }`,
     typescript: `function countConsistentStrings(allowed: string, words: string[]): number {
-
+  const set = new Set(allowed);
+  return words.filter(w => [...w].every(c => set.has(c))).length;
 }`,
     python: `def countConsistentStrings(allowed, words):
-    pass`,
+    allowed_set = set(allowed)
+    return sum(1 for w in words if all(c in allowed_set for c in w))`,
   },
   visibleTests: [
     { args: ['ab', ['ad', 'bd', 'aaab', 'baa', 'badab']], expected: 2 },
