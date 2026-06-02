@@ -101,11 +101,26 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class and preorderTraversalRunner wrapper are pre-defined.\n// Implement the function below:\nfunction preorderTraversal(root) {\n  \n}\n',
-    typescript: "function preorderTraversalRunner(root: (number | null)[]): number[] {\n  \n}",
+      '// TreeNode class and preorderTraversalRunner wrapper are pre-defined.\n// Implement the function below:\nfunction preorderTraversal(root) {\n  const result = [];\n  function dfs(node) {\n    if (!node) return;\n    result.push(node.val);\n    dfs(node.left);\n    dfs(node.right);\n  }\n  dfs(root);\n  return result;\n}\n',
+    typescript: `function preorderTraversalRunner(root: (number | null)[]): number[] {
+  if (!root.length || root[0] === null) return [];
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  const res: number[] = [];
+  const dfs = (n: N|null): void => { if (!n) return; res.push(n.v); dfs(n.l); dfs(n.r); };
+  dfs(r);
+  return res;
+}`,
 
     python:
-      '# TreeNode class and preorderTraversalRunner wrapper are pre-defined.\n# Implement the function below:\ndef preorderTraversal(root):\n    pass\n',
+      '# TreeNode class and preorderTraversalRunner wrapper are pre-defined.\n# Implement the function below:\ndef preorderTraversal(root):\n    result = []\n    def dfs(node):\n        if not node: return\n        result.append(node.val)\n        dfs(node.left)\n        dfs(node.right)\n    dfs(root)\n    return result\n',
   },
   visibleTests: [
     { args: [[1, null, 2, 3]], expected: [1, 2, 3] },

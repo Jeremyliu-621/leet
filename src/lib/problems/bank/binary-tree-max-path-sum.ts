@@ -93,11 +93,31 @@ Given the \`root\` of a binary tree, return the maximum **path sum** of any non-
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class is pre-defined. Implement the function below:\nfunction maxPathSum(root) {\n  \n}\n',
-    typescript: "function maxPathSumRunner(root: number[]): number {\n  \n}",
+      '// TreeNode class is pre-defined. Implement the function below:\nfunction maxPathSum(root) {\n  let maxSum = -Infinity;\n  function gain(node) {\n    if (!node) return 0;\n    const l = Math.max(0, gain(node.left));\n    const r = Math.max(0, gain(node.right));\n    if (node.val + l + r > maxSum) maxSum = node.val + l + r;\n    return node.val + Math.max(l, r);\n  }\n  gain(root);\n  return maxSum;\n}\n',
+    typescript: `function maxPathSumRunner(root: (number | null)[]): number {
+  if (!root.length || root[0] == null) return 0;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  let maxSum = -Infinity;
+  const gain = (n: N|null): number => {
+    if (!n) return 0;
+    const l = Math.max(0, gain(n.l)), rv = Math.max(0, gain(n.r));
+    if (n.v + l + rv > maxSum) maxSum = n.v + l + rv;
+    return n.v + Math.max(l, rv);
+  };
+  gain(r);
+  return maxSum;
+}`,
 
     python:
-      '# TreeNode class is pre-defined. Implement the function below:\ndef maxPathSum(root):\n    pass\n',
+      '# TreeNode class is pre-defined. Implement the function below:\ndef maxPathSum(root):\n    max_sum = [float(\'-inf\')]\n    def gain(node):\n        if not node: return 0\n        l = max(0, gain(node.left)); r = max(0, gain(node.right))\n        if node.val+l+r > max_sum[0]: max_sum[0] = node.val+l+r\n        return node.val + max(l, r)\n    gain(root)\n    return max_sum[0]\n',
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 6 },

@@ -93,13 +93,51 @@ A **consecutive sequence path** is a path where the values **increase by one** a
   starterCode: {
     javascript: `// TreeNode is pre-defined. Implement the function below:
 function longestConsecutive(root) {
-
+  let max = 0;
+  function dfs(node, expected, len) {
+    if (!node) return;
+    len = node.val === expected ? len + 1 : 1;
+    if (len > max) max = len;
+    dfs(node.left, node.val + 1, len);
+    dfs(node.right, node.val + 1, len);
+  }
+  dfs(root, root ? root.val : 0, 0);
+  return max;
 }`,
-    typescript: "function longestConsecutiveRunner(root: (number | null)[]): number {\n\n}",
+    typescript: `function longestConsecutiveRunner(root: (number | null)[]): number {
+  if (!root.length || root[0] === null) return 0;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  let max = 0;
+  const dfs = (n: N|null, exp: number, len: number): void => {
+    if (!n) return;
+    len = n.v === exp ? len + 1 : 1;
+    if (len > max) max = len;
+    dfs(n.l, n.v + 1, len);
+    dfs(n.r, n.v + 1, len);
+  };
+  dfs(r, r.v, 0);
+  return max;
+}`,
 
     python: `# TreeNode is pre-defined. Implement the function below:
 def longestConsecutive(root):
-    pass`,
+    mx = [0]
+    def dfs(node, expected, length):
+        if not node: return
+        length = length+1 if node.val==expected else 1
+        if length > mx[0]: mx[0] = length
+        dfs(node.left, node.val+1, length)
+        dfs(node.right, node.val+1, length)
+    if root: dfs(root, root.val, 0)
+    return mx[0]`,
   },
   visibleTests: [
     { args: [[1, null, 3, 2, 4, null, null, null, 5]], expected: 3 },

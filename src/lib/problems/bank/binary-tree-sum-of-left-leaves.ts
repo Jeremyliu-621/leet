@@ -117,15 +117,40 @@ Sum = **24**`,
     javascript: `// TreeNode class and sumOfLeftLeavesRunner wrapper are pre-defined.
 // Implement sumOfLeftLeaves below:
 function sumOfLeftLeaves(root) {
-  // Return sum of all left leaves in the binary tree
+  function dfs(node, isLeft) {
+    if (!node) return 0;
+    if (!node.left && !node.right) return isLeft ? node.val : 0;
+    return dfs(node.left, true) + dfs(node.right, false);
+  }
+  return dfs(root, false);
 }`,
-    typescript: "function sumOfLeftLeavesRunner(root: (number | null)[]): number {\n  // Return sum of all left leaves in the binary tree\n}",
+    typescript: `function sumOfLeftLeavesRunner(root: (number | null)[]): number {
+  if (!root.length || root[0] === null) return 0;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  const dfs = (n: N|null, isLeft: boolean): number => {
+    if (!n) return 0;
+    if (!n.l && !n.r) return isLeft ? n.v : 0;
+    return dfs(n.l, true) + dfs(n.r, false);
+  };
+  return dfs(r, false);
+}`,
 
     python: `# TreeNode class and sumOfLeftLeavesRunner wrapper are pre-defined.
 # Implement sumOfLeftLeaves below:
-def sumOfLeftLeaves(root) -> int:
-    # Return sum of all left leaves in the binary tree
-    pass`,
+def sumOfLeftLeaves(root):
+    def dfs(node, is_left):
+        if not node: return 0
+        if not node.left and not node.right: return node.val if is_left else 0
+        return dfs(node.left, True) + dfs(node.right, False)
+    return dfs(root, False)`,
   },
   visibleTests: [
     { args: [[3, 9, 20, null, null, 15, 7]], expected: 24 },

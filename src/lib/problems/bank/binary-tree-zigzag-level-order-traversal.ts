@@ -96,13 +96,62 @@ export const problem: Problem = {
   starterCode: {
     javascript: `// TreeNode is pre-defined. Implement the function below:
 function zigzagLevelOrder(root) {
-
+  if (!root) return [];
+  const result = [], q = [root];
+  let lr = true;
+  while (q.length) {
+    const level = [], sz = q.length;
+    for (let i = 0; i < sz; i++) {
+      const node = q.shift();
+      level.push(node.val);
+      if (node.left) q.push(node.left);
+      if (node.right) q.push(node.right);
+    }
+    result.push(lr ? level : level.reverse());
+    lr = !lr;
+  }
+  return result;
 }`,
-    typescript: "function zigzagLevelOrderRunner(root: (number | null)[]): number[][] {\n\n}",
+    typescript: `function zigzagLevelOrderRunner(root: (number | null)[]): number[][] {
+  if (!root.length || root[0] === null) return [];
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  const result: number[][] = [], bfsQ: N[] = [r];
+  let lr = true;
+  while (bfsQ.length) {
+    const level: number[] = [], sz = bfsQ.length;
+    for (let j = 0; j < sz; j++) {
+      const n = bfsQ.shift()!;
+      level.push(n.v);
+      if (n.l) bfsQ.push(n.l);
+      if (n.r) bfsQ.push(n.r);
+    }
+    result.push(lr ? level : level.reverse());
+    lr = !lr;
+  }
+  return result;
+}`,
 
     python: `# TreeNode is pre-defined. Implement the function below:
 def zigzagLevelOrder(root):
-    pass`,
+    if not root: return []
+    result, q, lr = [], [root], True
+    while q:
+        level, nxt = [], []
+        for node in q:
+            level.append(node.val)
+            if node.left: nxt.append(node.left)
+            if node.right: nxt.append(node.right)
+        result.append(level if lr else level[::-1])
+        q = nxt; lr = not lr
+    return result`,
   },
   visibleTests: [
     { args: [[3, 9, 20, null, null, 15, 7]], expected: [[3], [20, 9], [15, 7]] },

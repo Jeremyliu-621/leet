@@ -104,11 +104,31 @@ function findTilt(root) {
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
     javascript:
-      '// TreeNode class is pre-defined. Implement the function below:\nfunction findTilt(root) {\n  \n}\n',
-    typescript: "function findTiltRunner(root: number[]): number {\n  \n}",
+      '// TreeNode class is pre-defined. Implement the function below:\nfunction findTilt(root) {\n  let total = 0;\n  function sum(node) {\n    if (!node) return 0;\n    const l = sum(node.left), r = sum(node.right);\n    total += Math.abs(l - r);\n    return node.val + l + r;\n  }\n  sum(root);\n  return total;\n}\n',
+    typescript: `function findTiltRunner(root: (number | null)[]): number {
+  if (!root.length || root[0] == null) return 0;
+  type N = { v: number; l: N|null; r: N|null };
+  const mk = (v: number): N => ({v, l: null, r: null});
+  const r = mk(root[0] as number);
+  const q: N[] = [r]; let i = 1;
+  while (q.length && i < root.length) {
+    const n = q.shift()!;
+    if (root[i] != null) { n.l = mk(root[i] as number); q.push(n.l); } i++;
+    if (i < root.length && root[i] != null) { n.r = mk(root[i] as number); q.push(n.r); } i++;
+  }
+  let total = 0;
+  const sum = (n: N|null): number => {
+    if (!n) return 0;
+    const l = sum(n.l), rv = sum(n.r);
+    total += Math.abs(l - rv);
+    return n.v + l + rv;
+  };
+  sum(r);
+  return total;
+}`,
 
     python:
-      '# TreeNode class is pre-defined. Implement the function below:\ndef findTilt(root):\n    pass\n',
+      '# TreeNode class is pre-defined. Implement the function below:\ndef findTilt(root):\n    total = [0]\n    def sum_tree(node):\n        if not node: return 0\n        l, r = sum_tree(node.left), sum_tree(node.right)\n        total[0] += abs(l - r)\n        return node.val + l + r\n    sum_tree(root)\n    return total[0]\n',
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 1 },
