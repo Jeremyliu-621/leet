@@ -43,14 +43,35 @@ Use a sliding window: expand the right pointer, shrink from the left whenever th
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function longestSubarrayAtMostKSum(nums, k) {
-  // Sliding window: expand right, shrink left while sum > k.
+  let left = 0, sum = 0, ans = 0;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right];
+    while (sum > k) sum -= nums[left++];
+    if (right - left + 1 > ans) ans = right - left + 1;
+  }
+  return ans;
 }`,
     typescript: `function longestSubarrayAtMostKSum(nums: number[], k: number): number {
-  // Sliding window: expand right, shrink left while sum > k.
+  let left = 0, sum = 0, ans = 0;
+  for (let right = 0; right < nums.length; right++) {
+    sum += nums[right]!;
+    while (sum > k) sum -= nums[left++]!;
+    if (right - left + 1 > ans) ans = right - left + 1;
+  }
+  return ans;
 }`,
     python: `def longestSubarrayAtMostKSum(nums, k):
-    # Sliding window: expand right, shrink left while sum > k.
-    pass
+    left = 0
+    total = 0
+    ans = 0
+    for right in range(len(nums)):
+        total += nums[right]
+        while total > k:
+            total -= nums[left]
+            left += 1
+        if right - left + 1 > ans:
+            ans = right - left + 1
+    return ans
 `,
   },
   visibleTests: [

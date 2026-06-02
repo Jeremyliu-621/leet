@@ -40,16 +40,51 @@ After adding \`[25,55)\`: [50,55) covered by [50,60) and [25,55) + [10,40) overl
   params: ['bookings'],
   starterCode: {
     javascript: `function myCalendarThree(bookings) {
-  // bookings: array of [start, end) half-open intervals
-  // return: array where result[i] = max k-booking after i+1 intervals added
-
+  const diff = new Map();
+  const results = [];
+  for (const [s, e] of bookings) {
+    diff.set(s, (diff.get(s) || 0) + 1);
+    diff.set(e, (diff.get(e) || 0) - 1);
+    let cur = 0, maxK = 0;
+    for (const t of [...diff.keys()].sort((a, b) => a - b)) {
+      cur += diff.get(t);
+      if (cur > maxK) maxK = cur;
+    }
+    results.push(maxK);
+  }
+  return results;
 }`,
-    typescript: "function myCalendarThree(bookings: number[][]): number[] {\n  // bookings: array of [start, end) half-open intervals\n  // return: array where result[i] = max k-booking after i+1 intervals added\n\n}",
+    typescript: `function myCalendarThree(bookings: number[][]): number[] {
+  const diff = new Map<number, number>();
+  const results: number[] = [];
+  for (const b of bookings) {
+    const [s, e] = [b[0]!, b[1]!];
+    diff.set(s, (diff.get(s) ?? 0) + 1);
+    diff.set(e, (diff.get(e) ?? 0) - 1);
+    let cur = 0, maxK = 0;
+    for (const t of [...diff.keys()].sort((a, b) => a - b)) {
+      cur += diff.get(t)!;
+      if (cur > maxK) maxK = cur;
+    }
+    results.push(maxK);
+  }
+  return results;
+}`,
 
     python: `def myCalendarThree(bookings: list) -> list:
-    # bookings: list of [start, end) half-open intervals
-    # return: list where result[i] = max k-booking after i+1 intervals added
-    pass
+    from sortedcontainers import SortedDict
+    diff = SortedDict()
+    results = []
+    for s, e in bookings:
+        diff[s] = diff.get(s, 0) + 1
+        diff[e] = diff.get(e, 0) - 1
+        cur, max_k = 0, 0
+        for val in diff.values():
+            cur += val
+            if cur > max_k:
+                max_k = cur
+        results.append(max_k)
+    return results
 `,
   },
   visibleTests: [

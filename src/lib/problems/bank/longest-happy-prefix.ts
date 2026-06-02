@@ -49,14 +49,43 @@ return s.slice(0, prefix[n-1]);\`\`\``
   params: ['s'],
   starterCode: {
     javascript: `function longestPrefix(s) {
-  // return the longest happy prefix (also a suffix) of s
-
+  const n = s.length;
+  const lps = new Array(n).fill(0);
+  let len = 0, i = 1;
+  while (i < n) {
+    if (s[i] === s[len]) { lps[i++] = ++len; }
+    else if (len > 0) { len = lps[len - 1]; }
+    else { lps[i++] = 0; }
+  }
+  return s.slice(0, lps[n - 1]);
 }`,
-    typescript: "function longestPrefix(s: string): string {\n  // return the longest happy prefix (also a suffix) of s\n\n}",
+    typescript: `function longestPrefix(s: string): string {
+  const n = s.length;
+  const lps = new Array<number>(n).fill(0);
+  let len = 0, i = 1;
+  while (i < n) {
+    if (s[i] === s[len]) { lps[i++] = ++len; }
+    else if (len > 0) { len = lps[len - 1]!; }
+    else { lps[i++] = 0; }
+  }
+  return s.slice(0, lps[n - 1]);
+}`,
 
     python: `def longestPrefix(s: str) -> str:
-    # return the longest happy prefix (also a suffix) of s
-    pass
+    n = len(s)
+    lps = [0] * n
+    length, i = 0, 1
+    while i < n:
+        if s[i] == s[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        elif length > 0:
+            length = lps[length - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    return s[:lps[n - 1]]
 `,
   },
   visibleTests: [

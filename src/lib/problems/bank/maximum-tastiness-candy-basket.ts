@@ -51,12 +51,47 @@ Maximum tastiness = **7**`,
   params: ['price', 'k'],
   starterCode: {
     javascript: `function maximumTastiness(price, k) {
-
+  price.sort((a, b) => a - b);
+  let lo = 0, hi = price[price.length - 1] - price[0];
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    let count = 1, last = price[0];
+    for (let i = 1; i < price.length; i++) {
+      if (price[i] - last >= mid) { count++; last = price[i]; }
+    }
+    if (count >= k) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
-    typescript: "function maximumTastiness(price: number[], k: number): number {\n\n}",
+    typescript: `function maximumTastiness(price: number[], k: number): number {
+  price.sort((a, b) => a - b);
+  let lo = 0, hi = price[price.length - 1]! - price[0]!;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    let count = 1, last = price[0]!;
+    for (let i = 1; i < price.length; i++) {
+      if (price[i]! - last >= mid) { count++; last = price[i]!; }
+    }
+    if (count >= k) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
 
     python: `def maximumTastiness(price, k):
-    pass
+    price.sort()
+    lo, hi = 0, price[-1] - price[0]
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        count, last = 1, price[0]
+        for p in price[1:]:
+            if p - last >= mid:
+                count += 1
+                last = p
+        if count >= k:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
 `,
   },
   visibleTests: [

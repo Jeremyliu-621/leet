@@ -44,13 +44,72 @@ Return the **maximum possible sum** of a non-empty balanced subsequence.
   params: ['nums'],
   starterCode: {
     javascript: `function maximumBalancedSubsequenceSum(nums) {
-
+  const n = nums.length;
+  const keys = nums.map((v, i) => v - i);
+  const sorted = [...new Set(keys)].sort((a, b) => a - b);
+  const rankMap = new Map(sorted.map((v, i) => [v, i + 1]));
+  const m = sorted.length;
+  const bit = new Array(m + 1).fill(-Infinity);
+  const update = (i, val) => { for (; i <= m; i += i & -i) if (val > bit[i]) bit[i] = val; };
+  const query = (i) => { let r = -Infinity; for (; i > 0; i -= i & -i) if (bit[i] > r) r = bit[i]; return r; };
+  let ans = -Infinity;
+  for (let i = 0; i < n; i++) {
+    const r = rankMap.get(keys[i]);
+    const prev = query(r);
+    const dp = nums[i] + Math.max(0, prev === -Infinity ? -Infinity : prev);
+    if (dp > ans) ans = dp;
+    update(r, dp);
+  }
+  return ans;
 }`,
     typescript: `function maximumBalancedSubsequenceSum(nums: number[]): number {
-
+  const n = nums.length;
+  const keys = nums.map((v, i) => v - i);
+  const sorted = [...new Set(keys)].sort((a, b) => a - b);
+  const rankMap = new Map(sorted.map((v, i) => [v, i + 1]));
+  const m = sorted.length;
+  const bit = new Array<number>(m + 1).fill(-Infinity);
+  const update = (i: number, val: number) => { for (; i <= m; i += i & -i) if (val > bit[i]!) bit[i] = val; };
+  const query = (i: number) => { let r = -Infinity; for (; i > 0; i -= i & -i) if (bit[i]! > r) r = bit[i]!; return r; };
+  let ans = -Infinity;
+  for (let i = 0; i < n; i++) {
+    const r = rankMap.get(keys[i]!)!;
+    const prev = query(r);
+    const dp = nums[i]! + (prev > 0 ? prev : 0);
+    if (dp > ans) ans = dp;
+    update(r, dp);
+  }
+  return ans;
 }`,
+
     python: `def maximumBalancedSubsequenceSum(nums):
-    pass
+    n = len(nums)
+    keys = [v - i for i, v in enumerate(nums)]
+    sorted_keys = sorted(set(keys))
+    rank = {v: i + 1 for i, v in enumerate(sorted_keys)}
+    m = len(sorted_keys)
+    bit = [-float('inf')] * (m + 1)
+    def update(i, val):
+        while i <= m:
+            if val > bit[i]:
+                bit[i] = val
+            i += i & -i
+    def query(i):
+        r = -float('inf')
+        while i > 0:
+            if bit[i] > r:
+                r = bit[i]
+            i -= i & -i
+        return r
+    ans = -float('inf')
+    for i in range(n):
+        r = rank[keys[i]]
+        prev = query(r)
+        dp = nums[i] + max(0, prev) if prev != -float('inf') else nums[i]
+        if dp > ans:
+            ans = dp
+        update(r, dp)
+    return ans
 `,
   },
   visibleTests: [

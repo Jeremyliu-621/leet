@@ -106,17 +106,42 @@ export const problem: Problem = {
     javascript: `// ListNode class and mergeKListsRunner wrapper are pre-defined.
 // Implement the function below:
 function mergeKLists(lists) {
-
+  const vals = [];
+  for (const head of lists) {
+    let cur = head;
+    while (cur) { vals.push(cur.val); cur = cur.next; }
+  }
+  vals.sort((a, b) => a - b);
+  if (!vals.length) return null;
+  const dummy = new ListNode(0);
+  let cur = dummy;
+  for (const v of vals) { cur.next = new ListNode(v); cur = cur.next; }
+  return dummy.next;
 }
 `,
     typescript: `function mergeKListsRunner(arrays: number[][]): number[] {
-  // implement mergeKLists using ListNode
-  return [];
+  const result: number[] = [];
+  for (const arr of arrays) for (const x of arr) result.push(x);
+  return result.sort((a, b) => a - b);
 }`,
     python: `# ListNode class and mergeKListsRunner wrapper are pre-defined.
 # Implement the function below:
 def mergeKLists(lists):
-    pass
+    vals = []
+    for head in lists:
+        cur = head
+        while cur:
+            vals.append(cur.val)
+            cur = cur.next
+    vals.sort()
+    if not vals:
+        return None
+    dummy = ListNode(0)
+    cur = dummy
+    for v in vals:
+        cur.next = ListNode(v)
+        cur = cur.next
+    return dummy.next
 `,
   },
   visibleTests: [

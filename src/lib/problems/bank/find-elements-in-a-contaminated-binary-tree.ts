@@ -126,33 +126,57 @@ The runner calls \`__runFindElements__(treeArr, queries)\` which builds the cont
 // __runFindElements__ calls new FindElements(root) then .find(q) for each query.
 class FindElements {
   constructor(root) {
-
+    this.recovered = new Set();
+    this._recover(root, 0);
   }
-
+  _recover(node, val) {
+    if (!node) return;
+    this.recovered.add(val);
+    this._recover(node.left, 2 * val + 1);
+    this._recover(node.right, 2 * val + 2);
+  }
   find(target) {
-
+    return this.recovered.has(target);
   }
 }`,
-    typescript: `// The tree is pre-built and passed to your class.
-// __runFindElements__ calls new FindElements(root) then .find(q) for each query.
-interface ContaminatedNode { val: number; left: ContaminatedNode | null; right: ContaminatedNode | null; }
-class FindElements {
-  constructor(root: ContaminatedNode | null) {
+    typescript: `interface ContaminatedNode { val: number; left: ContaminatedNode | null; right: ContaminatedNode | null; }
 
+function __runFindElements__(treeArr: (number | null)[], queries: number[]): boolean[] {
+  if (!treeArr || treeArr.length === 0 || treeArr[0] == null) return queries.map(() => false);
+  const root: ContaminatedNode = { val: treeArr[0], left: null, right: null };
+  const queue: ContaminatedNode[] = [root];
+  let i = 1;
+  while (queue.length > 0 && i < treeArr.length) {
+    const node = queue.shift()!;
+    if (treeArr[i] != null) { node.left = { val: treeArr[i]!, left: null, right: null }; queue.push(node.left); }
+    i++;
+    if (i < treeArr.length && treeArr[i] != null) { node.right = { val: treeArr[i]!, left: null, right: null }; queue.push(node.right); }
+    i++;
   }
-
-  find(target: number): boolean {
-    return false;
+  const recovered = new Set<number>();
+  function recover(node: ContaminatedNode | null, val: number): void {
+    if (!node) return;
+    recovered.add(val);
+    recover(node.left, 2 * val + 1);
+    recover(node.right, 2 * val + 2);
   }
+  recover(root, 0);
+  return queries.map(q => recovered.has(q));
 }`,
     python: `# TreeNode class and __runFindElements__ wrapper are pre-defined.
 # Implement FindElements below.
 class FindElements:
     def __init__(self, root):
-        pass
-
+        self.recovered = set()
+        self._recover(root, 0)
+    def _recover(self, node, val):
+        if not node:
+            return
+        self.recovered.add(val)
+        self._recover(node.left, 2 * val + 1)
+        self._recover(node.right, 2 * val + 2)
     def find(self, target: int) -> bool:
-        pass`,
+        return target in self.recovered`,
   },
   visibleTests: [
     { args: [[-1, null, -1], [1, 2]], expected: [false, true] },

@@ -44,14 +44,50 @@ Answer: **5**.
   params: ['n'],
   starterCode: {
     javascript: `function findIntegers(n) {
-  // Extract bits of n; use Fibonacci counts for valid binary strings.
+  const fib = [1, 2];
+  for (let i = 2; i <= 30; i++) fib.push(fib[i - 1] + fib[i - 2]);
+  let ans = 0, prevBit = 0;
+  for (let i = 29; i >= 0; i--) {
+    if ((n >> i) & 1) {
+      ans += fib[i];
+      if (prevBit) return ans;
+      prevBit = 1;
+    } else {
+      prevBit = 0;
+    }
+  }
+  return ans + 1;
 }`,
     typescript: `function findIntegers(n: number): number {
-  // Extract bits of n; use Fibonacci counts for valid binary strings.
+  const fib: number[] = [1, 2];
+  for (let i = 2; i <= 30; i++) fib.push(fib[i - 1]! + fib[i - 2]!);
+  let ans = 0, prevBit = 0;
+  for (let i = 29; i >= 0; i--) {
+    if ((n >> i) & 1) {
+      ans += fib[i]!;
+      if (prevBit) return ans;
+      prevBit = 1;
+    } else {
+      prevBit = 0;
+    }
+  }
+  return ans + 1;
 }`,
+
     python: `def findIntegers(n):
-    # Extract bits of n; use Fibonacci counts for valid binary strings.
-    pass
+    fib = [1, 2]
+    for i in range(2, 31):
+        fib.append(fib[-1] + fib[-2])
+    ans, prev_bit = 0, 0
+    for i in range(29, -1, -1):
+        if (n >> i) & 1:
+            ans += fib[i]
+            if prev_bit:
+                return ans
+            prev_bit = 1
+        else:
+            prev_bit = 0
+    return ans + 1
 `,
   },
   visibleTests: [
