@@ -36,10 +36,29 @@ export const problem: Problem = {
   functionName: 'minWindowSum',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function minWindowSum(nums, k) {\n  // your code here\n}\n',
-    typescript: "function minWindowSum(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def minWindowSum(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function minWindowSum(nums, k) {
+  let win = nums.slice(0, k).reduce((a, b) => a + b, 0), min = win;
+  for (let i = k; i < nums.length; i++) {
+    win += nums[i] - nums[i - k];
+    if (win < min) min = win;
+  }
+  return min;
+}`,
+    typescript: `function minWindowSum(nums: number[], k: number): number {
+  let win = nums.slice(0, k).reduce((a, b) => a + b, 0), min = win;
+  for (let i = k; i < nums.length; i++) {
+    win += nums[i]! - nums[i - k]!;
+    if (win < min) min = win;
+  }
+  return min;
+}`,
+    python: `def minWindowSum(nums, k):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    win = sum(nums[:k]); best = win
+    for i in range(k, len(nums)):
+        win += nums[i] - nums[i - k]
+        best = min(best, win)
+    return best`,
   },
   visibleTests: [
     { args: [[4, 2, 1, 7], 2], expected: 3 },

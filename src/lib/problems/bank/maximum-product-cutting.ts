@@ -40,10 +40,26 @@ You must make at least one cut — you cannot keep \`n\` intact.
   functionName: 'integerBreak',
   params: ['n'] as readonly string[],
   starterCode: {
-    javascript: 'function integerBreak(n) {\n  // your code here\n}\n',
-    typescript: "function integerBreak(n: number): number {\n  // your code here\n}",
-
-    python: 'def integerBreak(n: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function integerBreak(n) {
+  const dp = new Array(n + 1).fill(0);
+  for (let i = 2; i <= n; i++)
+    for (let j = 1; j < i; j++)
+      dp[i] = Math.max(dp[i], j * Math.max(i - j, dp[i - j]));
+  return dp[n];
+}`,
+    typescript: `function integerBreak(n: number): number {
+  const dp = new Array<number>(n + 1).fill(0);
+  for (let i = 2; i <= n; i++)
+    for (let j = 1; j < i; j++)
+      dp[i] = Math.max(dp[i]!, j * Math.max(i - j, dp[i - j]!));
+  return dp[n]!;
+}`,
+    python: `def integerBreak(n):
+    dp = [0] * (n + 1)
+    for i in range(2, n + 1):
+        for j in range(1, i):
+            dp[i] = max(dp[i], j * max(i - j, dp[i - j]))
+    return dp[n]`,
   },
   visibleTests: [
     { args: [2], expected: 1 },

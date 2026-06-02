@@ -39,14 +39,38 @@ You are required to apply **exactly** \`k\` operations. Return the **maximum** e
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function maximumTop(nums, k) {
-  // your code here
+  const n = nums.length;
+  if (n === 1) return k % 2 === 0 ? nums[0] : -1;
+  let best = -1;
+  for (let i = 0; i <= Math.min(k, n - 1); i++) {
+    if (i === k || (k - i) % 2 === 0) best = Math.max(best, nums[i]);
+  }
+  if (k >= n && (k - n) % 2 === 1) {
+    for (let i = 0; i < n; i++) best = Math.max(best, nums[i]);
+  }
+  return best;
 }`,
     typescript: `function maximumTop(nums: number[], k: number): number {
-  // your code here
+  const n = nums.length;
+  if (n === 1) return k % 2 === 0 ? nums[0]! : -1;
+  let best = -1;
+  for (let i = 0; i <= Math.min(k, n - 1); i++) {
+    if (i === k || (k - i) % 2 === 0) best = Math.max(best, nums[i]!);
+  }
+  if (k >= n && (k - n) % 2 === 1) {
+    for (let i = 0; i < n; i++) best = Math.max(best, nums[i]!);
+  }
+  return best;
 }`,
     python: `def maximumTop(nums, k):
-    # your code here
-    pass`,
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    n = len(nums)
+    if n == 1: return nums[0] if k % 2 == 0 else -1
+    best = -1
+    for i in range(min(k, n - 1) + 1):
+        if i == k or (k - i) % 2 == 0: best = max(best, nums[i])
+    if k >= n and (k - n) % 2 == 1: best = max(nums)
+    return best`,
   },
   visibleTests: [
     { args: [[5, 2, 2, 4, 0, 6], 4], expected: 5 },

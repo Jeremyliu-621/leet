@@ -34,10 +34,33 @@ Return the merged array. Both inputs are left unchanged, and either of them may 
   functionName: 'mergeSortedArrays',
   params: ['a', 'b'],
   starterCode: {
-    javascript: 'function mergeSortedArrays(a, b) {\n  // your code here\n}\n',
-    typescript: "function mergeSortedArrays(a: number[], b: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def mergeSortedArrays(a, b):\n    # your code here\n    pass\n',
+    javascript: `function mergeSortedArrays(a, b) {
+  const res = [];
+  let i = 0, j = 0;
+  while (i < a.length && j < b.length)
+    res.push(a[i] <= b[j] ? a[i++] : b[j++]);
+  while (i < a.length) res.push(a[i++]);
+  while (j < b.length) res.push(b[j++]);
+  return res;
+}`,
+    typescript: `function mergeSortedArrays(a: number[], b: number[]): number[] {
+  const res: number[] = [];
+  let i = 0, j = 0;
+  while (i < a.length && j < b.length)
+    res.push(a[i]! <= b[j]! ? a[i++]! : b[j++]!);
+  while (i < a.length) res.push(a[i++]!);
+  while (j < b.length) res.push(b[j++]!);
+  return res;
+}`,
+    python: `def mergeSortedArrays(a, b):
+    a = list(a.to_py()) if hasattr(a, 'to_py') else list(a)
+    b = list(b.to_py()) if hasattr(b, 'to_py') else list(b)
+    res, i, j = [], 0, 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]: res.append(a[i]); i += 1
+        else: res.append(b[j]); j += 1
+    res.extend(a[i:]); res.extend(b[j:])
+    return res`,
   },
   visibleTests: [
     { args: [[1, 3, 5], [2, 4, 6]], expected: [1, 2, 3, 4, 5, 6] },

@@ -34,10 +34,43 @@ Return the **maximum** number of rows that can be covered by a selection of exac
   functionName: 'maximumRows',
   params: ['matrix', 'numSelect'],
   starterCode: {
-    javascript: 'function maximumRows(matrix, numSelect) {\n  // your code here\n}\n',
-    typescript: "function maximumRows(matrix: number[][], numSelect: number): number {\n  // your code here\n}",
-
-    python: 'def maximumRows(matrix, numSelect):\n    # your code here\n    pass\n',
+    javascript: `function maximumRows(matrix, numSelect) {
+  const m = matrix.length, n = matrix[0].length;
+  const rowMasks = matrix.map(row => row.reduce((acc, v, j) => v ? acc | (1 << j) : acc, 0));
+  let best = 0;
+  for (let mask = 0; mask < (1 << n); mask++) {
+    let bits = 0, m2 = mask; while (m2) { bits += m2 & 1; m2 >>= 1; }
+    if (bits !== numSelect) continue;
+    let count = 0;
+    for (const rm of rowMasks) if ((rm & mask) === rm) count++;
+    best = Math.max(best, count);
+  }
+  return best;
+}`,
+    typescript: `function maximumRows(matrix: number[][], numSelect: number): number {
+  const m = matrix.length, n = matrix[0]!.length;
+  const rowMasks = matrix.map(row => row.reduce((acc, v, j) => v ? acc | (1 << j) : acc, 0));
+  let best = 0;
+  for (let mask = 0; mask < (1 << n); mask++) {
+    let bits = 0, m2 = mask; while (m2) { bits += m2 & 1; m2 >>= 1; }
+    if (bits !== numSelect) continue;
+    let count = 0;
+    for (const rm of rowMasks) if ((rm & mask) === rm) count++;
+    best = Math.max(best, count);
+  }
+  return best;
+}`,
+    python: `def maximumRows(matrix, numSelect):
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in matrix]
+    n = len(matrix[0])
+    row_masks = [sum(v << j for j, v in enumerate(row)) for row in matrix]
+    best = 0
+    for mask in range(1 << n):
+        if bin(mask).count('1') != numSelect: continue
+        count = sum(1 for rm in row_masks if (rm & mask) == rm)
+        best = max(best, count)
+    return best`,
   },
   hints: [
     'Since n <= 12, enumerate all subsets of columns of size exactly numSelect using bitmask enumeration.',
