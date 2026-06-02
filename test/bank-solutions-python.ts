@@ -46429,6 +46429,90 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 284
+  'find-number-of-good-ways-to-split-a-string': `def numSplits(s):
+    n = len(s)
+    pref_count = [0] * 26
+    suf_count = [0] * 26
+    pref_distinct = 0
+    suf_distinct = 0
+    for c in s:
+        idx = ord(c) - ord('a')
+        if suf_count[idx] == 0:
+            suf_distinct += 1
+        suf_count[idx] += 1
+    ans = 0
+    for i in range(n - 1):
+        idx = ord(s[i]) - ord('a')
+        if pref_count[idx] == 0:
+            pref_distinct += 1
+        pref_count[idx] += 1
+        suf_count[idx] -= 1
+        if suf_count[idx] == 0:
+            suf_distinct -= 1
+        if pref_distinct == suf_distinct:
+            ans += 1
+    return ans
+`,
+
+  'count-number-of-good-subarrays': `def countGoodSubarrays(nums, k):
+    from collections import defaultdict
+    freq = defaultdict(int)
+    ans = cnt = l = 0
+    for r in range(len(nums)):
+        cnt += freq[nums[r]]
+        freq[nums[r]] += 1
+        while cnt >= k:
+            freq[nums[l]] -= 1
+            cnt -= freq[nums[l]]
+            l += 1
+        ans += l
+    return ans
+`,
+
+  'find-good-indices': `def goodIndices(nums, k):
+    n = len(nums)
+    dec_len = [1] * n
+    inc_len = [1] * n
+    for i in range(1, n):
+        if nums[i] <= nums[i - 1]:
+            dec_len[i] = dec_len[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if nums[i] <= nums[i + 1]:
+            inc_len[i] = inc_len[i + 1] + 1
+    result = []
+    for i in range(k, n - k):
+        if dec_len[i - 1] >= k and inc_len[i + 1] >= k:
+            result.append(i)
+    return result
+`,
+
+  'minimum-cost-to-change-final-value-of-expression': `def minOperationsToFlip(expression):
+    pos = [0]
+    def combine(c0, c1, op, r0, r1):
+        if op == '&':
+            return min(min(c0, r0), 1 + c0 + r0), min(c1 + r1, 1 + min(c1, r1))
+        return min(c0 + r0, 1 + min(c0, r0)), min(min(c1, r1), 1 + c1 + r1)
+    def parse_atom():
+        if expression[pos[0]] == '(':
+            pos[0] += 1
+            result = parse_expr()
+            pos[0] += 1
+            return result
+        v = 0 if expression[pos[0]] == '0' else 1
+        pos[0] += 1
+        return (0, 1) if v == 0 else (1, 0)
+    def parse_expr():
+        c0, c1 = parse_atom()
+        while pos[0] < len(expression) and expression[pos[0]] in '&|':
+            op = expression[pos[0]]; pos[0] += 1
+            r0, r1 = parse_atom()
+            c0, c1 = combine(c0, c1, op, r0, r1)
+        return c0, c1
+    c0, c1 = parse_expr()
+    return c1 if c0 == 0 else c0
+`,
+
   // batch 283
   'minimum-score-after-removals-on-a-tree': `def minimumScore(nums, edges):
     from collections import defaultdict

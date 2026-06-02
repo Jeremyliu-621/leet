@@ -47404,6 +47404,100 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 284
+  'find-number-of-good-ways-to-split-a-string': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const prefCount = new Array(26).fill(0);
+    const sufCount = new Array(26).fill(0);
+    let prefDistinct = 0;
+    let sufDistinct = 0;
+    for (const c of s) {
+      const idx = c.charCodeAt(0) - 97;
+      if (sufCount[idx] === 0) sufDistinct++;
+      sufCount[idx]++;
+    }
+    let ans = 0;
+    for (let i = 0; i < n - 1; i++) {
+      const idx = s.charCodeAt(i) - 97;
+      if (prefCount[idx] === 0) prefDistinct++;
+      prefCount[idx]++;
+      sufCount[idx]--;
+      if (sufCount[idx] === 0) sufDistinct--;
+      if (prefDistinct === sufDistinct) ans++;
+    }
+    return ans;
+  },
+
+  'count-number-of-good-subarrays': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const freq = new Map<number, number>();
+    let ans = 0;
+    let cnt = 0;
+    let l = 0;
+    for (let r = 0; r < nums.length; r++) {
+      cnt += freq.get(nums[r]!) ?? 0;
+      freq.set(nums[r]!, (freq.get(nums[r]!) ?? 0) + 1);
+      while (cnt >= k) {
+        freq.set(nums[l]!, freq.get(nums[l]!)! - 1);
+        cnt -= freq.get(nums[l]!)!;
+        l++;
+      }
+      ans += l;
+    }
+    return ans;
+  },
+
+  'find-good-indices': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const k = args[1] as number;
+    const n = nums.length;
+    const decLen = new Array<number>(n).fill(1);
+    const incLen = new Array<number>(n).fill(1);
+    for (let i = 1; i < n; i++) {
+      if (nums[i]! <= nums[i - 1]!) decLen[i] = decLen[i - 1]! + 1;
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      if (nums[i]! <= nums[i + 1]!) incLen[i] = incLen[i + 1]! + 1;
+    }
+    const result: number[] = [];
+    for (let i = k; i < n - k; i++) {
+      if (decLen[i - 1]! >= k && incLen[i + 1]! >= k) result.push(i);
+    }
+    return result;
+  },
+
+  'minimum-cost-to-change-final-value-of-expression': (...args: unknown[]) => {
+    const expression = args[0] as string;
+    let pos = 0;
+    function combine(c0: number, c1: number, op: string, r0: number, r1: number): [number, number] {
+      if (op === '&') return [Math.min(Math.min(c0, r0), 1 + c0 + r0), Math.min(c1 + r1, 1 + Math.min(c1, r1))];
+      return [Math.min(c0 + r0, 1 + Math.min(c0, r0)), Math.min(Math.min(c1, r1), 1 + c1 + r1)];
+    }
+    function parseAtom(): [number, number] {
+      if (expression[pos] === '(') {
+        pos++;
+        const result = parseExpr();
+        pos++;
+        return result;
+      }
+      const v = expression[pos++] === '1' ? 1 : 0;
+      return v === 0 ? [0, 1] : [1, 0];
+    }
+    function parseExpr(): [number, number] {
+      let [c0, c1] = parseAtom();
+      while (expression[pos] === '&' || expression[pos] === '|') {
+        const op = expression[pos++]!;
+        const [r0, r1] = parseAtom();
+        [c0, c1] = combine(c0, c1, op, r0, r1);
+      }
+      return [c0, c1];
+    }
+    const [c0, c1] = parseExpr();
+    return c0 === 0 ? c1 : c0;
+  },
+
   // batch 283
   'minimum-score-after-removals-on-a-tree': (...args: unknown[]) => {
     const nums = args[0] as number[];

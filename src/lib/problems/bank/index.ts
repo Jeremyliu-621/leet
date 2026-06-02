@@ -3098,6 +3098,10 @@ import { problem as eulerTourSubtree } from './euler-tour-subtree-queries';
 import { problem as moDistinctCount } from './mo-algorithm-range-distinct';
 import { problem as maximumBipartiteMatching } from './maximum-bipartite-matching';
 import { problem as countArithmeticTriplets } from './count-arithmetic-triplets';
+import { problem as findNumberOfGoodWaysToSplitString } from './find-number-of-good-ways-to-split-a-string';
+import { problem as countNumberOfGoodSubarrays } from './count-number-of-good-subarrays';
+import { problem as minimumCostToChangeFinalValueOfExpression } from './minimum-cost-to-change-final-value-of-expression';
+import { problem as findGoodIndices } from './find-good-indices';
 // batch 283
 import { problem as doubleModularExponentiation } from './double-modular-exponentiation';
 import { problem as maximumScoreNodeSequence } from './maximum-score-node-sequence';
@@ -6551,6 +6555,10 @@ export const problems: readonly Problem[] = [
   moDistinctCount,
   maximumBipartiteMatching,
   countArithmeticTriplets,
+  findNumberOfGoodWaysToSplitString,
+  countNumberOfGoodSubarrays,
+  minimumCostToChangeFinalValueOfExpression,
+  findGoodIndices,
   // batch 283
   doubleModularExponentiation,
   maximumScoreNodeSequence,
