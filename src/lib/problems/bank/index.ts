@@ -3399,6 +3399,13 @@ import { problem as rangeMinSegTree } from './range-min-query-segment-tree';
 import { problem as countInversionsBit } from './count-inversions-bit';
 import { problem as prefixCountTrie } from './prefix-count-trie';
 import { problem as lcpTrie } from './longest-common-prefix-trie';
+// batch 275 — new problems
+import { problem as kthAncestorTreeNode } from './k-th-ancestor-of-a-tree-node';
+import { problem as countNumberOfHousesAtCertainDistance } from './count-number-of-houses-at-a-certain-distance';
+import { problem as maximumOfMinimumForEveryWindowSize } from './maximum-of-minimum-for-every-window-size';
+import { problem as countWaysToMakeArrayWithProduct } from './count-ways-to-make-array-with-product';
+import { problem as numberOfWaysToWearDifferentHats } from './number-of-ways-to-wear-different-hats';
+import { problem as circularPermutationBinaryRepresentation } from './circular-permutation-in-binary-representation';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6834,4 +6841,11 @@ export const problems: readonly Problem[] = [
   earliestSecondToMarkAllIndicesI,
   minimumCostToSplitAnArray,
   countTheRepetitions,
+  // batch 275
+  kthAncestorTreeNode,
+  countNumberOfHousesAtCertainDistance,
+  maximumOfMinimumForEveryWindowSize,
+  countWaysToMakeArrayWithProduct,
+  numberOfWaysToWearDifferentHats,
+  circularPermutationBinaryRepresentation,
 ];

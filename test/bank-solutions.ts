@@ -49372,4 +49372,161 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     const seen = new Set(nums);
     return nums.filter(x => seen.has(x - diff) && seen.has(x - 2 * diff)).length;
   },
+
+  'k-th-ancestor-of-a-tree-node': (...args: unknown[]) => {
+    const parent = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = parent.length;
+    const LOG = Math.max(1, Math.ceil(Math.log2(n + 1)) + 1);
+    const up: number[][] = Array.from({ length: LOG }, () => new Array<number>(n).fill(-1));
+    for (let i = 0; i < n; i++) up[0]![i] = parent[i]!;
+    for (let j = 1; j < LOG; j++) {
+      for (let i = 0; i < n; i++) {
+        const mid = up[j - 1]![i]!;
+        up[j]![i] = mid === -1 ? -1 : up[j - 1]![mid]!;
+      }
+    }
+    return queries.map(([node, k]) => {
+      let cur = node!;
+      const steps = k!;
+      for (let j = 0; j < LOG && cur !== -1; j++) {
+        if ((steps >> j) & 1) cur = up[j]![cur]!;
+      }
+      return cur;
+    });
+  },
+
+  'count-number-of-houses-at-a-certain-distance': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const x = args[1] as number;
+    const y = args[2] as number;
+    const adj: number[][] = Array.from({ length: n + 1 }, () => []);
+    for (let i = 1; i < n; i++) {
+      adj[i]!.push(i + 1);
+      adj[i + 1]!.push(i);
+    }
+    if (x !== y) {
+      adj[x]!.push(y);
+      adj[y]!.push(x);
+    }
+    const result = new Array<number>(n).fill(0);
+    for (let src = 1; src <= n; src++) {
+      const dist = new Array<number>(n + 1).fill(-1);
+      dist[src] = 0;
+      const queue: number[] = [src];
+      for (let qi = 0; qi < queue.length; qi++) {
+        const u = queue[qi]!;
+        for (const v of adj[u]!) {
+          if (dist[v]! === -1) {
+            dist[v] = dist[u]! + 1;
+            queue.push(v);
+          }
+        }
+      }
+      for (let dst = 1; dst <= n; dst++) {
+        const d = dist[dst]!;
+        if (dst !== src && d > 0) result[d - 1]!++;
+      }
+    }
+    return result;
+  },
+
+  'maximum-of-minimum-for-every-window-size': (...args: unknown[]) => {
+    const arr = args[0] as number[];
+    const n = arr.length;
+    const left = new Array<number>(n).fill(-1);
+    const right = new Array<number>(n).fill(n);
+    const stack: number[] = [];
+    for (let i = 0; i < n; i++) {
+      while (stack.length > 0 && arr[stack[stack.length - 1]!]! >= arr[i]!) stack.pop();
+      left[i] = stack.length > 0 ? stack[stack.length - 1]! : -1;
+      stack.push(i);
+    }
+    stack.length = 0;
+    for (let i = n - 1; i >= 0; i--) {
+      while (stack.length > 0 && arr[stack[stack.length - 1]!]! > arr[i]!) stack.pop();
+      right[i] = stack.length > 0 ? stack[stack.length - 1]! : n;
+      stack.push(i);
+    }
+    const ans = new Array<number>(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      const span = right[i]! - left[i]! - 1;
+      ans[span - 1] = Math.max(ans[span - 1]!, arr[i]!);
+    }
+    for (let i = n - 2; i >= 0; i--) {
+      ans[i] = Math.max(ans[i]!, ans[i + 1]!);
+    }
+    return ans;
+  },
+
+  'count-ways-to-make-array-with-product': (...args: unknown[]) => {
+    const queries = args[0] as number[][];
+    const MOD = 1000000007n;
+    const MAXN = 20000;
+    const fact = new Array<bigint>(MAXN + 1).fill(0n);
+    const inv_fact = new Array<bigint>(MAXN + 1).fill(0n);
+    fact[0] = 1n;
+    for (let i = 1; i <= MAXN; i++) fact[i] = fact[i - 1]! * BigInt(i) % MOD;
+    const power = (base: bigint, exp: bigint, mod: bigint): bigint => {
+      let result = 1n;
+      base = base % mod;
+      while (exp > 0n) {
+        if (exp & 1n) result = result * base % mod;
+        base = base * base % mod;
+        exp >>= 1n;
+      }
+      return result;
+    };
+    inv_fact[MAXN] = power(fact[MAXN]!, MOD - 2n, MOD);
+    for (let i = MAXN - 1; i >= 0; i--) inv_fact[i] = inv_fact[i + 1]! * BigInt(i + 1) % MOD;
+    const comb = (n: number, r: number): bigint => {
+      if (r < 0 || r > n) return 0n;
+      return fact[n]! * inv_fact[r]! % MOD * inv_fact[n - r]! % MOD;
+    };
+    return queries.map(([n, k]) => {
+      let ans = 1n;
+      let rem = k!;
+      for (let p = 2; p * p <= rem; p++) {
+        if (rem % p === 0) {
+          let e = 0;
+          while (rem % p === 0) { e++; rem = Math.floor(rem / p); }
+          ans = ans * comb(e + n! - 1, n! - 1) % MOD;
+        }
+      }
+      if (rem > 1) ans = ans * comb(n!, n! - 1) % MOD;
+      return Number(ans);
+    });
+  },
+
+  'number-of-ways-to-wear-different-hats': (...args: unknown[]) => {
+    const hats = args[0] as number[][];
+    const MOD = 1000000007;
+    const n = hats.length;
+    const full = (1 << n) - 1;
+    const hatToPeople: number[][] = Array.from({ length: 41 }, () => []);
+    for (let i = 0; i < n; i++) {
+      for (const h of hats[i]!) hatToPeople[h]!.push(i);
+    }
+    const dp = new Array<number>(full + 1).fill(0);
+    dp[0] = 1;
+    for (let h = 1; h <= 40; h++) {
+      for (let mask = full; mask >= 0; mask--) {
+        if (dp[mask]! === 0) continue;
+        for (const person of hatToPeople[h]!) {
+          if (mask & (1 << person)) continue;
+          dp[mask | (1 << person)]! = (dp[mask | (1 << person)]! + dp[mask]!) % MOD;
+        }
+      }
+    }
+    return dp[full]!;
+  },
+
+  'circular-permutation-in-binary-representation': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const start = args[1] as number;
+    const size = 1 << n;
+    const result = new Array<number>(size);
+    for (let i = 0; i < size; i++) result[i] = (i ^ (i >> 1)) ^ start;
+    return result;
+  },
 };

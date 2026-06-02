@@ -48238,4 +48238,136 @@ def countArithmeticTriplets(nums, diff):
     seen = set(nums)
     return sum(1 for x in nums if x - diff in seen and x - 2 * diff in seen)
 `,
+  'k-th-ancestor-of-a-tree-node': `
+def kthAncestor(parent, queries):
+    n = len(parent)
+    LOG = max(1, n.bit_length())
+    up = [[-1] * n for _ in range(LOG)]
+    for i in range(n):
+        up[0][i] = parent[i]
+    for j in range(1, LOG):
+        for i in range(n):
+            mid = up[j - 1][i]
+            up[j][i] = -1 if mid == -1 else up[j - 1][mid]
+    result = []
+    for node, k in queries:
+        cur = node
+        for j in range(LOG):
+            if cur == -1:
+                break
+            if (k >> j) & 1:
+                cur = up[j][cur]
+        result.append(cur)
+    return result
+`,
+  'count-number-of-houses-at-a-certain-distance': `
+def countOfPairs(n, x, y):
+    from collections import deque
+    adj = [[] for _ in range(n + 1)]
+    for i in range(1, n):
+        adj[i].append(i + 1)
+        adj[i + 1].append(i)
+    if x != y:
+        adj[x].append(y)
+        adj[y].append(x)
+    result = [0] * n
+    for src in range(1, n + 1):
+        dist = [-1] * (n + 1)
+        dist[src] = 0
+        q = deque([src])
+        while q:
+            u = q.popleft()
+            for v in adj[u]:
+                if dist[v] == -1:
+                    dist[v] = dist[u] + 1
+                    q.append(v)
+        for dst in range(1, n + 1):
+            if dst != src and dist[dst] > 0:
+                result[dist[dst] - 1] += 1
+    return result
+`,
+  'maximum-of-minimum-for-every-window-size': `
+def maxOfMins(arr):
+    n = len(arr)
+    left = [-1] * n
+    right = [n] * n
+    stack = []
+    for i in range(n):
+        while stack and arr[stack[-1]] >= arr[i]:
+            stack.pop()
+        left[i] = stack[-1] if stack else -1
+        stack.append(i)
+    stack.clear()
+    for i in range(n - 1, -1, -1):
+        while stack and arr[stack[-1]] > arr[i]:
+            stack.pop()
+        right[i] = stack[-1] if stack else n
+        stack.append(i)
+    ans = [0] * n
+    for i in range(n):
+        span = right[i] - left[i] - 1
+        ans[span - 1] = max(ans[span - 1], arr[i])
+    for i in range(n - 2, -1, -1):
+        ans[i] = max(ans[i], ans[i + 1])
+    return ans
+`,
+  'count-ways-to-make-array-with-product': `
+def waysToFillArray(queries):
+    MOD = 10**9 + 7
+    MAXN = 20000
+    fact = [1] * (MAXN + 1)
+    for i in range(1, MAXN + 1):
+        fact[i] = fact[i - 1] * i % MOD
+    inv_fact = [1] * (MAXN + 1)
+    inv_fact[MAXN] = pow(fact[MAXN], MOD - 2, MOD)
+    for i in range(MAXN - 1, -1, -1):
+        inv_fact[i] = inv_fact[i + 1] * (i + 1) % MOD
+    def comb(n, r):
+        if r < 0 or r > n: return 0
+        return fact[n] * inv_fact[r] % MOD * inv_fact[n - r] % MOD
+    result = []
+    for n, k in queries:
+        ans = 1
+        rem = k
+        p = 2
+        while p * p <= rem:
+            if rem % p == 0:
+                e = 0
+                while rem % p == 0:
+                    e += 1
+                    rem //= p
+                ans = ans * comb(e + n - 1, n - 1) % MOD
+            p += 1
+        if rem > 1:
+            ans = ans * comb(n, n - 1) % MOD
+        result.append(ans)
+    return result
+`,
+  'number-of-ways-to-wear-different-hats': `
+def numberWays(hats):
+    MOD = 10**9 + 7
+    n = len(hats)
+    full = (1 << n) - 1
+    hat_to_people = [[] for _ in range(41)]
+    for i, pref in enumerate(hats):
+        for h in pref:
+            hat_to_people[h].append(i)
+    dp = [0] * (full + 1)
+    dp[0] = 1
+    for h in range(1, 41):
+        for mask in range(full, -1, -1):
+            if dp[mask] == 0:
+                continue
+            for person in hat_to_people[h]:
+                if mask & (1 << person):
+                    continue
+                new_mask = mask | (1 << person)
+                dp[new_mask] = (dp[new_mask] + dp[mask]) % MOD
+    return dp[full]
+`,
+  'circular-permutation-in-binary-representation': `
+def circularPermutation(n, start):
+    size = 1 << n
+    return [(i ^ (i >> 1)) ^ start for i in range(size)]
+`,
 };

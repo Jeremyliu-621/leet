@@ -39,13 +39,34 @@ More formally, for each row compute the minimum element in that row, then return
   params: ['matrix'],
   starterCode: {
     javascript: `function maximumOfMinimumValues(matrix) {
-
+  let result = -Infinity;
+  for (const row of matrix) {
+    let rowMin = Infinity;
+    for (const val of row) {
+      if (val < rowMin) rowMin = val;
+    }
+    if (rowMin > result) result = rowMin;
+  }
+  return result;
 }`,
     typescript: `function maximumOfMinimumValues(matrix: number[][]): number {
-
+  let result = -Infinity;
+  for (const row of matrix) {
+    let rowMin = Infinity;
+    for (const val of row) {
+      if (val < rowMin) rowMin = val;
+    }
+    if (rowMin > result) result = rowMin;
+  }
+  return result;
 }`,
     python: `def maximumOfMinimumValues(matrix: list[list[int]]) -> int:
-    pass`,
+    result = float('-inf')
+    for row in matrix:
+        row_min = min(row)
+        if row_min > result:
+            result = row_min
+    return result`,
   },
   visibleTests: [
     { args: [[[1, 2, 3], [4, 5, 6], [7, 8, 9]]], expected: 7 },
