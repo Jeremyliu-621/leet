@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 283
+import { problem as doubleModularExponentiation } from './double-modular-exponentiation';
+import { problem as maximumScoreNodeSequence } from './maximum-score-node-sequence';
+import { problem as minimumIncrementArrayUnique } from './minimum-increment-to-make-array-unique';
+import { problem as minimumOpsStringSort } from './minimum-number-of-operations-to-make-string-sorted';
 // batch 282
 import { problem as maximumStrongPairsII } from './maximum-strong-pairs-in-an-array-ii';
 import { problem as minimumLinesToCoverPoints } from './minimum-number-of-lines-to-cover-points';
@@ -6530,6 +6535,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 283
+  doubleModularExponentiation,
+  maximumScoreNodeSequence,
+  minimumIncrementArrayUnique,
+  minimumOpsStringSort,
   // batch 282
   maximumStrongPairsII,
   minimumLinesToCoverPoints,

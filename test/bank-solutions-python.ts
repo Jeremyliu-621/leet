@@ -47634,6 +47634,101 @@ def findXSum(nums, k, x):
     return prefix
 `,
 
+  // batch 283
+  'double-modular-exponentiation': `
+def doubleModularExponentiation(variables):
+    def modpow(base, exp, mod):
+        result = 1
+        base %= mod
+        while exp > 0:
+            if exp & 1:
+                result = result * base % mod
+            base = base * base % mod
+            exp >>= 1
+        return result
+    ans = []
+    for i, row in enumerate(variables):
+        row_list = row.to_py() if hasattr(row, 'to_py') else list(row)
+        a, b, c, m = int(row_list[0]), int(row_list[1]), int(row_list[2]), int(row_list[3])
+        step1 = modpow(a, b, 10)
+        step2 = modpow(step1, c, m)
+        if step2 == 0:
+            ans.append(i)
+    return ans
+`,
+  'maximum-score-node-sequence': `
+def maximumScore(scores, edges):
+    scores_list = scores.to_py() if hasattr(scores, 'to_py') else list(scores)
+    edges_list = []
+    raw_edges = edges.to_py() if hasattr(edges, 'to_py') else list(edges)
+    for e in raw_edges:
+        e2 = e.to_py() if hasattr(e, 'to_py') else list(e)
+        edges_list.append((int(e2[0]), int(e2[1])))
+    n = len(scores_list)
+    scores_int = [int(x) for x in scores_list]
+    top = [[] for _ in range(n)]
+    for u, v in edges_list:
+        top[u].append(v)
+        top[v].append(u)
+    for i in range(n):
+        top[i].sort(key=lambda x: -scores_int[x])
+        top[i] = top[i][:3]
+    ans = -1
+    for b, c in edges_list:
+        for a in top[b]:
+            if a == c:
+                continue
+            for d in top[c]:
+                if d == b or d == a:
+                    continue
+                s = scores_int[a] + scores_int[b] + scores_int[c] + scores_int[d]
+                if s > ans:
+                    ans = s
+    return ans
+`,
+  'minimum-increment-to-make-array-unique': `
+def minIncrementForUnique(nums):
+    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
+    moves = 0
+    for i in range(1, len(nums)):
+        if nums[i] <= nums[i-1]:
+            moves += nums[i-1] + 1 - nums[i]
+            nums[i] = nums[i-1] + 1
+    return moves
+`,
+  'minimum-number-of-operations-to-make-string-sorted': `
+def makeStringSorted(s):
+    if hasattr(s, 'to_py'):
+        s = s.to_py()
+    MOD = 10**9 + 7
+    n = len(s)
+    fact = [1] * (n + 1)
+    for i in range(1, n + 1):
+        fact[i] = fact[i-1] * i % MOD
+    def modpow(b, e):
+        r = 1
+        b %= MOD
+        while e > 0:
+            if e & 1:
+                r = r * b % MOD
+            b = b * b % MOD
+            e >>= 1
+        return r
+    cnt = [0] * 26
+    for ch in s:
+        cnt[ord(ch) - ord('a')] += 1
+    denom_inv = 1
+    for c in range(26):
+        denom_inv = denom_inv * modpow(fact[cnt[c]], MOD - 2) % MOD
+    ans = 0
+    for i in range(n):
+        ci = ord(s[i]) - ord('a')
+        smaller = sum(cnt[:ci])
+        ans = (ans + smaller * fact[n - i - 1] % MOD * denom_inv) % MOD
+        denom_inv = denom_inv * cnt[ci] % MOD
+        cnt[ci] -= 1
+    return ans
+`,
   // batch 282
   'maximum-strong-pairs-in-an-array-ii': `
 def maximumStrongPairXorII(nums):

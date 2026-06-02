@@ -48752,6 +48752,96 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return prefix;
   },
 
+  // batch 283
+  'double-modular-exponentiation': (...args: unknown[]) => {
+    const variables = args[0] as number[][];
+    function modpow(base: number, exp: number, mod: number): number {
+      let result = 1n;
+      let b = BigInt(base) % BigInt(mod);
+      let e = exp;
+      while (e > 0) {
+        if (e & 1) result = result * b % BigInt(mod);
+        b = b * b % BigInt(mod);
+        e >>= 1;
+      }
+      return Number(result);
+    }
+    const ans: number[] = [];
+    for (let i = 0; i < variables.length; i++) {
+      const [a, b, c, m] = variables[i]!;
+      const step1 = modpow(a!, b!, 10);
+      const step2 = modpow(step1, c!, m!);
+      if (step2 === 0) ans.push(i);
+    }
+    return ans;
+  },
+  'maximum-score-node-sequence': (...args: unknown[]) => {
+    const scores = args[0] as number[];
+    const edges = args[1] as number[][];
+    const n = scores.length;
+    const top: number[][] = Array.from({ length: n }, () => []);
+    for (const [u, v] of edges) {
+      top[u!]!.push(v!);
+      top[v!]!.push(u!);
+    }
+    for (let i = 0; i < n; i++) {
+      top[i]!.sort((a, b) => scores[b]! - scores[a]!);
+      top[i] = top[i]!.slice(0, 3);
+    }
+    let maxAns = -1;
+    for (const [b, c] of edges) {
+      for (const a of top[b!]!) {
+        if (a === c) continue;
+        for (const d of top[c!]!) {
+          if (d === b || d === a) continue;
+          maxAns = Math.max(maxAns, scores[a]! + scores[b!]! + scores[c!]! + scores[d]!);
+        }
+      }
+    }
+    return maxAns;
+  },
+  'minimum-increment-to-make-array-unique': (...args: unknown[]) => {
+    const nums = [...(args[0] as number[])].sort((a, b) => a - b);
+    let moves = 0;
+    for (let i = 1; i < nums.length; i++) {
+      if (nums[i]! <= nums[i - 1]!) {
+        moves += nums[i - 1]! + 1 - nums[i]!;
+        nums[i] = nums[i - 1]! + 1;
+      }
+    }
+    return moves;
+  },
+  'minimum-number-of-operations-to-make-string-sorted': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1000000007n;
+    const n = s.length;
+    const fact: bigint[] = [1n];
+    for (let i = 1; i <= n; i++) fact.push(fact[i - 1]! * BigInt(i) % MOD);
+    function mpow(b: bigint, e: bigint): bigint {
+      let r = 1n;
+      b %= MOD;
+      while (e > 0n) {
+        if (e & 1n) r = r * b % MOD;
+        b = b * b % MOD;
+        e >>= 1n;
+      }
+      return r;
+    }
+    const cnt = new Array<number>(26).fill(0);
+    for (const c of s) cnt[c.charCodeAt(0) - 97]!++;
+    let denomInv = 1n;
+    for (let c = 0; c < 26; c++) denomInv = denomInv * mpow(fact[cnt[c]!]!, MOD - 2n) % MOD;
+    let ans = 0n;
+    for (let i = 0; i < n; i++) {
+      const ci = s.charCodeAt(i) - 97;
+      let smaller = 0;
+      for (let c = 0; c < ci; c++) smaller += cnt[c]!;
+      ans = (ans + BigInt(smaller) * fact[n - i - 1]! % MOD * denomInv) % MOD;
+      denomInv = denomInv * BigInt(cnt[ci]!) % MOD;
+      cnt[ci]!--;
+    }
+    return Number(ans);
+  },
   // batch 282
   'maximum-strong-pairs-in-an-array-ii': (...args: unknown[]) => {
     const input = args[0] as number[];
