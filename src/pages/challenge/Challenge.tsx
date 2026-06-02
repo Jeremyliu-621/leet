@@ -878,7 +878,11 @@ export function Challenge() {
                 ? 'hard'
                 : 'hard';
           const relatedCandidates = filterProblems({ tags: problem.tags, excludeIds: [problem.id] });
-          const shuffled = [...relatedCandidates].sort(() => Math.random() - 0.5);
+          const shuffled = [...relatedCandidates];
+          for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j]!, shuffled[i]!];
+          }
           shuffled.sort((a, b) => {
             const aScore =
               (solvedIds.has(a.id) ? 100 : 0) +
