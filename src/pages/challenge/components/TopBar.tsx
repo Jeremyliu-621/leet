@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import type { UserPreferences } from '../../../lib/types';
+import { formatCountdown } from '../challenge-helpers';
 
 interface TopBarProps {
   /** Seconds remaining on the countdown timer. */
@@ -14,14 +15,6 @@ interface TopBarProps {
   targetDomain?: string | null;
   /** Number of submit attempts made so far this session (0 = none yet). */
   attempts?: number;
-}
-
-/** Formats seconds into MM:SS. */
-function formatTime(seconds: number): string {
-  const s = Math.max(0, seconds);
-  const m = Math.floor(s / 60);
-  const rem = s % 60;
-  return `${String(m).padStart(2, '0')}:${String(rem).padStart(2, '0')}`;
 }
 
 /** Formats unlock minutes into a compact string like "10m" or "1h 30m". */
@@ -149,7 +142,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
                     ? 'border-border bg-surface-2/50'
                     : 'border-border',
           ].join(' ')}
-          aria-label={`Time remaining: ${formatTime(secondsLeft)}`}
+          aria-label={`Time remaining: ${formatCountdown(secondsLeft)}`}
           aria-live="off"
         >
           <span className="font-mono text-[10px] text-faint uppercase tracking-wider">time</span>
@@ -162,7 +155,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
               .filter(Boolean)
               .join(' ')}
           >
-            {formatTime(secondsLeft)}
+            {formatCountdown(secondsLeft)}
           </span>
         </div>
       </div>
@@ -170,4 +163,3 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
   );
 }
 
-export { formatTime };

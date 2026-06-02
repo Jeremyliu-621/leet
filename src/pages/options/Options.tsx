@@ -48,6 +48,7 @@ import {
   isReducingTimeLimitSec,
   isIncreasingMaxAttempts,
   isReducingCooldownMs,
+  formatCooldownMs,
 } from './options-helpers';
 import { BlockedSitesSection } from './components/BlockedSitesSection';
 import { KeywordTriggersSection } from './components/KeywordTriggersSection';
@@ -667,9 +668,7 @@ export function Options() {
           >
             <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
               Strict mode active — changes that reduce friction are deferred by{' '}
-              {d.prefs.settingsCooldownMs / 60_000 >= 60
-                ? `${d.prefs.settingsCooldownMs / 3_600_000}h`
-                : `${d.prefs.settingsCooldownMs / 60_000}m`}
+              {formatCooldownMs(d.prefs.settingsCooldownMs)}
             </p>
           </div>
         )}

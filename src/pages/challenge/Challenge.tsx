@@ -10,6 +10,7 @@ import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
 import type { CustomTestStatus } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { applyTheme } from '../../lib/theme';
+import { localDateString } from '../../lib/streak';
 import type { ResolvedTheme } from '../../lib/theme';
 import { generateStarter } from '../../lib/problems/starter-gen';
 import { parseTargetParam, extractDomain, parseProblemIdParam } from './challenge-helpers';
@@ -910,12 +911,12 @@ export function Challenge() {
           try {
             const summaryVal = await getValue('streakSummary');
             solvedScreenStreak = summaryVal.current;
-            // Count distinct problems solved today (UTC day) from the updated list.
-            const todayUtc = new Date().toISOString().slice(0, 10);
+            // Count distinct problems solved today (local day) from the updated list.
+            const today = localDateString();
             const allSolved = await getValue('solvedProblems');
             const todaySet = new Set<string>();
             for (const r of allSolved) {
-              if (new Date(r.solvedAt).toISOString().slice(0, 10) === todayUtc) {
+              if (localDateString(new Date(r.solvedAt)) === today) {
                 todaySet.add(r.problemId);
               }
             }
