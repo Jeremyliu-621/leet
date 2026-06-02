@@ -41,13 +41,49 @@ Return the **minimum** possible height that the total bookcase can be after plac
   params: ['books', 'shelfWidth'],
   starterCode: {
     javascript: `function minHeightShelves(books, shelfWidth) {
-
+  const n = books.length;
+  const dp = new Array(n + 1).fill(Infinity);
+  dp[0] = 0;
+  for (let i = 1; i <= n; i++) {
+    let w = 0, h = 0;
+    for (let j = i; j >= 1; j--) {
+      w += books[j-1][0];
+      if (w > shelfWidth) break;
+      h = Math.max(h, books[j-1][1]);
+      dp[i] = Math.min(dp[i], dp[j-1] + h);
+    }
+  }
+  return dp[n];
 }`,
     typescript: `function minHeightShelves(books: number[][], shelfWidth: number): number {
-
+  const n = books.length;
+  const dp = new Array(n + 1).fill(Infinity);
+  dp[0] = 0;
+  for (let i = 1; i <= n; i++) {
+    let w = 0, h = 0;
+    for (let j = i; j >= 1; j--) {
+      w += books[j-1]![0]!;
+      if (w > shelfWidth) break;
+      h = Math.max(h, books[j-1]![1]!);
+      dp[i] = Math.min(dp[i]!, dp[j-1]! + h);
+    }
+  }
+  return dp[n]!;
 }`,
     python: `def minHeightShelves(books, shelfWidth):
-    pass`,
+    if hasattr(books, 'to_py'): books = books.to_py()
+    books = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in books]
+    n = len(books)
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+    for i in range(1, n + 1):
+        w = h = 0
+        for j in range(i, 0, -1):
+            w += books[j-1][0]
+            if w > shelfWidth: break
+            h = max(h, books[j-1][1])
+            dp[i] = min(dp[i], dp[j-1] + h)
+    return dp[n]`,
   },
   visibleTests: [
     { args: [[[1, 1], [2, 3], [2, 3], [1, 1], [1, 1], [1, 1], [1, 2]], 4], expected: 6 },

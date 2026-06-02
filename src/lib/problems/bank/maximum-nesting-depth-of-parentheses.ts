@@ -40,12 +40,27 @@ Given a VPS represented as string \`s\`, return the **nesting depth** of \`s\`.`
   params: ['s'],
   starterCode: {
     javascript: `function maxDepth(s) {
-
+  let d = 0, m = 0;
+  for (const c of s) {
+    if (c === '(') m = Math.max(m, ++d);
+    else if (c === ')') d--;
+  }
+  return m;
 }`,
-    typescript: "function maxDepth(s: string): number {\n\n}",
-
+    typescript: `function maxDepth(s: string): number {
+  let d = 0, m = 0;
+  for (const c of s) {
+    if (c === '(') m = Math.max(m, ++d);
+    else if (c === ')') d--;
+  }
+  return m;
+}`,
     python: `def maxDepth(s):
-    pass`,
+    d = m = 0
+    for c in s:
+        if c == '(': d += 1; m = max(m, d)
+        elif c == ')': d -= 1
+    return m`,
   },
   visibleTests: [
     { args: ['(1+(2*3)+((8)/4))+1'], expected: 3 },

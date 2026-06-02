@@ -38,12 +38,19 @@ You can use each character in \`text\` **at most once**. Return the maximum numb
   params: ['text'],
   starterCode: {
     javascript: `function maxNumberOfBalloons(text) {
-
+  const f = {};
+  for (const c of text) f[c] = (f[c] || 0) + 1;
+  return Math.min(f['b']||0, f['a']||0, (f['l']||0)>>1, (f['o']||0)>>1, f['n']||0);
 }`,
-    typescript: "function maxNumberOfBalloons(text: string): number {\n\n}",
-
+    typescript: `function maxNumberOfBalloons(text: string): number {
+  const f: Record<string, number> = {};
+  for (const c of text) f[c] = (f[c] ?? 0) + 1;
+  return Math.min(f['b']??0, f['a']??0, (f['l']??0)>>1, (f['o']??0)>>1, f['n']??0);
+}`,
     python: `def maxNumberOfBalloons(text):
-    pass`,
+    from collections import Counter
+    f = Counter(text)
+    return min(f['b'], f['a'], f['l']//2, f['o']//2, f['n'])`,
   },
   visibleTests: [
     { args: ['nlaebolko'], expected: 1 },

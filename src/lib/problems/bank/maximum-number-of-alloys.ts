@@ -46,13 +46,61 @@ You can only use **one machine** at a time. Return the **maximum number of alloy
   params: ['n', 'k', 'budget', 'composition', 'stock', 'cost'],
   starterCode: {
     javascript: `function maxNumberOfAlloys(n, k, budget, composition, stock, cost) {
-
+  const canMake = (mid) => {
+    for (let i = 0; i < k; i++) {
+      let spend = 0;
+      for (let j = 0; j < n; j++) {
+        const need = Math.max(0, composition[i][j] * mid - stock[j]);
+        spend += need * cost[j];
+        if (spend > budget) break;
+      }
+      if (spend <= budget) return true;
+    }
+    return false;
+  };
+  let lo = 0, hi = 2e8;
+  while (lo < hi) {
+    const mid = Math.floor((lo + hi + 1) / 2);
+    if (canMake(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     typescript: `function maxNumberOfAlloys(n: number, k: number, budget: number, composition: number[][], stock: number[], cost: number[]): number {
-
+  const canMake = (mid: number): boolean => {
+    for (let i = 0; i < k; i++) {
+      let spend = 0;
+      for (let j = 0; j < n; j++) {
+        const need = Math.max(0, composition[i]![j]! * mid - stock[j]!);
+        spend += need * cost[j]!;
+        if (spend > budget) break;
+      }
+      if (spend <= budget) return true;
+    }
+    return false;
+  };
+  let lo = 0, hi = 2e8;
+  while (lo < hi) {
+    const mid = Math.floor((lo + hi + 1) / 2);
+    if (canMake(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     python: `def maxNumberOfAlloys(n, k, budget, composition, stock, cost):
-    pass`,
+    if hasattr(composition, 'to_py'): composition = composition.to_py()
+    composition = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in composition]
+    if hasattr(stock, 'to_py'): stock = [int(x) for x in stock.to_py()]
+    if hasattr(cost, 'to_py'): cost = [int(x) for x in cost.to_py()]
+    def can_make(mid):
+        for i in range(k):
+            spend = sum(max(0, composition[i][j]*mid - stock[j])*cost[j] for j in range(n))
+            if spend <= budget: return True
+        return False
+    lo, hi = 0, 2*10**8
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_make(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [2, 3, 15, [[1, 1], [1, 2], [1, 3]], [0, 0], [1, 2]], expected: 5 },

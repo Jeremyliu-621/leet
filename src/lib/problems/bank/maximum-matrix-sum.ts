@@ -38,12 +38,37 @@ Your goal is to **maximize** the summation of the matrix's elements. Return the 
   params: ['matrix'],
   starterCode: {
     javascript: `function maxMatrixSum(matrix) {
-
+  let total = 0, minAbs = Infinity, negCount = 0;
+  for (const row of matrix) {
+    for (const v of row) {
+      total += Math.abs(v);
+      if (v < 0) negCount++;
+      minAbs = Math.min(minAbs, Math.abs(v));
+    }
+  }
+  return negCount % 2 === 0 ? total : total - 2 * minAbs;
 }`,
-    typescript: "function maxMatrixSum(matrix: number[][]): number {\n\n}",
-
+    typescript: `function maxMatrixSum(matrix: number[][]): number {
+  let total = 0, minAbs = Infinity, negCount = 0;
+  for (const row of matrix) {
+    for (const v of row) {
+      total += Math.abs(v);
+      if (v < 0) negCount++;
+      minAbs = Math.min(minAbs, Math.abs(v));
+    }
+  }
+  return negCount % 2 === 0 ? total : total - 2 * minAbs;
+}`,
     python: `def maxMatrixSum(matrix):
-    pass`,
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(x) for x in (r.to_py() if hasattr(r, 'to_py') else r)] for r in matrix]
+    total, min_abs, neg_count = 0, float('inf'), 0
+    for row in matrix:
+        for v in row:
+            total += abs(v)
+            if v < 0: neg_count += 1
+            min_abs = min(min_abs, abs(v))
+    return total if neg_count % 2 == 0 else total - 2 * min_abs`,
   },
   visibleTests: [
     { args: [[[1, -1], [-1, 1]]], expected: 4 },

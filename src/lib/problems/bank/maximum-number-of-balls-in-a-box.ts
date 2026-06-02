@@ -39,13 +39,25 @@ Return the **maximum** number of balls any one box contains.`,
   params: ['lowLimit', 'highLimit'],
   starterCode: {
     javascript: `function countBalls(lowLimit, highLimit) {
-
+  const ds = n => { let s = 0; while (n > 0) { s += n % 10; n = Math.floor(n / 10); } return s; };
+  const boxes = new Array(46).fill(0);
+  for (let i = lowLimit; i <= highLimit; i++) boxes[ds(i)]++;
+  return Math.max(...boxes);
 }`,
     typescript: `function countBalls(lowLimit: number, highLimit: number): number {
-
+  const ds = (n: number): number => { let s = 0; while (n > 0) { s += n % 10; n = Math.floor(n / 10); } return s; };
+  const boxes = new Array(46).fill(0);
+  for (let i = lowLimit; i <= highLimit; i++) boxes[ds(i)]++;
+  return Math.max(...boxes);
 }`,
     python: `def countBalls(lowLimit, highLimit):
-    pass`,
+    from collections import Counter
+    def ds(n):
+        s = 0
+        while n: s += n % 10; n //= 10
+        return s
+    c = Counter(ds(i) for i in range(lowLimit, highLimit + 1))
+    return max(c.values())`,
   },
   visibleTests: [
     { args: [1, 10], expected: 2 },
