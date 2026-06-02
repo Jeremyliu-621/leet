@@ -49952,4 +49952,68 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return total[0]
 `,
 
+  // batch 301
+  'shortest-path-binary-matrix': `def shortestPathBinaryMatrix(grid):
+    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
+    n = len(grid)
+    if grid[0][0] == 1 or grid[n-1][n-1] == 1: return -1
+    if n == 1: return 1
+    from collections import deque
+    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+    visited = [[False]*n for _ in range(n)]
+    visited[0][0] = True
+    q = deque([(0, 0, 1)])
+    while q:
+        r, c, d = q.popleft()
+        for dr, dc in dirs:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] == 0:
+                if nr == n-1 and nc == n-1: return d+1
+                visited[nr][nc] = True
+                q.append((nr, nc, d+1))
+    return -1
+`,
+
+  'find-score-by-marking-elements': `def findScore(nums):
+    nums = [int(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else nums)]
+    n = len(nums)
+    marked = [False] * n
+    heap = sorted(enumerate(nums), key=lambda x: (x[1], x[0]))
+    score = 0
+    for i, v in heap:
+        if marked[i]: continue
+        score += v
+        marked[i] = True
+        if i > 0: marked[i-1] = True
+        if i < n-1: marked[i+1] = True
+    return score
+`,
+
+  'maximum-number-of-visible-points': `def visiblePoints(points, angle, location):
+    import math
+    points = [list(p.to_py() if hasattr(p, 'to_py') else p) for p in (points.to_py() if hasattr(points, 'to_py') else points)]
+    location = list(location.to_py() if hasattr(location, 'to_py') else location)
+    ox, oy = int(location[0]), int(location[1])
+    angle = float(angle)
+    same = 0
+    angles = []
+    for p in points:
+        x, y = int(p[0]), int(p[1])
+        if x == ox and y == oy:
+            same += 1
+            continue
+        angles.append(math.atan2(y - oy, x - ox) * 180 / math.pi)
+    angles.sort()
+    n = len(angles)
+    doubled = angles + [a + 360 for a in angles]
+    best = 0
+    l = 0
+    for r in range(len(doubled)):
+        while doubled[r] - doubled[l] > angle:
+            l += 1
+        if r - l + 1 <= n:
+            best = max(best, r - l + 1)
+    return best + same
+`,
+
 };

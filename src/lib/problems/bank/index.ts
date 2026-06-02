@@ -3496,6 +3496,10 @@ import { problem as maximumNumberOfEdgesToRemove } from './maximum-number-of-edg
 // batch 300
 import { problem as minimumCostToFillCups } from './minimum-cost-to-fill-cups';
 import { problem as pathSumIV } from './path-sum-iv';
+// batch 301
+import { problem as shortestPathBinaryMatrix } from './shortest-path-binary-matrix';
+import { problem as findScoreByMarkingElements } from './find-score-by-marking-elements';
+import { problem as maximumNumberOfVisiblePoints } from './maximum-number-of-visible-points';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7031,4 +7035,8 @@ export const problems: readonly Problem[] = [
   // batch 300
   minimumCostToFillCups,
   pathSumIV,
+  // batch 301
+  shortestPathBinaryMatrix,
+  findScoreByMarkingElements,
+  maximumNumberOfVisiblePoints,
 ];

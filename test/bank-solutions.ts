@@ -51143,4 +51143,68 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return total;
   },
 
+  // batch 301
+  'shortest-path-binary-matrix': (...args: unknown[]) => {
+    const grid = args[0] as number[][];
+    const n = grid.length;
+    if ((grid[0] as number[])[0] === 1 || (grid[n-1] as number[])[n-1] === 1) return -1;
+    if (n === 1) return 1;
+    const dirs = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+    const visited = Array.from({length: n}, () => new Array<boolean>(n).fill(false));
+    (visited[0] as boolean[])[0] = true;
+    const queue: [number, number, number][] = [[0, 0, 1]];
+    while (queue.length) {
+      const [r, c, d] = queue.shift()!;
+      for (const step of dirs) {
+        const nr = r + step[0]!, nc = c + step[1]!;
+        if (nr < 0 || nr >= n || nc < 0 || nc >= n || (visited[nr] as boolean[])[nc] || (grid[nr] as number[])[nc] === 1) continue;
+        if (nr === n-1 && nc === n-1) return d + 1;
+        (visited[nr] as boolean[])[nc] = true;
+        queue.push([nr, nc, d + 1]);
+      }
+    }
+    return -1;
+  },
+
+  'find-score-by-marking-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const n = nums.length;
+    const marked = new Array<boolean>(n).fill(false);
+    const sorted = nums.map((v, i): [number, number] => [v, i]);
+    sorted.sort((a, b) => a[0]! - b[0]! || a[1]! - b[1]!);
+    let score = 0;
+    for (const entry of sorted) {
+      const v = entry[0]!, i = entry[1]!;
+      if (marked[i]) continue;
+      score += v;
+      marked[i] = true;
+      if (i > 0) marked[i - 1] = true;
+      if (i < n - 1) marked[i + 1] = true;
+    }
+    return score;
+  },
+
+  'maximum-number-of-visible-points': (...args: unknown[]) => {
+    const points = args[0] as number[][];
+    const angle = args[1] as number;
+    const location = args[2] as number[];
+    const ox = location[0]!, oy = location[1]!;
+    let same = 0;
+    const angles: number[] = [];
+    for (const pt of points) {
+      const x = pt[0]!, y = pt[1]!;
+      if (x === ox && y === oy) { same++; continue; }
+      angles.push(Math.atan2(y - oy, x - ox) * 180 / Math.PI);
+    }
+    angles.sort((a, b) => a - b);
+    const n = angles.length;
+    const doubled = [...angles, ...angles.map(a => a + 360)];
+    let best = 0, l = 0;
+    for (let r = 0; r < doubled.length; r++) {
+      while (doubled[r]! - doubled[l]! > angle) l++;
+      if (r - l + 1 <= n) best = Math.max(best, r - l + 1);
+    }
+    return best + same;
+  },
+
 };
