@@ -23,6 +23,19 @@ describe('daysBetween', () => {
     expect(daysBetween('2026-05-22', '')).toBeNaN();
     expect(daysBetween('2026/05/22', '2026-05-22')).toBeNaN();
   });
+
+  it('returns NaN for dates that pass regex but are invalid calendar dates', () => {
+    // "2026-13-45" passes /^\d{4}-\d{2}-\d{2}$/ but is not a real date
+    expect(daysBetween('2026-13-45', '2026-05-22')).toBeNaN();
+  });
+
+  it('handles month boundaries correctly', () => {
+    expect(daysBetween('2026-03-01', '2026-02-28')).toBe(1);
+  });
+
+  it('handles leap year transitions', () => {
+    expect(daysBetween('2024-03-01', '2024-02-29')).toBe(1);
+  });
 });
 
 describe('localDateString', () => {
@@ -130,5 +143,31 @@ describe('recordSolve edge cases', () => {
     const after2 = recordSolve(after1.summary, after1.history, { today: '2026-05-23' });
     expect(after2.summary.current).toBe(1);
     expect(after2.history.filter((d) => d.date === '2026-05-23')[0]?.solved).toBe(2);
+  });
+
+  it('resets streak to 1 when lastSolvedDate is malformed (corrupted storage)', () => {
+    const corrupted: StreakSummary = {
+      current: 5,
+      longest: 5,
+      lastSolvedDate: 'garbage',
+      damaged: false,
+    };
+    const result = recordSolve(corrupted, [], { today: '2026-05-23' });
+    // daysBetween returns NaN for malformed dates → treated as non-consecutive
+    expect(result.summary.current).toBe(1);
+    expect(result.summary.longest).toBe(5);
+  });
+
+  it('handles date going backwards (timezone change) by resetting streak', () => {
+    const start: StreakSummary = {
+      current: 3,
+      longest: 3,
+      lastSolvedDate: '2026-05-24',
+      damaged: false,
+    };
+    // Solve on a date *before* the last solved date (e.g. timezone shift)
+    const result = recordSolve(start, [], { today: '2026-05-23' });
+    expect(result.summary.current).toBe(1);
+    expect(result.summary.longest).toBe(3);
   });
 });

@@ -86,6 +86,40 @@ describe('matchUrl', () => {
   });
 });
 
+describe('matchUrl edge cases', () => {
+  it('matches a domain pattern with a leading dot', () => {
+    const rules = { blockRules: [domainRule('.youtube.com')], keywordRules: [] };
+    const m = matchUrl('https://youtube.com/', rules);
+    expect(m?.ruleKind).toBe('block-domain');
+    expect(m?.domain).toBe('youtube.com');
+  });
+
+  it('matches a domain pattern with an https:// prefix (user mistake)', () => {
+    const rules = { blockRules: [domainRule('https://youtube.com')], keywordRules: [] };
+    const m = matchUrl('https://youtube.com/', rules);
+    expect(m?.ruleKind).toBe('block-domain');
+  });
+
+  it('does not match a URL rule with an empty pattern', () => {
+    const rules = { blockRules: [urlRule('')], keywordRules: [] };
+    expect(matchUrl('https://youtube.com/', rules)).toBeNull();
+  });
+
+  it('does not match a keyword with only whitespace', () => {
+    const rules = { blockRules: [], keywordRules: [keywordRule('   ')] };
+    expect(matchUrl('https://youtube.com/', rules)).toBeNull();
+  });
+
+  it('URL rules take priority over domain rules for the same site', () => {
+    const rules = {
+      blockRules: [urlRule('https://youtube.com/shorts'), domainRule('youtube.com')],
+      keywordRules: [],
+    };
+    const m = matchUrl('https://youtube.com/shorts/abc', rules);
+    expect(m?.ruleKind).toBe('block-url');
+  });
+});
+
 describe('extractDomain edge cases', () => {
   it('returns lowercase hostname for mixed-case URL', () => {
     expect(extractDomain('HTTPS://YOUTUBE.COM/watch')).toBe('youtube.com');
