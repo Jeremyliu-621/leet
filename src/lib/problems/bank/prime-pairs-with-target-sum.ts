@@ -35,9 +35,9 @@ Return the 2D sorted list of all prime pairs \`[x, y]\`. The list should be sort
   functionName: 'findPrimePairs',
   params: ['n'],
   starterCode: {
-    javascript: 'function findPrimePairs(n) {\n  // your code here\n}\n',
-    typescript: 'function findPrimePairs(n: number): number[][] {\n  // your code here\n}\n',
-    python: 'def findPrimePairs(n):\n    # your code here\n    pass\n',
+    javascript: 'function findPrimePairs(n) {\n  const sieve = Array(n + 1).fill(true);\n  sieve[0] = sieve[1] = false;\n  for (let p = 2; p * p <= n; p++) if (sieve[p]) for (let i = p * p; i <= n; i += p) sieve[i] = false;\n  const result = [];\n  for (let x = 2; x <= Math.floor(n / 2); x++) if (sieve[x] && sieve[n - x]) result.push([x, n - x]);\n  return result;\n}\n',
+    typescript: 'function findPrimePairs(n: number): number[][] {\n  const sieve = Array(n + 1).fill(true) as boolean[];\n  sieve[0] = sieve[1] = false;\n  for (let p = 2; p * p <= n; p++) if (sieve[p]) for (let i = p * p; i <= n; i += p) sieve[i] = false;\n  const result: number[][] = [];\n  for (let x = 2; x <= Math.floor(n / 2); x++) if (sieve[x] && sieve[n - x]) result.push([x, n - x]);\n  return result;\n}\n',
+    python: 'def findPrimePairs(n):\n    n = int(n)\n    sieve = [True] * (n + 1)\n    sieve[0] = sieve[1] = False\n    p = 2\n    while p * p <= n:\n        if sieve[p]:\n            for i in range(p*p, n+1, p): sieve[i] = False\n        p += 1\n    return [[x, n-x] for x in range(2, n//2+1) if sieve[x] and sieve[n-x]]\n',
   },
   visibleTests: [
     {

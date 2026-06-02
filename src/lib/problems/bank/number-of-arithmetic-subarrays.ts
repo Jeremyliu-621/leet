@@ -37,10 +37,10 @@ Return a list of \`boolean\` elements \`answer\`, where \`answer[i]\` is \`true\
   functionName: 'checkArithmeticSubarrays',
   params: ['nums', 'l', 'r'],
   starterCode: {
-    javascript: 'function checkArithmeticSubarrays(nums, l, r) {\n  // your code here\n}\n',
-    typescript: "function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {\n  // your code here\n}",
+    javascript: 'function checkArithmeticSubarrays(nums, l, r) {\n  return l.map((li, i) => {\n    const sub = nums.slice(li, r[i] + 1).sort((a, b) => a - b);\n    if (sub.length < 2) return true;\n    const d = sub[1] - sub[0];\n    return sub.every((_, j) => j === 0 || sub[j] - sub[j - 1] === d);\n  });\n}\n',
+    typescript: "function checkArithmeticSubarrays(nums: number[], l: number[], r: number[]): boolean[] {\n  return l.map((li, i) => {\n    const sub = nums.slice(li, r[i]! + 1).sort((a, b) => a - b);\n    if (sub.length < 2) return true;\n    const d = sub[1]! - sub[0]!;\n    return sub.every((_, j) => j === 0 || sub[j]! - sub[j - 1]! === d);\n  });\n}",
 
-    python: 'def checkArithmeticSubarrays(nums, l, r):\n    # your code here\n    pass\n',
+    python: 'def checkArithmeticSubarrays(nums, l, r):\n    if hasattr(nums, \'to_py\'): nums = nums.to_py()\n    if hasattr(l, \'to_py\'): l = l.to_py()\n    if hasattr(r, \'to_py\'): r = r.to_py()\n    nums = [int(x) for x in nums]\n    result = []\n    for li, ri in zip(l, r):\n        sub = sorted(nums[int(li):int(ri)+1])\n        if len(sub) < 2: result.append(True); continue\n        d = sub[1]-sub[0]\n        result.append(all(sub[j]-sub[j-1]==d for j in range(1, len(sub))))\n    return result\n',
   },
   visibleTests: [
     { args: [[4, 6, 5, 9, 3, 7], [0, 0, 2], [2, 3, 5]], expected: [true, false, true] },

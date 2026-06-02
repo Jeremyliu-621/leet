@@ -46,10 +46,10 @@ This runs in **O(log n)** time instead of O(n).`,
   functionName: 'fastPow',
   params: ['x', 'n'],
   starterCode: {
-    javascript: 'function fastPow(x, n) {\n  // your code here\n}\n',
-    typescript: "function fastPow(x: number, n: number): number {\n  // your code here\n}",
+    javascript: 'function fastPow(x, n) {\n  if (n === 0) return 1;\n  if (n < 0) return fastPow(1 / x, -n);\n  const half = fastPow(x, Math.floor(n / 2));\n  return n % 2 === 0 ? half * half : x * half * half;\n}\n',
+    typescript: "function fastPow(x: number, n: number): number {\n  if (n === 0) return 1;\n  if (n < 0) return fastPow(1 / x, -n);\n  const half = fastPow(x, Math.floor(n / 2));\n  return n % 2 === 0 ? half * half : x * half * half;\n}",
 
-    python: 'def fastPow(x, n):\n    # your code here\n    pass\n',
+    python: 'def fastPow(x, n):\n    if hasattr(x, \'to_py\'): x = x.to_py()\n    x = float(x); n = int(n)\n    if n == 0: return 1.0\n    if n < 0: return fastPow(1/x, -n)\n    half = fastPow(x, n//2)\n    return half*half if n%2==0 else x*half*half\n',
   },
   visibleTests: [
     { args: [2, 10], expected: 1024 },

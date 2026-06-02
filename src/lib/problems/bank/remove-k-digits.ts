@@ -40,10 +40,10 @@ After processing all digits, if removals remain, trim from the end (those would 
   functionName: 'removeKdigits',
   params: ['num', 'k'],
   starterCode: {
-    javascript: 'function removeKdigits(num, k) {\n  // your code here\n}\n',
-    typescript: "function removeKdigits(num: string, k: number): string {\n  // your code here\n}",
+    javascript: 'function removeKdigits(num, k) {\n  const stk = []; let rem = k;\n  for (const d of num) {\n    while (rem > 0 && stk.length && stk[stk.length - 1] > d) { stk.pop(); rem--; }\n    stk.push(d);\n  }\n  while (rem-- > 0) stk.pop();\n  return stk.join(\'\').replace(/^0+/, \'\') || \'0\';\n}\n',
+    typescript: "function removeKdigits(num: string, k: number): string {\n  const stk: string[] = []; let rem = k;\n  for (const d of num) {\n    while (rem > 0 && stk.length && stk[stk.length - 1]! > d) { stk.pop(); rem--; }\n    stk.push(d);\n  }\n  while (rem-- > 0) stk.pop();\n  return stk.join('').replace(/^0+/, '') || '0';\n}",
 
-    python: 'def removeKdigits(num: str, k: int) -> str:\n    # your code here\n    pass\n',
+    python: 'def removeKdigits(num: str, k: int) -> str:\n    if hasattr(num, \'to_py\'): num = num.to_py()\n    stk = []; rem = int(k)\n    for d in str(num):\n        while rem > 0 and stk and stk[-1] > d: stk.pop(); rem -= 1\n        stk.append(d)\n    stk = stk[:len(stk)-rem] if rem > 0 else stk\n    return \'\'.join(stk).lstrip(\'0\') or \'0\'\n',
   },
   visibleTests: [
     { args: ['1432219', 3], expected: '1219' },

@@ -33,14 +33,23 @@ Return the **minimum number of steps** needed to reach the integer \`target\`.`,
   params: ['target'],
   starterCode: {
     javascript: `function reachNumber(target) {
-  // your code here
+  target = Math.abs(target);
+  let sum = 0, k = 0;
+  while (sum < target || (sum - target) % 2 !== 0) { k++; sum += k; }
+  return k;
 }`,
     typescript: `function reachNumber(target: number): number {
-  // your code here
+  target = Math.abs(target);
+  let sum = 0, k = 0;
+  while (sum < target || (sum - target) % 2 !== 0) { k++; sum += k; }
+  return k;
 }`,
     python: `def reachNumber(target):
-    # your code here
-    pass`,
+    target = abs(int(target))
+    s = k = 0
+    while s < target or (s - target) % 2 != 0:
+        k += 1; s += k
+    return k`,
   },
   visibleTests: [
     { args: [2], expected: 3 },

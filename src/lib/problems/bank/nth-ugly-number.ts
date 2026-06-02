@@ -29,10 +29,10 @@ Note: \`1\` is considered an ugly number by convention.`,
   functionName: 'nthUglyNumber',
   params: ['n'],
   starterCode: {
-    javascript: 'function nthUglyNumber(n) {\n  // your code here\n}\n',
-    typescript: "function nthUglyNumber(n: number): number {\n  // your code here\n}",
+    javascript: 'function nthUglyNumber(n) {\n  const dp = [1];\n  let i2 = 0, i3 = 0, i5 = 0;\n  for (let i = 1; i < n; i++) {\n    const next = Math.min(dp[i2] * 2, dp[i3] * 3, dp[i5] * 5);\n    dp.push(next);\n    if (next === dp[i2] * 2) i2++;\n    if (next === dp[i3] * 3) i3++;\n    if (next === dp[i5] * 5) i5++;\n  }\n  return dp[n - 1];\n}\n',
+    typescript: "function nthUglyNumber(n: number): number {\n  const dp: number[] = [1];\n  let i2 = 0, i3 = 0, i5 = 0;\n  for (let i = 1; i < n; i++) {\n    const next = Math.min(dp[i2]! * 2, dp[i3]! * 3, dp[i5]! * 5);\n    dp.push(next);\n    if (next === dp[i2]! * 2) i2++;\n    if (next === dp[i3]! * 3) i3++;\n    if (next === dp[i5]! * 5) i5++;\n  }\n  return dp[n - 1]!;\n}",
 
-    python: 'def nthUglyNumber(n: int) -> int:\n    # your code here\n    pass\n',
+    python: 'def nthUglyNumber(n: int) -> int:\n    dp = [1]; i2 = i3 = i5 = 0\n    for _ in range(n - 1):\n        nxt = min(dp[i2]*2, dp[i3]*3, dp[i5]*5)\n        dp.append(nxt)\n        if nxt == dp[i2]*2: i2 += 1\n        if nxt == dp[i3]*3: i3 += 1\n        if nxt == dp[i5]*5: i5 += 1\n    return dp[n - 1]\n',
   },
   visibleTests: [
     { args: [10], expected: 12 },

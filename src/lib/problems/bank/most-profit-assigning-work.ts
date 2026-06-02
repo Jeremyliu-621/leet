@@ -40,10 +40,10 @@ Return the maximum profit we can achieve after assigning the workers to the jobs
   functionName: 'maxProfitAssignment',
   params: ['difficulty', 'profit', 'worker'],
   starterCode: {
-    javascript: 'function maxProfitAssignment(difficulty, profit, worker) {\n  // your code here\n}\n',
-    typescript: "function maxProfitAssignment(difficulty: number[], profit: number[], worker: number[]): number {\n  // your code here\n}",
+    javascript: 'function maxProfitAssignment(difficulty, profit, worker) {\n  const jobs = difficulty.map((d, i) => [d, profit[i]]).sort((a, b) => a[0] - b[0]);\n  const maxP = [0];\n  for (const [, p] of jobs) maxP.push(Math.max(maxP[maxP.length - 1], p));\n  let total = 0;\n  for (const w of worker) {\n    let lo = 0, hi = jobs.length;\n    while (lo < hi) { const m = (lo + hi) >> 1; if (jobs[m][0] <= w) lo = m + 1; else hi = m; }\n    total += maxP[lo];\n  }\n  return total;\n}\n',
+    typescript: "function maxProfitAssignment(difficulty: number[], profit: number[], worker: number[]): number {\n  const jobs = difficulty.map((d, i) => [d, profit[i]!] as [number,number]).sort((a, b) => a[0] - b[0]);\n  const maxP: number[] = [0];\n  for (const [, p] of jobs) maxP.push(Math.max(maxP[maxP.length - 1]!, p));\n  let total = 0;\n  for (const w of worker) {\n    let lo = 0, hi = jobs.length;\n    while (lo < hi) { const m = (lo + hi) >> 1; if (jobs[m]![0]! <= w) lo = m + 1; else hi = m; }\n    total += maxP[lo]!;\n  }\n  return total;\n}",
 
-    python: 'def maxProfitAssignment(difficulty, profit, worker):\n    # your code here\n    pass\n',
+    python: 'def maxProfitAssignment(difficulty, profit, worker):\n    if hasattr(difficulty, \'to_py\'): difficulty = difficulty.to_py()\n    if hasattr(profit, \'to_py\'): profit = profit.to_py()\n    if hasattr(worker, \'to_py\'): worker = worker.to_py()\n    jobs = sorted(zip([int(d) for d in difficulty], [int(p) for p in profit]))\n    max_p = [0]\n    for _, p in jobs: max_p.append(max(max_p[-1], p))\n    import bisect\n    total = 0\n    diffs = [j[0] for j in jobs]\n    for w in worker: idx = bisect.bisect_right(diffs, int(w)); total += max_p[idx]\n    return total\n',
   },
   visibleTests: [
     { args: [[2, 4, 6, 8, 10], [10, 20, 30, 40, 50], [4, 5, 6, 7]], expected: 100 },

@@ -36,10 +36,10 @@ Return the number of **land cells** in the grid from which we **cannot** walk of
   functionName: 'numEnclaves',
   params: ['grid'],
   starterCode: {
-    javascript: 'function numEnclaves(grid) {\n  // your code here\n}\n',
-    typescript: "function numEnclaves(grid: number[][]): number {\n  // your code here\n}",
+    javascript: 'function numEnclaves(grid) {\n  const m = grid.length, n = grid[0].length;\n  const dfs = (r, c) => {\n    if (r < 0 || r >= m || c < 0 || c >= n || !grid[r][c]) return;\n    grid[r][c] = 0;\n    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr,dc]) => dfs(r+dr, c+dc));\n  };\n  for (let r = 0; r < m; r++) { dfs(r, 0); dfs(r, n - 1); }\n  for (let c = 0; c < n; c++) { dfs(0, c); dfs(m - 1, c); }\n  return grid.flat().reduce((s, v) => s + v, 0);\n}\n',
+    typescript: "function numEnclaves(grid: number[][]): number {\n  const m = grid.length, n = grid[0]!.length;\n  const dfs = (r: number, c: number): void => {\n    if (r < 0 || r >= m || c < 0 || c >= n || !grid[r]![c]) return;\n    grid[r]![c] = 0;\n    [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dr,dc]) => dfs(r+dr!, c+dc!));\n  };\n  for (let r = 0; r < m; r++) { dfs(r, 0); dfs(r, n - 1); }\n  for (let c = 0; c < n; c++) { dfs(0, c); dfs(m - 1, c); }\n  return grid.flat().reduce((s, v) => s + v, 0);\n}",
 
-    python: 'def numEnclaves(grid):\n    # your code here\n    pass\n',
+    python: 'def numEnclaves(grid):\n    if hasattr(grid, \'to_py\'): grid = grid.to_py()\n    grid = [[int(v) for v in (r.to_py() if hasattr(r,\'to_py\') else r)] for r in grid]\n    m, n = len(grid), len(grid[0])\n    def dfs(r, c):\n        if r<0 or r>=m or c<0 or c>=n or not grid[r][c]: return\n        grid[r][c] = 0\n        for dr,dc in [(1,0),(-1,0),(0,1),(0,-1)]: dfs(r+dr, c+dc)\n    for r in range(m): dfs(r, 0); dfs(r, n-1)\n    for c in range(n): dfs(0, c); dfs(m-1, c)\n    return sum(grid[r][c] for r in range(m) for c in range(n))\n',
   },
   visibleTests: [
     {
