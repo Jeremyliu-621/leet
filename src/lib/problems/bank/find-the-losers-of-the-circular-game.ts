@@ -44,13 +44,41 @@ Return the friends who **never** received the ball (in ascending order).`,
   params: ['n', 'k'],
   starterCode: {
     javascript: `function circularGameLosers(n, k) {
-
+  const visited = new Set();
+  let pos = 0, round = 1;
+  visited.add(0);
+  while (true) {
+    pos = (pos + round * k) % n;
+    if (visited.has(pos)) break;
+    visited.add(pos);
+    round++;
+  }
+  const result = [];
+  for (let i = 0; i < n; i++) if (!visited.has(i)) result.push(i + 1);
+  return result;
 }`,
     typescript: `function circularGameLosers(n: number, k: number): number[] {
-
+  const visited = new Set<number>();
+  let pos = 0, round = 1;
+  visited.add(0);
+  while (true) {
+    pos = (pos + round * k) % n;
+    if (visited.has(pos)) break;
+    visited.add(pos);
+    round++;
+  }
+  const result: number[] = [];
+  for (let i = 0; i < n; i++) if (!visited.has(i)) result.push(i + 1);
+  return result;
 }`,
     python: `def circularGameLosers(n, k):
-    pass`,
+    visited = {0}
+    pos, round_ = 0, 1
+    while True:
+        pos = (pos + round_ * k) % n
+        if pos in visited: break
+        visited.add(pos); round_ += 1
+    return [i + 1 for i in range(n) if i not in visited]`,
   },
   visibleTests: [
     { args: [5, 2], expected: [4, 5] },

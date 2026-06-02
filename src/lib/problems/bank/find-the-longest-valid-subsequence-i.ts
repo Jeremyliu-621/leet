@@ -39,13 +39,33 @@ Note that the resulting subsequence does **not** need to be contiguous.`,
   params: ['nums'],
   starterCode: {
     javascript: `function maximumLength(nums) {
-
+  let evens = 0, odds = 0;
+  for (const n of nums) n % 2 === 0 ? evens++ : odds++;
+  let dp = [0, 0];
+  for (const n of nums) {
+    if (n % 2 === 0) dp[0] = dp[1] + 1;
+    else dp[1] = dp[0] + 1;
+  }
+  return Math.max(evens, odds, dp[0], dp[1]);
 }`,
     typescript: `function maximumLength(nums: number[]): number {
-
+  let evens = 0, odds = 0;
+  for (const n of nums) n % 2 === 0 ? evens++ : odds++;
+  let dp = [0, 0];
+  for (const n of nums) {
+    if (n % 2 === 0) dp[0] = dp[1] + 1;
+    else dp[1] = dp[0] + 1;
+  }
+  return Math.max(evens, odds, dp[0], dp[1]);
 }`,
     python: `def maximumLength(nums: list[int]) -> int:
-    pass`,
+    evens = sum(1 for n in nums if n % 2 == 0)
+    odds = len(nums) - evens
+    dp = [0, 0]
+    for n in nums:
+        if n % 2 == 0: dp[0] = dp[1] + 1
+        else: dp[1] = dp[0] + 1
+    return max(evens, odds, dp[0], dp[1])`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: 4 },

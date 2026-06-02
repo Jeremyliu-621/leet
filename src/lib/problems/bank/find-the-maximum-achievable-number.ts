@@ -35,12 +35,13 @@ Return the **maximum possible achievable number**.`,
   params: ['num', 't'],
   starterCode: {
     javascript: `function theMaximumAchievableX(num, t) {
-
+  return num + 2 * t;
 }`,
-    typescript: "function theMaximumAchievableX(num: number, t: number): number {\n\n}",
-
+    typescript: `function theMaximumAchievableX(num: number, t: number): number {
+  return num + 2 * t;
+}`,
     python: `def theMaximumAchievableX(num, t):
-    pass`,
+    return num + 2 * t`,
   },
   visibleTests: [
     { args: [4, 1], expected: 6 },
