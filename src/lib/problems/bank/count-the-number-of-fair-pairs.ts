@@ -45,14 +45,40 @@ A pair \`(i, j)\` is **fair** if:
   params: ['nums', 'lower', 'upper'],
   starterCode: {
     javascript: `function countFairPairs(nums, lower, upper) {
-  // return count of pairs (i, j) where lower <= nums[i]+nums[j] <= upper
-
+  nums.sort((a, b) => a - b);
+  const countAtMost = (limit) => {
+    let l = 0, r = nums.length - 1, cnt = 0;
+    while (l < r) {
+      if (nums[l] + nums[r] <= limit) { cnt += r - l; l++; }
+      else r--;
+    }
+    return cnt;
+  };
+  return countAtMost(upper) - countAtMost(lower - 1);
 }`,
-    typescript: "function countFairPairs(nums: number[], lower: number, upper: number): number {\n  // return count of pairs (i, j) where lower <= nums[i]+nums[j] <= upper\n\n}",
+    typescript: `function countFairPairs(nums: number[], lower: number, upper: number): number {
+  nums.sort((a, b) => a - b);
+  const countAtMost = (limit: number): number => {
+    let l = 0, r = nums.length - 1, cnt = 0;
+    while (l < r) {
+      if (nums[l]! + nums[r]! <= limit) { cnt += r - l; l++; }
+      else r--;
+    }
+    return cnt;
+  };
+  return countAtMost(upper) - countAtMost(lower - 1);
+}`,
 
     python: `def countFairPairs(nums: list, lower: int, upper: int) -> int:
-    # return count of pairs (i, j) where lower <= nums[i]+nums[j] <= upper
-    pass
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = sorted(int(x) for x in nums)
+    def count_at_most(limit):
+        l, r, cnt = 0, len(nums)-1, 0
+        while l < r:
+            if nums[l]+nums[r] <= limit: cnt += r-l; l += 1
+            else: r -= 1
+        return cnt
+    return count_at_most(upper) - count_at_most(lower-1)
 `,
   },
   visibleTests: [

@@ -45,14 +45,23 @@ function halvesAreAlike(s) {
   params: ['s'],
   starterCode: {
     javascript: `function halvesAreAlike(s) {
-  // return true if both halves have equal vowel counts
-
+  const v = new Set(['a','e','i','o','u','A','E','I','O','U']);
+  const h = s.length >> 1;
+  let a = 0, b = 0;
+  for (let i = 0; i < h; i++) { if (v.has(s[i])) a++; if (v.has(s[h + i])) b++; }
+  return a === b;
 }`,
-    typescript: "function halvesAreAlike(s: string): boolean {\n  // return true if both halves have equal vowel counts\n\n}",
-
-    python: `def halvesAreAlike(s: str) -> bool:
-    # return true if both halves have equal vowel counts
-    pass
+    typescript: `function halvesAreAlike(s: string): boolean {
+  const v = new Set(['a','e','i','o','u','A','E','I','O','U']);
+  const h = s.length >> 1;
+  let a = 0, b = 0;
+  for (let i = 0; i < h; i++) { if (v.has(s[i]!)) a++; if (v.has(s[h + i]!)) b++; }
+  return a === b;
+}`,
+    python: `def halvesAreAlike(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    v = set('aeiouAEIOU'); h = len(s)//2
+    return sum(c in v for c in s[:h]) == sum(c in v for c in s[h:])
 `,
   },
   visibleTests: [

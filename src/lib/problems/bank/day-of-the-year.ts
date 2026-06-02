@@ -34,14 +34,30 @@ export const problem: Problem = {
   params: ['date'],
   starterCode: {
     javascript: `function dayOfYear(date) {
-  // return the day number of the year
-
+  const [y, m, d] = date.split('-').map(Number);
+  const leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+  const days = [31,28,31,30,31,30,31,31,30,31,30,31];
+  let sum = d;
+  for (let i = 0; i < m - 1; i++) sum += days[i];
+  if (leap && m > 2) sum++;
+  return sum;
 }`,
-    typescript: "function dayOfYear(date: string): number {\n  // return the day number of the year\n\n}",
-
-    python: `def dayOfYear(date: str) -> int:
-    # return the day number of the year
-    pass
+    typescript: `function dayOfYear(date: string): number {
+  const [y, m, d] = date.split('-').map(Number);
+  const leap = (y! % 4 === 0 && y! % 100 !== 0) || y! % 400 === 0;
+  const days = [31,28,31,30,31,30,31,31,30,31,30,31];
+  let sum = d!;
+  for (let i = 0; i < m! - 1; i++) sum += days[i]!;
+  if (leap && m! > 2) sum++;
+  return sum;
+}`,
+    python: `def dayOfYear(date):
+    if hasattr(date, 'to_py'): date = date.to_py()
+    y, m, d = int(date[:4]), int(date[5:7]), int(date[8:])
+    leap = (y%4==0 and y%100!=0) or y%400==0
+    days = [31,28,31,30,31,30,31,31,30,31,30,31]
+    total = d + sum(days[:m-1]) + (1 if leap and m>2 else 0)
+    return total
 `,
   },
   visibleTests: [

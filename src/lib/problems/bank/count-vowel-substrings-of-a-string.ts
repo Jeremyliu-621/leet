@@ -48,15 +48,42 @@ function countVowelSubstrings(word) {
   params: ['word'],
   starterCode: {
     javascript: `function countVowelSubstrings(word) {
-  // return count of vowel substrings
-
+  const v = new Set(['a','e','i','o','u']);
+  let count = 0;
+  for (let i = 0; i < word.length; i++) {
+    const seen = new Set();
+    for (let j = i; j < word.length; j++) {
+      if (!v.has(word[j])) break;
+      seen.add(word[j]);
+      if (seen.size === 5) count++;
+    }
+  }
+  return count;
 }`,
-    typescript: "function countVowelSubstrings(word: string): number {\n  // return count of vowel substrings\n\n}",
+    typescript: `function countVowelSubstrings(word: string): number {
+  const v = new Set(['a','e','i','o','u']);
+  let count = 0;
+  for (let i = 0; i < word.length; i++) {
+    const seen = new Set<string>();
+    for (let j = i; j < word.length; j++) {
+      if (!v.has(word[j]!)) break;
+      seen.add(word[j]!);
+      if (seen.size === 5) count++;
+    }
+  }
+  return count;
+}`,
 
-    python: `def countVowelSubstrings(word: str) -> int:
-    # return count of vowel substrings
-    pass
-`,
+    python: `def countVowelSubstrings(word):
+    if hasattr(word, 'to_py'): word = word.to_py()
+    v = set('aeiou'); count = 0
+    for i in range(len(word)):
+        seen = set()
+        for j in range(i, len(word)):
+            if word[j] not in v: break
+            seen.add(word[j])
+            if len(seen) == 5: count += 1
+    return count`,
   },
   visibleTests: [
     { args: ['aeiouu'], expected: 2 },

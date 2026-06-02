@@ -43,14 +43,43 @@ You want to select 3 buildings such that they are not all the same type. Specifi
   params: ['s'],
   starterCode: {
     javascript: `function countWays(s) {
-  // return count of ways to select 3 buildings forming 010 or 101 pattern
-
+  const n = s.length;
+  const ones = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) ones[i + 1] = ones[i] + (s[i] === '1' ? 1 : 0);
+  const total = ones[n];
+  let ans = 0;
+  for (let j = 1; j < n - 1; j++) {
+    const ob = ones[j], zb = j - ob, oa = total - ones[j + 1], za = (n - j - 1) - oa;
+    if (s[j] === '1') ans += zb * za;
+    else ans += ob * oa;
+  }
+  return ans;
 }`,
-    typescript: "function countWays(s: string): number {\n  // return count of ways to select 3 buildings forming 010 or 101 pattern\n\n}",
-
-    python: `def countWays(s: str) -> int:
-    # return count of ways to select 3 buildings forming 010 or 101 pattern
-    pass
+    typescript: `function countWays(s: string): number {
+  const n = s.length;
+  const ones = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) ones[i + 1] = ones[i]! + (s[i] === '1' ? 1 : 0);
+  const total = ones[n]!;
+  let ans = 0;
+  for (let j = 1; j < n - 1; j++) {
+    const ob = ones[j]!, zb = j - ob, oa = total - ones[j + 1]!, za = (n - j - 1) - oa;
+    if (s[j] === '1') ans += zb * za;
+    else ans += ob * oa;
+  }
+  return ans;
+}`,
+    python: `def countWays(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    n = len(s)
+    ones = [0] * (n + 1)
+    for i in range(n): ones[i+1] = ones[i] + (1 if s[i]=='1' else 0)
+    total = ones[n]; ans = 0
+    for j in range(1, n-1):
+        ob, zb = ones[j], j-ones[j]
+        oa = total-ones[j+1]; za = (n-j-1)-oa
+        if s[j]=='1': ans += zb*za
+        else: ans += ob*oa
+    return ans
 `,
   },
   visibleTests: [

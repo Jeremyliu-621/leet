@@ -55,12 +55,47 @@ Output: \`[1,4,2,7,5,3,8,6,9]\``,
   params: ['nums'],
   starterCode: {
     javascript: `function findDiagonalOrder(nums) {
-
+  const groups = new Map();
+  for (let r = 0; r < nums.length; r++) {
+    for (let c = 0; c < nums[r].length; c++) {
+      const d = r + c;
+      if (!groups.has(d)) groups.set(d, []);
+      groups.get(d).push(nums[r][c]);
+    }
+  }
+  const result = [];
+  for (let d = 0; groups.has(d); d++) {
+    const g = groups.get(d);
+    for (let i = g.length - 1; i >= 0; i--) result.push(g[i]);
+  }
+  return result;
 }`,
-    typescript: "function findDiagonalOrder(nums: number[][]): number[] {\n\n}",
-
+    typescript: `function findDiagonalOrder(nums: number[][]): number[] {
+  const groups = new Map<number, number[]>();
+  for (let r = 0; r < nums.length; r++) {
+    for (let c = 0; c < nums[r]!.length; c++) {
+      const d = r + c;
+      if (!groups.has(d)) groups.set(d, []);
+      groups.get(d)!.push(nums[r]![c]!);
+    }
+  }
+  const result: number[] = [];
+  for (let d = 0; groups.has(d); d++) {
+    const g = groups.get(d)!;
+    for (let i = g.length - 1; i >= 0; i--) result.push(g[i]!);
+  }
+  return result;
+}`,
     python: `def findDiagonalOrder(nums):
-    pass
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in nums]
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for r in range(len(nums)):
+        for c in range(len(nums[r])): groups[r+c].append(nums[r][c])
+    res = []
+    for d in range(max(groups)+1): res.extend(reversed(groups[d]))
+    return res
 `,
   },
   visibleTests: [

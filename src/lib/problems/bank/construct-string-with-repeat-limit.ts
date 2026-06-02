@@ -40,14 +40,60 @@ Return \`repeatLimitedString\`.
   params: ['s', 'repeatLimit'],
   starterCode: {
     javascript: `function repeatLimitedString(s, repeatLimit) {
-  // return lexicographically largest string with no letter repeating > repeatLimit times consecutively
-
+  const freq = new Array(26).fill(0);
+  for (const c of s) freq[c.charCodeAt(0) - 97]++;
+  const res = [];
+  let i = 25;
+  while (i >= 0) {
+    if (freq[i] === 0) { i--; continue; }
+    const take = Math.min(freq[i], repeatLimit);
+    res.push(String.fromCharCode(97 + i).repeat(take));
+    freq[i] -= take;
+    if (freq[i] > 0) {
+      let j = i - 1;
+      while (j >= 0 && freq[j] === 0) j--;
+      if (j < 0) break;
+      res.push(String.fromCharCode(97 + j));
+      freq[j]--;
+    }
+  }
+  return res.join('');
 }`,
-    typescript: "function repeatLimitedString(s: string, repeatLimit: number): string {\n  // return lexicographically largest string with no letter repeating > repeatLimit times consecutively\n\n}",
-
-    python: `def repeatLimitedString(s: str, repeatLimit: int) -> str:
-    # return lexicographically largest string with no letter repeating > repeatLimit times consecutively
-    pass
+    typescript: `function repeatLimitedString(s: string, repeatLimit: number): string {
+  const freq = new Array<number>(26).fill(0);
+  for (const c of s) freq[c.charCodeAt(0) - 97]!++;
+  const res: string[] = [];
+  let i = 25;
+  while (i >= 0) {
+    if (freq[i] === 0) { i--; continue; }
+    const take = Math.min(freq[i]!, repeatLimit);
+    res.push(String.fromCharCode(97 + i).repeat(take));
+    freq[i]! -= take;
+    if (freq[i]! > 0) {
+      let j = i - 1;
+      while (j >= 0 && freq[j] === 0) j--;
+      if (j < 0) break;
+      res.push(String.fromCharCode(97 + j));
+      freq[j]!--;
+    }
+  }
+  return res.join('');
+}`,
+    python: `def repeatLimitedString(s, repeatLimit):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    freq = [0] * 26
+    for c in s: freq[ord(c)-97] += 1
+    res = []; i = 25
+    while i >= 0:
+        if freq[i] == 0: i -= 1; continue
+        take = min(freq[i], repeatLimit)
+        res.append(chr(97+i)*take); freq[i] -= take
+        if freq[i] > 0:
+            j = i - 1
+            while j >= 0 and freq[j] == 0: j -= 1
+            if j < 0: break
+            res.append(chr(97+j)); freq[j] -= 1
+    return ''.join(res)
 `,
   },
   visibleTests: [

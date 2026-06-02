@@ -94,10 +94,80 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   params: ['arr', 'start'],
   preamble: { javascript: JS_PREAMBLE, python: PY_PREAMBLE },
   starterCode: {
-    javascript: '// TreeNode class and amountOfTimeRunner wrapper are pre-defined.\n// Implement the function below:\nfunction amountOfTime(root, start) {\n  // your code here\n}\n',
-    typescript: "function amountOfTimeRunner(arr: (number | null)[], start: number): number {\n  // your code here\n}",
-
-    python: '# TreeNode class and amountOfTimeRunner wrapper are pre-defined.\n# Implement the function below:\ndef amountOfTime(root, start):\n    # your code here\n    pass\n',
+    javascript: `// TreeNode class and amountOfTimeRunner wrapper are pre-defined.
+// Implement the function below:
+function amountOfTime(root, start) {
+  const adj = new Map();
+  function dfs(node, parent) {
+    if (!node) return;
+    if (!adj.has(node.val)) adj.set(node.val, []);
+    if (parent !== null) {
+      adj.get(node.val).push(parent);
+      if (!adj.has(parent)) adj.set(parent, []);
+      adj.get(parent).push(node.val);
+    }
+    dfs(node.left, node.val); dfs(node.right, node.val);
+  }
+  dfs(root, null);
+  const visited = new Set([start]);
+  let q = [start], time = -1;
+  while (q.length) {
+    const next = [];
+    for (const v of q) for (const u of (adj.get(v) || [])) if (!visited.has(u)) { visited.add(u); next.push(u); }
+    time++; q = next;
+  }
+  return time;
+}`,
+    typescript: `function amountOfTimeRunner(arr: (number | null)[], start: number): number {
+  if (!arr.length || arr[0] === null) return -1;
+  const nodes: {val:number,left:any,right:any}[] = [];
+  const root = {val: arr[0]!, left: null, right: null};
+  const queue: typeof root[] = [root]; let i = 1;
+  while (queue.length && i < arr.length) {
+    const node = queue.shift()!;
+    if (arr[i] != null) { node.left = {val: arr[i]!, left: null, right: null}; queue.push(node.left); } i++;
+    if (i < arr.length && arr[i] != null) { node.right = {val: arr[i]!, left: null, right: null}; queue.push(node.right); } i++;
+  }
+  const adj = new Map<number, number[]>();
+  const stack: [typeof root, number|null][] = [[root, null]];
+  while (stack.length) {
+    const [node, parent] = stack.pop()!;
+    if (!adj.has(node.val)) adj.set(node.val, []);
+    if (parent !== null) { adj.get(node.val)!.push(parent); if (!adj.has(parent)) adj.set(parent,[]); adj.get(parent)!.push(node.val); }
+    if (node.right) stack.push([node.right, node.val]);
+    if (node.left) stack.push([node.left, node.val]);
+  }
+  const visited = new Set<number>([start]);
+  let q: number[] = [start], time = -1;
+  while (q.length) {
+    const next: number[] = [];
+    for (const v of q) for (const u of (adj.get(v) ?? [])) if (!visited.has(u)) { visited.add(u); next.push(u); }
+    time++; q = next;
+  }
+  return time;
+}`,
+    python: `# TreeNode class and amountOfTimeRunner wrapper are pre-defined.
+# Implement the function below:
+def amountOfTime(root, start):
+    from collections import deque
+    adj = {}
+    def dfs(node, parent):
+        if node is None: return
+        if node.val not in adj: adj[node.val] = []
+        if parent is not None:
+            adj[node.val].append(parent)
+            if parent not in adj: adj[parent] = []
+            adj[parent].append(node.val)
+        dfs(node.left, node.val); dfs(node.right, node.val)
+    dfs(root, None)
+    visited = {start}; q = deque([start]); time = -1
+    while q:
+        for _ in range(len(q)):
+            v = q.popleft()
+            for u in adj.get(v, []):
+                if u not in visited: visited.add(u); q.append(u)
+        time += 1
+    return time`,
   },
   visibleTests: [
     { args: [[1, 5, 3, null, 4, 10, 6, 9, 2], 3], expected: 4 },

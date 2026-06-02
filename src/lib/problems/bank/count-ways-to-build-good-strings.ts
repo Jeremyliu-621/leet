@@ -47,16 +47,35 @@ Return the count of good strings modulo \`10^9 + 7\`.
   starterCode: {
     javascript: `function countGoodStrings(low, high, zero, one) {
   const MOD = 1_000_000_007;
-  // dp[i] = ways to build string of length i
+  const dp = new Array(high + 1).fill(0);
+  dp[0] = 1;
+  for (let i = 1; i <= high; i++) {
+    if (i >= zero) dp[i] = (dp[i] + dp[i - zero]) % MOD;
+    if (i >= one) dp[i] = (dp[i] + dp[i - one]) % MOD;
+  }
+  let ans = 0;
+  for (let i = low; i <= high; i++) ans = (ans + dp[i]) % MOD;
+  return ans;
 }`,
     typescript: `function countGoodStrings(low: number, high: number, zero: number, one: number): number {
   const MOD = 1_000_000_007;
-  // dp[i] = ways to build string of length i
+  const dp = new Array<number>(high + 1).fill(0);
+  dp[0] = 1;
+  for (let i = 1; i <= high; i++) {
+    if (i >= zero) dp[i]! = (dp[i]! + dp[i - zero]!) % MOD;
+    if (i >= one) dp[i]! = (dp[i]! + dp[i - one]!) % MOD;
+  }
+  let ans = 0;
+  for (let i = low; i <= high; i++) ans = (ans + dp[i]!) % MOD;
+  return ans;
 }`,
     python: `def countGoodStrings(low, high, zero, one):
     MOD = 10**9 + 7
-    # dp[i] = ways to build string of length i
-    pass
+    dp = [0] * (high + 1); dp[0] = 1
+    for i in range(1, high + 1):
+        if i >= zero: dp[i] = (dp[i] + dp[i-zero]) % MOD
+        if i >= one: dp[i] = (dp[i] + dp[i-one]) % MOD
+    return sum(dp[low:high+1]) % MOD
 `,
   },
   visibleTests: [

@@ -39,15 +39,24 @@ export const problem: Problem = {
   params: ['k', 's'],
   starterCode: {
     javascript: `function canConstruct(k, s) {
-  // return true if all characters of s can form k palindromes
-
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c] || 0) + 1;
+  const odds = Object.values(freq).filter(v => v % 2 === 1).length;
+  return odds <= k && k <= s.length;
 }`,
-    typescript: "function canConstruct(k: number, s: string): boolean {\n  // return true if all characters of s can form k palindromes\n\n}",
+    typescript: `function canConstruct(k: number, s: string): boolean {
+  const freq: Record<string, number> = {};
+  for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+  const odds = Object.values(freq).filter(v => v % 2 === 1).length;
+  return odds <= k && k <= s.length;
+}`,
 
-    python: `def canConstruct(k: int, s: str) -> bool:
-    # return True if all characters of s can form k palindromes
-    pass
-`,
+    python: `def canConstruct(k, s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    from collections import Counter
+    freq = Counter(s)
+    odds = sum(1 for v in freq.values() if v % 2 == 1)
+    return odds <= k <= len(s)`,
   },
   visibleTests: [
     { args: [3, 'annabelle'], expected: true },

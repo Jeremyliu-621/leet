@@ -35,14 +35,61 @@ An inversion is a pair \`(i, j)\` where \`0 <= i < j < nums.length\` and \`nums[
   params: ['nums'],
   starterCode: {
     javascript: `function countInversions(nums) {
-  // your code here
+  let count = 0;
+  function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+    const mid = arr.length >> 1;
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    const merged = [];
+    let i = 0, j = 0;
+    while (i < left.length && j < right.length) {
+      if (left[i] <= right[j]) { merged.push(left[i++]); }
+      else { count += left.length - i; merged.push(right[j++]); }
+    }
+    while (i < left.length) merged.push(left[i++]);
+    while (j < right.length) merged.push(right[j++]);
+    return merged;
+  }
+  mergeSort(nums);
+  return count;
 }`,
     typescript: `function countInversions(nums: number[]): number {
-  // your code here
+  let count = 0;
+  function mergeSort(arr: number[]): number[] {
+    if (arr.length <= 1) return arr;
+    const mid = arr.length >> 1;
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    const merged: number[] = [];
+    let i = 0, j = 0;
+    while (i < left.length && j < right.length) {
+      if (left[i]! <= right[j]!) { merged.push(left[i++]!); }
+      else { count += left.length - i; merged.push(right[j++]!); }
+    }
+    while (i < left.length) merged.push(left[i++]!);
+    while (j < right.length) merged.push(right[j++]!);
+    return merged;
+  }
+  mergeSort(nums);
+  return count;
 }`,
     python: `def countInversions(nums):
-    # your code here
-    pass`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    count = [0]
+    def merge_sort(arr):
+        if len(arr) <= 1: return arr
+        mid = len(arr) // 2
+        left = merge_sort(arr[:mid]); right = merge_sort(arr[mid:])
+        merged = []; i = j = 0
+        while i < len(left) and j < len(right):
+            if left[i] <= right[j]: merged.append(left[i]); i += 1
+            else: count[0] += len(left)-i; merged.append(right[j]); j += 1
+        merged.extend(left[i:]); merged.extend(right[j:])
+        return merged
+    merge_sort(nums)
+    return count[0]`,
   },
   visibleTests: [
     { args: [[2, 4, 1, 3, 5]], expected: 3 },

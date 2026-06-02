@@ -39,12 +39,67 @@ Return the number of **pairs of different nodes** that are **unreachable** from 
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function countPairs(n, edges) {
-
+  const parent = Array.from({length: n}, (_, i) => i);
+  const rank = new Array(n).fill(0);
+  function find(x) { return parent[x] === x ? x : (parent[x] = find(parent[x])); }
+  function union(a, b) {
+    a = find(a); b = find(b);
+    if (a === b) return;
+    if (rank[a] < rank[b]) { const t = a; a = b; b = t; }
+    parent[b] = a;
+    if (rank[a] === rank[b]) rank[a]++;
+  }
+  for (const [a, b] of edges) union(a, b);
+  const sizes = new Map();
+  for (let i = 0; i < n; i++) {
+    const r = find(i);
+    sizes.set(r, (sizes.get(r) || 0) + 1);
+  }
+  let ans = 0, remaining = n;
+  for (const s of sizes.values()) { ans += s * (remaining - s); remaining -= s; }
+  return ans;
 }`,
-    typescript: "function countPairs(n: number, edges: number[][]): number {\n\n}",
+    typescript: `function countPairs(n: number, edges: number[][]): number {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const rank = new Array<number>(n).fill(0);
+  function find(x: number): number { return parent[x] === x ? x : (parent[x] = find(parent[x]!)); }
+  function union(a: number, b: number) {
+    a = find(a); b = find(b);
+    if (a === b) return;
+    if (rank[a]! < rank[b]!) { const t = a; a = b; b = t; }
+    parent[b] = a;
+    if (rank[a] === rank[b]) rank[a]!++;
+  }
+  for (const e of edges) union(e[0]!, e[1]!);
+  const sizes = new Map<number, number>();
+  for (let i = 0; i < n; i++) {
+    const r = find(i);
+    sizes.set(r, (sizes.get(r) ?? 0) + 1);
+  }
+  let ans = 0, remaining = n;
+  for (const s of sizes.values()) { ans += s * (remaining - s); remaining -= s; }
+  return ans;
+}`,
 
     python: `def countPairs(n: int, edges: list) -> int:
-    pass
+    if hasattr(edges, 'to_py'): edges = edges.to_py()
+    edges = [[int(v) for v in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges]
+    parent = list(range(n)); rank = [0]*n
+    def find(x):
+        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    def union(a, b):
+        a, b = find(a), find(b)
+        if a == b: return
+        if rank[a] < rank[b]: a, b = b, a
+        parent[b] = a
+        if rank[a] == rank[b]: rank[a] += 1
+    for e in edges: union(e[0], e[1])
+    from collections import Counter
+    sizes = Counter(find(i) for i in range(n))
+    ans = 0; remaining = n
+    for s in sizes.values(): ans += s*(remaining-s); remaining -= s
+    return ans
 `,
   },
   visibleTests: [
