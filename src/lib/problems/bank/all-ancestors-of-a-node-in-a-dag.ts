@@ -42,12 +42,48 @@ A node \`u\` is an **ancestor** of another node \`v\` if \`u\` can reach \`v\` v
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function getAncestors(n, edges) {
-
+  const adj = Array.from({ length: n }, () => []);
+  for (const [from, to] of edges) adj[from].push(to);
+  const result = Array.from({ length: n }, () => new Set());
+  function dfs(src, cur) {
+    for (const next of adj[cur]) {
+      if (!result[next].has(src)) {
+        result[next].add(src);
+        dfs(src, next);
+      }
+    }
+  }
+  for (let i = 0; i < n; i++) dfs(i, i);
+  return result.map(s => [...s].sort((a, b) => a - b));
 }`,
-    typescript: "function getAncestors(n: number, edges: number[][]): (unknown[] | number[])[] {\n\n}",
-
+    typescript: `function getAncestors(n: number, edges: number[][]): number[][] {
+  const adj: number[][] = Array.from({ length: n }, () => []);
+  for (const e of edges) adj[e[0]!]!.push(e[1]!);
+  const result: Set<number>[] = Array.from({ length: n }, () => new Set<number>());
+  function dfs(src: number, cur: number): void {
+    for (const next of adj[cur]!) {
+      if (!result[next]!.has(src)) {
+        result[next]!.add(src);
+        dfs(src, next);
+      }
+    }
+  }
+  for (let i = 0; i < n; i++) dfs(i, i);
+  return result.map(s => [...s].sort((a, b) => a - b));
+}`,
     python: `def getAncestors(n, edges):
-    pass`,
+    adj = [[] for _ in range(n)]
+    for frm, to in edges:
+        adj[frm].append(to)
+    result = [set() for _ in range(n)]
+    def dfs(src, cur):
+        for nxt in adj[cur]:
+            if src not in result[nxt]:
+                result[nxt].add(src)
+                dfs(src, nxt)
+    for i in range(n):
+        dfs(i, i)
+    return [sorted(s) for s in result]`,
   },
   visibleTests: [
     {

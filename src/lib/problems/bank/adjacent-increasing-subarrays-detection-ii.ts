@@ -40,13 +40,39 @@ A subarray is **strictly increasing** if each element is strictly greater than t
   params: ['nums'],
   starterCode: {
     javascript: `function maxIncreasingSubarrays(nums) {
-
+  const n = nums.length;
+  const left = new Array(n).fill(1);
+  const right = new Array(n).fill(1);
+  for (let i = 1; i < n; i++) if (nums[i] > nums[i - 1]) left[i] = left[i - 1] + 1;
+  for (let i = n - 2; i >= 0; i--) if (nums[i] < nums[i + 1]) right[i] = right[i + 1] + 1;
+  let ans = 1;
+  for (let b = 1; b < n; b++) ans = Math.max(ans, Math.min(left[b - 1], right[b]));
+  return ans;
 }`,
     typescript: `function maxIncreasingSubarrays(nums: number[]): number {
-
+  const n = nums.length;
+  const left = new Array<number>(n).fill(1);
+  const right = new Array<number>(n).fill(1);
+  for (let i = 1; i < n; i++) if (nums[i]! > nums[i - 1]!) left[i] = left[i - 1]! + 1;
+  for (let i = n - 2; i >= 0; i--) if (nums[i]! < nums[i + 1]!) right[i] = right[i + 1]! + 1;
+  let ans = 1;
+  for (let b = 1; b < n; b++) ans = Math.max(ans, Math.min(left[b - 1]!, right[b]!));
+  return ans;
 }`,
     python: `def maxIncreasingSubarrays(nums):
-    pass`,
+    n = len(nums)
+    left = [1] * n
+    right = [1] * n
+    for i in range(1, n):
+        if nums[i] > nums[i - 1]:
+            left[i] = left[i - 1] + 1
+    for i in range(n - 2, -1, -1):
+        if nums[i] < nums[i + 1]:
+            right[i] = right[i + 1] + 1
+    ans = 1
+    for b in range(1, n):
+        ans = max(ans, min(left[b - 1], right[b]))
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 5, 7, 8, 9, 2, 3, 4, 3, 1]], expected: 3 },

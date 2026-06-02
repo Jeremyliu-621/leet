@@ -38,11 +38,34 @@ That is, count the distinct values in \`{arr[i] OR arr[i+1] OR ... OR arr[j] : 0
   params: ['arr'],
   starterCode: {
     javascript: `function subarrayBitwiseORs(arr) {
-
+  const all = new Set();
+  let cur = new Set();
+  for (const x of arr) {
+    const next = new Set([x]);
+    for (const v of cur) next.add(v | x);
+    for (const v of next) all.add(v);
+    cur = next;
+  }
+  return all.size;
 }`,
-    typescript: 'function subarrayBitwiseORs(arr: number[]): number {\n\n}',
+    typescript: `function subarrayBitwiseORs(arr: number[]): number {
+  const all = new Set<number>();
+  let cur = new Set<number>();
+  for (const x of arr) {
+    const next = new Set<number>([x]);
+    for (const v of cur) next.add(v | x);
+    for (const v of next) all.add(v);
+    cur = next;
+  }
+  return all.size;
+}`,
     python: `def subarrayBitwiseORs(arr):
-    pass`,
+    all_vals = set()
+    cur = set()
+    for x in arr:
+        cur = {v | x for v in cur} | {x}
+        all_vals |= cur
+    return len(all_vals)`,
   },
   visibleTests: [
     { args: [[0]], expected: 1 },

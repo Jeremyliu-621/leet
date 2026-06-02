@@ -46,12 +46,60 @@ The Manhattan distance between two points \`p1\` and \`p2\` is \`|p1.x - p2.x| +
   params: ['workers', 'bikes'],
   starterCode: {
     javascript: `function campusBikes(workers, bikes) {
-
+  const triples = [];
+  for (let w = 0; w < workers.length; w++) {
+    for (let b = 0; b < bikes.length; b++) {
+      const dist = Math.abs(workers[w][0] - bikes[b][0]) + Math.abs(workers[w][1] - bikes[b][1]);
+      triples.push([dist, w, b]);
+    }
+  }
+  triples.sort((a, b) => a[0] !== b[0] ? a[0] - b[0] : a[1] !== b[1] ? a[1] - b[1] : a[2] - b[2]);
+  const usedWorker = new Set(), usedBike = new Set();
+  const result = new Array(workers.length).fill(-1);
+  for (const [, w, b] of triples) {
+    if (!usedWorker.has(w) && !usedBike.has(b)) {
+      result[w] = b;
+      usedWorker.add(w); usedBike.add(b);
+    }
+    if (usedWorker.size === workers.length) break;
+  }
+  return result;
 }`,
-    typescript: "function campusBikes(workers: number[][], bikes: number[][]): number[] {\n\n}",
-
+    typescript: `function campusBikes(workers: number[][], bikes: number[][]): number[] {
+  const triples: [number, number, number][] = [];
+  for (let w = 0; w < workers.length; w++) {
+    for (let b = 0; b < bikes.length; b++) {
+      const dist = Math.abs(workers[w]![0]! - bikes[b]![0]!) + Math.abs(workers[w]![1]! - bikes[b]![1]!);
+      triples.push([dist, w, b]);
+    }
+  }
+  triples.sort((a, b) => a[0] !== b[0] ? a[0]! - b[0]! : a[1] !== b[1] ? a[1]! - b[1]! : a[2]! - b[2]!);
+  const usedWorker = new Set<number>(), usedBike = new Set<number>();
+  const result = new Array<number>(workers.length).fill(-1);
+  for (const [, w, b] of triples) {
+    if (!usedWorker.has(w) && !usedBike.has(b)) {
+      result[w] = b; usedWorker.add(w); usedBike.add(b);
+    }
+    if (usedWorker.size === workers.length) break;
+  }
+  return result;
+}`,
     python: `def campusBikes(workers, bikes):
-    pass`,
+    triples = []
+    for w, (wx, wy) in enumerate(workers):
+        for b, (bx, by) in enumerate(bikes):
+            dist = abs(wx - bx) + abs(wy - by)
+            triples.append((dist, w, b))
+    triples.sort()
+    used_worker, used_bike = set(), set()
+    result = [-1] * len(workers)
+    for dist, w, b in triples:
+        if w not in used_worker and b not in used_bike:
+            result[w] = b
+            used_worker.add(w); used_bike.add(b)
+        if len(used_worker) == len(workers):
+            break
+    return result`,
   },
   visibleTests: [
     { args: [[[0, 0], [1, 1]], [[2, 0], [1, 0]]], expected: [1, 0] },
