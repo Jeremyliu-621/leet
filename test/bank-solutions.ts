@@ -47404,6 +47404,67 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 274
+  'minimum-swaps-to-balance': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let open = 0, swaps = 0;
+    for (const c of s) {
+      if (c === '[') open++;
+      else {
+        if (open > 0) open--;
+        else { swaps++; open++; }
+      }
+    }
+    return swaps;
+  },
+
+  'count-number-of-homogeneous-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const MOD = 1000000007n;
+    let ans = 0n, k = 1n;
+    for (let i = 1; i <= s.length; i++) {
+      if (i < s.length && s[i] === s[i - 1]) {
+        k++;
+      } else {
+        ans = (ans + k * (k + 1n) / 2n) % MOD;
+        k = 1n;
+      }
+    }
+    return Number(ans);
+  },
+
+  'score-by-removing-substrings': (...args: unknown[]) => {
+    const s = args[0] as string, x = args[1] as number, y = args[2] as number;
+    function removeAll(str: string, first: string, second: string, pts: number): [string, number] {
+      const stack: string[] = [];
+      let score = 0;
+      for (const c of str) {
+        if (stack.length && stack[stack.length - 1] === first && c === second) {
+          stack.pop();
+          score += pts;
+        } else {
+          stack.push(c);
+        }
+      }
+      return [stack.join(''), score];
+    }
+    let score = 0;
+    const [s1, pts1] = x >= y ? removeAll(s, 'a', 'b', x) : removeAll(s, 'b', 'a', y);
+    score += pts1;
+    const [, pts2] = x >= y ? removeAll(s1, 'b', 'a', y) : removeAll(s1, 'a', 'b', x);
+    score += pts2;
+    return score;
+  },
+
+  'count-words-consisting-only-of-one-distinct-letter': (...args: unknown[]) => {
+    const words = args[0] as string[];
+    let count = 0;
+    for (const w of words) {
+      if (new Set(w).size === 1) count++;
+    }
+    return count;
+  },
+
   // batch 273
   'the-kth-factor-of-n': (...args: unknown[]) => {
     const n = args[0] as number, k = args[1] as number;

@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 274
+import { problem as minSwapsBalance } from './minimum-swaps-to-balance';
+import { problem as scoreRemovingSubstrings } from './score-by-removing-substrings';
+import { problem as countWordsOneDistinctLetter } from './count-words-consisting-only-of-one-distinct-letter';
+import { problem as countHomogeneousSubstrings } from './count-number-of-homogeneous-substrings';
 // batch 273
 import { problem as theKthFactorOfN } from './the-kth-factor-of-n';
 import { problem as lastMomentAnts } from './last-moment-before-all-ants-fall-off-a-plank';
@@ -6480,6 +6485,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 274
+  minSwapsBalance,
+  scoreRemovingSubstrings,
+  countWordsOneDistinctLetter,
+  countHomogeneousSubstrings,
   // batch 273
   theKthFactorOfN,
   lastMomentAnts,

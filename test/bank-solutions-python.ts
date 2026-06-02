@@ -46429,6 +46429,56 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 274
+  'minimum-swaps-to-balance': `def minSwaps(s):
+    open_count, swaps = 0, 0
+    for c in s:
+        if c == '[':
+            open_count += 1
+        else:
+            if open_count > 0:
+                open_count -= 1
+            else:
+                swaps += 1
+                open_count += 1
+    return swaps
+`,
+
+  'score-by-removing-substrings': `def maximumGain(s, x, y):
+    def remove_all(t, first, second, pts):
+        stack, score = [], 0
+        for c in t:
+            if stack and stack[-1] == first and c == second:
+                stack.pop()
+                score += pts
+            else:
+                stack.append(c)
+        return ''.join(stack), score
+    if x >= y:
+        s, pts1 = remove_all(s, 'a', 'b', x)
+        _, pts2 = remove_all(s, 'b', 'a', y)
+    else:
+        s, pts1 = remove_all(s, 'b', 'a', y)
+        _, pts2 = remove_all(s, 'a', 'b', x)
+    return pts1 + pts2
+`,
+
+  'count-words-consisting-only-of-one-distinct-letter': `def countWords(words):
+    return sum(1 for w in words if len(set(w)) == 1)
+`,
+
+  'count-number-of-homogeneous-substrings': `def countHomogenous(s):
+    MOD = 10**9 + 7
+    ans, k = 0, 1
+    for i in range(1, len(s) + 1):
+        if i < len(s) and s[i] == s[i - 1]:
+            k += 1
+        else:
+            ans = (ans + k * (k + 1) // 2) % MOD
+            k = 1
+    return ans
+`,
+
   // batch 273
   'the-kth-factor-of-n': `def kthFactor(n, k):
     count = 0
