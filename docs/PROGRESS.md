@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2922** problems; 9097 tests green. Batch 281 (3 new problems) pushed. ~2040+ stubs remaining.
+**Current focus:** Bank at **2925** problems; 9119 tests green. Batch 282 (4 new problems) pushed. ~2040+ stubs remaining.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Continued bank growth (batch 282+); starter backfill (batch 40+); UX polish.
+**Next up:** Ctrl+L terminal clear shortcut; continued bank growth (batch 283+); starter backfill (batch 40+); UX polish.
+
+### feat(bank): batch 282 — maximum-strong-pairs-II, minimum-lines, find-elements, make-costs (2026-06-02)
+Four new problems: `maximum-strong-pairs-in-an-array-ii` (medium/trie+sliding-window — XOR-max via trie with ref-count delete; sliding window ensures y≤2x), `minimum-number-of-lines-to-cover-points` (medium/bitmask+DP — BFS/DP over bitmask states; precompute line coverage masks; O(3^n)), `find-elements-in-a-contaminated-binary-tree` (medium/tree+design — BFS build + DFS recover into Set; O(n)), `make-costs-of-paths-equal-in-a-binary-tree` (medium/tree+greedy — bottom-up sibling equalization, ans+=abs(diff); O(n)). Also fixed JsNull handling in Python preamble for tree problems. Bank at **2925**; 9119 tests.
 
 ### feat(bank): batch 281 — count-interesting-subarrays, minimize-deviations, longest-word-dict-deleting (2026-06-02)
 Three new problems: `count-the-number-of-interesting-subarrays` (medium/arrays+hash-map — prefix-count hash map; cnt=(qualifying elements in [l,r])%modulo==k; O(n)), `minimize-deviations-in-array` (hard/arrays+heap — multiply all odds by 2, greedily halve max in max-heap tracking global min; O(n log n log max_val)), `longest-word-in-dictionary-through-deleting` (medium/strings+two-pointers — subsequence check per word via two-pointer; track longest then lex-smallest; O(n*|s|)). Bank at **2922**; 9097 tests.

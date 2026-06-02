@@ -1270,6 +1270,15 @@ export function EditorPanel({
               return true;
             },
           },
+          // Mod-L: clear terminal output (standard terminal convention).
+          {
+            key: 'Mod-l',
+            preventDefault: true,
+            run() {
+              clearTerminalRef.current?.();
+              return true;
+            },
+          },
         ]),
         themeCompartmentRef.current.of(
           resolvedTheme.includes('light') ? leetlockEditorThemeLight : leetlockEditorThemeDark,
@@ -1493,6 +1502,9 @@ export function EditorPanel({
   // Ref-forwarded toggleTerminal so the CM keymap (built once) can call the latest version.
   const toggleTerminalRef = useRef(toggleTerminal);
   useEffect(() => { toggleTerminalRef.current = toggleTerminal; }, [toggleTerminal]);
+
+  // Ref populated by TerminalPanel; used to trigger Ctrl+L clear from the editor keymap.
+  const clearTerminalRef = useRef<(() => void) | null>(null);
 
   // Terminal resize — drag handle above the terminal panel.
   const [terminalHeight, setTerminalHeight] = useState(TERMINAL_DEFAULT_PX);
@@ -1758,6 +1770,7 @@ export function EditorPanel({
           collapsed={terminalCollapsed}
           onToggleCollapsed={toggleTerminal}
           bodyHeight={terminalCollapsed ? undefined : terminalHeight}
+          clearRef={clearTerminalRef}
         />
       </div>
 

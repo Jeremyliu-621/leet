@@ -55,6 +55,7 @@ const SECTIONS: ShortcutSection[] = [
     heading: 'Layout',
     rows: [
       { keys: ['⌘J', 'Ctrl+J'], description: 'Toggle terminal panel' },
+      { keys: ['⌘L', 'Ctrl+L'], description: 'Clear terminal output' },
       { keys: ['← →', 'Arrow keys'], description: 'Resize problem / editor panels (focus splitter)' },
       { keys: ['Home', 'End'], description: 'Snap panel to min / max width' },
       { keys: ['↑ ↓', 'Arrow keys'], description: 'Resize terminal height (focus terminal handle)' },

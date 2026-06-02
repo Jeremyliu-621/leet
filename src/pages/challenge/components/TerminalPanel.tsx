@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, type RefObject } from 'react';
+import { useEffect, useRef, useState, useCallback, type RefObject, type MutableRefObject } from 'react';
 import type { JudgeResult, TestVerdict } from '../../../lib/judge';
 
 const TRUNCATE_AT = 160;
@@ -361,6 +361,8 @@ interface TerminalPanelProps {
   onToggleCollapsed?: () => void;
   /** Height of the terminal body in px (only applies when not collapsed). */
   bodyHeight?: number;
+  /** Ref populated with the clear-output function (for keyboard shortcuts). */
+  clearRef?: RefObject<(() => void) | null>;
 }
 
 function TerminalEntry({ entry }: { entry: TerminalEntry }) {
@@ -500,7 +502,7 @@ function RunHistoryBar({ history }: { history: TerminalEntry[][] }) {
  */
 const TERMINAL_TABS: ReadonlyArray<'output' | 'testcases'> = ['output', 'testcases'];
 
-export function TerminalPanel({ result, mode, collapsed = false, onToggleCollapsed, bodyHeight }: TerminalPanelProps) {
+export function TerminalPanel({ result, mode, collapsed = false, onToggleCollapsed, bodyHeight, clearRef }: TerminalPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabListRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<TerminalEntry[][]>([]);
@@ -575,6 +577,11 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
     setHistory([]);
     prevResultRef.current = null;
   }, []);
+
+  // Expose handleClear via clearRef so EditorPanel can trigger it with Ctrl+L.
+  useEffect(() => {
+    if (clearRef) (clearRef as MutableRefObject<(() => void) | null>).current = handleClear;
+  }, [clearRef, handleClear]);
 
   const [copied, setCopied] = useState(false);
   const handleCopyOutput = useCallback(() => {
