@@ -8,9 +8,15 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3036** problems; 9456 tests green. Batch 302 complete.
+**Current focus:** Bank at **3045** problems; 9474 tests green. Batch 304 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 303+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+**Next up:** Bank growth (batch 305+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+
+### feat(bank): batch 304 — single-element-sorted, equal-01-path, write-Y-grid (2026-06-02)
+Three new problems: `single-element-in-a-sorted-array` (medium/binary-search — force mid to even index; if nums[mid]==nums[mid+1] single is right else left or mid; O(log n)), `check-if-there-is-a-path-with-equal-number-of-0s-and-1s` (medium/dp — path length m+n-1; if odd return false; track min/max ones reachable at each cell; check if target=(m+n-1)/2 is achievable at (m-1,n-1); O(mn)), `minimum-operations-to-write-the-letter-y-on-a-grid` (medium/simulation — identify Y cells via 3 conditions; count 0/1/2 freq in Y and non-Y; try all 6 ordered pairs (v1,v2); return minimum ops; O(n²)). Bank at **3045**; 9474 tests.
+
+### feat(bank): batch 303 — count-characters, meeting-scheduler, removing-boxes (2026-06-02)
+Three new problems: `number-of-strings-can-be-formed-using-characters` (easy/strings — freq map of chars; check each word's char freq ≤ chars freq; sum lengths; O(n·|chars|)), `meeting-scheduler` (medium/two-pointers — sort both slots by start; two-pointer find earliest intersection ≥ duration; O(n log n)), `removing-boxes` (hard/dynamic-programming — dp[l][r][k]=max points from boxes[l..r] with k extra same-color boxes left of l; option A remove k+1 at once for (k+1)²+dp[l+1][r][0]; option B for each m with boxes[m]==boxes[l]: dp[l+1][m-1][0]+dp[m][r][k+1]; O(n⁴)). Bank at **3039**; 9465 tests.
 
 ### feat(bank): batch 302 — minimum-deviation-in-array, minimum-swaps-group-ones, 3sum-closest (2026-06-02)
 Three new problems: `minimum-deviation-in-array` (hard/heap+greedy — double all odds to make even, max-heap, repeatedly halve maximum tracking minimum; O(n log n · log maxVal)), `minimum-swaps-to-group-all-ones-together` (medium/sliding-window — k=total 1s; slide window of size k; answer=k−maxOnesInWindow; O(n)), `3sum-closest` (medium/sort+two-pointer — sort, for each i use l=i+1,r=n-1; track best closest sum; early exit if sum===target; O(n²)). Bank at **3036**; 9456 tests.
