@@ -39,13 +39,43 @@ A cut is a vertical line \`x = c\` or horizontal line \`y = c\` that splits the 
   params: ['n', 'rectangles'],
   starterCode: {
     javascript: `function checkValidCuts(n, rectangles) {
-
+  function canCut(intervals) {
+    intervals.sort((a, b) => a[0] - b[0]);
+    let groups = 1, maxEnd = intervals[0][1];
+    for (let i = 1; i < intervals.length; i++) {
+      if (intervals[i][0] >= maxEnd) groups++;
+      maxEnd = Math.max(maxEnd, intervals[i][1]);
+    }
+    return groups >= 3;
+  }
+  return canCut(rectangles.map(r => [r[0], r[2]])) ||
+         canCut(rectangles.map(r => [r[1], r[3]]));
 }`,
     typescript: `function checkValidCuts(n: number, rectangles: number[][]): boolean {
-
+  function canCut(intervals: number[][]): boolean {
+    intervals.sort((a, b) => a[0]! - b[0]!);
+    let groups = 1, maxEnd = intervals[0]![1]!;
+    for (let i = 1; i < intervals.length; i++) {
+      if (intervals[i]![0]! >= maxEnd) groups++;
+      maxEnd = Math.max(maxEnd, intervals[i]![1]!);
+    }
+    return groups >= 3;
+  }
+  return canCut(rectangles.map(r => [r[0]!, r[2]!])) ||
+         canCut(rectangles.map(r => [r[1]!, r[3]!]));
 }`,
     python: `def checkValidCuts(n, rectangles):
-    pass`,
+    def can_cut(intervals):
+        intervals.sort()
+        groups, max_end = 1, intervals[0][1]
+        for start, end in intervals[1:]:
+            if start >= max_end:
+                groups += 1
+            max_end = max(max_end, end)
+        return groups >= 3
+    xs = [(r[0], r[2]) for r in rectangles]
+    ys = [(r[1], r[3]) for r in rectangles]
+    return can_cut(xs) or can_cut(ys)`,
   },
   visibleTests: [
     { args: [3, [[0, 0, 1, 1], [0, 1, 1, 2], [0, 2, 1, 3]]], expected: true },

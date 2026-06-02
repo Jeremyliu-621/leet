@@ -37,13 +37,25 @@ An integer \`y\` is a power of three if there exists an integer \`x\` such that 
   params: ['n'],
   starterCode: {
     javascript: `function checkPowersOfThree(n) {
-
+  while (n > 0) {
+    if (n % 3 === 2) return false;
+    n = Math.floor(n / 3);
+  }
+  return true;
 }`,
     typescript: `function checkPowersOfThree(n: number): boolean {
-
+  while (n > 0) {
+    if (n % 3 === 2) return false;
+    n = Math.floor(n / 3);
+  }
+  return true;
 }`,
     python: `def checkPowersOfThree(n):
-    pass`,
+    while n > 0:
+        if n % 3 == 2:
+            return False
+        n //= 3
+    return True`,
   },
   visibleTests: [
     { args: [12], expected: true },

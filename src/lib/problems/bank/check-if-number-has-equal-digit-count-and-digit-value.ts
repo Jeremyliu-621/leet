@@ -42,12 +42,25 @@ function digitCount(num) {
   params: ['num'],
   starterCode: {
     javascript: `function digitCount(num) {
-
+  const freq = {};
+  for (const c of num) freq[c] = (freq[c] || 0) + 1;
+  for (let i = 0; i < num.length; i++) {
+    if ((freq[i] || 0) !== Number(num[i])) return false;
+  }
+  return true;
 }`,
-    typescript: "function digitCount(num: string): boolean {\n\n}",
-
+    typescript: `function digitCount(num: string): boolean {
+  const freq: Record<string, number> = {};
+  for (const c of num) freq[c] = (freq[c] ?? 0) + 1;
+  for (let i = 0; i < num.length; i++) {
+    if ((freq[i] ?? 0) !== Number(num[i])) return false;
+  }
+  return true;
+}`,
     python: `def digitCount(num):
-    pass`,
+    from collections import Counter
+    freq = Counter(num)
+    return all(freq.get(str(i), 0) == int(num[i]) for i in range(len(num)))`,
   },
   visibleTests: [
     { args: ['1210'], expected: true },

@@ -35,14 +35,28 @@ export const problem: Problem = {
   params: ['arr'],
   starterCode: {
     javascript: `function checkIfExist(arr) {
-  // Use a hash set to check for N and its double
+  const seen = new Set();
+  for (const x of arr) {
+    if (seen.has(2 * x) || (x % 2 === 0 && seen.has(x / 2))) return true;
+    seen.add(x);
+  }
+  return false;
 }`,
     typescript: `function checkIfExist(arr: number[]): boolean {
-  // Use a hash set to check for N and its double
+  const seen = new Set<number>();
+  for (const x of arr) {
+    if (seen.has(2 * x) || (x % 2 === 0 && seen.has(x / 2))) return true;
+    seen.add(x);
+  }
+  return false;
 }`,
     python: `def checkIfExist(arr):
-    # Use a hash set to check for N and its double
-    pass`,
+    seen = set()
+    for x in arr:
+        if 2 * x in seen or (x % 2 == 0 and x // 2 in seen):
+            return True
+        seen.add(x)
+    return False`,
   },
   visibleTests: [
     { args: [[10, 2, 5, 3]], expected: true },

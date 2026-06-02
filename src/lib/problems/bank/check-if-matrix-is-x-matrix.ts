@@ -37,12 +37,37 @@ Given a 2D integer array \`grid\` of size \`n x n\` representing a square matrix
   params: ['grid'],
   starterCode: {
     javascript: `function checkXMatrix(grid) {
-
+  const n = grid.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const onDiag = i === j || i + j === n - 1;
+      if (onDiag && grid[i][j] === 0) return false;
+      if (!onDiag && grid[i][j] !== 0) return false;
+    }
+  }
+  return true;
 }`,
-    typescript: "function checkXMatrix(grid: number[][]): boolean {\n\n}",
-
+    typescript: `function checkXMatrix(grid: number[][]): boolean {
+  const n = grid.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      const onDiag = i === j || i + j === n - 1;
+      if (onDiag && grid[i]![j] === 0) return false;
+      if (!onDiag && grid[i]![j] !== 0) return false;
+    }
+  }
+  return true;
+}`,
     python: `def checkXMatrix(grid):
-    pass`,
+    n = len(grid)
+    for i in range(n):
+        for j in range(n):
+            on_diag = i == j or i + j == n - 1
+            if on_diag and grid[i][j] == 0:
+                return False
+            if not on_diag and grid[i][j] != 0:
+                return False
+    return True`,
   },
   visibleTests: [
     { args: [[[2, 0, 0, 1], [0, 3, 1, 0], [0, 5, 2, 0], [4, 0, 0, 2]]], expected: true },
