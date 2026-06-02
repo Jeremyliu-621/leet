@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2987** problems; 9321 tests green. Batches 290a+290b complete (8 new problems).
+**Current focus:** Bank at **2990** problems; 9330 tests green. Batch 291 complete (3 new problems).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 291+); starter backfill; UX polish.
+**Next up:** Bank growth (batch 292+); starter backfill; UX polish.
+
+### feat(bank): batch 291 — count-nodes-max-score, min-space-wasted-k-resizing, largest-pos-int-with-negative (2026-06-02)
+Three new problems: `count-nodes-with-maximum-score` (medium/tree+graph — topological leaf-to-root pass to compute subtree sizes; score(i)=product of child subtrees × (n-subtree[i]) skipping 0 components; count nodes with max score; O(n)), `minimum-space-wasted-with-k-resizing` (hard/arrays+dynamic-programming — split nums into k+1 segments; waste(l,r)=max(segment)*(r-l+1)-sum(segment); O(n²k) rolling-dp; base dp from single segment, k iterations refine splits), `largest-positive-integer-that-exists-with-its-negative` (easy/arrays+hash-map — build hash set; iterate positives; check if negation exists; return max or -1; O(n)). Bank at **2990**; 9330 tests.
 
 ### feat(bank): batch 290b — min-flips-binary-matrix, num-pairs-inequality, num-great-partitions, max-total-height-towers (2026-06-02)
 Four new problems: `minimum-number-of-flips-to-convert-binary-matrix-to-zero-matrix` (hard/bit-manipulation+graph, LC 1284 — encode m×n mat as bitmask; BFS over all 2^(m*n) states; flip cell XORs bit and 4 neighbors; O(2^(m*n)·m·n)), `number-of-pairs-satisfying-inequality` (hard/arrays+binary-indexed-tree, LC 2426 — c[k]=nums1[k]-nums2[k]; count i<j with c[i]≤c[j]+diff; BIT+coordinate-compression; O(n log n)), `number-of-great-partitions` (hard/arrays+dynamic-programming, LC 2518 — if total<2k return 0; 0/1 knapsack counts subsets with sum<k; ans=(2^n−2·bad) mod 10^9+7; O(n·k)), `maximize-the-total-height-of-unique-towers` (medium/arrays+math, LC 3301 — sort desc; greedily assign height = min(maxH[i], prev-1); -1 if height≤0; O(n log n)). Fixed: permutation-sequence.ts restored (original had solutions in starters, rewritten with empty starters); numberOfPairs hidden test expected 4→6.
