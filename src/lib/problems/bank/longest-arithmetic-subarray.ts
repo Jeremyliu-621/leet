@@ -43,13 +43,36 @@ A subarray of length 1 trivially qualifies (any constant difference works). A su
   params: ['nums'],
   starterCode: {
     javascript: `function longestArithmeticSubarray(nums) {
-
+  if (nums.length <= 1) return nums.length;
+  let best = 2, cur = 2, diff = nums[1] - nums[0];
+  for (let i = 2; i < nums.length; i++) {
+    const d = nums[i] - nums[i-1];
+    if (d === diff) cur++;
+    else { diff = d; cur = 2; }
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
     typescript: `function longestArithmeticSubarray(nums: number[]): number {
-
+  if (nums.length <= 1) return nums.length;
+  let best = 2, cur = 2, diff = nums[1] - nums[0];
+  for (let i = 2; i < nums.length; i++) {
+    const d = nums[i] - nums[i-1];
+    if (d === diff) cur++;
+    else { diff = d; cur = 2; }
+    if (cur > best) best = cur;
+  }
+  return best;
 }`,
     python: `def longestArithmeticSubarray(nums):
-    pass`,
+    if len(nums) <= 1: return len(nums)
+    best = cur = 2; diff = nums[1] - nums[0]
+    for i in range(2, len(nums)):
+        d = nums[i] - nums[i-1]
+        if d == diff: cur += 1
+        else: diff = d; cur = 2
+        best = max(best, cur)
+    return best`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 7, 2, 4, 6]], expected: 4 },

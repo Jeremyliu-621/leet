@@ -39,12 +39,39 @@ Return the **length** of the **longest** subsequence of \`s\` that makes up a **
   params: ['s', 'k'],
   starterCode: {
     javascript: `function longestSubsequence(s, k) {
-
+  let sum = 0, ones = 0, total = 0;
+  for (let i = s.length - 1; i >= 0; i--) {
+    if (s[i] === '0') {
+      total++;
+    } else {
+      const bit = 1 << ones;
+      if (sum + bit <= k) { sum += bit; ones++; total++; }
+    }
+  }
+  return total;
 }`,
-    typescript: "function longestSubsequence(s: string, k: number): number {\n\n}",
-
+    typescript: `function longestSubsequence(s: string, k: number): number {
+  let sum = 0, ones = 0, total = 0;
+  for (let i = s.length - 1; i >= 0; i--) {
+    if (s[i] === '0') {
+      total++;
+    } else {
+      const bit = 1 << ones;
+      if (sum + bit <= k) { sum += bit; ones++; total++; }
+    }
+  }
+  return total;
+}`,
     python: `def longestSubsequence(s, k):
-    pass`,
+    total = ones = sum_ = 0
+    for c in reversed(s):
+        if c == '0':
+            total += 1
+        else:
+            bit = 1 << ones
+            if sum_ + bit <= k:
+                sum_ += bit; ones += 1; total += 1
+    return total`,
   },
   visibleTests: [
     { args: ['1001010', 5], expected: 5 },

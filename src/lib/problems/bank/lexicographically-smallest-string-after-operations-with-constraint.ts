@@ -35,13 +35,45 @@ Return the **lexicographically smallest** string that can be obtained.`,
   params: ['s', 'k'],
   starterCode: {
     javascript: `function getSmallestString(s, k) {
-
+  const arr = s.split('');
+  for (let i = 0; i < arr.length; i++) {
+    const d = arr[i].charCodeAt(0) - 97;
+    const costToA = Math.min(d, 26 - d);
+    if (k >= costToA) { arr[i] = 'a'; k -= costToA; }
+    else {
+      const bwd = ((d - k) % 26 + 26) % 26, fwd = (d + k) % 26;
+      arr[i] = String.fromCharCode(97 + Math.min(bwd, fwd));
+      break;
+    }
+  }
+  return arr.join('');
 }`,
     typescript: `function getSmallestString(s: string, k: number): string {
-
+  const arr = s.split('');
+  for (let i = 0; i < arr.length; i++) {
+    const d = arr[i].charCodeAt(0) - 97;
+    const costToA = Math.min(d, 26 - d);
+    if (k >= costToA) { arr[i] = 'a'; k -= costToA; }
+    else {
+      const bwd = ((d - k) % 26 + 26) % 26, fwd = (d + k) % 26;
+      arr[i] = String.fromCharCode(97 + Math.min(bwd, fwd));
+      break;
+    }
+  }
+  return arr.join('');
 }`,
     python: `def getSmallestString(s, k):
-    pass`,
+    arr = list(s)
+    for i, c in enumerate(arr):
+        d = ord(c) - ord('a')
+        cost = min(d, 26 - d)
+        if k >= cost:
+            arr[i] = 'a'; k -= cost
+        else:
+            bwd = (d - k) % 26; fwd = (d + k) % 26
+            arr[i] = chr(ord('a') + min(bwd, fwd))
+            break
+    return ''.join(arr)`,
   },
   visibleTests: [
     { args: ['zbbz', 3], expected: 'aaaz' },

@@ -39,12 +39,42 @@ Return the **maximum** length of all alternating subarrays present in \`nums\`, 
   params: ['nums'],
   starterCode: {
     javascript: `function alternatingSubarray(nums) {
-
+  let ans = -1;
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i+1] - nums[i] !== 1) continue;
+    let len = 2;
+    ans = Math.max(ans, len);
+    for (let j = i + 2; j < nums.length; j++) {
+      if (nums[j] - nums[j-1] === (len % 2 === 0 ? -1 : 1)) { len++; ans = Math.max(ans, len); }
+      else break;
+    }
+  }
+  return ans;
 }`,
-    typescript: "function alternatingSubarray(nums: number[]): number {\n\n}",
-
+    typescript: `function alternatingSubarray(nums: number[]): number {
+  let ans = -1;
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i+1] - nums[i] !== 1) continue;
+    let len = 2;
+    ans = Math.max(ans, len);
+    for (let j = i + 2; j < nums.length; j++) {
+      if (nums[j] - nums[j-1] === (len % 2 === 0 ? -1 : 1)) { len++; ans = Math.max(ans, len); }
+      else break;
+    }
+  }
+  return ans;
+}`,
     python: `def alternatingSubarray(nums):
-    pass`,
+    ans = -1
+    n = len(nums)
+    for i in range(n - 1):
+        if nums[i+1] - nums[i] != 1: continue
+        length = 2; ans = max(ans, length)
+        for j in range(i+2, n):
+            expected = -1 if length % 2 == 0 else 1
+            if nums[j] - nums[j-1] == expected: length += 1; ans = max(ans, length)
+            else: break
+    return ans`,
   },
   visibleTests: [
     { args: [[2, 3, 4, 3, 4]], expected: 4 },

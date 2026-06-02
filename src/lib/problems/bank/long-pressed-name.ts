@@ -41,12 +41,27 @@ function isLongPressedName(name, typed) {
   params: ['name', 'typed'],
   starterCode: {
     javascript: `function isLongPressedName(name, typed) {
-
+  let i = 0;
+  for (let j = 0; j < typed.length; j++) {
+    if (i < name.length && typed[j] === name[i]) i++;
+    else if (j === 0 || typed[j] !== typed[j-1]) return false;
+  }
+  return i === name.length;
 }`,
-    typescript: "function isLongPressedName(name: string, typed: string): boolean {\n\n}",
-
+    typescript: `function isLongPressedName(name: string, typed: string): boolean {
+  let i = 0;
+  for (let j = 0; j < typed.length; j++) {
+    if (i < name.length && typed[j] === name[i]) i++;
+    else if (j === 0 || typed[j] !== typed[j-1]) return false;
+  }
+  return i === name.length;
+}`,
     python: `def isLongPressedName(name, typed):
-    pass`,
+    i = 0
+    for j, c in enumerate(typed):
+        if i < len(name) and c == name[i]: i += 1
+        elif j == 0 or c != typed[j-1]: return False
+    return i == len(name)`,
   },
   visibleTests: [
     { args: ['alex', 'aaleex'], expected: true },

@@ -40,12 +40,30 @@ Note that if there are no \`0\`s, then the longest contiguous segment of \`0\`s 
   params: ['s'],
   starterCode: {
     javascript: `function checkZeroOnes(s) {
-
+  const maxRun = (c) => {
+    let best = 0, cur = 0;
+    for (const ch of s) { if (ch === c) cur++; else cur = 0; if (cur > best) best = cur; }
+    return best;
+  };
+  return maxRun('1') > maxRun('0');
 }`,
-    typescript: "function checkZeroOnes(s: string): boolean {\n\n}",
-
+    typescript: `function checkZeroOnes(s: string): boolean {
+  const maxRun = (c: string) => {
+    let best = 0, cur = 0;
+    for (const ch of s) { if (ch === c) cur++; else cur = 0; if (cur > best) best = cur; }
+    return best;
+  };
+  return maxRun('1') > maxRun('0');
+}`,
     python: `def checkZeroOnes(s):
-    pass`,
+    def max_run(c):
+        best = cur = 0
+        for ch in s:
+            if ch == c: cur += 1
+            else: cur = 0
+            best = max(best, cur)
+        return best
+    return max_run('1') > max_run('0')`,
   },
   visibleTests: [
     { args: ['1101'], expected: true },

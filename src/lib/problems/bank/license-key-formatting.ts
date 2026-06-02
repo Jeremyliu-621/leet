@@ -45,12 +45,31 @@ function licenseKeyFormatting(s, k) {
   params: ['s', 'k'],
   starterCode: {
     javascript: `function licenseKeyFormatting(s, k) {
-
+  const clean = s.replace(/-/g, '').toUpperCase();
+  const parts = [];
+  const first = clean.length % k || k;
+  let i = 0;
+  if (first) { parts.push(clean.slice(0, first)); i = first; }
+  while (i < clean.length) { parts.push(clean.slice(i, i + k)); i += k; }
+  return parts.join('-');
 }`,
-    typescript: "function licenseKeyFormatting(s: string, k: number): string {\n\n}",
-
+    typescript: `function licenseKeyFormatting(s: string, k: number): string {
+  const clean = s.replace(/-/g, '').toUpperCase();
+  const parts: string[] = [];
+  const first = clean.length % k || k;
+  let i = 0;
+  if (first) { parts.push(clean.slice(0, first)); i = first; }
+  while (i < clean.length) { parts.push(clean.slice(i, i + k)); i += k; }
+  return parts.join('-');
+}`,
     python: `def licenseKeyFormatting(s, k):
-    pass`,
+    clean = s.replace('-', '').upper()
+    first = len(clean) % k or k
+    parts = []
+    if first: parts.append(clean[:first])
+    i = first
+    while i < len(clean): parts.append(clean[i:i+k]); i += k
+    return '-'.join(parts)`,
   },
   visibleTests: [
     { args: ['5F3Z-2e-9-w', 4], expected: '5F3Z-2E9W' },
