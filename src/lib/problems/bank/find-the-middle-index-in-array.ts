@@ -42,12 +42,30 @@ Return the **leftmost** \`middleIndex\` that satisfies the condition, or \`-1\` 
   params: ['nums'],
   starterCode: {
     javascript: `function findMiddleIndex(nums) {
-
+  const total = nums.reduce((a, b) => a + b, 0);
+  let left = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (left === total - left - nums[i]) return i;
+    left += nums[i];
+  }
+  return -1;
 }`,
-    typescript: "function findMiddleIndex(nums: number[]): number {\n\n}",
-
+    typescript: `function findMiddleIndex(nums: number[]): number {
+  const total = nums.reduce((a, b) => a + b, 0);
+  let left = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (left === total - left - nums[i]) return i;
+    left += nums[i];
+  }
+  return -1;
+}`,
     python: `def findMiddleIndex(nums):
-    pass`,
+    total = sum(nums)
+    left = 0
+    for i, v in enumerate(nums):
+        if left == total - left - v: return i
+        left += v
+    return -1`,
   },
   visibleTests: [
     { args: [[2, 3, -1, 8, 4]], expected: 3 },

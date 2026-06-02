@@ -45,12 +45,34 @@ Return the **minimum** possible sum that a beautiful array can have modulo \`10^
   params: ['n', 'target'],
   starterCode: {
     javascript: `function minimumPossibleSum(n, target) {
-
+  const MOD = 1_000_000_007n;
+  const N = BigInt(n), T = BigInt(target);
+  const safe = T / 2n;
+  if (N <= safe) return Number(N * (N + 1n) / 2n % MOD);
+  const rem = N - safe;
+  const s1 = safe * (safe + 1n) / 2n % MOD;
+  const s2 = (rem * T % MOD + rem * (rem - 1n) / 2n % MOD) % MOD;
+  return Number((s1 + s2) % MOD);
 }`,
-    typescript: "function minimumPossibleSum(n: number, target: number): number {\n\n}",
-
+    typescript: `function minimumPossibleSum(n: number, target: number): number {
+  const MOD = 1_000_000_007n;
+  const N = BigInt(n), T = BigInt(target);
+  const safe = T / 2n;
+  if (N <= safe) return Number(N * (N + 1n) / 2n % MOD);
+  const rem = N - safe;
+  const s1 = safe * (safe + 1n) / 2n % MOD;
+  const s2 = (rem * T % MOD + rem * (rem - 1n) / 2n % MOD) % MOD;
+  return Number((s1 + s2) % MOD);
+}`,
     python: `def minimumPossibleSum(n, target):
-    pass`,
+    MOD = 10**9 + 7
+    safe = target // 2
+    if n <= safe:
+        return n * (n + 1) // 2 % MOD
+    rem = n - safe
+    s1 = safe * (safe + 1) // 2 % MOD
+    s2 = (rem * target % MOD + rem * (rem - 1) // 2 % MOD) % MOD
+    return (s1 + s2) % MOD`,
   },
   visibleTests: [
     { args: [2, 3], expected: 4 },

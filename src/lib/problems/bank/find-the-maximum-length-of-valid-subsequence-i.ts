@@ -48,13 +48,22 @@ Return the **length** of the **longest valid subsequence** of \`nums\`.
   params: ['nums'],
   starterCode: {
     javascript: `function maximumLength(nums) {
-
+  let evens = 0, odds = 0;
+  for (const n of nums) n % 2 === 0 ? evens++ : odds++;
+  const alt = 2 * Math.min(evens, odds) + (evens !== odds ? 1 : 0);
+  return Math.max(evens, odds, alt);
 }`,
     typescript: `function maximumLength(nums: number[]): number {
-
+  let evens = 0, odds = 0;
+  for (const n of nums) n % 2 === 0 ? evens++ : odds++;
+  const alt = 2 * Math.min(evens, odds) + (evens !== odds ? 1 : 0);
+  return Math.max(evens, odds, alt);
 }`,
     python: `def maximumLength(nums: list[int]) -> int:
-    pass`,
+    evens = sum(1 for n in nums if n % 2 == 0)
+    odds = len(nums) - evens
+    alt = 2 * min(evens, odds) + (1 if evens != odds else 0)
+    return max(evens, odds, alt)`,
   },
   functionName: 'maximumLength',
   visibleTests: [

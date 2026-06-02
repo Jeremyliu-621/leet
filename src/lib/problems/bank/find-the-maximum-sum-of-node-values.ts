@@ -45,13 +45,34 @@ Return the **maximum possible sum** of the values \`nums\` after performing any 
   params: ['nums', 'k', 'edges'],
   starterCode: {
     javascript: `function maximumValueSum(nums, k, edges) {
-
+  const base = nums.reduce((a, b) => a + b, 0);
+  const deltas = nums.map(v => (v ^ k) - v).sort((a, b) => b - a);
+  let gain = 0;
+  for (let i = 0; i + 1 < deltas.length; i += 2) {
+    const pair = deltas[i] + deltas[i + 1];
+    if (pair > 0) gain += pair; else break;
+  }
+  return base + gain;
 }`,
     typescript: `function maximumValueSum(nums: number[], k: number, edges: number[][]): number {
-
+  const base = nums.reduce((a, b) => a + b, 0);
+  const deltas = nums.map(v => (v ^ k) - v).sort((a, b) => b - a);
+  let gain = 0;
+  for (let i = 0; i + 1 < deltas.length; i += 2) {
+    const pair = deltas[i] + deltas[i + 1];
+    if (pair > 0) gain += pair; else break;
+  }
+  return base + gain;
 }`,
     python: `def maximumValueSum(nums, k, edges):
-    pass`,
+    base = sum(nums)
+    deltas = sorted([(v ^ k) - v for v in nums], reverse=True)
+    gain = 0
+    for i in range(0, len(deltas) - 1, 2):
+        pair = deltas[i] + deltas[i + 1]
+        if pair > 0: gain += pair
+        else: break
+    return base + gain`,
   },
   visibleTests: [
     { args: [[1, 2, 1], 3, [[0, 1], [0, 2]]], expected: 6 },

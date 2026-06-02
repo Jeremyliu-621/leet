@@ -41,13 +41,33 @@ Return the **maximum** number of pairs that can be formed from the array. Each s
   params: ['words'],
   starterCode: {
     javascript: `function maximumNumberOfStringPairs(words) {
-
+  const seen = new Set();
+  let pairs = 0;
+  for (const w of words) {
+    const rev = w.split('').reverse().join('');
+    if (seen.has(rev)) { pairs++; seen.delete(rev); }
+    else seen.add(w);
+  }
+  return pairs;
 }`,
     typescript: `function maximumNumberOfStringPairs(words: string[]): number {
-
+  const seen = new Set<string>();
+  let pairs = 0;
+  for (const w of words) {
+    const rev = w.split('').reverse().join('');
+    if (seen.has(rev)) { pairs++; seen.delete(rev); }
+    else seen.add(w);
+  }
+  return pairs;
 }`,
     python: `def maximumNumberOfStringPairs(words):
-    pass`,
+    seen = set()
+    pairs = 0
+    for w in words:
+        rev = w[::-1]
+        if rev in seen: pairs += 1; seen.discard(rev)
+        else: seen.add(w)
+    return pairs`,
   },
   visibleTests: [
     { args: [['cd', 'ac', 'dc', 'ca', 'zz']], expected: 2 },
