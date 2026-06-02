@@ -40,13 +40,50 @@ A **substring** is a contiguous sequence of characters within a string.`,
   params: ['s', 't'],
   starterCode: {
     javascript: `function countSubstrings(s, t) {
-
+  const m = s.length, n = t.length;
+  let count = 0;
+  // dp[i][j] = length of longest common suffix of s[0..i-1] and t[0..j-1]
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s[i - 1] !== t[j - 1]) {
+        count += dp[i - 1][j - 1] + 1;
+        dp[i][j] = 0;
+      } else {
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      }
+    }
+  }
+  return count;
 }`,
     typescript: `function countSubstrings(s: string, t: string): number {
-
+  const m = s.length, n = t.length;
+  let count = 0;
+  const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (s[i - 1] !== t[j - 1]) {
+        count += dp[i - 1]![j - 1]! + 1;
+        dp[i]![j] = 0;
+      } else {
+        dp[i]![j] = dp[i - 1]![j - 1]! + 1;
+      }
+    }
+  }
+  return count;
 }`,
     python: `def countSubstrings(s, t):
-    pass`,
+    m, n = len(s), len(t)
+    count = 0
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s[i-1] != t[j-1]:
+                count += dp[i-1][j-1] + 1
+                dp[i][j] = 0
+            else:
+                dp[i][j] = dp[i-1][j-1] + 1
+    return count`,
   },
   visibleTests: [
     { args: ['aba', 'baba'], expected: 6 },

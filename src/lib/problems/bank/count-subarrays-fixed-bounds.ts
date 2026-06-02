@@ -46,13 +46,34 @@ Return the number of fixed-bound subarrays.`,
   params: ['nums', 'minK', 'maxK'],
   starterCode: {
     javascript: `function countSubarrays(nums, minK, maxK) {
-
+  let ans = 0, lastBad = -1, lastMin = -1, lastMax = -1;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] < minK || nums[i] > maxK) lastBad = i;
+    if (nums[i] === minK) lastMin = i;
+    if (nums[i] === maxK) lastMax = i;
+    ans += Math.max(0, Math.min(lastMin, lastMax) - lastBad);
+  }
+  return ans;
 }`,
     typescript: `function countSubarrays(nums: number[], minK: number, maxK: number): number {
-
+  let ans = 0, lastBad = -1, lastMin = -1, lastMax = -1;
+  for (let i = 0; i < nums.length; i++) {
+    const v = nums[i]!;
+    if (v < minK || v > maxK) lastBad = i;
+    if (v === minK) lastMin = i;
+    if (v === maxK) lastMax = i;
+    ans += Math.max(0, Math.min(lastMin, lastMax) - lastBad);
+  }
+  return ans;
 }`,
     python: `def countSubarrays(nums, minK, maxK):
-    pass`,
+    ans, last_bad, last_min, last_max = 0, -1, -1, -1
+    for i, v in enumerate(nums):
+        if v < minK or v > maxK: last_bad = i
+        if v == minK: last_min = i
+        if v == maxK: last_max = i
+        ans += max(0, min(last_min, last_max) - last_bad)
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 2, 7, 5], 1, 5], expected: 2 },

@@ -30,13 +30,50 @@ export const problem: Problem = {
   params: ['mat'],
   starterCode: {
     javascript: `function numSubmat(mat) {
-
+  const m = mat.length, n = mat[0].length;
+  const height = new Array(n).fill(0);
+  let count = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) height[j] = mat[i][j] === 1 ? height[j] + 1 : 0;
+    for (let j = 0; j < n; j++) {
+      let minH = height[j];
+      for (let k = j; k >= 0; k--) {
+        minH = Math.min(minH, height[k]);
+        count += minH;
+      }
+    }
+  }
+  return count;
 }`,
     typescript: `function numSubmat(mat: number[][]): number {
-
+  const m = mat.length, n = mat[0]!.length;
+  const height = new Array<number>(n).fill(0);
+  let count = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) height[j] = mat[i]![j] === 1 ? height[j]! + 1 : 0;
+    for (let j = 0; j < n; j++) {
+      let minH = height[j]!;
+      for (let k = j; k >= 0; k--) {
+        minH = Math.min(minH, height[k]!);
+        count += minH;
+      }
+    }
+  }
+  return count;
 }`,
     python: `def numSubmat(mat):
-    pass`,
+    m, n = len(mat), len(mat[0])
+    height = [0] * n
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            height[j] = height[j] + 1 if mat[i][j] == 1 else 0
+        for j in range(n):
+            min_h = height[j]
+            for k in range(j, -1, -1):
+                min_h = min(min_h, height[k])
+                count += min_h
+    return count`,
   },
   visibleTests: [
     { args: [[[1, 0, 1], [1, 1, 0], [1, 1, 0]]], expected: 13 },
