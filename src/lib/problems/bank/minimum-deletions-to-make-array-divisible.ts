@@ -36,13 +36,29 @@ Note that an integer \`x\` divides \`y\` if \`y % x == 0\`.`,
   params: ['nums', 'numsDivide'],
   starterCode: {
     javascript: `function minOperations(nums, numsDivide) {
-
+  const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
+  const g = numsDivide.reduce((acc, v) => gcd(acc, v), 0);
+  const sorted = [...nums].sort((a, b) => a - b);
+  for (let i = 0; i < sorted.length; i++) if (g % sorted[i] === 0) return i;
+  return -1;
 }`,
     typescript: `function minOperations(nums: number[], numsDivide: number[]): number {
-
+  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const g = numsDivide.reduce((acc, v) => gcd(acc, v), 0);
+  const sorted = [...nums].sort((a, b) => a - b);
+  for (let i = 0; i < sorted.length; i++) if (g % sorted[i]! === 0) return i;
+  return -1;
 }`,
     python: `def minOperations(nums, numsDivide):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if hasattr(numsDivide, 'to_py'): numsDivide = list(numsDivide.to_py())
+    from math import gcd
+    g = 0
+    for v in numsDivide: g = gcd(g, v)
+    nums = sorted(nums)
+    for i, v in enumerate(nums):
+        if g % v == 0: return i
+    return -1`,
   },
   visibleTests: [
     { args: [[2, 3, 2, 4, 3], [9, 6, 9, 3, 15]], expected: 2 },

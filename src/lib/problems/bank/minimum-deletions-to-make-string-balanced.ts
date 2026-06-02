@@ -34,10 +34,28 @@ Return the **minimum** number of deletions needed to make \`s\` balanced.`,
   functionName: 'minimumDeletions',
   params: ['s'],
   starterCode: {
-    javascript: 'function minimumDeletions(s) {\n\n}\n',
-    typescript: "function minimumDeletions(s: string): number {\n\n}",
-
-    python: 'def minimumDeletions(s):\n    pass\n',
+    javascript: `function minimumDeletions(s) {
+  let bCount = 0, dp = 0;
+  for (const c of s) {
+    if (c === 'b') bCount++;
+    else dp = Math.min(dp + 1, bCount);
+  }
+  return dp;
+}`,
+    typescript: `function minimumDeletions(s: string): number {
+  let bCount = 0, dp = 0;
+  for (const c of s) {
+    if (c === 'b') bCount++;
+    else dp = Math.min(dp + 1, bCount);
+  }
+  return dp;
+}`,
+    python: `def minimumDeletions(s):
+    b_count = 0; dp = 0
+    for c in s:
+        if c == 'b': b_count += 1
+        else: dp = min(dp + 1, b_count)
+    return dp`,
   },
   visibleTests: [
     { args: ['aababbab'], expected: 2 },

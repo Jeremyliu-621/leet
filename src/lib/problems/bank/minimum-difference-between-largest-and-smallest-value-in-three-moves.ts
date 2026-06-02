@@ -34,10 +34,27 @@ Return the **minimum difference** between the largest and smallest value of \`nu
   functionName: 'minDifference',
   params: ['nums'],
   starterCode: {
-    javascript: 'function minDifference(nums) {\n\n}\n',
-    typescript: "function minDifference(nums: number[]): number {\n\n}",
-
-    python: 'def minDifference(nums):\n    pass\n',
+    javascript: `function minDifference(nums) {
+  if (nums.length <= 4) return 0;
+  nums = [...nums].sort((a, b) => a - b);
+  const n = nums.length;
+  let ans = Infinity;
+  for (let i = 0; i <= 3; i++) ans = Math.min(ans, nums[n-1-(3-i)] - nums[i]);
+  return ans;
+}`,
+    typescript: `function minDifference(nums: number[]): number {
+  if (nums.length <= 4) return 0;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const n = sorted.length;
+  let ans = Infinity;
+  for (let i = 0; i <= 3; i++) ans = Math.min(ans, sorted[n-1-(3-i)]! - sorted[i]!);
+  return ans;
+}`,
+    python: `def minDifference(nums):
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    if len(nums) <= 4: return 0
+    nums = sorted(nums); n = len(nums)
+    return min(nums[n-1-(3-i)] - nums[i] for i in range(4))`,
   },
   visibleTests: [
     { args: [[5, 3, 2, 4]], expected: 0 },

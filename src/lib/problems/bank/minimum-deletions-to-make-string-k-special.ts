@@ -40,10 +40,40 @@ Return the **minimum** number of characters you need to delete from \`word\` to 
   functionName: 'minimumDeletions',
   params: ['word', 'k'],
   starterCode: {
-    javascript: 'function minimumDeletions(word, k) {\n  \n}\n',
-    typescript: "function minimumDeletions(word: string, k: number): number {\n  \n}",
-
-    python: 'def minimumDeletions(word: str, k: int) -> int:\n    pass\n',
+    javascript: `function minimumDeletions(word, k) {
+  const cnt = new Array(26).fill(0);
+  for (const c of word) cnt[c.charCodeAt(0) - 97]++;
+  const f = cnt.filter(x => x > 0).sort((a, b) => a - b);
+  let mn = Infinity, ps = 0;
+  for (let i = 0; i < f.length; i++) {
+    let d = ps;
+    for (let j = i; j < f.length; j++) d += Math.max(0, f[j] - f[i] - k);
+    mn = Math.min(mn, d);
+    ps += f[i];
+  }
+  return mn;
+}`,
+    typescript: `function minimumDeletions(word: string, k: number): number {
+  const cnt = new Array<number>(26).fill(0);
+  for (const c of word) cnt[c.charCodeAt(0) - 97]!++;
+  const f = cnt.filter(x => x > 0).sort((a, b) => a - b);
+  let mn = Infinity, ps = 0;
+  for (let i = 0; i < f.length; i++) {
+    let d = ps;
+    for (let j = i; j < f.length; j++) d += Math.max(0, f[j]! - f[i]! - k);
+    mn = Math.min(mn, d);
+    ps += f[i]!;
+  }
+  return mn;
+}`,
+    python: `def minimumDeletions(word: str, k: int) -> int:
+    from collections import Counter
+    f = sorted(Counter(word).values())
+    mn = float('inf'); ps = 0
+    for i in range(len(f)):
+        d = ps + sum(max(0, f[j] - f[i] - k) for j in range(i, len(f)))
+        mn = min(mn, d); ps += f[i]
+    return mn`,
   },
   visibleTests: [
     { args: ['aabbc', 0], expected: 1 },

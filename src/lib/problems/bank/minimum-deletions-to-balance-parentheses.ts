@@ -42,10 +42,28 @@ Output: 2
   functionName: 'minimumDeletions',
   params: ['s'],
   starterCode: {
-    javascript: 'function minimumDeletions(s) {\n\n}\n',
-    typescript: "function minimumDeletions(s: string): number {\n\n}",
-
-    python: 'def minimumDeletions(s):\n    pass\n',
+    javascript: `function minimumDeletions(s) {
+  let bCount = 0, dels = 0;
+  for (const c of s) {
+    if (c === 'b') bCount++;
+    else if (bCount > 0) { bCount--; dels++; }
+  }
+  return dels;
+}`,
+    typescript: `function minimumDeletions(s: string): number {
+  let bCount = 0, dels = 0;
+  for (const c of s) {
+    if (c === 'b') bCount++;
+    else if (bCount > 0) { bCount--; dels++; }
+  }
+  return dels;
+}`,
+    python: `def minimumDeletions(s):
+    b_count = 0; dels = 0
+    for c in s:
+        if c == 'b': b_count += 1
+        elif b_count > 0: b_count -= 1; dels += 1
+    return dels`,
   },
   visibleTests: [
     { args: ['aababbab'], expected: 2 },

@@ -40,13 +40,18 @@ It is guaranteed that \`target\` exists in \`nums\`.`,
   params: ['nums', 'target', 'start'],
   starterCode: {
     javascript: `function getMinDistance(nums, target, start) {
-
+  let ans = Infinity;
+  for (let i = 0; i < nums.length; i++) if (nums[i] === target) ans = Math.min(ans, Math.abs(i - start));
+  return ans;
 }`,
     typescript: `function getMinDistance(nums: number[], target: number, start: number): number {
-
+  let ans = Infinity;
+  for (let i = 0; i < nums.length; i++) if (nums[i]! === target) ans = Math.min(ans, Math.abs(i - start));
+  return ans;
 }`,
     python: `def getMinDistance(nums: list[int], target: int, start: int) -> int:
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    return min(abs(i - start) for i, v in enumerate(nums) if v == target)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5], 5, 3], expected: 1 },

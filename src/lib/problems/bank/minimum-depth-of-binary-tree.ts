@@ -36,10 +36,86 @@ The tree is given as an array in level-order format where \`null\` represents a 
   functionName: 'minDepth',
   params: ['root'],
   starterCode: {
-    javascript: 'function minDepth(root) {\n\n}',
-    typescript: "function minDepth(root: (number | null)[]): number {\n\n}",
-
-    python: 'def minDepth(root):\n    pass',
+    javascript: `function minDepth(root) {
+  if (!root || root.length === 0 || root[0] == null) return 0;
+  const children = new Map();
+  const bfsQ = [0]; let qi = 0, ai = 1;
+  while (qi < bfsQ.length) {
+    const cur = bfsQ[qi++];
+    if (root[cur] == null) continue;
+    const l = ai++, r = ai++;
+    if (l < root.length) {
+      children.set(cur, [l, r]);
+      if (root[l] != null) bfsQ.push(l);
+      if (r < root.length && root[r] != null) bfsQ.push(r);
+    }
+  }
+  const q = [[0, 1]]; qi = 0;
+  while (qi < q.length) {
+    const [idx, depth] = q[qi++];
+    const cp = children.get(idx);
+    if (!cp) return depth;
+    const [l, r] = cp;
+    const hasL = l < root.length && root[l] != null;
+    const hasR = r < root.length && root[r] != null;
+    if (!hasL && !hasR) return depth;
+    if (hasL) q.push([l, depth + 1]);
+    if (hasR) q.push([r, depth + 1]);
+  }
+  return 1;
+}`,
+    typescript: `function minDepth(root: (number | null)[]): number {
+  if (root.length === 0 || root[0] == null) return 0;
+  const children = new Map<number, [number, number]>();
+  const bfsQ: number[] = [0]; let qi = 0, ai = 1;
+  while (qi < bfsQ.length) {
+    const cur = bfsQ[qi++]!;
+    if (root[cur] == null) continue;
+    const l = ai++, r = ai++;
+    if (l < root.length) {
+      children.set(cur, [l, r]);
+      if (root[l] != null) bfsQ.push(l);
+      if (r < root.length && root[r] != null) bfsQ.push(r);
+    }
+  }
+  const q: [number, number][] = [[0, 1]]; qi = 0;
+  while (qi < q.length) {
+    const [idx, depth] = q[qi++]!;
+    const cp = children.get(idx);
+    if (!cp) return depth;
+    const [l, r] = cp;
+    const hasL = l < root.length && root[l] != null;
+    const hasR = r < root.length && root[r] != null;
+    if (!hasL && !hasR) return depth;
+    if (hasL) q.push([l, depth + 1]);
+    if (hasR) q.push([r, depth + 1]);
+  }
+  return 1;
+}`,
+    python: `def minDepth(root):
+    if hasattr(root, 'to_py'): root = list(root.to_py())
+    if not root or root[0] is None: return 0
+    children = {}; bfs_q = [0]; qi = 0; ai = 1
+    while qi < len(bfs_q):
+        cur = bfs_q[qi]; qi += 1
+        if root[cur] is None: continue
+        l = ai; ai += 1; r = ai; ai += 1
+        if l < len(root):
+            children[cur] = (l, r)
+            if root[l] is not None: bfs_q.append(l)
+            if r < len(root) and root[r] is not None: bfs_q.append(r)
+    q = [(0, 1)]; qi = 0
+    while qi < len(q):
+        idx, depth = q[qi]; qi += 1
+        cp = children.get(idx)
+        if cp is None: return depth
+        l, r = cp
+        has_l = l < len(root) and root[l] is not None
+        has_r = r < len(root) and root[r] is not None
+        if not has_l and not has_r: return depth
+        if has_l: q.append((l, depth + 1))
+        if has_r: q.append((r, depth + 1))
+    return 1`,
   },
   visibleTests: [
     { args: [[3, 9, 20, null, null, 15, 7]], expected: 2 },

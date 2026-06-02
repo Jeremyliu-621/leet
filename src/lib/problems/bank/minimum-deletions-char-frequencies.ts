@@ -39,12 +39,37 @@ Given a string \`s\`, return the **minimum** number of characters you need to de
   params: ['s'],
   starterCode: {
     javascript: `function minDeletions(s) {
-
+  const freq = {};
+  for (const c of s) freq[c] = (freq[c] || 0) + 1;
+  const freqs = Object.values(freq).sort((a, b) => b - a);
+  const used = new Set();
+  let dels = 0;
+  for (let f of freqs) {
+    while (f > 0 && used.has(f)) { f--; dels++; }
+    if (f > 0) used.add(f);
+  }
+  return dels;
 }`,
-    typescript: "function minDeletions(s: string): number {\n\n}",
-
+    typescript: `function minDeletions(s: string): number {
+  const freq: Record<string, number> = {};
+  for (const c of s) freq[c] = (freq[c] ?? 0) + 1;
+  const freqs = Object.values(freq).sort((a, b) => b - a);
+  const used = new Set<number>();
+  let dels = 0;
+  for (let f of freqs) {
+    while (f > 0 && used.has(f)) { f--; dels++; }
+    if (f > 0) used.add(f);
+  }
+  return dels;
+}`,
     python: `def minDeletions(s):
-    pass`,
+    from collections import Counter
+    freqs = sorted(Counter(s).values(), reverse=True)
+    used = set(); dels = 0
+    for freq in freqs:
+        while freq > 0 and freq in used: freq -= 1; dels += 1
+        if freq > 0: used.add(freq)
+    return dels`,
   },
   visibleTests: [
     { args: ['aab'], expected: 0 },
