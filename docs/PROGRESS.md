@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3033** problems; 9447 tests green. Batch 301 complete.
+**Current focus:** Bank at **3033** problems; 9438 tests green. Batch 41at complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 302+); starter backfill (batch 41at+, continuing from minimum-index-sum*); UX polish.
+**Next up:** Bank growth (batch 302+); starter backfill (batch 41au+, continuing from minimum-number-of-*); UX polish.
+
+### feat(bank): batch 41at — minimum-incompatibility through minimum-moves-to-reach-target-score (2026-06-02)
+17 stubs filled: `minimum-incompatibility` (bitmask DP O(3^n)), `minimum-index-sum-of-two-lists` (hash map index sum), `minimum-initial-energy-to-finish-tasks` (sort by min-actual desc, greedy top-up), `minimum-insertion-steps-palindrome` (n−LCS(s,rev)), `minimum-interval-to-include-each-query` (offline sort + inline min-heap by size), `minimum-knight-moves` (BFS fold to |x|,|y| with -2 buffer), `minimum-length-of-anagram-concatenation` (divisor scan, compare 26-char freq), `minimum-length-of-string-after-deleting-similar-ends` (two-pointer run-trim), `minimum-length-of-string-after-operations` (odd freq→1 / even freq→2 per char), `minimum-length-string-operations` (stack AB/CD removal), `minimum-lines-to-represent-a-line-chart` (sort + BigInt cross-multiply slope), `minimum-money-required-before-transactions` (totalLoss formula), `minimum-moves-to-capture-the-queen` (geometry: same row/col/diagonal + blocking check), `minimum-moves-to-convert-string` (greedy skip-3 on X), `minimum-moves-to-equal-array-elements` (sum − n·min), `minimum-moves-to-make-array-complementary` (difference array over target sums), `minimum-moves-to-reach-target-score` (greedy backwards halve/decrement). 9438 tests.
 
 ### feat(bank): batch 301 — shortest-path-binary-matrix, find-score, maximum-visible-points (2026-06-02)
 Three new problems: `shortest-path-binary-matrix` (medium/graph+BFS — 8-directional BFS from (0,0), return shortest clear path length or -1; O(n²)), `find-score-by-marking-elements` (medium/arrays+heap — sort (value,index), greedily take smallest unmarked, mark it and neighbors; O(n log n)), `maximum-number-of-visible-points` (hard/arrays+math — atan2 angles, sort+double for circularity, sliding window ≤ angle, add at-location count; O(n log n)). Bank at **3033**; 9447 tests.
