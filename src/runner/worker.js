@@ -69,9 +69,18 @@ self.onmessage = function handleMessage(event) {
 function runOne(userFn, test, index) {
   var logs = [];
   var originalLog = console.log;
-  console.log = function captureLog() {
+  var originalWarn = console.warn;
+  var originalError = console.error;
+  var originalInfo = console.info;
+  var originalDebug = console.debug;
+  function capture() {
     logs.push(Array.prototype.map.call(arguments, stringifyArg).join(' '));
-  };
+  }
+  console.log = capture;
+  console.warn = capture;
+  console.error = capture;
+  console.info = capture;
+  console.debug = capture;
   try {
     var args = test && Array.isArray(test.args) ? test.args : [];
     var start = Date.now();
@@ -82,6 +91,10 @@ function runOne(userFn, test, index) {
     return { index: index, status: 'threw', error: describeError(err), logs: logs };
   } finally {
     console.log = originalLog;
+    console.warn = originalWarn;
+    console.error = originalError;
+    console.info = originalInfo;
+    console.debug = originalDebug;
   }
 }
 
