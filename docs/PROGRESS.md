@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **3019** problems; 9405 tests green. Batches 296 complete.
+**Current focus:** Bank at **3019** problems; 9405 tests green. Batches 41ae–41ag complete (21 more stubs).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 297+); starter backfill (batch 41ae+); UX polish.
+**Next up:** Bank growth (batch 297+); starter backfill (batch 41ah+); UX polish.
+
+### feat: starter backfill batches 41ae–41ag — 21 more maximum-* stubs (2026-06-02)
+Batch 41ae (8 stubs): `maximum-score-of-a-node-sequence` (top-3 neighbors + edge 4-path), `maximum-strength-of-a-group` (2^13 bitmask subset product), `maximum-subarray-min-product` (monotonic stack L/R bounds + BigInt prefix sums), `maximum-sum-after-xor-operations` (sort gains desc, take positive pairs), `maximum-sum-of-3-non-overlapping-subarrays` (window sums + left/right best scan), `maximum-sum-of-almost-unique-subarray` (sliding window, distinct≥k), `maximum-sum-of-distinct-subarrays-with-length-k` (sliding window all-distinct), `maximum-sum-of-two-non-overlapping-subarrays` (try L-before-M and M-before-L). Batch 41af (8 stubs): `maximum-sum-with-at-most-k-elements` (top limits[i] per row, merge top-k), `maximum-sum-with-exactly-k-elements` (k*max+k*(k-1)/2), `maximum-total-reward-using-operations-i` (0/1 knapsack DP), `maximum-total-reward-using-operations-ii` (BigInt bitset DP), `maximum-trailing-zeros-in-a-cornered-path` (row/col prefix 2/5 factors, 4 corner combos), `maximum-units-on-a-truck` (sort units/box desc, greedy), `maximum-vacation-days` (rolling DP over weeks), `maximum-value-after-insertion` (positive: insert before smaller; negative: before larger). Batch 41ag (5 stubs): `maximum-value-of-an-ordered-triplet-i` (O(n³) brute force), `maximum-value-of-k-coins-from-piles` (0/1 knapsack with pile prefix sums), `maximum-xor-product` (BigInt greedy bit assignment), `maximum-xor-score-subarray-queries` (O(n²) dp/suf/mx + O(1) per query), `maximum-xor-with-element-from-array` (offline sort + binary trie). 9396 tests.
 
 ### feat(bank): batch 296 — max-profit-trading, minimize-array-length, houses-at-distance (2026-06-02)
 Three new problems: `maximum-profit-from-trading-stocks` (medium/dp — 0/1 knapsack; only buy stocks with future>present; dp[c]=max profit with c budget; O(n*budget)), `minimize-length-of-array-using-operations` (medium/arrays+math — g=gcd(nums); elements>g can be eliminated by modding against g; answer=max(1, count(g in nums))), `count-the-number-of-houses-at-a-certain-distance-i` (medium/graph+shortest-path — BFS from each node on graph=linear chain 1..n plus shortcut x-y; O(n²); tally result[dist-1]++). Bank at **3019**; 9405 tests.
