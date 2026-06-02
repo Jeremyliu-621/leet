@@ -647,7 +647,9 @@ export function Challenge() {
         tabId,
       });
     } catch {
-      // SW may be transiently unavailable — swallow the error.
+      // SW may be transiently unavailable — reset resolving flag so the
+      // beforeunload prompt is not permanently suppressed.
+      isResolvingRef.current = false;
     }
   }, []);
 

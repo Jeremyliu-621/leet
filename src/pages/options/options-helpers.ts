@@ -93,6 +93,9 @@ export function isReducingUnlockDuration(
   next: Partial<UserPreferences>,
 ): boolean {
   if (next.unlockDurationMin === undefined) return false;
+  // Increasing the unlock duration is strictness-reducing (user gets more
+  // browsing time per solve). Decreasing is strictness-increasing and does
+  // NOT need deferral.
   return next.unlockDurationMin > prev.unlockDurationMin;
 }
 
