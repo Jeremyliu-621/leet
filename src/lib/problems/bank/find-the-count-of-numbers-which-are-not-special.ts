@@ -34,13 +34,37 @@ Return the count of integers in \`[l, r]\` that are **not** special.`,
   params: ['l', 'r'],
   starterCode: {
     javascript: `function nonSpecialCount(l, r) {
-
+  const sqrtR = Math.floor(Math.sqrt(r));
+  const sieve = new Array(sqrtR + 1).fill(true);
+  sieve[0] = sieve[1] = false;
+  for (let i = 2; i * i <= sqrtR; i++)
+    if (sieve[i]) for (let j = i * i; j <= sqrtR; j += i) sieve[j] = false;
+  let special = 0;
+  for (let p = 2; p <= sqrtR; p++)
+    if (sieve[p] && p * p >= l) special++;
+  return r - l + 1 - special;
 }`,
     typescript: `function nonSpecialCount(l: number, r: number): number {
-
+  const sqrtR = Math.floor(Math.sqrt(r));
+  const sieve = new Array(sqrtR + 1).fill(true);
+  sieve[0] = sieve[1] = false;
+  for (let i = 2; i * i <= sqrtR; i++)
+    if (sieve[i]) for (let j = i * i; j <= sqrtR; j += i) sieve[j] = false;
+  let special = 0;
+  for (let p = 2; p <= sqrtR; p++)
+    if (sieve[p] && p * p >= l) special++;
+  return r - l + 1 - special;
 }`,
     python: `def nonSpecialCount(l, r):
-    pass`,
+    import math
+    sqrt_r = int(math.isqrt(r))
+    sieve = [True] * (sqrt_r + 1)
+    sieve[0] = sieve[1] = False
+    for i in range(2, int(sqrt_r**0.5) + 1):
+        if sieve[i]:
+            for j in range(i*i, sqrt_r + 1, i): sieve[j] = False
+    special = sum(1 for p in range(2, sqrt_r + 1) if sieve[p] and p*p >= l)
+    return r - l + 1 - special`,
   },
   visibleTests: [
     { args: [5, 7], expected: 3 },

@@ -39,13 +39,13 @@ The **distance value** is the count of elements \`arr1[i]\` such that there is *
   params: ['arr1', 'arr2', 'd'],
   starterCode: {
     javascript: `function findTheDistanceValue(arr1, arr2, d) {
-
+  return arr1.filter(a => arr2.every(b => Math.abs(a - b) > d)).length;
 }`,
     typescript: `function findTheDistanceValue(arr1: number[], arr2: number[], d: number): number {
-
+  return arr1.filter(a => arr2.every(b => Math.abs(a - b) > d)).length;
 }`,
     python: `def findTheDistanceValue(arr1, arr2, d):
-    pass`,
+    return sum(1 for a in arr1 if all(abs(a - b) > d for b in arr2))`,
   },
   visibleTests: [
     { args: [[4, 5, 8], [10, 9, 1, 8], 2], expected: 2 },

@@ -46,12 +46,79 @@ Output: [[2,3],[3]]
   params: ['root'],
   starterCode: {
     javascript: `function findDuplicateSubtrees(root) {
-
+  if (!root.length || root[0] === null) return [];
+  const build = arr => {
+    const r = { v: arr[0], l: null, r: null }; const q = [r]; let i = 1;
+    while (q.length && i < arr.length) {
+      const nd = q.shift();
+      if (i < arr.length && arr[i] !== null) { nd.l = { v: arr[i], l: null, r: null }; q.push(nd.l); } i++;
+      if (i < arr.length && arr[i] !== null) { nd.r = { v: arr[i], l: null, r: null }; q.push(nd.r); } i++;
+    }
+    return r;
+  };
+  const toBFS = node => {
+    const res = [], q = [node];
+    while (q.length) { const n = q.shift(); if (!n) { res.push(null); continue; } res.push(n.v); q.push(n.l); q.push(n.r); }
+    while (res.length && res[res.length - 1] === null) res.pop();
+    return res;
+  };
+  const seen = new Map(), result = [];
+  const ser = n => { if (!n) return '#'; const s = n.v + ',' + ser(n.l) + ',' + ser(n.r); const c = (seen.get(s) ?? 0) + 1; seen.set(s, c); if (c === 2) result.push(n); return s; };
+  ser(build(root));
+  return result.map(toBFS).sort((a, b) => a[0] - b[0]);
 }`,
-    typescript: "function findDuplicateSubtrees(root: (number | null)[]): number[][] {\n\n}",
-
+    typescript: `function findDuplicateSubtrees(root: (number | null)[]): number[][] {
+  if (!root.length || root[0] === null) return [];
+  type N = { v: number; l: N | null; r: N | null };
+  const build = (arr: (number | null)[]): N => {
+    const r: N = { v: arr[0]!, l: null, r: null }; const q: N[] = [r]; let i = 1;
+    while (q.length && i < arr.length) {
+      const nd = q.shift()!;
+      if (i < arr.length && arr[i] !== null) { nd.l = { v: arr[i]!, l: null, r: null }; q.push(nd.l); } i++;
+      if (i < arr.length && arr[i] !== null) { nd.r = { v: arr[i]!, l: null, r: null }; q.push(nd.r); } i++;
+    }
+    return r;
+  };
+  const toBFS = (node: N): number[] => {
+    const res: (number | null)[] = [], q: (N | null)[] = [node];
+    while (q.length) { const n = q.shift()!; if (!n) { res.push(null); continue; } res.push(n.v); q.push(n.l); q.push(n.r); }
+    while (res.length && res[res.length - 1] === null) res.pop();
+    return res as number[];
+  };
+  const seen = new Map<string, number>(), result: N[] = [];
+  const ser = (n: N | null): string => { if (!n) return '#'; const s = n.v + ',' + ser(n.l) + ',' + ser(n.r); const c = (seen.get(s) ?? 0) + 1; seen.set(s, c); if (c === 2) result.push(n); return s; };
+  ser(build(root));
+  return result.map(toBFS).sort((a, b) => a[0]! - b[0]!);
+}`,
     python: `def findDuplicateSubtrees(root):
-    `,
+    from collections import deque, defaultdict
+    if not root or root[0] is None: return []
+    def build(arr):
+        r = [arr[0], None, None]; q = deque([r]); i = 1
+        while q and i < len(arr):
+            nd = q.popleft()
+            if i < len(arr) and arr[i] is not None: nd[1] = [arr[i], None, None]; q.append(nd[1])
+            i += 1
+            if i < len(arr) and arr[i] is not None: nd[2] = [arr[i], None, None]; q.append(nd[2])
+            i += 1
+        return r
+    def to_bfs(node):
+        res, q = [], deque([node])
+        while q:
+            n = q.popleft()
+            if n is None: res.append(None)
+            else: res.append(n[0]); q.append(n[1]); q.append(n[2])
+        while res and res[-1] is None: res.pop()
+        return res
+    seen, result = defaultdict(int), []
+    def ser(n):
+        if n is None: return '#'
+        s = str(n[0]) + ',' + ser(n[1]) + ',' + ser(n[2])
+        seen[s] += 1
+        if seen[s] == 2: result.append(to_bfs(n))
+        return s
+    ser(build(root))
+    return sorted(result, key=lambda x: x[0] if x else 0)`,
   },
   visibleTests: [
     { args: [[1,2,3,4,null,2,4,null,null,4]], expected: [[2,4],[4]] },

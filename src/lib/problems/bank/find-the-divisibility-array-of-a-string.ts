@@ -40,13 +40,25 @@ Return the divisibility array of \`word\`.`,
   params: ['word', 'm'],
   starterCode: {
     javascript: `function findDivisibilityArray(word, m) {
-
+  let rem = 0;
+  return word.split('').map(c => {
+    rem = (rem * 10 + Number(c)) % m;
+    return rem === 0 ? 1 : 0;
+  });
 }`,
     typescript: `function findDivisibilityArray(word: string, m: number): number[] {
-
+  let rem = 0;
+  return word.split('').map(c => {
+    rem = (rem * 10 + Number(c)) % m;
+    return rem === 0 ? 1 : 0;
+  });
 }`,
     python: `def findDivisibilityArray(word, m):
-    pass`,
+    rem, result = 0, []
+    for c in word:
+        rem = (rem * 10 + int(c)) % m
+        result.append(1 if rem == 0 else 0)
+    return result`,
   },
   visibleTests: [
     {

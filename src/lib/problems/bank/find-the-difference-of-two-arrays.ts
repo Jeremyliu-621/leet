@@ -40,12 +40,22 @@ function findDifference(nums1, nums2) {
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function findDifference(nums1, nums2) {
-
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  return [
+    [...s1].filter(v => !s2.has(v)).sort((a, b) => a - b),
+    [...s2].filter(v => !s1.has(v)).sort((a, b) => a - b),
+  ];
 }`,
-    typescript: "function findDifference(nums1: number[], nums2: number[]): number[][] {\n\n}",
-
+    typescript: `function findDifference(nums1: number[], nums2: number[]): number[][] {
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  return [
+    [...s1].filter(v => !s2.has(v)).sort((a, b) => a - b),
+    [...s2].filter(v => !s1.has(v)).sort((a, b) => a - b),
+  ];
+}`,
     python: `def findDifference(nums1, nums2):
-    pass`,
+    s1, s2 = set(nums1), set(nums2)
+    return [sorted(s1 - s2), sorted(s2 - s1)]`,
   },
   visibleTests: [
     { args: [[1, 2, 3], [2, 4, 6]], expected: [[1, 3], [4, 6]] },
