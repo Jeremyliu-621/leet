@@ -40,13 +40,57 @@ Return an array \`intervals\` of length \`n\` where \`intervals[i]\` is the **su
   params: ['arr'],
   starterCode: {
     javascript: `function getDistances(arr) {
-
+  const groups = new Map();
+  for (let i = 0; i < arr.length; i++) {
+    if (!groups.has(arr[i])) groups.set(arr[i], []);
+    groups.get(arr[i]).push(i);
+  }
+  const ans = new Array(arr.length).fill(0);
+  for (const indices of groups.values()) {
+    const n = indices.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + indices[i];
+    for (let m = 0; m < n; m++) {
+      const left = indices[m] * m - prefix[m];
+      const right = (prefix[n] - prefix[m + 1]) - indices[m] * (n - m - 1);
+      ans[indices[m]] = left + right;
+    }
+  }
+  return ans;
 }`,
     typescript: `function getDistances(arr: number[]): number[] {
-
+  const groups = new Map<number, number[]>();
+  for (let i = 0; i < arr.length; i++) {
+    if (!groups.has(arr[i])) groups.set(arr[i], []);
+    groups.get(arr[i])!.push(i);
+  }
+  const ans = new Array(arr.length).fill(0);
+  for (const indices of groups.values()) {
+    const n = indices.length;
+    const prefix = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + indices[i];
+    for (let m = 0; m < n; m++) {
+      const left = indices[m] * m - prefix[m];
+      const right = (prefix[n] - prefix[m + 1]) - indices[m] * (n - m - 1);
+      ans[indices[m]] = left + right;
+    }
+  }
+  return ans;
 }`,
     python: `def getDistances(arr):
-    pass`,
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for i, v in enumerate(arr): groups[v].append(i)
+    ans = [0] * len(arr)
+    for indices in groups.values():
+        n = len(indices)
+        prefix = [0] * (n + 1)
+        for i in range(n): prefix[i + 1] = prefix[i] + indices[i]
+        for m in range(n):
+            left = indices[m] * m - prefix[m]
+            right = (prefix[n] - prefix[m + 1]) - indices[m] * (n - m - 1)
+            ans[indices[m]] = left + right
+    return ans`,
   },
   visibleTests: [
     { args: [[2,1,3,1,2,3,3]], expected: [4,2,7,2,4,4,5] },

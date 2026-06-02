@@ -39,12 +39,22 @@ Return the **maximum** possible sum.`,
   params: ['numOnes', 'numZeros', 'numNegOnes', 'k'],
   starterCode: {
     javascript: `function kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k) {
-
+  const ones = Math.min(k, numOnes);
+  const zeros = Math.min(k - ones, numZeros);
+  const negs = k - ones - zeros;
+  return ones - negs;
 }`,
-    typescript: "function kItemsWithMaximumSum(numOnes: number, numZeros: number, numNegOnes: number, k: number): number {\n\n}",
-
+    typescript: `function kItemsWithMaximumSum(numOnes: number, numZeros: number, numNegOnes: number, k: number): number {
+  const ones = Math.min(k, numOnes);
+  const zeros = Math.min(k - ones, numZeros);
+  const negs = k - ones - zeros;
+  return ones - negs;
+}`,
     python: `def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
-    pass`,
+    ones = min(k, numOnes)
+    zeros = min(k - ones, numZeros)
+    negs = k - ones - zeros
+    return ones - negs`,
   },
   visibleTests: [
     { args: [3, 2, 0, 2], expected: 2 },

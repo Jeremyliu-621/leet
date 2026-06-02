@@ -33,12 +33,13 @@ The distance from the origin to a point \`(x, y)\` is \`√(x² + y²)\`. You ma
   params: ['points', 'k'],
   starterCode: {
     javascript: `function kClosest(points, k) {
-
+  return points.sort((a, b) => (a[0]*a[0]+a[1]*a[1]) - (b[0]*b[0]+b[1]*b[1])).slice(0, k);
 }`,
-    typescript: "function kClosest(points: number[][], k: number): number[][] {\n\n}",
-
+    typescript: `function kClosest(points: number[][], k: number): number[][] {
+  return points.sort((a, b) => (a[0]*a[0]+a[1]*a[1]) - (b[0]*b[0]+b[1]*b[1])).slice(0, k);
+}`,
     python: `def kClosest(points, k):
-    pass`,
+    return sorted(points, key=lambda p: p[0]*p[0]+p[1]*p[1])[:k]`,
   },
   visibleTests: [
     { args: [[[1, 3], [-2, 2]], 1], expected: [[-2, 2]] },

@@ -41,13 +41,33 @@ Return **the indices of the \`k\` weakest rows** in the matrix ordered from weak
   params: ['mat', 'k'],
   starterCode: {
     javascript: `function kWeakestRows(mat, k) {
-
+  const strengths = mat.map((row, i) => {
+    let lo = 0, hi = row.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (row[mid] === 1) lo = mid + 1; else hi = mid; }
+    return [lo, i];
+  });
+  strengths.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  return strengths.slice(0, k).map(([, i]) => i);
 }`,
     typescript: `function kWeakestRows(mat: number[][], k: number): number[] {
-
+  const strengths = mat.map((row, i) => {
+    let lo = 0, hi = row.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (row[mid] === 1) lo = mid + 1; else hi = mid; }
+    return [lo, i];
+  });
+  strengths.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  return strengths.slice(0, k).map(([, i]) => i);
 }`,
     python: `def kWeakestRows(mat, k):
-    pass`,
+    def count_soldiers(row):
+        lo, hi = 0, len(row)
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if row[mid] == 1: lo = mid + 1
+            else: hi = mid
+        return lo
+    strengths = sorted(enumerate(mat), key=lambda x: (count_soldiers(x[1]), x[0]))
+    return [i for i, _ in strengths[:k]]`,
   },
   visibleTests: [
     {

@@ -34,12 +34,24 @@ A **subsequence** of a string is a new string that is formed from the original s
   params: ['s', 't'],
   starterCode: {
     javascript: `function isSubsequence(s, t) {
-
+  let i = 0;
+  for (let j = 0; j < t.length && i < s.length; j++) {
+    if (s[i] === t[j]) i++;
+  }
+  return i === s.length;
 }`,
-    typescript: "function isSubsequence(s: string, t: string): boolean {\n\n}",
-
+    typescript: `function isSubsequence(s: string, t: string): boolean {
+  let i = 0;
+  for (let j = 0; j < t.length && i < s.length; j++) {
+    if (s[i] === t[j]) i++;
+  }
+  return i === s.length;
+}`,
     python: `def isSubsequence(s, t):
-    pass`,
+    i = 0
+    for c in t:
+        if i < len(s) and s[i] == c: i += 1
+    return i == len(s)`,
   },
   visibleTests: [
     { args: ['abc', 'ahbgdc'], expected: true },

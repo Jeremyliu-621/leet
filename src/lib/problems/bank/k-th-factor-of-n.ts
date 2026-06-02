@@ -37,13 +37,23 @@ Consider a list of all factors of \`n\` sorted in **ascending order**, return th
   params: ['n', 'k'],
   starterCode: {
     javascript: `function kthFactor(n, k) {
-
+  for (let i = 1; i <= n; i++) {
+    if (n % i === 0 && --k === 0) return i;
+  }
+  return -1;
 }`,
     typescript: `function kthFactor(n: number, k: number): number {
-
+  for (let i = 1; i <= n; i++) {
+    if (n % i === 0 && --k === 0) return i;
+  }
+  return -1;
 }`,
     python: `def kthFactor(n, k):
-    pass`,
+    for i in range(1, n + 1):
+        if n % i == 0:
+            k -= 1
+            if k == 0: return i
+    return -1`,
   },
   visibleTests: [
     { args: [12, 3], expected: 3 },

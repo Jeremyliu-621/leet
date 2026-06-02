@@ -37,12 +37,51 @@ Return \`true\` if you can reach index \`s.length - 1\` in \`s\`, or \`false\` o
   params: ['s', 'minJump', 'maxJump'],
   starterCode: {
     javascript: `function canReach(s, minJump, maxJump) {
-
+  const n = s.length;
+  const reach = new Array(n).fill(0);
+  reach[0] = 1;
+  const pre = new Array(n + 1).fill(0);
+  pre[1] = 1;
+  for (let i = 1; i < n; i++) {
+    if (s[i] === '0') {
+      const lo = Math.max(0, i - maxJump);
+      const hi = i - minJump;
+      if (hi >= 0 && pre[hi + 1] - pre[lo] > 0) reach[i] = 1;
+    }
+    pre[i + 1] = pre[i] + reach[i];
+  }
+  return reach[n - 1] === 1;
 }`,
-    typescript: "function canReach(s: string, minJump: number, maxJump: number): boolean {\n\n}",
-
+    typescript: `function canReach(s: string, minJump: number, maxJump: number): boolean {
+  const n = s.length;
+  const reach = new Array(n).fill(0);
+  reach[0] = 1;
+  const pre = new Array(n + 1).fill(0);
+  pre[1] = 1;
+  for (let i = 1; i < n; i++) {
+    if (s[i] === '0') {
+      const lo = Math.max(0, i - maxJump);
+      const hi = i - minJump;
+      if (hi >= 0 && pre[hi + 1] - pre[lo] > 0) reach[i] = 1;
+    }
+    pre[i + 1] = pre[i] + reach[i];
+  }
+  return reach[n - 1] === 1;
+}`,
     python: `def canReach(s, minJump, maxJump):
-    pass`,
+    n = len(s)
+    reach = [0] * n
+    reach[0] = 1
+    pre = [0] * (n + 1)
+    pre[1] = 1
+    for i in range(1, n):
+        if s[i] == '0':
+            lo = max(0, i - maxJump)
+            hi = i - minJump
+            if hi >= 0 and pre[hi + 1] - pre[lo] > 0:
+                reach[i] = 1
+        pre[i + 1] = pre[i] + reach[i]
+    return reach[n - 1] == 1`,
   },
   visibleTests: [
     { args: ['011010', 2, 3], expected: true },

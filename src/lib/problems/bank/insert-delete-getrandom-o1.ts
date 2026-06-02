@@ -44,12 +44,67 @@ You are given a list of \`operations\` where each operation is \`["insert", val]
   params: ['operations'],
   starterCode: {
     javascript: `function insertDeleteGetRandom(operations) {
-
+  const map = new Map();
+  const vals = [];
+  return operations.map(([op, val]) => {
+    if (op === 'insert') {
+      if (map.has(val)) return false;
+      map.set(val, vals.length);
+      vals.push(val);
+      return true;
+    } else if (op === 'remove') {
+      if (!map.has(val)) return false;
+      const idx = map.get(val);
+      const last = vals[vals.length - 1];
+      vals[idx] = last;
+      map.set(last, idx);
+      vals.pop();
+      map.delete(val);
+      return true;
+    } else {
+      return vals[Math.floor(Math.random() * vals.length)];
+    }
+  });
 }`,
-    typescript: "function insertDeleteGetRandom(operations: (string | number)[][]): (boolean | number)[] {\n\n}",
-
-    python: `def insertDeleteGetRandom(operations: list[list]) -> list:
-    pass`,
+    typescript: `function insertDeleteGetRandom(operations: (string | number)[][]): (boolean | number)[] {
+  const map = new Map<number, number>();
+  const vals: number[] = [];
+  return operations.map(([op, val]) => {
+    if (op === 'insert') {
+      if (map.has(val as number)) return false;
+      map.set(val as number, vals.length);
+      vals.push(val as number);
+      return true;
+    } else if (op === 'remove') {
+      if (!map.has(val as number)) return false;
+      const idx = map.get(val as number)!;
+      const last = vals[vals.length - 1];
+      vals[idx] = last;
+      map.set(last, idx);
+      vals.pop();
+      map.delete(val as number);
+      return true;
+    } else {
+      return vals[Math.floor(Math.random() * vals.length)];
+    }
+  });
+}`,
+    python: `def insertDeleteGetRandom(operations):
+    import random
+    idx_map = {}
+    vals = []
+    res = []
+    for op, val in operations:
+        if op == 'insert':
+            if val in idx_map: res.append(False); continue
+            idx_map[val] = len(vals); vals.append(val); res.append(True)
+        elif op == 'remove':
+            if val not in idx_map: res.append(False); continue
+            i = idx_map[val]; last = vals[-1]
+            vals[i] = last; idx_map[last] = i; vals.pop(); del idx_map[val]; res.append(True)
+        else:
+            res.append(random.choice(vals))
+    return res`,
   },
   visibleTests: [
     {
