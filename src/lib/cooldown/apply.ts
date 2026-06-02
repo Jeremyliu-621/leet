@@ -4,6 +4,7 @@ import type {
   KeywordRule,
   UserPreferences,
 } from '../types';
+import { DEFAULT_PREFERENCES } from '../storage/defaults';
 
 // Pure application of cooldown-deferred settings changes. The service worker
 // reads current state, calls `applyAll` with the applicable pending changes,
@@ -57,10 +58,52 @@ export function applyChange(state: SettingsState, change: CooldownPendingChange)
       };
     }
     case 'reduce-friction': {
-      const patch =
-        change.payload !== null && typeof change.payload === 'object'
-          ? (change.payload as Partial<UserPreferences>)
-          : {};
+      if (change.payload === null || typeof change.payload !== 'object') {
+        return { state, damagedStreak: true };
+      }
+      const payload = change.payload as Record<string, unknown>;
+
+      // Payload shape: { ruleId: string, enabled: false } → disable a block or keyword rule.
+      if (typeof payload['ruleId'] === 'string' && payload['enabled'] === false) {
+        const ruleId = payload['ruleId'];
+        const inBlock = state.blockedRules.some((r) => r.id === ruleId);
+        if (inBlock) {
+          return {
+            state: {
+              ...state,
+              blockedRules: state.blockedRules.map((r) =>
+                r.id === ruleId ? { ...r, enabled: false } : r,
+              ),
+            },
+            damagedStreak: true,
+          };
+        }
+        const inKeyword = state.keywordRules.some((r) => r.id === ruleId);
+        if (inKeyword) {
+          return {
+            state: {
+              ...state,
+              keywordRules: state.keywordRules.map((r) =>
+                r.id === ruleId ? { ...r, enabled: false } : r,
+              ),
+            },
+            damagedStreak: true,
+          };
+        }
+        // Rule not found — no-op but still mark as damaged (user intended to weaken).
+        return { state, damagedStreak: true };
+      }
+
+      // Payload shape: { reset: true } → reset preferences to defaults.
+      if (payload['reset'] === true) {
+        return {
+          state: { ...state, userPreferences: { ...DEFAULT_PREFERENCES } },
+          damagedStreak: true,
+        };
+      }
+
+      // Default: treat as Partial<UserPreferences> and merge into preferences.
+      const patch = payload as Partial<UserPreferences>;
       return {
         state: { ...state, userPreferences: { ...state.userPreferences, ...patch } },
         damagedStreak: true,

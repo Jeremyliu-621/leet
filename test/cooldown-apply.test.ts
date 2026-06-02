@@ -66,6 +66,40 @@ describe('applyChange', () => {
     expect(out.state.userPreferences).toEqual(userPreferences);
     expect(out.damagedStreak).toBe(true); // still applied (empty patch)
   });
+
+  it('disables a block rule via reduce-friction { ruleId, enabled: false }', () => {
+    const out = applyChange(initial, pending('reduce-friction', { ruleId: 'b1', enabled: false }));
+    const rule = out.state.blockedRules.find((r) => r.id === 'b1');
+    expect(rule?.enabled).toBe(false);
+    // Other rules remain unchanged
+    expect(out.state.blockedRules.find((r) => r.id === 'b2')?.enabled).toBe(true);
+    expect(out.damagedStreak).toBe(true);
+    // Preferences should NOT have ruleId/enabled keys injected
+    expect('ruleId' in out.state.userPreferences).toBe(false);
+  });
+
+  it('disables a keyword rule via reduce-friction { ruleId, enabled: false }', () => {
+    const out = applyChange(initial, pending('reduce-friction', { ruleId: 'k1', enabled: false }));
+    const rule = out.state.keywordRules.find((r) => r.id === 'k1');
+    expect(rule?.enabled).toBe(false);
+    expect(out.damagedStreak).toBe(true);
+  });
+
+  it('is a no-op when reduce-friction targets a non-existent rule', () => {
+    const out = applyChange(initial, pending('reduce-friction', { ruleId: 'nonexistent', enabled: false }));
+    expect(out.state.blockedRules).toEqual(blockedRules);
+    expect(out.state.keywordRules).toEqual(keywordRules);
+    expect(out.damagedStreak).toBe(true);
+  });
+
+  it('resets preferences to defaults via reduce-friction { reset: true }', () => {
+    const out = applyChange(initial, pending('reduce-friction', { reset: true }));
+    expect(out.state.userPreferences).toEqual(DEFAULT_PREFERENCES);
+    expect(out.damagedStreak).toBe(true);
+    // Rules should be unaffected
+    expect(out.state.blockedRules).toEqual(blockedRules);
+    expect(out.state.keywordRules).toEqual(keywordRules);
+  });
 });
 
 describe('applyAll', () => {
