@@ -43,13 +43,38 @@ Return an integer array \`answers\` where \`answers[j]\` is the result of query 
   params: ['n', 'queries'],
   starterCode: {
     javascript: `function productQueries(n, queries) {
-  // your code here
+  const MOD = 1000000007;
+  const powers = [];
+  for (let i = 0; i < 30; i++) if ((n >> i) & 1) powers.push(1 << i);
+  return queries.map(([l, r]) => {
+    let prod = 1;
+    for (let j = l; j <= r; j++) prod = prod * powers[j] % MOD;
+    return prod;
+  });
 }`,
-    typescript:
-      'function productQueries(n: number, queries: number[][]): number[] {\n  // your code here\n}',
+    typescript: `function productQueries(n: number, queries: number[][]): number[] {
+  const MOD = 1000000007;
+  const powers: number[] = [];
+  for (let i = 0; i < 30; i++) if ((n >> i) & 1) powers.push(1 << i);
+  return queries.map(q => {
+    let prod = 1;
+    for (let j = q[0]!; j <= q[1]!; j++) prod = prod * powers[j]! % MOD;
+    return prod;
+  });
+}`,
     python: `def productQueries(n, queries):
-    # your code here
-    pass`,
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(queries, 'to_py'): queries = queries.to_py()
+    n = int(n)
+    queries = [[int(v) for v in (q.to_py() if hasattr(q,'to_py') else q)] for q in queries]
+    MOD = 10**9+7
+    powers = [1<<i for i in range(30) if (n>>i)&1]
+    result = []
+    for l, r in queries:
+        prod = 1
+        for j in range(l, r+1): prod = prod*powers[j]%MOD
+        result.append(prod)
+    return result`,
   },
   visibleTests: [
     { args: [15, [[0, 1], [2, 2], [0, 3]]], expected: [2, 4, 64] },

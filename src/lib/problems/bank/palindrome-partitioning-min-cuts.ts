@@ -39,10 +39,61 @@ A cut splits the string into two parts. For example, \`"aab"\` can be split with
   functionName: 'minCut',
   params: ['s'] as readonly string[],
   starterCode: {
-    javascript: 'function minCut(s) {\n  // your code here\n}\n',
-    typescript: "function minCut(s: string): number {\n  // your code here\n}",
-
-    python: 'def minCut(s: str) -> int:\n    # your code here\n    pass\n',
+    javascript: `function minCut(s) {
+  const n = s.length;
+  const isPalin = Array.from({length: n}, () => new Array(n).fill(false));
+  for (let i = 0; i < n; i++) {
+    for (let d = 0; i - d >= 0 && i + d < n; d++) {
+      if (s[i - d] === s[i + d]) isPalin[i - d][i + d] = true; else break;
+    }
+    for (let d = 0; i - d >= 0 && i + d + 1 < n; d++) {
+      if (s[i - d] === s[i + d + 1]) isPalin[i - d][i + d + 1] = true; else break;
+    }
+  }
+  const cuts = Array.from({length: n}, (_, i) => i);
+  for (let i = 1; i < n; i++) {
+    if (isPalin[0][i]) { cuts[i] = 0; continue; }
+    for (let j = 1; j <= i; j++) if (isPalin[j][i]) cuts[i] = Math.min(cuts[i], cuts[j - 1] + 1);
+  }
+  return cuts[n - 1];
+}`,
+    typescript: `function minCut(s: string): number {
+  const n = s.length;
+  const isPalin: boolean[][] = Array.from({length: n}, () => new Array(n).fill(false));
+  for (let i = 0; i < n; i++) {
+    for (let d = 0; i - d >= 0 && i + d < n; d++) {
+      if (s[i - d] === s[i + d]) isPalin[i - d]![i + d] = true; else break;
+    }
+    for (let d = 0; i - d >= 0 && i + d + 1 < n; d++) {
+      if (s[i - d] === s[i + d + 1]) isPalin[i - d]![i + d + 1] = true; else break;
+    }
+  }
+  const cuts: number[] = Array.from({length: n}, (_, i) => i);
+  for (let i = 1; i < n; i++) {
+    if (isPalin[0]![i]) { cuts[i] = 0; continue; }
+    for (let j = 1; j <= i; j++) if (isPalin[j]![i]) cuts[i] = Math.min(cuts[i]!, cuts[j - 1]! + 1);
+  }
+  return cuts[n - 1]!;
+}`,
+    python: `def minCut(s: str) -> int:
+    if hasattr(s, 'to_py'): s = s.to_py()
+    s = str(s); n = len(s)
+    is_p = [[False]*n for _ in range(n)]
+    for i in range(n):
+        d = 0
+        while i-d >= 0 and i+d < n:
+            if s[i-d] == s[i+d]: is_p[i-d][i+d] = True; d += 1
+            else: break
+        d = 0
+        while i-d >= 0 and i+d+1 < n:
+            if s[i-d] == s[i+d+1]: is_p[i-d][i+d+1] = True; d += 1
+            else: break
+    cuts = list(range(n))
+    for i in range(1, n):
+        if is_p[0][i]: cuts[i] = 0; continue
+        for j in range(1, i+1):
+            if is_p[j][i]: cuts[i] = min(cuts[i], cuts[j-1]+1)
+    return cuts[n-1]`,
   },
   visibleTests: [
     { args: ['aab'], expected: 1 },

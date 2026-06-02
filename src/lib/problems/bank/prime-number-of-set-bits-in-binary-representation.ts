@@ -33,14 +33,34 @@ Recall that the number of set bits an integer has is the number of \`1\`s presen
   params: ['left', 'right'],
   starterCode: {
     javascript: `function countPrimeSetBits(left, right) {
-  // your code here
+  const primes = new Set([2,3,5,7,11,13,17,19]);
+  let count = 0;
+  for (let n = left; n <= right; n++) {
+    let bits = 0, x = n;
+    while (x) { bits += x & 1; x >>= 1; }
+    if (primes.has(bits)) count++;
+  }
+  return count;
 }`,
     typescript: `function countPrimeSetBits(left: number, right: number): number {
-  // your code here
+  const primes = new Set([2,3,5,7,11,13,17,19]);
+  let count = 0;
+  for (let n = left; n <= right; n++) {
+    let bits = 0, x = n;
+    while (x) { bits += x & 1; x >>= 1; }
+    if (primes.has(bits)) count++;
+  }
+  return count;
 }`,
     python: `def countPrimeSetBits(left, right):
-    # your code here
-    pass`,
+    if hasattr(left, 'to_py'): left = left.to_py()
+    if hasattr(right, 'to_py'): right = right.to_py()
+    left = int(left); right = int(right)
+    primes = {2,3,5,7,11,13,17,19}
+    count = 0
+    for n in range(left, right+1):
+        if bin(n).count('1') in primes: count += 1
+    return count`,
   },
   visibleTests: [
     { args: [6, 10], expected: 4 },

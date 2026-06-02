@@ -28,10 +28,57 @@ Given the integer \`n\` and the array \`dislikes\` where \`dislikes[i] = [a_i, b
   functionName: 'possibleBipartition',
   params: ['n', 'dislikes'],
   starterCode: {
-    javascript: 'function possibleBipartition(n, dislikes) {\n  // your code here\n}\n',
-    typescript: "function possibleBipartition(n: number, dislikes: number[][]): boolean {\n  // your code here\n}",
-
-    python: 'def possibleBipartition(n, dislikes):\n    # your code here\n    pass\n',
+    javascript: `function possibleBipartition(n, dislikes) {
+  const adj = Array.from({length: n + 1}, () => []);
+  for (const [a, b] of dislikes) { adj[a].push(b); adj[b].push(a); }
+  const color = new Array(n + 1).fill(-1);
+  for (let s = 1; s <= n; s++) {
+    if (color[s] !== -1) continue;
+    color[s] = 0; const q = [s];
+    while (q.length) {
+      const u = q.shift();
+      for (const v of adj[u]) {
+        if (color[v] === -1) { color[v] = 1 - color[u]; q.push(v); }
+        else if (color[v] === color[u]) return false;
+      }
+    }
+  }
+  return true;
+}`,
+    typescript: `function possibleBipartition(n: number, dislikes: number[][]): boolean {
+  const adj: number[][] = Array.from({length: n + 1}, () => []);
+  for (const d of dislikes) { adj[d[0]!]!.push(d[1]!); adj[d[1]!]!.push(d[0]!); }
+  const color: number[] = new Array(n + 1).fill(-1);
+  for (let s = 1; s <= n; s++) {
+    if (color[s] !== -1) continue;
+    color[s] = 0; const q: number[] = [s];
+    while (q.length) {
+      const u = q.shift()!;
+      for (const v of adj[u]!) {
+        if (color[v]! === -1) { color[v] = 1 - color[u]!; q.push(v); }
+        else if (color[v]! === color[u]!) return false;
+      }
+    }
+  }
+  return true;
+}`,
+    python: `def possibleBipartition(n, dislikes):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(dislikes, 'to_py'): dislikes = dislikes.to_py()
+    n = int(n)
+    dislikes = [[int(v) for v in (d.to_py() if hasattr(d,'to_py') else d)] for d in dislikes]
+    adj = [[] for _ in range(n+1)]
+    for a, b in dislikes: adj[a].append(b); adj[b].append(a)
+    color = [-1]*(n+1)
+    for s in range(1, n+1):
+        if color[s] != -1: continue
+        color[s] = 0; q = [s]
+        while q:
+            u = q.pop(0)
+            for v in adj[u]:
+                if color[v] == -1: color[v] = 1-color[u]; q.append(v)
+                elif color[v] == color[u]: return False
+    return True`,
   },
   visibleTests: [
     { args: [4, [[1, 2], [1, 3], [2, 4]]], expected: true },

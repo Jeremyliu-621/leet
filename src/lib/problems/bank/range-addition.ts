@@ -37,10 +37,32 @@ After applying all updates, return the resulting array.
   functionName: 'getModifiedArray',
   params: ['n', 'updates'],
   starterCode: {
-    javascript: 'function getModifiedArray(n, updates) {\n  // your code here\n}\n',
-    typescript: "function getModifiedArray(n: number, updates: number[][]): number[] {\n  // your code here\n}",
-
-    python: 'def getModifiedArray(n, updates):\n    # your code here\n    pass\n',
+    javascript: `function getModifiedArray(n, updates) {
+  const diff = new Array(n + 1).fill(0);
+  for (const [s, e, inc] of updates) { diff[s] += inc; diff[e + 1] -= inc; }
+  const result = [];
+  let sum = 0;
+  for (let i = 0; i < n; i++) { sum += diff[i]; result.push(sum); }
+  return result;
+}`,
+    typescript: `function getModifiedArray(n: number, updates: number[][]): number[] {
+  const diff = new Array(n + 1).fill(0) as number[];
+  for (const u of updates) { diff[u[0]!]! += u[2]!; diff[u[1]! + 1]! -= u[2]!; }
+  const result: number[] = [];
+  let sum = 0;
+  for (let i = 0; i < n; i++) { sum += diff[i]!; result.push(sum); }
+  return result;
+}`,
+    python: `def getModifiedArray(n, updates):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(updates, 'to_py'): updates = updates.to_py()
+    n = int(n)
+    updates = [[int(v) for v in (u.to_py() if hasattr(u,'to_py') else u)] for u in updates]
+    diff = [0]*(n+1)
+    for s, e, inc in updates: diff[s] += inc; diff[e+1] -= inc
+    result = []; sm = 0
+    for i in range(n): sm += diff[i]; result.append(sm)
+    return result`,
   },
   visibleTests: [
     { args: [5, [[1, 3, 2], [2, 4, 3], [0, 2, -2]]], expected: [-2, 0, 3, 5, 3] },

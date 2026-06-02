@@ -35,10 +35,27 @@ Return the count as a number.`,
   functionName: 'countInteriorPeaks',
   params: ['nums'],
   starterCode: {
-    javascript: 'function countInteriorPeaks(nums) {\n  // your code here\n}\n',
-    typescript: "function countInteriorPeaks(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def countInteriorPeaks(nums):\n    # your code here\n    pass\n',
+    javascript: `function countInteriorPeaks(nums) {
+  let count = 0;
+  for (let i = 1; i < nums.length - 1; i++) {
+    if (nums[i] > nums[i - 1] && nums[i] > nums[i + 1]) count++;
+  }
+  return count;
+}`,
+    typescript: `function countInteriorPeaks(nums: number[]): number {
+  let count = 0;
+  for (let i = 1; i < nums.length - 1; i++) {
+    if (nums[i]! > nums[i - 1]! && nums[i]! > nums[i + 1]!) count++;
+  }
+  return count;
+}`,
+    python: `def countInteriorPeaks(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    count = 0
+    for i in range(1, len(nums)-1):
+        if nums[i] > nums[i-1] and nums[i] > nums[i+1]: count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 4, 1]], expected: 2 },

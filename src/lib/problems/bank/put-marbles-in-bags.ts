@@ -48,10 +48,34 @@ Output: 0
   functionName: 'putMarbles',
   params: ['weights', 'k'],
   starterCode: {
-    javascript: 'function putMarbles(weights, k) {\n  // your code here\n}\n',
-    typescript: "function putMarbles(weights: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def putMarbles(weights, k):\n    pass\n',
+    javascript: `function putMarbles(weights, k) {
+  if (k === 1) return 0;
+  const n = weights.length;
+  const pairs = [];
+  for (let i = 0; i < n - 1; i++) pairs.push(weights[i] + weights[i + 1]);
+  pairs.sort((a, b) => a - b);
+  let diff = 0;
+  for (let i = 0; i < k - 1; i++) diff += pairs[pairs.length - 1 - i] - pairs[i];
+  return diff;
+}`,
+    typescript: `function putMarbles(weights: number[], k: number): number {
+  if (k === 1) return 0;
+  const n = weights.length;
+  const pairs: number[] = [];
+  for (let i = 0; i < n - 1; i++) pairs.push(weights[i]! + weights[i + 1]!);
+  pairs.sort((a, b) => a - b);
+  let diff = 0;
+  for (let i = 0; i < k - 1; i++) diff += pairs[pairs.length - 1 - i]! - pairs[i]!;
+  return diff;
+}`,
+    python: `def putMarbles(weights, k):
+    if hasattr(weights, 'to_py'): weights = weights.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    weights = [int(x) for x in weights]; k = int(k)
+    if k == 1: return 0
+    n = len(weights)
+    pairs = sorted(weights[i]+weights[i+1] for i in range(n-1))
+    return sum(pairs[-(i+1)] - pairs[i] for i in range(k-1))`,
   },
   visibleTests: [
     { args: [[1,3,5,1], 2], expected: 4 },
