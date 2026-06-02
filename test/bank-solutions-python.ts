@@ -46932,4 +46932,28 @@ def maxTotalReward(rewardValues):
         prev = cur
     return prev[n]
 `,
+
+  // batch 273
+  'make-string-great': `def makeGood(s):
+    stack = []
+    for c in s:
+        if stack and stack[-1] != c and stack[-1].lower() == c.lower():
+            stack.pop()
+        else:
+            stack.append(c)
+    return ''.join(stack)
+`,
+
+  'minimum-number-of-flips-to-make-the-binary-string-alternating': `def minFlips(s):
+    n = len(s)
+    s2 = s + s
+    f = [0] * (2 * n + 1)
+    for i in range(2 * n):
+        f[i + 1] = f[i] + (1 if s2[i] == ('0' if i % 2 == 0 else '1') else 0)
+    ans = n
+    for k in range(n):
+        m = f[k + n] - f[k]
+        ans = min(ans, n - m, m)
+    return ans
+`,
 };

@@ -47975,4 +47975,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return prev[n]!;
   },
+
+  // batch 273
+  'make-string-great': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    for (const c of s) {
+      if (stack.length > 0) {
+        const top = stack[stack.length - 1]!;
+        if (top !== c && top.toLowerCase() === c.toLowerCase()) {
+          stack.pop();
+          continue;
+        }
+      }
+      stack.push(c);
+    }
+    return stack.join('');
+  },
+
+  'minimum-number-of-flips-to-make-the-binary-string-alternating': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const n = s.length;
+    const s2 = s + s;
+    const f = new Array<number>(2 * n + 1).fill(0);
+    for (let i = 0; i < 2 * n; i++) {
+      f[i + 1] = f[i]! + (s2[i] === (i % 2 === 0 ? '0' : '1') ? 1 : 0);
+    }
+    let ans = n;
+    for (let k = 0; k < n; k++) {
+      const m = f[k + n]! - f[k]!;
+      ans = Math.min(ans, n - m, m);
+    }
+    return ans;
+  },
 };

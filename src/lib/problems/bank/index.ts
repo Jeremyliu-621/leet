@@ -3287,6 +3287,8 @@ import { problem as findTheMaximumNumberOfStringPairs } from './find-the-maximum
 import { problem as countSubstringsWithVowelAndConsonant } from './count-substrings-with-vowel-and-consonant';
 import { problem as takeKCharactersFromLeftAndRight } from './take-k-characters-from-left-and-right';
 import { problem as minimumExtraWhiteTilesAfterPlacingCarpets } from './minimum-extra-white-tiles-after-placing-carpets';
+import { problem as makeStringGreat } from './make-string-great';
+import { problem as minimumNumberOfFlipsToMakeBinaryStringAlternating } from './minimum-number-of-flips-to-make-the-binary-string-alternating';
 // batch 248
 import { problem as validPalindromeIii } from './valid-palindrome-iii';
 import { problem as palindromePartitioningIv } from './palindrome-partitioning-iv';
@@ -6680,4 +6682,7 @@ export const problems: readonly Problem[] = [
   countSubstringsWithVowelAndConsonant,
   takeKCharactersFromLeftAndRight,
   minimumExtraWhiteTilesAfterPlacingCarpets,
+  // batch 273
+  makeStringGreat,
+  minimumNumberOfFlipsToMakeBinaryStringAlternating,
 ];
