@@ -51,13 +51,47 @@ Return an array \`answer\` where \`answer[i]\` denotes the minimum cost of a wal
   params: ['n', 'edges', 'queries'],
   starterCode: {
     javascript: `function minimumCost(n, edges, queries) {
-
+  const parent = Array.from({length: n}, (_, i) => i);
+  const compAnd = new Array(n).fill(-1);
+  const find = x => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+  for (const [u, v, w] of edges) {
+    const ra = find(u), rb = find(v);
+    if (ra === rb) compAnd[ra] &= w;
+    else { compAnd[ra] &= compAnd[rb] & w; parent[rb] = ra; }
+  }
+  return queries.map(([s, t]) => {
+    if (s === t) return 0;
+    const rs = find(s), rt = find(t);
+    return rs !== rt ? -1 : compAnd[rs];
+  });
 }`,
     typescript: `function minimumCost(n: number, edges: number[][], queries: number[][]): number[] {
-
+  const parent = Array.from({length: n}, (_, i) => i);
+  const compAnd = new Array<number>(n).fill(-1);
+  const find = (x: number): number => { while (parent[x]! !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; } return x; };
+  for (const [u, v, w] of edges) {
+    const ra = find(u!), rb = find(v!);
+    if (ra === rb) compAnd[ra] = compAnd[ra]! & w!;
+    else { compAnd[ra] = compAnd[ra]! & compAnd[rb]! & w!; parent[rb] = ra; }
+  }
+  return queries.map(([s, t]) => {
+    if (s === t) return 0;
+    const rs = find(s!), rt = find(t!);
+    return rs !== rt ? -1 : compAnd[rs]!;
+  });
 }`,
     python: `def minimumCost(n: int, edges: list[list[int]], queries: list[list[int]]) -> list[int]:
-    pass`,
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    if hasattr(queries, 'to_py'): queries = [[int(x) for x in (q.to_py() if hasattr(q, 'to_py') else q)] for q in queries.to_py()]
+    parent = list(range(n)); comp_and = [-1] * n
+    def find(x):
+        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    for u, v, w in edges:
+        ra, rb = find(u), find(v)
+        if ra == rb: comp_and[ra] &= w
+        else: comp_and[ra] &= comp_and[rb] & w; parent[rb] = ra
+    return [0 if s == t else (-1 if find(s) != find(t) else comp_and[find(s)]) for s, t in queries]`,
   },
   visibleTests: [
     { args: [5, [[0, 1, 7], [1, 3, 7], [1, 2, 1]], [[0, 3], [3, 4]]], expected: [1, -1] },

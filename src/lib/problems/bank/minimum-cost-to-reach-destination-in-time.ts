@@ -54,12 +54,48 @@ You want to travel from city \`0\` to city \`n - 1\` in at most \`maxTime\` minu
   params: ['maxTime', 'edges', 'passingFees'],
   starterCode: {
     javascript: `function minCost(maxTime, edges, passingFees) {
-
+  const n = passingFees.length;
+  const adj = Array.from({length: n}, () => []);
+  for (const [x, y, t] of edges) { adj[x].push([y, t]); adj[y].push([x, t]); }
+  const dp = Array.from({length: maxTime+1}, () => new Array(n).fill(Infinity));
+  dp[0][0] = passingFees[0];
+  for (let t = 0; t <= maxTime; t++) {
+    for (let v = 0; v < n; v++) {
+      if (dp[t][v] === Infinity) continue;
+      for (const [u, et] of adj[v]) if (t + et <= maxTime) dp[t+et][u] = Math.min(dp[t+et][u], dp[t][v] + passingFees[u]);
+    }
+  }
+  const ans = Math.min(...dp.map(row => row[n-1]));
+  return ans === Infinity ? -1 : ans;
 }`,
-    typescript: "function minCost(maxTime: number, edges: number[][], passingFees: number[]): number {\n\n}",
-
+    typescript: `function minCost(maxTime: number, edges: number[][], passingFees: number[]): number {
+  const n = passingFees.length;
+  const adj: [number, number][][] = Array.from({length: n}, () => []);
+  for (const [x, y, t] of edges) { adj[x]!.push([y!, t!]); adj[y!]!.push([x!, t!]); }
+  const dp = Array.from({length: maxTime+1}, () => new Array<number>(n).fill(Infinity));
+  dp[0]![0] = passingFees[0]!;
+  for (let t = 0; t <= maxTime; t++) {
+    for (let v = 0; v < n; v++) {
+      if (dp[t]![v]! === Infinity) continue;
+      for (const [u, et] of adj[v]!) if (t + et <= maxTime) dp[t+et]![u] = Math.min(dp[t+et]![u]!, dp[t]![v]! + passingFees[u]!);
+    }
+  }
+  const ans = Math.min(...dp.map(row => row[n-1]!));
+  return ans === Infinity ? -1 : ans;
+}`,
     python: `def minCost(maxTime: int, edges: list[list[int]], passingFees: list[int]) -> int:
-    pass`,
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    if hasattr(passingFees, 'to_py'): passingFees = list(passingFees.to_py())
+    n = len(passingFees); adj = [[] for _ in range(n)]
+    for x, y, t in edges: adj[x].append((y, t)); adj[y].append((x, t))
+    dp = [[float('inf')] * n for _ in range(maxTime + 1)]; dp[0][0] = passingFees[0]
+    for t in range(maxTime + 1):
+        for v in range(n):
+            if dp[t][v] == float('inf'): continue
+            for u, et in adj[v]:
+                if t + et <= maxTime: dp[t+et][u] = min(dp[t+et][u], dp[t][v] + passingFees[u])
+    ans = min(row[n-1] for row in dp)
+    return -1 if ans == float('inf') else ans`,
   },
   visibleTests: [
     {

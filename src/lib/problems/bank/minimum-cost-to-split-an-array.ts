@@ -47,13 +47,41 @@ Return the **minimum** possible cost of a split of \`nums\`.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function minCost(nums, k) {
-
+  const n = nums.length;
+  const dp = new Array(n + 1).fill(Infinity); dp[0] = 0;
+  for (let i = 1; i <= n; i++) {
+    const freq = new Map(); let extra = 0;
+    for (let j = i - 1; j >= 0; j--) {
+      const v = nums[j], cnt = (freq.get(v) || 0) + 1; freq.set(v, cnt);
+      if (cnt === 2) extra++;
+      if (dp[j] < Infinity) dp[i] = Math.min(dp[i], dp[j] + k + (i - j) + extra);
+    }
+  }
+  return dp[n];
 }`,
     typescript: `function minCost(nums: number[], k: number): number {
-
+  const n = nums.length;
+  const dp = new Array<number>(n + 1).fill(Infinity); dp[0] = 0;
+  for (let i = 1; i <= n; i++) {
+    const freq = new Map<number, number>(); let extra = 0;
+    for (let j = i - 1; j >= 0; j--) {
+      const v = nums[j]!, cnt = (freq.get(v) ?? 0) + 1; freq.set(v, cnt);
+      if (cnt === 2) extra++;
+      if (dp[j]! < Infinity) dp[i] = Math.min(dp[i]!, dp[j]! + k + (i - j) + extra);
+    }
+  }
+  return dp[n]!;
 }`,
     python: `def minCost(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    n = len(nums); dp = [float('inf')] * (n + 1); dp[0] = 0
+    for i in range(1, n + 1):
+        freq = {}; extra = 0
+        for j in range(i - 1, -1, -1):
+            v = nums[j]; freq[v] = freq.get(v, 0) + 1
+            if freq[v] == 2: extra += 1
+            if dp[j] < float('inf'): dp[i] = min(dp[i], dp[j] + k + (i - j) + extra)
+    return dp[n]`,
   },
   visibleTests: [
     { args: [[1, 2, 1, 2, 1, 3], 2], expected: 10 },

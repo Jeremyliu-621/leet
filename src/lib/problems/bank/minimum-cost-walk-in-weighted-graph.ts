@@ -46,9 +46,48 @@ Return an array \`answer\`, where \`answer[i]\` denotes the **minimum cost** of 
   functionName: 'minimumCostWalk',
   params: ['n', 'edges', 'query'],
   starterCode: {
-    javascript: 'function minimumCostWalk(n, edges, query) {\n  \n}\n',
-    typescript: 'function minimumCostWalk(n: number, edges: number[][], query: number[][]): number[] {\n  \n}',
-    python: 'def minimumCostWalk(n, edges, query):\n    pass\n',
+    javascript: `function minimumCostWalk(n, edges, query) {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const compAnd = new Array(n).fill(-1);
+  const find = x => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+  for (const [u, v, w] of edges) {
+    const ra = find(u), rb = find(v);
+    if (ra === rb) compAnd[ra] &= w;
+    else { compAnd[ra] &= compAnd[rb] & w; parent[rb] = ra; }
+  }
+  return query.map(([s, t]) => {
+    if (s === t) return 0;
+    const rs = find(s), rt = find(t);
+    return rs !== rt ? -1 : compAnd[rs];
+  });
+}`,
+    typescript: `function minimumCostWalk(n: number, edges: number[][], query: number[][]): number[] {
+  const parent = Array.from({length: n}, (_, i) => i);
+  const compAnd = new Array<number>(n).fill(-1);
+  const find = (x: number): number => { while (parent[x]! !== x) { parent[x] = parent[parent[x]!]!; x = parent[x]!; } return x; };
+  for (const [u, v, w] of edges) {
+    const ra = find(u!), rb = find(v!);
+    if (ra === rb) compAnd[ra] = compAnd[ra]! & w!;
+    else { compAnd[ra] = compAnd[ra]! & compAnd[rb]! & w!; parent[rb] = ra; }
+  }
+  return query.map(([s, t]) => {
+    if (s === t) return 0;
+    const rs = find(s!), rt = find(t!);
+    return rs !== rt ? -1 : compAnd[rs]!;
+  });
+}`,
+    python: `def minimumCostWalk(n, edges, query):
+    if hasattr(edges, 'to_py'): edges = [[int(x) for x in (e.to_py() if hasattr(e, 'to_py') else e)] for e in edges.to_py()]
+    if hasattr(query, 'to_py'): query = [[int(x) for x in (q.to_py() if hasattr(q, 'to_py') else q)] for q in query.to_py()]
+    parent = list(range(n)); comp_and = [-1] * n
+    def find(x):
+        while parent[x] != x: parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+    for u, v, w in edges:
+        ra, rb = find(u), find(v)
+        if ra == rb: comp_and[ra] &= w
+        else: comp_and[ra] &= comp_and[rb] & w; parent[rb] = ra
+    return [0 if s == t else (-1 if find(s) != find(t) else comp_and[find(s)]) for s, t in query]`,
   },
   visibleTests: [
     { args: [5, [[0, 1, 7], [1, 3, 7], [1, 2, 1]], [[0, 3], [3, 4]]], expected: [1, -1] },

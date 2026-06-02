@@ -37,13 +37,33 @@ Among all possible binary trees considered, return the **smallest possible sum**
   params: ['arr'],
   starterCode: {
     javascript: `function mctFromLeafValues(arr) {
-
+  const stack = [Infinity]; let ans = 0;
+  for (const v of arr) {
+    while (stack[stack.length-1] <= v) { const top = stack.pop(); ans += top * Math.min(stack[stack.length-1], v); }
+    stack.push(v);
+  }
+  while (stack.length > 2) { const top = stack.pop(); ans += top * stack[stack.length-1]; }
+  return ans;
 }`,
     typescript: `function mctFromLeafValues(arr: number[]): number {
-
+  const stack: number[] = [Infinity]; let ans = 0;
+  for (const v of arr) {
+    while (stack[stack.length-1]! <= v) { const top = stack.pop()!; ans += top * Math.min(stack[stack.length-1]!, v); }
+    stack.push(v);
+  }
+  while (stack.length > 2) { const top = stack.pop()!; ans += top * stack[stack.length-1]!; }
+  return ans;
 }`,
     python: `def mctFromLeafValues(arr):
-    pass`,
+    if hasattr(arr, 'to_py'): arr = list(arr.to_py())
+    stack = [float('inf')]; ans = 0
+    for v in arr:
+        while stack[-1] <= v:
+            top = stack.pop(); ans += top * min(stack[-1], v)
+        stack.append(v)
+    while len(stack) > 2:
+        top = stack.pop(); ans += top * stack[-1]
+    return ans`,
   },
   visibleTests: [
     { args: [[6, 2, 4]], expected: 32 },

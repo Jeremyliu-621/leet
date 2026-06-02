@@ -37,13 +37,16 @@ Given the integer \`n\`, return the **minimum** number of cuts needed to divide 
   params: ['n'],
   starterCode: {
     javascript: `function numberOfCuts(n) {
-
+  if (n === 1) return 0;
+  return n % 2 === 0 ? n / 2 : n;
 }`,
     typescript: `function numberOfCuts(n: number): number {
-
+  if (n === 1) return 0;
+  return n % 2 === 0 ? n / 2 : n;
 }`,
     python: `def numberOfCuts(n):
-    pass`,
+    if n == 1: return 0
+    return n // 2 if n % 2 == 0 else n`,
   },
   visibleTests: [
     { args: [4], expected: 2 },
