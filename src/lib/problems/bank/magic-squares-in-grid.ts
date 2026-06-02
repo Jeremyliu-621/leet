@@ -42,12 +42,9 @@ Given a \`rows × cols\` grid of integers, return the number of 3 × 3 contiguou
   params: ['grid'],
   starterCode: {
     javascript: `function numMagicSquaresInside(grid) {
-  const rows = grid.length;
-  const cols = grid[0].length;
   let count = 0;
-
-  for (let r = 0; r <= rows - 3; r++) {
-    for (let c = 0; c <= cols - 3; c++) {
+  for (let r = 0; r <= grid.length - 3; r++) {
+    for (let c = 0; c <= grid[r].length - 3; c++) {
       if (isMagic(grid, r, c)) count++;
     }
   }
@@ -55,16 +52,27 @@ Given a \`rows × cols\` grid of integers, return the number of 3 × 3 contiguou
 }
 
 function isMagic(grid, r, c) {
-  // check distinct 1-9
-  // check rows, cols, diags sum to 15
+  const vals = new Set();
+  for (let dr = 0; dr < 3; dr++) {
+    for (let dc = 0; dc < 3; dc++) {
+      const v = grid[r + dr][c + dc];
+      if (v < 1 || v > 9 || vals.has(v)) return false;
+      vals.add(v);
+    }
+  }
+  for (let i = 0; i < 3; i++) {
+    let rs = 0, cs = 0;
+    for (let j = 0; j < 3; j++) { rs += grid[r + i][c + j]; cs += grid[r + j][c + i]; }
+    if (rs !== 15 || cs !== 15) return false;
+  }
+  if (grid[r][c] + grid[r+1][c+1] + grid[r+2][c+2] !== 15) return false;
+  if (grid[r][c+2] + grid[r+1][c+1] + grid[r+2][c] !== 15) return false;
+  return true;
 }`,
     typescript: `function numMagicSquaresInside(grid: number[][]): number {
-  const rows = grid.length;
-  const cols = grid[0].length;
   let count = 0;
-
-  for (let r = 0; r <= rows - 3; r++) {
-    for (let c = 0; c <= cols - 3; c++) {
+  for (let r = 0; r <= grid.length - 3; r++) {
+    for (let c = 0; c <= grid[r]!.length - 3; c++) {
       if (isMagic(grid, r, c)) count++;
     }
   }
@@ -72,18 +80,45 @@ function isMagic(grid, r, c) {
 }
 
 function isMagic(grid: number[][], r: number, c: number): boolean {
-  // check distinct 1-9
-  // check rows, cols, diags sum to 15
-  return false;
+  const vals = new Set<number>();
+  for (let dr = 0; dr < 3; dr++) {
+    for (let dc = 0; dc < 3; dc++) {
+      const v = grid[r + dr]![c + dc]!;
+      if (v < 1 || v > 9 || vals.has(v)) return false;
+      vals.add(v);
+    }
+  }
+  for (let i = 0; i < 3; i++) {
+    let rs = 0, cs = 0;
+    for (let j = 0; j < 3; j++) { rs += grid[r + i]![c + j]!; cs += grid[r + j]![c + i]!; }
+    if (rs !== 15 || cs !== 15) return false;
+  }
+  if (grid[r]![c]! + grid[r+1]![c+1]! + grid[r+2]![c+2]! !== 15) return false;
+  if (grid[r]![c+2]! + grid[r+1]![c+1]! + grid[r+2]![c]! !== 15) return false;
+  return true;
 }`,
     python: `def numMagicSquaresInside(grid):
     rows, cols = len(grid), len(grid[0])
     count = 0
 
     def is_magic(r, c):
-        # check distinct 1-9
-        # check rows, cols, diags sum to 15
-        pass
+        vals = set()
+        for dr in range(3):
+            for dc in range(3):
+                v = grid[r + dr][c + dc]
+                if v < 1 or v > 9 or v in vals:
+                    return False
+                vals.add(v)
+        for i in range(3):
+            if sum(grid[r + i][c + j] for j in range(3)) != 15:
+                return False
+            if sum(grid[r + j][c + i] for j in range(3)) != 15:
+                return False
+        if grid[r][c] + grid[r+1][c+1] + grid[r+2][c+2] != 15:
+            return False
+        if grid[r][c+2] + grid[r+1][c+1] + grid[r+2][c] != 15:
+            return False
+        return True
 
     for r in range(rows - 2):
         for c in range(cols - 2):

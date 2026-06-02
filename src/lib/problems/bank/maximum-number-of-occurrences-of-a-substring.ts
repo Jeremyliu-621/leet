@@ -43,15 +43,41 @@ export const problem: Problem = {
   params: ['s', 'maxLetters', 'minSize', 'maxSize'],
   starterCode: {
     javascript: `function maxFreq(s, maxLetters, minSize, maxSize) {
-  // return max occurrences of any valid substring
-
+  const count = new Map();
+  let res = 0;
+  for (let i = 0; i <= s.length - minSize; i++) {
+    const sub = s.substring(i, i + minSize);
+    if (new Set(sub).size <= maxLetters) {
+      const c = (count.get(sub) ?? 0) + 1;
+      count.set(sub, c);
+      res = Math.max(res, c);
+    }
+  }
+  return res;
 }`,
-    typescript: "function maxFreq(s: string, maxLetters: number, minSize: number, maxSize: number): number {\n  // return max occurrences of any valid substring\n\n}",
-
+    typescript: `function maxFreq(s: string, maxLetters: number, minSize: number, maxSize: number): number {
+  const count = new Map<string, number>();
+  let res = 0;
+  for (let i = 0; i <= s.length - minSize; i++) {
+    const sub = s.substring(i, i + minSize);
+    if (new Set(sub).size <= maxLetters) {
+      const c = (count.get(sub) ?? 0) + 1;
+      count.set(sub, c);
+      res = Math.max(res, c);
+    }
+  }
+  return res;
+}`,
     python: `def maxFreq(s: str, maxLetters: int, minSize: int, maxSize: int) -> int:
-    # return max occurrences of any valid substring
-    pass
-`,
+    from collections import defaultdict
+    count = defaultdict(int)
+    res = 0
+    for i in range(len(s) - minSize + 1):
+        sub = s[i:i + minSize]
+        if len(set(sub)) <= maxLetters:
+            count[sub] += 1
+            res = max(res, count[sub])
+    return res`,
   },
   visibleTests: [
     { args: ['aababcaab', 2, 3, 4], expected: 2 },

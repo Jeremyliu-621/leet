@@ -42,15 +42,26 @@ Return the **maximum** binary string you can get (lexicographically largest).
   params: ['binary'],
   starterCode: {
     javascript: `function maximumBinaryString(binary) {
-  // return the maximum binary string achievable
-
+  const n = binary.length;
+  const firstZero = binary.indexOf('0');
+  if (firstZero === -1) return binary;
+  const zeros = [...binary].filter(c => c === '0').length;
+  return '1'.repeat(firstZero + zeros - 1) + '0' + '1'.repeat(n - firstZero - zeros);
 }`,
-    typescript: "function maximumBinaryString(binary: string): string {\n  // return the maximum binary string achievable\n\n}",
-
+    typescript: `function maximumBinaryString(binary: string): string {
+  const n = binary.length;
+  const firstZero = binary.indexOf('0');
+  if (firstZero === -1) return binary;
+  const zeros = [...binary].filter(c => c === '0').length;
+  return '1'.repeat(firstZero + zeros - 1) + '0' + '1'.repeat(n - firstZero - zeros);
+}`,
     python: `def maximumBinaryString(binary: str) -> str:
-    # return the maximum binary string achievable
-    pass
-`,
+    n = len(binary)
+    first_zero = binary.find('0')
+    if first_zero == -1:
+        return binary
+    zeros = binary.count('0')
+    return '1' * (first_zero + zeros - 1) + '0' + '1' * (n - first_zero - zeros)`,
   },
   visibleTests: [
     { args: ['000110'], expected: '111011' },

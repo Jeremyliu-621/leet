@@ -40,19 +40,31 @@ Return the **maximum total cost** achievable.`,
   functionName: 'maximumTotalCost',
   params: ['nums'],
   starterCode: {
-    javascript: `/**
- * @param {number[]} nums
- * @return {number}
- */
-function maximumTotalCost(nums) {
-
+    javascript: `function maximumTotalCost(nums) {
+  let pos = nums[0], neg = -Infinity;
+  for (let i = 1; i < nums.length; i++) {
+    const newPos = Math.max(pos, neg) + nums[i];
+    const newNeg = pos - nums[i];
+    pos = newPos; neg = newNeg;
+  }
+  return Math.max(pos, neg);
 }`,
     typescript: `function maximumTotalCost(nums: number[]): number {
-
+  let pos = nums[0]!, neg = -Infinity;
+  for (let i = 1; i < nums.length; i++) {
+    const newPos = Math.max(pos, neg) + nums[i]!;
+    const newNeg = pos - nums[i]!;
+    pos = newPos; neg = newNeg;
+  }
+  return Math.max(pos, neg);
 }`,
     python: `def maximumTotalCost(nums: list[int]) -> int:
-    pass
-`,
+    pos, neg = nums[0], float('-inf')
+    for i in range(1, len(nums)):
+        new_pos = max(pos, neg) + nums[i]
+        new_neg = pos - nums[i]
+        pos, neg = new_pos, new_neg
+    return max(pos, neg)`,
   },
   visibleTests: [
     { args: [[1, -2, 3, 4]], expected: 10 },

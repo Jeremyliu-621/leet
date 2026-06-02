@@ -39,15 +39,28 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function maximumANDSum(nums) {
-  // Greedy: try each bit from MSB to LSB; include if >= 2 elements have all current bits.
+  let ans = 0;
+  for (let b = 29; b >= 0; b--) {
+    const cand = ans | (1 << b);
+    if (nums.filter(n => (n & cand) === cand).length >= 2) ans = cand;
+  }
+  return ans;
 }`,
     typescript: `function maximumANDSum(nums: number[]): number {
-  // Greedy: try each bit from MSB to LSB; include if >= 2 elements have all current bits.
+  let ans = 0;
+  for (let b = 29; b >= 0; b--) {
+    const cand = ans | (1 << b);
+    if (nums.filter(n => (n & cand) === cand).length >= 2) ans = cand;
+  }
+  return ans;
 }`,
     python: `def maximumANDSum(nums):
-    # Greedy: try each bit from MSB to LSB; include if >= 2 elements have all current bits.
-    pass
-`,
+    ans = 0
+    for b in range(29, -1, -1):
+        cand = ans | (1 << b)
+        if sum(1 for n in nums if (n & cand) == cand) >= 2:
+            ans = cand
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5]], expected: 4 },

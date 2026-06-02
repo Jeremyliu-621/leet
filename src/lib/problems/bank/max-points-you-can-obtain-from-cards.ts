@@ -41,13 +41,43 @@ Return the **maximum** score you can obtain.`,
   params: ['cardPoints', 'k'],
   starterCode: {
     javascript: `function maxScore(cardPoints, k) {
-
+  const n = cardPoints.length;
+  const total = cardPoints.reduce((a, b) => a + b, 0);
+  if (k === n) return total;
+  const w = n - k;
+  let win = cardPoints.slice(0, w).reduce((a, b) => a + b, 0);
+  let minWin = win;
+  for (let i = w; i < n; i++) {
+    win += cardPoints[i] - cardPoints[i - w];
+    minWin = Math.min(minWin, win);
+  }
+  return total - minWin;
 }`,
-    typescript: "function maxScore(cardPoints: number[], k: number): number {\n\n}",
-
+    typescript: `function maxScore(cardPoints: number[], k: number): number {
+  const n = cardPoints.length;
+  const total = cardPoints.reduce((a, b) => a + b, 0);
+  if (k === n) return total;
+  const w = n - k;
+  let win = cardPoints.slice(0, w).reduce((a, b) => a + b, 0);
+  let minWin = win;
+  for (let i = w; i < n; i++) {
+    win += cardPoints[i]! - cardPoints[i - w]!;
+    minWin = Math.min(minWin, win);
+  }
+  return total - minWin;
+}`,
     python: `def maxScore(cardPoints, k):
-    pass
-`,
+    n = len(cardPoints)
+    total = sum(cardPoints)
+    if k == n:
+        return total
+    w = n - k
+    win = sum(cardPoints[:w])
+    min_win = win
+    for i in range(w, n):
+        win += cardPoints[i] - cardPoints[i - w]
+        min_win = min(min_win, win)
+    return total - min_win`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 5, 6, 1], 3], expected: 12 },

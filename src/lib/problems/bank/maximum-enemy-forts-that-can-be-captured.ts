@@ -55,15 +55,33 @@ function captureForts(forts) {
   params: ['forts'],
   starterCode: {
     javascript: `function captureForts(forts) {
-  // return maximum enemy forts captured
-
+  let ans = 0, prev = -1;
+  for (let i = 0; i < forts.length; i++) {
+    if (forts[i] !== 0) {
+      if (prev !== -1 && forts[i] !== forts[prev]) ans = Math.max(ans, i - prev - 1);
+      prev = i;
+    }
+  }
+  return ans;
 }`,
-    typescript: "function captureForts(forts: number[]): number {\n  // return maximum enemy forts captured\n\n}",
-
+    typescript: `function captureForts(forts: number[]): number {
+  let ans = 0, prev = -1;
+  for (let i = 0; i < forts.length; i++) {
+    if (forts[i] !== 0) {
+      if (prev !== -1 && forts[i] !== forts[prev]) ans = Math.max(ans, i - prev - 1);
+      prev = i;
+    }
+  }
+  return ans;
+}`,
     python: `def captureForts(forts: list) -> int:
-    # return maximum enemy forts captured
-    pass
-`,
+    ans, prev = 0, -1
+    for i, v in enumerate(forts):
+        if v != 0:
+            if prev != -1 and v != forts[prev]:
+                ans = max(ans, i - prev - 1)
+            prev = i
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 0, 0, -1, 0, 0, 0, 0, 1]], expected: 4 },

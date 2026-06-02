@@ -41,13 +41,43 @@ A string \`t\` is a **subsequence** of \`s\` if \`t\` can be obtained by deletin
   params: ['s', 'dictionary'],
   starterCode: {
     javascript: `function findLongestWord(s, dictionary) {
-
+  const isSub = t => {
+    let j = 0;
+    for (const c of s) if (c === t[j]) j++;
+    return j === t.length;
+  };
+  let best = '';
+  for (const word of dictionary) {
+    if (isSub(word) && (word.length > best.length || (word.length === best.length && word < best)))
+      best = word;
+  }
+  return best;
 }`,
-    typescript: "function findLongestWord(s: string, dictionary: string[]): string {\n\n}",
-
+    typescript: `function findLongestWord(s: string, dictionary: string[]): string {
+  const isSub = (t: string) => {
+    let j = 0;
+    for (const c of s) if (c === t[j]) j++;
+    return j === t.length;
+  };
+  let best = '';
+  for (const word of dictionary) {
+    if (isSub(word) && (word.length > best.length || (word.length === best.length && word < best)))
+      best = word;
+  }
+  return best;
+}`,
     python: `def findLongestWord(s, dictionary):
-    pass
-`,
+    def is_sub(t):
+        j = 0
+        for c in s:
+            if j < len(t) and c == t[j]:
+                j += 1
+        return j == len(t)
+    best = ''
+    for word in dictionary:
+        if is_sub(word) and (len(word) > len(best) or (len(word) == len(best) and word < best)):
+            best = word
+    return best`,
   },
   visibleTests: [
     { args: ['abpcplea', ['ale','apple','monkey','plea']], expected: 'apple' },

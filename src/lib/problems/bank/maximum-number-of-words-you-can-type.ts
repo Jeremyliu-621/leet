@@ -42,15 +42,16 @@ function canBeTypedWords(text, brokenLetters) {
   params: ['text', 'brokenLetters'],
   starterCode: {
     javascript: `function canBeTypedWords(text, brokenLetters) {
-  // return count of words that can be typed
-
+  const broken = new Set(brokenLetters);
+  return text.split(' ').filter(w => [...w].every(c => !broken.has(c))).length;
 }`,
-    typescript: "function canBeTypedWords(text: string, brokenLetters: string): number {\n  // return count of words that can be typed\n\n}",
-
+    typescript: `function canBeTypedWords(text: string, brokenLetters: string): number {
+  const broken = new Set(brokenLetters);
+  return text.split(' ').filter(w => [...w].every(c => !broken.has(c))).length;
+}`,
     python: `def canBeTypedWords(text: str, brokenLetters: str) -> int:
-    # return count of words that can be typed
-    pass
-`,
+    broken = set(brokenLetters)
+    return sum(1 for w in text.split(' ') if not any(c in broken for c in w))`,
   },
   visibleTests: [
     { args: ['hello world', 'ad'], expected: 1 },

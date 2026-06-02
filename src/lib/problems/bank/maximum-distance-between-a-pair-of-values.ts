@@ -46,13 +46,32 @@ Return the **maximum distance** of any valid pair \`(i, j)\`. If there are no va
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function maxDistance(nums1, nums2) {
-
+  let i = 0, j = 0, ans = 0;
+  while (i < nums1.length && j < nums2.length) {
+    if (nums1[i] <= nums2[j]) { ans = Math.max(ans, j - i); j++; }
+    else { i++; if (j < i) j = i; }
+  }
+  return ans;
 }`,
-    typescript: "function maxDistance(nums1: number[], nums2: number[]): number {\n\n}",
-
+    typescript: `function maxDistance(nums1: number[], nums2: number[]): number {
+  let i = 0, j = 0, ans = 0;
+  while (i < nums1.length && j < nums2.length) {
+    if (nums1[i]! <= nums2[j]!) { ans = Math.max(ans, j - i); j++; }
+    else { i++; if (j < i) j = i; }
+  }
+  return ans;
+}`,
     python: `def maxDistance(nums1, nums2):
-    pass
-`,
+    i, j, ans = 0, 0, 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] <= nums2[j]:
+            ans = max(ans, j - i)
+            j += 1
+        else:
+            i += 1
+            if j < i:
+                j = i
+    return ans`,
   },
   visibleTests: [
     { args: [[55, 30, 5, 4, 2], [100, 20, 10, 10, 5]], expected: 2 },
