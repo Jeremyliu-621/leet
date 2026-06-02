@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2997** problems; 9351 tests green. Batches 291/292 complete (7 new problems).
+**Current focus:** Bank at **2999** problems; 9357 tests green. Batch 293 complete (2 new: triangle DP, subarray min-product).
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
-**Next up:** Bank growth (batch 293+); starter backfill; UX polish.
+**Next up:** Bank growth (batch 294+); starter backfill; UX polish.
+
+### feat(bank): batch 293 — min-path-sum-triangle-grid, max-subarray-min-product (2026-06-02)
+Two new problems: `minimum-path-sum-in-a-triangle-grid` (medium/dp — bottom-up DP from last row; dp[j]=triangle[i][j]+min(dp[j],dp[j+1]); O(n²) time, O(n) space), `maximum-subarray-minimum-product` (medium/arrays+stack — monotonic stack for left[]/right[] boundaries; asymmetric: pop-left when ≥, pop-right when >; score=nums[i]*(prefix[right[i]]-prefix[left[i]+1]); BigInt for overflow; O(n)). Bank at **2999**; 9357 tests.
 
 ### feat(bank): batch 292 — max-sum-score-array, house-placements, max-jumps-last-index (2026-06-02)
 Three new problems: `maximum-sum-score-of-array` (medium/arrays — O(n) prefix scan; score(i)=max(prefix[i+1], suffix[i]); suffix[i]=total-prefix[i]+nums[i]; O(n)), `count-the-number-of-house-placements-on-a-street` (medium/dp+math — each side independent; f(n)=Fibonacci-like, f(0)=1,f(1)=2; answer=f(n)²%MOD; O(n)), `maximum-number-of-jumps-to-reach-last-index` (medium/arrays+dp — dp[j]=max over valid i<j: dp[i]+1 if |nums[j]-nums[i]|≤target; O(n²); return dp[n-1] or -1 if unreachable). Bank at **2993**; 9339 tests.
