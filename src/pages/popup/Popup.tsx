@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getValue, setValue, updateValue } from '../../lib/storage';
-import type { StorageSchema } from '../../lib/storage';
+import { getValue, setValue, updateValue, STORAGE_DEFAULTS } from '../../lib/storage';
+import type { StorageSchema, StorageKey } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
 import { localDateString } from '../../lib/streak';
@@ -813,15 +813,15 @@ function minutesLeft(token: UnlockToken, now: number = Date.now()): number {
   return Math.max(0, Math.ceil((token.expiresAt - now) / 60_000));
 }
 
-async function safeGet<K extends Parameters<typeof getValue>[0]>(
+async function safeGet<K extends StorageKey>(
   key: K,
 ): Promise<StorageSchema[K]> {
   try {
     return await getValue(key);
   } catch {
     // The popup is opened outside an extension context (e.g. preview) — return
-    // a deep-cloned empty default by re-fetching once chrome is wired.
-    throw new Error(`LeetLock: failed to read "${key}" from storage`);
+    // a deep-cloned empty default so the UI can still render.
+    return structuredClone(STORAGE_DEFAULTS[key]);
   }
 }
 
