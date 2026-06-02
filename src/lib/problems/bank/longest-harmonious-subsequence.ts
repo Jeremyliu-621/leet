@@ -42,15 +42,31 @@ A **subsequence** of an array is a sequence that can be derived from the array b
   params: ['nums'],
   starterCode: {
     javascript: `function findLHS(nums) {
-  // return length of longest harmonious subsequence
-
+  const freq = new Map();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = 0;
+  for (const [k, v] of freq) {
+    if (freq.has(k + 1)) ans = Math.max(ans, v + freq.get(k + 1));
+  }
+  return ans;
 }`,
-    typescript: "function findLHS(nums: number[]): number {\n  // return length of longest harmonious subsequence\n\n}",
-
+    typescript: `function findLHS(nums: number[]): number {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) ?? 0) + 1);
+  let ans = 0;
+  for (const [k, v] of freq) {
+    if (freq.has(k + 1)) ans = Math.max(ans, v + freq.get(k + 1)!);
+  }
+  return ans;
+}`,
     python: `def findLHS(nums: list) -> int:
-    # return length of longest harmonious subsequence
-    pass
-`,
+    from collections import Counter
+    freq = Counter(nums)
+    ans = 0
+    for k, v in freq.items():
+        if k + 1 in freq:
+            ans = max(ans, v + freq[k + 1])
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 2, 2, 5, 2, 3, 7]], expected: 5 },

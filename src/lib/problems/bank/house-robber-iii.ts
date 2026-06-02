@@ -101,16 +101,44 @@ Given the \`root\` of the binary tree, return the **maximum amount of money the 
   starterCode: {
     javascript: `// TreeNode class and robRunner wrapper are pre-defined.
 function rob(root) {
-  // Return the maximum amount of money the thief can rob
-}
-`,
-    typescript: "function robRunner(arr: (number | null)[]): number {\n  // Return the maximum amount of money the thief can rob\n}",
-
+  function dp(node) {
+    if (!node) return [0, 0];
+    const [lr, ls] = dp(node.left);
+    const [rr, rs] = dp(node.right);
+    return [node.val + ls + rs, Math.max(lr, ls) + Math.max(rr, rs)];
+  }
+  return Math.max(...dp(root));
+}`,
+    typescript: `function robRunner(arr: (number | null)[]): number {
+  if (!arr.length || arr[0] === null) return 0;
+  type N = { val: number; left: N | null; right: N | null };
+  const mk = (v: number): N => ({ val: v, left: null, right: null });
+  const root = mk(arr[0] as number);
+  const q: N[] = [root];
+  let i = 1;
+  while (q.length && i < arr.length) {
+    const node = q.shift()!;
+    if (arr[i] != null) { node.left = mk(arr[i] as number); q.push(node.left); }
+    i++;
+    if (i < arr.length && arr[i] != null) { node.right = mk(arr[i] as number); q.push(node.right); }
+    i++;
+  }
+  const dp = (n: N | null): [number, number] => {
+    if (!n) return [0, 0];
+    const [lr, ls] = dp(n.left), [rr, rs] = dp(n.right);
+    return [n.val + ls + rs, Math.max(lr, ls) + Math.max(rr, rs)];
+  };
+  return Math.max(...dp(root));
+}`,
     python: `# TreeNode class and robRunner wrapper are pre-defined.
 def rob(root):
-    # Return the maximum amount of money the thief can rob
-    pass
-`,
+    def dp(node):
+        if not node:
+            return (0, 0)
+        lr, ls = dp(node.left)
+        rr, rs = dp(node.right)
+        return (node.val + ls + rs, max(lr, ls) + max(rr, rs))
+    return max(dp(root))`,
   },
   visibleTests: [
     { args: [[3, 2, 3, null, 3, null, 1]], expected: 7 },

@@ -34,15 +34,31 @@ Return *the **largest** possible value of* \`num\` *after **any** number of swap
   params: ['num'],
   starterCode: {
     javascript: `function largestInteger(num) {
-  // return largest number after parity swaps
-
+  const d = String(num).split('').map(Number);
+  const odd = d.filter(x => x % 2 !== 0).sort((a, b) => b - a);
+  const even = d.filter(x => x % 2 === 0).sort((a, b) => b - a);
+  let oi = 0, ei = 0;
+  return +d.map(x => x % 2 !== 0 ? odd[oi++] : even[ei++]).join('');
 }`,
-    typescript: "function largestInteger(num: number): number {\n  // return largest number after parity swaps\n\n}",
-
+    typescript: `function largestInteger(num: number): number {
+  const d = String(num).split('').map(Number);
+  const odd = d.filter(x => x % 2 !== 0).sort((a, b) => b - a);
+  const even = d.filter(x => x % 2 === 0).sort((a, b) => b - a);
+  let oi = 0, ei = 0;
+  return +d.map(x => x % 2 !== 0 ? odd[oi++]! : even[ei++]!).join('');
+}`,
     python: `def largestInteger(num: int) -> int:
-    # return largest number after parity swaps
-    pass
-`,
+    d = [int(c) for c in str(num)]
+    odd = sorted([x for x in d if x % 2 != 0], reverse=True)
+    even = sorted([x for x in d if x % 2 == 0], reverse=True)
+    oi = ei = 0
+    result = []
+    for x in d:
+        if x % 2 != 0:
+            result.append(odd[oi]); oi += 1
+        else:
+            result.append(even[ei]); ei += 1
+    return int(''.join(map(str, result)))`,
   },
   visibleTests: [
     { args: [1234], expected: 3412 },

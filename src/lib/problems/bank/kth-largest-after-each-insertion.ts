@@ -50,16 +50,41 @@ It is guaranteed that \`k\` is always valid (i.e., the list always has at least 
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function kthLargestAfterEachInsertion(nums, k) {
-
-}
-`,
+  const sorted = [];
+  const result = [];
+  for (const n of nums) {
+    let lo = 0, hi = sorted.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (sorted[mid] <= n) lo = mid + 1; else hi = mid;
+    }
+    sorted.splice(lo, 0, n);
+    result.push(sorted.length >= k ? sorted[sorted.length - k] : -1);
+  }
+  return result;
+}`,
     typescript: `function kthLargestAfterEachInsertion(nums: number[], k: number): number[] {
-
-  return [];
+  const sorted: number[] = [];
+  const result: number[] = [];
+  for (const n of nums) {
+    let lo = 0, hi = sorted.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (sorted[mid]! <= n) lo = mid + 1; else hi = mid;
+    }
+    sorted.splice(lo, 0, n);
+    result.push(sorted.length >= k ? sorted[sorted.length - k]! : -1);
+  }
+  return result;
 }`,
     python: `def kthLargestAfterEachInsertion(nums, k):
-    pass
-`,
+    import bisect
+    sorted_arr = []
+    result = []
+    for n in nums:
+        bisect.insort(sorted_arr, n)
+        result.append(sorted_arr[-k] if len(sorted_arr) >= k else -1)
+    return result`,
   },
   visibleTests: [
     { args: [[3, 1, 5, 2, 4], 2], expected: [-1, 1, 3, 3, 4] },

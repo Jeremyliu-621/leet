@@ -33,19 +33,37 @@ Return the **minimum** possible area of the rectangle.`,
   functionName: 'minimumArea',
   params: ['grid'],
   starterCode: {
-    javascript: `/**
- * @param {number[][]} grid
- * @return {number}
- */
-function minimumArea(grid) {
-
+    javascript: `function minimumArea(grid) {
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+  for (let r = 0; r < grid.length; r++) {
+    for (let c = 0; c < grid[r].length; c++) {
+      if (grid[r][c] === 1) {
+        minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+        minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+      }
+    }
+  }
+  return (maxR - minR + 1) * (maxC - minC + 1);
 }`,
     typescript: `function minimumArea(grid: number[][]): number {
-
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
+  for (let r = 0; r < grid.length; r++) {
+    for (let c = 0; c < grid[r]!.length; c++) {
+      if (grid[r]![c] === 1) {
+        minR = Math.min(minR, r); maxR = Math.max(maxR, r);
+        minC = Math.min(minC, c); maxC = Math.max(maxC, c);
+      }
+    }
+  }
+  return (maxR - minR + 1) * (maxC - minC + 1);
 }`,
     python: `def minimumArea(grid: list[list[int]]) -> int:
-    pass
-`,
+    ones = [(r, c) for r in range(len(grid)) for c in range(len(grid[r])) if grid[r][c] == 1]
+    min_r = min(r for r, _ in ones)
+    max_r = max(r for r, _ in ones)
+    min_c = min(c for _, c in ones)
+    max_c = max(c for _, c in ones)
+    return (max_r - min_r + 1) * (max_c - min_c + 1)`,
   },
   visibleTests: [
     { args: [[[0, 1, 0], [1, 0, 1]]], expected: 6 },

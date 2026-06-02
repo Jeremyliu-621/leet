@@ -42,15 +42,60 @@ Given two nodes \`node1\` and \`node2\`, find the node \`x\` reachable from **bo
   params: ['edges', 'node1', 'node2'],
   starterCode: {
     javascript: `function closestMeetingNode(edges, node1, node2) {
-  // return node minimizing max distance from both node1 and node2
-
+  const n = edges.length;
+  const bfs = (start) => {
+    const d = Array(n).fill(-1);
+    let cur = start, step = 0;
+    while (cur !== -1 && d[cur] === -1) { d[cur] = step++; cur = edges[cur]; }
+    return d;
+  };
+  const d1 = bfs(node1), d2 = bfs(node2);
+  let res = -1, best = Infinity;
+  for (let i = 0; i < n; i++) {
+    if (d1[i] !== -1 && d2[i] !== -1) {
+      const mx = Math.max(d1[i], d2[i]);
+      if (mx < best) { best = mx; res = i; }
+    }
+  }
+  return res;
 }`,
-    typescript: "function closestMeetingNode(edges: number[], node1: number, node2: number): number {\n  // return node minimizing max distance from both node1 and node2\n\n}",
-
+    typescript: `function closestMeetingNode(edges: number[], node1: number, node2: number): number {
+  const n = edges.length;
+  const bfs = (start: number) => {
+    const d = Array(n).fill(-1) as number[];
+    let cur = start, step = 0;
+    while (cur !== -1 && d[cur] === -1) { d[cur] = step++; cur = edges[cur]!; }
+    return d;
+  };
+  const d1 = bfs(node1), d2 = bfs(node2);
+  let res = -1, best = Infinity;
+  for (let i = 0; i < n; i++) {
+    if (d1[i] !== -1 && d2[i] !== -1) {
+      const mx = Math.max(d1[i]!, d2[i]!);
+      if (mx < best) { best = mx; res = i; }
+    }
+  }
+  return res;
+}`,
     python: `def closestMeetingNode(edges: list, node1: int, node2: int) -> int:
-    # return node minimizing max distance from both node1 and node2
-    pass
-`,
+    n = len(edges)
+    def bfs(start):
+        d = [-1] * n
+        cur, step = start, 0
+        while cur != -1 and d[cur] == -1:
+            d[cur] = step
+            step += 1
+            cur = edges[cur]
+        return d
+    d1, d2 = bfs(node1), bfs(node2)
+    res, best = -1, float('inf')
+    for i in range(n):
+        if d1[i] != -1 and d2[i] != -1:
+            mx = max(d1[i], d2[i])
+            if mx < best:
+                best = mx
+                res = i
+    return res`,
   },
   visibleTests: [
     { args: [[2, 2, 3, -1], 0, 1], expected: 2 },

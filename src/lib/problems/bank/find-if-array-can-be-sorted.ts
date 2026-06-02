@@ -42,15 +42,48 @@ Return \`true\` if you can sort the array, or \`false\` otherwise.
   params: ['nums'],
   starterCode: {
     javascript: `function canSortArray(nums) {
-  // return true if array can be sorted by swapping adjacent same-popcount elements
-
+  const pop = n => { let c = 0; while (n) { c += n & 1; n >>= 1; } return c; };
+  let prevMax = -Infinity, i = 0;
+  while (i < nums.length) {
+    let j = i, bits = pop(nums[i]), gMin = nums[i], gMax = nums[i];
+    while (j < nums.length && pop(nums[j]) === bits) {
+      gMin = Math.min(gMin, nums[j]); gMax = Math.max(gMax, nums[j]); j++;
+    }
+    if (gMin < prevMax) return false;
+    prevMax = gMax; i = j;
+  }
+  return true;
 }`,
-    typescript: "function canSortArray(nums: number[]): boolean {\n  // return true if array can be sorted by swapping adjacent same-popcount elements\n\n}",
-
+    typescript: `function canSortArray(nums: number[]): boolean {
+  const pop = (n: number) => { let c = 0; while (n) { c += n & 1; n >>= 1; } return c; };
+  let prevMax = -Infinity, i = 0;
+  while (i < nums.length) {
+    let j = i, bits = pop(nums[i]!), gMin = nums[i]!, gMax = nums[i]!;
+    while (j < nums.length && pop(nums[j]!) === bits) {
+      gMin = Math.min(gMin, nums[j]!); gMax = Math.max(gMax, nums[j]!); j++;
+    }
+    if (gMin < prevMax) return false;
+    prevMax = gMax; i = j;
+  }
+  return true;
+}`,
     python: `def canSortArray(nums: list) -> bool:
-    # return true if array can be sorted by swapping adjacent same-popcount elements
-    pass
-`,
+    def pop(n):
+        return bin(n).count('1')
+    prev_max = float('-inf')
+    i = 0
+    while i < len(nums):
+        j, bits = i, pop(nums[i])
+        g_min, g_max = nums[i], nums[i]
+        while j < len(nums) and pop(nums[j]) == bits:
+            g_min = min(g_min, nums[j])
+            g_max = max(g_max, nums[j])
+            j += 1
+        if g_min < prev_max:
+            return False
+        prev_max = g_max
+        i = j
+    return True`,
   },
   visibleTests: [
     { args: [[8, 4, 2, 30, 15]], expected: true },

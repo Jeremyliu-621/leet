@@ -37,14 +37,19 @@ Return the array \`[1, 2, ..., n-1, -(n*(n-1)/2)]\` so that when \`n = 1\` the r
   params: ['n'],
   starterCode: {
     javascript: `function sumZero(n) {
-
-}
-`,
-    typescript: "function sumZero(n: number): number[] {\n\n}",
-
+  const arr = Array.from({ length: n - 1 }, (_, i) => i + 1);
+  arr.push(-(n * (n - 1) / 2));
+  return arr;
+}`,
+    typescript: `function sumZero(n: number): number[] {
+  const arr = Array.from({ length: n - 1 }, (_, i) => i + 1);
+  arr.push(-(n * (n - 1) / 2));
+  return arr;
+}`,
     python: `def sumZero(n):
-    pass
-`,
+    arr = list(range(1, n))
+    arr.append(-(n * (n - 1) // 2))
+    return arr`,
   },
   visibleTests: [
     { args: [3], expected: [1, 2, -3] },

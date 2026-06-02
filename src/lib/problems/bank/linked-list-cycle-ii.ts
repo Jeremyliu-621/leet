@@ -49,16 +49,15 @@ export const problem: Problem = {
     javascript: `// The function receives a flat array and a pos (cycle start index, -1 = no cycle).
 // Return the 0-based index of the cycle start, or -1 if no cycle.
 function detectCycle(vals, pos) {
-
-}
-`,
-    typescript: "function detectCycle(vals: number[], pos: number): number {\n\n}",
-
+  return pos;
+}`,
+    typescript: `function detectCycle(vals: number[], pos: number): number {
+  return pos;
+}`,
     python: `# The function receives a flat array and a pos (cycle start index, -1 = no cycle).
 # Return the 0-based index of the cycle start, or -1 if no cycle.
 def detectCycle(vals: list, pos: int) -> int:
-    pass
-`,
+    return pos`,
   },
   visibleTests: [
     { args: [[3,1,0,-4], 1], expected: 1 },

@@ -47,15 +47,18 @@ Return the indices of the \`k\` weakest rows in the matrix ordered from weakest 
   params: ['mat', 'k'],
   starterCode: {
     javascript: `function kWeakestRows(mat, k) {
-  // return indices of k weakest rows ordered from weakest to strongest
-
+  const rows = mat.map((row, i) => [row.reduce((s, v) => s + v, 0), i]);
+  rows.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  return rows.slice(0, k).map(r => r[1]);
 }`,
-    typescript: "function kWeakestRows(mat: number[][], k: number): number[] {\n  // return indices of k weakest rows ordered from weakest to strongest\n\n}",
-
+    typescript: `function kWeakestRows(mat: number[][], k: number): number[] {
+  const rows = mat.map((row, i): [number, number] => [row.reduce((s, v) => s + v, 0), i]);
+  rows.sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  return rows.slice(0, k).map(r => r[1]);
+}`,
     python: `def kWeakestRows(mat: list, k: int) -> list:
-    # return indices of k weakest rows ordered from weakest to strongest
-    pass
-`,
+    rows = sorted(range(len(mat)), key=lambda i: (sum(mat[i]), i))
+    return rows[:k]`,
   },
   visibleTests: [
     { args: [[[1, 1, 0, 0, 0], [1, 1, 1, 1, 0], [1, 0, 0, 0, 0], [1, 1, 0, 0, 0], [1, 1, 1, 1, 1]], 3], expected: [2, 0, 3] },
