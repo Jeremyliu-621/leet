@@ -3352,6 +3352,12 @@ import { problem as applyOperationsMaximizeScore } from './apply-operations-to-m
 import { problem as sumOfGoodSubsequences } from './find-the-sum-of-good-subsequences';
 import { problem as countKConstraintSubstringsII } from './count-substrings-that-satisfy-k-constraint-ii';
 import { problem as countBalancedPermutations } from './count-number-of-balanced-permutations';
+// batch 254 — segment-tree/medium×2, binary-indexed-tree/hard, trie/easy, trie/medium
+import { problem as rangeSumSegTree } from './range-sum-query-segment-tree';
+import { problem as rangeMinSegTree } from './range-min-query-segment-tree';
+import { problem as countInversionsBit } from './count-inversions-bit';
+import { problem as prefixCountTrie } from './prefix-count-trie';
+import { problem as lcpTrie } from './longest-common-prefix-trie';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6712,6 +6718,12 @@ export const problems: readonly Problem[] = [
   palindromePartitioningIv,
   constructDistancedSequence,
   findTheLongestHappyString,
+  // batch 254 — segment-tree, binary-indexed-tree, trie
+  rangeSumSegTree,
+  rangeMinSegTree,
+  countInversionsBit,
+  prefixCountTrie,
+  lcpTrie,
   // batch 267
   cellsInRangeOnSpreadsheet,
   diffOnesZerosRowCol,

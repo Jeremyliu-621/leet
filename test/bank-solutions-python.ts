@@ -47341,4 +47341,135 @@ def findXSum(nums, k, x):
                     s2_count += 1
     return s2_count // n2
 `,
+
+  'range-sum-query-segment-tree': `def rangeSumSegTree(nums, ops):
+    n = len(nums)
+    tree = [0] * (4 * n)
+    def build(node, start, end):
+        if start == end:
+            tree[node] = nums[start]
+            return
+        mid = (start + end) // 2
+        build(2 * node, start, mid)
+        build(2 * node + 1, mid + 1, end)
+        tree[node] = tree[2 * node] + tree[2 * node + 1]
+    def update(node, start, end, idx, val):
+        if start == end:
+            tree[node] = val
+            return
+        mid = (start + end) // 2
+        if idx <= mid:
+            update(2 * node, start, mid, idx, val)
+        else:
+            update(2 * node + 1, mid + 1, end, idx, val)
+        tree[node] = tree[2 * node] + tree[2 * node + 1]
+    def query(node, start, end, l, r):
+        if r < start or end < l:
+            return 0
+        if l <= start and end <= r:
+            return tree[node]
+        mid = (start + end) // 2
+        return query(2 * node, start, mid, l, r) + query(2 * node + 1, mid + 1, end, l, r)
+    build(1, 0, n - 1)
+    results = []
+    for op in ops:
+        if op[0] == "update":
+            nums[op[1]] = op[2]
+            update(1, 0, n - 1, op[1], op[2])
+        else:
+            results.append(query(1, 0, n - 1, op[1], op[2]))
+    return results
+`,
+
+  'range-min-query-segment-tree': `def rangeMinQuery(nums, queries):
+    n = len(nums)
+    tree = [float('inf')] * (4 * n)
+    def build(i, lo, hi):
+        if lo == hi:
+            tree[i] = nums[lo]
+            return
+        mid = (lo + hi) // 2
+        build(2 * i, lo, mid)
+        build(2 * i + 1, mid + 1, hi)
+        tree[i] = min(tree[2 * i], tree[2 * i + 1])
+    def query(i, lo, hi, l, r):
+        if r < lo or hi < l:
+            return float('inf')
+        if l <= lo and hi <= r:
+            return tree[i]
+        mid = (lo + hi) // 2
+        return min(query(2 * i, lo, mid, l, r), query(2 * i + 1, mid + 1, hi, l, r))
+    build(1, 0, n - 1)
+    return [query(1, 0, n - 1, l, r) for l, r in queries]
+`,
+
+  'count-inversions-bit': `def countInversions(nums):
+    sorted_unique = sorted(set(nums))
+    rank = {v: i + 1 for i, v in enumerate(sorted_unique)}
+    sz = len(sorted_unique)
+    bit = [0] * (sz + 1)
+    def update(i, d):
+        while i <= sz:
+            bit[i] += d
+            i += i & -i
+    def query(i):
+        s = 0
+        while i > 0:
+            s += bit[i]
+            i -= i & -i
+        return s
+    inv = 0
+    for i in range(len(nums) - 1, -1, -1):
+        r = rank[nums[i]]
+        inv += query(r - 1)
+        update(r, 1)
+    return inv
+`,
+
+  'prefix-count-trie': `def prefixCount(words, prefixes):
+    root = {}
+    for w in words:
+        node = root
+        for ch in w:
+            if ch not in node:
+                node[ch] = {"_count": 0}
+            node[ch]["_count"] += 1
+            node = node[ch]
+    results = []
+    for p in prefixes:
+        node = root
+        found = True
+        for ch in p:
+            if ch not in node:
+                found = False
+                break
+            node = node[ch]
+        results.append(node.get("_count", 0) if found else 0)
+    return results
+`,
+
+  'longest-common-prefix-trie': `def lcpTrie(words):
+    if not words:
+        return ""
+    root = {}
+    for w in words:
+        node = root
+        for ch in w:
+            if ch not in node:
+                node[ch] = {"_count": 0}
+            node[ch]["_count"] += 1
+            node = node[ch]
+    prefix = ""
+    node = root
+    while True:
+        keys = [k for k in node if k != "_count"]
+        if len(keys) != 1:
+            break
+        ch = keys[0]
+        if node[ch]["_count"] != len(words):
+            break
+        prefix += ch
+        node = node[ch]
+    return prefix
+`,
 };
