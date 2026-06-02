@@ -96,14 +96,36 @@ Trees are represented as level-order arrays where \`null\` indicates a missing c
     javascript: `// TreeNode and minDiffInBSTRunner wrapper are pre-defined.
 // Implement the function below:
 function minDiffInBST(root) {
-
+  let prev = null, ans = Infinity;
+  const inorder = node => {
+    if (!node) return;
+    inorder(node.left);
+    if (prev !== null) ans = Math.min(ans, node.val - prev);
+    prev = node.val;
+    inorder(node.right);
+  };
+  inorder(root);
+  return ans;
 }`,
-    typescript: "function minDiffInBSTRunner(arr: number[]): number {\n\n}",
-
+    typescript: `function minDiffInBSTRunner(arr: number[]): number {
+  const raw = arr as unknown as (number | null)[];
+  const vals = raw.filter((v): v is number => v != null).sort((a, b) => a - b);
+  let ans = Infinity;
+  for (let i = 1; i < vals.length; i++) ans = Math.min(ans, vals[i]! - vals[i-1]!);
+  return ans;
+}`,
     python: `# TreeNode and minDiffInBSTRunner wrapper are pre-defined.
 # Implement the function below:
 def minDiffInBST(root):
-    pass`,
+    res = [float('inf')]; prev = [None]
+    def inorder(node):
+        if not node: return
+        inorder(node.left)
+        if prev[0] is not None: res[0] = min(res[0], node.val - prev[0])
+        prev[0] = node.val
+        inorder(node.right)
+    inorder(root)
+    return res[0]`,
   },
   visibleTests: [
     { args: [[4,2,6,1,3]], expected: 1 },

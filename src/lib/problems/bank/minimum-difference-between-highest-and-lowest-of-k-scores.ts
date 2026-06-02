@@ -35,12 +35,21 @@ Return the **minimum** possible difference.`,
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function minimumDifference(nums, k) {
-
+  nums = [...nums].sort((a, b) => a - b);
+  let ans = Infinity;
+  for (let i = 0; i + k - 1 < nums.length; i++) ans = Math.min(ans, nums[i + k - 1] - nums[i]);
+  return ans;
 }`,
-    typescript: "function minimumDifference(nums: number[], k: number): number {\n\n}",
-
+    typescript: `function minimumDifference(nums: number[], k: number): number {
+  const sorted = [...nums].sort((a, b) => a - b);
+  let ans = Infinity;
+  for (let i = 0; i + k - 1 < sorted.length; i++) ans = Math.min(ans, sorted[i + k - 1]! - sorted[i]!);
+  return ans;
+}`,
     python: `def minimumDifference(nums, k):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    nums = sorted(nums)
+    return min(nums[i + k - 1] - nums[i] for i in range(len(nums) - k + 1))`,
   },
   visibleTests: [
     { args: [[90], 1], expected: 0 },

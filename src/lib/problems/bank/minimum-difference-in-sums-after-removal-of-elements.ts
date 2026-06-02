@@ -41,12 +41,67 @@ Return the **minimum possible difference**.
   params: ['nums'],
   starterCode: {
     javascript: `function minimumDifference(nums) {
-
+  const N = nums.length / 3 | 0;
+  const prefMin = new Array(3 * N + 1), suffMax = new Array(3 * N + 1);
+  const mxH = []; let ps = 0;
+  const mxUp = i => { while (i > 0) { const p = (i-1)>>1; if (mxH[p] >= mxH[i]) break; [mxH[p],mxH[i]]=[mxH[i],mxH[p]]; i=p; } };
+  const mxDn = () => { let i=0,n=mxH.length; while(true){let m=i,l=2*i+1,r=2*i+2;if(l<n&&mxH[l]>mxH[m])m=l;if(r<n&&mxH[r]>mxH[m])m=r;if(m===i)break;[mxH[m],mxH[i]]=[mxH[i],mxH[m]];i=m;} };
+  for (let i = 0; i < 2*N; i++) {
+    mxH.push(nums[i]); ps += nums[i]; mxUp(mxH.length-1);
+    if (mxH.length > N) { ps -= mxH[0]; mxH[0] = mxH.pop(); mxDn(); }
+    if (i+1 >= N) prefMin[i+1] = ps;
+  }
+  const mnH = []; let ss = 0;
+  const mnUp = i => { while (i > 0) { const p = (i-1)>>1; if (mnH[p] <= mnH[i]) break; [mnH[p],mnH[i]]=[mnH[i],mnH[p]]; i=p; } };
+  const mnDn = () => { let i=0,n=mnH.length; while(true){let m=i,l=2*i+1,r=2*i+2;if(l<n&&mnH[l]<mnH[m])m=l;if(r<n&&mnH[r]<mnH[m])m=r;if(m===i)break;[mnH[m],mnH[i]]=[mnH[i],mnH[m]];i=m;} };
+  for (let i = 3*N-1; i >= N; i--) {
+    mnH.push(nums[i]); ss += nums[i]; mnUp(mnH.length-1);
+    if (mnH.length > N) { ss -= mnH[0]; mnH[0] = mnH.pop(); mnDn(); }
+    if (i <= 2*N) suffMax[i] = ss;
+  }
+  let ans = Infinity;
+  for (let m = N; m <= 2*N; m++) ans = Math.min(ans, prefMin[m] - suffMax[m]);
+  return ans;
 }`,
-    typescript: "function minimumDifference(nums: number[]): number {\n\n}",
-
+    typescript: `function minimumDifference(nums: number[]): number {
+  const N = Math.floor(nums.length / 3);
+  const prefMin: number[] = new Array(3 * N + 1), suffMax: number[] = new Array(3 * N + 1);
+  const mxH: number[] = []; let ps = 0;
+  const mxUp = (i: number) => { while (i > 0) { const p = (i-1)>>1; if (mxH[p]! >= mxH[i]!) break; [mxH[p],mxH[i]]=[mxH[i]!,mxH[p]!]; i=p; } };
+  const mxDn = () => { let i=0,n=mxH.length; while(true){let m=i,l=2*i+1,r=2*i+2;if(l<n&&mxH[l]!>mxH[m]!)m=l;if(r<n&&mxH[r]!>mxH[m]!)m=r;if(m===i)break;[mxH[m],mxH[i]]=[mxH[i]!,mxH[m]!];i=m;} };
+  for (let i = 0; i < 2*N; i++) {
+    mxH.push(nums[i]!); ps += nums[i]!; mxUp(mxH.length-1);
+    if (mxH.length > N) { ps -= mxH[0]!; mxH[0] = mxH.pop()!; mxDn(); }
+    if (i+1 >= N) prefMin[i+1] = ps;
+  }
+  const mnH: number[] = []; let ss = 0;
+  const mnUp = (i: number) => { while (i > 0) { const p = (i-1)>>1; if (mnH[p]! <= mnH[i]!) break; [mnH[p],mnH[i]]=[mnH[i]!,mnH[p]!]; i=p; } };
+  const mnDn = () => { let i=0,n=mnH.length; while(true){let m=i,l=2*i+1,r=2*i+2;if(l<n&&mnH[l]!<mnH[m]!)m=l;if(r<n&&mnH[r]!<mnH[m]!)m=r;if(m===i)break;[mnH[m],mnH[i]]=[mnH[i]!,mnH[m]!];i=m;} };
+  for (let i = 3*N-1; i >= N; i--) {
+    mnH.push(nums[i]!); ss += nums[i]!; mnUp(mnH.length-1);
+    if (mnH.length > N) { ss -= mnH[0]!; mnH[0] = mnH.pop()!; mnDn(); }
+    if (i <= 2*N) suffMax[i] = ss;
+  }
+  let ans = Infinity;
+  for (let m = N; m <= 2*N; m++) ans = Math.min(ans, prefMin[m]! - suffMax[m]!);
+  return ans;
+}`,
     python: `def minimumDifference(nums):
-    pass`,
+    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
+    import heapq
+    N = len(nums) // 3
+    pref_min = [0] * (3 * N + 1); suff_max = [0] * (3 * N + 1)
+    h = []; ps = 0
+    for i in range(2 * N):
+        heapq.heappush(h, -nums[i]); ps += nums[i]
+        if len(h) > N: ps += heapq.heappop(h)
+        if i + 1 >= N: pref_min[i + 1] = ps
+    h = []; ss = 0
+    for i in range(3 * N - 1, N - 1, -1):
+        heapq.heappush(h, nums[i]); ss += nums[i]
+        if len(h) > N: ss -= heapq.heappop(h)
+        if i <= 2 * N: suff_max[i] = ss
+    return min(pref_min[m] - suff_max[m] for m in range(N, 2 * N + 1))`,
   },
   visibleTests: [
     { args: [[3, 1, 2]], expected: -1 },

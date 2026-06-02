@@ -41,10 +41,16 @@ function findTheDistanceValue(arr1, arr2, d) {
   functionName: 'findTheDistanceValue',
   params: ['arr1', 'arr2', 'd'],
   starterCode: {
-    javascript: 'function findTheDistanceValue(arr1, arr2, d) {\n  \n}\n',
-    typescript: "function findTheDistanceValue(arr1: number[], arr2: number[], d: number): number {\n  \n}",
-
-    python: 'def findTheDistanceValue(arr1, arr2, d):\n    pass\n',
+    javascript: `function findTheDistanceValue(arr1, arr2, d) {
+  return arr1.filter(v => arr2.every(u => Math.abs(v - u) > d)).length;
+}`,
+    typescript: `function findTheDistanceValue(arr1: number[], arr2: number[], d: number): number {
+  return arr1.filter(v => arr2.every(u => Math.abs(v - u) > d)).length;
+}`,
+    python: `def findTheDistanceValue(arr1, arr2, d):
+    if hasattr(arr1, 'to_py'): arr1 = list(arr1.to_py())
+    if hasattr(arr2, 'to_py'): arr2 = list(arr2.to_py())
+    return sum(1 for v in arr1 if all(abs(v - u) > d for u in arr2))`,
   },
   visibleTests: [
     { args: [[4, 5, 8], [10, 9, 1, 8], 2], expected: 2 },
