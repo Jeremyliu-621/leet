@@ -8,9 +8,12 @@
 
 **Last updated:** 2026-06-02
 **Current phase:** Phase 13 — Post-MVP polish
-**Current focus:** Bank at **2975** problems; 9285 tests green. Batch 289 complete.
+**Current focus:** Bank at **2979** problems; 9297 tests green. Batch 287b (our session) + Batch 289 complete.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` green.
 **Next up:** Bank growth (batch 290+); starter backfill; UX polish.
+
+### feat(bank): batch 287b — num-different-integers, max-elegance-k-subseq, min-time-remove-cars, min-buckets-rainwater (2026-06-02)
+Four new problems: `number-of-different-integers-in-a-string` (easy/strings+hash-map, LC 1805 — split on non-digits, strip leading zeros, Set dedup; O(n)), `maximum-elegance-of-a-k-length-subsequence` (hard/arrays+heap, LC 2813 — sort desc by profit; greedily take top-k; swap duplicate-category items for new-category ones from remaining; O(n log n)), `minimum-time-to-remove-all-cars-containing-illegal-goods` (hard/strings+dynamic-programming, LC 2167 — left/right DP: left[i]=min(left[i-1]+2*(s[i]=='1'), i+1); split-point minimization; O(n)), `minimum-number-of-buckets-required-to-collect-rainwater` (medium/strings+simulation, LC 2086 — greedy left-to-right; prefer placing bucket to right of each house; O(n)). Bank at **2979**; 9297 tests.
 
 ### feat(bank): batch 289 — count-subarrays-max-bitwise-and, number-of-ways-express-n-sum-powers, minimum-cost-ropes, find-number-good-pairs-array (2026-06-02)
 Four new problems: `count-subarrays-with-maximum-bitwise-and` (medium/arrays+bit-manipulation — max AND = max(nums); count consecutive runs of max elements; group of length L → L*(L+1)/2 subarrays; O(n)), `number-of-ways-to-express-n-as-sum-of-powers` (medium/dp+math — subset-sum knapsack DP with BigInt modular arithmetic; iterate i from 1 until i^x>n; backward scan dp[j]=(dp[j]+dp[j-v])%MOD; O(n^(1/x)*n)), `minimum-cost-of-ropes` (medium/heap+simulation — Huffman greedy: always merge 2 smallest ropes; cost=sum of all merges; JS uses sorted-array with binary search insert; Python uses heapq; O(n log n)), `find-the-number-of-good-pairs-in-an-array` (medium/arrays+hash-map — build set of nums1; for each (i,j) check divisibility and quotient membership; O(n²)). Bank at **2975**; 9285 tests.
