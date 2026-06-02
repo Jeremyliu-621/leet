@@ -49707,4 +49707,75 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return s[i:]
 `,
 
+  'create-binary-tree-from-descriptions': `def createBinaryTree(descriptions):
+    if hasattr(descriptions, 'to_py'): descriptions = descriptions.to_py()
+    descriptions = [[int(x) for x in row] for row in descriptions]
+    nodes = {}
+    children = set()
+    def get(v):
+        if v not in nodes: nodes[v] = [v, None, None]
+        return nodes[v]
+    for p, c, is_left in descriptions:
+        parent, child = get(p), get(c)
+        if is_left: parent[1] = child
+        else: parent[2] = child
+        children.add(c)
+    def to_arr(node):
+        if node is None: return []
+        result = []; q = [node]
+        while q:
+            n = q.pop(0)
+            if n is None: result.append(None)
+            else:
+                result.append(n[0]); q.append(n[1]); q.append(n[2])
+        while result and result[-1] is None: result.pop()
+        return result
+    for p, _, _ in descriptions:
+        if p not in children:
+            return to_arr(nodes[p])
+    return []
+`,
+
+  'lexicographically-smallest-array-by-swapping-elements': `def lexicographicallySmallestArray(nums, limit):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; limit = int(limit)
+    n = len(nums)
+    sorted_pairs = sorted(enumerate(nums), key=lambda x: x[1])
+    result = [0] * n
+    i = 0
+    while i < n:
+        j = i + 1
+        while j < n and sorted_pairs[j][1] - sorted_pairs[j - 1][1] <= limit:
+            j += 1
+        group = sorted_pairs[i:j]
+        indices = sorted(x[0] for x in group)
+        values = [x[1] for x in group]
+        for k, idx in enumerate(indices):
+            result[idx] = values[k]
+        i = j
+    return result
+`,
+
+  'count-good-arrays': `def countGoodArrays(n, m, k):
+    n = int(n); m = int(m); k = int(k)
+    MOD = 10**9 + 7
+    N = n - 1
+    if k > N:
+        return 0
+    fact = [1] * (N + 1)
+    for i in range(1, N + 1):
+        fact[i] = fact[i - 1] * i % MOD
+    def power(base, exp, mod):
+        result = 1; base %= mod
+        while exp > 0:
+            if exp & 1: result = result * base % mod
+            base = base * base % mod; exp >>= 1
+        return result
+    inv_fact_N = power(fact[N], MOD - 2, MOD)
+    inv_fact_k = power(fact[k], MOD - 2, MOD)
+    inv_fact_Nk = power(fact[N - k], MOD - 2, MOD)
+    comb = fact[N] * inv_fact_k % MOD * inv_fact_Nk % MOD
+    return comb * m % MOD * power(m - 1, N - k, MOD) % MOD
+`,
+
 };

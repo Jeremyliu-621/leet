@@ -50940,4 +50940,69 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return s.slice(i);
   },
 
+
+  'create-binary-tree-from-descriptions': (...args: unknown[]) => {
+    const descriptions = args[0] as number[][];
+    const nodes = new Map<number, _TN>();
+    const children = new Set<number>();
+    const get = (val: number): _TN => {
+      if (!nodes.has(val)) nodes.set(val, { v: val, l: null, r: null });
+      return nodes.get(val)!;
+    };
+    for (const desc of descriptions) {
+      const p = desc[0]!, c = desc[1]!, isLeft = desc[2]!;
+      const parent = get(p), child = get(c);
+      if (isLeft) parent.l = child; else parent.r = child;
+      children.add(c);
+    }
+    for (const desc of descriptions) {
+      if (!children.has(desc[0]!)) return _treeToArr(nodes.get(desc[0]!)!);
+    }
+    return [];
+  },
+
+  'lexicographically-smallest-array-by-swapping-elements': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const limit = args[1] as number;
+    const n = nums.length;
+    const sorted = nums.map((v, i) => [v, i] as [number, number]).sort((a, b) => a[0] - b[0]);
+    const result = new Array<number>(n);
+    let i = 0;
+    while (i < n) {
+      let j = i + 1;
+      while (j < n && sorted[j]![0] - sorted[j - 1]![0] <= limit) j++;
+      const group = sorted.slice(i, j);
+      const indices = group.map(x => x[1]).sort((a, b) => a - b);
+      const values = group.map(x => x[0]);
+      for (let ki = 0; ki < indices.length; ki++) result[indices[ki]!] = values[ki]!;
+      i = j;
+    }
+    return result;
+  },
+
+  'count-good-arrays': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const m = args[1] as number;
+    const k = args[2] as number;
+    const MOD = 1_000_000_007n;
+    const N = n - 1;
+    if (k > N) return 0;
+    const fact = new Array<bigint>(N + 1);
+    fact[0] = 1n;
+    for (let i = 1; i <= N; i++) fact[i] = fact[i - 1]! * BigInt(i) % MOD;
+    function power(base: bigint, exp: bigint, mod: bigint): bigint {
+      let result = 1n; base = base % mod;
+      while (exp > 0n) {
+        if (exp & 1n) result = result * base % mod;
+        base = base * base % mod; exp >>= 1n;
+      }
+      return result;
+    }
+    const invk = power(fact[k]!, MOD - 2n, MOD);
+    const invNk = power(fact[N - k]!, MOD - 2n, MOD);
+    const comb = fact[N]! * invk % MOD * invNk % MOD;
+    const ways = comb * BigInt(m) % MOD * power(BigInt(m - 1), BigInt(N - k), MOD) % MOD;
+    return Number(ways);
+  },
+
 };

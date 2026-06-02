@@ -3481,6 +3481,10 @@ import { problem as maximumWhiteTilesCoveredByACarpet } from './maximum-white-ti
 import { problem as minimumTimeToMakeArraySumAtMostX } from './minimum-time-to-make-array-sum-at-most-x';
 import { problem as differenceOfSumAndDigitSum } from './difference-between-element-sum-and-digit-sum-of-an-array';
 import { problem as countMentionsPerUser } from './count-mentions-per-user';
+// batch 297
+import { problem as lexicographicallySmallestArraySwapping } from './lexicographically-smallest-array-by-swapping-elements';
+import { problem as countGoodArrays } from './count-good-arrays';
+import { problem as createBinaryTreeFromDescriptions } from './create-binary-tree-from-descriptions';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -7001,4 +7005,8 @@ export const problems: readonly Problem[] = [
   maximumProfitTradingStocks,
   minimizeLengthArrayOps,
   countHousesCertainDistance,
+  // batch 297
+  lexicographicallySmallestArraySwapping,
+  countGoodArrays,
+  createBinaryTreeFromDescriptions,
 ];
