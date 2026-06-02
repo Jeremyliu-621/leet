@@ -42,11 +42,25 @@ Return the **minimum number of seconds** required to break all \`n\` locks.`,
   functionName: 'findMinimumTime',
   params: ['strength'],
   starterCode: {
-    javascript: 'function findMinimumTime(strength) {\n  // your code here\n}\n',
-    typescript: `function findMinimumTime(strength: number[]): number {
-
+    javascript: `function findMinimumTime(strength) {
+  const sorted = [...strength].sort((a, b) => b - a);
+  const n = sorted.length;
+  let maxVal = 0;
+  for (let k = 0; k < n; k++) maxVal = Math.max(maxVal, (k + 1) * sorted[k]);
+  return n + maxVal;
 }`,
-    python: 'def findMinimumTime(strength):\n    # your code here\n    pass\n',
+    typescript: `function findMinimumTime(strength: number[]): number {
+  const sorted = [...strength].sort((a, b) => b - a);
+  const n = sorted.length;
+  let maxVal = 0;
+  for (let k = 0; k < n; k++) maxVal = Math.max(maxVal, (k + 1) * sorted[k]!);
+  return n + maxVal;
+}`,
+    python: `def findMinimumTime(strength):
+    strength = list(strength.to_py()) if hasattr(strength, 'to_py') else list(strength)
+    s = sorted(strength, reverse=True)
+    n = len(s)
+    return n + max((k+1)*s[k] for k in range(n))`,
   },
   visibleTests: [
     { args: [[3, 4, 1]], expected: 9 },

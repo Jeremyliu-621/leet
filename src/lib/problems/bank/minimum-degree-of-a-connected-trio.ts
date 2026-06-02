@@ -39,14 +39,55 @@ Return the **minimum degree** of a connected trio, or \`-1\` if no trio exists.`
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function minTrioDegree(n, edges) {
-  // your code here
+  const adj = Array.from({length: n+1}, () => new Set());
+  const deg = new Array(n+1).fill(0);
+  for (const [u, v] of edges) {
+    adj[u].add(v); adj[v].add(u); deg[u]++; deg[v]++;
+  }
+  let best = Infinity;
+  for (let u = 1; u <= n; u++) {
+    for (const v of adj[u]) {
+      if (v <= u) continue;
+      for (const w of adj[u]) {
+        if (w <= v) continue;
+        if (adj[v].has(w)) best = Math.min(best, deg[u]+deg[v]+deg[w]-6);
+      }
+    }
+  }
+  return best === Infinity ? -1 : best;
 }`,
     typescript: `function minTrioDegree(n: number, edges: number[][]): number {
-  // your code here
+  const adj: Set<number>[] = Array.from({length: n+1}, () => new Set<number>());
+  const deg = new Array<number>(n+1).fill(0);
+  for (const [u, v] of edges) {
+    adj[u!]!.add(v!); adj[v!]!.add(u!); deg[u!]!++; deg[v!]!++;
+  }
+  let best = Infinity;
+  for (let u = 1; u <= n; u++) {
+    for (const v of adj[u]!) {
+      if (v <= u) continue;
+      for (const w of adj[u]!) {
+        if (w <= v) continue;
+        if (adj[v]!.has(w)) best = Math.min(best, deg[u]!+deg[v]!+deg[w]!-6);
+      }
+    }
+  }
+  return best === Infinity ? -1 : best;
 }`,
     python: `def minTrioDegree(n, edges):
-    # your code here
-    pass`,
+    if hasattr(edges, 'to_py'): edges = edges.to_py()
+    edges = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges]
+    adj = [set() for _ in range(n+1)]; deg = [0]*(n+1)
+    for u, v in edges:
+        adj[u].add(v); adj[v].add(u); deg[u]+=1; deg[v]+=1
+    best = float('inf')
+    for u in range(1, n+1):
+        for v in adj[u]:
+            if v <= u: continue
+            for w in adj[u]:
+                if w <= v: continue
+                if w in adj[v]: best = min(best, deg[u]+deg[v]+deg[w]-6)
+    return -1 if best == float('inf') else best`,
   },
   visibleTests: [
     { args: [6, [[1,2],[1,3],[3,2],[4,1],[5,2],[3,6]]], expected: 3 },

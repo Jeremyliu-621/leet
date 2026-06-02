@@ -43,13 +43,52 @@ The values you may assign to any cell are the digits \`0\` through \`9\`.`,
   params: ['grid'],
   starterCode: {
     javascript: `function minimumOperations(grid) {
-  // your code here
+  const m = grid.length, n = grid[0].length;
+  let dp = new Array(10).fill(0);
+  for (let j = 0; j < n; j++) {
+    const freq = new Array(10).fill(0);
+    for (let i = 0; i < m; i++) freq[grid[i][j]]++;
+    const cost = freq.map(f => m - f);
+    let min1 = Infinity, min2 = Infinity, argMin = 0;
+    for (let d = 0; d < 10; d++) {
+      if (dp[d] < min1) { min2 = min1; min1 = dp[d]; argMin = d; }
+      else if (dp[d] < min2) min2 = dp[d];
+    }
+    dp = cost.map((c, d) => c + (d === argMin ? min2 : min1));
+  }
+  return Math.min(...dp);
 }`,
-    typescript: "function minimumOperations(grid: number[][]): number {\n  // your code here\n}",
-
+    typescript: `function minimumOperations(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  let dp = new Array<number>(10).fill(0);
+  for (let j = 0; j < n; j++) {
+    const freq = new Array<number>(10).fill(0);
+    for (let i = 0; i < m; i++) freq[grid[i]![j]!]!++;
+    const cost = freq.map(f => m - f);
+    let min1 = Infinity, min2 = Infinity, argMin = 0;
+    for (let d = 0; d < 10; d++) {
+      if (dp[d]! < min1) { min2 = min1; min1 = dp[d]!; argMin = d; }
+      else if (dp[d]! < min2) min2 = dp[d]!;
+    }
+    dp = cost.map((c, d) => c + (d === argMin ? min2 : min1));
+  }
+  return Math.min(...dp);
+}`,
     python: `def minimumOperations(grid):
-    # your code here
-    pass`,
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r, 'to_py') else r)] for r in grid]
+    m, n = len(grid), len(grid[0])
+    dp = [0] * 10
+    for j in range(n):
+        freq = [0] * 10
+        for i in range(m): freq[grid[i][j]] += 1
+        cost = [m - f for f in freq]
+        min1 = min2 = float('inf'); arg_min = 0
+        for d in range(10):
+            if dp[d] < min1: min2 = min1; min1 = dp[d]; arg_min = d
+            elif dp[d] < min2: min2 = dp[d]
+        dp = [cost[d] + (min2 if d == arg_min else min1) for d in range(10)]
+    return min(dp)`,
   },
   visibleTests: [
     { args: [[[1, 0, 2], [1, 0, 2]]], expected: 0 },

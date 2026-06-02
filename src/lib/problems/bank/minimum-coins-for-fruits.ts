@@ -41,11 +41,37 @@ Return the **minimum** number of coins needed to acquire all \`n\` fruits.`,
   functionName: 'minimumCoins',
   params: ['prices'],
   starterCode: {
-    javascript: 'function minimumCoins(prices) {\n  // your code here\n}\n',
-    typescript: `function minimumCoins(prices: number[]): number {
-
+    javascript: `function minimumCoins(prices) {
+  const n = prices.length;
+  const dp = new Array(n + 2).fill(0);
+  for (let i = n; i >= 1; i--) {
+    dp[i] = Infinity;
+    for (let j = i + 1; j <= Math.min(2 * i + 1, n + 1); j++) {
+      dp[i] = Math.min(dp[i], prices[i - 1] + dp[j]);
+    }
+  }
+  return dp[1];
 }`,
-    python: 'def minimumCoins(prices):\n    # your code here\n    pass\n',
+    typescript: `function minimumCoins(prices: number[]): number {
+  const n = prices.length;
+  const dp = new Array<number>(n + 2).fill(0);
+  for (let i = n; i >= 1; i--) {
+    dp[i] = Infinity;
+    for (let j = i + 1; j <= Math.min(2 * i + 1, n + 1); j++) {
+      dp[i] = Math.min(dp[i]!, prices[i - 1]! + dp[j]!);
+    }
+  }
+  return dp[1]!;
+}`,
+    python: `def minimumCoins(prices):
+    prices = list(prices.to_py()) if hasattr(prices, 'to_py') else list(prices)
+    n = len(prices)
+    dp = [0] * (n + 2)
+    for i in range(n, 0, -1):
+        dp[i] = float('inf')
+        for j in range(i+1, min(2*i+2, n+2)):
+            dp[i] = min(dp[i], prices[i-1] + dp[j])
+    return dp[1]`,
   },
   visibleTests: [
     { args: [[3, 1, 2]], expected: 4 },

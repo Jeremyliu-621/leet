@@ -37,15 +37,58 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function halveArray(nums) {
-  // return minimum operations to reduce sum to at most half
-
+  const heap = [...nums];
+  const n = heap.length;
+  function sift(i) {
+    while (true) {
+      let m = i, l = 2*i+1, r = 2*i+2;
+      if (l < heap.length && heap[l] > heap[m]) m = l;
+      if (r < heap.length && heap[r] > heap[m]) m = r;
+      if (m === i) break;
+      [heap[i], heap[m]] = [heap[m], heap[i]]; i = m;
+    }
+  }
+  for (let i = (n >> 1) - 1; i >= 0; i--) sift(i);
+  const total = nums.reduce((a, b) => a + b, 0);
+  let need = total / 2, reduced = 0, ops = 0;
+  while (reduced < need) {
+    const top = heap[0] / 2;
+    heap[0] = top; sift(0); reduced += top; ops++;
+  }
+  return ops;
 }`,
-    typescript: "function halveArray(nums: number[]): number {\n  // return minimum operations to reduce sum to at most half\n\n}",
-
-    python: `def halveArray(nums: list) -> int:
-    # return minimum operations to reduce sum to at most half
-    pass
-`,
+    typescript: `function halveArray(nums: number[]): number {
+  const heap = [...nums];
+  const n = heap.length;
+  function sift(i: number) {
+    while (true) {
+      let m = i, l = 2*i+1, r = 2*i+2;
+      if (l < heap.length && heap[l]! > heap[m]!) m = l;
+      if (r < heap.length && heap[r]! > heap[m]!) m = r;
+      if (m === i) break;
+      [heap[i], heap[m]] = [heap[m]!, heap[i]!]; i = m;
+    }
+  }
+  for (let i = (n >> 1) - 1; i >= 0; i--) sift(i);
+  const total = nums.reduce((a, b) => a + b, 0);
+  let need = total / 2, reduced = 0, ops = 0;
+  while (reduced < need) {
+    const top = heap[0]! / 2;
+    heap[0] = top; sift(0); reduced += top; ops++;
+  }
+  return ops;
+}`,
+    python: `def halveArray(nums):
+    import heapq
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    total = sum(nums)
+    need = total / 2; reduced = 0; ops = 0
+    heap = [-x for x in nums]; heapq.heapify(heap)
+    while reduced < need:
+        top = -heapq.heappop(heap) / 2
+        heapq.heappush(heap, -top)
+        reduced += top; ops += 1
+    return ops`,
   },
   visibleTests: [
     { args: [[5,19,8,1]], expected: 3 },

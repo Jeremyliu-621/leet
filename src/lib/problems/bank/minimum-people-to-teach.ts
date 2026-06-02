@@ -45,17 +45,54 @@ Return the **minimum number of users** you need to teach so that every pair of f
   params: ['n', 'languages', 'friendships'],
   starterCode: {
     javascript: `function minimumTeachings(n, languages, friendships) {
-  // languages[i] is 1-indexed array of languages user i+1 speaks
-  // friendships[j] = [u, v] (1-indexed user pair)
-
+  const langSets = languages.map(l => new Set(l));
+  const needTeach = new Set();
+  for (const [u, v] of friendships) {
+    const su = langSets[u - 1], sv = langSets[v - 1];
+    let ok = false;
+    for (const l of su) if (sv.has(l)) { ok = true; break; }
+    if (!ok) { needTeach.add(u); needTeach.add(v); }
+  }
+  let best = needTeach.size;
+  for (let lang = 1; lang <= n; lang++) {
+    let count = 0;
+    for (const u of needTeach) if (!langSets[u - 1].has(lang)) count++;
+    best = Math.min(best, count);
+  }
+  return best;
 }`,
-    typescript: "function minimumTeachings(n: number, languages: number[][], friendships: number[][]): number {\n  // languages[i] is 1-indexed array of languages user i+1 speaks\n  // friendships[j] = [u, v] (1-indexed user pair)\n\n}",
-
+    typescript: `function minimumTeachings(n: number, languages: number[][], friendships: number[][]): number {
+  const langSets = languages.map(l => new Set(l));
+  const needTeach = new Set<number>();
+  for (const [u, v] of friendships) {
+    const su = langSets[u! - 1]!, sv = langSets[v! - 1]!;
+    let ok = false;
+    for (const l of su) if (sv.has(l)) { ok = true; break; }
+    if (!ok) { needTeach.add(u!); needTeach.add(v!); }
+  }
+  let best = needTeach.size;
+  for (let lang = 1; lang <= n; lang++) {
+    let count = 0;
+    for (const u of needTeach) if (!langSets[u - 1]!.has(lang)) count++;
+    best = Math.min(best, count);
+  }
+  return best;
+}`,
     python: `def minimumTeachings(n, languages, friendships):
-    # languages[i] is 1-indexed list of languages user i+1 speaks
-    # friendships[j] = [u, v] (1-indexed user pair)
-    pass
-`,
+    if hasattr(languages, 'to_py'): languages = languages.to_py()
+    if hasattr(friendships, 'to_py'): friendships = friendships.to_py()
+    languages = [[int(x) for x in (l.to_py() if hasattr(l,'to_py') else l)] for l in languages]
+    friendships = [[int(x) for x in (f.to_py() if hasattr(f,'to_py') else f)] for f in friendships]
+    lang_sets = [set(l) for l in languages]
+    need = set()
+    for u, v in friendships:
+        if not lang_sets[u-1] & lang_sets[v-1]:
+            need.add(u); need.add(v)
+    best = len(need)
+    for lang in range(1, n+1):
+        count = sum(1 for u in need if lang not in lang_sets[u-1])
+        best = min(best, count)
+    return best`,
   },
   visibleTests: [
     {

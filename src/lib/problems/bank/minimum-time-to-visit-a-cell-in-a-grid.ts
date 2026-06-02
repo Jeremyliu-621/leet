@@ -46,10 +46,87 @@ Output: -1
   functionName: 'minimumTime',
   params: ['grid'],
   starterCode: {
-    javascript: 'function minimumTime(grid) {\n  // your code here\n}\n',
-    typescript: "function minimumTime(grid: number[][]): number {\n  // your code here\n}",
-
-    python: 'def minimumTime(grid):\n    pass\n',
+    javascript: `function minimumTime(grid) {
+  const m = grid.length, n = grid[0].length;
+  if (grid[0][1] > 1 && grid[1][0] > 1) return -1;
+  const dist = Array.from({length: m}, () => new Array(n).fill(Infinity));
+  dist[0][0] = 0;
+  const heap = [[0, 0, 0]];
+  function push(x) {
+    heap.push(x); let i = heap.length - 1;
+    while (i > 0) { const p = (i-1)>>1; if (heap[p][0] <= heap[i][0]) break; [heap[p],heap[i]]=[heap[i],heap[p]]; i=p; }
+  }
+  function pop() {
+    const top = heap[0]; const last = heap.pop();
+    if (heap.length) { heap[0] = last; let i=0; while(true){ let m2=i,l=2*i+1,r=2*i+2; if(l<heap.length&&heap[l][0]<heap[m2][0])m2=l; if(r<heap.length&&heap[r][0]<heap[m2][0])m2=r; if(m2===i)break; [heap[i],heap[m2]]=[heap[m2],heap[i]]; i=m2; } }
+    return top;
+  }
+  const dirs = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (heap.length) {
+    const [t, r, c] = pop();
+    if (t > dist[r][c]) continue;
+    if (r === m-1 && c === n-1) return t;
+    for (const [dr, dc] of dirs) {
+      const nr = r+dr, nc = c+dc;
+      if (nr<0||nr>=m||nc<0||nc>=n) continue;
+      let nt = t + 1;
+      if (nt < grid[nr][nc]) { const extra = grid[nr][nc]-nt; nt = grid[nr][nc] + (extra%2); }
+      if (nt < dist[nr][nc]) { dist[nr][nc] = nt; push([nt, nr, nc]); }
+    }
+  }
+  return -1;
+}`,
+    typescript: `function minimumTime(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  if (grid[0]![1]! > 1 && grid[1]![0]! > 1) return -1;
+  const dist = Array.from({length: m}, () => new Array<number>(n).fill(Infinity));
+  dist[0]![0] = 0;
+  const heap: [number, number, number][] = [[0, 0, 0]];
+  function push(x: [number,number,number]) {
+    heap.push(x); let i = heap.length-1;
+    while (i>0) { const p=(i-1)>>1; if (heap[p]![0]<=heap[i]![0]) break; [heap[p],heap[i]]=[heap[i]!,heap[p]!]; i=p; }
+  }
+  function pop(): [number,number,number] {
+    const top=heap[0]!; const last=heap.pop()!;
+    if (heap.length) { heap[0]=last; let i=0; while(true){ let m2=i,l=2*i+1,r=2*i+2; if(l<heap.length&&heap[l]![0]<heap[m2]![0])m2=l; if(r<heap.length&&heap[r]![0]<heap[m2]![0])m2=r; if(m2===i)break; [heap[i],heap[m2]]=[heap[m2]!,heap[i]!]; i=m2; } }
+    return top;
+  }
+  const dirs: [number,number][] = [[0,1],[0,-1],[1,0],[-1,0]];
+  while (heap.length) {
+    const [t,r,c]=pop();
+    if (t>dist[r]![c]!) continue;
+    if (r===m-1&&c===n-1) return t;
+    for (const [dr,dc] of dirs) {
+      const nr=r+dr, nc=c+dc;
+      if (nr<0||nr>=m||nc<0||nc>=n) continue;
+      let nt=t+1;
+      if (nt<grid[nr]![nc]!) { const extra=grid[nr]![nc]!-nt; nt=grid[nr]![nc]!+(extra%2); }
+      if (nt<dist[nr]![nc]!) { dist[nr]![nc]=nt; push([nt,nr,nc]); }
+    }
+  }
+  return -1;
+}`,
+    python: `def minimumTime(grid):
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in grid]
+    m, n = len(grid), len(grid[0])
+    if grid[0][1] > 1 and grid[1][0] > 1: return -1
+    import heapq
+    dist = [[float('inf')]*n for _ in range(m)]; dist[0][0] = 0
+    heap = [(0,0,0)]
+    while heap:
+        t, r, c = heapq.heappop(heap)
+        if t > dist[r][c]: continue
+        if r == m-1 and c == n-1: return t
+        for dr, dc in ((0,1),(0,-1),(1,0),(-1,0)):
+            nr, nc = r+dr, c+dc
+            if 0<=nr<m and 0<=nc<n:
+                nt = t+1
+                if nt < grid[nr][nc]:
+                    extra = grid[nr][nc]-nt; nt = grid[nr][nc]+(extra%2)
+                if nt < dist[nr][nc]:
+                    dist[nr][nc] = nt; heapq.heappush(heap, (nt,nr,nc))
+    return -1`,
   },
   visibleTests: [
     { args: [[[0, 1, 3, 2], [5, 1, 2, 5], [4, 3, 8, 6]]], expected: 7 },

@@ -46,14 +46,71 @@ Return the **minimum cost** to make at least one valid path exist.`,
   params: ['grid'],
   starterCode: {
     javascript: `function minCost(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  const dist = Array.from({length: m}, () => new Array(n).fill(Infinity));
+  dist[0][0] = 0;
+  const drs = [0, 0, 1, -1], dcs = [1, -1, 0, 0]; // directions 1,2,3,4
+  const deque = [[0, 0]];
+  let head = 0;
+  while (head < deque.length) {
+    const [r, c] = deque[head++];
+    for (let d = 0; d < 4; d++) {
+      const nr = r + drs[d], nc = c + dcs[d];
+      if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+      const cost = grid[r][c] === d + 1 ? 0 : 1;
+      const nt = dist[r][c] + cost;
+      if (nt < dist[nr][nc]) {
+        dist[nr][nc] = nt;
+        if (cost === 0) deque.splice(head, 0, [nr, nc]);
+        else deque.push([nr, nc]);
+      }
+    }
+  }
+  return dist[m-1][n-1];
 }`,
     typescript: `function minCost(grid: number[][]): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  const dist = Array.from({length: m}, () => new Array<number>(n).fill(Infinity));
+  dist[0]![0] = 0;
+  const drs = [0, 0, 1, -1], dcs = [1, -1, 0, 0];
+  const deque: [number, number][] = [[0, 0]];
+  let head = 0;
+  while (head < deque.length) {
+    const [r, c] = deque[head++]!;
+    for (let d = 0; d < 4; d++) {
+      const nr = r + drs[d]!, nc = c + dcs[d]!;
+      if (nr < 0 || nr >= m || nc < 0 || nc >= n) continue;
+      const cost = grid[r]![c] === d + 1 ? 0 : 1;
+      const nt = dist[r]![c]! + cost;
+      if (nt < dist[nr]![nc]!) {
+        dist[nr]![nc] = nt;
+        if (cost === 0) deque.splice(head, 0, [nr, nc]);
+        else deque.push([nr, nc]);
+      }
+    }
+  }
+  return dist[m-1]![n-1]!;
 }`,
     python: `def minCost(grid):
-    pass
-`,
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in grid]
+    from collections import deque
+    m, n = len(grid), len(grid[0])
+    dist = [[float('inf')]*n for _ in range(m)]; dist[0][0] = 0
+    drs, dcs = [0,0,1,-1],[1,-1,0,0]
+    dq = deque([(0,0)])
+    while dq:
+        r, c = dq.popleft()
+        for d in range(4):
+            nr, nc = r+drs[d], c+dcs[d]
+            if 0<=nr<m and 0<=nc<n:
+                cost = 0 if grid[r][c] == d+1 else 1
+                nt = dist[r][c] + cost
+                if nt < dist[nr][nc]:
+                    dist[nr][nc] = nt
+                    if cost == 0: dq.appendleft((nr,nc))
+                    else: dq.append((nr,nc))
+    return dist[m-1][n-1]`,
   },
   visibleTests: [
     { args: [[[1, 1, 1, 1], [2, 2, 2, 2], [1, 1, 1, 1], [2, 2, 2, 2]]], expected: 3 },

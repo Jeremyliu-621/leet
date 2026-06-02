@@ -41,14 +41,87 @@ Return an integer array \`answer\` of size \`n\` where \`answer[i]\` is the mini
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function minEdgeReversals(n, edges) {
-  // your code here
+  const adj = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) {
+    adj[u].push([v, 0]); // forward: cost 0 (original direction)
+    adj[v].push([u, 1]); // backward: cost 1 (reversal needed)
+  }
+  const dp = new Array(n).fill(0);
+  // BFS from 0 to compute dp[0]
+  const vis = new Uint8Array(n);
+  vis[0] = 1;
+  const q = [0]; let qi = 0;
+  while (qi < q.length) {
+    const node = q[qi++];
+    for (const [next, cost] of adj[node]) {
+      if (!vis[next]) { vis[next] = 1; dp[0] += cost; q.push(next); }
+    }
+  }
+  // Re-root BFS
+  vis.fill(0); vis[0] = 1;
+  q.length = 0; q.push(0); qi = 0;
+  while (qi < q.length) {
+    const node = q[qi++];
+    for (const [next, cost] of adj[node]) {
+      if (!vis[next]) {
+        vis[next] = 1;
+        dp[next] = dp[node] + 1 - 2 * cost;
+        q.push(next);
+      }
+    }
+  }
+  return dp;
 }`,
     typescript: `function minEdgeReversals(n: number, edges: number[][]): number[] {
-  // your code here
+  const adj: [number, number][][] = Array.from({length: n}, () => []);
+  for (const [u, v] of edges) {
+    adj[u!]!.push([v!, 0]);
+    adj[v!]!.push([u!, 1]);
+  }
+  const dp = new Array<number>(n).fill(0);
+  const vis = new Uint8Array(n);
+  vis[0] = 1;
+  const q: number[] = [0]; let qi = 0;
+  while (qi < q.length) {
+    const node = q[qi++]!;
+    for (const [next, cost] of adj[node]!) {
+      if (!vis[next]) { vis[next] = 1; dp[0]! += cost; q.push(next); }
+    }
+  }
+  vis.fill(0); vis[0] = 1;
+  q.length = 0; q.push(0); qi = 0;
+  while (qi < q.length) {
+    const node = q[qi++]!;
+    for (const [next, cost] of adj[node]!) {
+      if (!vis[next]) {
+        vis[next] = 1;
+        dp[next] = dp[node]! + 1 - 2 * cost;
+        q.push(next);
+      }
+    }
+  }
+  return dp;
 }`,
     python: `def minEdgeReversals(n, edges):
-    # your code here
-    pass`,
+    if hasattr(edges, 'to_py'): edges = edges.to_py()
+    edges = [[int(x) for x in (e.to_py() if hasattr(e,'to_py') else e)] for e in edges]
+    from collections import deque
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append((v, 0)); adj[v].append((u, 1))
+    dp = [0]*n; vis = [False]*n; vis[0] = True
+    q = deque([0])
+    while q:
+        node = q.popleft()
+        for nxt, cost in adj[node]:
+            if not vis[nxt]: vis[nxt]=True; dp[0]+=cost; q.append(nxt)
+    vis = [False]*n; vis[0]=True; q=deque([0])
+    while q:
+        node = q.popleft()
+        for nxt, cost in adj[node]:
+            if not vis[nxt]:
+                vis[nxt]=True; dp[nxt]=dp[node]+1-2*cost; q.append(nxt)
+    return dp`,
   },
   visibleTests: [
     { args: [4, [[0, 1], [0, 2], [1, 3]]], expected: [0, 1, 1, 2] },

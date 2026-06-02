@@ -39,10 +39,40 @@ Output: [20]
   functionName: 'minOperations',
   params: ['nums', 'queries'],
   starterCode: {
-    javascript: 'function minOperations(nums, queries) {\n  // your code here\n}\n',
-    typescript: "function minOperations(nums: number[], queries: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def minOperations(nums, queries):\n    pass\n',
+    javascript: `function minOperations(nums, queries) {
+  const sorted = [...nums].sort((a, b) => a - b);
+  const n = sorted.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + sorted[i];
+  return queries.map(q => {
+    let lo = 0, hi = n;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid] < q) lo = mid + 1; else hi = mid; }
+    return q * lo - prefix[lo] + (prefix[n] - prefix[lo]) - q * (n - lo);
+  });
+}`,
+    typescript: `function minOperations(nums: number[], queries: number[]): number[] {
+  const sorted = [...nums].sort((a, b) => a - b);
+  const n = sorted.length;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + sorted[i]!;
+  return queries.map(q => {
+    let lo = 0, hi = n;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (sorted[mid]! < q) lo = mid + 1; else hi = mid; }
+    return q * lo - prefix[lo]! + (prefix[n]! - prefix[lo]!) - q * (n - lo);
+  });
+}`,
+    python: `def minOperations(nums, queries):
+    nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
+    queries = list(queries.to_py()) if hasattr(queries, 'to_py') else list(queries)
+    import bisect
+    s = sorted(nums); n = len(s)
+    pre = [0] * (n + 1)
+    for i in range(n): pre[i+1] = pre[i] + s[i]
+    res = []
+    for q in queries:
+        lo = bisect.bisect_left(s, q)
+        res.append(q*lo - pre[lo] + (pre[n]-pre[lo]) - q*(n-lo))
+    return res`,
   },
   visibleTests: [
     { args: [[3, 1, 6, 8], [1, 5]], expected: [14, 10] },

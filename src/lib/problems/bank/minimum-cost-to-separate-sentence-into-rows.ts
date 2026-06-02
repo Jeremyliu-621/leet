@@ -56,13 +56,50 @@ Minimum cost: **36**`,
   params: ['sentence', 'k'],
   starterCode: {
     javascript: `function minimumCost(sentence, k) {
-
+  const words = sentence.split(' ');
+  const n = words.length;
+  const dp = new Array(n + 1).fill(Infinity);
+  dp[n] = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    let chars = 0;
+    for (let j = i; j < n; j++) {
+      chars += words[j].length + (j > i ? 1 : 0);
+      if (chars > k) break;
+      const cost = j === n - 1 ? 0 : (k - chars) ** 2;
+      dp[i] = Math.min(dp[i], cost + dp[j + 1]);
+    }
+  }
+  return dp[0];
 }`,
-    typescript: "function minimumCost(sentence: string, k: number): number {\n\n}",
-
+    typescript: `function minimumCost(sentence: string, k: number): number {
+  const words = sentence.split(' ');
+  const n = words.length;
+  const dp = new Array<number>(n + 1).fill(Infinity);
+  dp[n] = 0;
+  for (let i = n - 1; i >= 0; i--) {
+    let chars = 0;
+    for (let j = i; j < n; j++) {
+      chars += words[j]!.length + (j > i ? 1 : 0);
+      if (chars > k) break;
+      const cost = j === n - 1 ? 0 : (k - chars) ** 2;
+      dp[i] = Math.min(dp[i]!, cost + dp[j + 1]!);
+    }
+  }
+  return dp[0]!;
+}`,
     python: `def minimumCost(sentence, k):
-    pass
-`,
+    if hasattr(sentence, 'to_py'): sentence = sentence.to_py()
+    words = sentence.split()
+    n = len(words)
+    dp = [float('inf')] * (n + 1); dp[n] = 0
+    for i in range(n - 1, -1, -1):
+        chars = 0
+        for j in range(i, n):
+            chars += len(words[j]) + (1 if j > i else 0)
+            if chars > k: break
+            cost = 0 if j == n-1 else (k - chars)**2
+            dp[i] = min(dp[i], cost + dp[j+1])
+    return dp[0]`,
   },
   visibleTests: [
     { args: ['i love leetcode', 12], expected: 36 },

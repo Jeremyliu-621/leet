@@ -42,14 +42,68 @@ Return the **minimum number of flips** to make \`grid\` satisfy both:
   params: ['grid'],
   starterCode: {
     javascript: `function minFlips(grid) {
-
+  const m = grid.length, n = grid[0].length;
+  let flips = 0;
+  for (let i = 0; i < (m >> 1); i++) {
+    for (let j = 0; j < (n >> 1); j++) {
+      const ones = grid[i][j] + grid[i][n-1-j] + grid[m-1-i][j] + grid[m-1-i][n-1-j];
+      flips += Math.min(ones, 4 - ones);
+    }
+  }
+  if (m & 1) {
+    const r = m >> 1;
+    for (let j = 0; j < (n >> 1); j++) {
+      if (grid[r][j] !== grid[r][n-1-j]) flips++;
+    }
+  }
+  if (n & 1) {
+    const c = n >> 1;
+    for (let i = 0; i < (m >> 1); i++) {
+      if (grid[i][c] !== grid[m-1-i][c]) flips++;
+    }
+  }
+  return flips;
 }`,
     typescript: `function minFlips(grid: number[][]): number {
-
+  const m = grid.length, n = grid[0]!.length;
+  let flips = 0;
+  for (let i = 0; i < (m >> 1); i++) {
+    for (let j = 0; j < (n >> 1); j++) {
+      const ones = grid[i]![j]! + grid[i]![n-1-j]! + grid[m-1-i]![j]! + grid[m-1-i]![n-1-j]!;
+      flips += Math.min(ones, 4 - ones);
+    }
+  }
+  if (m & 1) {
+    const r = m >> 1;
+    for (let j = 0; j < (n >> 1); j++) {
+      if (grid[r]![j] !== grid[r]![n-1-j]) flips++;
+    }
+  }
+  if (n & 1) {
+    const c = n >> 1;
+    for (let i = 0; i < (m >> 1); i++) {
+      if (grid[i]![c] !== grid[m-1-i]![c]) flips++;
+    }
+  }
+  return flips;
 }`,
     python: `def minFlips(grid):
-    pass
-`,
+    if hasattr(grid, 'to_py'): grid = grid.to_py()
+    grid = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in grid]
+    m, n = len(grid), len(grid[0]); flips = 0
+    for i in range(m >> 1):
+        for j in range(n >> 1):
+            ones = grid[i][j]+grid[i][n-1-j]+grid[m-1-i][j]+grid[m-1-i][n-1-j]
+            flips += min(ones, 4-ones)
+    if m & 1:
+        r = m >> 1
+        for j in range(n >> 1):
+            if grid[r][j] != grid[r][n-1-j]: flips += 1
+    if n & 1:
+        c = n >> 1
+        for i in range(m >> 1):
+            if grid[i][c] != grid[m-1-i][c]: flips += 1
+    return flips`,
   },
   visibleTests: [
     { args: [[[1, 0, 0], [0, 1, 0], [0, 0, 1]]], expected: 2 },

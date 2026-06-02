@@ -38,14 +38,43 @@ A subsequence of an array is a new array generated from the original array by de
   params: ['target', 'arr'],
   starterCode: {
     javascript: `function minOperations(target, arr) {
-  // your code here
+  const pos = new Map();
+  for (let i = 0; i < target.length; i++) pos.set(target[i], i);
+  const indices = [];
+  for (const x of arr) { if (pos.has(x)) indices.push(pos.get(x)); }
+  const tails = [];
+  for (const v of indices) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (tails[mid] < v) lo = mid + 1; else hi = mid; }
+    tails[lo] = v;
+  }
+  return target.length - tails.length;
 }`,
     typescript: `function minOperations(target: number[], arr: number[]): number {
-
+  const pos = new Map<number, number>();
+  for (let i = 0; i < target.length; i++) pos.set(target[i]!, i);
+  const indices: number[] = [];
+  for (const x of arr) { if (pos.has(x)) indices.push(pos.get(x)!); }
+  const tails: number[] = [];
+  for (const v of indices) {
+    let lo = 0, hi = tails.length;
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (tails[mid]! < v) lo = mid + 1; else hi = mid; }
+    tails[lo] = v;
+  }
+  return target.length - tails.length;
 }`,
     python: `def minOperations(target, arr):
-    # your code here
-    pass`,
+    target = list(target.to_py()) if hasattr(target, 'to_py') else list(target)
+    arr = list(arr.to_py()) if hasattr(arr, 'to_py') else list(arr)
+    import bisect
+    pos = {v: i for i, v in enumerate(target)}
+    indices = [pos[x] for x in arr if x in pos]
+    tails = []
+    for v in indices:
+        lo = bisect.bisect_left(tails, v)
+        if lo == len(tails): tails.append(v)
+        else: tails[lo] = v
+    return len(target) - len(tails)`,
   },
   visibleTests: [
     { args: [[5, 1, 3], [9, 4, 2, 3, 4]], expected: 2 },
