@@ -76,7 +76,7 @@ export function buildVerdict(tests: readonly TestCase[], response: RunResponse):
       verdicts.push({
         index: i,
         status: 'error',
-        input: '',
+        input: test ? formatArgs(test.args) : '',
         error: 'No result was produced for this test.',
         logs: [],
       });
