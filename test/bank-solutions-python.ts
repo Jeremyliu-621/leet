@@ -46429,6 +46429,32 @@ def placedCoins(edges, cost):
     return ans
 `,
 
+  // batch 278
+  'check-if-two-events-have-conflict': `def haveConflict(event1, event2):
+    return event1[0] <= event2[1] and event2[0] <= event1[1]
+`,
+
+  'count-good-substrings': `def countGoodSubstrings(s):
+    count = 0
+    for i in range(len(s) - 2):
+        if s[i] != s[i+1] and s[i+1] != s[i+2] and s[i] != s[i+2]:
+            count += 1
+    return count
+`,
+
+  'count-words-with-a-given-prefix': `def prefixCount(words, pref):
+    return sum(1 for w in words if w.startswith(pref))
+`,
+
+  'first-day-where-you-have-been-in-all-the-rooms': `def firstDayBeenInAllRooms(nextVisit):
+    MOD = 10**9 + 7
+    n = len(nextVisit)
+    dp = [0] * n
+    for i in range(1, n):
+        dp[i] = (2 * dp[i-1] - dp[nextVisit[i-1]] + 2) % MOD
+    return dp[-1]
+`,
+
   // batch 276
   'number-of-ways-to-paint-the-fence': `def numWays(n, k):
     if k == 0:

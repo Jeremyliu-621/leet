@@ -3092,6 +3092,11 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 278
+import { problem as checkTwoEventsConflict } from './check-if-two-events-have-conflict';
+import { problem as countGoodSubstrings } from './count-good-substrings';
+import { problem as countWordsWithPrefix } from './count-words-with-a-given-prefix';
+import { problem as firstDayAllRooms } from './first-day-where-you-have-been-in-all-the-rooms';
 // batch 277
 import { problem as minimumArraySum } from './minimum-array-sum';
 import { problem as findXSumSubarraysII } from './find-x-sum-of-all-k-long-subarrays-ii';
@@ -6502,6 +6507,11 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 278
+  checkTwoEventsConflict,
+  countGoodSubstrings,
+  countWordsWithPrefix,
+  firstDayAllRooms,
   // batch 277
   minimumArraySum,
   findXSumSubarraysII,

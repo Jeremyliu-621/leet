@@ -47404,6 +47404,37 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return ans;
   },
 
+  // batch 278
+  'check-if-two-events-have-conflict': (...args: unknown[]) => {
+    const event1 = args[0] as string[], event2 = args[1] as string[];
+    return event1[0]! <= event2[1]! && event2[0]! <= event1[1]!;
+  },
+
+  'count-good-substrings': (...args: unknown[]) => {
+    const s = args[0] as string;
+    let count = 0;
+    for (let i = 0; i <= s.length - 3; i++) {
+      if (s[i] !== s[i + 1] && s[i + 1] !== s[i + 2] && s[i] !== s[i + 2]) count++;
+    }
+    return count;
+  },
+
+  'count-words-with-a-given-prefix': (...args: unknown[]) => {
+    const words = args[0] as string[], pref = args[1] as string;
+    return words.filter(w => w.startsWith(pref)).length;
+  },
+
+  'first-day-where-you-have-been-in-all-the-rooms': (...args: unknown[]) => {
+    const nextVisit = args[0] as number[];
+    const MOD = 1000000007n;
+    const n = nextVisit.length;
+    const dp: bigint[] = new Array(n).fill(0n);
+    for (let i = 1; i < n; i++) {
+      dp[i] = (2n * dp[i - 1]! - dp[nextVisit[i - 1]!]! + 2n + MOD) % MOD;
+    }
+    return Number(dp[n - 1]!);
+  },
+
   // batch 276
   'number-of-ways-to-paint-the-fence': (...args: unknown[]) => {
     const n = args[0] as number, k = args[1] as number;
