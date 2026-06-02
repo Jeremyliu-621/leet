@@ -620,6 +620,9 @@ export function Challenge() {
     // give-up should not close the tab, redirect, or damage the streak.
     if (!targetUrl.current) return;
 
+    // If a solve already triggered navigation, don't double-record a failure.
+    if (isResolvingRef.current) return;
+
     // The SW is about to close or redirect this tab — suppress the
     // beforeunload prompt that would otherwise interrupt that navigation.
     isResolvingRef.current = true;
