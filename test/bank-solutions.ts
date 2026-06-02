@@ -49089,4 +49089,129 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     }
     return ans;
   },
+
+  // batch 284
+  'segment-tree-range-max': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const operations = args[1] as (string | number)[][];
+    const n = nums.length;
+    const tree = new Array(4 * n).fill(-Infinity);
+    function build(v: number, lo: number, hi: number): void {
+      if (lo === hi) { tree[v] = nums[lo]; return; }
+      const mid = (lo + hi) >> 1;
+      build(2*v, lo, mid); build(2*v+1, mid+1, hi);
+      tree[v] = Math.max(tree[2*v]!, tree[2*v+1]!);
+    }
+    function update(v: number, lo: number, hi: number, i: number, val: number): void {
+      if (lo === hi) { tree[v] = val; return; }
+      const mid = (lo + hi) >> 1;
+      if (i <= mid) update(2*v, lo, mid, i, val);
+      else update(2*v+1, mid+1, hi, i, val);
+      tree[v] = Math.max(tree[2*v]!, tree[2*v+1]!);
+    }
+    function query(v: number, lo: number, hi: number, l: number, r: number): number {
+      if (r < lo || hi < l) return -Infinity;
+      if (l <= lo && hi <= r) return tree[v]!;
+      const mid = (lo + hi) >> 1;
+      return Math.max(query(2*v, lo, mid, l, r), query(2*v+1, mid+1, hi, l, r));
+    }
+    build(1, 0, n - 1);
+    const res: number[] = [];
+    for (const op of operations) {
+      if (op[0] === 'update') update(1, 0, n-1, op[1] as number, op[2] as number);
+      else res.push(query(1, 0, n-1, op[1] as number, op[2] as number));
+    }
+    return res;
+  },
+
+  'euler-tour-subtree-queries': (...args: unknown[]) => {
+    const n = args[0] as number;
+    const edges = args[1] as number[][];
+    const vals = args[2] as number[];
+    const operations = args[3] as (string | number)[][];
+    const adj: number[][] = Array.from({length: n}, () => []);
+    for (const [u, v] of edges) { adj[u!]!.push(v!); adj[v!]!.push(u!); }
+    const tin = new Int32Array(n), tout = new Int32Array(n);
+    const flat = new Array<number>(n);
+    let timer = 0;
+    function dfs(u: number, p: number): void {
+      tin[u] = timer++;
+      flat[tin[u]!] = vals[u]!;
+      for (const v of adj[u]!) if (v !== p) dfs(v, u);
+      tout[u] = timer - 1;
+    }
+    dfs(0, -1);
+    const bit = new Array(n + 1).fill(0);
+    for (let i = 0; i < n; i++) { let x = i+1; while (x<=n){bit[x]+=flat[i];x+=x&-x;} }
+    function add(i: number, d: number): void { for (let x=i+1;x<=n;x+=x&-x) bit[x]+=d; }
+    function sumRange(l: number, r: number): number {
+      let s = 0;
+      for (let x=r+1;x>0;x-=x&-x) s+=bit[x];
+      for (let x=l;x>0;x-=x&-x) s-=bit[x];
+      return s;
+    }
+    const res: number[] = [];
+    for (const op of operations) {
+      if (op[0] === 'update') add(tin[op[1] as number]!, op[2] as number);
+      else res.push(sumRange(tin[op[1] as number]!, tout[op[1] as number]!));
+    }
+    return res;
+  },
+
+  'mo-algorithm-range-distinct': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const queries = args[1] as number[][];
+    const n = nums.length, Q = queries.length;
+    const B = Math.max(1, Math.ceil(Math.sqrt(n)));
+    const order = queries.map((_, i) => i).sort((a, b) => {
+      const ba = Math.floor(queries[a]![0]! / B), bb = Math.floor(queries[b]![0]! / B);
+      if (ba !== bb) return ba - bb;
+      return ba % 2 === 0 ? queries[a]![1]! - queries[b]![1]! : queries[b]![1]! - queries[a]![1]!;
+    });
+    const freq = new Int32Array(10001);
+    let curL = 0, curR = -1, distinct = 0;
+    const add = (x: number): void => { if (freq[x]! === 0) distinct++; freq[x]!++; };
+    const rem = (x: number): void => { freq[x]!--; if (freq[x]! === 0) distinct--; };
+    const ans: number[] = new Array(Q);
+    for (const i of order) {
+      const [l, r] = queries[i]!;
+      while (curR < r!) add(nums[++curR]!);
+      while (curL > l!) add(nums[--curL]!);
+      while (curR > r!) rem(nums[curR--]!);
+      while (curL < l!) rem(nums[curL++]!);
+      ans[i] = distinct;
+    }
+    return ans;
+  },
+
+  'maximum-bipartite-matching': (...args: unknown[]) => {
+    const left = args[0] as number;
+    const right = args[1] as number;
+    const edges = args[2] as number[][];
+    const adj: number[][] = Array.from({length: left}, () => []);
+    for (const [u, v] of edges) adj[u!]!.push(v!);
+    const matchR = new Int32Array(right).fill(-1);
+    function dfs(u: number, visited: Uint8Array): boolean {
+      for (const v of adj[u]!) {
+        if (visited[v]) continue;
+        visited[v] = 1;
+        if (matchR[v] === -1 || dfs(matchR[v]!, visited)) {
+          matchR[v] = u; return true;
+        }
+      }
+      return false;
+    }
+    let ans = 0;
+    for (let u = 0; u < left; u++) {
+      if (dfs(u, new Uint8Array(right))) ans++;
+    }
+    return ans;
+  },
+
+  'count-arithmetic-triplets': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const diff = args[1] as number;
+    const seen = new Set(nums);
+    return nums.filter(x => seen.has(x - diff) && seen.has(x - 2 * diff)).length;
+  },
 };

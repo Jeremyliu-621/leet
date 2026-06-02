@@ -3092,6 +3092,12 @@ import { problem as remainingMethodsProject } from './remove-methods-from-projec
 import { problem as minimumTimeJobsII } from './find-minimum-time-to-finish-all-jobs-ii';
 import { problem as minOpsSubarrayEqual } from './minimum-operations-to-make-subarray-elements-equal';
 import { problem as countSubseqEqualGCD } from './find-the-number-of-subsequences-with-equal-gcd';
+// batch 284
+import { problem as segTreeRangeMax } from './segment-tree-range-max';
+import { problem as eulerTourSubtree } from './euler-tour-subtree-queries';
+import { problem as moDistinctCount } from './mo-algorithm-range-distinct';
+import { problem as maximumBipartiteMatching } from './maximum-bipartite-matching';
+import { problem as countArithmeticTriplets } from './count-arithmetic-triplets';
 // batch 283
 import { problem as doubleModularExponentiation } from './double-modular-exponentiation';
 import { problem as maximumScoreNodeSequence } from './maximum-score-node-sequence';
@@ -6539,6 +6545,12 @@ export const problems: readonly Problem[] = [
   sumSubseqWidths,
   countDiffSubseqGCDs,
   smallestRangeKLists,
+  // batch 284
+  segTreeRangeMax,
+  eulerTourSubtree,
+  moDistinctCount,
+  maximumBipartiteMatching,
+  countArithmeticTriplets,
   // batch 283
   doubleModularExponentiation,
   maximumScoreNodeSequence,

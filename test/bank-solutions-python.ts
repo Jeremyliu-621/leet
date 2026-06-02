@@ -47982,4 +47982,119 @@ def minIncrements(n, cost):
         i -= 1
     return ans
 `,
+  'segment-tree-range-max': `
+def segTreeRangeMax(nums, operations):
+    n = len(nums)
+    tree = [-float('inf')] * (4 * n)
+    def build(v, lo, hi):
+        if lo == hi:
+            tree[v] = nums[lo]; return
+        mid = (lo + hi) >> 1
+        build(2*v, lo, mid); build(2*v+1, mid+1, hi)
+        tree[v] = max(tree[2*v], tree[2*v+1])
+    def update(v, lo, hi, i, val):
+        if lo == hi:
+            tree[v] = val; return
+        mid = (lo + hi) >> 1
+        if i <= mid: update(2*v, lo, mid, i, val)
+        else: update(2*v+1, mid+1, hi, i, val)
+        tree[v] = max(tree[2*v], tree[2*v+1])
+    def query(v, lo, hi, l, r):
+        if r < lo or hi < l: return -float('inf')
+        if l <= lo and hi <= r: return tree[v]
+        mid = (lo + hi) >> 1
+        return max(query(2*v, lo, mid, l, r), query(2*v+1, mid+1, hi, l, r))
+    build(1, 0, n - 1)
+    res = []
+    for op in operations:
+        if op[0] == 'update': update(1, 0, n-1, int(op[1]), int(op[2]))
+        else: res.append(query(1, 0, n-1, int(op[1]), int(op[2])))
+    return res
+`,
+  'euler-tour-subtree-queries': `
+def eulerTourSubtree(n, edges, vals, operations):
+    from collections import defaultdict
+    adj = defaultdict(list)
+    for u, v in edges:
+        adj[u].append(v); adj[v].append(u)
+    tin = [0] * n; tout = [0] * n; flat = [0] * n
+    timer = [0]
+    def dfs(u, p):
+        tin[u] = timer[0]; flat[timer[0]] = vals[u]; timer[0] += 1
+        for v in adj[u]:
+            if v != p: dfs(v, u)
+        tout[u] = timer[0] - 1
+    dfs(0, -1)
+    bit = [0] * (n + 1)
+    for i in range(n):
+        x = i + 1
+        while x <= n: bit[x] += flat[i]; x += x & -x
+    def add(i, d):
+        x = i + 1
+        while x <= n: bit[x] += d; x += x & -x
+    def query_sum(l, r):
+        s, x = 0, r + 1
+        while x > 0: s += bit[x]; x -= x & -x
+        x = l
+        while x > 0: s -= bit[x]; x -= x & -x
+        return s
+    res = []
+    for op in operations:
+        if op[0] == 'update': add(tin[int(op[1])], int(op[2]))
+        else: res.append(query_sum(tin[int(op[1])], tout[int(op[1])]))
+    return res
+`,
+  'mo-algorithm-range-distinct': `
+def moDistinctCount(nums, queries):
+    import math
+    n, Q = len(nums), len(queries)
+    B = max(1, int(math.sqrt(n)))
+    order = sorted(range(Q), key=lambda i: (
+        queries[i][0] // B,
+        queries[i][1] if (queries[i][0] // B) % 2 == 0 else -queries[i][1]
+    ))
+    freq = [0] * 10001
+    curL, curR, distinct = 0, -1, 0
+    def add(x):
+        nonlocal distinct
+        if freq[x] == 0: distinct += 1
+        freq[x] += 1
+    def rem(x):
+        nonlocal distinct
+        freq[x] -= 1
+        if freq[x] == 0: distinct -= 1
+    ans = [0] * Q
+    for i in order:
+        l, r = queries[i]
+        while curR < r: curR += 1; add(nums[curR])
+        while curL > l: curL -= 1; add(nums[curL])
+        while curR > r: rem(nums[curR]); curR -= 1
+        while curL < l: rem(nums[curL]); curL += 1
+        ans[i] = distinct
+    return ans
+`,
+  'maximum-bipartite-matching': `
+def maximumBipartiteMatching(left, right, edges):
+    adj = [[] for _ in range(left)]
+    for u, v in edges:
+        adj[u].append(v)
+    match_r = [-1] * right
+    def dfs(u, visited):
+        for v in adj[u]:
+            if visited[v]: continue
+            visited[v] = True
+            if match_r[v] == -1 or dfs(match_r[v], visited):
+                match_r[v] = u; return True
+        return False
+    ans = 0
+    for u in range(left):
+        if dfs(u, [False] * right):
+            ans += 1
+    return ans
+`,
+  'count-arithmetic-triplets': `
+def countArithmeticTriplets(nums, diff):
+    seen = set(nums)
+    return sum(1 for x in nums if x - diff in seen and x - 2 * diff in seen)
+`,
 };
