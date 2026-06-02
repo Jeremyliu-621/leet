@@ -39,13 +39,26 @@ Both strings can only contain lowercase English letters and will be **rearranged
   params: ['s1', 's2'],
   starterCode: {
     javascript: `function checkIfCanBreak(s1, s2) {
-
+  const a = [...s1].sort(), b = [...s2].sort();
+  let s1Breaks = true, s2Breaks = true;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] < b[i]) s1Breaks = false;
+    if (b[i] < a[i]) s2Breaks = false;
+  }
+  return s1Breaks || s2Breaks;
 }`,
     typescript: `function checkIfCanBreak(s1: string, s2: string): boolean {
-
+  const a = [...s1].sort(), b = [...s2].sort();
+  let s1Breaks = true, s2Breaks = true;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i]! < b[i]!) s1Breaks = false;
+    if (b[i]! < a[i]!) s2Breaks = false;
+  }
+  return s1Breaks || s2Breaks;
 }`,
     python: `def checkIfCanBreak(s1, s2):
-    pass`,
+    a, b = sorted(s1), sorted(s2)
+    return all(x >= y for x, y in zip(a, b)) or all(y >= x for x, y in zip(a, b))`,
   },
   visibleTests: [
     { args: ['abc', 'xya'], expected: true },

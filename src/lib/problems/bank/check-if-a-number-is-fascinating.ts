@@ -41,11 +41,16 @@ function isFascinating(n) {
   params: ['n'],
   starterCode: {
     javascript: `function isFascinating(n) {
-
+  const s = '' + n + 2 * n + 3 * n;
+  return s.length === 9 && s.split('').sort().join('') === '123456789';
 }`,
-    typescript: 'function isFascinating(n: number): boolean {\n\n}',
+    typescript: `function isFascinating(n: number): boolean {
+  const s = '' + n + 2 * n + 3 * n;
+  return s.length === 9 && s.split('').sort().join('') === '123456789';
+}`,
     python: `def isFascinating(n):
-    pass`,
+    s = str(n) + str(2 * n) + str(3 * n)
+    return len(s) == 9 and sorted(s) == list('123456789')`,
   },
   visibleTests: [
     { args: [192], expected: true },

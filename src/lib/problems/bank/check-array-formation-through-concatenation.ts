@@ -40,14 +40,43 @@ Return \`true\` if it is possible to form the array \`arr\` from \`pieces\`. Oth
   params: ['arr', 'pieces'],
   starterCode: {
     javascript: `function canFormArray(arr, pieces) {
-
-}
-`,
-    typescript: "function canFormArray(arr: number[], pieces: number[][]): boolean {\n\n}",
-
+  const map = new Map(pieces.map(p => [p[0], p]));
+  let i = 0;
+  while (i < arr.length) {
+    const piece = map.get(arr[i]);
+    if (!piece) return false;
+    for (const v of piece) {
+      if (arr[i] !== v) return false;
+      i++;
+    }
+  }
+  return true;
+}`,
+    typescript: `function canFormArray(arr: number[], pieces: number[][]): boolean {
+  const map = new Map(pieces.map(p => [p[0]!, p]));
+  let i = 0;
+  while (i < arr.length) {
+    const piece = map.get(arr[i]!);
+    if (!piece) return false;
+    for (const v of piece) {
+      if (arr[i]! !== v) return false;
+      i++;
+    }
+  }
+  return true;
+}`,
     python: `def canFormArray(arr, pieces):
-    pass
-`,
+    m = {p[0]: p for p in pieces}
+    i = 0
+    while i < len(arr):
+        piece = m.get(arr[i])
+        if piece is None:
+            return False
+        for v in piece:
+            if arr[i] != v:
+                return False
+            i += 1
+    return True`,
   },
   visibleTests: [
     { args: [[85], [[85]]], expected: true },

@@ -36,12 +36,28 @@ export const problem: Problem = {
   params: ['length', 'width', 'height', 'mass'],
   starterCode: {
     javascript: `function categorizeBox(length, width, height, mass) {
-
+  const bulk = length >= 1e4 || width >= 1e4 || height >= 1e4 || length * width * height >= 1e9;
+  const heavy = mass >= 100;
+  if (bulk && heavy) return 'Both';
+  if (bulk) return 'Bulk';
+  if (heavy) return 'Heavy';
+  return 'Neither';
 }`,
-    typescript: "function categorizeBox(length: number, width: number, height: number, mass: number): string {\n\n}",
-
+    typescript: `function categorizeBox(length: number, width: number, height: number, mass: number): string {
+  const bulk = length >= 1e4 || width >= 1e4 || height >= 1e4 || length * width * height >= 1e9;
+  const heavy = mass >= 100;
+  if (bulk && heavy) return 'Both';
+  if (bulk) return 'Bulk';
+  if (heavy) return 'Heavy';
+  return 'Neither';
+}`,
     python: `def categorizeBox(length, width, height, mass):
-    pass`,
+    bulk = length >= 1e4 or width >= 1e4 or height >= 1e4 or length * width * height >= 1e9
+    heavy = mass >= 100
+    if bulk and heavy: return 'Both'
+    if bulk: return 'Bulk'
+    if heavy: return 'Heavy'
+    return 'Neither'`,
   },
   visibleTests: [
     { args: [1000, 35, 700, 300], expected: 'Heavy' },

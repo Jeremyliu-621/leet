@@ -40,12 +40,24 @@ Return \`true\` if \`num\` is balanced, otherwise return \`false\`.`,
   params: ['num'],
   starterCode: {
     javascript: `function isBalanced(num) {
-
+  let even = 0, odd = 0;
+  for (let i = 0; i < num.length; i++) {
+    if (i % 2 === 0) even += Number(num[i]);
+    else odd += Number(num[i]);
+  }
+  return even === odd;
 }`,
-    typescript: "function isBalanced(num: string): boolean {\n\n}",
-
+    typescript: `function isBalanced(num: string): boolean {
+  let even = 0, odd = 0;
+  for (let i = 0; i < num.length; i++) {
+    if (i % 2 === 0) even += Number(num[i]);
+    else odd += Number(num[i]);
+  }
+  return even === odd;
+}`,
     python: `def isBalanced(num):
-    pass`,
+    return sum(int(c) for i, c in enumerate(num) if i % 2 == 0) == \
+           sum(int(c) for i, c in enumerate(num) if i % 2 == 1)`,
   },
   visibleTests: [
     { args: ['1221'], expected: true },
