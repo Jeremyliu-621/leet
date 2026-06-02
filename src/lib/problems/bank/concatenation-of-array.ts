@@ -34,12 +34,13 @@ Return the array \`ans\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function getConcatenation(nums) {
-
+  return [...nums, ...nums];
 }`,
-    typescript: "function getConcatenation(nums: number[]): number[] {\n\n}",
-
+    typescript: `function getConcatenation(nums: number[]): number[] {
+  return [...nums, ...nums];
+}`,
     python: `def getConcatenation(nums):
-    pass`,
+    return nums + nums`,
   },
   visibleTests: [
     { args: [[1, 2, 1]], expected: [1, 2, 1, 1, 2, 1] },

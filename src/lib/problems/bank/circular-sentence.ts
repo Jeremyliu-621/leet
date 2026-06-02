@@ -53,12 +53,27 @@ Return \`true\` if \`sentence\` is a circular sentence, or \`false\` otherwise.`
   params: ['sentence'],
   starterCode: {
     javascript: `function isCircularSentence(sentence) {
-
+  const words = sentence.split(' ');
+  const n = words.length;
+  for (let i = 0; i < n; i++) {
+    const curr = words[i], next = words[(i + 1) % n];
+    if (curr[curr.length - 1] !== next[0]) return false;
+  }
+  return true;
 }`,
-    typescript: "function isCircularSentence(sentence: string): boolean {\n\n}",
-
+    typescript: `function isCircularSentence(sentence: string): boolean {
+  const words = sentence.split(' ');
+  const n = words.length;
+  for (let i = 0; i < n; i++) {
+    const curr = words[i]!, next = words[(i + 1) % n]!;
+    if (curr[curr.length - 1] !== next[0]) return false;
+  }
+  return true;
+}`,
     python: `def isCircularSentence(sentence):
-    pass`,
+    words = sentence.split()
+    n = len(words)
+    return all(words[i][-1] == words[(i+1) % n][0] for i in range(n))`,
   },
   visibleTests: [
     { args: ['leetcode exercises sound delightful'], expected: true },

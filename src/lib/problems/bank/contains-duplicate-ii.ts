@@ -34,13 +34,32 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function containsNearbyDuplicate(nums, k) {
-  // Return true if any two equal elements are within k indices apart
+  const seen = new Set();
+  for (let i = 0; i < nums.length; i++) {
+    if (seen.has(nums[i])) return true;
+    seen.add(nums[i]);
+    if (seen.size > k) seen.delete(nums[i - k]);
+  }
+  return false;
 }`,
-    typescript: "function containsNearbyDuplicate(nums: number[], k: number): boolean {\n  // Return true if any two equal elements are within k indices apart\n}",
-
+    typescript: `function containsNearbyDuplicate(nums: number[], k: number): boolean {
+  const seen = new Set<number>();
+  for (let i = 0; i < nums.length; i++) {
+    if (seen.has(nums[i]!)) return true;
+    seen.add(nums[i]!);
+    if (seen.size > k) seen.delete(nums[i - k]!);
+  }
+  return false;
+}`,
     python: `def containsNearbyDuplicate(nums, k):
-    # Return true if any two equal elements are within k indices apart
-    pass`,
+    seen = set()
+    for i, x in enumerate(nums):
+        if x in seen:
+            return True
+        seen.add(x)
+        if len(seen) > k:
+            seen.discard(nums[i - k])
+    return False`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 1], 3], expected: true },

@@ -39,12 +39,27 @@ return max;\`\`\``
   params: ['s'],
   starterCode: {
     javascript: `function maxPower(s) {
-
+  let max = 1, cur = 1;
+  for (let i = 1; i < s.length; i++) {
+    cur = s[i] === s[i - 1] ? cur + 1 : 1;
+    max = Math.max(max, cur);
+  }
+  return max;
 }`,
-    typescript: "function maxPower(s: string): number {\n\n}",
-
+    typescript: `function maxPower(s: string): number {
+  let max = 1, cur = 1;
+  for (let i = 1; i < s.length; i++) {
+    cur = s[i] === s[i - 1] ? cur + 1 : 1;
+    max = Math.max(max, cur);
+  }
+  return max;
+}`,
     python: `def maxPower(s):
-    pass`,
+    max_p = cur = 1
+    for i in range(1, len(s)):
+        cur = cur + 1 if s[i] == s[i-1] else 1
+        max_p = max(max_p, cur)
+    return max_p`,
   },
   visibleTests: [
     { args: ['leetcode'], expected: 2 },

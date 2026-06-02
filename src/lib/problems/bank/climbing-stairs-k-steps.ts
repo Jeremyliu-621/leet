@@ -33,12 +33,40 @@ Since the answer may be very large, return it modulo \`10^9 + 7\`.`,
   params: ['n', 'k'],
   starterCode: {
     javascript: `function climbStairsK(n, k) {
-
+  const MOD = 1e9 + 7;
+  const dp = new Array(n + 1).fill(0);
+  dp[0] = 1;
+  let prefix = 1;
+  for (let i = 1; i <= n; i++) {
+    dp[i] = prefix % MOD;
+    if (i >= k) prefix = (prefix - dp[i - k] + MOD) % MOD;
+    prefix = (prefix + dp[i]) % MOD;
+  }
+  return dp[n];
 }`,
-    typescript: "function climbStairsK(n: number, k: number): number {\n\n}",
-
+    typescript: `function climbStairsK(n: number, k: number): number {
+  const MOD = 1e9 + 7;
+  const dp = new Array(n + 1).fill(0) as number[];
+  dp[0] = 1;
+  let prefix = 1;
+  for (let i = 1; i <= n; i++) {
+    dp[i] = prefix % MOD;
+    if (i >= k) prefix = (prefix - dp[i - k]! + MOD) % MOD;
+    prefix = (prefix + dp[i]!) % MOD;
+  }
+  return dp[n]!;
+}`,
     python: `def climbStairsK(n, k):
-    pass`,
+    MOD = 10**9 + 7
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    prefix = 1
+    for i in range(1, n + 1):
+        dp[i] = prefix % MOD
+        if i >= k:
+            prefix = (prefix - dp[i - k] + MOD) % MOD
+        prefix = (prefix + dp[i]) % MOD
+    return dp[n]`,
   },
   visibleTests: [
     { args: [4, 2], expected: 5 },
