@@ -34,10 +34,50 @@ Return the **number** of islands in \`grid2\` that are considered **sub-islands*
   functionName: 'countSubIslands',
   params: ['grid1', 'grid2'],
   starterCode: {
-    javascript: 'function countSubIslands(grid1, grid2) {\n\n}\n',
-    typescript: "function countSubIslands(grid1: number[][], grid2: number[][]): number {\n\n}",
-
-    python: 'def countSubIslands(grid1, grid2):\n    pass\n',
+    javascript: `function countSubIslands(grid1, grid2) {
+  const m = grid1.length, n = grid1[0].length;
+  let count = 0;
+  function dfs(i, j) {
+    if (i < 0 || i >= m || j < 0 || j >= n || grid2[i][j] === 0) return true;
+    grid2[i][j] = 0;
+    const valid = grid1[i][j] === 1;
+    const t = dfs(i-1,j), b = dfs(i+1,j), l = dfs(i,j-1), r = dfs(i,j+1);
+    return valid && t && b && l && r;
+  }
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid2[i][j] === 1 && dfs(i,j)) count++;
+  return count;
+}`,
+    typescript: `function countSubIslands(grid1: number[][], grid2: number[][]): number {
+  const m = grid1.length, n = grid1[0]!.length;
+  let count = 0;
+  function dfs(i: number, j: number): boolean {
+    if (i < 0 || i >= m || j < 0 || j >= n || grid2[i]![j] === 0) return true;
+    grid2[i]![j] = 0;
+    const valid = grid1[i]![j] === 1;
+    const t = dfs(i-1,j), b = dfs(i+1,j), l = dfs(i,j-1), r = dfs(i,j+1);
+    return valid && t && b && l && r;
+  }
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid2[i]![j] === 1 && dfs(i,j)) count++;
+  return count;
+}`,
+    python: `def countSubIslands(grid1, grid2):
+    m, n = len(grid1), len(grid1[0])
+    def dfs(i, j):
+        if i < 0 or i >= m or j < 0 or j >= n or grid2[i][j] == 0:
+            return True
+        grid2[i][j] = 0
+        valid = grid1[i][j] == 1
+        t = dfs(i-1, j)
+        b = dfs(i+1, j)
+        l = dfs(i, j-1)
+        r = dfs(i, j+1)
+        return valid and t and b and l and r
+    count = 0
+    for i in range(m):
+        for j in range(n):
+            if grid2[i][j] == 1 and dfs(i, j):
+                count += 1
+    return count`,
   },
   visibleTests: [
     {

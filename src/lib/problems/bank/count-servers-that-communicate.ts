@@ -35,10 +35,30 @@ Return the number of servers that communicate with **at least one** other server
   functionName: 'countServers',
   params: ['grid'],
   starterCode: {
-    javascript: 'function countServers(grid) {\n\n}\n',
-    typescript: "function countServers(grid: number[][]): number {\n\n}",
-
-    python: 'def countServers(grid):\n    pass\n',
+    javascript: `function countServers(grid) {
+  const m = grid.length, n = grid[0].length;
+  const rowCnt = new Array(m).fill(0), colCnt = new Array(n).fill(0);
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid[i][j]) { rowCnt[i]++; colCnt[j]++; }
+  let count = 0;
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid[i][j] && (rowCnt[i] > 1 || colCnt[j] > 1)) count++;
+  return count;
+}`,
+    typescript: `function countServers(grid: number[][]): number {
+  const m = grid.length, n = grid[0]!.length;
+  const rowCnt = new Array(m).fill(0), colCnt = new Array(n).fill(0);
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid[i]![j]) { rowCnt[i]++; colCnt[j]++; }
+  let count = 0;
+  for (let i = 0; i < m; i++) for (let j = 0; j < n; j++) if (grid[i]![j] && (rowCnt[i]! > 1 || colCnt[j]! > 1)) count++;
+  return count;
+}`,
+    python: `def countServers(grid):
+    m, n = len(grid), len(grid[0])
+    row_cnt = [sum(grid[i]) for i in range(m)]
+    col_cnt = [sum(grid[i][j] for i in range(m)) for j in range(n)]
+    return sum(
+        1 for i in range(m) for j in range(n)
+        if grid[i][j] and (row_cnt[i] > 1 or col_cnt[j] > 1)
+    )`,
   },
   visibleTests: [
     { args: [[[1, 0], [0, 1]]], expected: 0 },

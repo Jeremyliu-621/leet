@@ -31,10 +31,39 @@ export const problem: Problem = {
   functionName: 'countSquares',
   params: ['matrix'],
   starterCode: {
-    javascript: 'function countSquares(matrix) {\n\n}\n',
-    typescript: "function countSquares(matrix: number[][]): number {\n\n}",
-
-    python: 'def countSquares(matrix):\n    pass\n',
+    javascript: `function countSquares(matrix) {
+  const m = matrix.length, n = matrix[0].length;
+  let total = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (matrix[i][j] && i > 0 && j > 0)
+        matrix[i][j] = Math.min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]) + 1;
+      total += matrix[i][j];
+    }
+  }
+  return total;
+}`,
+    typescript: `function countSquares(matrix: number[][]): number {
+  const m = matrix.length, n = matrix[0]!.length;
+  let total = 0;
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < n; j++) {
+      if (matrix[i]![j] && i > 0 && j > 0)
+        matrix[i]![j] = Math.min(matrix[i-1]![j]!, matrix[i]![j-1]!, matrix[i-1]![j-1]!) + 1;
+      total += matrix[i]![j]!;
+    }
+  }
+  return total;
+}`,
+    python: `def countSquares(matrix):
+    m, n = len(matrix), len(matrix[0])
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            if matrix[i][j] and i > 0 and j > 0:
+                matrix[i][j] = min(matrix[i-1][j], matrix[i][j-1], matrix[i-1][j-1]) + 1
+            total += matrix[i][j]
+    return total`,
   },
   visibleTests: [
     { args: [[[0, 1, 1, 1], [1, 1, 1, 1], [0, 1, 1, 1]]], expected: 15 },

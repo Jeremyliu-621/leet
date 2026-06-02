@@ -40,10 +40,30 @@ export const problem: Problem = {
   functionName: 'numSubarrayBoundedMax',
   params: ['nums', 'left', 'right'],
   starterCode: {
-    javascript: 'function numSubarrayBoundedMax(nums, left, right) {\n  // Count subarrays where max(subarray) is in [left, right].\n}\n',
-    typescript: "function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {\n  // Count subarrays where max(subarray) is in [left, right].\n}",
-
-    python: 'def numSubarrayBoundedMax(nums, left, right):\n    # Count subarrays where max(subarray) is in [left, right].\n    pass\n',
+    javascript: `function numSubarrayBoundedMax(nums, left, right) {
+  function count(bound) {
+    let total = 0, curr = 0;
+    for (const n of nums) { curr = n <= bound ? curr + 1 : 0; total += curr; }
+    return total;
+  }
+  return count(right) - count(left - 1);
+}`,
+    typescript: `function numSubarrayBoundedMax(nums: number[], left: number, right: number): number {
+  function count(bound: number): number {
+    let total = 0, curr = 0;
+    for (const n of nums) { curr = n <= bound ? curr + 1 : 0; total += curr; }
+    return total;
+  }
+  return count(right) - count(left - 1);
+}`,
+    python: `def numSubarrayBoundedMax(nums, left, right):
+    def count(bound):
+        total = curr = 0
+        for n in nums:
+            curr = curr + 1 if n <= bound else 0
+            total += curr
+        return total
+    return count(right) - count(left - 1)`,
   },
   visibleTests: [
     { args: [[2, 1, 4, 3], 2, 3], expected: 3 },

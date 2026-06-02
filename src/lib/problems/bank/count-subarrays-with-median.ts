@@ -43,10 +43,49 @@ Explanation: Only [3] has median 3.
   functionName: 'countSubarrays',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function countSubarrays(nums, k) {\n  // your code here\n}\n',
-    typescript: "function countSubarrays(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def countSubarrays(nums, k):\n    pass\n',
+    javascript: `function countSubarrays(nums, k) {
+  const ki = nums.indexOf(k);
+  const freq = new Map([[0, 1]]);
+  let balance = 0;
+  for (let i = ki - 1; i >= 0; i--) {
+    balance += nums[i] > k ? 1 : -1;
+    freq.set(balance, (freq.get(balance) || 0) + 1);
+  }
+  let count = 0, rBalance = 0;
+  for (let j = ki; j < nums.length; j++) {
+    if (j > ki) rBalance += nums[j] > k ? 1 : -1;
+    count += (freq.get(-rBalance) || 0) + (freq.get(1 - rBalance) || 0);
+  }
+  return count;
+}`,
+    typescript: `function countSubarrays(nums: number[], k: number): number {
+  const ki = nums.indexOf(k);
+  const freq = new Map<number, number>([[0, 1]]);
+  let balance = 0;
+  for (let i = ki - 1; i >= 0; i--) {
+    balance += nums[i]! > k ? 1 : -1;
+    freq.set(balance, (freq.get(balance) ?? 0) + 1);
+  }
+  let count = 0, rBalance = 0;
+  for (let j = ki; j < nums.length; j++) {
+    if (j > ki) rBalance += nums[j]! > k ? 1 : -1;
+    count += (freq.get(-rBalance) ?? 0) + (freq.get(1 - rBalance) ?? 0);
+  }
+  return count;
+}`,
+    python: `def countSubarrays(nums, k):
+    ki = nums.index(k)
+    freq = {0: 1}
+    balance = 0
+    for i in range(ki - 1, -1, -1):
+        balance += 1 if nums[i] > k else -1
+        freq[balance] = freq.get(balance, 0) + 1
+    count = r_balance = 0
+    for j in range(ki, len(nums)):
+        if j > ki:
+            r_balance += 1 if nums[j] > k else -1
+        count += freq.get(-r_balance, 0) + freq.get(1 - r_balance, 0)
+    return count`,
   },
   visibleTests: [
     { args: [[3, 2, 1, 4, 5], 4], expected: 3 },

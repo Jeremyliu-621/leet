@@ -42,10 +42,38 @@ Return the **number** of fixed-bound subarrays.`,
   functionName: 'countSubarrays',
   params: ['nums', 'minK', 'maxK'],
   starterCode: {
-    javascript: 'function countSubarrays(nums, minK, maxK) {\n  \n}\n',
-    typescript: "function countSubarrays(nums: number[], minK: number, maxK: number): number {\n  \n}",
-
-    python: 'def countSubarrays(nums, minK, maxK):\n    pass\n',
+    javascript: `function countSubarrays(nums, minK, maxK) {
+  let count = 0, jbad = -1, jmin = -1, jmax = -1;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] < minK || nums[i] > maxK) jbad = i;
+    if (nums[i] === minK) jmin = i;
+    if (nums[i] === maxK) jmax = i;
+    count += Math.max(0, Math.min(jmin, jmax) - jbad);
+  }
+  return count;
+}`,
+    typescript: `function countSubarrays(nums: number[], minK: number, maxK: number): number {
+  let count = 0, jbad = -1, jmin = -1, jmax = -1;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i]! < minK || nums[i]! > maxK) jbad = i;
+    if (nums[i] === minK) jmin = i;
+    if (nums[i] === maxK) jmax = i;
+    count += Math.max(0, Math.min(jmin, jmax) - jbad);
+  }
+  return count;
+}`,
+    python: `def countSubarrays(nums, minK, maxK):
+    count = jbad = jmin = jmax = -1
+    count = 0
+    for i, v in enumerate(nums):
+        if v < minK or v > maxK:
+            jbad = i
+        if v == minK:
+            jmin = i
+        if v == maxK:
+            jmax = i
+        count += max(0, min(jmin, jmax) - jbad)
+    return count`,
   },
   visibleTests: [
     { args: [[1, 3, 3, 2, 2], 1, 3], expected: 4 },
