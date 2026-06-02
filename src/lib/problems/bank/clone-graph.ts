@@ -115,15 +115,57 @@ The graph is given as an adjacency list: \`adjList[i]\` contains the 1-indexed v
     javascript: `// Node class and cloneGraphRunner wrapper are pre-defined.
 // Implement the function below:
 function cloneGraph(node) {
-
+  const map = new Map();
+  function dfs(n) {
+    if (!n) return null;
+    if (map.has(n.val)) return map.get(n.val);
+    const clone = new Node(n.val);
+    map.set(n.val, clone);
+    for (const nb of n.neighbors) clone.neighbors.push(dfs(nb));
+    return clone;
+  }
+  return dfs(node);
 }
 `,
-    typescript: "function cloneGraphRunner(adjList: number[][]): number[][] {\n\n}",
+    typescript: `function cloneGraphRunner(adjList: number[][]): number[][] {
+  if (!adjList || adjList.length === 0) return [];
+  type GNode = { val: number; neighbors: GNode[] };
+  const nodes: GNode[] = adjList.map((_, i) => ({ val: i + 1, neighbors: [] as GNode[] }));
+  for (let i = 0; i < adjList.length; i++) {
+    for (const nb of adjList[i]!) nodes[i]!.neighbors.push(nodes[nb - 1]!);
+  }
+  const cloneMap = new Map<number, GNode>();
+  function dfs(n: GNode): GNode {
+    if (cloneMap.has(n.val)) return cloneMap.get(n.val)!;
+    const clone: GNode = { val: n.val, neighbors: [] };
+    cloneMap.set(n.val, clone);
+    for (const nb of n.neighbors) clone.neighbors.push(dfs(nb));
+    return clone;
+  }
+  dfs(nodes[0]!);
+  const result: number[][] = [];
+  for (let i = 1; i <= adjList.length; i++) {
+    const nd = cloneMap.get(i)!;
+    result.push(nd.neighbors.map(nb => nb.val).sort((a, b) => a - b));
+  }
+  return result;
+}`,
 
     python: `# Node class and cloneGraphRunner wrapper are pre-defined.
 # Implement the function below:
 def cloneGraph(node):
-    pass
+    if not node:
+        return None
+    clone_map = {}
+    def dfs(n):
+        if n.val in clone_map:
+            return clone_map[n.val]
+        clone = Node(n.val)
+        clone_map[n.val] = clone
+        for nb in n.neighbors:
+            clone.neighbors.append(dfs(nb))
+        return clone
+    return dfs(node)
 `,
   },
   visibleTests: [

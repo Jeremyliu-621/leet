@@ -38,14 +38,57 @@ Trees are represented as level-order arrays (BFS order), where \`null\` indicate
   params: ['nums'],
   starterCode: {
     javascript: `function sortedArrayToBST(nums) {
-  // return root of height-balanced BST
-
+  function build(l, r) {
+    if (l > r) return null;
+    const mid = (l + r) >> 1;
+    return { val: nums[mid], left: build(l, mid - 1), right: build(mid + 1, r) };
+  }
+  const root = build(0, nums.length - 1);
+  const result = [], queue = [root];
+  while (queue.length) {
+    const node = queue.shift();
+    result.push(node ? node.val : null);
+    if (node) { queue.push(node.left); queue.push(node.right); }
+  }
+  while (result.length && result[result.length - 1] === null) result.pop();
+  return result;
 }`,
-    typescript: "function sortedArrayToBST(nums: number[]): (number | null)[] {\n  // return root of height-balanced BST\n\n}",
+    typescript: `function sortedArrayToBST(nums: number[]): (number | null)[] {
+  type N = { val: number; left: N | null; right: N | null };
+  function build(l: number, r: number): N | null {
+    if (l > r) return null;
+    const mid = (l + r) >> 1;
+    return { val: nums[mid]!, left: build(l, mid - 1), right: build(mid + 1, r) };
+  }
+  const root = build(0, nums.length - 1);
+  const result: (number | null)[] = [], queue: (N | null)[] = [root];
+  while (queue.length) {
+    const node = queue.shift()!;
+    result.push(node ? node.val : null);
+    if (node) { queue.push(node.left); queue.push(node.right); }
+  }
+  while (result.length && result[result.length - 1] === null) result.pop();
+  return result;
+}`,
 
     python: `def sortedArrayToBST(nums: list):
-    # return root of height-balanced BST
-    pass
+    from collections import deque
+    def build(l, r):
+        if l > r:
+            return None
+        mid = (l + r) // 2
+        return {'val': nums[mid], 'left': build(l, mid - 1), 'right': build(mid + 1, r)}
+    root = build(0, len(nums) - 1)
+    result, queue = [], deque([root])
+    while queue:
+        node = queue.popleft()
+        result.append(node['val'] if node else None)
+        if node:
+            queue.append(node['left'])
+            queue.append(node['right'])
+    while result and result[-1] is None:
+        result.pop()
+    return result
 `,
   },
   visibleTests: [

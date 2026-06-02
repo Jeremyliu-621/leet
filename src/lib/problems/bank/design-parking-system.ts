@@ -3,37 +3,47 @@ import type { Problem } from '../types';
 const JS_PREAMBLE = `
 class ParkingSystem {
   constructor(big, medium, small) {
-    // Your code here
+    this.spots = [0, big, medium, small];
   }
   addCar(carType) {
-    // carType: 1 = big, 2 = medium, 3 = small
-    // Return true if there is space; false otherwise
+    if (this.spots[carType] > 0) { this.spots[carType]--; return true; }
+    return false;
   }
 }
 `;
 
 const TS_PREAMBLE = `
 class ParkingSystem {
+  private spots: number[];
   constructor(big: number, medium: number, small: number) {
-    // Your code here
+    this.spots = [0, big, medium, small];
   }
   addCar(carType: number): boolean {
-    // carType: 1 = big, 2 = medium, 3 = small
-    // Return true if there is space; false otherwise
+    if (this.spots[carType]! > 0) { this.spots[carType]!--; return true; }
+    return false;
   }
+}
+
+function parkingSystemRunner(ops: string[], vals: number[][]): (null | boolean)[] {
+  const init = vals[0]!;
+  const sys = new ParkingSystem(init[0]!, init[1]!, init[2]!);
+  return ops.map((op, i) => {
+    if (op === 'addCar') return sys.addCar(vals[i]![0]!);
+    return null;
+  });
 }
 `;
 
 const PYTHON_PREAMBLE = `
 class ParkingSystem:
     def __init__(self, big: int, medium: int, small: int):
-        # Your code here
-        pass
+        self.spots = [0, big, medium, small]
 
     def addCar(self, carType: int) -> bool:
-        # carType: 1 = big, 2 = medium, 3 = small
-        # Return True if there is space; False otherwise
-        pass
+        if self.spots[carType] > 0:
+            self.spots[carType] -= 1
+            return True
+        return False
 `;
 
 export const problem: Problem = {
@@ -84,7 +94,7 @@ function parkingSystemRunner(ops, vals) {
   });
 }
 `,
-    typescript: "function parkingSystemRunner(ops: string[], vals: number[][]): (null | boolean)[] {\n  constructor(big, medium, small) {\n    // Your code here\n  }\n  addCar(carType) {\n    // carType: 1 = big, 2 = medium, 3 = small\n    // Return true if there is space; false otherwise\n  }\n}",
+    typescript: '',
 
     python: `
 def parkingSystemRunner(ops, vals):

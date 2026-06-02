@@ -40,22 +40,82 @@ Implement the solution as a function that takes a list of operations and returns
   params: ['n', 'ops'],
   starterCode: {
     javascript: `function memoryAllocator(n, ops) {
-  // Implement the Allocator class logic here.
-  // For each op [type, a, b]:
-  //   type=0: allocate(size=a, mID=b), return first free index or -1
-  //   type=1: freeMemory(mID=a), return count freed
-  // Return array of results.
+  const mem = new Array(n).fill(0);
+  const results = [];
+  for (const [type, a, b] of ops) {
+    if (type === 0) {
+      let start = -1, count = 0;
+      for (let i = 0; i <= n; i++) {
+        if (i < n && mem[i] === 0) {
+          count++;
+          if (count === a) { start = i - a + 1; break; }
+        } else {
+          count = 0;
+        }
+      }
+      if (start !== -1) for (let i = start; i < start + a; i++) mem[i] = b;
+      results.push(start);
+    } else {
+      let freed = 0;
+      for (let i = 0; i < n; i++) if (mem[i] === a) { mem[i] = 0; freed++; }
+      results.push(freed);
+    }
+  }
+  return results;
 }
 `,
-    typescript: "function memoryAllocator(n: number, ops: number[][]): number[] {\n  // Implement the Allocator class logic here.\n  // For each op [type, a, b]:\n  //   type=0: allocate(size=a, mID=b), return first free index or -1\n  //   type=1: freeMemory(mID=a), return count freed\n  // Return array of results.\n}",
+    typescript: `function memoryAllocator(n: number, ops: number[][]): number[] {
+  const mem = new Array<number>(n).fill(0);
+  const results: number[] = [];
+  for (const op of ops) {
+    const [type, a, b] = [op[0]!, op[1]!, op[2]!];
+    if (type === 0) {
+      let start = -1, count = 0;
+      for (let i = 0; i <= n; i++) {
+        if (i < n && mem[i] === 0) {
+          count++;
+          if (count === a) { start = i - a + 1; break; }
+        } else {
+          count = 0;
+        }
+      }
+      if (start !== -1) for (let i = start; i < start + a; i++) mem[i] = b;
+      results.push(start);
+    } else {
+      let freed = 0;
+      for (let i = 0; i < n; i++) if (mem[i] === a) { mem[i] = 0; freed++; }
+      results.push(freed);
+    }
+  }
+  return results;
+}`,
 
     python: `def memoryAllocator(n, ops):
-    # Implement the Allocator class logic here.
-    # For each op [type, a, b]:
-    #   type=0: allocate(size=a, mID=b), return first free index or -1
-    #   type=1: freeMemory(mID=a), return count freed
-    # Return array of results.
-    pass
+    mem = [0] * n
+    results = []
+    for op in ops:
+        type_, a, b = int(op[0]), int(op[1]), int(op[2])
+        if type_ == 0:
+            start, count = -1, 0
+            for i in range(n + 1):
+                if i < n and mem[i] == 0:
+                    count += 1
+                    if count == a:
+                        start = i - a + 1
+                        break
+                else:
+                    count = 0
+            if start != -1:
+                for i in range(start, start + a):
+                    mem[i] = b
+            results.append(start)
+        else:
+            freed = sum(1 for x in mem if x == a)
+            for i in range(n):
+                if mem[i] == a:
+                    mem[i] = 0
+            results.append(freed)
+    return results
 `,
   },
   hints: [

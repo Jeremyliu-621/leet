@@ -3,54 +3,61 @@ import type { Problem } from '../types';
 const JS_PREAMBLE = `
 class MyHashSet {
   constructor() {
-    // Your code here
+    this.data = new Array(1000001).fill(false);
   }
   add(key) {
-    // Your code here
+    this.data[key] = true;
   }
   remove(key) {
-    // Your code here
+    this.data[key] = false;
   }
   contains(key) {
-    // Your code here
+    return this.data[key];
   }
 }
 `;
 
 const TS_PREAMBLE = `
 class MyHashSet {
+  private data: boolean[];
   constructor() {
-    // Your code here
+    this.data = new Array(1000001).fill(false);
   }
   add(key: number): void {
-    // Your code here
+    this.data[key] = true;
   }
   remove(key: number): void {
-    // Your code here
+    this.data[key] = false;
   }
   contains(key: number): boolean {
-    // Your code here
+    return this.data[key]!;
   }
+}
+
+function myHashSetRunner(ops: string[], vals: number[]): (null | boolean)[] {
+  const set = new MyHashSet();
+  return ops.map((op, i) => {
+    if (op === 'add') { set.add(vals[i]!); return null; }
+    if (op === 'remove') { set.remove(vals[i]!); return null; }
+    if (op === 'contains') return set.contains(vals[i]!);
+    return null;
+  });
 }
 `;
 
 const PYTHON_PREAMBLE = `
 class MyHashSet:
     def __init__(self):
-        # Your code here
-        pass
+        self.data = [False] * 1000001
 
     def add(self, key: int) -> None:
-        # Your code here
-        pass
+        self.data[key] = True
 
     def remove(self, key: int) -> None:
-        # Your code here
-        pass
+        self.data[key] = False
 
     def contains(self, key: int) -> bool:
-        # Your code here
-        pass
+        return self.data[key]
 `;
 
 export const problem: Problem = {
@@ -104,7 +111,7 @@ function myHashSetRunner(ops, vals) {
   });
 }
 `,
-    typescript: "function myHashSetRunner(ops: string[], vals: number[]): (null | boolean)[] {\n  constructor() {\n    // Your code here\n  }\n  add(key) {\n    // Your code here\n  }\n  remove(key) {\n    // Your code here\n  }\n  contains(key) {\n    // Your code here\n  }\n}",
+    typescript: '',
 
     python: `
 def myHashSetRunner(ops, vals):

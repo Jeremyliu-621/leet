@@ -52,15 +52,63 @@ If a node is **unreachable** from \`source\`, its distance should be \`-1\`.
   params: ['n', 'edges', 'source'],
   starterCode: {
     javascript: `function dijkstra(n, edges, source) {
-
+  const adj = Array.from({ length: n + 1 }, () => []);
+  for (const [u, v, w] of edges) adj[u].push([v, w]);
+  const dist = new Array(n + 1).fill(Infinity);
+  dist[0] = 0; dist[source] = 0;
+  const visited = new Array(n + 1).fill(false);
+  for (let iter = 0; iter < n; iter++) {
+    let u = -1;
+    for (let i = 1; i <= n; i++) {
+      if (!visited[i] && (u === -1 || dist[i] < dist[u])) u = i;
+    }
+    if (u === -1 || dist[u] === Infinity) break;
+    visited[u] = true;
+    for (const [v, w] of adj[u]) {
+      if (dist[u] + w < dist[v]) dist[v] = dist[u] + w;
+    }
+  }
+  return dist.map((d, i) => i === 0 ? 0 : d === Infinity ? -1 : d);
 }
 `,
     typescript: `function dijkstra(n: number, edges: number[][], source: number): number[] {
-
-  return [];
+  const adj: [number, number][][] = Array.from({ length: n + 1 }, () => []);
+  for (const e of edges) adj[e[0]!]!.push([e[1]!, e[2]!]);
+  const dist = new Array<number>(n + 1).fill(Infinity);
+  dist[0] = 0; dist[source] = 0;
+  const visited = new Array<boolean>(n + 1).fill(false);
+  for (let iter = 0; iter < n; iter++) {
+    let u = -1;
+    for (let i = 1; i <= n; i++) {
+      if (!visited[i] && (u === -1 || dist[i]! < dist[u]!)) u = i;
+    }
+    if (u === -1 || dist[u]! === Infinity) break;
+    visited[u] = true;
+    for (const [v, w] of adj[u]!) {
+      if (dist[u]! + w < dist[v]!) dist[v] = dist[u]! + w;
+    }
+  }
+  return dist.map((d, i) => i === 0 ? 0 : d === Infinity ? -1 : d);
 }`,
     python: `def dijkstra(n, edges, source):
-    pass
+    import heapq
+    adj = [[] for _ in range(n + 1)]
+    for e in edges:
+        u, v, w = int(e[0]), int(e[1]), int(e[2])
+        adj[u].append((v, w))
+    INF = float('inf')
+    dist = [INF] * (n + 1)
+    dist[source] = 0
+    heap = [(0, source)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    return [0 if i == 0 else (-1 if dist[i] == INF else dist[i]) for i in range(n + 1)]
 `,
   },
   visibleTests: [

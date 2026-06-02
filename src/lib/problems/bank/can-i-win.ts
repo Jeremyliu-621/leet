@@ -41,14 +41,56 @@ Return \`true\` if the **first player** can guarantee a win, assuming both play 
   params: ['maxChoosableInteger', 'desiredTotal'],
   starterCode: {
     javascript: `function canIWin(maxChoosableInteger, desiredTotal) {
-  // return true if first player can guarantee a win
-
+  if (desiredTotal <= 0) return true;
+  const sum = maxChoosableInteger * (maxChoosableInteger + 1) / 2;
+  if (sum < desiredTotal) return false;
+  const memo = new Map();
+  const canWin = (mask, total) => {
+    if (memo.has(mask)) return memo.get(mask);
+    for (let i = 1; i <= maxChoosableInteger; i++) {
+      if ((mask >> i) & 1) continue;
+      if (total + i >= desiredTotal || !canWin(mask | (1 << i), total + i)) {
+        memo.set(mask, true); return true;
+      }
+    }
+    memo.set(mask, false); return false;
+  };
+  return canWin(0, 0);
 }`,
-    typescript: "function canIWin(maxChoosableInteger: number, desiredTotal: number): boolean {\n  // return true if first player can guarantee a win\n\n}",
+    typescript: `function canIWin(maxChoosableInteger: number, desiredTotal: number): boolean {
+  if (desiredTotal <= 0) return true;
+  const sum = maxChoosableInteger * (maxChoosableInteger + 1) / 2;
+  if (sum < desiredTotal) return false;
+  const memo = new Map<number, boolean>();
+  const canWin = (mask: number, total: number): boolean => {
+    if (memo.has(mask)) return memo.get(mask)!;
+    for (let i = 1; i <= maxChoosableInteger; i++) {
+      if ((mask >> i) & 1) continue;
+      if (total + i >= desiredTotal || !canWin(mask | (1 << i), total + i)) {
+        memo.set(mask, true); return true;
+      }
+    }
+    memo.set(mask, false); return false;
+  };
+  return canWin(0, 0);
+}`,
 
     python: `def canIWin(maxChoosableInteger: int, desiredTotal: int) -> bool:
-    # return true if first player can guarantee a win
-    pass
+    if desiredTotal <= 0:
+        return True
+    total = maxChoosableInteger * (maxChoosableInteger + 1) // 2
+    if total < desiredTotal:
+        return False
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def can_win(mask, running):
+        for i in range(1, maxChoosableInteger + 1):
+            if (mask >> i) & 1:
+                continue
+            if running + i >= desiredTotal or not can_win(mask | (1 << i), running + i):
+                return True
+        return False
+    return can_win(0, 0)
 `,
   },
   visibleTests: [

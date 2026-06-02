@@ -46,14 +46,34 @@ Given a list of \`queries\` where \`queries[j] = [u, v]\`, for each query return
   params: ['numCourses', 'prerequisites', 'queries'],
   starterCode: {
     javascript: `function checkIfPrerequisite(numCourses, prerequisites, queries) {
-  // Build reachability matrix and use Floyd-Warshall
-
+  const reach = Array.from({ length: numCourses }, () => new Array(numCourses).fill(false));
+  for (const [a, b] of prerequisites) reach[a][b] = true;
+  for (let k = 0; k < numCourses; k++)
+    for (let i = 0; i < numCourses; i++)
+      for (let j = 0; j < numCourses; j++)
+        if (reach[i][k] && reach[k][j]) reach[i][j] = true;
+  return queries.map(([u, v]) => reach[u][v]);
 }`,
-    typescript: "function checkIfPrerequisite(numCourses: number, prerequisites: number[][], queries: number[][]): boolean[] {\n  // Build reachability matrix and use Floyd-Warshall\n\n}",
+    typescript: `function checkIfPrerequisite(numCourses: number, prerequisites: number[][], queries: number[][]): boolean[] {
+  const reach = Array.from({ length: numCourses }, () => new Array<boolean>(numCourses).fill(false));
+  for (const p of prerequisites) reach[p[0]!]![p[1]!] = true;
+  for (let k = 0; k < numCourses; k++)
+    for (let i = 0; i < numCourses; i++)
+      for (let j = 0; j < numCourses; j++)
+        if (reach[i]![k] && reach[k]![j]) reach[i]![j] = true;
+  return queries.map(q => reach[q[0]!]![q[1]!]!);
+}`,
 
     python: `def checkIfPrerequisite(numCourses, prerequisites, queries):
-    # Build reachability matrix and use Floyd-Warshall
-    pass
+    reach = [[False] * numCourses for _ in range(numCourses)]
+    for a, b in prerequisites:
+        reach[a][b] = True
+    for k in range(numCourses):
+        for i in range(numCourses):
+            for j in range(numCourses):
+                if reach[i][k] and reach[k][j]:
+                    reach[i][j] = True
+    return [reach[u][v] for u, v in queries]
 `,
   },
   visibleTests: [

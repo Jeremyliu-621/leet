@@ -45,14 +45,52 @@ Return \`false\` otherwise.
   params: ['nums', 'indexDiff', 'valueDiff'],
   starterCode: {
     javascript: `function containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff) {
-  // Use bucket sort with sliding window
-
+  const w = valueDiff + 1;
+  const getBucket = x => x >= 0 ? Math.floor(x / w) : Math.floor((x + 1) / w) - 1;
+  const buckets = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    const b = getBucket(nums[i]);
+    if (buckets.has(b)) return true;
+    if (buckets.has(b - 1) && Math.abs(nums[i] - buckets.get(b - 1)) <= valueDiff) return true;
+    if (buckets.has(b + 1) && Math.abs(nums[i] - buckets.get(b + 1)) <= valueDiff) return true;
+    buckets.set(b, nums[i]);
+    if (i >= indexDiff) buckets.delete(getBucket(nums[i - indexDiff]));
+  }
+  return false;
 }`,
-    typescript: "function containsNearbyAlmostDuplicate(nums: number[], indexDiff: number, valueDiff: number): boolean {\n  // Use bucket sort with sliding window\n\n}",
+    typescript: `function containsNearbyAlmostDuplicate(nums: number[], indexDiff: number, valueDiff: number): boolean {
+  const w = valueDiff + 1;
+  const getBucket = (x: number) => x >= 0 ? Math.floor(x / w) : Math.floor((x + 1) / w) - 1;
+  const buckets = new Map<number, number>();
+  for (let i = 0; i < nums.length; i++) {
+    const x = nums[i]!;
+    const b = getBucket(x);
+    if (buckets.has(b)) return true;
+    if (buckets.has(b - 1) && Math.abs(x - buckets.get(b - 1)!) <= valueDiff) return true;
+    if (buckets.has(b + 1) && Math.abs(x - buckets.get(b + 1)!) <= valueDiff) return true;
+    buckets.set(b, x);
+    if (i >= indexDiff) buckets.delete(getBucket(nums[i - indexDiff]!));
+  }
+  return false;
+}`,
 
     python: `def containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff):
-    # Use bucket sort with sliding window
-    pass
+    w = valueDiff + 1
+    def get_bucket(x):
+        return x // w if x >= 0 else (x + 1) // w - 1
+    buckets = {}
+    for i, x in enumerate(nums):
+        b = get_bucket(x)
+        if b in buckets:
+            return True
+        if b - 1 in buckets and abs(x - buckets[b - 1]) <= valueDiff:
+            return True
+        if b + 1 in buckets and abs(x - buckets[b + 1]) <= valueDiff:
+            return True
+        buckets[b] = x
+        if i >= indexDiff:
+            del buckets[get_bucket(nums[i - indexDiff])]
+    return False
 `,
   },
   visibleTests: [

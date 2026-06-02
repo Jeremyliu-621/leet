@@ -44,14 +44,44 @@ From index \`i\`, the next index is \`next(i) = ((i + nums[i]) % n + n) % n\`.
   params: ['nums'],
   starterCode: {
     javascript: `function circularArrayLoop(nums) {
-  // return true if a valid cycle exists
-
+  const n = nums.length;
+  const nxt = i => ((i + nums[i]) % n + n) % n;
+  for (let i = 0; i < n; i++) {
+    let s = i, f = i;
+    while (nums[s] * nums[nxt(s)] > 0 && nums[f] * nums[nxt(nxt(f))] > 0) {
+      s = nxt(s);
+      f = nxt(nxt(f));
+      if (s === f) return nxt(s) !== s;
+    }
+  }
+  return false;
 }`,
-    typescript: "function circularArrayLoop(nums: number[]): boolean {\n  // return true if a valid cycle exists\n\n}",
+    typescript: `function circularArrayLoop(nums: number[]): boolean {
+  const n = nums.length;
+  const nxt = (i: number) => ((i + nums[i]!) % n + n) % n;
+  for (let i = 0; i < n; i++) {
+    let s = i, f = i;
+    while (nums[s]! * nums[nxt(s)]! > 0 && nums[f]! * nums[nxt(nxt(f))]! > 0) {
+      s = nxt(s);
+      f = nxt(nxt(f));
+      if (s === f) return nxt(s) !== s;
+    }
+  }
+  return false;
+}`,
 
     python: `def circularArrayLoop(nums: list) -> bool:
-    # return True if a valid cycle exists
-    pass
+    n = len(nums)
+    def nxt(i):
+        return ((i + nums[i]) % n + n) % n
+    for i in range(n):
+        s, f = i, i
+        while nums[s] * nums[nxt(s)] > 0 and nums[f] * nums[nxt(nxt(f))] > 0:
+            s = nxt(s)
+            f = nxt(nxt(f))
+            if s == f:
+                return nxt(s) != s
+    return False
 `,
   },
   visibleTests: [
