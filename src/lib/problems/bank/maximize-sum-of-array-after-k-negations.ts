@@ -39,14 +39,27 @@ export const problem: Problem = {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function largestSumAfterKNegations(nums, k) {
-  // nums: number[], k: number
-  // Return maximum possible sum after exactly k negations
+  nums.sort((a, b) => Math.abs(a) - Math.abs(b));
+  for (let i = nums.length - 1; i >= 0 && k > 0; i--) {
+    if (nums[i] < 0) { nums[i] = -nums[i]; k--; }
+  }
+  if (k % 2 === 1) nums[0] = -nums[0];
+  return nums.reduce((a, b) => a + b, 0);
 }`,
-    typescript: "function largestSumAfterKNegations(nums: number[], k: number): number {\n  // nums: number[], k: number\n  // Return maximum possible sum after exactly k negations\n}",
-
+    typescript: `function largestSumAfterKNegations(nums: number[], k: number): number {
+  nums.sort((a, b) => Math.abs(a) - Math.abs(b));
+  for (let i = nums.length - 1; i >= 0 && k > 0; i--) {
+    if (nums[i]! < 0) { nums[i] = -nums[i]!; k--; }
+  }
+  if (k % 2 === 1) nums[0] = -nums[0]!;
+  return nums.reduce((a, b) => a + b, 0);
+}`,
     python: `def largestSumAfterKNegations(nums: list[int], k: int) -> int:
-    # Your code here
-    pass`,
+    nums = sorted(nums, key=abs)
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] < 0 and k > 0: nums[i] = -nums[i]; k -= 1
+    if k % 2 == 1: nums[0] = -nums[0]
+    return sum(nums)`,
   },
   visibleTests: [
     { args: [[4, 2, 3], 1], expected: 5 },

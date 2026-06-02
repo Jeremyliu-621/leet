@@ -38,12 +38,20 @@ Return the **maximum sum of happiness values** of the selected children.`,
   params: ['happiness', 'k'],
   starterCode: {
     javascript: `function maximumHappinessSum(happiness, k) {
-
+  happiness.sort((a, b) => b - a);
+  let ans = 0;
+  for (let i = 0; i < k; i++) ans += Math.max(0, happiness[i] - i);
+  return ans;
 }`,
-    typescript: "function maximumHappinessSum(happiness: number[], k: number): number {\n\n}",
-
+    typescript: `function maximumHappinessSum(happiness: number[], k: number): number {
+  happiness.sort((a, b) => b - a);
+  let ans = 0;
+  for (let i = 0; i < k; i++) ans += Math.max(0, happiness[i]! - i);
+  return ans;
+}`,
     python: `def maximumHappinessSum(happiness, k):
-    pass`,
+    happiness = sorted(happiness, reverse=True)
+    return sum(max(0, happiness[i] - i) for i in range(k))`,
   },
   visibleTests: [
     { args: [[1, 2, 3], 2], expected: 4 },

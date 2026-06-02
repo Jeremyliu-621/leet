@@ -48,13 +48,28 @@ Note: Splitting \`nums\` means every element of \`nums\` must be in exactly one 
   params: ['nums'],
   starterCode: {
     javascript: `function maximizeTotalCost(nums) {
-
+  let pos = nums[0], neg = -Infinity;
+  for (let i = 1; i < nums.length; i++) {
+    const newPos = Math.max(pos, neg) + nums[i];
+    const newNeg = pos - nums[i];
+    pos = newPos; neg = newNeg;
+  }
+  return Math.max(pos, neg);
 }`,
     typescript: `function maximizeTotalCost(nums: number[]): number {
-
+  let pos = nums[0]!, neg = -Infinity;
+  for (let i = 1; i < nums.length; i++) {
+    const newPos = Math.max(pos, neg) + nums[i]!;
+    const newNeg = pos - nums[i]!;
+    pos = newPos; neg = newNeg;
+  }
+  return Math.max(pos, neg);
 }`,
     python: `def maximizeTotalCost(nums):
-    pass`,
+    pos, neg = nums[0], float('-inf')
+    for i in range(1, len(nums)):
+        pos, neg = max(pos, neg) + nums[i], pos - nums[i]
+    return max(pos, neg)`,
   },
   visibleTests: [
     { args: [[1, -2, 3, 4, -1, -2]], expected: 11 },

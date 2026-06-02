@@ -38,18 +38,44 @@ Return the maximum gold you can earn.`,
   functionName: 'maximizeTheProfit',
   params: ['n', 'offers'],
   starterCode: {
-    javascript: `/**
- * @param {number} n
- * @param {number[][]} offers
- * @return {number}
- */
-function maximizeTheProfit(n, offers) {
-
+    javascript: `function maximizeTheProfit(n, offers) {
+  const byEnd = new Map();
+  for (const [s, e, g] of offers) {
+    if (!byEnd.has(e)) byEnd.set(e, []);
+    byEnd.get(e).push([s, g]);
+  }
+  const dp = new Array(n + 1).fill(0);
+  for (let e = 0; e < n; e++) {
+    dp[e + 1] = dp[e];
+    if (byEnd.has(e)) {
+      for (const [s, g] of byEnd.get(e)) dp[e + 1] = Math.max(dp[e + 1], dp[s] + g);
+    }
+  }
+  return dp[n];
 }`,
-    typescript: "function maximizeTheProfit(n: number, offers: number[][]): number {number} n\n * @param {number[][]} offers\n * @return {number}\n */\nfunction maximizeTheProfit(n, offers) {\n\n}",
-
+    typescript: `function maximizeTheProfit(n: number, offers: number[][]): number {
+  const byEnd = new Map<number, [number, number][]>();
+  for (const offer of offers) {
+    const [s, e, g] = [offer[0]!, offer[1]!, offer[2]!];
+    if (!byEnd.has(e)) byEnd.set(e, []);
+    byEnd.get(e)!.push([s, g]);
+  }
+  const dp = new Array<number>(n + 1).fill(0);
+  for (let e = 0; e < n; e++) {
+    dp[e + 1] = dp[e]!;
+    for (const [s, g] of (byEnd.get(e) ?? [])) dp[e + 1] = Math.max(dp[e + 1]!, dp[s]! + g);
+  }
+  return dp[n]!;
+}`,
     python: `def maximizeTheProfit(n: int, offers: list[list[int]]) -> int:
-    pass`,
+    from collections import defaultdict
+    by_end = defaultdict(list)
+    for s, e, g in offers: by_end[e].append((s, g))
+    dp = [0] * (n + 1)
+    for e in range(n):
+        dp[e + 1] = dp[e]
+        for s, g in by_end[e]: dp[e + 1] = max(dp[e + 1], dp[s] + g)
+    return dp[n]`,
   },
   hints: [
     'This is a weighted interval scheduling / DP problem. Sort offers by end index. Define dp[i] = max gold attainable using only houses 0..i-1.',

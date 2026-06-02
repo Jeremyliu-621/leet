@@ -37,13 +37,42 @@ Return the **maximum** number of elements in \`nums\` that can be made to form a
   params: ['nums'],
   starterCode: {
     javascript: `function maxSelectedElements(nums) {
-
+  nums.sort((a, b) => a - b);
+  const dp = new Map();
+  let ans = 1;
+  for (const x of nums) {
+    const keep = (dp.get(x - 1) || 0) + 1;
+    const inc = (dp.get(x) || 0) + 1;
+    dp.set(x, Math.max(dp.get(x) || 0, keep));
+    dp.set(x + 1, Math.max(dp.get(x + 1) || 0, inc));
+    ans = Math.max(ans, keep, inc);
+  }
+  return ans;
 }`,
     typescript: `function maxSelectedElements(nums: number[]): number {
-
+  nums.sort((a, b) => a - b);
+  const dp = new Map<number, number>();
+  let ans = 1;
+  for (const x of nums) {
+    const keep = (dp.get(x - 1) ?? 0) + 1;
+    const inc = (dp.get(x) ?? 0) + 1;
+    dp.set(x, Math.max(dp.get(x) ?? 0, keep));
+    dp.set(x + 1, Math.max(dp.get(x + 1) ?? 0, inc));
+    ans = Math.max(ans, keep, inc);
+  }
+  return ans;
 }`,
     python: `def maxSelectedElements(nums: list[int]) -> int:
-    pass`,
+    nums.sort()
+    dp = {}
+    ans = 1
+    for x in nums:
+        keep = dp.get(x - 1, 0) + 1
+        inc = dp.get(x, 0) + 1
+        dp[x] = max(dp.get(x, 0), keep)
+        dp[x + 1] = max(dp.get(x + 1, 0), inc)
+        ans = max(ans, keep, inc)
+    return ans`,
   },
   functionName: 'maxSelectedElements',
   visibleTests: [

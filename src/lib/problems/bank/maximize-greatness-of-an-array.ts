@@ -35,10 +35,28 @@ Return the **maximum** possible greatness you can achieve after permuting \`nums
   functionName: 'maximizeGreatness',
   params: ['nums'],
   starterCode: {
-    javascript: 'function maximizeGreatness(nums) {\n  \n}\n',
-    typescript: "function maximizeGreatness(nums: number[]): number {\n  \n}",
-
-    python: 'def maximizeGreatness(nums):\n    pass\n',
+    javascript: `function maximizeGreatness(nums) {
+  nums.sort((a, b) => a - b);
+  let i = 0, ans = 0;
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] > nums[i]) { ans++; i++; }
+  }
+  return ans;
+}`,
+    typescript: `function maximizeGreatness(nums: number[]): number {
+  nums.sort((a, b) => a - b);
+  let i = 0, ans = 0;
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j]! > nums[i]!) { ans++; i++; }
+  }
+  return ans;
+}`,
+    python: `def maximizeGreatness(nums):
+    nums.sort()
+    i = ans = 0
+    for j in range(len(nums)):
+        if nums[j] > nums[i]: ans += 1; i += 1
+    return ans`,
   },
   visibleTests: [
     { args: [[1, 3, 5, 2, 1, 3, 1]], expected: 4 },

@@ -39,11 +39,82 @@ Return the **maximum possible minimum power** any city can have after optimally 
   params: ['stations', 'r', 'k'],
   starterCode: {
     javascript: `function maximizeMinimumPower(stations, r, k) {
-
+  const n = stations.length;
+  const prefix = new Array(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i] + stations[i];
+  const power = Array.from({length: n}, (_, i) =>
+    prefix[Math.min(n-1,i+r)+1] - prefix[Math.max(0,i-r)]);
+  function canAchieve(minPow) {
+    const diff = new Array(n + 1).fill(0);
+    let extra = 0, added = 0;
+    for (let i = 0; i < n; i++) {
+      extra += diff[i];
+      const cur = power[i] + extra;
+      if (cur < minPow) {
+        const need = minPow - cur;
+        if (added + need > k) return false;
+        added += need; extra += need;
+        diff[Math.min(i + r, n - 1) + 1] -= need;
+      }
+    }
+    return true;
+  }
+  let lo = 0, hi = prefix[n] + k;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (canAchieve(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
-    typescript: 'function maximizeMinimumPower(stations: number[], r: number, k: number): number {\n\n}',
+    typescript: `function maximizeMinimumPower(stations: number[], r: number, k: number): number {
+  const n = stations.length;
+  const prefix = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i++) prefix[i + 1] = prefix[i]! + stations[i]!;
+  const power = Array.from({length: n}, (_, i) =>
+    prefix[Math.min(n-1,i+r)+1]! - prefix[Math.max(0,i-r)]!);
+  function canAchieve(minPow: number): boolean {
+    const diff = new Array<number>(n + 1).fill(0);
+    let extra = 0, added = 0;
+    for (let i = 0; i < n; i++) {
+      extra += diff[i]!;
+      const cur = power[i]! + extra;
+      if (cur < minPow) {
+        const need = minPow - cur;
+        if (added + need > k) return false;
+        added += need; extra += need;
+        diff[Math.min(i + r, n - 1) + 1]! -= need;
+      }
+    }
+    return true;
+  }
+  let lo = 0, hi = prefix[n]! + k;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (canAchieve(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
     python: `def maximizeMinimumPower(stations, r, k):
-    pass`,
+    n = len(stations)
+    prefix = [0] * (n + 1)
+    for i in range(n): prefix[i+1] = prefix[i] + stations[i]
+    power = [prefix[min(n-1,i+r)+1] - prefix[max(0,i-r)] for i in range(n)]
+    def can_achieve(min_pow):
+        diff = [0] * (n + 1); extra = added = 0
+        for i in range(n):
+            extra += diff[i]; cur = power[i] + extra
+            if cur < min_pow:
+                need = min_pow - cur
+                if added + need > k: return False
+                added += need; extra += need
+                diff[min(i + r, n - 1) + 1] -= need
+        return True
+    lo, hi = 0, sum(stations) + k
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [[1, 2, 4, 5, 0], 1, 2], expected: 5 },

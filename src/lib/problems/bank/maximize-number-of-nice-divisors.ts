@@ -37,13 +37,50 @@ Return the number of **nice divisors** of \`n\`. Since the answer may be very la
   params: ['primeFactors'],
   starterCode: {
     javascript: `function maxNiceDivisors(primeFactors) {
-
+  const MOD = 1000000007n;
+  function powmod(base, exp) {
+    let b = BigInt(base) % MOD, e = BigInt(exp), result = 1n;
+    while (e > 0n) {
+      if (e & 1n) result = result * b % MOD;
+      b = b * b % MOD; e >>= 1n;
+    }
+    return Number(result);
+  }
+  if (primeFactors <= 3) return primeFactors;
+  const rem = primeFactors % 3, threes = Math.floor(primeFactors / 3);
+  if (rem === 0) return powmod(3, threes);
+  if (rem === 1) return powmod(3, threes - 1) * 4 % 1000000007;
+  return powmod(3, threes) * 2 % 1000000007;
 }`,
     typescript: `function maxNiceDivisors(primeFactors: number): number {
-
+  const MOD = 1000000007n;
+  function powmod(base: number, exp: number): number {
+    let b = BigInt(base) % MOD, e = BigInt(exp), result = 1n;
+    while (e > 0n) {
+      if (e & 1n) result = result * b % MOD;
+      b = b * b % MOD; e >>= 1n;
+    }
+    return Number(result);
+  }
+  if (primeFactors <= 3) return primeFactors;
+  const rem = primeFactors % 3, threes = Math.floor(primeFactors / 3);
+  if (rem === 0) return powmod(3, threes);
+  if (rem === 1) return powmod(3, threes - 1) * 4 % 1000000007;
+  return powmod(3, threes) * 2 % 1000000007;
 }`,
     python: `def maxNiceDivisors(primeFactors):
-    pass`,
+    MOD = 10**9 + 7
+    def powmod(base, exp):
+        result = 1; base %= MOD
+        while exp > 0:
+            if exp & 1: result = result * base % MOD
+            base = base * base % MOD; exp >>= 1
+        return result
+    if primeFactors <= 3: return primeFactors
+    rem = primeFactors % 3; threes = primeFactors // 3
+    if rem == 0: return powmod(3, threes)
+    if rem == 1: return powmod(3, threes - 1) * 4 % MOD
+    return powmod(3, threes) * 2 % MOD`,
   },
   visibleTests: [
     { args: [5], expected: 6 },

@@ -46,13 +46,38 @@ Return the **maximum** area of a square hole that can be formed by removing some
   params: ['n', 'm', 'hBars', 'vBars'],
   starterCode: {
     javascript: `function maximizeSquareHoleArea(n, m, hBars, vBars) {
-
+  function maxRun(bars) {
+    let max = 1, run = 1;
+    for (let i = 1; i < bars.length; i++) {
+      run = bars[i] === bars[i-1] + 1 ? run + 1 : 1;
+      max = Math.max(max, run);
+    }
+    return max + 1;
+  }
+  const side = Math.min(maxRun(hBars), maxRun(vBars));
+  return side * side;
 }`,
     typescript: `function maximizeSquareHoleArea(n: number, m: number, hBars: number[], vBars: number[]): number {
-
+  function maxRun(bars: number[]): number {
+    let max = 1, run = 1;
+    for (let i = 1; i < bars.length; i++) {
+      run = bars[i]! === bars[i-1]! + 1 ? run + 1 : 1;
+      max = Math.max(max, run);
+    }
+    return max + 1;
+  }
+  const side = Math.min(maxRun(hBars), maxRun(vBars));
+  return side * side;
 }`,
     python: `def maximizeSquareHoleArea(n, m, hBars, vBars):
-    pass`,
+    def max_run(bars):
+        max_r = run = 1
+        for i in range(1, len(bars)):
+            run = run + 1 if bars[i] == bars[i-1] + 1 else 1
+            max_r = max(max_r, run)
+        return max_r + 1
+    side = min(max_run(hBars), max_run(vBars))
+    return side * side`,
   },
   visibleTests: [
     { args: [2, 1, [2, 3], [2]], expected: 4 },

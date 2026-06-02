@@ -40,10 +40,40 @@ Alex wants to sit in the seat such that the distance between him and the closest
   functionName: 'maxDistToClosest',
   params: ['seats'],
   starterCode: {
-    javascript: 'function maxDistToClosest(seats) {\n\n}\n',
-    typescript: "function maxDistToClosest(seats: number[]): number {\n\n}",
-
-    python: 'def maxDistToClosest(seats):\n    pass\n',
+    javascript: `function maxDistToClosest(seats) {
+  const n = seats.length;
+  let ans = 0, prev = -1;
+  for (let i = 0; i < n; i++) {
+    if (seats[i] === 1) {
+      ans = prev === -1 ? i : Math.max(ans, (i - prev) >> 1);
+      prev = i;
+    }
+  }
+  if (prev < n - 1) ans = Math.max(ans, n - 1 - prev);
+  return ans;
+}`,
+    typescript: `function maxDistToClosest(seats: number[]): number {
+  const n = seats.length;
+  let ans = 0, prev = -1;
+  for (let i = 0; i < n; i++) {
+    if (seats[i] === 1) {
+      ans = prev === -1 ? i : Math.max(ans, (i - prev) >> 1);
+      prev = i;
+    }
+  }
+  if (prev < n - 1) ans = Math.max(ans, n - 1 - prev);
+  return ans;
+}`,
+    python: `def maxDistToClosest(seats):
+    n = len(seats)
+    ans = prev = 0
+    prev = -1
+    for i in range(n):
+        if seats[i] == 1:
+            ans = i if prev == -1 else max(ans, (i - prev) // 2)
+            prev = i
+    if prev < n - 1: ans = max(ans, n - 1 - prev)
+    return ans`,
   },
   visibleTests: [
     { args: [[1,0,0,0,1,0,1]], expected: 2 },

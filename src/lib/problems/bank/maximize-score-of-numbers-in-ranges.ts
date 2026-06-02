@@ -44,13 +44,56 @@ Return the **maximum possible score**.`,
   params: ['start', 'd'],
   starterCode: {
     javascript: `function maxScore(start, d) {
-
+  start.sort((a, b) => a - b);
+  const n = start.length;
+  function canAchieve(m) {
+    let cur = start[0];
+    for (let i = 1; i < n; i++) {
+      cur = Math.max(start[i], cur + m);
+      if (cur > start[i] + d) return false;
+    }
+    return true;
+  }
+  let lo = 0, hi = start[n - 1] + d - start[0];
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (canAchieve(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     typescript: `function maxScore(start: number[], d: number): number {
-
+  start.sort((a, b) => a - b);
+  const n = start.length;
+  function canAchieve(m: number): boolean {
+    let cur = start[0]!;
+    for (let i = 1; i < n; i++) {
+      cur = Math.max(start[i]!, cur + m);
+      if (cur > start[i]! + d) return false;
+    }
+    return true;
+  }
+  let lo = 0, hi = start[n - 1]! + d - start[0]!;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    if (canAchieve(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
 }`,
     python: `def maxScore(start: list[int], d: int) -> int:
-    pass`,
+    start.sort()
+    n = len(start)
+    def can_achieve(m):
+        cur = start[0]
+        for i in range(1, n):
+            cur = max(start[i], cur + m)
+            if cur > start[i] + d: return False
+        return True
+    lo, hi = 0, start[-1] + d - start[0]
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_achieve(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [[6, 0, 3], 2], expected: 4 },

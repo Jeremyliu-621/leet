@@ -34,10 +34,79 @@ Return the **maximum** number of tasks that can be assigned to workers.`,
   functionName: 'maxTaskAssign',
   params: ['tasks', 'workers', 'pills', 'strength'],
   starterCode: {
-    javascript: 'function maxTaskAssign(tasks, workers, pills, strength) {\n\n}\n',
-    typescript: "function maxTaskAssign(tasks: number[], workers: number[], pills: number, strength: number): number {\n\n}",
-
-    python: 'def maxTaskAssign(tasks, workers, pills, strength):\n    pass\n',
+    javascript: `function maxTaskAssign(tasks, workers, pills, strength) {
+  tasks.sort((a, b) => a - b);
+  workers.sort((a, b) => a - b);
+  const n = tasks.length, m = workers.length;
+  function canDo(k) {
+    const ws = workers.slice(m - k);
+    let pillsLeft = pills;
+    for (let i = k - 1; i >= 0; i--) {
+      const t = tasks[i];
+      if (ws[ws.length - 1] >= t) { ws.pop(); continue; }
+      if (!pillsLeft) return false;
+      const need = t - strength;
+      let lo = 0, hi = ws.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (ws[mid] >= need) hi = mid; else lo = mid + 1; }
+      if (lo === ws.length) return false;
+      ws.splice(lo, 1); pillsLeft--;
+    }
+    return true;
+  }
+  let lo = 0, hi = Math.min(n, m);
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canDo(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
+    typescript: `function maxTaskAssign(tasks: number[], workers: number[], pills: number, strength: number): number {
+  tasks.sort((a, b) => a - b);
+  workers.sort((a, b) => a - b);
+  const n = tasks.length, m = workers.length;
+  function canDo(k: number): boolean {
+    const ws = workers.slice(m - k);
+    let pillsLeft = pills;
+    for (let i = k - 1; i >= 0; i--) {
+      const t = tasks[i]!;
+      if (ws[ws.length - 1]! >= t) { ws.pop(); continue; }
+      if (!pillsLeft) return false;
+      const need = t - strength;
+      let lo = 0, hi = ws.length;
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (ws[mid]! >= need) hi = mid; else lo = mid + 1; }
+      if (lo === ws.length) return false;
+      ws.splice(lo, 1); pillsLeft--;
+    }
+    return true;
+  }
+  let lo = 0, hi = Math.min(n, m);
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >> 1;
+    if (canDo(mid)) lo = mid; else hi = mid - 1;
+  }
+  return lo;
+}`,
+    python: `def maxTaskAssign(tasks, workers, pills, strength):
+    from sortedcontainers import SortedList
+    tasks.sort(); workers.sort()
+    n, m = len(tasks), len(workers)
+    def can_do(k):
+        ws = SortedList(workers[m - k:])
+        pills_left = pills
+        for i in range(k - 1, -1, -1):
+            t = tasks[i]
+            if ws[-1] >= t: ws.pop(-1); continue
+            if not pills_left: return False
+            idx = ws.bisect_left(t - strength)
+            if idx == len(ws): return False
+            ws.pop(idx); pills_left -= 1
+        return True
+    lo, hi = 0, min(n, m)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if can_do(mid): lo = mid
+        else: hi = mid - 1
+    return lo`,
   },
   visibleTests: [
     { args: [[3,2,1], [0,3,3], 1, 1], expected: 3 },

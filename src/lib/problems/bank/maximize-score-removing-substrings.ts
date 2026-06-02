@@ -45,13 +45,49 @@ Return the **maximum** number of points you can gain after applying the above op
   params: ['s', 'x', 'y'],
   starterCode: {
     javascript: `function maximumGain(s, x, y) {
-
+  function remove(str, a, b, pts) {
+    const stack = []; let score = 0;
+    for (const ch of str) {
+      if (stack.length && stack[stack.length - 1] === a && ch === b) { stack.pop(); score += pts; }
+      else stack.push(ch);
+    }
+    return [stack.join(''), score];
+  }
+  const [first, second] = x >= y ? [['a','b',x],['b','a',y]] : [['b','a',y],['a','b',x]];
+  const [s2, sc1] = remove(s, first[0], first[1], first[2]);
+  const [, sc2] = remove(s2, second[0], second[1], second[2]);
+  return sc1 + sc2;
 }`,
     typescript: `function maximumGain(s: string, x: number, y: number): number {
-
+  function remove(str: string, a: string, b: string, pts: number): [string, number] {
+    const stack: string[] = []; let score = 0;
+    for (const ch of str) {
+      if (stack.length && stack[stack.length - 1] === a && ch === b) { stack.pop(); score += pts; }
+      else stack.push(ch);
+    }
+    return [stack.join(''), score];
+  }
+  const [first, second] = x >= y
+    ? [['a','b',x] as [string,string,number], ['b','a',y] as [string,string,number]]
+    : [['b','a',y] as [string,string,number], ['a','b',x] as [string,string,number]];
+  const [s2, sc1] = remove(s, first[0], first[1], first[2]);
+  const [, sc2] = remove(s2, second[0], second[1], second[2]);
+  return sc1 + sc2;
 }`,
     python: `def maximumGain(s, x, y):
-    pass`,
+    def remove(string, a, b, pts):
+        stack = []; score = 0
+        for ch in string:
+            if stack and stack[-1] == a and ch == b: stack.pop(); score += pts
+            else: stack.append(ch)
+        return ''.join(stack), score
+    if x >= y:
+        s, sc1 = remove(s, 'a', 'b', x)
+        s, sc2 = remove(s, 'b', 'a', y)
+    else:
+        s, sc1 = remove(s, 'b', 'a', y)
+        s, sc2 = remove(s, 'a', 'b', x)
+    return sc1 + sc2`,
   },
   visibleTests: [
     { args: ['cdbcbbaaabab', 4, 5], expected: 19 },

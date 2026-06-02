@@ -48,12 +48,63 @@ Return the **maximum** score you can receive after performing \`n\` operations.
   params: ['nums'],
   starterCode: {
     javascript: `function maxScore(nums) {
-
+  const m = nums.length;
+  function gcd(a, b) { return b === 0 ? a : gcd(b, a % b); }
+  const g = Array.from({length: m}, (_, i) => Array.from({length: m}, (_, j) => gcd(nums[i], nums[j])));
+  const dp = new Array(1 << m).fill(0);
+  function popcount(x) { let c = 0; while (x) { c += x & 1; x >>= 1; } return c; }
+  for (let mask = 0; mask < (1 << m); mask++) {
+    const pc = popcount(mask);
+    if (pc % 2 !== 0 || pc === m) continue;
+    const op = pc >> 1;
+    for (let i = 0; i < m; i++) {
+      if (mask & (1 << i)) continue;
+      for (let j = i + 1; j < m; j++) {
+        if (mask & (1 << j)) continue;
+        const next = mask | (1 << i) | (1 << j);
+        dp[next] = Math.max(dp[next], dp[mask] + (op + 1) * g[i][j]);
+      }
+    }
+  }
+  return dp[(1 << m) - 1];
 }`,
-    typescript: "function maxScore(nums: number[]): number {\n\n}",
-
+    typescript: `function maxScore(nums: number[]): number {
+  const m = nums.length;
+  function gcd(a: number, b: number): number { return b === 0 ? a : gcd(b, a % b); }
+  const g = Array.from({length: m}, (_, i) => Array.from({length: m}, (_, j) => gcd(nums[i]!, nums[j]!)));
+  const dp = new Array<number>(1 << m).fill(0);
+  function popcount(x: number): number { let c = 0; while (x) { c += x & 1; x >>= 1; } return c; }
+  for (let mask = 0; mask < (1 << m); mask++) {
+    const pc = popcount(mask);
+    if (pc % 2 !== 0 || pc === m) continue;
+    const op = pc >> 1;
+    for (let i = 0; i < m; i++) {
+      if (mask & (1 << i)) continue;
+      for (let j = i + 1; j < m; j++) {
+        if (mask & (1 << j)) continue;
+        const next = mask | (1 << i) | (1 << j);
+        dp[next] = Math.max(dp[next]!, dp[mask]! + (op + 1) * g[i]![j]!);
+      }
+    }
+  }
+  return dp[(1 << m) - 1]!;
+}`,
     python: `def maxScore(nums):
-    pass`,
+    from math import gcd
+    m = len(nums)
+    g = [[gcd(nums[i], nums[j]) for j in range(m)] for i in range(m)]
+    dp = [0] * (1 << m)
+    for mask in range(1 << m):
+        pc = bin(mask).count('1')
+        if pc % 2 != 0 or pc == m: continue
+        op = pc >> 1
+        for i in range(m):
+            if mask & (1 << i): continue
+            for j in range(i + 1, m):
+                if mask & (1 << j): continue
+                nxt = mask | (1 << i) | (1 << j)
+                dp[nxt] = max(dp[nxt], dp[mask] + (op + 1) * g[i][j])
+    return dp[(1 << m) - 1]`,
   },
   visibleTests: [
     { args: [[1, 2]], expected: 1 },
