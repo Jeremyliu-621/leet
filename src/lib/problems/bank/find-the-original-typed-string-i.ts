@@ -40,13 +40,30 @@ Given a string \`word\`, which represents the **final** output displayed on Alic
   params: ['word'],
   starterCode: {
     javascript: `function possibleStringCount(word) {
-
+  let runs = 0, i = 0;
+  while (i < word.length) {
+    let j = i + 1;
+    while (j < word.length && word[j] === word[i]) j++;
+    runs++; i = j;
+  }
+  return word.length - runs + 1;
 }`,
     typescript: `function possibleStringCount(word: string): number {
-
+  let runs = 0, i = 0;
+  while (i < word.length) {
+    let j = i + 1;
+    while (j < word.length && word[j] === word[i]) j++;
+    runs++; i = j;
+  }
+  return word.length - runs + 1;
 }`,
     python: `def possibleStringCount(word):
-    pass`,
+    runs, i = 0, 0
+    while i < len(word):
+        j = i + 1
+        while j < len(word) and word[j] == word[i]: j += 1
+        runs += 1; i = j
+    return len(word) - runs + 1`,
   },
   visibleTests: [
     { args: ['abbcccc'], expected: 5 },

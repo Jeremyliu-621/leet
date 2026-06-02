@@ -34,13 +34,42 @@ The **punishment number** of \`n\` is defined as the sum of the squares of all i
   params: ['n'],
   starterCode: {
     javascript: `function punishmentNumber(n) {
-
+  const can = (s, pos, rem) => {
+    if (pos === s.length) return rem === 0;
+    let v = 0;
+    for (let end = pos; end < s.length; end++) {
+      v = v * 10 + (s.charCodeAt(end) - 48);
+      if (v <= rem && can(s, end + 1, rem - v)) return true;
+    }
+    return false;
+  };
+  let ans = 0;
+  for (let i = 1; i <= n; i++) if (can(String(i * i), 0, i)) ans += i * i;
+  return ans;
 }`,
     typescript: `function punishmentNumber(n: number): number {
-
+  const can = (s: string, pos: number, rem: number): boolean => {
+    if (pos === s.length) return rem === 0;
+    let v = 0;
+    for (let end = pos; end < s.length; end++) {
+      v = v * 10 + (s.charCodeAt(end) - 48);
+      if (v <= rem && can(s, end + 1, rem - v)) return true;
+    }
+    return false;
+  };
+  let ans = 0;
+  for (let i = 1; i <= n; i++) if (can(String(i * i), 0, i)) ans += i * i;
+  return ans;
 }`,
     python: `def punishmentNumber(n):
-    pass`,
+    def can(s, pos, rem):
+        if pos == len(s): return rem == 0
+        v = 0
+        for end in range(pos, len(s)):
+            v = v * 10 + int(s[end])
+            if v <= rem and can(s, end + 1, rem - v): return True
+        return False
+    return sum(i * i for i in range(1, n + 1) if can(str(i * i), 0, i))`,
   },
   visibleTests: [
     { args: [10], expected: 182 },

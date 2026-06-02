@@ -53,11 +53,32 @@ function resultsArray(nums, k) {
   params: ['nums', 'k'],
   starterCode: {
     javascript: `function resultsArray(nums, k) {
-
+  if (k === 1) return nums.slice();
+  const res = [];
+  let streak = 1;
+  for (let i = 1; i < nums.length; i++) {
+    streak = nums[i] === nums[i - 1] + 1 ? streak + 1 : 1;
+    if (i >= k - 1) res.push(streak >= k ? nums[i] : -1);
+  }
+  return res;
 }`,
-    typescript: 'function resultsArray(nums: number[], k: number): number[] {\n\n}',
+    typescript: `function resultsArray(nums: number[], k: number): number[] {
+  if (k === 1) return nums.slice();
+  const res: number[] = [];
+  let streak = 1;
+  for (let i = 1; i < nums.length; i++) {
+    streak = nums[i] === nums[i - 1] + 1 ? streak + 1 : 1;
+    if (i >= k - 1) res.push(streak >= k ? nums[i] : -1);
+  }
+  return res;
+}`,
     python: `def resultsArray(nums, k):
-    pass`,
+    if k == 1: return nums[:]
+    res, streak = [], 1
+    for i in range(1, len(nums)):
+        streak = streak + 1 if nums[i] == nums[i-1] + 1 else 1
+        if i >= k - 1: res.append(nums[i] if streak >= k else -1)
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4, 3, 2, 5], 3], expected: [3, 4, -1, -1, -1] },

@@ -40,13 +40,80 @@ Since the answer may be very large, return it **modulo** \`10^9 + 7\`.`,
   params: ['word', 'k'],
   starterCode: {
     javascript: `function possibleStringCount(word, k) {
-
+  const MOD = 1_000_000_007n;
+  const runs = [];
+  let i = 0;
+  while (i < word.length) {
+    let l = 1;
+    while (i + l < word.length && word[i + l] === word[i]) l++;
+    runs.push(l); i += l;
+  }
+  let tot = 1n;
+  for (const l of runs) tot = tot * BigInt(l) % MOD;
+  if (runs.length >= k) return Number(tot);
+  let dp = new Array(k).fill(0n);
+  dp[0] = 1n;
+  for (const L of runs) {
+    const nd = new Array(k).fill(0n), pr = new Array(k + 1).fill(0n);
+    for (let j = 0; j < k; j++) pr[j + 1] = (pr[j] + dp[j]) % MOD;
+    for (let j = 1; j < k; j++) {
+      const lo = Math.max(0, j - L);
+      nd[j] = (pr[j] - pr[lo] + MOD) % MOD;
+    }
+    dp = nd;
+  }
+  let bad = 0n;
+  for (const v of dp) bad = (bad + v) % MOD;
+  return Number((tot - bad + MOD) % MOD);
 }`,
     typescript: `function possibleStringCount(word: string, k: number): number {
-
+  const MOD = 1_000_000_007n;
+  const runs: number[] = [];
+  let i = 0;
+  while (i < word.length) {
+    let l = 1;
+    while (i + l < word.length && word[i + l] === word[i]) l++;
+    runs.push(l); i += l;
+  }
+  let tot = 1n;
+  for (const l of runs) tot = tot * BigInt(l) % MOD;
+  if (runs.length >= k) return Number(tot);
+  let dp: bigint[] = new Array(k).fill(0n);
+  dp[0] = 1n;
+  for (const L of runs) {
+    const nd: bigint[] = new Array(k).fill(0n), pr: bigint[] = new Array(k + 1).fill(0n);
+    for (let j = 0; j < k; j++) pr[j + 1] = (pr[j] + dp[j]) % MOD;
+    for (let j = 1; j < k; j++) {
+      const lo = Math.max(0, j - L);
+      nd[j] = (pr[j] - pr[lo] + MOD) % MOD;
+    }
+    dp = nd;
+  }
+  let bad = 0n;
+  for (const v of dp) bad = (bad + v) % MOD;
+  return Number((tot - bad + MOD) % MOD);
 }`,
     python: `def possibleStringCount(word, k):
-    pass`,
+    MOD = 10**9 + 7
+    runs, i = [], 0
+    while i < len(word):
+        l = 1
+        while i + l < len(word) and word[i + l] == word[i]: l += 1
+        runs.append(l); i += l
+    tot = 1
+    for l in runs: tot = tot * l % MOD
+    if len(runs) >= k: return tot
+    dp = [0] * k; dp[0] = 1
+    for L in runs:
+        pr = [0] * (k + 1)
+        for j in range(k): pr[j + 1] = (pr[j] + dp[j]) % MOD
+        nd = [0] * k
+        for j in range(1, k):
+            lo = max(0, j - L)
+            nd[j] = (pr[j] - pr[lo]) % MOD
+        dp = nd
+    bad = sum(dp) % MOD
+    return (tot - bad) % MOD`,
   },
   visibleTests: [
     { args: ['aabbccdd', 7], expected: 5 },

@@ -43,12 +43,20 @@ function findPeaks(mountain) {
   params: ['mountain'],
   starterCode: {
     javascript: `function findPeaks(mountain) {
-
+  const peaks = [];
+  for (let i = 1; i < mountain.length - 1; i++)
+    if (mountain[i] > mountain[i - 1] && mountain[i] > mountain[i + 1]) peaks.push(i);
+  return peaks;
 }`,
-    typescript: "function findPeaks(mountain: number[]): unknown[] {\n\n}",
-
+    typescript: `function findPeaks(mountain: number[]): number[] {
+  const peaks: number[] = [];
+  for (let i = 1; i < mountain.length - 1; i++)
+    if (mountain[i] > mountain[i - 1] && mountain[i] > mountain[i + 1]) peaks.push(i);
+  return peaks;
+}`,
     python: `def findPeaks(mountain):
-    pass`,
+    return [i for i in range(1, len(mountain) - 1)
+            if mountain[i] > mountain[i-1] and mountain[i] > mountain[i+1]]`,
   },
   visibleTests: [
     { args: [[2, 4, 4]], expected: [] },
