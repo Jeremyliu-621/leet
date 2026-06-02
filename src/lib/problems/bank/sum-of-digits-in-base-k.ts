@@ -39,10 +39,19 @@ After converting, each digit of \`n\` in base \`k\` should be summed and the sum
   functionName: 'sumBase',
   params: ['n', 'k'],
   starterCode: {
-    javascript: 'function sumBase(n, k) {\n  // your code here\n}\n',
-    typescript: "function sumBase(n: number, k: number): number {\n  // your code here\n}",
-
-    python: 'def sumBase(n, k):\n    # your code here\n    pass\n',
+    javascript: `function sumBase(n, k) {
+  let s = 0; while (n > 0) { s += n % k; n = Math.floor(n / k); } return s;
+}`,
+    typescript: `function sumBase(n: number, k: number): number {
+  let s = 0; while (n > 0) { s += n % k; n = Math.floor(n / k); } return s;
+}`,
+    python: `def sumBase(n, k):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    n, k = int(n), int(k)
+    s = 0
+    while n > 0: s += n % k; n //= k
+    return s`,
   },
   visibleTests: [
     { args: [34, 6], expected: 9 },

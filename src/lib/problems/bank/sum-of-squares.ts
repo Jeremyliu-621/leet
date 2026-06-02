@@ -38,10 +38,16 @@ This operation is the basis of the **happy number** problem — repeatedly apply
   functionName: 'sumOfSquares',
   params: ['n'],
   starterCode: {
-    javascript: 'function sumOfSquares(n) {\n  // your code here\n}\n',
-    typescript: "function sumOfSquares(n: number): number {\n  // your code here\n}",
-
-    python: 'def sumOfSquares(n):\n    # your code here\n    pass\n',
+    javascript: `function sumOfSquares(n) {
+  let s = 0; while (n > 0) { const d = n % 10; s += d * d; n = Math.floor(n / 10); } return s;
+}`,
+    typescript: `function sumOfSquares(n: number): number {
+  let s = 0; while (n > 0) { const d = n % 10; s += d * d; n = Math.floor(n / 10); } return s;
+}`,
+    python: `def sumOfSquares(n):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    n = int(n)
+    return sum(int(d)**2 for d in str(n)) if n > 0 else 0`,
   },
   visibleTests: [
     { args: [123], expected: 14 },

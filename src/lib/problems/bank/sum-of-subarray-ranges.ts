@@ -38,10 +38,31 @@ A subarray is a contiguous **non-empty** sequence of elements within an array.`,
   functionName: 'subArrayRanges',
   params: ['nums'],
   starterCode: {
-    javascript: 'function subArrayRanges(nums) {\n  // your code here\n}\n',
-    typescript: "function subArrayRanges(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def subArrayRanges(nums):\n    # your code here\n    pass\n',
+    javascript: `function subArrayRanges(nums) {
+  let res = 0;
+  for (let i = 0; i < nums.length; i++) {
+    let mn = nums[i], mx = nums[i];
+    for (let j = i; j < nums.length; j++) { mn = Math.min(mn, nums[j]); mx = Math.max(mx, nums[j]); res += mx - mn; }
+  }
+  return res;
+}`,
+    typescript: `function subArrayRanges(nums: number[]): number {
+  let res = 0;
+  for (let i = 0; i < nums.length; i++) {
+    let mn = nums[i]!, mx = nums[i]!;
+    for (let j = i; j < nums.length; j++) { mn = Math.min(mn, nums[j]!); mx = Math.max(mx, nums[j]!); res += mx - mn; }
+  }
+  return res;
+}`,
+    python: `def subArrayRanges(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    res = 0
+    for i in range(len(nums)):
+        mn = mx = nums[i]
+        for j in range(i, len(nums)):
+            mn = min(mn, nums[j]); mx = max(mx, nums[j]); res += mx - mn
+    return res`,
   },
   visibleTests: [
     { args: [[1, 2, 3]], expected: 4 },

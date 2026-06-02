@@ -47,10 +47,35 @@ If Alice and Bob play optimally, return \`true\` if Alice wins, and \`false\` if
   functionName: 'sumGame',
   params: ['num'],
   starterCode: {
-    javascript: 'function sumGame(num) {\n  // your code here\n}\n',
-    typescript: "function sumGame(num: string): boolean {\n  // your code here\n}",
-
-    python: 'def sumGame(num):\n    # your code here\n    pass\n',
+    javascript: `function sumGame(num) {
+  const half = num.length / 2;
+  let sumL = 0, sumR = 0, qL = 0, qR = 0;
+  for (let i = 0; i < half; i++) { if (num[i] === '?') qL++; else sumL += +num[i]; }
+  for (let i = half; i < num.length; i++) { if (num[i] === '?') qR++; else sumR += +num[i]; }
+  if ((qL + qR) % 2 === 1) return true;
+  return 2 * (sumL - sumR) + (qL - qR) * 9 !== 0;
+}`,
+    typescript: `function sumGame(num: string): boolean {
+  const half = num.length / 2;
+  let sumL = 0, sumR = 0, qL = 0, qR = 0;
+  for (let i = 0; i < half; i++) { if (num[i]! === '?') qL++; else sumL += +num[i]!; }
+  for (let i = half; i < num.length; i++) { if (num[i]! === '?') qR++; else sumR += +num[i]!; }
+  if ((qL + qR) % 2 === 1) return true;
+  return 2 * (sumL - sumR) + (qL - qR) * 9 !== 0;
+}`,
+    python: `def sumGame(num):
+    if hasattr(num, 'to_py'): num = num.to_py()
+    num = str(num)
+    half = len(num) // 2
+    sum_l = sum_r = q_l = q_r = 0
+    for c in num[:half]:
+        if c == '?': q_l += 1
+        else: sum_l += int(c)
+    for c in num[half:]:
+        if c == '?': q_r += 1
+        else: sum_r += int(c)
+    if (q_l + q_r) % 2 == 1: return True
+    return 2 * (sum_l - sum_r) + (q_l - q_r) * 9 != 0`,
   },
   visibleTests: [
     { args: ['5023'], expected: false },

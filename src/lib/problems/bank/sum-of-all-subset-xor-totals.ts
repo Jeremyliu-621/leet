@@ -38,10 +38,20 @@ An array \`a\` is a **subset** of an array \`b\` if \`a\` can be obtained from \
   functionName: 'subsetXORSum',
   params: ['nums'],
   starterCode: {
-    javascript: 'function subsetXORSum(nums) {\n  // your code here\n}\n',
-    typescript: "function subsetXORSum(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def subsetXORSum(nums):\n    # your code here\n    pass\n',
+    javascript: `function subsetXORSum(nums) {
+  const or = nums.reduce((a, b) => a | b, 0);
+  return or * (1 << (nums.length - 1));
+}`,
+    typescript: `function subsetXORSum(nums: number[]): number {
+  const or = nums.reduce((a, b) => a | b, 0);
+  return or * (1 << (nums.length - 1));
+}`,
+    python: `def subsetXORSum(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    from functools import reduce
+    from operator import or_
+    return reduce(or_, nums, 0) * (1 << (len(nums) - 1))`,
   },
   visibleTests: [
     { args: [[1, 3]], expected: 6 },

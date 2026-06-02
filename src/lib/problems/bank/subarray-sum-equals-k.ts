@@ -39,10 +39,27 @@ The brute-force approach checks all O(n²) pairs of start/end indices. A more ef
   functionName: 'subarraySumEqualsK',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function subarraySumEqualsK(nums, k) {\n  // your code here\n}\n',
-    typescript: "function subarraySumEqualsK(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def subarraySumEqualsK(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function subarraySumEqualsK(nums, k) {
+  const freq = new Map([[0, 1]]);
+  let sum = 0, count = 0;
+  for (const n of nums) { sum += n; count += freq.get(sum - k) ?? 0; freq.set(sum, (freq.get(sum) ?? 0) + 1); }
+  return count;
+}`,
+    typescript: `function subarraySumEqualsK(nums: number[], k: number): number {
+  const freq = new Map([[0, 1]]);
+  let sum = 0, count = 0;
+  for (const n of nums) { sum += n; count += freq.get(sum - k) ?? 0; freq.set(sum, (freq.get(sum) ?? 0) + 1); }
+  return count;
+}`,
+    python: `def subarraySumEqualsK(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    freq = {0: 1}; s = 0; count = 0
+    for n in nums:
+        s += n
+        count += freq.get(s - k, 0)
+        freq[s] = freq.get(s, 0) + 1
+    return count`,
   },
   visibleTests: [
     { args: [[1, 1, 1], 2], expected: 2 },

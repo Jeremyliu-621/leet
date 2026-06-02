@@ -38,11 +38,18 @@ If no multiple of \`k\` is ≤ \`n\`, return \`0\`.`,
   functionName: 'sumEveryKth',
   params: ['n', 'k'],
   starterCode: {
-    javascript: 'function sumEveryKth(n, k) {\n  // your code here\n}\n',
-    typescript: `function sumEveryKth(n: number, k: number): number {
-
+    javascript: `function sumEveryKth(n, k) {
+  const m = Math.floor(n / k); return k * m * (m + 1) / 2;
 }`,
-    python: 'def sumEveryKth(n, k):\n    # your code here\n    pass\n',
+    typescript: `function sumEveryKth(n: number, k: number): number {
+  const m = Math.floor(n / k); return k * m * (m + 1) / 2;
+}`,
+    python: `def sumEveryKth(n, k):
+    if hasattr(n, 'to_py'): n = n.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    n, k = int(n), int(k)
+    m = n // k
+    return k * m * (m + 1) // 2`,
   },
   visibleTests: [
     { args: [10, 3], expected: 18 },

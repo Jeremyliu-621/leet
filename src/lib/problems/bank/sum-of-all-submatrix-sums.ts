@@ -42,14 +42,30 @@ A **submatrix** is any contiguous rectangular region of the matrix (at least 1×
   params: ['matrix'],
   starterCode: {
     javascript: `function sumSubmatrixSums(matrix) {
-  // your code here
+  const m = matrix.length, n = matrix[0].length;
+  let total = 0;
+  for (let i = 0; i < m; i++)
+    for (let j = 0; j < n; j++)
+      total += matrix[i][j] * (i + 1) * (m - i) * (j + 1) * (n - j);
+  return total;
 }`,
     typescript: `function sumSubmatrixSums(matrix: number[][]): number {
-
+  const m = matrix.length, n = matrix[0]!.length;
+  let total = 0;
+  for (let i = 0; i < m; i++)
+    for (let j = 0; j < n; j++)
+      total += matrix[i]![j]! * (i + 1) * (m - i) * (j + 1) * (n - j);
+  return total;
 }`,
     python: `def sumSubmatrixSums(matrix):
-    # your code here
-    pass`,
+    if hasattr(matrix, 'to_py'): matrix = matrix.to_py()
+    matrix = [[int(v) for v in (r.to_py() if hasattr(r,'to_py') else r)] for r in matrix]
+    m, n = len(matrix), len(matrix[0])
+    total = 0
+    for i in range(m):
+        for j in range(n):
+            total += matrix[i][j] * (i + 1) * (m - i) * (j + 1) * (n - j)
+    return total`,
   },
   visibleTests: [
     { args: [[[1, 2], [3, 4]]], expected: 40 },

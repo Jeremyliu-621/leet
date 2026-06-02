@@ -33,10 +33,53 @@ The game continues until all the stones have been taken. Assuming Alice and Bob 
   functionName: 'stoneGameII',
   params: ['piles'],
   starterCode: {
-    javascript: 'function stoneGameII(piles) {\n  // your code here\n}\n',
-    typescript: "function stoneGameII(piles: number[]): number {\n  // your code here\n}",
-
-    python: 'def stoneGameII(piles):\n    # your code here\n    pass\n',
+    javascript: `function stoneGameII(piles) {
+  const n = piles.length;
+  const suf = new Array(n + 1).fill(0);
+  for (let i = n - 1; i >= 0; i--) suf[i] = suf[i + 1] + piles[i];
+  const memo = new Map();
+  function dp(i, m) {
+    if (i >= n) return 0;
+    if (2 * m >= n - i) return suf[i];
+    const k = i * 200 + m;
+    if (memo.has(k)) return memo.get(k);
+    let best = 0;
+    for (let x = 1; x <= 2 * m; x++) best = Math.max(best, suf[i] - dp(i + x, Math.max(m, x)));
+    memo.set(k, best);
+    return best;
+  }
+  return dp(0, 1);
+}`,
+    typescript: `function stoneGameII(piles: number[]): number {
+  const n = piles.length;
+  const suf = new Array(n + 1).fill(0) as number[];
+  for (let i = n - 1; i >= 0; i--) suf[i] = suf[i + 1]! + piles[i]!;
+  const memo = new Map<number, number>();
+  function dp(i: number, m: number): number {
+    if (i >= n) return 0;
+    if (2 * m >= n - i) return suf[i]!;
+    const k = i * 200 + m;
+    if (memo.has(k)) return memo.get(k)!;
+    let best = 0;
+    for (let x = 1; x <= 2 * m; x++) best = Math.max(best, suf[i]! - dp(i + x, Math.max(m, x)));
+    memo.set(k, best);
+    return best;
+  }
+  return dp(0, 1);
+}`,
+    python: `def stoneGameII(piles):
+    if hasattr(piles, 'to_py'): piles = piles.to_py()
+    piles = [int(x) for x in piles]
+    n = len(piles)
+    suf = [0] * (n + 1)
+    for i in range(n - 1, -1, -1): suf[i] = suf[i + 1] + piles[i]
+    from functools import lru_cache
+    @lru_cache(maxsize=None)
+    def dp(i, m):
+        if i >= n: return 0
+        if 2 * m >= n - i: return suf[i]
+        return max(suf[i] - dp(i + x, max(m, x)) for x in range(1, 2 * m + 1))
+    return dp(0, 1)`,
   },
   visibleTests: [
     { args: [[2, 7, 9, 4, 4]], expected: 10 },

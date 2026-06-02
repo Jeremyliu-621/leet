@@ -37,10 +37,52 @@ Use a sliding window to count subarrays with **at most k** distinct integers. Th
   functionName: 'subarraysWithKDistinct',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function subarraysWithKDistinct(nums, k) {\n  // your code here\n}\n',
-    typescript: "function subarraysWithKDistinct(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def subarraysWithKDistinct(nums: list, k: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function subarraysWithKDistinct(nums, k) {
+  function atMost(k) {
+    const freq = new Map(); let lo = 0, cnt = 0;
+    for (let hi = 0; hi < nums.length; hi++) {
+      freq.set(nums[hi], (freq.get(nums[hi]) ?? 0) + 1);
+      while (freq.size > k) {
+        const v = freq.get(nums[lo]) - 1;
+        if (v === 0) freq.delete(nums[lo]); else freq.set(nums[lo], v);
+        lo++;
+      }
+      cnt += hi - lo + 1;
+    }
+    return cnt;
+  }
+  return atMost(k) - atMost(k - 1);
+}`,
+    typescript: `function subarraysWithKDistinct(nums: number[], k: number): number {
+  function atMost(k: number): number {
+    const freq = new Map<number, number>(); let lo = 0, cnt = 0;
+    for (let hi = 0; hi < nums.length; hi++) {
+      freq.set(nums[hi]!, (freq.get(nums[hi]!) ?? 0) + 1);
+      while (freq.size > k) {
+        const v = freq.get(nums[lo]!)! - 1;
+        if (v === 0) freq.delete(nums[lo]!); else freq.set(nums[lo]!, v);
+        lo++;
+      }
+      cnt += hi - lo + 1;
+    }
+    return cnt;
+  }
+  return atMost(k) - atMost(k - 1);
+}`,
+    python: `def subarraysWithKDistinct(nums: list, k: int) -> int:
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    def at_most(k):
+        freq = {}; lo = 0; cnt = 0
+        for hi, v in enumerate(nums):
+            freq[v] = freq.get(v, 0) + 1
+            while len(freq) > k:
+                freq[nums[lo]] -= 1
+                if freq[nums[lo]] == 0: del freq[nums[lo]]
+                lo += 1
+            cnt += hi - lo + 1
+        return cnt
+    return at_most(k) - at_most(k - 1)`,
   },
   visibleTests: [
     { args: [[1, 2, 1, 2, 3], 2], expected: 7 },

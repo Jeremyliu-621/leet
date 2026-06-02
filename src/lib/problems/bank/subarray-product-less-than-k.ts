@@ -40,10 +40,33 @@ When the window \`[l, r]\` has product < \`k\`, all \`r - l + 1\` subarrays endi
   functionName: 'subarrayProductLessThanK',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function subarrayProductLessThanK(nums, k) {\n  // your code here\n}\n',
-    typescript: "function subarrayProductLessThanK(nums: number[], k: number): number {\n  // your code here\n}",
-
-    python: 'def subarrayProductLessThanK(nums: list[int], k: int) -> int:\n    # your code here\n    pass\n',
+    javascript: `function subarrayProductLessThanK(nums, k) {
+  let l = 0, product = 1, count = 0;
+  for (let r = 0; r < nums.length; r++) {
+    product *= nums[r];
+    while (product >= k && l <= r) product /= nums[l++];
+    count += r - l + 1;
+  }
+  return count;
+}`,
+    typescript: `function subarrayProductLessThanK(nums: number[], k: number): number {
+  let l = 0, product = 1, count = 0;
+  for (let r = 0; r < nums.length; r++) {
+    product *= nums[r]!;
+    while (product >= k && l <= r) product /= nums[l++]!;
+    count += r - l + 1;
+  }
+  return count;
+}`,
+    python: `def subarrayProductLessThanK(nums: list[int], k: int) -> int:
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    l, product, count = 0, 1, 0
+    for r in range(len(nums)):
+        product *= nums[r]
+        while product >= k and l <= r: product //= nums[l]; l += 1
+        count += r - l + 1
+    return count`,
   },
   visibleTests: [
     { args: [[10, 5, 2, 6], 100], expected: 8 },

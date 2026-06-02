@@ -40,14 +40,22 @@ Return the **sum of the squares** of all special elements of \`nums\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function sumOfSquares(nums) {
-  // your code here
+  const n = nums.length;
+  let s = 0;
+  for (let i = 1; i <= n; i++) if (n % i === 0) s += nums[i - 1] * nums[i - 1];
+  return s;
 }`,
     typescript: `function sumOfSquares(nums: number[]): number {
-  // your code here
+  const n = nums.length;
+  let s = 0;
+  for (let i = 1; i <= n; i++) if (n % i === 0) s += nums[i - 1]! * nums[i - 1]!;
+  return s;
 }`,
     python: `def sumOfSquares(nums):
-    # your code here
-`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    n = len(nums)
+    return sum(nums[i-1]**2 for i in range(1, n+1) if n % i == 0)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 4]], expected: 21 },

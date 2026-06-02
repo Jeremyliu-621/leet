@@ -36,10 +36,22 @@ Return the **sum** of all the unique elements of \`nums\`.`,
   functionName: 'sumOfUnique',
   params: ['nums'],
   starterCode: {
-    javascript: 'function sumOfUnique(nums) {\n  // your code here\n}\n',
-    typescript: "function sumOfUnique(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def sumOfUnique(nums):\n    # your code here\n    pass\n',
+    javascript: `function sumOfUnique(nums) {
+  const f = new Map();
+  for (const n of nums) f.set(n, (f.get(n) ?? 0) + 1);
+  return [...f].filter(([, v]) => v === 1).reduce((s, [k]) => s + k, 0);
+}`,
+    typescript: `function sumOfUnique(nums: number[]): number {
+  const f = new Map<number, number>();
+  for (const n of nums) f.set(n, (f.get(n) ?? 0) + 1);
+  return [...f].filter(([, v]) => v === 1).reduce((s, [k]) => s + k, 0);
+}`,
+    python: `def sumOfUnique(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    from collections import Counter
+    c = Counter(nums)
+    return sum(k for k, v in c.items() if v == 1)`,
   },
   visibleTests: [
     { args: [[1, 2, 3, 2]], expected: 4 },
