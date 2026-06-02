@@ -4040,12 +4040,6 @@ def reverseString(s):
 `,
 
 
-  'percentage-of-letter-in-string': `def percentageLetter(s, letter):
-    return int(s.count(letter) / len(s) * 100)
-`,
-
-
-
   'determine-if-string-halves-alike': `def halvesAreAlike(s):
     vowels = set('aeiouAEIOU')
     half = len(s) // 2
@@ -5522,11 +5516,6 @@ def minLength(s):
     return len(stack)
 `,
 
-  'sum-of-multiples': `
-def sumOfMultiples(n):
-    return sum(i for i in range(1, n + 1) if i % 3 == 0 or i % 5 == 0 or i % 7 == 0)
-`,
-
   'maximum-score-after-splitting-string': `
 def maxScore(s):
     best = 0
@@ -6928,23 +6917,6 @@ def countVowelStrings(n):
     return sum(dp)
 `,
 
-  'maximum-product-of-word-lengths': `
-def maxProduct(words):
-    words = list(words)
-    masks = []
-    for w in words:
-        m = 0
-        for c in w:
-            m |= (1 << (ord(c) - ord('a')))
-        masks.append(m)
-    max_val = 0
-    for i in range(len(words)):
-        for j in range(i + 1, len(words)):
-            if not (masks[i] & masks[j]):
-                max_val = max(max_val, len(words[i]) * len(words[j]))
-    return max_val
-`,
-
   'exclusive-time-of-functions': `
 def exclusiveTime(n, logs):
     logs = list(logs)
@@ -7800,14 +7772,6 @@ def checkDistances(s, distance):
 
 
 
-  'sort-the-people': `
-def sortPeople(names, heights):
-    names = list(names)
-    heights = list(heights)
-    paired = sorted(zip(heights, names), reverse=True)
-    return [name for _, name in paired]
-`,
-
   'baseball-game': `
 def calPoints(ops):
     ops = list(ops)
@@ -8495,18 +8459,6 @@ def maxDistance(colors):
     freq = Counter(head)
     return [v for v in head if freq[v] == 1]
 `,
-  'count-number-of-homogenous-substrings': `def countHomogenous(s: str) -> int:
-    MOD = 10**9 + 7
-    ans = 0
-    cnt = 1
-    for i in range(1, len(s) + 1):
-        if i < len(s) and s[i] == s[i - 1]:
-            cnt += 1
-        else:
-            ans = (ans + cnt * (cnt + 1) // 2) % MOD
-            cnt = 1
-    return ans
-`,
   'stone-game-vi': `def stoneGameVI(aliceValues: list[int], bobValues: list[int]) -> int:
     n = len(aliceValues)
     stones = sorted(range(n), key=lambda i: -(aliceValues[i] + bobValues[i]))
@@ -8543,20 +8495,6 @@ def maxDistance(colors):
   'alternating-digit-sum': `def alternateDigitSum(n: int) -> int:
     digits = [int(c) for c in str(n)]
     return sum(d if i % 2 == 0 else -d for i, d in enumerate(digits))
-`,
-  'count-ways-to-build-good-string': `def countGoodStrings(low: int, high: int, zero: int, one: int) -> int:
-    MOD = 10**9 + 7
-    dp = [0] * (high + 1)
-    dp[0] = 1
-    ans = 1 if low == 0 else 0
-    for i in range(1, high + 1):
-        if i >= zero:
-            dp[i] = (dp[i] + dp[i - zero]) % MOD
-        if i >= one:
-            dp[i] = (dp[i] + dp[i - one]) % MOD
-        if i >= low:
-            ans = (ans + dp[i]) % MOD
-    return ans
 `,
   'divide-players-into-teams-of-equal-skill': `def dividePlayers(skill: list[int]) -> int:
     skill = sorted(skill)
@@ -9027,14 +8965,6 @@ def largestInteger(num):
 `,
 
 
-  'find-the-original-array-of-prefix-xor': `
-def findArray(pref):
-    result = [pref[0]]
-    for i in range(1, len(pref)):
-        result.append(pref[i] ^ pref[i - 1])
-    return result
-`,
-
   'separate-digits-in-array': `
 def separateDigits(nums):
     result = []
@@ -9426,17 +9356,6 @@ def countConsistentStrings(allowed, words):
     return count
 `,
 
-  'make-the-string-great': `
-def makeGood(s):
-    stack = []
-    for c in s:
-        if stack and abs(ord(stack[-1]) - ord(c)) == 32:
-            stack.pop()
-        else:
-            stack.append(c)
-    return ''.join(stack)
-`,
-
   'find-target-indices-after-sorting-array': `
 def targetIndices(nums, target):
     t = int(target)
@@ -9516,12 +9435,6 @@ def isGood(nums):
         if arr[i] != i + 1:
             return False
     return True
-`,
-
-  'count-the-digits-that-divide-the-number': `
-def countDigits(num):
-    n = int(num)
-    return sum(1 for c in str(n) if int(c) != 0 and n % int(c) == 0)
 `,
 
   'find-the-difference-of-two-arrays': `
@@ -10490,21 +10403,6 @@ def countNumbersWithUniqueDigits(n):
         ans += unique_count
         avail -= 1
     return ans
-`,
-
-  'minimum-cost-to-cut-stick': `
-def minCost(n, cuts):
-    n = int(n)
-    c = sorted([0] + [int(x) for x in cuts] + [n])
-    m = len(c)
-    dp = [[0]*m for _ in range(m)]
-    for length in range(2, m):
-        for i in range(m - length):
-            j = i + length
-            dp[i][j] = float('inf')
-            for k in range(i+1, j):
-                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + c[j] - c[i])
-    return dp[0][m-1]
 `,
 
   'find-minimum-in-rotated-sorted-array-ii': `
@@ -12196,18 +12094,6 @@ def countPalindromicSubsequences(s):
     return dp[0][n-1]
 `,
 
-  'painting-the-walls': `
-def paintWalls(cost, time):
-    cost = list(cost.to_py()) if hasattr(cost, 'to_py') else list(cost)
-    time = list(time.to_py()) if hasattr(time, 'to_py') else list(time)
-    n = len(cost)
-    dp = [float('inf')] * (n + 1); dp[0] = 0
-    for i in range(n):
-        for j in range(n, -1, -1):
-            dp[j] = min(dp[j], dp[max(0, j - time[i] - 1)] + cost[i])
-    return dp[n]
-`,
-
   'shortest-path-to-get-all-keys': `
 from collections import deque
 def shortestPathAllKeys(grid):
@@ -12410,20 +12296,6 @@ def numWays(steps, arrLen):
     return dp[0]
 `,
 
-  'minimum-score-triangulation-of-polygon': `
-def minScoreTriangulation(values):
-    values = list(values.to_py()) if hasattr(values, 'to_py') else list(values)
-    n = len(values)
-    dp = [[0] * n for _ in range(n)]
-    for length in range(2, n):
-        for i in range(n - length):
-            j = i + length
-            dp[i][j] = float('inf')
-            for k in range(i + 1, j):
-                dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j] + values[i] * values[k] * values[j])
-    return dp[0][n-1]
-`,
-
   'minimum-cost-to-make-array-equal': `
 def minCost(nums, cost):
     nums = list(nums.to_py()) if hasattr(nums, 'to_py') else list(nums)
@@ -12569,26 +12441,6 @@ def distributeCookies(cookies, k):
             children[j] -= cookies[i]
     bt(0, 0)
     return ans[0]
-`,
-
-  'maximum-profit-in-job-scheduling': `
-def jobScheduling(startTime, endTime, profit):
-    startTime = list(startTime.to_py()) if hasattr(startTime, 'to_py') else list(startTime)
-    endTime = list(endTime.to_py()) if hasattr(endTime, 'to_py') else list(endTime)
-    profit = list(profit.to_py()) if hasattr(profit, 'to_py') else list(profit)
-    startTime = [int(x) for x in startTime]
-    endTime = [int(x) for x in endTime]
-    profit = [int(x) for x in profit]
-    import bisect
-    n = len(startTime)
-    jobs = sorted(zip(startTime, endTime, profit), key=lambda x: x[1])
-    dp = [0] * (n + 1)
-    end_times = [0] + [jobs[i][1] for i in range(n)]
-    for i in range(1, n + 1):
-        s, e, p = jobs[i - 1]
-        idx = bisect.bisect_right(end_times, s, 0, i) - 1
-        dp[i] = max(dp[i - 1], dp[idx] + p)
-    return dp[n]
 `,
 
   'dota2-senate': `
@@ -13871,16 +13723,6 @@ def minimumDeletions(s):
     return min(dp)
 `,
 
-
-  'take-gifts-from-the-richest-pile': `def pickGifts(gifts, k):
-    import math
-    g = list(gifts.to_py() if hasattr(gifts, 'to_py') else gifts)
-    k = int(k)
-    for _ in range(k):
-        max_idx = g.index(max(g))
-        g[max_idx] = math.isqrt(g[max_idx])
-    return sum(g)
-`,
 
   'find-all-good-indices': `def goodIndices(nums, k):
     a = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
@@ -15522,21 +15364,6 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     return res
 `,
 
-  'count-the-number-of-fair-pairs': `def countFairPairs(nums, lower, upper):
-    nums = sorted(nums.to_py() if hasattr(nums, 'to_py') else list(nums))
-    lower, upper = int(lower), int(upper)
-    def count_at_most(limit):
-        l, r, cnt = 0, len(nums) - 1, 0
-        while l < r:
-            if nums[l] + nums[r] <= limit:
-                cnt += r - l
-                l += 1
-            else:
-                r -= 1
-        return cnt
-    return count_at_most(upper) - count_at_most(lower - 1)
-`,
-
   'find-if-array-can-be-sorted': `def canSortArray(nums):
     nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
     prev_max = float('-inf')
@@ -15767,24 +15594,6 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
     for c in t:
         count[ord(c) - ord('a')] -= 1
     return sum(max(0, -v) for v in count)
-`,
-
-  'find-the-prefix-common-array-of-two-arrays': `def findThePrefixCommonArray(A, B):
-    A = list(A.to_py() if hasattr(A, 'to_py') else A)
-    B = list(B.to_py() if hasattr(B, 'to_py') else B)
-    n = len(A)
-    freq = [0] * (n + 1)
-    result = []
-    common = 0
-    for i in range(n):
-        freq[A[i]] += 1
-        if freq[A[i]] == 2:
-            common += 1
-        freq[B[i]] += 1
-        if freq[B[i]] == 2:
-            common += 1
-        result.append(common)
-    return result
 `,
 
   'last-stone-weight-ii': `def lastStoneWeightII(stones):
@@ -16309,13 +16118,6 @@ def maxArea(h, w, horizontalCuts, verticalCuts):
             if len(seen) == 5:
                 count += 1
     return count
-`,
-
-  'number-of-rectangles-that-can-form-the-largest-square': `def countGoodRectangles(rectangles):
-    rectangles = list(rectangles.to_py() if hasattr(rectangles, 'to_py') else rectangles)
-    mins = [min(r[0], r[1]) for r in rectangles]
-    max_len = max(mins)
-    return sum(1 for m in mins if m == max_len)
 `,
 
   'determine-if-string-halves-are-alike': `def halvesAreAlike(s):
@@ -17385,13 +17187,6 @@ def secondMinimum(n, edges, time, change):
         else:
             total += clamped ** 2
     return total
-`,
-
-  'find-the-kth-largest-integer-in-array': `def kthLargestNumber(nums, k):
-    arr = [str(x) for x in (nums.to_py() if hasattr(nums, 'to_py') else list(nums))]
-    arr.sort(key=lambda x: (len(x), x), reverse=True)
-    return arr[int(k) - 1]
-
 `,
 
   'trapping-rain-water-ii': `def trapRainWaterII(heightMap):
@@ -19222,27 +19017,6 @@ def secondMinimum(n, edges, time, change):
     return dp[n]
 `,
 
-  'kth-largest-sum-in-a-binary-tree': `def kthLargestLevelSum(root, k):
-    from collections import deque
-    ki = int(k)
-    sums = []
-    if root is None:
-        return -1
-    q = deque([root])
-    while q:
-        level_sum = 0
-        for _ in range(len(q)):
-            node = q.popleft()
-            level_sum += int(node.val)
-            if node.left: q.append(node.left)
-            if node.right: q.append(node.right)
-        sums.append(level_sum)
-    if ki > len(sums):
-        return -1
-    sums.sort(reverse=True)
-    return sums[ki - 1]
-`,
-
   'sum-of-matrix-after-queries': `def matrixSumQueries(n, queries):
     ni = int(n)
     qs = [(int(q[0]), int(q[1]), int(q[2])) for q in (queries.to_py() if hasattr(queries, 'to_py') else queries)]
@@ -19373,23 +19147,6 @@ def secondMinimum(n, edges, time, change):
         if disc[i] == -1:
             dfs(i, -1)
     return sorted(bridges)
-`,
-
-  'minimum-cost-to-cut-a-stick': `def minCost(n, cuts):
-    ni = int(n)
-    cuts_list = sorted(int(x) for x in (cuts.to_py() if hasattr(cuts, 'to_py') else cuts))
-    c = [0] + cuts_list + [ni]
-    length = len(c)
-    dp = [[0]*length for _ in range(length)]
-    for gap in range(2, length):
-        for i in range(length - gap):
-            j = i + gap
-            dp[i][j] = float('inf')
-            for k in range(i+1, j):
-                cost = dp[i][k] + dp[k][j] + c[j] - c[i]
-                if cost < dp[i][j]:
-                    dp[i][j] = cost
-    return dp[0][length-1]
 `,
 
   'largest-rectangle-in-histogram': `def largestRectangleArea(heights):
@@ -19883,14 +19640,6 @@ def secondMinimum(n, edges, time, change):
     return (d[0] * 10 + d[2]) + (d[1] * 10 + d[3])
 `,
 
-  'k-items-with-the-maximum-sum': `def kItemsWithMaximumSum(numOnes, numZeros, numNegOnes, k):
-    numOnes, numZeros, numNegOnes, k = int(numOnes), int(numZeros), int(numNegOnes), int(k)
-    ones = min(k, numOnes)
-    zeros = min(k - ones, numZeros)
-    negones = k - ones - zeros
-    return ones - negones
-`,
-
   'group-shifted-strings': `def groupStrings(strings):
     from collections import defaultdict
     groups = defaultdict(list)
@@ -20293,11 +20042,6 @@ def secondMinimum(n, edges, time, change):
             bisect.insort(sorted_arr, val)
             results.append(sorted_arr[-K])
     return results
-`,
-
-  'check-if-the-sentence-is-pangram': `def checkIfPangram(sentence):
-    sentence = str(sentence)
-    return len(set(sentence)) >= 26
 `,
 
   'count-number-of-ways-to-place-houses': `def countHousePlacements(n):
@@ -20803,24 +20547,6 @@ def secondMinimum(n, edges, time, change):
     return best
 `,
 
-  'minimum-replacements-to-sort-the-array': `def minimumReplacement(nums):
-    import math
-    if not nums:
-        return 0
-    ops = 0
-    bound = nums[-1]
-    for i in range(len(nums) - 2, -1, -1):
-        v = nums[i]
-        if v > bound:
-            pieces = math.ceil(v / bound)
-            ops += pieces - 1
-            bound = v // pieces
-        else:
-            bound = v
-    return ops
-`,
-
-
   'decrease-elements-to-make-array-zigzag': `def movesToMakeZigzag(nums):
     n = len(nums)
     ans = [0, 0]
@@ -21189,23 +20915,6 @@ def secondMinimum(n, edges, time, change):
         else:
             results.append(None)
     return results
-`,
-
-  'count-the-number-of-good-subarrays': `def countGoodSubarrays(nums, k):
-    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
-    k = int(k)
-    from collections import defaultdict
-    freq = defaultdict(int)
-    pairs = 0; left = 0; result = 0
-    for right in range(len(nums)):
-        pairs += freq[nums[right]]
-        freq[nums[right]] += 1
-        while pairs >= k:
-            freq[nums[left]] -= 1
-            pairs -= freq[nums[left]]
-            left += 1
-        result += left
-    return result
 `,
 
   'maximum-strictly-increasing-cells-in-a-matrix': `def maxIncreasingCells(mat):
@@ -21800,23 +21509,6 @@ def minimumMoney(transactions):
     return sorted(result, key=lambda x: int(x[0]) if x and x[0] is not None else 0)
 `,
 
-  'find-score-of-an-array-after-marking-all-elements': `def findScore(nums):
-    n = len(nums)
-    marked = [False] * n
-    order = sorted(range(n), key=lambda i: (nums[i], i))
-    score = 0
-    for i in order:
-        if marked[i]:
-            continue
-        score += nums[i]
-        marked[i] = True
-        if i > 0:
-            marked[i - 1] = True
-        if i < n - 1:
-            marked[i + 1] = True
-    return score
-`,
-
   'count-zero-request-servers': `def countServers(n, logs, x, queries):
     from collections import defaultdict
     logs_sorted = sorted(logs, key=lambda l: l[1])
@@ -22002,21 +21694,6 @@ def minimumMoney(transactions):
     return sum(left_smaller[j] * right_larger[j] for j in range(n))
 `,
 
-  'find-the-longest-balanced-substring-of-a-binary-string': `
-def findTheLongestBalancedSubstring(s):
-    ans = 0
-    i = 0
-    while i < len(s):
-        zeros = 0
-        ones = 0
-        while i < len(s) and s[i] == '0':
-            zeros += 1; i += 1
-        while i < len(s) and s[i] == '1':
-            ones += 1; i += 1
-        ans = max(ans, 2 * min(zeros, ones))
-    return ans
-`,
-
   'largest-palindromic-number': `
 def largestPalindromic(num):
     freq = [0] * 10
@@ -22151,16 +21828,6 @@ def totalCost(costs, k, candidates):
             freq[nums[l]] -= 1; l += 1
         ans = max(ans, r - l + 1)
     return ans
-`,
-
-  'count-pairs-in-two-arrays': `def countPairs(nums1, nums2):
-    import bisect
-    diff = sorted(a - b for a, b in zip(nums1, nums2))
-    count = 0
-    for i in range(len(diff) - 1):
-        lo = bisect.bisect_right(diff, -diff[i], i + 1)
-        count += len(diff) - lo
-    return count
 `,
 
   'apply-discount-every-n-items': `def discountPrices(prices, n, discount):
@@ -22898,21 +22565,6 @@ def numOfStrings(patterns, word):
 `,
 
   // batch 71 (new problems)
-
-  'find-the-good-days-to-rob-bank': `def goodDaysToRobBank(security, time):
-    n = len(security)
-    if n == 0:
-        return []
-    dec = [0] * n
-    inc = [0] * n
-    for i in range(1, n):
-        if security[i] <= security[i - 1]:
-            dec[i] = dec[i - 1] + 1
-    for i in range(n - 2, -1, -1):
-        if security[i] <= security[i + 1]:
-            inc[i] = inc[i + 1] + 1
-    return [i for i in range(n) if dec[i] >= time and inc[i] >= time]
-`,
 
   'minimum-extra-characters-in-a-string': `def minExtraChar(s, dictionary):
     n = len(s)
@@ -24261,21 +23913,6 @@ def maximumBeauty(flowers, newFlowers, target, full, partial):
     return ans
 `,
 
-  'maximum-xor-of-two-numbers-in-an-array': `
-def findMaximumXOR(nums):
-    ans = 0
-    mask = 0
-    for i in range(30, -1, -1):
-        mask |= (1 << i)
-        prefixes = set(n & mask for n in nums)
-        candidate = ans | (1 << i)
-        for p in prefixes:
-            if p ^ candidate in prefixes:
-                ans = candidate
-                break
-    return ans
-`,
-
   'design-graph-with-shortest-path-calculator': `
 def designGraph(n, edges, ops):
     from heapq import heappush, heappop
@@ -25356,30 +24993,6 @@ def minimumFuelCost(roads: list, seats: int) -> int:
                     stack.append((v, u, False))
     return fuel
 `,
-  'minimum-operations-to-make-the-array-alternating': `
-import math
-def minimumOperations(nums: list) -> int:
-    n = len(nums)
-    ec = math.ceil(n / 2)
-    oc = n // 2
-    from collections import Counter
-    fe = Counter(nums[i] for i in range(0, n, 2))
-    fo = Counter(nums[i] for i in range(1, n, 2))
-    def top2(cnt):
-        lst = cnt.most_common(2)
-        f = lst[0] if len(lst) > 0 else (None, 0)
-        s = lst[1] if len(lst) > 1 else (None, 0)
-        return f, s
-    (ev1, ef1), (ev2, ef2) = top2(fe)
-    (ov1, of1), (ov2, of2) = top2(fo)
-    if ev1 != ov1:
-        return (ec - ef1) + (oc - of1)
-    opt1 = (ec - ef1) + (oc - of2)
-    opt2 = (ec - ef2) + (oc - of1)
-    return min(opt1, opt2)
-`,
-
-  // batch 80
   'find-the-safest-path-in-a-grid': `
 from collections import deque
 def maximumSafenessFactor(grid):
@@ -26236,18 +25849,6 @@ def countRestrictedPaths(n, edges):
 
 
 
-  'maximum-value-of-an-ordered-triplet-ii': `
-def maximumTripletValue(nums: list) -> int:
-    max_i = float('-inf')
-    max_diff = float('-inf')
-    ans = 0
-    for x in nums:
-        ans = max(ans, max_diff * x)
-        max_diff = max(max_diff, max_i - x)
-        max_i = max(max_i, x)
-    return ans
-`,
-
   'divide-array-into-arrays-with-max-difference': `
 def divideArray(nums: list, k: int) -> list:
     sorted_nums = sorted(nums)
@@ -26445,22 +26046,6 @@ def maxPoints(grid, queries):
     return res
 `,
 
-
-  'check-if-there-is-a-valid-partition-for-the-array': `
-def validPartition(nums: list) -> bool:
-    n = len(nums)
-    dp = [False] * (n + 1)
-    dp[0] = True
-    for i in range(2, n + 1):
-        if nums[i - 1] == nums[i - 2]:
-            dp[i] = dp[i] or dp[i - 2]
-        if i >= 3:
-            if nums[i - 1] == nums[i - 2] == nums[i - 3]:
-                dp[i] = dp[i] or dp[i - 3]
-            if nums[i - 1] == nums[i - 2] + 1 == nums[i - 3] + 2:
-                dp[i] = dp[i] or dp[i - 3]
-    return dp[n]
-`,
 
   'reverse-nodes-in-even-length-groups': `
 class ListNode:
@@ -28028,27 +27613,6 @@ def countComponents(n, edges):
             components -= 1
     return components
 `,
-  'longest-increasing-path-in-a-matrix': `
-def longestIncreasingPath(matrix):
-    if not matrix:
-        return 0
-    m, n = len(matrix), len(matrix[0])
-    memo = [[0] * n for _ in range(m)]
-    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
-    def dfs(r, c):
-        if memo[r][c]:
-            return memo[r][c]
-        best = 1
-        for dr, dc in dirs:
-            nr, nc = r + dr, c + dc
-            if 0 <= nr < m and 0 <= nc < n and matrix[nr][nc] > matrix[r][c]:
-                best = max(best, 1 + dfs(nr, nc))
-        memo[r][c] = best
-        return best
-    return max(dfs(r, c) for r in range(m) for c in range(n))
-`,
-
-  // batch 105
   'merge-two-binary-trees': `
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -28997,18 +28561,6 @@ def findIntersectionValues(nums1, nums2):
     return [sum(1 for x in a if x in set_b), sum(1 for x in b if x in set_a)]
 `,
 
-  'maximum-value-of-an-ordered-triplet-i': `
-def maximumTripletValue(nums):
-    nums = list(nums.to_py() if hasattr(nums, 'to_py') else nums)
-    best = 0
-    n = len(nums)
-    for i in range(n - 2):
-        for j in range(i + 1, n - 1):
-            for k in range(j + 1, n):
-                best = max(best, (nums[i] - nums[j]) * nums[k])
-    return best
-`,
-
   'check-balanced-string': `
 def isBalanced(num):
     even_sum = sum(int(num[i]) for i in range(0, len(num), 2))
@@ -29481,15 +29033,6 @@ def maximumNumberOfStringPairs(words):
     return pairs
 `,
 
-  'check-if-a-string-is-an-acronym-of-words': `
-def isAcronym(words, s):
-    words = list(words.to_py() if hasattr(words, 'to_py') else words)
-    if len(words) != len(s):
-        return False
-    return all(w[0] == s[i] for i, w in enumerate(words))
-`,
-
-  // batch 125
   'find-champion-i': `
 def findChampion(grid):
     grid = [list(x.to_py() if hasattr(x, 'to_py') else x) for x in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
@@ -29498,13 +29041,6 @@ def findChampion(grid):
         if not any(grid[j][i] == 1 for j in range(n)):
             return i
     return -1
-`,
-
-  'count-the-number-of-consistent-strings': `
-def countConsistentStrings(allowed, words):
-    words = list(words.to_py() if hasattr(words, 'to_py') else words)
-    allowed_set = set(allowed)
-    return sum(1 for w in words if all(c in allowed_set for c in w))
 `,
 
   'count-number-of-pairs-with-absolute-difference-k': `
@@ -29663,20 +29199,6 @@ def minMovesToSeat(seats, students):
     return sum(abs(s - t) for s, t in zip(seats, students))
 `,
 
-  'check-if-string-is-a-prefix-of-array': `
-def isPrefixString(s, words):
-    words = list(words.to_py() if hasattr(words, 'to_py') else words)
-    acc = ''
-    for w in words:
-        acc += w
-        if acc == s:
-            return True
-        if len(acc) >= len(s):
-            return False
-    return False
-`,
-
-  // batch 129 — arrays/medium, strings+math/medium, arrays+graph/hard
   'minimum-number-of-operations-to-move-all-balls-to-each-box': `
 def minOperations(boxes):
     n = len(boxes)
@@ -29708,31 +29230,6 @@ def minimumOperations(num):
     return ans
 `,
 
-  'maximum-score-of-a-node-sequence': `
-def maximumScore(scores, edges):
-    scores = list(scores.to_py() if hasattr(scores, 'to_py') else scores)
-    edges = [list(e.to_py() if hasattr(e, 'to_py') else e) for e in (edges.to_py() if hasattr(edges, 'to_py') else edges)]
-    n = len(scores)
-    adj = [[] for _ in range(n)]
-    for u, v in edges:
-        adj[u].append((scores[v], v))
-        adj[v].append((scores[u], u))
-    for i in range(n):
-        adj[i].sort(key=lambda x: -x[0])
-        adj[i] = adj[i][:3]
-    ans = -1
-    for b, c in edges:
-        for sa, a in adj[b]:
-            if a == c:
-                continue
-            for sd, d in adj[c]:
-                if d == b or d == a:
-                    continue
-                ans = max(ans, scores[b] + scores[c] + sa + sd)
-    return ans
-`,
-
-  // batch 128b
   'check-if-a-number-is-fascinating': `
 def isFascinating(n):
     s = str(n) + str(2 * n) + str(3 * n)
@@ -29883,12 +29380,6 @@ def minNumber(nums1, nums2):
     return min(min1 * 10 + min2, min2 * 10 + min1)
 `,
 
-  'a-number-after-a-double-reversal': `
-def isSameAfterReversals(num):
-    return num == 0 or num % 10 != 0
-`,
-
-  // batch 132a
   'find-the-losers-of-the-circular-game': `
 def circularGameLosers(n, k):
     received = set()
@@ -29924,17 +29415,6 @@ def maximumBinaryString(nums):
         bits = ''.join(bin(x)[2:] for x in perm)
         best = max(best, int(bits, 2))
     return best
-`,
-
-  'lexicographically-smallest-string-after-a-swap': `
-def getSmallestString(s):
-    arr = list(s)
-    for i in range(len(arr) - 1):
-        a, b = int(arr[i]), int(arr[i + 1])
-        if a % 2 == b % 2 and b < a:
-            arr[i], arr[i + 1] = arr[i + 1], arr[i]
-            return ''.join(arr)
-    return s
 `,
 
   'find-the-number-of-good-pairs-i': `
@@ -30668,19 +30148,6 @@ def minDominoRotations(tops, bottoms) -> int:
 `,
 
   // batch 145
-  'convert-an-array-into-a-2d-array-with-conditions': `
-def findMatrix(nums):
-    freq = {}
-    result = []
-    for num in nums:
-        row = freq.get(num, 0)
-        if row == len(result):
-            result.append([])
-        result[row].append(num)
-        freq[num] = row + 1
-    return result
-`,
-
   'replace-the-substring-for-balanced-string': `
 def balancedString(s: str) -> int:
     from collections import Counter
@@ -31422,22 +30889,6 @@ def kthPalindrome(queries, intLength):
     return result
 `,
 
-  'number-of-ways-to-reach-a-position-after-exactly-k-steps': `
-def numberOfWays(startPos, endPos, k):
-    MOD = 10 ** 9 + 7
-    diff = abs(startPos - endPos)
-    if (k - diff) < 0 or (k - diff) % 2 != 0:
-        return 0
-    r = (k + diff) // 2
-    dp = [0] * (k + 1)
-    dp[0] = 1
-    for i in range(1, k + 1):
-        for j in range(min(i, r), 0, -1):
-            dp[j] = (dp[j] + dp[j - 1]) % MOD
-    return dp[r]
-`,
-
-
   'calculate-amount-paid-in-taxes': `
 def calculateTax(brackets, income):
     if hasattr(brackets, 'to_py'):
@@ -31877,14 +31328,6 @@ def resultsArray(queries, k):
 `,
 
   // batch 152
-
-  'number-of-segments-in-a-string': `def countSegments(s):
-    count = 0
-    for i in range(len(s)):
-        if s[i] != ' ' and (i == 0 or s[i - 1] == ' '):
-            count += 1
-    return count
-`,
 
   'repeated-dna-sequences': `def findRepeatedDnaSequences(s):
     seen = {}
@@ -32750,31 +32193,6 @@ def streamOfCharacters(ops, args):
         for start, earn in by_end[i]:
             dp[i] = max(dp[i], dp[start] + earn)
     return dp[n]
-`,
-
-  'find-the-longest-special-substring-that-occurs-thrice-i': `def maximumLength(s):
-    from collections import defaultdict
-    runs = defaultdict(list)
-    i = 0
-    while i < len(s):
-        c = s[i]
-        j = i
-        while j < len(s) and s[j] == c:
-            j += 1
-        runs[c].append(j - i)
-        i = j
-    ans = -1
-    for lengths in runs.values():
-        lo, hi = 1, max(lengths)
-        while lo <= hi:
-            mid = (lo + hi) // 2
-            cnt = sum(max(0, R - mid + 1) for R in lengths)
-            if cnt >= 3:
-                ans = max(ans, mid)
-                lo = mid + 1
-            else:
-                hi = mid - 1
-    return ans
 `,
 
   'minimum-cost-to-make-array-equalindromic': `def minimumCost(nums):
@@ -34414,14 +33832,6 @@ def subarrayBitwiseORs(arr):
     return len(result)
 `,
 
-  'check-if-a-string-contains-all-binary-codes-of-size-k': `
-def hasAllCodes(s, k):
-    seen = set()
-    for i in range(len(s) - k + 1):
-        seen.add(s[i:i+k])
-    return len(seen) == 1 << k
-`,
-
   'convert-to-base-2': `
 def baseNeg2(n):
     if n == 0: return '0'
@@ -35229,32 +34639,6 @@ def pseudoPalindromicPathsRunner(arr):
 `,
 
   // batch 169 — graph/medium×2, arrays+sliding-window/medium×2, tree/medium
-  'shortest-path-in-binary-matrix': `
-def shortestPathBinaryMatrix(grid):
-    if hasattr(grid, 'to_py'):
-        grid = [list(r.to_py() if hasattr(r, 'to_py') else r) for r in grid.to_py()]
-    grid = [[int(v) for v in row] for row in grid]
-    n = len(grid)
-    if grid[0][0] == 1 or grid[n-1][n-1] == 1:
-        return -1
-    if n == 1:
-        return 1
-    dirs = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
-    visited = [[False]*n for _ in range(n)]
-    visited[0][0] = True
-    queue = [(0, 0, 1)]
-    while queue:
-        r, c, dist = queue.pop(0)
-        for dr, dc in dirs:
-            nr, nc = r+dr, c+dc
-            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc] and grid[nr][nc] == 0:
-                if nr == n-1 and nc == n-1:
-                    return dist + 1
-                visited[nr][nc] = True
-                queue.append((nr, nc, dist+1))
-    return -1
-`,
-
   'minimum-cost-to-connect-all-points': `
 def minCostConnectPoints(points):
     if hasattr(points, 'to_py'):
@@ -37110,23 +36494,6 @@ def numberOfGoodSubsets(nums):
     pw = pow(2, ones, MOD)
     return (total * pw) % MOD`,
 
-  'number-of-people-aware-of-a-secret': `
-def peopleAwareOfSecret(n, delay, forget):
-    n, delay, forget = int(n), int(delay), int(forget)
-    MOD = 10**9 + 7
-    dp = [0] * (n + 1)
-    dp[1] = 1
-    prefix = [0] * (n + 2)
-    prefix[1] = 1
-    for i in range(2, n + 1):
-        lo = max(1, i - forget + 1)
-        hi = i - delay
-        if hi >= lo:
-            dp[i] = (prefix[hi] - prefix[lo - 1]) % MOD
-        prefix[i] = (prefix[i-1] + dp[i]) % MOD
-    lo = max(1, n - forget + 1)
-    return (prefix[n] - prefix[lo - 1]) % MOD`,
-
   'number-of-sub-arrays-with-odd-sum': `
 def numOfSubarrays(arr):
     if hasattr(arr, 'to_py'): arr = list(arr.to_py())
@@ -37963,41 +37330,6 @@ def maxBottlesDrunk(numBottles, numExchange):
     return total
 `,
 
-  'largest-local-values-in-a-matrix': `def largestLocal(grid):
-    if hasattr(grid, 'to_py'): grid = [list(row.to_py()) if hasattr(row, 'to_py') else list(row) for row in grid.to_py()]
-    else: grid = [list(row) for row in grid]
-    n = len(grid)
-    result = []
-    for i in range(1, n - 1):
-        row = []
-        for j in range(1, n - 1):
-            best = 0
-            for dr in range(-1, 2):
-                for dc in range(-1, 2):
-                    best = max(best, grid[i + dr][j + dc])
-            row.append(best)
-        result.append(row)
-    return result
-`,
-
-  'the-number-of-beautiful-subsets': `def beautifulSubsets(nums, k):
-    if hasattr(nums, 'to_py'): nums = list(nums.to_py())
-    nums = sorted(int(x) for x in nums)
-    k = int(k)
-    freq = {}
-    count = [0]
-    def bt(idx):
-        for i in range(idx, len(nums)):
-            v = nums[i]
-            if freq.get(v - k, 0) == 0:
-                freq[v] = freq.get(v, 0) + 1
-                count[0] += 1
-                bt(i + 1)
-                freq[v] -= 1
-    bt(0)
-    return count[0]
-`,
-
   'minimum-number-of-steps-to-make-two-strings-anagram-ii': `def minSteps(s, t):
     from collections import Counter
     cs = Counter(s)
@@ -38049,24 +37381,6 @@ def maxBottlesDrunk(numBottles, numExchange):
             if is_si(l, r):
                 count += 1
     return count
-`,
-
-  'check-if-the-grid-can-be-cut-into-sections': `def checkValidCuts(n, rectangles):
-    if hasattr(rectangles, 'to_py'): rectangles = [list(r.to_py()) if hasattr(r, 'to_py') else list(r) for r in rectangles.to_py()]
-    else: rectangles = [list(r) for r in rectangles]
-    rectangles = [[int(x) for x in r] for r in rectangles]
-    def can_cut(intervals):
-        intervals.sort()
-        groups = 0
-        end = -1
-        for s, e in intervals:
-            if s >= end:
-                groups += 1
-            end = max(end, e)
-        return groups >= 3
-    x_intervals = [(r[0], r[2]) for r in rectangles]
-    y_intervals = [(r[1], r[3]) for r in rectangles]
-    return can_cut(x_intervals) or can_cut(y_intervals)
 `,
 
   'minimum-ops-make-elements-distinct': `def minimumOperations(nums):
@@ -38378,19 +37692,6 @@ def maxBottlesDrunk(numBottles, numExchange):
 `,
 
 
-  'minimum-operations-to-make-array-continuous': `def minOperations(nums):
-    n = len(nums)
-    arr = sorted(set(nums))
-    m = len(arr)
-    max_keep = 0
-    r = 0
-    for l in range(m):
-        while r < m and arr[r] <= arr[l] + n - 1:
-            r += 1
-        max_keep = max(max_keep, r - l)
-    return n - max_keep
-`,
-
   'minimum-distance-to-the-target-element': `def getMinDistance(nums, target, start):
     return min(abs(i - start) for i, x in enumerate(nums) if x == target)
 `,
@@ -38433,19 +37734,6 @@ def maxBottlesDrunk(numBottles, numExchange):
             if prefix[i] == prefix[k + 1]:
                 count += k - i
     return count
-`,
-
-  'maximum-number-of-jumps-to-reach-the-last-index': `def maximumJumps(nums, target):
-    n = len(nums)
-    dp = [-1] * n
-    dp[0] = 0
-    for i in range(n):
-        if dp[i] == -1:
-            continue
-        for j in range(i + 1, n):
-            if abs(nums[j] - nums[i]) <= target:
-                dp[j] = max(dp[j], dp[i] + 1)
-    return dp[-1]
 `,
 
   'count-substrings-with-every-vowel-and-k-consonants-i': `
@@ -39220,11 +38508,6 @@ def mergeSortedArrays(nums1, nums2):
     return result
 `,
   // batch 198b ---------------------------------------------------------------
-  'check-if-the-number-is-fascinating': `
-def isFascinating(n):
-    s = str(n) + str(2 * n) + str(3 * n)
-    return len(s) == 9 and sorted(s) == list('123456789')
-`,
   'count-the-digits-that-divide-a-number': `
 def countDigits(num):
     count = 0
@@ -39275,18 +38558,6 @@ def minimalKSum(nums, k):
     if remaining > 0:
         result += (curr + 1 + curr + remaining) * remaining // 2
     return result
-`,
-  'count-the-number-of-good-partitions': `
-def numberOfGoodPartitions(nums):
-    MOD = 10**9 + 7
-    last_pos = {v: i for i, v in enumerate(nums)}
-    count = 0
-    max_right = -1
-    for i, v in enumerate(nums):
-        max_right = max(max_right, last_pos[v])
-        if i == max_right:
-            count += 1
-    return pow(2, count - 1, MOD)
 `,
   'maximum-sum-of-heights-of-the-towers': `
 def maximumSumOfHeights(heights):
@@ -39441,17 +38712,6 @@ def findIndices(nums, indexDifference, valueDifference):
 def countElements(nums):
     mn, mx = min(nums), max(nums)
     return sum(1 for n in nums if n != mn and n != mx)
-`,
-  'find-first-palindromic-string-in-the-array': `
-def firstPalindrome(words):
-    for w in words:
-        if w == w[::-1]:
-            return w
-    return ''
-`,
-  'remove-trailing-zeros-from-a-string': `
-def removeTrailingZeros(num):
-    return num.rstrip('0')
 `,
   'number-of-valid-words-in-a-sentence': `
 def countValidWords(sentence):
@@ -40130,22 +39390,6 @@ def matchPlayersAndTrainers(players, trainers):
         j += 1
     return count
 `,
-  'sum-of-absolute-differences-in-a-sorted-array': `
-def getSumAbsoluteDifferences(nums):
-    n = len(nums)
-    prefix = [0] * n
-    prefix[0] = nums[0]
-    for i in range(1, n):
-        prefix[i] = prefix[i - 1] + nums[i]
-    result = []
-    for i in range(n):
-        left_sum = i * nums[i] - (prefix[i - 1] if i > 0 else 0)
-        right_sum = (prefix[n - 1] - prefix[i]) - (n - 1 - i) * nums[i]
-        result.append(left_sum + right_sum)
-    return result
-`,
-
-  // batch 213 ----------------------------------------------------------------
   'design-neighbor-sum-service': `
 def designNeighborSumService(ops, args):
     ops = list(ops.to_py() if hasattr(ops, 'to_py') else ops)
@@ -40648,15 +39892,6 @@ def numOfSubarrays(arr):
             odd += 1
     return ans
 `,
-  'separate-the-digits-in-an-array': `
-def separateDigits(nums):
-    result = []
-    for n in nums:
-        for ch in str(n):
-            result.append(int(ch))
-    return result
-`,
-  // batch 218 ---------------------------------------------------------------
   'phone-number-prefix': `
 def phonePrefix(numbers):
     numbers = sorted(numbers)
@@ -40774,30 +40009,9 @@ def sumOfMultiples(n):
             total += i
     return total
 `,
-  'minimum-operations-to-make-the-array-increasing': `
-def minOperations(nums):
-    nums = list(nums)
-    ops = 0
-    for i in range(1, len(nums)):
-        if nums[i] <= nums[i - 1]:
-            ops += nums[i - 1] + 1 - nums[i]
-            nums[i] = nums[i - 1] + 1
-    return ops
-`,
   'remove-trailing-zeros-from-string': `
 def removeTrailingZeros(num):
     return num.rstrip('0')
-`,
-  'check-if-numbers-are-ascending-in-a-sentence': `
-def areNumbersAscending(s):
-    prev = -1
-    for token in s.split():
-        if token.isdigit():
-            n = int(token)
-            if n <= prev:
-                return False
-            prev = n
-    return True
 `,
   'count-common-characters': `
 def commonChars(words):
@@ -40854,22 +40068,6 @@ def countSpecialSubsequences(nums):
         else:
             dp2 = (2 * dp2 + dp1) % MOD
     return dp2
-`,
-  'count-odd-numbers-in-an-interval-range': `
-def countOdds(low, high):
-    return (high + 1) // 2 - low // 2
-`,
-  'find-kth-bit-in-nth-binary-string': `
-def findKthBit(n, k):
-    if n == 1:
-        return "0"
-    mid = 1 << (n - 1)
-    if k == mid:
-        return "1"
-    if k < mid:
-        return findKthBit(n - 1, k)
-    mirrored = findKthBit(n - 1, mid * 2 - k)
-    return "1" if mirrored == "0" else "0"
 `,
   'check-if-a-string-can-break-another-string': `
 def checkIfCanBreak(s1, s2):
@@ -40973,13 +40171,6 @@ def peopleAwareOfSecret(n, delay, forget):
         for L in range(max(1, d - forget + 1), d - delay + 1):
             dp[d] = (dp[d] + dp[L]) % MOD
     return sum(dp[max(1, n - forget + 1):n + 1]) % MOD
-`,
-  'determine-if-a-cell-is-reachable-at-a-given-time': `
-def isReachableAtTime(sx, sy, fx, fy, t):
-    dist = max(abs(sx - fx), abs(sy - fy))
-    if dist == 0 and t == 1:
-        return False
-    return t >= dist
 `,
   'count-balanced-subarrays': `
 def countBalanced(nums):
@@ -41123,20 +40314,6 @@ def executeInstructions(n, startPos, s):
         res.append(count)
     return res
 `,
-  'find-good-days-to-rob-the-bank': `
-def goodDaysToRobBank(security, time):
-    n = len(security)
-    left = [0] * n
-    right = [0] * n
-    for i in range(1, n):
-        if security[i-1] >= security[i]:
-            left[i] = left[i-1] + 1
-    for i in range(n-2, -1, -1):
-        if security[i] <= security[i+1]:
-            right[i] = right[i+1] + 1
-    return [i for i in range(n) if left[i] >= time and right[i] >= time]
-`,
-  // batch 225
   'find-score-after-marking-all-elements': `
 def findScore(nums):
     n = len(nums)
@@ -41256,12 +40433,6 @@ def arrayChange(nums, operations):
   'check-if-all-a-appears-before-all-b': `
 def checkString(s):
     return 'ba' not in s
-`,
-  'determine-color-of-a-chessboard-square': `
-def squareIsWhite(coordinates):
-    col = ord(coordinates[0]) - ord('a') + 1
-    row = int(coordinates[1])
-    return (col + row) % 2 != 0
 `,
   'most-frequent-number-following-key-in-an-array': `
 def mostFrequent(nums, key):
@@ -41544,19 +40715,6 @@ def sumOfPower(nums, k):
     return ans
 `,
   // batch 229
-  'find-a-peak-element-ii': `
-def findPeakGrid(mat):
-    lo, hi = 0, len(mat) - 1
-    while lo < hi:
-        mid = (lo + hi) // 2
-        max_col = mat[mid].index(max(mat[mid]))
-        if mat[mid][max_col] < mat[mid + 1][max_col]:
-            lo = mid + 1
-        else:
-            hi = mid
-    max_col = mat[lo].index(max(mat[lo]))
-    return [lo, max_col]
-`,
   'group-the-people-given-the-group-size-they-belong-to': `
 def groupThePeople(groupSizes):
     from collections import defaultdict
@@ -41809,10 +40967,6 @@ def maxDistance(colors):
             res = max(res, n - 1 - i)
             break
     return res
-`,
-  'maximum-score-from-removing-stones': `
-def maximumScore(a, b, c):
-    return min((a + b + c) // 2, a + b + c - max(a, b, c))
 `,
   'string-compression-count': `
 def compressedLength(s):
@@ -42165,29 +41319,6 @@ def mostFrequentPrime(mat):
         return -1
     max_freq = max(freq.values())
     return max(p for p, c in freq.items() if c == max_freq)
-`,
-  'find-the-number-of-ways-to-place-people': `
-def numberOfPairs(points):
-    points = sorted(points, key=lambda p: (p[0], -p[1]))
-    n = len(points)
-    count = 0
-    for i in range(n):
-        for j in range(i + 1, n):
-            xi, yi = points[i]
-            xj, yj = points[j]
-            if yj > yi:
-                continue
-            valid = True
-            for k in range(n):
-                if k == i or k == j:
-                    continue
-                xk, yk = points[k]
-                if xi <= xk <= xj and yj <= yk <= yi:
-                    valid = False
-                    break
-            if valid:
-                count += 1
-    return count
 `,
   'happy-students': `
 def countHappyStudents(nums):
@@ -43638,54 +42769,6 @@ def equalToDescendants(root):
     return count[0]
 `,
 
-  'minimum-path-sum-in-triangle': `
-def minimumTotal(triangle):
-    dp = list(triangle[-1])
-    for i in range(len(triangle) - 2, -1, -1):
-        for j in range(i + 1):
-            dp[j] = triangle[i][j] + min(dp[j], dp[j+1])
-    return dp[0]
-`,
-
-  'maximum-xor-with-an-element-from-array': `
-def maximizeXor(nums, queries):
-    n = len(queries)
-    idx = sorted(range(n), key=lambda i: queries[i][1])
-    nums_sorted = sorted(nums)
-    BITS = 30
-    trie = {}
-    def insert(x):
-        node = trie
-        for b in range(BITS, -1, -1):
-            bit = (x >> b) & 1
-            if bit not in node:
-                node[bit] = {}
-            node = node[bit]
-    def query(x):
-        node = trie
-        res = 0
-        for b in range(BITS, -1, -1):
-            bit = (x >> b) & 1
-            want = bit ^ 1
-            if want in node:
-                res |= (1 << b)
-                node = node[want]
-            elif bit in node:
-                node = node[bit]
-            else:
-                return -1
-        return res
-    ans = [0] * n
-    ni = 0
-    for qi in idx:
-        x, m = queries[qi]
-        while ni < len(nums_sorted) and nums_sorted[ni] <= m:
-            insert(nums_sorted[ni])
-            ni += 1
-        ans[qi] = -1 if ni == 0 else query(x)
-    return ans
-`,
-
   'minimum-cost-walk-in-weighted-graph': `
 def minimumCostWalk(n, edges, query):
     parent = list(range(n))
@@ -43777,32 +42860,6 @@ def minAbsoluteDifference(nums, x):
         if ans == 0:
             return 0
     return ans
-`,
-
-  'shortest-path-in-a-grid-with-obstacles-elimination': `
-from collections import deque
-def shortestPath(grid, k):
-    m, n = len(grid), len(grid[0])
-    if m == 1 and n == 1:
-        return 0
-    visited = [[[False] * (k + 1) for _ in range(n)] for _ in range(m)]
-    q = deque([(0, 0, k, 0)])
-    visited[0][0][k] = True
-    while q:
-        r, c, kr, steps = q.popleft()
-        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
-            nr, nc = r + dr, c + dc
-            if not (0 <= nr < m and 0 <= nc < n):
-                continue
-            nk = kr - grid[nr][nc]
-            if nk < 0:
-                continue
-            if nr == m - 1 and nc == n - 1:
-                return steps + 1
-            if not visited[nr][nc][nk]:
-                visited[nr][nc][nk] = True
-                q.append((nr, nc, nk, steps + 1))
-    return -1
 `,
 
   'euler-path-circuit': `
@@ -45107,42 +44164,6 @@ def sortItems(n, m, group, beforeItems):
     return [x for g in grp_order for x in grp_items[g]]
 `,
 
-  'min-cost-to-connect-all-points': `
-def minCostConnectPoints(points):
-    pts = [[int(p[0]), int(p[1])] for p in (points.to_py() if hasattr(points, 'to_py') else points)]
-    n = len(pts)
-    min_dist = [float('inf')] * n
-    in_mst = [False] * n
-    min_dist[0] = 0
-    total = 0
-    for _ in range(n):
-        u = min((i for i in range(n) if not in_mst[i]), key=lambda i: min_dist[i])
-        in_mst[u] = True
-        total += min_dist[u]
-        for v in range(n):
-            if not in_mst[v]:
-                d = abs(pts[u][0] - pts[v][0]) + abs(pts[u][1] - pts[v][1])
-                if d < min_dist[v]:
-                    min_dist[v] = d
-    return total
-`,
-
-  'maximize-the-confusion-of-an-exam': `
-def maxConsecutiveAnswers(answerKey, k):
-    def max_window(ch):
-        left = count = best = 0
-        for right in range(len(answerKey)):
-            if answerKey[right] == ch:
-                count += 1
-            while count > k:
-                if answerKey[left] == ch:
-                    count -= 1
-                left += 1
-            best = max(best, right - left + 1)
-        return best
-    return max(max_window('T'), max_window('F'))
-`,
-
   'moving-stones-until-consecutive': `
 def numMovesStones(a, b, c):
     x, y, z = sorted([a, b, c])
@@ -45151,29 +44172,6 @@ def numMovesStones(a, b, c):
     min_moves = 1 if min(y - x, z - y) <= 2 else 2
     max_moves = (y - x - 1) + (z - y - 1)
     return [min_moves, max_moves]
-`,
-
-  'maximum-tastiness-of-candy-basket': `
-def maximumTastiness(price, k):
-    price = sorted(list(price.to_py()) if hasattr(price, 'to_py') else list(price))
-    n = len(price)
-    def can_achieve(gap):
-        count, last = 1, price[0]
-        for i in range(1, n):
-            if price[i] - last >= gap:
-                count += 1
-                last = price[i]
-                if count >= k:
-                    return True
-        return count >= k
-    lo, hi = 0, (price[-1] - price[0]) // (k - 1)
-    while lo < hi:
-        mid = (lo + hi + 1) // 2
-        if can_achieve(mid):
-            lo = mid
-        else:
-            hi = mid - 1
-    return lo
 `,
 
   'allocate-mailboxes': `
@@ -45740,14 +44738,6 @@ def minStartingIndex(s, pattern):
     return -1
 `,
   // batch 260
-  'xor-queries-of-a-subarray': `
-def xorQueries(arr, queries):
-    n = len(arr)
-    pre = [0] * (n + 1)
-    for i in range(n):
-        pre[i + 1] = pre[i] ^ arr[i]
-    return [pre[r + 1] ^ pre[l] for l, r in queries]
-`,
   'average-salary-excluding-the-minimum-and-maximum-salary': `
 def average(salary):
     return (sum(salary) - min(salary) - max(salary)) / (len(salary) - 2)
@@ -45933,12 +44923,6 @@ def maximumTripletValue(nums):
     return ans
 `,
   // batch 265
-  'check-if-two-chessboard-squares-have-the-same-color': `
-def checkTwoChessboards(coordinate1, coordinate2):
-    def val(c):
-        return ord(c[0]) + int(c[1])
-    return val(coordinate1) % 2 == val(coordinate2) % 2
-`,
   'count-equal-divisible-pairs': `
 def countPairs(nums, k):
     count = 0
@@ -45980,16 +44964,6 @@ def maxAbsValExpr(arr1, arr2):
             ans = max(ans, mx - mn)
     return ans
 `,
-  'minimum-operations-to-make-a-uni-value-grid': `
-def minOperations(grid, x):
-    flat = sorted(v for row in grid for v in row)
-    rem = flat[0] % x
-    if any(v % x != rem for v in flat):
-        return -1
-    median = flat[len(flat) // 2]
-    return sum(abs(v - median) // x for v in flat)
-`,
-  // batch 264
   'find-mirror-score-of-a-string': `
 def calculateScore(s):
     stacks = [[] for _ in range(26)]
@@ -46346,9 +45320,6 @@ def placedCoins(edges, cost):
         for i in range(m)
     ]
 `,
-  'make-the-array-zero-by-subtracting-equal-amounts': `def minimumOperations(nums):
-    return len(set(x for x in nums if x > 0))
-`,
   'sum-of-numbers-with-units-digit-k': `def minimumNumbers(num, k):
     if num == 0:
         return 1 if k == 0 else -1
@@ -46494,18 +45465,6 @@ def placedCoins(edges, cost):
     return ans
 `,
 
-
-  'maximize-the-total-height-of-unique-towers': `def maximumTotalSum(maximumHeight):
-    s = sorted(maximumHeight, reverse=True)
-    total = prev = s[0]
-    for i in range(1, len(s)):
-        h = min(s[i], prev - 1)
-        if h <= 0:
-            return -1
-        total += h
-        prev = h
-    return total
-`,
 
   'number-of-great-partitions': `def countPartitions(nums, k):
     MOD = 10**9 + 7
@@ -47071,19 +46030,6 @@ def placedCoins(edges, cost):
     return ans
 `,
 
-  'make-a-string-a-subsequence-using-cyclic-increments': `def canMakeSubsequence(str1, str2):
-    j = 0
-    for c in str1:
-        if j == len(str2):
-            break
-        c1 = ord(c) - 97
-        c2 = ord(str2[j]) - 97
-        if c1 == c2 or (c1 + 1) % 26 == c2:
-            j += 1
-    return j == len(str2)
-`,
-
-  // batch 281
   'count-the-number-of-interesting-subarrays': `def countInterestingSubarrays(nums, modulo, k):
     from collections import defaultdict
     freq = defaultdict(int)
@@ -47195,10 +46141,6 @@ def placedCoins(edges, cost):
         if s[i] != s[i+1] and s[i+1] != s[i+2] and s[i] != s[i+2]:
             count += 1
     return count
-`,
-
-  'count-words-with-a-given-prefix': `def prefixCount(words, pref):
-    return sum(1 for w in words if w.startswith(pref))
 `,
 
   'first-day-where-you-have-been-in-all-the-rooms': `def firstDayBeenInAllRooms(nextVisit):
@@ -47487,10 +46429,6 @@ def placedCoins(edges, cost):
 `,
 
   // batch 271
-  'reverse-words-in-a-string-iii': `def reverseWords(s):
-    return ' '.join(w[::-1] for w in s.split(' '))
-`,
-
   'goal-parser-interpretation': `def interpret(command):
     return command.replace('()', 'o').replace('(al)', 'al')
 `,
@@ -47528,21 +46466,6 @@ def placedCoins(edges, cost):
             else: hi = mid - 1
         return ans
     return [find(False), find(True)]
-`,
-
-  'find-the-punishment-number-of-an-integer': `def punishmentNumber(n):
-    def can_partition(s, pos, rem):
-        if pos == len(s): return rem == 0
-        for end in range(pos + 1, len(s) + 1):
-            val = int(s[pos:end])
-            if val <= rem and can_partition(s, end, rem - val):
-                return True
-        return False
-    ans = 0
-    for i in range(1, n + 1):
-        if can_partition(str(i * i), 0, i):
-            ans += i * i
-    return ans
 `,
 
   'cycle-length-queries-in-a-tree': `def cycleLengthQueries(n, queries):
@@ -47837,19 +46760,6 @@ def maxTotalReward(rewardValues):
 `,
 
   // batch 272
-  'find-the-maximum-number-of-string-pairs': `def maximumNumberOfStringPairs(words):
-    seen = set()
-    pairs = 0
-    for w in words:
-        rev = w[::-1]
-        if rev in seen:
-            pairs += 1
-            seen.remove(rev)
-        else:
-            seen.add(w)
-    return pairs
-`,
-
   'count-substrings-with-vowel-and-consonant': `def countOfSubstrings(word):
     vowels = set('aeiou')
     n = len(word)
@@ -48018,20 +46928,6 @@ def findXSum(nums, k, x):
     return ''.join(stack)
 `,
 
-  'minimum-number-of-flips-to-make-the-binary-string-alternating': `def minFlips(s):
-    n = len(s)
-    s2 = s + s
-    f = [0] * (2 * n + 1)
-    for i in range(2 * n):
-        f[i + 1] = f[i] + (1 if s2[i] == ('0' if i % 2 == 0 else '1') else 0)
-    ans = n
-    for k in range(n):
-        m = f[k + n] - f[k]
-        ans = min(ans, n - m, m)
-    return ans
-`,
-
-  // batch 274
   'find-different-binary-string': `def findDifferentBinaryString(nums):
     return ''.join('1' if nums[i][i] == '0' else '0' for i in range(len(nums)))
 `,
@@ -49422,24 +48318,6 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return rank
 `,
 
-  'using-a-robot-to-print-the-lexicographically-smallest-string': `def robotWithString(s):
-    if hasattr(s, 'to_py'): s = s.to_py()
-    s = str(s)
-    n = len(s)
-    suf = ['{'] * (n + 1)
-    for i in range(n - 1, -1, -1):
-        suf[i] = min(s[i], suf[i + 1])
-    t, result = [], []
-    for i in range(n):
-        while t and t[-1] <= suf[i]:
-            result.append(t.pop())
-        t.append(s[i])
-    while t:
-        result.append(t.pop())
-    return ''.join(result)
-`,
-
-  // batch 295
   'rearrange-string-k-distance-apart': `def rearrangeString(s, k):
     if hasattr(s, 'to_py'): s = s.to_py()
     s = str(s); k = int(k)
@@ -49588,22 +48466,6 @@ def maximumSumOfHeights(heights: list[int]) -> int:
 `,
 
   // batch 294
-  'maximum-value-at-a-given-index-in-a-bounded-array': `def maxValue(n, index, maxSum):
-    def min_cost(v, length):
-        if v >= length:
-            return (2 * v - length + 1) * length // 2
-        return v * (v + 1) // 2 + (length - v)
-    lo, hi = 1, maxSum
-    while lo < hi:
-        mid = (lo + hi + 1) // 2
-        total = min_cost(mid, index + 1) + min_cost(mid, n - index) - mid
-        if total <= maxSum:
-            lo = mid
-        else:
-            hi = mid - 1
-    return lo
-`,
-
   'sender-with-largest-word-count': `def largestWordCount(messages, senders):
     if hasattr(messages, 'to_py'): messages = messages.to_py()
     if hasattr(senders, 'to_py'): senders = senders.to_py()
@@ -49617,29 +48479,6 @@ def maximumSumOfHeights(heights: list[int]) -> int:
             best = sender
             best_count = c
     return best
-`,
-
-  'maximum-white-tiles-covered-by-a-carpet': `def maximumWhiteTiles(tiles, carpetLen):
-    if hasattr(tiles, 'to_py'): tiles = tiles.to_py()
-    tiles = [list(t) for t in tiles]
-    tiles.sort(key=lambda t: t[0])
-    n = len(tiles)
-    prefix = [0] * (n + 1)
-    for i in range(n):
-        prefix[i + 1] = prefix[i] + tiles[i][1] - tiles[i][0] + 1
-    ans = 0
-    for i in range(n):
-        right_edge = tiles[i][0] + carpetLen - 1
-        lo, hi, j = i, n - 1, i
-        while lo <= hi:
-            mid = (lo + hi) // 2
-            if tiles[mid][0] <= right_edge:
-                j = mid; lo = mid + 1
-            else:
-                hi = mid - 1
-        covered = prefix[j] - prefix[i] + min(tiles[j][1], right_edge) - tiles[j][0] + 1
-        ans = max(ans, covered)
-    return ans
 `,
 
   'minimum-time-to-make-array-sum-at-most-x': `def minimumTime(nums1, nums2, x):
@@ -49658,13 +48497,6 @@ def maximumSumOfHeights(heights: list[int]) -> int:
         if s1 + t * s2 - dp[t] <= x:
             return t
     return -1
-`,
-
-  'difference-between-element-sum-and-digit-sum-of-an-array': `def differenceOfSum(nums):
-    if hasattr(nums, 'to_py'): nums = nums.to_py()
-    elem_sum = sum(int(x) for x in nums)
-    digit_sum = sum(int(d) for n in nums for d in str(int(n)))
-    return elem_sum - digit_sum
 `,
 
   'count-mentions-per-user': `def countMentions(numberOfUsers, events):
@@ -50280,30 +49112,6 @@ def maximumSumOfHeights(heights: list[int]) -> int:
         label = (min_l + max_l - label) >> 1
         level -= 1
     return path[::-1]
-`,
-
-  'minimum-operations-to-write-the-letter-y-on-a-grid': `def minimumOperationsToWriteY(grid):
-    grid = [list(row.to_py() if hasattr(row, 'to_py') else row) for row in (grid.to_py() if hasattr(grid, 'to_py') else grid)]
-    n = len(grid)
-    half = (n - 1) // 2
-    y_freq = [0, 0, 0]
-    n_freq = [0, 0, 0]
-    for i in range(n):
-        for j in range(n):
-            v = grid[i][j]
-            is_y = (i == j and i <= half) or (i + j == n - 1 and i <= half) or (i >= half and j == half)
-            if is_y:
-                y_freq[v] += 1
-            else:
-                n_freq[v] += 1
-    y_total = sum(y_freq)
-    n_total = sum(n_freq)
-    ans = float('inf')
-    for v1 in range(3):
-        for v2 in range(3):
-            if v1 == v2: continue
-            ans = min(ans, (y_total - y_freq[v1]) + (n_total - n_freq[v2]))
-    return ans
 `,
 
   'removing-boxes': `def removeBoxes(boxes):
