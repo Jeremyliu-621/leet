@@ -43,13 +43,27 @@ Return the champion of the tournament. It is guaranteed that there is **exactly 
   params: ['grid'],
   starterCode: {
     javascript: `function findChampion(grid) {
-
+  const n = grid.length;
+  outer: for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) if (grid[j][i]) continue outer;
+    return i;
+  }
+  return -1;
 }`,
     typescript: `function findChampion(grid: number[][]): number {
-
+  const n = grid.length;
+  outer: for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) if (grid[j]![i]) continue outer;
+    return i;
+  }
+  return -1;
 }`,
     python: `def findChampion(grid):
-    pass`,
+    n = len(grid)
+    for i in range(n):
+        if all(grid[j][i] == 0 for j in range(n)):
+            return i
+    return -1`,
   },
   visibleTests: [
     { args: [[[0, 1], [0, 0]]], expected: 0 },

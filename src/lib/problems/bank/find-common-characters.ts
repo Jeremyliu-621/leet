@@ -30,12 +30,36 @@ export const problem: Problem = {
   params: ['words'],
   starterCode: {
     javascript: `function commonChars(words) {
-
+  const a = 'a'.charCodeAt(0);
+  let minFreq = new Array(26).fill(Infinity);
+  for (const word of words) {
+    const freq = new Array(26).fill(0);
+    for (const c of word) freq[c.charCodeAt(0) - a]++;
+    minFreq = minFreq.map((v, i) => Math.min(v, freq[i]));
+  }
+  const result = [];
+  for (let i = 0; i < 26; i++) for (let j = 0; j < minFreq[i]; j++) result.push(String.fromCharCode(a + i));
+  return result;
 }`,
-    typescript: "function commonChars(words: string[]): string[] {\n\n}",
-
+    typescript: `function commonChars(words: string[]): string[] {
+  const a = 'a'.charCodeAt(0);
+  let minFreq: number[] = new Array(26).fill(Infinity);
+  for (const word of words) {
+    const freq: number[] = new Array(26).fill(0);
+    for (const c of word) freq[c.charCodeAt(0) - a]!++;
+    minFreq = minFreq.map((v, i) => Math.min(v, freq[i]!));
+  }
+  const result: string[] = [];
+  for (let i = 0; i < 26; i++) for (let j = 0; j < minFreq[i]!; j++) result.push(String.fromCharCode(a + i));
+  return result;
+}`,
     python: `def commonChars(words):
-    pass`,
+    from collections import Counter
+    min_freq = Counter(words[0])
+    for w in words[1:]:
+        c = Counter(w)
+        min_freq &= c
+    return list(min_freq.elements())`,
   },
   visibleTests: [
     { args: [['bella', 'label', 'roller']], expected: ['e', 'l', 'l'] },

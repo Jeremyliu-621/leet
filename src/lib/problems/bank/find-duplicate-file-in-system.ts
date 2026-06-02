@@ -46,12 +46,50 @@ Output: [["root/a/2.txt","root/c/d/4.txt","root/4.txt"],["root/a/1.txt","root/c/
   params: ['paths'],
   starterCode: {
     javascript: `function findDuplicate(paths) {
-
+  const map = new Map();
+  for (const p of paths) {
+    const parts = p.split(' ');
+    const dir = parts[0];
+    for (let i = 1; i < parts.length; i++) {
+      const m = parts[i].match(/^(.+)\((.+)\)$/);
+      if (!m) continue;
+      const content = m[2];
+      if (!map.has(content)) map.set(content, []);
+      map.get(content).push(\`\${dir}/\${m[1]}\`);
+    }
+  }
+  const res = [];
+  for (const g of map.values()) if (g.length >= 2) res.push([...g].sort());
+  return res.sort((a, b) => a[0] < b[0] ? -1 : 1);
 }`,
-    typescript: "function findDuplicate(paths: string[]): string[][] {\n\n}",
-
+    typescript: `function findDuplicate(paths: string[]): string[][] {
+  const map = new Map<string, string[]>();
+  for (const p of paths) {
+    const parts = p.split(' ');
+    const dir = parts[0]!;
+    for (let i = 1; i < parts.length; i++) {
+      const m = parts[i]!.match(/^(.+)\((.+)\)$/);
+      if (!m) continue;
+      const content = m[2]!;
+      if (!map.has(content)) map.set(content, []);
+      map.get(content)!.push(\`\${dir}/\${m[1]!}\`);
+    }
+  }
+  const res: string[][] = [];
+  for (const g of map.values()) if (g.length >= 2) res.push([...g].sort());
+  return res.sort((a, b) => (a[0] ?? '').localeCompare(b[0] ?? ''));
+}`,
     python: `def findDuplicate(paths):
-    `,
+    from collections import defaultdict
+    content_map = defaultdict(list)
+    for p in paths:
+        parts = p.split(' ')
+        directory = parts[0]
+        for entry in parts[1:]:
+            paren = entry.index('(')
+            name, content = entry[:paren], entry[paren+1:-1]
+            content_map[content].append(f'{directory}/{name}')
+    return sorted([sorted(g) for g in content_map.values() if len(g) >= 2])`,
   },
   visibleTests: [
     {

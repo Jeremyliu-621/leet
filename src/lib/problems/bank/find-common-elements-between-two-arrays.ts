@@ -41,12 +41,16 @@ Return the array \`[answer1, answer2]\`.`,
   params: ['nums1', 'nums2'],
   starterCode: {
     javascript: `function findIntersectionValues(nums1, nums2) {
-
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  return [nums1.filter(x => s2.has(x)).length, nums2.filter(x => s1.has(x)).length];
 }`,
-    typescript: "function findIntersectionValues(nums1: number[], nums2: number[]): number[] {\n\n}",
-
+    typescript: `function findIntersectionValues(nums1: number[], nums2: number[]): number[] {
+  const s1 = new Set(nums1), s2 = new Set(nums2);
+  return [nums1.filter(x => s2.has(x)).length, nums2.filter(x => s1.has(x)).length];
+}`,
     python: `def findIntersectionValues(nums1, nums2):
-    pass`,
+    s1, s2 = set(nums1), set(nums2)
+    return [sum(x in s2 for x in nums1), sum(x in s1 for x in nums2)]`,
   },
   visibleTests: [
     { args: [[4, 3, 2, 3, 1], [2, 2, 5, 2, 3, 6]], expected: [3, 4] },

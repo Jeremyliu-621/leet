@@ -39,13 +39,13 @@ export const problem: Problem = {
   params: ['nums'],
   starterCode: {
     javascript: `function findDifferentBinaryString(nums) {
-
+  return nums.map((s, i) => s[i] === '0' ? '1' : '0').join('');
 }`,
     typescript: `function findDifferentBinaryString(nums: string[]): string {
-
+  return nums.map((s, i) => s[i] === '0' ? '1' : '0').join('');
 }`,
     python: `def findDifferentBinaryString(nums):
-    pass`,
+    return ''.join('1' if s[i] == '0' else '0' for i, s in enumerate(nums))`,
   },
   visibleTests: [
     { args: [['01', '10']], expected: '11' },

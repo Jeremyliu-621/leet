@@ -44,13 +44,24 @@ Return the team that will be the **champion** of the tournament if there is a **
   params: ['n', 'edges'],
   starterCode: {
     javascript: `function findChampion(n, edges) {
-
+  const indegree = new Array(n).fill(0);
+  for (const [, v] of edges) indegree[v]++;
+  const zeros = [];
+  for (let i = 0; i < n; i++) if (indegree[i] === 0) zeros.push(i);
+  return zeros.length === 1 ? zeros[0] : -1;
 }`,
     typescript: `function findChampion(n: number, edges: number[][]): number {
-
+  const indegree: number[] = new Array(n).fill(0);
+  for (const e of edges) indegree[e[1]!]++;
+  const zeros: number[] = [];
+  for (let i = 0; i < n; i++) if (indegree[i] === 0) zeros.push(i);
+  return zeros.length === 1 ? zeros[0]! : -1;
 }`,
     python: `def findChampion(n, edges):
-    pass`,
+    indegree = [0] * n
+    for _, v in edges: indegree[v] += 1
+    zeros = [i for i in range(n) if indegree[i] == 0]
+    return zeros[0] if len(zeros) == 1 else -1`,
   },
   visibleTests: [
     { args: [3, [[0, 1], [1, 2]]], expected: 0 },
