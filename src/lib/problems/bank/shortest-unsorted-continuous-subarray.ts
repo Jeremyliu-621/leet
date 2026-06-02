@@ -36,10 +36,28 @@ Return the length of this subarray. If the array is already sorted, return \`0\`
   functionName: 'findUnsortedSubarray',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findUnsortedSubarray(nums) {\n  // your code here\n}\n',
-    typescript: "function findUnsortedSubarray(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def findUnsortedSubarray(nums):\n    # your code here\n    pass\n',
+    javascript: `function findUnsortedSubarray(nums) {
+  const sorted = [...nums].sort((a, b) => a - b);
+  let l = 0, r = nums.length - 1;
+  while (l <= r && nums[l] === sorted[l]) l++;
+  while (r >= l && nums[r] === sorted[r]) r--;
+  return r >= l ? r - l + 1 : 0;
+}`,
+    typescript: `function findUnsortedSubarray(nums: number[]): number {
+  const sorted = [...nums].sort((a, b) => a - b);
+  let l = 0, r = nums.length - 1;
+  while (l <= r && nums[l] === sorted[l]) l++;
+  while (r >= l && nums[r] === sorted[r]) r--;
+  return r >= l ? r - l + 1 : 0;
+}`,
+    python: `def findUnsortedSubarray(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    s = sorted(nums); n = len(nums)
+    l, r = 0, n-1
+    while l <= r and nums[l] == s[l]: l += 1
+    while r >= l and nums[r] == s[r]: r -= 1
+    return r - l + 1 if r >= l else 0`,
   },
   visibleTests: [
     {

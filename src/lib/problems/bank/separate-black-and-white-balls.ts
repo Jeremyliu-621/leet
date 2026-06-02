@@ -51,10 +51,23 @@ Output: 0
   functionName: 'minimumSteps',
   params: ['s'],
   starterCode: {
-    javascript: 'function minimumSteps(s) {\n  // your code here\n}\n',
-    typescript: "function minimumSteps(s: string): number {\n  // your code here\n}",
-
-    python: 'def minimumSteps(s):\n    pass\n',
+    javascript: `function minimumSteps(s) {
+  let ones = 0, steps = 0;
+  for (const c of s) { if (c === '1') ones++; else steps += ones; }
+  return steps;
+}`,
+    typescript: `function minimumSteps(s: string): number {
+  let ones = 0, steps = 0;
+  for (const c of s) { if (c === '1') ones++; else steps += ones; }
+  return steps;
+}`,
+    python: `def minimumSteps(s):
+    if hasattr(s, 'to_py'): s = s.to_py()
+    ones = 0; steps = 0
+    for c in str(s):
+        if c == '1': ones += 1
+        else: steps += ones
+    return steps`,
   },
   visibleTests: [
     { args: ['101'], expected: 1 },

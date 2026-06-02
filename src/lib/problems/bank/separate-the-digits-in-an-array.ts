@@ -35,14 +35,15 @@ For example, for the integer \`23\`, the separated digits are \`[2, 3]\`.`,
   params: ['nums'],
   starterCode: {
     javascript: `function separateDigits(nums) {
-  // your code here
+  return nums.flatMap(n => String(n).split('').map(Number));
 }`,
     typescript: `function separateDigits(nums: number[]): number[] {
-  // your code here
+  return nums.flatMap(n => String(n).split('').map(Number));
 }`,
     python: `def separateDigits(nums):
-    # your code here
-    pass`,
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    return [int(d) for n in nums for d in str(n)]`,
   },
   visibleTests: [
     { args: [[13,25,83,77]], expected: [1,3,2,5,8,3,7,7] },

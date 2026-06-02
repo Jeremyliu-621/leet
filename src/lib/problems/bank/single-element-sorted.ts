@@ -42,10 +42,34 @@ You must solve this in **O(log n)** time and **O(1)** space.
   functionName: 'singleNonDuplicate',
   params: ['nums'],
   starterCode: {
-    javascript: 'function singleNonDuplicate(nums) {\n  // your code here\n}\n',
-    typescript: "function singleNonDuplicate(nums: number[]): number {\n  // your code here\n}",
-
-    python: 'def singleNonDuplicate(nums):\n    # your code here\n    pass\n',
+    javascript: `function singleNonDuplicate(nums) {
+  let l = 0, r = nums.length - 1;
+  while (l < r) {
+    let mid = (l + r) >> 1;
+    if (mid % 2 === 1) mid--;
+    if (nums[mid] === nums[mid + 1]) l = mid + 2; else r = mid;
+  }
+  return nums[l];
+}`,
+    typescript: `function singleNonDuplicate(nums: number[]): number {
+  let l = 0, r = nums.length - 1;
+  while (l < r) {
+    let mid = (l + r) >> 1;
+    if (mid % 2 === 1) mid--;
+    if (nums[mid]! === nums[mid + 1]!) l = mid + 2; else r = mid;
+  }
+  return nums[l]!;
+}`,
+    python: `def singleNonDuplicate(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    l, r = 0, len(nums)-1
+    while l < r:
+        mid = (l+r)>>1
+        if mid % 2 == 1: mid -= 1
+        if nums[mid] == nums[mid+1]: l = mid+2
+        else: r = mid
+    return nums[l]`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 3, 3, 4, 4, 8, 8]], expected: 2 },

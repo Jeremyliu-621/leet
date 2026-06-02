@@ -24,10 +24,30 @@ You are given an integer array \`nums\` representing the data status of this set
   functionName: 'findErrorNums',
   params: ['nums'],
   starterCode: {
-    javascript: 'function findErrorNums(nums) {\n  // your code here\n}\n',
-    typescript: "function findErrorNums(nums: number[]): number[] {\n  // your code here\n}",
-
-    python: 'def findErrorNums(nums):\n    # your code here\n    pass\n',
+    javascript: `function findErrorNums(nums) {
+  const cnt = new Array(nums.length + 1).fill(0);
+  for (const x of nums) cnt[x]++;
+  let dup = -1, miss = -1;
+  for (let i = 1; i <= nums.length; i++) { if (cnt[i] === 2) dup = i; if (cnt[i] === 0) miss = i; }
+  return [dup, miss];
+}`,
+    typescript: `function findErrorNums(nums: number[]): number[] {
+  const cnt = new Array(nums.length + 1).fill(0) as number[];
+  for (const x of nums) cnt[x]!++;
+  let dup = -1, miss = -1;
+  for (let i = 1; i <= nums.length; i++) { if (cnt[i]! === 2) dup = i; if (cnt[i]! === 0) miss = i; }
+  return [dup, miss];
+}`,
+    python: `def findErrorNums(nums):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    nums = [int(x) for x in nums]
+    n = len(nums); cnt = [0]*(n+1)
+    for x in nums: cnt[x] += 1
+    dup = miss = -1
+    for i in range(1, n+1):
+        if cnt[i] == 2: dup = i
+        if cnt[i] == 0: miss = i
+    return [dup, miss]`,
   },
   visibleTests: [
     { args: [[1, 2, 2, 4]], expected: [2, 3] },

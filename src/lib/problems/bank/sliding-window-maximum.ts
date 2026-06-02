@@ -42,10 +42,38 @@ The brute-force O(nk) approach is too slow. Use a **monotonic deque** to achieve
   functionName: 'maxSlidingWindow',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function maxSlidingWindow(nums, k) {\n  // your code here\n}\n',
-    typescript: "function maxSlidingWindow(nums: number[], k: number): number[] {\n  // your code here\n}",
-
-    python: 'def maxSlidingWindow(nums, k):\n    # your code here\n    pass\n',
+    javascript: `function maxSlidingWindow(nums, k) {
+  const deque = [], result = [];
+  for (let i = 0; i < nums.length; i++) {
+    while (deque.length && deque[0] <= i - k) deque.shift();
+    while (deque.length && nums[deque[deque.length - 1]] < nums[i]) deque.pop();
+    deque.push(i);
+    if (i >= k - 1) result.push(nums[deque[0]]);
+  }
+  return result;
+}`,
+    typescript: `function maxSlidingWindow(nums: number[], k: number): number[] {
+  const deque: number[] = [], result: number[] = [];
+  for (let i = 0; i < nums.length; i++) {
+    while (deque.length && deque[0]! <= i - k) deque.shift();
+    while (deque.length && nums[deque[deque.length - 1]!]! < nums[i]!) deque.pop();
+    deque.push(i);
+    if (i >= k - 1) result.push(nums[deque[0]!]!);
+  }
+  return result;
+}`,
+    python: `def maxSlidingWindow(nums, k):
+    if hasattr(nums, 'to_py'): nums = nums.to_py()
+    if hasattr(k, 'to_py'): k = k.to_py()
+    nums = [int(x) for x in nums]; k = int(k)
+    from collections import deque
+    dq = deque(); result = []
+    for i, v in enumerate(nums):
+        while dq and dq[0] <= i - k: dq.popleft()
+        while dq and nums[dq[-1]] < v: dq.pop()
+        dq.append(i)
+        if i >= k-1: result.append(nums[dq[0]])
+    return result`,
   },
   visibleTests: [
     { args: [[1, 3, -1, -3, 5, 3, 6, 7], 3], expected: [3, 3, 5, 5, 6, 7] },
