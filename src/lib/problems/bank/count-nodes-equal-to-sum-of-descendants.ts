@@ -34,9 +34,50 @@ The tree is given as a **level-order** array where \`null\` indicates a missing 
   functionName: 'equalToDescendants',
   params: ['root'],
   starterCode: {
-    javascript: 'function equalToDescendants(root) {\n  \n}\n',
-    typescript: 'function equalToDescendants(root: (number | null)[]): number {\n  \n}',
-    python: 'def equalToDescendants(root):\n    pass\n',
+    javascript: `function equalToDescendants(root) {
+  const n = root.length;
+  let count = 0;
+  function dfs(i) {
+    if (i >= n || root[i] === null || root[i] === undefined) return 0;
+    const left = dfs(2 * i + 1);
+    const right = dfs(2 * i + 2);
+    const sum = left + right;
+    if (sum === root[i]) count++;
+    return sum + root[i];
+  }
+  dfs(0);
+  return count;
+}`,
+    typescript: `function equalToDescendants(root: (number | null)[]): number {
+  const n = root.length;
+  let count = 0;
+  function dfs(i: number): number {
+    if (i >= n || root[i] === null || root[i] === undefined) return 0;
+    const val = root[i] as number;
+    const left = dfs(2 * i + 1);
+    const right = dfs(2 * i + 2);
+    const sum = left + right;
+    if (sum === val) count++;
+    return sum + val;
+  }
+  dfs(0);
+  return count;
+}`,
+    python: `def equalToDescendants(root):
+    n = len(root)
+    count = 0
+    def dfs(i):
+        nonlocal count
+        if i >= n or root[i] is None:
+            return 0
+        left = dfs(2 * i + 1)
+        right = dfs(2 * i + 2)
+        s = left + right
+        if s == root[i]:
+            count += 1
+        return s + root[i]
+    dfs(0)
+    return count`,
   },
   visibleTests: [
     { args: [[5, 2, 3]], expected: 1 },

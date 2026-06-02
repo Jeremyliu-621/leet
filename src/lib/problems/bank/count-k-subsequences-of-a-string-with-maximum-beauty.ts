@@ -41,9 +41,76 @@ Return *the number of k-subsequences having the **maximum** beauty*, modulo \`10
   functionName: 'countKSubsequencesWithMaxBeauty',
   params: ['s', 'k'],
   starterCode: {
-    javascript: 'function countKSubsequencesWithMaxBeauty(s, k) {\n\n}\n',
-    typescript: 'function countKSubsequencesWithMaxBeauty(s: string, k: number): number {\n\n}\n',
-    python: 'def countKSubsequencesWithMaxBeauty(s, k):\n    pass\n',
+    javascript: `function countKSubsequencesWithMaxBeauty(s, k) {
+  const MOD = 1_000_000_007n;
+  const freq = new Map();
+  for (const c of s) freq.set(c, (freq.get(c) || 0) + 1);
+  const freqs = [...freq.values()].sort((a, b) => b - a);
+  if (freqs.length < k) return 0;
+  const minFreq = freqs[k - 1];
+  let above = 0, prodAbove = 1n, tied = 0;
+  for (const f of freqs) {
+    if (f > minFreq) { above++; prodAbove = prodAbove * BigInt(f) % MOD; }
+    else if (f === minFreq) tied++;
+  }
+  const need = k - above;
+  function modpow(b, e) {
+    let r = 1n; b %= MOD;
+    while (e > 0n) { if (e % 2n === 1n) r = r * b % MOD; b = b * b % MOD; e /= 2n; }
+    return r;
+  }
+  function comb(n, r) {
+    if (r > n) return 0n;
+    let num = 1n, den = 1n;
+    for (let i = 0; i < r; i++) { num = num * BigInt(n - i) % MOD; den = den * BigInt(i + 1) % MOD; }
+    return num * modpow(den, MOD - 2n) % MOD;
+  }
+  return Number(prodAbove * comb(tied, need) % MOD * modpow(BigInt(minFreq), BigInt(need)) % MOD);
+}`,
+    typescript: `function countKSubsequencesWithMaxBeauty(s: string, k: number): number {
+  const MOD = 1_000_000_007n;
+  const freq = new Map<string, number>();
+  for (const c of s) freq.set(c, (freq.get(c) ?? 0) + 1);
+  const freqs = [...freq.values()].sort((a, b) => b - a);
+  if (freqs.length < k) return 0;
+  const minFreq = freqs[k - 1]!;
+  let above = 0, prodAbove = 1n, tied = 0;
+  for (const f of freqs) {
+    if (f > minFreq) { above++; prodAbove = prodAbove * BigInt(f) % MOD; }
+    else if (f === minFreq) tied++;
+  }
+  const need = k - above;
+  function modpow(b: bigint, e: bigint): bigint {
+    let r = 1n; b %= MOD;
+    while (e > 0n) { if (e % 2n === 1n) r = r * b % MOD; b = b * b % MOD; e /= 2n; }
+    return r;
+  }
+  function comb(n: number, r: number): bigint {
+    if (r > n) return 0n;
+    let num = 1n, den = 1n;
+    for (let i = 0; i < r; i++) { num = num * BigInt(n - i) % MOD; den = den * BigInt(i + 1) % MOD; }
+    return num * modpow(den, MOD - 2n) % MOD;
+  }
+  return Number(prodAbove * comb(tied, need) % MOD * modpow(BigInt(minFreq), BigInt(need)) % MOD);
+}`,
+    python: `def countKSubsequencesWithMaxBeauty(s, k):
+    MOD = 10**9 + 7
+    from collections import Counter
+    from math import comb
+    freq = Counter(s)
+    freqs = sorted(freq.values(), reverse=True)
+    if len(freqs) < k:
+        return 0
+    min_freq = freqs[k - 1]
+    above, prod_above, tied = 0, 1, 0
+    for f in freqs:
+        if f > min_freq:
+            above += 1
+            prod_above = prod_above * f % MOD
+        elif f == min_freq:
+            tied += 1
+    need = k - above
+    return prod_above * comb(tied, need) % MOD * pow(min_freq, need, MOD) % MOD`,
   },
   visibleTests: [
     { args: ['bcca', 2], expected: 4 },

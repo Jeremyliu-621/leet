@@ -37,10 +37,77 @@ Return the **number** of nodes that have the **highest score**.`,
   functionName: 'countHighestScoreNodes',
   params: ['parents'],
   starterCode: {
-    javascript: 'function countHighestScoreNodes(parents) {\n\n}\n',
-    typescript: "function countHighestScoreNodes(parents: number[]): number {\n\n}",
-
-    python: 'def countHighestScoreNodes(parents: list) -> int:\n    pass\n',
+    javascript: `function countHighestScoreNodes(parents) {
+  const n = parents.length;
+  const children = Array.from({length: n}, () => []);
+  for (let i = 1; i < n; i++) children[parents[i]].push(i);
+  const size = new Array(n).fill(1);
+  function dfs(v) {
+    for (const c of children[v]) { dfs(c); size[v] += size[c]; }
+  }
+  dfs(0);
+  let maxScore = 0n, count = 0;
+  for (let v = 0; v < n; v++) {
+    const left = children[v][0] !== undefined ? size[children[v][0]] : 0;
+    const right = children[v][1] !== undefined ? size[children[v][1]] : 0;
+    const rest = n - 1 - left - right;
+    let score = 1n;
+    if (left > 0) score *= BigInt(left);
+    if (right > 0) score *= BigInt(right);
+    if (rest > 0) score *= BigInt(rest);
+    if (score > maxScore) { maxScore = score; count = 1; }
+    else if (score === maxScore) count++;
+  }
+  return count;
+}`,
+    typescript: `function countHighestScoreNodes(parents: number[]): number {
+  const n = parents.length;
+  const children: number[][] = Array.from({length: n}, () => []);
+  for (let i = 1; i < n; i++) children[parents[i]!]!.push(i);
+  const size = new Array(n).fill(1);
+  function dfs(v: number): void {
+    for (const c of children[v]!) { dfs(c); size[v]! += size[c]!; }
+  }
+  dfs(0);
+  let maxScore = 0n, count = 0;
+  for (let v = 0; v < n; v++) {
+    const left = children[v]![0] !== undefined ? size[children[v]![0]!]! : 0;
+    const right = children[v]![1] !== undefined ? size[children[v]![1]!]! : 0;
+    const rest = n - 1 - left - right;
+    let score = 1n;
+    if (left > 0) score *= BigInt(left);
+    if (right > 0) score *= BigInt(right);
+    if (rest > 0) score *= BigInt(rest);
+    if (score > maxScore) { maxScore = score; count = 1; }
+    else if (score === maxScore) count++;
+  }
+  return count;
+}`,
+    python: `def countHighestScoreNodes(parents: list) -> int:
+    n = len(parents)
+    children = [[] for _ in range(n)]
+    for i in range(1, n):
+        children[parents[i]].append(i)
+    size = [1] * n
+    def dfs(v):
+        for c in children[v]:
+            dfs(c)
+            size[v] += size[c]
+    dfs(0)
+    max_score, count = 0, 0
+    for v in range(n):
+        left = size[children[v][0]] if len(children[v]) > 0 else 0
+        right = size[children[v][1]] if len(children[v]) > 1 else 0
+        rest = n - 1 - left - right
+        score = 1
+        if left > 0: score *= left
+        if right > 0: score *= right
+        if rest > 0: score *= rest
+        if score > max_score:
+            max_score, count = score, 1
+        elif score == max_score:
+            count += 1
+    return count`,
   },
   visibleTests: [
     { args: [[-1,2,0,2,0]], expected: 3 },

@@ -33,10 +33,43 @@ Return the number of **nice** sub-arrays.`,
   functionName: 'numberOfSubarrays',
   params: ['nums', 'k'],
   starterCode: {
-    javascript: 'function numberOfSubarrays(nums, k) {\n\n}\n',
-    typescript: "function numberOfSubarrays(nums: number[], k: number): number {\n\n}",
-
-    python: 'def numberOfSubarrays(nums, k):\n    pass\n',
+    javascript: `function numberOfSubarrays(nums, k) {
+  function atMost(k) {
+    let count = 0, left = 0, odds = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if (nums[right] % 2 === 1) odds++;
+      while (odds > k) { if (nums[left] % 2 === 1) odds--; left++; }
+      count += right - left + 1;
+    }
+    return count;
+  }
+  return atMost(k) - atMost(k - 1);
+}`,
+    typescript: `function numberOfSubarrays(nums: number[], k: number): number {
+  function atMost(k: number): number {
+    let count = 0, left = 0, odds = 0;
+    for (let right = 0; right < nums.length; right++) {
+      if (nums[right]! % 2 === 1) odds++;
+      while (odds > k) { if (nums[left]! % 2 === 1) odds--; left++; }
+      count += right - left + 1;
+    }
+    return count;
+  }
+  return atMost(k) - atMost(k - 1);
+}`,
+    python: `def numberOfSubarrays(nums, k):
+    def at_most(k):
+        count = left = odds = 0
+        for right, v in enumerate(nums):
+            if v % 2 == 1:
+                odds += 1
+            while odds > k:
+                if nums[left] % 2 == 1:
+                    odds -= 1
+                left += 1
+            count += right - left + 1
+        return count
+    return at_most(k) - at_most(k - 1)`,
   },
   visibleTests: [
     { args: [[1, 1, 2, 1, 1], 3], expected: 2 },

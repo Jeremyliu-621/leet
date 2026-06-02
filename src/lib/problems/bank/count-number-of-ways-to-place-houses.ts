@@ -39,10 +39,24 @@ Note that if a house is placed on the \`i\`th plot on one side of the street, a 
   functionName: 'countHousePlacements',
   params: ['n'],
   starterCode: {
-    javascript: 'function countHousePlacements(n) {\n  \n}\n',
-    typescript: "function countHousePlacements(n: number): number {\n  \n}",
-
-    python: 'def countHousePlacements(n):\n    pass\n',
+    javascript: `function countHousePlacements(n) {
+  const MOD = 1_000_000_007;
+  let a = 1, b = 2;
+  for (let i = 2; i <= n; i++) [a, b] = [b, (a + b) % MOD];
+  return b * b % MOD;
+}`,
+    typescript: `function countHousePlacements(n: number): number {
+  const MOD = 1_000_000_007;
+  let a = 1, b = 2;
+  for (let i = 2; i <= n; i++) [a, b] = [b, (a + b) % MOD];
+  return b * b % MOD;
+}`,
+    python: `def countHousePlacements(n):
+    MOD = 10**9 + 7
+    a, b = 1, 2
+    for _ in range(2, n + 1):
+        a, b = b, (a + b) % MOD
+    return b * b % MOD`,
   },
   visibleTests: [
     { args: [1], expected: 4 },

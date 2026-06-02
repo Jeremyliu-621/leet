@@ -31,9 +31,92 @@ Since the answer may be very large, return it **modulo 10^9 + 7**.`,
   functionName: 'countSteppingNumbers',
   params: ['lo', 'hi'],
   starterCode: {
-    javascript: 'function countSteppingNumbers(lo, hi) {\n  \n}\n',
-    typescript: 'function countSteppingNumbers(lo: number, hi: number): number {\n  \n}\n',
-    python: 'def countSteppingNumbers(lo, hi):\n    pass\n',
+    javascript: `function countSteppingNumbers(lo, hi) {
+  const MOD = 1_000_000_007;
+  function count(n) {
+    if (n < 0) return 0;
+    const digits = String(n).split('').map(Number);
+    const len = digits.length;
+    const memo = new Map();
+    function dp(pos, last, tight, started) {
+      if (pos === len) return 1;
+      const key = pos + ',' + last + ',' + tight + ',' + started;
+      if (!tight && memo.has(key)) return memo.get(key);
+      const limit = tight ? digits[pos] : 9;
+      let res = 0;
+      for (let d = 0; d <= limit; d++) {
+        const isTight = tight && d === limit;
+        if (!started) {
+          if (d === 0) res = (res + dp(pos + 1, -1, isTight, false)) % MOD;
+          else res = (res + dp(pos + 1, d, isTight, true)) % MOD;
+        } else if (Math.abs(d - last) === 1) {
+          res = (res + dp(pos + 1, d, isTight, true)) % MOD;
+        }
+      }
+      if (!tight) memo.set(key, res);
+      return res;
+    }
+    return dp(0, -1, true, false);
+  }
+  return (count(hi) - count(lo - 1) + MOD) % MOD;
+}`,
+    typescript: `function countSteppingNumbers(lo: number, hi: number): number {
+  const MOD = 1_000_000_007;
+  function count(n: number): number {
+    if (n < 0) return 0;
+    const digits = String(n).split('').map(Number);
+    const len = digits.length;
+    const memo = new Map<string, number>();
+    function dp(pos: number, last: number, tight: boolean, started: boolean): number {
+      if (pos === len) return 1;
+      const key = pos + ',' + last + ',' + tight + ',' + started;
+      if (!tight && memo.has(key)) return memo.get(key)!;
+      const limit = tight ? digits[pos]! : 9;
+      let res = 0;
+      for (let d = 0; d <= limit; d++) {
+        const isTight = tight && d === limit;
+        if (!started) {
+          if (d === 0) res = (res + dp(pos + 1, -1, isTight, false)) % MOD;
+          else res = (res + dp(pos + 1, d, isTight, true)) % MOD;
+        } else if (Math.abs(d - last) === 1) {
+          res = (res + dp(pos + 1, d, isTight, true)) % MOD;
+        }
+      }
+      if (!tight) memo.set(key, res);
+      return res;
+    }
+    return dp(0, -1, true, false);
+  }
+  return (count(hi) - count(lo - 1) + MOD) % MOD;
+}`,
+    python: `def countSteppingNumbers(lo, hi):
+    MOD = 10**9 + 7
+    from functools import lru_cache
+    def count(n):
+        if n < 0:
+            return 0
+        digits = [int(c) for c in str(n)]
+        length = len(digits)
+        @lru_cache(maxsize=None)
+        def dp(pos, last, tight, started):
+            if pos == length:
+                return 1
+            limit = digits[pos] if tight else 9
+            res = 0
+            for d in range(limit + 1):
+                is_tight = tight and d == limit
+                if not started:
+                    if d == 0:
+                        res = (res + dp(pos + 1, -1, is_tight, False)) % MOD
+                    else:
+                        res = (res + dp(pos + 1, d, is_tight, True)) % MOD
+                elif abs(d - last) == 1:
+                    res = (res + dp(pos + 1, d, is_tight, True)) % MOD
+            return res
+        result = dp(0, -1, True, False)
+        dp.cache_clear()
+        return result
+    return (count(hi) - count(lo - 1) + MOD) % MOD`,
   },
   visibleTests: [
     { args: [0, 21], expected: 13 },
