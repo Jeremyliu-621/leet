@@ -37,11 +37,14 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
+  /* Container steps mirror the dark theme's magnitude (~18 then ~13 levels of
+     lightness) so panels stand out from the page as clearly as in dark mode:
+     page #ffffff, panel #ededed, elevated #e0e0e0. */
   --ll-bg: #ffffff;
-  --ll-surface: #f7f7f7;
-  --ll-surface-2: #efefef;
-  --ll-border: #e3e3e3;
-  --ll-border-strong: #c8c8c8;
+  --ll-surface: #ededed;
+  --ll-surface-2: #e0e0e0;
+  --ll-border: #d4d4d4;
+  --ll-border-strong: #bcbcbc;
   --ll-text: #0a0a0a;
   --ll-muted: #555555;
   --ll-faint: #606060;

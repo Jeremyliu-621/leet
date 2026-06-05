@@ -131,7 +131,7 @@ const leetlockThemeDark = EditorView.theme(
 const leetlockThemeLight = EditorView.theme(
   {
     '&': {
-      backgroundColor: '#FFFFFF',
+      backgroundColor: '#ededed',
       color: '#0A0A0A',
       height: '100%',
       // fontSize controlled by fontSizeCompartment — do NOT set here.
@@ -162,8 +162,8 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: '#cfe0ff',
     },
     '.cm-gutters': {
-      backgroundColor: '#F7F7F7',
-      borderRight: '1px solid #E3E3E3',
+      backgroundColor: '#ededed',
+      borderRight: '1px solid #d4d4d4',
       color: '#888888',
       userSelect: 'none',
     },
@@ -172,11 +172,11 @@ const leetlockThemeLight = EditorView.theme(
       minWidth: '36px',
     },
     '.cm-activeLineGutter': {
-      backgroundColor: '#EFEFEF',
+      backgroundColor: '#e3e3e3',
       color: '#555555',
     },
     '.cm-activeLine': {
-      backgroundColor: '#F0F0F0',
+      backgroundColor: '#e3e3e3',
     },
     '.cm-searchMatch': {
       outline: '1px solid #888888',
@@ -184,7 +184,7 @@ const leetlockThemeLight = EditorView.theme(
     },
     '.cm-searchMatch.cm-searchMatch-selected': {
       outline: '1px solid #0A0A0A',
-      backgroundColor: '#D0D0D0',
+      backgroundColor: '#d4d4d4',
     },
     '.cm-matchingBracket': {
       backgroundColor: 'transparent',
@@ -197,12 +197,12 @@ const leetlockThemeLight = EditorView.theme(
       fontWeight: '700',
     },
     '.cm-tooltip': {
-      backgroundColor: '#F7F7F7',
-      border: '1px solid #E3E3E3',
+      backgroundColor: '#e0e0e0',
+      border: '1px solid #d4d4d4',
       color: '#0A0A0A',
     },
     '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
-      backgroundColor: '#E3E3E3',
+      backgroundColor: '#d4d4d4',
     },
     '.cm-completionDetail': {
       color: '#888888',
@@ -220,10 +220,10 @@ const leetlockThemeLight = EditorView.theme(
       height: '6px',
     },
     '.cm-scroller::-webkit-scrollbar-track': {
-      background: '#F7F7F7',
+      background: '#ededed',
     },
     '.cm-scroller::-webkit-scrollbar-thumb': {
-      background: '#C8C8C8',
+      background: '#bcbcbc',
       borderRadius: '3px',
     },
     '.cm-scroller::-webkit-scrollbar-thumb:hover': {
