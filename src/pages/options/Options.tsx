@@ -29,6 +29,7 @@ import type {
   SettingsLock,
   AccountabilityPartner,
   CooldownPendingChange,
+  AiSettings,
 } from '../../lib/types';
 import {
   getValue,
@@ -65,6 +66,7 @@ import { ResetSection } from './components/ResetSection';
 import { AboutSection } from './components/AboutSection';
 import { ImportExportSection } from './components/ImportExportSection';
 import { EditorSection } from './components/EditorSection';
+import { AiHintsSection } from './components/AiHintsSection';
 import { ProblemBrowserSection } from './components/ProblemBrowserSection';
 import { VerifyModal } from './components/VerifyModal';
 
@@ -81,6 +83,7 @@ interface PageData {
   lock: SettingsLock;
   partner: AccountabilityPartner;
   pending: CooldownPendingChange[];
+  aiSettings: AiSettings;
 }
 
 /**
@@ -144,17 +147,18 @@ export function Options() {
 
     async function load() {
       try {
-        const [prefs, blockRules, keywordRules, lock, partner, pending] = await Promise.all([
+        const [prefs, blockRules, keywordRules, lock, partner, pending, aiSettings] = await Promise.all([
           getValue('userPreferences'),
           getValue('blockedRules'),
           getValue('keywordRules'),
           getValue('settingsLock'),
           getValue('accountabilityPartner'),
           getValue('cooldownPendingChanges'),
+          getValue('aiSettings'),
         ]);
 
         if (!cancelled) {
-          setData({ prefs, blockRules, keywordRules, lock, partner, pending });
+          setData({ prefs, blockRules, keywordRules, lock, partner, pending, aiSettings });
           setStatus('ready');
         }
       } catch (err) {
@@ -277,6 +281,20 @@ export function Options() {
   const applyPrefsNow = useCallback(async (patch: Partial<UserPreferences>): Promise<void> => {
     const updated = await updateValue('userPreferences', (curr) => ({ ...curr, ...patch }));
     setData((prev) => (prev ? { ...prev, prefs: updated } : prev));
+  }, []);
+
+  // AI settings writer — local-only key; no strictness gating applies.
+  const handleAiSettingsChange = useCallback(async (patch: Partial<AiSettings>): Promise<void> => {
+    const updated = await updateValue('aiSettings', (curr) => {
+      const next = { ...curr, ...patch };
+      // Auto-enable the assistant the moment a key is first added; auto-disable
+      // when the key is cleared, so the toggle never lies about availability.
+      if (patch.geminiApiKey !== undefined) {
+        next.enabled = patch.geminiApiKey ? true : false;
+      }
+      return next;
+    });
+    setData((prev) => (prev ? { ...prev, aiSettings: updated } : prev));
   }, []);
 
   /**
@@ -745,6 +763,12 @@ export function Options() {
           <EditorSection
             prefs={d.prefs}
             onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+          />
+
+          {/* 6b. AI hints (Gemini) */}
+          <AiHintsSection
+            settings={d.aiSettings}
+            onChange={(patch) => void handleAiSettingsChange(patch).then(() => announce('AI settings saved.'))}
           />
 
           {/* 7. Failure action */}
