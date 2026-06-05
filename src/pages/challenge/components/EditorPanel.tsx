@@ -1902,7 +1902,7 @@ export function EditorPanel({
                   'rounded-sm border px-3 py-1.5 font-mono text-[11px] transition-colors',
                   'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40',
                   giveUpArmed
-                    ? 'border-border-strong text-text hover:border-accent'
+                    ? 'border-error bg-error-bg text-error hover:opacity-90'
                     : 'border-border text-faint hover:border-border-strong hover:text-muted',
                 ].join(' ')}
               >

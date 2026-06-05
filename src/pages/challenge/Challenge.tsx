@@ -261,7 +261,7 @@ function SolvedStandaloneScreen({
   return (
     <div className="flex h-full flex-col items-center justify-center gap-8 bg-bg px-8 text-center">
       <div className="space-y-3">
-        <div className="inline-flex items-center justify-center h-12 w-12 rounded-full border border-accent mb-2">
+        <div className="inline-flex items-center justify-center h-12 w-12 rounded-full border border-success bg-success-bg mb-2">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M5 13l4 4L19 7"
@@ -269,11 +269,11 @@ function SolvedStandaloneScreen({
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-accent"
+              className="text-success"
             />
           </svg>
         </div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">Accepted</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-success">Accepted</p>
         <h1 ref={headingRef} tabIndex={-1} className="text-lg font-semibold text-text outline-none">{problemTitle}</h1>
         <p className="text-xs text-muted capitalize">{difficulty}</p>
       </div>

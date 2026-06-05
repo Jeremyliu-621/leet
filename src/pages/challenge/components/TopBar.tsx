@@ -154,29 +154,33 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
           </div>
         )}
 
-        {/* Timer — always visible, prominent */}
+        {/* Timer — always visible, prominent. Color escalates with urgency:
+            calm (neutral) → amber (last 2 min) → red (last 30 s / expired). */}
         <div
           className={[
-            'flex items-center gap-1.5 rounded-sm border px-3 py-1 transition-colors duration-500',
-            isExpired
-              ? 'border-accent bg-accent/10'
-              : isCritical
-                ? 'border-border-strong bg-surface-2'
-                : isLow
-                  ? 'border-border-strong'
-                  : isWarning
-                    ? 'border-border bg-surface-2/50'
-                    : 'border-border',
+            'flex items-center gap-1.5 rounded-md border px-3 py-1 transition-colors duration-500',
+            isExpired || isCritical
+              ? 'border-error bg-error-bg'
+              : isLow
+                ? 'border-warning bg-warning-bg'
+                : 'border-border',
           ].join(' ')}
           aria-label={`Time remaining: ${formatCountdown(secondsLeft)}`}
           aria-live="off"
         >
-          <span className="font-mono text-[10px] text-faint uppercase tracking-wider">time</span>
+          <span
+            className={[
+              'font-mono text-[10px] uppercase tracking-wider transition-colors duration-500',
+              isExpired || isCritical ? 'text-error' : isLow ? 'text-warning' : 'text-faint',
+            ].join(' ')}
+          >
+            time
+          </span>
           <span
             className={[
               'font-mono text-sm font-bold tabular-nums transition-colors duration-500',
-              isExpired ? 'text-accent' : isLow ? 'text-text' : isWarning ? 'text-text' : 'text-muted',
-              isCritical ? 'motion-safe:animate-pulse' : '',
+              isExpired || isCritical ? 'text-error' : isLow || isWarning ? 'text-warning' : 'text-muted',
+              isCritical || isExpired ? 'motion-safe:animate-pulse' : '',
             ]
               .filter(Boolean)
               .join(' ')}
