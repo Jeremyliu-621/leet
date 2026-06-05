@@ -1241,7 +1241,7 @@ export function Challenge() {
        */}
       <main
         ref={splitContainerRef}
-        className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden gap-1.5 p-1.5 lg:gap-0 bg-bg"
+        className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden gap-1.5 px-1.5 pb-1.5 lg:gap-0 bg-bg"
         aria-label="Challenge workspace"
       >
         {/* Problem panel — a rounded "floating" card, scrollable independently.

@@ -60,7 +60,7 @@ export function TopBar({ secondsLeft, prefs, streak, settingsHref, attempts = 0,
 
   return (
     <header
-      className="relative flex h-12 shrink-0 items-center justify-between px-5"
+      className="relative flex h-11 shrink-0 items-center justify-between px-5"
       role="banner"
     >
       {/* Screen-reader-only threshold announcements */}
