@@ -1632,7 +1632,9 @@ export function EditorPanel({
   const showLanguageSelector = availableLanguages.length > 1;
 
   return (
-    <section className="flex h-full flex-col overflow-hidden" aria-label="Code editor">
+    <section className="flex h-full flex-col overflow-hidden gap-0" aria-label="Code editor">
+      {/* Editor card — header + code + footer (the "top" of the right column). */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-surface">
       {/* Language label / selector + fullscreen toggle */}
       <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface px-3 py-1.5">
         <div className="flex items-center gap-2.5">
@@ -1774,8 +1776,11 @@ export function EditorPanel({
       >
         <div ref={editorContainerRef} className="h-full w-full" />
       </div>
+      {/* end Editor card */}
+      </div>
 
-      {/* Terminal resize handle — hidden when terminal is collapsed */}
+      {/* Terminal resize handle — the draggable gap between the editor and
+          terminal cards; a hairline at rest, a brand line on hover/drag. */}
       {!terminalCollapsed && (
         <div
           role="separator"
@@ -1786,7 +1791,7 @@ export function EditorPanel({
           aria-valuemax={TERMINAL_MAX_PX}
           aria-valuetext={`Terminal panel: ${terminalHeight}px`}
           tabIndex={0}
-          className="group relative h-1 shrink-0 cursor-row-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          className="group relative flex h-2 shrink-0 cursor-row-resize items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           onPointerDown={handleTerminalResizePointerDown}
           onPointerMove={handleTerminalResizePointerMove}
           onPointerUp={handleTerminalResizePointerUp}
@@ -1800,9 +1805,12 @@ export function EditorPanel({
             }
           }}
         >
-          <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-border-strong opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+          <div className="h-px w-16 rounded-full bg-border transition-all duration-150 group-hover:h-0.5 group-hover:bg-brand group-active:h-0.5 group-active:bg-brand group-focus-visible:bg-brand" aria-hidden="true" />
         </div>
       )}
+
+      {/* Terminal card — test results + footer (the "bottom" of the right column). */}
+      <div className="flex min-h-0 shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-surface">
       <div className="shrink-0 overflow-hidden" role="region" aria-label="Terminal output">
         <TerminalPanel
           result={verdict}
@@ -1924,6 +1932,8 @@ export function EditorPanel({
             </div>
           </div>
         </div>
+      </div>
+      {/* end Terminal card */}
       </div>
     </section>
   );
