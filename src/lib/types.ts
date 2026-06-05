@@ -313,3 +313,19 @@ export type ThemePreference = 'dark' | 'light' | 'system';
 
 /** Modal-vs-default selector for the CodeMirror editor. */
 export type EditorKeymap = 'default' | 'vim' | 'emacs';
+
+// --- AI hint assistant ----------------------------------------------------
+
+/**
+ * Settings for the optional AI hint assistant (Gemini). The API key is the
+ * user's own, entered in Settings, and is stored in `chrome.storage.local`
+ * (device-only — never synced, never committed to the repo).
+ */
+export interface AiSettings {
+  /** The user's Gemini API key. `null` until they enter one in Settings. */
+  geminiApiKey: string | null;
+  /** Master switch for the hint assistant. */
+  enabled: boolean;
+  /** Gemini model id to call. */
+  model: string;
+}

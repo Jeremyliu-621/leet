@@ -1,5 +1,6 @@
 import type {
   AccountabilityPartner,
+  AiSettings,
   BlockRule,
   CooldownPendingChange,
   KeywordRule,
@@ -40,6 +41,11 @@ export interface StorageSchema {
    * quota pressure.
    */
   submissionHistory: Record<string, SubmissionRecord[]>;
+  /**
+   * AI hint assistant settings, including the user's Gemini API key. Stored in
+   * `local` (device-only) so the secret never syncs through a Google account.
+   */
+  aiSettings: AiSettings;
 }
 
 export type StorageKey = keyof StorageSchema;
@@ -64,4 +70,5 @@ export const STORAGE_AREAS: Readonly<Record<StorageKey, StorageAreaName>> = {
   streakHistory: 'local',
   draftCode: 'local',
   submissionHistory: 'local',
+  aiSettings: 'local',
 };

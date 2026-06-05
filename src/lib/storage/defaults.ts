@@ -43,4 +43,5 @@ export const STORAGE_DEFAULTS: StorageSchema = {
   streakHistory: [],
   draftCode: {},
   submissionHistory: {},
+  aiSettings: { geminiApiKey: null, enabled: false, model: 'gemini-2.0-flash' },
 };
