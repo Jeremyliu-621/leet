@@ -47,6 +47,7 @@ import {
 import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/search';
 import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
+import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import { normalizeIndentation } from '../../../lib/editor/indent';
 import type { JudgeResult } from '../../../lib/judge';
@@ -1124,6 +1125,18 @@ export function EditorPanel({
         drawSelection(),
         dropCursor(),
         scrollPastEnd(),
+        // Vertical indentation guide lines, like VS Code / LeetCode. Subtle at
+        // rest; the active indent level is a touch brighter.
+        indentationMarkers({
+          thickness: 1,
+          activeThickness: 1,
+          colors: {
+            light: '#d4d4d4',
+            dark: '#2f2f2f',
+            activeLight: '#a0a0a0',
+            activeDark: '#4a4a4a',
+          },
+        }),
         // AI hint decorations: line highlights + inline annotation bubbles.
         hintExtension,
         // Allow multi-cursor (Alt-click, Ctrl-D add-next via defaultKeymap).

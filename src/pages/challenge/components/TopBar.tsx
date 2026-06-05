@@ -120,8 +120,12 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
             aria-label={`${streak} day streak`}
             title={`${streak}-day streak`}
           >
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" className="text-warning" aria-hidden="true">
-              <path d="M8.6 1.3c.1 2.1 2.4 3.3 2.4 6a3 3 0 1 1-5.9-.8c.2.9.9 1.4 1.5 1.4.5 0 .9-.4.9-1 0-1.2-1-1.7-.3-3.5.4-1 1.4-1.7 1.4-2.1Z" />
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" className="text-warning" aria-hidden="true">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12.963 2.286a.75.75 0 0 0-1.071-.136 9.742 9.742 0 0 0-3.539 6.177A7.547 7.547 0 0 1 6.648 6.61a.75.75 0 0 0-1.152-.082A9 9 0 1 0 15.68 4.534a7.46 7.46 0 0 1-2.717-2.248ZM12 18a3.75 3.75 0 0 0 .495-7.468 5.99 5.99 0 0 0-1.925 3.547 5.975 5.975 0 0 1-2.133-1.001A3.75 3.75 0 0 0 12 18Z"
+              />
             </svg>
             <span className="font-mono text-sm font-semibold text-text tabular-nums">{streak}</span>
           </div>
@@ -171,14 +175,25 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
           aria-label={`Time remaining: ${formatCountdown(secondsLeft)}`}
           aria-live="off"
         >
-          <span
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
             className={[
-              'font-mono text-[10px] uppercase tracking-wider transition-colors duration-500',
+              'transition-colors duration-500',
               isExpired || isCritical ? 'text-error' : isLow ? 'text-warning' : 'text-faint',
             ].join(' ')}
           >
-            time
-          </span>
+            <line x1="10" x2="14" y1="2" y2="2" />
+            <line x1="12" x2="15" y1="14" y2="11" />
+            <circle cx="12" cy="14" r="8" />
+          </svg>
           <span
             className={[
               'font-mono text-sm font-bold tabular-nums transition-colors duration-500',
