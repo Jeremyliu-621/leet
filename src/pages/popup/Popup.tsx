@@ -431,7 +431,7 @@ export function Popup() {
                 type="button"
                 onClick={() => void addDomainRule(domain)}
                 aria-label={`Block ${domain}`}
-                className="rounded-sm border border-border bg-bg px-2.5 py-1 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                className="rounded-md border border-border bg-bg px-2.5 py-1 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
               >
                 + {domain}
               </button>
@@ -463,7 +463,7 @@ export function Popup() {
                     }
                   }}
                   aria-label={`Visit ${token.domain} (${minsLeft} minutes left)`}
-                  className="relative flex w-full flex-col overflow-hidden border border-border bg-surface px-3 pb-1 pt-2 text-xs transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+                  className="relative flex w-full flex-col overflow-hidden rounded-md border border-border bg-surface px-3 pb-1 pt-2 text-xs transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
                 >
                   <div className="flex items-center justify-between">
                     <span className="truncate font-mono text-text">{token.domain}</span>
@@ -498,8 +498,8 @@ export function Popup() {
           onChange={(v) => void handleThemeChange(v)}
           buttonClass={(s) =>
             s
-              ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'flex-1 border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              ? 'flex-1 rounded-md border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'flex-1 rounded-md border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
           }
         />
       </section>
@@ -517,8 +517,8 @@ export function Popup() {
           onChange={(v) => void handleFontSizeChange(v)}
           buttonClass={(s) =>
             s
-              ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              ? 'flex-1 rounded-md border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'flex-1 rounded-md border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
           }
         />
       </section>
@@ -531,7 +531,7 @@ export function Popup() {
           value={data.preferredLanguage}
           onChange={(e) => void handleLanguageChange(e.target.value as SupportedLanguage)}
           aria-label="Default language"
-          className="w-full border border-border bg-surface px-3 py-1.5 font-mono text-[11px] text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          className="w-full rounded-md border border-border bg-surface px-3 py-1.5 font-mono text-[11px] text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
         >
           {LANGUAGE_OPTIONS.map((o) => (
             <option key={o.value} value={o.value}>{o.label}</option>
@@ -552,8 +552,8 @@ export function Popup() {
           onChange={(v) => void handleKeymapChange(v)}
           buttonClass={(s) =>
             s
-              ? 'flex-1 border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'flex-1 border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              ? 'flex-1 rounded-md border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
+              : 'flex-1 rounded-md border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
           }
         />
       </section>
