@@ -123,6 +123,20 @@ export function HintBot({
     }
   })();
 
+  // Open Settings in a NEW tab. The challenge page is a gate with a
+  // beforeunload guard, so navigating the current tab via an <a href> gets
+  // cancelled and the panel just disappears. chrome.tabs.create keeps the
+  // challenge open and deep-links to the AI section.
+  const openSettingsTab = useCallback(() => {
+    if (!settingsUrl) return;
+    setOpen(false);
+    try {
+      void chrome.tabs.create({ url: settingsUrl });
+    } catch {
+      window.open(settingsUrl, '_blank', 'noopener');
+    }
+  }, [settingsUrl]);
+
   const run = useCallback(
     async (mode: HintMode) => {
       if (!apiKey) return;
@@ -220,12 +234,13 @@ export function HintBot({
                 code, annotated right in the editor.
               </p>
               {settingsUrl && (
-                <a
-                  href={settingsUrl}
+                <button
+                  type="button"
+                  onClick={openSettingsTab}
                   className="inline-flex items-center gap-1.5 rounded-md bg-brand px-3 py-1.5 font-sans text-[11px] font-semibold text-white transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                 >
                   {apiKey && !enabled ? 'Enable in Settings' : 'Add your key in Settings'}
-                </a>
+                </button>
               )}
               <p className="text-[10px] leading-relaxed text-faint">
                 Your key is stored only on this device (never synced, never sent anywhere but
