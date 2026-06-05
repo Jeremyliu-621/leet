@@ -228,10 +228,10 @@ function TestDotMatrix({ verdicts, scrollContainerRef }: { verdicts: readonly Te
           className={[
             'w-2.5 h-2.5 rounded-sm flex-shrink-0 cursor-pointer transition-opacity hover:opacity-70 focus:outline-none focus:ring-1 focus:ring-accent focus:ring-offset-1',
             v.status === 'pass'
-              ? 'bg-accent'
+              ? 'bg-success'
               : v.status === 'error'
-              ? 'bg-muted'
-              : 'border border-text',
+              ? 'bg-warning'
+              : 'bg-error',
           ].join(' ')}
         />
       ))}
@@ -396,7 +396,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
     case 'pass':
       return (
         <div className="select-text">
-          <span className="text-accent font-semibold">PASS</span>
+          <span className="text-success font-semibold">PASS</span>
           <span className="text-faint ml-2">Test {entry.testIndex + 1}</span>
           {entry.input && <span className="text-muted ml-2">({entry.input})</span>}
           {entry.durationMs !== undefined && (
@@ -408,7 +408,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
       return (
         <div className="select-text space-y-0.5">
           <div>
-            <span className="text-text font-semibold">FAIL</span>
+            <span className="text-error font-semibold">FAIL</span>
             <span className="text-faint ml-2">Test {entry.testIndex + 1}</span>
             {entry.input && <span className="text-muted ml-2">({truncate(entry.input).text})</span>}
           </div>
@@ -431,7 +431,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
       return (
         <div className="select-text space-y-0.5">
           <div>
-            <span className="text-text font-semibold">ERROR</span>
+            <span className="text-warning font-semibold">ERROR</span>
             <span className="text-faint ml-2">Test {entry.testIndex + 1}</span>
           </div>
           <div className="pl-4 flex items-start gap-1">
@@ -443,7 +443,7 @@ function TerminalEntry({ entry }: { entry: TerminalEntry }) {
     case 'summary': {
       const isAccepted = entry.outcome === 'accepted';
       return (
-        <div className={`py-1 ${isAccepted ? 'text-accent font-bold' : 'text-text font-semibold'}`}>
+        <div className={`py-1 ${isAccepted ? 'text-success font-bold' : 'text-error font-semibold'}`}>
           {outcomeLabel(entry.outcome, entry.mode)}
           <span className="text-muted font-normal ml-3">
             {entry.passed}/{entry.total} passed
@@ -483,7 +483,7 @@ function RunHistoryBar({ history }: { history: TerminalEntry[][] }) {
           {i > 0 && <span className="text-border-strong" aria-hidden="true">→</span>}
           <span
             className={`font-mono text-[10px] tabular-nums ${
-              s.outcome === 'accepted' ? 'text-accent' : 'text-muted'
+              s.outcome === 'accepted' ? 'text-success' : 'text-error'
             }`}
             aria-label={`Run ${i + 1}: ${s.passed} of ${s.total} passed`}
           >
@@ -674,7 +674,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
               <span className="tabular-nums motion-safe:animate-pulse" aria-hidden="true">···</span>
             ) : result != null ? (
               <span
-                className={`tabular-nums ${result.outcome === 'accepted' ? 'text-accent' : ''}`}
+                className={`tabular-nums ${result.outcome === 'accepted' ? 'text-success' : 'text-error'}`}
                 aria-label={`${result.passed} of ${result.total} passed`}
               >
                 {result.passed}/{result.total}
@@ -790,7 +790,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
                   <div className="flex items-center gap-3 pb-2 border-b border-border">
                     <span
                       className={`font-mono text-xs font-semibold uppercase ${
-                        result.outcome === 'accepted' ? 'text-accent' : 'text-text'
+                        result.outcome === 'accepted' ? 'text-success' : 'text-error'
                       }`}
                     >
                       {outcomeLabel(result.outcome, mode)}
@@ -883,7 +883,7 @@ function TestResultCard({ verdict, autoExpand }: { verdict: TestVerdict; autoExp
       >
         <span
           className={`font-mono text-[10px] font-semibold uppercase ${
-            verdict.status === 'pass' ? 'text-accent' : 'text-text'
+            verdict.status === 'pass' ? 'text-success' : verdict.status === 'error' ? 'text-warning' : 'text-error'
           }`}
         >
           {verdict.status === 'pass' ? 'PASS' : verdict.status === 'fail' ? 'FAIL' : 'ERROR'}
