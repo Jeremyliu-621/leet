@@ -84,12 +84,10 @@ const hintField = StateField.define<HintState>({
   },
 });
 
-// A view-side decorations facet derived from the field. We use a separate
-// plugin-free approach: EditorView.decorations.compute over the field plus the
-// view, rebuilt whenever the field changes.
-const hintDecorations = EditorView.decorations.compute([hintField], (state) => {
-  // We cannot access the view here, but buildDecorations needs doc only — read
-  // it from state instead.
+// A decorations facet derived from the field. Recompute on doc changes too, so
+// line-anchored decorations are always built against the CURRENT document and
+// never point past the end after an edit.
+const hintDecorations = EditorView.decorations.compute([hintField, 'doc'], (state) => {
   const hs = state.field(hintField);
   const builder = new RangeSetBuilder<Decoration>();
   const doc = state.doc;
