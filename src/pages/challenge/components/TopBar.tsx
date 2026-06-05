@@ -35,6 +35,11 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
+/** Strips a leading protocol and "www." so the gate label reads cleanly. */
+function cleanDomain(domain: string): string {
+  return domain.replace(/^https?:\/\//, '').replace(/^www\./, '');
+}
+
 export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain, attempts = 0, onRun, onSubmit, isRunning = false, verdictMode = 'run', attemptsRemaining = null }: TopBarProps) {
   const isWarning = secondsLeft <= 120 && secondsLeft > 60;
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
@@ -106,13 +111,13 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
           {practiceMode
             ? 'practice mode'
             : targetDomain
-              ? `unlock ${targetDomain}`
+              ? `unlock ${cleanDomain(targetDomain)}`
               : 'solve to unlock'}
         </span>
       </div>
 
       {/* Right meta strip */}
-      <div className="flex items-center gap-4" role="group" aria-label="Challenge status">
+      <div className="flex items-center gap-2" role="group" aria-label="Challenge status">
         {/* Streak */}
         {streak > 0 && (
           <div

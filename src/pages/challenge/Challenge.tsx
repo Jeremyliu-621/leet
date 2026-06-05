@@ -560,9 +560,6 @@ export function Challenge() {
   // Initialised from prefs once `pageState` transitions to 'ready'.
   const [panelPct, setPanelPct] = useState(DEFAULT_PREFERENCES.problemPanelWidthPct);
 
-  // Fullscreen editor mode — hides the problem panel so the editor takes full width.
-  const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
-  const handleToggleFullscreen = useCallback(() => setIsEditorFullscreen((v) => !v), []);
 
   // Timestamp updated each time a draft save completes — triggers the "saved" flash in EditorPanel.
   const [draftSavedAt, setDraftSavedAt] = useState<number | null>(null);
@@ -1165,16 +1162,6 @@ export function Challenge() {
     })();
   }, []);
 
-  const handleWordWrapChange = useCallback((wrap: boolean) => {
-    void (async () => {
-      try {
-        await updateValue('userPreferences', (curr) => ({ ...curr, editorWordWrap: wrap }));
-      } catch {
-        /* storage unavailable */
-      }
-    })();
-  }, []);
-
   // -------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------
@@ -1263,7 +1250,7 @@ export function Challenge() {
             inline width drives the draggable split. */}
         <div
           id="problem-description"
-          className={`flex flex-col overflow-hidden rounded-xl border border-border bg-surface max-lg:max-h-[45vh] max-lg:!w-full${isEditorFullscreen ? ' hidden' : ''}`}
+          className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface max-lg:max-h-[45vh] max-lg:!w-full"
           style={{ width: `${panelPct}%` }}
         >
           {/* key={problem.id} remounts ProblemPanel on problem change, scrolling to top
@@ -1276,15 +1263,13 @@ export function Challenge() {
           />
         </div>
 
-        {/* Drag handle — only visible on desktop (lg+) and not in fullscreen */}
-        {!isEditorFullscreen && (
-          <DraggableSplitter
-            onDrag={handleSplitterDrag}
-            onDragEnd={handleSplitterDragEnd}
-            containerRef={splitContainerRef}
-            currentPct={panelPct}
-          />
-        )}
+        {/* Drag handle — only visible on desktop (lg+) */}
+        <DraggableSplitter
+          onDrag={handleSplitterDrag}
+          onDragEnd={handleSplitterDragEnd}
+          containerRef={splitContainerRef}
+          currentPct={panelPct}
+        />
 
         {/* Editor column — holds the editor card + terminal card (each rendered
             inside EditorPanel) plus the collapsible test/submission drawers. */}
@@ -1312,12 +1297,9 @@ export function Challenge() {
             verdictMode={verdictMode}
             showGiveUp={prefs.allowGiveUp}
             attemptsRemaining={attemptsRemaining}
-            isFullscreen={isEditorFullscreen}
-            onToggleFullscreen={handleToggleFullscreen}
             resolvedTheme={resolvedTheme}
             resetCode={resetCode}
             wordWrap={prefs.editorWordWrap}
-            onWordWrapChange={handleWordWrapChange}
             autocomplete={prefs.editorAutocomplete}
             draftSavedAt={draftSavedAt}
           />

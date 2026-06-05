@@ -103,10 +103,6 @@ interface EditorPanelProps {
   onNewProblem?: () => void;
   /** Number of attempts remaining. */
   attemptsRemaining: number | null;
-  /** Whether the editor is currently in fullscreen (problem panel hidden) mode. */
-  isFullscreen?: boolean;
-  /** Called when the user clicks the fullscreen toggle button. */
-  onToggleFullscreen?: () => void;
   /** Current resolved theme — controls the CodeMirror colour scheme. */
   resolvedTheme?: string;
   /**
@@ -115,10 +111,8 @@ interface EditorPanelProps {
    * re-fires even if the content string happens to be the same.
    */
   resetCode?: { content: string; version: number };
-  /** Initial word-wrap state; controlled externally for persistence. */
+  /** Word-wrap state, from the persisted preference. */
   wordWrap?: boolean;
-  /** Called when the user toggles word-wrap so the caller can persist it. */
-  onWordWrapChange?: (wrap: boolean) => void;
   /** Whether to show autocomplete suggestions while typing. Defaults to false. */
   autocomplete?: boolean;
   /** Timestamp (Date.now()) set each time a draft save completes; triggers a brief "saved" indicator. */
@@ -1038,12 +1032,9 @@ export function EditorPanel({
   showGiveUp,
   onNewProblem,
   attemptsRemaining,
-  isFullscreen = false,
-  onToggleFullscreen,
   resolvedTheme = 'dark',
   resetCode,
   wordWrap: wordWrapProp,
-  onWordWrapChange,
   autocomplete: autocompleteProp = false,
   draftSavedAt,
 }: EditorPanelProps) {
@@ -1414,15 +1405,6 @@ export function EditorPanel({
   }, [resolvedTheme]);
 
   const [showShortcuts, setShowShortcuts] = useState(false);
-  const [codeCopied, setCodeCopied] = useState(false);
-  const handleCopyCode = useCallback(() => {
-    const code = viewRef.current?.state.doc.toString() ?? '';
-    if (!code) return;
-    void navigator.clipboard.writeText(code).then(() => {
-      setCodeCopied(true);
-      setTimeout(() => setCodeCopied(false), 1500);
-    });
-  }, []);
 
   // --- AI hint bot bridge — lets HintBot read the live code and drive the
   // editor's inline hint decorations without owning the EditorView itself.
@@ -1599,36 +1581,14 @@ export function EditorPanel({
     };
   }, [editorKeymap]);
 
-  // Word-wrap toggle — seed from prop if provided, else default on.
-  const [wordWrap, setWordWrap] = useState(wordWrapProp ?? true);
-  const onWordWrapChangeRef = useRef(onWordWrapChange);
-  useEffect(() => { onWordWrapChangeRef.current = onWordWrapChange; }, [onWordWrapChange]);
-
-  // Sync compartment when the prop changes externally (e.g. first load from storage).
+  // Word wrap follows the persisted preference; there's no in-editor toggle.
   useEffect(() => {
-    if (wordWrapProp === undefined) return;
-    setWordWrap(wordWrapProp);
     const view = viewRef.current;
-    if (view) {
-      view.dispatch({
-        effects: wrapCompartmentRef.current.reconfigure(wordWrapProp ? EditorView.lineWrapping : []),
-      });
-    }
-  }, [wordWrapProp]);
-
-  const handleToggleWrap = useCallback(() => {
-    setWordWrap((prev) => {
-      const next = !prev;
-      const view = viewRef.current;
-      if (view) {
-        view.dispatch({
-          effects: wrapCompartmentRef.current.reconfigure(next ? EditorView.lineWrapping : []),
-        });
-      }
-      onWordWrapChangeRef.current?.(next);
-      return next;
+    if (!view || wordWrapProp === undefined) return;
+    view.dispatch({
+      effects: wrapCompartmentRef.current.reconfigure(wordWrapProp ? EditorView.lineWrapping : []),
     });
-  }, []);
+  }, [wordWrapProp]);
 
   // Reconfigure autocomplete when the setting changes.
   useEffect(() => {
@@ -1678,7 +1638,8 @@ export function EditorPanel({
           )}
         </div>
 
-        {/* Right controls: AI hints + copy code + wrap toggle + shortcuts + fullscreen */}
+        {/* Right controls: AI hints only — the rest is kept clean. Keyboard
+            shortcuts are still available via the global "?" key. */}
         <div className="flex items-center gap-1">
           {problem && (
             <HintBot
@@ -1689,53 +1650,6 @@ export function EditorPanel({
               onClearHints={handleClearHints}
               onRevealLine={handleRevealLine}
             />
-          )}
-          <button
-            type="button"
-            onClick={handleCopyCode}
-            aria-label="Copy code to clipboard"
-            title="Copy code"
-            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-          >
-            {codeCopied ? '✓' : 'copy'}
-          </button>
-          <button
-            type="button"
-            onClick={handleToggleWrap}
-            aria-label={wordWrap ? 'Disable word wrap' : 'Enable word wrap'}
-            aria-pressed={wordWrap}
-            title={wordWrap ? 'Word wrap: on' : 'Word wrap: off'}
-            className={[
-              'rounded-sm border px-1.5 py-0.5 font-mono text-[10px] transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
-              wordWrap
-                ? 'border-border-strong text-muted bg-surface-2'
-                : 'border-transparent text-faint hover:border-border hover:text-muted',
-            ].join(' ')}
-          >
-            wrap
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowShortcuts(true)}
-            aria-label="Show keyboard shortcuts"
-            title="Keyboard shortcuts"
-            className="rounded-sm border border-transparent px-1.5 py-0.5 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-          >
-            ?
-          </button>
-
-          {/* Fullscreen toggle — only rendered when the parent passes the callback */}
-          {onToggleFullscreen && (
-            <button
-              type="button"
-              onClick={onToggleFullscreen}
-              aria-label={isFullscreen ? 'Show problem panel' : 'Expand editor to full width'}
-              aria-pressed={isFullscreen}
-              title={isFullscreen ? 'Collapse (show problem)' : 'Expand editor'}
-              className="rounded-sm border border-transparent p-1 font-mono text-[10px] text-faint transition-colors hover:border-border hover:text-muted focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-            >
-              {isFullscreen ? '⊡' : '⊞'}
-            </button>
           )}
         </div>
       </div>
