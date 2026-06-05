@@ -35,12 +35,7 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-/** Strips a leading protocol and "www." so the gate label reads cleanly. */
-function cleanDomain(domain: string): string {
-  return domain.replace(/^https?:\/\//, '').replace(/^www\./, '');
-}
-
-export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain, attempts = 0, onRun, onSubmit, isRunning = false, verdictMode = 'run', attemptsRemaining = null }: TopBarProps) {
+export function TopBar({ secondsLeft, prefs, streak, settingsHref, attempts = 0, onRun, onSubmit, isRunning = false, verdictMode = 'run', attemptsRemaining = null }: TopBarProps) {
   const isWarning = secondsLeft <= 120 && secondsLeft > 60;
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
@@ -105,14 +100,6 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         )}
         <span className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase">
           LEETLOCK
-        </span>
-        <span className="hidden lg:inline-block h-4 w-px bg-border" aria-hidden="true" />
-        <span className="hidden lg:inline-block font-mono text-[10px] text-faint uppercase tracking-wider">
-          {practiceMode
-            ? 'practice mode'
-            : targetDomain
-              ? `unlock ${cleanDomain(targetDomain)}`
-              : 'solve to unlock'}
         </span>
       </div>
 
