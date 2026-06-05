@@ -22,12 +22,12 @@ const leetlockThemeDark = EditorView.theme(
       lineHeight: '1.65',
     },
     '.cm-content': {
-      padding: '12px 0',
+      padding: '12px 16px',
       caretColor: '#FFFFFF',
     },
     '.cm-line': {
-      paddingLeft: '16px',
-      paddingRight: '16px',
+      paddingLeft: '0',
+      paddingRight: '0',
     },
     // Cursor — a clearly visible 2px white caret that sits ABOVE the
     // bracket-match highlight (z-index) so it never gets swallowed by the
@@ -146,12 +146,12 @@ const leetlockThemeLight = EditorView.theme(
       lineHeight: '1.65',
     },
     '.cm-content': {
-      padding: '12px 0',
+      padding: '12px 16px',
       caretColor: '#0A0A0A',
     },
     '.cm-line': {
-      paddingLeft: '16px',
-      paddingRight: '16px',
+      paddingLeft: '0',
+      paddingRight: '0',
     },
     '.cm-cursor, .cm-dropCursor': {
       borderLeftColor: '#0A0A0A',
