@@ -139,7 +139,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Attempt counter — shown after the first submit */}
         {attempts > 0 && (
           <div
-            className="hidden xl:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            className="hidden xl:flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1"
             aria-label={`Attempt ${attempts}`}
           >
             <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
