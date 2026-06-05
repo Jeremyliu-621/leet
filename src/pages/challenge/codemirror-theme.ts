@@ -141,7 +141,7 @@ const leetlockThemeDark = EditorView.theme(
 const leetlockThemeLight = EditorView.theme(
   {
     '&': {
-      backgroundColor: '#f3f3f3',
+      backgroundColor: '#ffffff',
       color: '#0A0A0A',
       height: '100%',
       // fontSize controlled by fontSizeCompartment — do NOT set here.
@@ -176,8 +176,8 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: '#cfe0ff',
     },
     '.cm-gutters': {
-      backgroundColor: '#f3f3f3',
-      borderRight: '1px solid #d9d9d9',
+      backgroundColor: '#ffffff',
+      borderRight: '1px solid #e0e0e0',
       color: '#888888',
       userSelect: 'none',
     },
@@ -186,7 +186,7 @@ const leetlockThemeLight = EditorView.theme(
       minWidth: '36px',
     },
     '.cm-activeLineGutter': {
-      backgroundColor: '#ececec',
+      backgroundColor: '#f0f0f0',
       color: '#555555',
     },
     // Translucent so indentation guides (z-index:-1) remain visible on the
@@ -200,11 +200,11 @@ const leetlockThemeLight = EditorView.theme(
     },
     '.cm-searchMatch.cm-searchMatch-selected': {
       outline: '1px solid #0A0A0A',
-      backgroundColor: '#d9d9d9',
+      backgroundColor: '#e0e0e0',
     },
     '.cm-matchingBracket': {
       backgroundColor: 'rgba(0, 0, 0, 0.06) !important',
-      outline: '1px solid #c2c2c2',
+      outline: '1px solid #cccccc',
       borderRadius: '2px',
       color: '#0A0A0A',
     },
@@ -214,12 +214,12 @@ const leetlockThemeLight = EditorView.theme(
       fontWeight: '700',
     },
     '.cm-tooltip': {
-      backgroundColor: '#eaeaea',
-      border: '1px solid #d9d9d9',
+      backgroundColor: '#fafafa',
+      border: '1px solid #e0e0e0',
       color: '#0A0A0A',
     },
     '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
-      backgroundColor: '#d9d9d9',
+      backgroundColor: '#e0e0e0',
     },
     '.cm-completionDetail': {
       color: '#888888',
@@ -236,10 +236,10 @@ const leetlockThemeLight = EditorView.theme(
       height: '6px',
     },
     '.cm-scroller::-webkit-scrollbar-track': {
-      background: '#f3f3f3',
+      background: '#ffffff',
     },
     '.cm-scroller::-webkit-scrollbar-thumb': {
-      background: '#c2c2c2',
+      background: '#cccccc',
       borderRadius: '3px',
     },
     '.cm-scroller::-webkit-scrollbar-thumb:hover': {

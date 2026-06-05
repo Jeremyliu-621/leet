@@ -37,15 +37,15 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-  /* Container steps: a moderate ~12 then ~9 levels of lightness. Equal numeric
-     steps read stronger on light backgrounds than dark, so these sit between
-     the original near-flat panels and a full dark-mode-magnitude step:
-     page #ffffff, panel #f3f3f3, elevated #eaeaea. */
-  --ll-bg: #ffffff;
-  --ll-surface: #f3f3f3;
-  --ll-surface-2: #eaeaea;
-  --ll-border: #d9d9d9;
-  --ll-border-strong: #c2c2c2;
+  /* Inverted, LeetCode-exact light palette: a darker page with lighter (white)
+     panels rising out of it — the opposite of a white page with grey cards.
+     Sampled from LeetCode: page #f0f0f0, panel #ffffff, header strip #fafafa,
+     hairline #e0e0e0 (~their #dedede divider). */
+  --ll-bg: #f0f0f0;
+  --ll-surface: #ffffff;
+  --ll-surface-2: #fafafa;
+  --ll-border: #e0e0e0;
+  --ll-border-strong: #cccccc;
   --ll-text: #0a0a0a;
   --ll-muted: #555555;
   --ll-faint: #606060;
