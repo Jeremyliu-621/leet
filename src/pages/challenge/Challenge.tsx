@@ -106,8 +106,10 @@ function DraggableSplitter({ onDrag, onDragEnd, containerRef, currentPct }: Spli
       onPointerUp={handlePointerUp}
       onKeyDown={handleKeyDown}
     >
-      {/* Hairline divider — subtle at rest, a high-contrast brand line on hover/drag. */}
-      <div className="h-full w-px rounded-full bg-border transition-all duration-150 group-hover:w-0.5 group-hover:bg-brand group-active:w-0.5 group-active:bg-brand group-focus-visible:bg-brand" />
+      {/* Short centered dash — matches the horizontal terminal handle: barely
+          visible at rest, a brand line on hover/drag. The full-height container
+          keeps the col-resize hit area and cursor unchanged. */}
+      <div className="h-16 w-px rounded-full bg-border transition-all duration-150 group-hover:w-0.5 group-hover:bg-brand group-active:w-0.5 group-active:bg-brand group-focus-visible:bg-brand" />
     </div>
   );
 }
