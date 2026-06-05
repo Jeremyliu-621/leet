@@ -78,14 +78,13 @@ const leetlockThemeDark = EditorView.theme(
       outline: '1px solid #FFFFFF',
       backgroundColor: '#404040',
     },
-    // Bracket matching — subtle and boxless. The old version drew an outlined
-    // grey box around BOTH auto-paired brackets, which read as a stray "box"
-    // and hid the caret sitting between them. Now we just brighten + bold the
-    // matched bracket; no background, no outline.
+    // Bracket matching — a subtle box like LeetCode: visible but not jarring.
+    // Faint fill + thin rounded outline, normal glyph color (no bold white).
+    // The caret stays readable between [] (cursor layer is z-index 5, above).
     '.cm-matchingBracket': {
-      backgroundColor: 'transparent',
-      color: '#FFFFFF',
-      fontWeight: '700',
+      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+      outline: '1px solid #525252',
+      borderRadius: '2px',
     },
     '.cm-nonmatchingBracket': {
       backgroundColor: 'transparent',
@@ -200,9 +199,9 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: '#d9d9d9',
     },
     '.cm-matchingBracket': {
-      backgroundColor: 'transparent',
-      color: '#0A0A0A',
-      fontWeight: '700',
+      backgroundColor: 'rgba(0, 0, 0, 0.06)',
+      outline: '1px solid #c2c2c2',
+      borderRadius: '2px',
     },
     '.cm-nonmatchingBracket': {
       backgroundColor: 'transparent',
