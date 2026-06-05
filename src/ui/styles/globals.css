@@ -233,6 +233,35 @@ body {
   }
 }
 
+/* Modal entrance — a centered scale-in for dialogs, plus a backdrop fade.
+   Motion-safe: reduced-motion users get the final state instantly. */
+@keyframes ll-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ll-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ll-animate-fade {
+    animation: ll-fade-in 120ms ease-out;
+  }
+  .ll-animate-modal {
+    animation: ll-modal-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
 /* Hide scrollbar but keep scrollable (used in language selector) */
 .scrollbar-none {
   -ms-overflow-style: none;

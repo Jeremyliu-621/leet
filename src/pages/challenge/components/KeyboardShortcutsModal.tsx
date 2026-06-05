@@ -141,9 +141,19 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
     };
   }, []);
 
+  // Lock background scroll while the modal is open so the page behind it can't
+  // drift; restore the prior overflow on close.
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-bg/80 backdrop-blur-sm"
+      className="ll-animate-fade fixed inset-0 z-50 flex items-center justify-center bg-bg/80 p-4 backdrop-blur-sm"
       role="presentation"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -155,7 +165,7 @@ export function KeyboardShortcutsModal({ onClose }: Props) {
         aria-modal="true"
         aria-labelledby="shortcuts-title"
         tabIndex={-1}
-        className="relative max-h-[80vh] w-full max-w-md overflow-y-auto rounded-card border border-border bg-surface shadow-2xl outline-none"
+        className="ll-animate-modal relative max-h-[80vh] w-full max-w-md overflow-y-auto rounded-card border border-border bg-surface shadow-2xl outline-none"
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
