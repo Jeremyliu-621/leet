@@ -158,18 +158,18 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
             <div className="space-y-5">
               {examples.map((example, i) => (
                 <div key={i} aria-label={`Example ${i + 1}`}>
-                  <h3 className="mb-1.5 text-[13px] font-bold text-text">Example {i + 1}:</h3>
+                  <h3 className="mb-1.5 text-sm font-bold text-text">Example {i + 1}:</h3>
                   <div className="space-y-1.5 border-l-2 border-border pl-3.5">
-                    <p className="text-[13px] leading-relaxed">
+                    <p className="text-sm leading-relaxed">
                       <span className="font-semibold text-text">Input: </span>
-                      <code className="font-mono text-[13px] text-muted break-all">{example.input}</code>
+                      <code className="font-mono text-sm text-muted break-all">{example.input}</code>
                     </p>
-                    <p className="text-[13px] leading-relaxed">
+                    <p className="text-sm leading-relaxed">
                       <span className="font-semibold text-text">Output: </span>
-                      <code className="font-mono text-[13px] text-muted break-all">{example.output}</code>
+                      <code className="font-mono text-sm text-muted break-all">{example.output}</code>
                     </p>
                     {example.explanation && (
-                      <p className="text-[13px] leading-relaxed">
+                      <p className="text-sm leading-relaxed">
                         <span className="font-semibold text-text">Explanation: </span>
                         <span className="text-muted">
                           <InlineText text={example.explanation} />
