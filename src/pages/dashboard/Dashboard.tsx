@@ -207,6 +207,7 @@ function DashboardBody({ data, now }: { data: DashboardData; now: number }) {
                 label={DIFF_LABEL[d]}
                 count={stats.byDifficulty[d]}
                 total={BANK_SIZE_BY_DIFF[d]}
+                barClass={DIFF_BAR_CLASS[d]}
               />
             ))}
           </div>
@@ -236,6 +237,7 @@ function DashboardBody({ data, now }: { data: DashboardData; now: number }) {
                   count={count}
                   total={stats.total || 1}
                   showTotal={false}
+                  barClass="bg-brand"
                 />
               ))}
             </div>
@@ -323,7 +325,7 @@ function Shell({ children, streak }: { children: React.ReactNode; streak?: Strea
             <button
               type="button"
               onClick={openPractice}
-              className="border border-accent bg-accent px-3 py-1.5 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+              className="rounded-md border border-brand bg-brand px-3 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
             >
               Practice now
             </button>
@@ -390,11 +392,14 @@ function BarRow({
   count,
   total,
   showTotal = true,
+  barClass = 'bg-border-strong',
 }: {
   label: string;
   count: number;
   total: number;
   showTotal?: boolean;
+  /** Tailwind background class for the filled portion. */
+  barClass?: string;
 }) {
   const widthPct = total === 0 ? 0 : Math.max(count === 0 ? 0 : 3, Math.round((count / total) * 100));
   return (
@@ -404,7 +409,7 @@ function BarRow({
     >
       <span className="w-24 shrink-0 truncate font-mono text-[10px] text-muted">{label}</span>
       <div className="h-1.5 flex-1 rounded-full bg-bg">
-        <div className="h-1.5 rounded-full bg-border-strong transition-all" style={{ width: `${widthPct}%` }} />
+        <div className={`h-1.5 rounded-full transition-all ${barClass}`} style={{ width: `${widthPct}%` }} />
       </div>
       <span className="w-16 shrink-0 text-right font-mono text-[10px] text-faint tabular-nums">
         {showTotal ? `${count}/${total}` : count}
@@ -413,6 +418,13 @@ function BarRow({
   );
 }
 
+/** LeetCode-style difficulty colors. */
+const DIFF_BAR_CLASS: Record<Difficulty, string> = {
+  easy: 'bg-success',
+  medium: 'bg-warning',
+  hard: 'bg-error',
+};
+
 // ---------------------------------------------------------------------------
 // Contribution calendar
 // ---------------------------------------------------------------------------
@@ -420,10 +432,24 @@ function BarRow({
 function cellClass(c: CalendarCell): string {
   if (c.inFuture) return 'bg-transparent';
   if (c.solved === 0) return 'bg-bg';
-  if (c.solved === 1) return 'bg-border-strong';
-  if (c.solved <= 3) return 'bg-muted';
-  return 'bg-text';
+  return '';
 }
+
+/** Green intensity ramp for solved days (like GitHub/LeetCode contributions). */
+function cellStyle(c: CalendarCell): React.CSSProperties | undefined {
+  if (c.inFuture || c.solved === 0) return undefined;
+  const opacity = c.solved === 1 ? 0.4 : c.solved <= 3 ? 0.62 : c.solved <= 6 ? 0.82 : 1;
+  return { backgroundColor: 'var(--ll-success)', opacity };
+}
+
+/** Inline styles for the calendar legend swatches (matches the cell ramp). */
+const LEGEND_STEPS: ReadonlyArray<React.CSSProperties> = [
+  { backgroundColor: 'var(--ll-bg)' },
+  { backgroundColor: 'var(--ll-success)', opacity: 0.4 },
+  { backgroundColor: 'var(--ll-success)', opacity: 0.62 },
+  { backgroundColor: 'var(--ll-success)', opacity: 0.82 },
+  { backgroundColor: 'var(--ll-success)', opacity: 1 },
+];
 
 function ContributionGrid({ calendar }: { calendar: ContributionCalendar }) {
   return (
@@ -459,6 +485,7 @@ function ContributionGrid({ calendar }: { calendar: ContributionCalendar }) {
                       : `${cell.date}: ${cell.solved} solve${cell.solved !== 1 ? 's' : ''}`
                   }
                   className={`h-2.5 w-2.5 rounded-[2px] ${cellClass(cell)}`}
+                  style={cellStyle(cell)}
                 />
               ))}
             </div>
@@ -467,8 +494,8 @@ function ContributionGrid({ calendar }: { calendar: ContributionCalendar }) {
         {/* Legend */}
         <div className="mt-2 flex items-center justify-end gap-1 pr-1">
           <span className="font-mono text-[8px] text-faint">Less</span>
-          {['bg-bg', 'bg-border-strong', 'bg-muted', 'bg-text'].map((c) => (
-            <div key={c} className={`h-2.5 w-2.5 rounded-[2px] ${c}`} />
+          {LEGEND_STEPS.map((s, i) => (
+            <div key={i} className="h-2.5 w-2.5 rounded-[2px]" style={s} />
           ))}
           <span className="font-mono text-[8px] text-faint">More</span>
         </div>
@@ -602,7 +629,7 @@ function ProblemsTable({ problems }: { problems: readonly AttemptedProblem[] }) 
 
 function StatusBadge({ status }: { status: AttemptedProblem['status'] }) {
   return status === 'solved' ? (
-    <span className="border border-border-strong bg-text px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-bg">
+    <span className="rounded border border-success bg-success-bg px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-success">
       Solved
     </span>
   ) : (
