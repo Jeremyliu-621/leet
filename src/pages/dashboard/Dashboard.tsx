@@ -425,6 +425,12 @@ const DIFF_BAR_CLASS: Record<Difficulty, string> = {
   hard: 'bg-error',
 };
 
+const DIFF_TEXT_CLASS: Record<Difficulty, string> = {
+  easy: 'text-success',
+  medium: 'text-warning',
+  hard: 'text-error',
+};
+
 // ---------------------------------------------------------------------------
 // Contribution calendar
 // ---------------------------------------------------------------------------
@@ -598,7 +604,9 @@ function ProblemsTable({ problems }: { problems: readonly AttemptedProblem[] }) 
                     </button>
                   </td>
                   <td className="py-1.5 pr-2">
-                    <span className="font-mono text-[10px] text-muted">{DIFF_ABBR[p.difficulty]}</span>
+                    <span className={`font-mono text-[10px] font-semibold ${DIFF_TEXT_CLASS[p.difficulty]}`}>
+                      {DIFF_ABBR[p.difficulty]}
+                    </span>
                   </td>
                   <td className="py-1.5 pr-2 font-mono text-[10px] text-muted">
                     {p.language ? LANGUAGE_LABEL[p.language] : '—'}

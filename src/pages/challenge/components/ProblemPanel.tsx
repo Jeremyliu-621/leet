@@ -109,15 +109,15 @@ interface ProblemPanelProps {
   hintCostLabel?: string;
 }
 
-/** Maps difficulty to Tailwind classes for the pill label. */
+/** Maps difficulty to Tailwind classes for the pill label (LeetCode colors). */
 function difficultyClasses(difficulty: Difficulty): string {
   switch (difficulty) {
     case 'easy':
-      return 'text-faint border-faint';
+      return 'text-success border-success bg-success-bg';
     case 'medium':
-      return 'text-muted border-muted';
+      return 'text-warning border-warning bg-warning-bg';
     case 'hard':
-      return 'text-text border-border-strong';
+      return 'text-error border-error bg-error-bg';
   }
 }
 

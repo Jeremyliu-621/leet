@@ -587,6 +587,7 @@ function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSol
     .slice(0, 5);
 
   const DIFF_LABEL: Record<Difficulty, string> = { easy: 'Easy', medium: 'Med', hard: 'Hard' };
+  const DIFF_BAR: Record<Difficulty, string> = { easy: 'bg-success', medium: 'bg-warning', hard: 'bg-error' };
 
   return (
     <section className="mt-4 border-t border-border pt-4" aria-label="Solved problem breakdown">
@@ -611,7 +612,7 @@ function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSol
               <div className="flex flex-1 items-center gap-1.5">
                 <div className="h-1.5 flex-1 rounded-full bg-surface">
                   <div
-                    className="h-1.5 rounded-full bg-border-strong transition-all"
+                    className={`h-1.5 rounded-full transition-all ${DIFF_BAR[d]}`}
                     style={{ width: `${widthPct}%` }}
                   />
                 </div>
