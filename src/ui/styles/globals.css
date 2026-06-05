@@ -214,6 +214,25 @@ body {
   overflow-y: hidden;
 }
 
+/* Popover / menu entrance — a subtle pop-in. Motion-safe: users who prefer
+   reduced motion get the final state with no animation. */
+@keyframes ll-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ll-animate-pop {
+    animation: ll-pop-in 120ms ease-out;
+    transform-origin: top right;
+  }
+}
+
 /* Hide scrollbar but keep scrollable (used in language selector) */
 .scrollbar-none {
   -ms-overflow-style: none;

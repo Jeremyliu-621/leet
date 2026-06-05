@@ -91,7 +91,11 @@ export function HintBot({
       }
     }
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') {
+        setOpen(false);
+        // Return focus to the trigger so keyboard users aren't dropped to <body>.
+        triggerRef.current?.focus();
+      }
     }
     document.addEventListener('mousedown', onDown);
     document.addEventListener('keydown', onKey);
@@ -99,6 +103,14 @@ export function HintBot({
       document.removeEventListener('mousedown', onDown);
       document.removeEventListener('keydown', onKey);
     };
+  }, [open]);
+
+  // Move focus into the panel when it opens, so keyboard / screen-reader users
+  // land on the dialog rather than staying on the trigger behind it.
+  useEffect(() => {
+    if (!open) return;
+    const id = requestAnimationFrame(() => panelRef.current?.focus());
+    return () => cancelAnimationFrame(id);
   }, [open]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
@@ -174,7 +186,8 @@ export function HintBot({
           ref={panelRef}
           role="dialog"
           aria-label="AI hint assistant"
-          className="absolute right-0 top-full z-50 mt-2 w-[340px] max-w-[88vw] overflow-hidden rounded-xl border border-border bg-surface shadow-2xl"
+          tabIndex={-1}
+          className="ll-animate-pop absolute right-0 top-full z-50 mt-2 w-[340px] max-w-[88vw] overflow-hidden rounded-xl border border-border bg-surface shadow-2xl focus:outline-none"
         >
           {/* Header */}
           <div className="flex items-center justify-between border-b border-border px-3 py-2">
