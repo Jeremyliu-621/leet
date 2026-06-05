@@ -1829,32 +1829,9 @@ export function EditorPanel({
       {/* Action bar */}
       <div className="shrink-0 border-t border-border bg-surface">
         <div className="flex items-center justify-between px-4 py-2">
-          {/* Left: status info */}
+          {/* Left: status info — kept minimal (Ln/Col + saved). Shortcut hints
+              live in the ? modal; attempts surface on the Submit button itself. */}
           <div className="flex items-center gap-3 font-mono text-[10px] text-faint">
-            <span aria-hidden="true" className="hidden md:flex items-center gap-1.5">
-              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">
-                ⌘↵
-              </kbd>
-              <span>run</span>
-              <span className="text-border-strong mx-0.5">·</span>
-              <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">
-                ⌘⇧↵
-              </kbd>
-              <span>submit</span>
-            </span>
-            {attemptsRemaining !== null && attemptsRemaining < Infinity && (
-              <span
-                aria-label={`${attemptsRemaining} submissions remaining`}
-                className={[
-                  'rounded border px-1.5 py-0.5 text-[10px]',
-                  attemptsRemaining <= 1
-                    ? 'border-border-strong bg-surface-2 font-semibold text-text'
-                    : 'border-border text-faint',
-                ].join(' ')}
-              >
-                {attemptsRemaining} left
-              </span>
-            )}
             {/* Vim mode indicator — shows NORMAL/INSERT/VISUAL when vim keymap is active */}
             {vimMode !== null && (
               <span

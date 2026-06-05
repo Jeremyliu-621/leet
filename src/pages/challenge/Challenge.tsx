@@ -6,8 +6,7 @@ import type { JudgeResult } from '../../lib/judge';
 import type { ChallengeFailureReason, FailChallengeRequest } from '../../lib/messaging/runtime';
 import { getValue, updateValue } from '../../lib/storage';
 import { pickChallengeProblem, getProblemById, filterProblems } from '../../lib/problems';
-import { runTests, warmPython, runCustomArgs } from '../../lib/judge';
-import type { CustomTestStatus } from '../../lib/judge';
+import { runTests, warmPython } from '../../lib/judge';
 import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { applyTheme } from '../../lib/theme';
 import { localDateString } from '../../lib/streak';
@@ -18,7 +17,6 @@ import { parseTargetParam, extractDomain, parseProblemIdParam } from './challeng
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
-import { CustomTestPanel } from './components/CustomTestPanel';
 import { SubmissionsPanel } from './components/SubmissionsPanel';
 
 /** Maximum submissions persisted per problem to cap storage usage. */
@@ -534,7 +532,6 @@ export function Challenge() {
   const [streak, setStreak] = useState(0);
 
   // Custom test state.
-  const [customTestResult, setCustomTestResult] = useState<CustomTestStatus>({ status: 'idle' });
 
   // Per-session submission history (Submit clicks only). Persisted to storage
   // so history survives a page reload. Cleared on acceptance.
@@ -1140,22 +1137,6 @@ export function Challenge() {
   // Custom test handler
   // -------------------------------------------------------------------------
 
-  const handleCustomRun = useCallback(
-    async (args: unknown[]) => {
-      if (pageState.status !== 'ready') return;
-      setCustomTestResult({ status: 'running' });
-      const result = await runCustomArgs({
-        code,
-        functionName: pageState.problem.functionName,
-        args,
-        language,
-        timeoutMs: 4000,
-      });
-      setCustomTestResult(result);
-    },
-    [pageState, code, language],
-  );
-
   // -------------------------------------------------------------------------
   // Splitter drag handlers
   // -------------------------------------------------------------------------
@@ -1333,13 +1314,6 @@ export function Challenge() {
             onWordWrapChange={handleWordWrapChange}
             autocomplete={prefs.editorAutocomplete}
             draftSavedAt={draftSavedAt}
-          />
-          {/* Custom test drawer — collapses below the verdict/action bar */}
-          <CustomTestPanel
-            params={problem.params}
-            onRun={handleCustomRun}
-            result={customTestResult}
-            defaultArgs={problem.visibleTests[0]?.args}
           />
           {/* Submission history — appears after first submit, collapsible */}
           <SubmissionsPanel submissions={submissions} onRestore={handleRestoreCode} />

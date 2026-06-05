@@ -116,12 +116,13 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Streak */}
         {streak > 0 && (
           <div
-            className="hidden xl:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            className="hidden lg:flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1"
             aria-label={`${streak} day streak`}
+            title={`${streak}-day streak`}
           >
-            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
-              streak
-            </span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" className="text-warning" aria-hidden="true">
+              <path d="M8.6 1.3c.1 2.1 2.4 3.3 2.4 6a3 3 0 1 1-5.9-.8c.2.9.9 1.4 1.5 1.4.5 0 .9-.4.9-1 0-1.2-1-1.7-.3-3.5.4-1 1.4-1.7 1.4-2.1Z" />
+            </svg>
             <span className="font-mono text-sm font-semibold text-text tabular-nums">{streak}</span>
           </div>
         )}
@@ -142,12 +143,14 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Unlock reward */}
         {prefs && (
           <div
-            className="hidden xl:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            className="hidden lg:flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1"
             aria-label={`Unlock reward: ${prefs.unlockDurationMin} minutes`}
+            title="Unlock reward"
           >
-            <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
-              unlock
-            </span>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" className="text-muted" aria-hidden="true">
+              <rect x="3.5" y="7.3" width="9" height="6" rx="1.2" />
+              <path d="M5.6 7.3V5.1a2.4 2.4 0 0 1 4.7-.6" strokeLinecap="round" />
+            </svg>
             <span className="font-mono text-sm font-medium text-muted tabular-nums">
               {formatUnlockDuration(prefs.unlockDurationMin)}
             </span>
