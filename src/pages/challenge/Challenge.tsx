@@ -179,10 +179,71 @@ type PageState =
 // Empty / loading states
 // ---------------------------------------------------------------------------
 
+/** A single shimmering skeleton block. */
+function SkeletonBlock({ className = '' }: { className?: string }) {
+  return <div className={`rounded bg-surface-2 motion-safe:animate-pulse ${className}`} />;
+}
+
+/**
+ * Layout-matched loading skeleton. Mirrors the real challenge shell (top bar +
+ * two floating cards) so the page resolves without a jarring pop-in, and the
+ * load reads as "almost ready" rather than "nothing here yet".
+ */
 function LoadingScreen() {
   return (
-    <div className="flex h-full items-center justify-center bg-bg" role="status" aria-live="polite">
-      <span className="font-mono text-xs text-faint">Loading challenge…</span>
+    <div className="flex h-full flex-col overflow-hidden bg-bg" role="status" aria-live="polite">
+      <span className="sr-only">Loading challenge…</span>
+
+      {/* Top bar */}
+      <div className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-5" aria-hidden="true">
+        <SkeletonBlock className="h-4 w-28" />
+        <SkeletonBlock className="h-7 w-40 rounded-lg" />
+        <SkeletonBlock className="h-6 w-20" />
+      </div>
+
+      {/* Two floating cards */}
+      <div className="flex min-h-0 flex-1 flex-col gap-2 p-2 lg:flex-row" aria-hidden="true">
+        {/* Problem card */}
+        <div className="flex w-full flex-col gap-4 overflow-hidden rounded-xl border border-border bg-surface p-5 lg:w-[42%]">
+          <SkeletonBlock className="h-6 w-1/2" />
+          <div className="flex gap-2">
+            <SkeletonBlock className="h-5 w-16 rounded-full" />
+            <SkeletonBlock className="h-5 w-16 rounded-full" />
+          </div>
+          <div className="space-y-2.5 pt-2">
+            <SkeletonBlock className="h-3 w-full" />
+            <SkeletonBlock className="h-3 w-[92%]" />
+            <SkeletonBlock className="h-3 w-[85%]" />
+            <SkeletonBlock className="h-3 w-[60%]" />
+          </div>
+          <SkeletonBlock className="mt-2 h-28 w-full rounded-lg" />
+          <div className="space-y-2.5">
+            <SkeletonBlock className="h-3 w-[88%]" />
+            <SkeletonBlock className="h-3 w-[70%]" />
+          </div>
+        </div>
+
+        {/* Editor card */}
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-surface">
+          <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
+            <SkeletonBlock className="h-5 w-24 rounded-md" />
+            <SkeletonBlock className="h-5 w-12 rounded-md" />
+          </div>
+          <div className="flex-1 space-y-2.5 p-5">
+            {[88, 64, 72, 50, 80, 40, 68].map((w, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <SkeletonBlock className="h-3 w-4 shrink-0 opacity-60" />
+                <div className="flex-1" style={{ maxWidth: `${w}%` }}>
+                  <SkeletonBlock className="h-3 w-full" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="border-t border-border px-4 py-2.5">
+            <SkeletonBlock className="h-4 w-32" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
