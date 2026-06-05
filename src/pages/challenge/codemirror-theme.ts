@@ -104,10 +104,11 @@ const leetlockThemeDark = EditorView.theme(
     '.cm-foldGutter': {
       color: '#5A5A5A',
     },
-    // Focus ring — white outline on focused editor
+    // No focus box — the caret + the panel border indicate focus, like
+    // LeetCode / VS Code. The old 2px inset outline drew a hard rectangle
+    // (its top + left edges read as stray black/white lines on type).
     '&.cm-focused': {
-      outline: '2px solid #FFFFFF',
-      outlineOffset: '-2px',
+      outline: 'none',
     },
     // Scrollbar (webkit)
     '.cm-scroller::-webkit-scrollbar': {
@@ -212,8 +213,7 @@ const leetlockThemeLight = EditorView.theme(
       color: '#888888',
     },
     '&.cm-focused': {
-      outline: '2px solid #0A0A0A',
-      outlineOffset: '-2px',
+      outline: 'none',
     },
     '.cm-scroller::-webkit-scrollbar': {
       width: '6px',
