@@ -141,12 +141,16 @@ function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
  * without an explicit starter use `generateStarter`, which is already a stub.
  */
 function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
+  // First test case feeds the Python stub's `:type:`/`:rtype:` docstring.
+  const sample = problem.visibleTests[0]
+    ? { args: problem.visibleTests[0].args, expected: problem.visibleTests[0].expected }
+    : undefined;
   // Use a language-specific starter if one exists — stubbed so the body is empty.
   const starter = problem.starterCode[language];
-  if (starter) return stubifyStarter(starter, language, problem.functionName, problem.params);
+  if (starter) return stubifyStarter(starter, language, problem.functionName, problem.params, sample);
   // TypeScript falls back to JS (valid TS is a superset) — also stubbed.
   if (language === 'typescript') {
-    return stubifyStarter(problem.starterCode.javascript, 'typescript', problem.functionName, problem.params);
+    return stubifyStarter(problem.starterCode.javascript, 'typescript', problem.functionName, problem.params, sample);
   }
   // Other languages get an auto-generated skeleton from the problem metadata.
   return generateStarter(language, problem.functionName, problem.params);

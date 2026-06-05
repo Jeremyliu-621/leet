@@ -1,5 +1,22 @@
 import { describe, it, expect } from 'vitest';
-import { stubifyStarter } from '../src/lib/problems/stubify';
+import { stubifyStarter, inferPythonType } from '../src/lib/problems/stubify';
+
+describe('inferPythonType', () => {
+  it('maps scalars', () => {
+    expect(inferPythonType(3)).toBe('int');
+    expect(inferPythonType(3.5)).toBe('float');
+    expect(inferPythonType('a')).toBe('str');
+    expect(inferPythonType(true)).toBe('bool');
+    expect(inferPythonType(null)).toBe('Any');
+  });
+
+  it('maps lists by element type, including nesting', () => {
+    expect(inferPythonType([1, 2, 3])).toBe('List[int]');
+    expect(inferPythonType(['a'])).toBe('List[str]');
+    expect(inferPythonType([[1], [2]])).toBe('List[List[int]]');
+    expect(inferPythonType([])).toBe('List[Any]');
+  });
+});
 
 describe('stubifyStarter — python', () => {
   const sol = `def twoSum(nums, target):
@@ -10,31 +27,55 @@ describe('stubifyStarter — python', () => {
         seen[v] = i
     return []`;
 
-  it('keeps the signature and replaces the body with a placeholder + pass', () => {
-    const out = stubifyStarter(sol, 'python', 'twoSum', ['nums', 'target']);
-    expect(out).toBe('def twoSum(nums, target):\n    # Write your solution here\n    pass');
+  it('emits a LeetCode-style type docstring with no pass or comment', () => {
+    const out = stubifyStarter(sol, 'python', 'twoSum', ['nums', 'target'], {
+      args: [[2, 7, 11], 9],
+      expected: [0, 1],
+    });
+    expect(out).toBe(
+      [
+        'def twoSum(nums, target):',
+        '    """',
+        '    :type nums: List[int]',
+        '    :type target: int',
+        '    :rtype: List[int]',
+        '    """',
+      ].join('\n'),
+    );
+    expect(out).not.toContain('pass');
+    expect(out).not.toContain('Write your solution');
   });
 
   it('does not leak any of the solution body', () => {
-    const out = stubifyStarter(sol, 'python', 'twoSum', ['nums', 'target']);
+    const out = stubifyStarter(sol, 'python', 'twoSum', ['nums', 'target'], { args: [[1], 1], expected: [] });
     expect(out).not.toContain('enumerate');
     expect(out).not.toContain('seen');
   });
 
-  it('handles a return type annotation', () => {
-    const sol2 = `def f(a) -> int:\n    return a + 1`;
-    expect(stubifyStarter(sol2, 'python', 'f', ['a'])).toBe('def f(a) -> int:\n    # Write your solution here\n    pass');
+  it('defaults types to Any when no sample is provided', () => {
+    const out = stubifyStarter('def f(a):\n    return a', 'python', 'f', ['a']);
+    expect(out).toBe('def f(a):\n    """\n    :type a: Any\n    :rtype: Any\n    """');
   });
 
-  it('preserves indentation for an indented (class-method) def', () => {
+  it('preserves a class wrapper and its indentation', () => {
     const sol2 = `class Solution:\n    def f(self, a):\n        return a`;
-    const out = stubifyStarter(sol2, 'python', 'f', ['self', 'a']);
-    expect(out).toBe('class Solution:\n    def f(self, a):\n        # Write your solution here\n        pass');
+    const out = stubifyStarter(sol2, 'python', 'f', ['self', 'a'], { args: [null, 5], expected: 5 });
+    expect(out).toBe(
+      [
+        'class Solution:',
+        '    def f(self, a):',
+        '        """',
+        '        :type self: Any',
+        '        :type a: int',
+        '        :rtype: int',
+        '        """',
+      ].join('\n'),
+    );
   });
 
   it('falls back to a synthesized signature when no def matches', () => {
-    expect(stubifyStarter('garbage', 'python', 'foo', ['x', 'y'])).toBe(
-      'def foo(x, y):\n    # Write your solution here\n    pass',
+    expect(stubifyStarter('garbage', 'python', 'foo', ['x', 'y'], { args: [1, 'a'], expected: true })).toBe(
+      'def foo(x, y):\n    """\n    :type x: int\n    :type y: str\n    :rtype: bool\n    """',
     );
   });
 });
