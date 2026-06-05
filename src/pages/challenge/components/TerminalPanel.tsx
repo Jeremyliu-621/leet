@@ -853,8 +853,19 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
             <div role="status" aria-live="polite" className="text-faint motion-safe:animate-pulse font-mono text-xs">Running tests...</div>
           )}
           {result === null && (
-            <div className="text-faint font-mono text-xs">
-              No test results yet. Click Run or Submit.
+            <div className="flex flex-col items-center justify-center gap-2.5 py-10 text-center">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" className="text-border-strong" aria-hidden="true">
+                <path d="M9 3h6M10 3v5.5L5.5 17a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 8.5V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M8 14h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              <p className="font-sans text-sm text-muted">No test results yet</p>
+              <p className="flex items-center gap-1.5 font-mono text-[10px] text-faint">
+                Press
+                <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">⌘↵</kbd>
+                to run, or
+                <kbd className="rounded border border-border bg-surface-2 px-1 py-px text-[9px]">⌘⇧↵</kbd>
+                to submit
+              </p>
             </div>
           )}
           {result && result.verdicts.length > 0 && (
