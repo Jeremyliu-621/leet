@@ -50,15 +50,21 @@ import { emacs } from '@replit/codemirror-emacs';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
 import { normalizeIndentation } from '../../../lib/editor/indent';
 import type { JudgeResult } from '../../../lib/judge';
+import type { Problem } from '../../../lib/problems/types';
 import { LANGUAGE_LABEL, JS_SYNTAX_ONLY_LANGUAGES } from '../../../lib/types';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
+import type { AiHint } from '../../../lib/ai/types';
 import { TerminalPanel } from './TerminalPanel';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
 import { RunActions } from './RunActions';
+import { HintBot } from './HintBot';
+import { hintExtension, applyHints, clearHints, revealLine } from './hint-decorations';
 
 interface EditorPanelProps {
   /** Number of spaces inserted by the Tab key. */
   indentSize?: 2 | 4;
+  /** The active problem — gives the AI hint bot full context. */
+  problem?: Problem;
   /** Starter code for the active language. Replacing this resets the editor. */
   starterCode: string;
   /** Language currently active in the editor (controls syntax highlighting + the runner). */
@@ -1014,6 +1020,7 @@ const TERMINAL_RESIZE_STEP_PX = 20;
  */
 export function EditorPanel({
   indentSize = 2,
+  problem,
   starterCode,
   language,
   availableLanguages,
@@ -1117,6 +1124,8 @@ export function EditorPanel({
         drawSelection(),
         dropCursor(),
         scrollPastEnd(),
+        // AI hint decorations: line highlights + inline annotation bubbles.
+        hintExtension,
         // Allow multi-cursor (Alt-click, Ctrl-D add-next via defaultKeymap).
         // drawSelection above is what makes the additional carets visible.
         EditorState.allowMultipleSelections.of(true),
@@ -1402,6 +1411,22 @@ export function EditorPanel({
     });
   }, []);
 
+  // --- AI hint bot bridge — lets HintBot read the live code and drive the
+  // editor's inline hint decorations without owning the EditorView itself.
+  const getCurrentCode = useCallback(() => viewRef.current?.state.doc.toString() ?? '', []);
+  const handleApplyHints = useCallback((hints: AiHint[]) => {
+    if (viewRef.current) applyHints(viewRef.current, hints);
+  }, []);
+  const handleClearHints = useCallback(() => {
+    if (viewRef.current) clearHints(viewRef.current);
+  }, []);
+  const handleRevealLine = useCallback((line: number) => {
+    if (viewRef.current) {
+      revealLine(viewRef.current, line);
+      viewRef.current.focus();
+    }
+  }, []);
+
   // Language-switch confirmation: show an inline banner when the user has
   // modified the editor content and tries to switch languages.
   const [pendingLang, setPendingLang] = useState<SupportedLanguage | null>(null);
@@ -1609,28 +1634,47 @@ export function EditorPanel({
   return (
     <section className="flex h-full flex-col overflow-hidden" aria-label="Code editor">
       {/* Language label / selector + fullscreen toggle */}
-      <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-1.5">
-        {showLanguageSelector ? (
-          <select
-            value={language}
-            onChange={handleLangSelect}
-            aria-label="Select programming language"
-            className="rounded-sm border border-border bg-surface px-2 py-0.5 font-mono text-[11px] text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-          >
-            {availableLanguages.map((lang) => (
-              <option key={lang} value={lang}>
-                {LANGUAGE_LABEL[lang]}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
-            {LANGUAGE_LABEL[language]}
+      <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface px-3 py-1.5">
+        <div className="flex items-center gap-2.5">
+          {/* "</> Code" label — the LeetCode editor-panel header. */}
+          <span className="hidden items-center gap-1.5 font-sans text-[12px] font-semibold text-text sm:inline-flex">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="text-brand">
+              <path d="M5.5 4 2 8l3.5 4M10.5 4 14 8l-3.5 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Code
           </span>
-        )}
+          {showLanguageSelector ? (
+            <select
+              value={language}
+              onChange={handleLangSelect}
+              aria-label="Select programming language"
+              className="rounded-md border border-border bg-surface-2 px-2.5 py-1 font-sans text-[11px] font-medium text-text transition-colors hover:border-border-strong focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            >
+              {availableLanguages.map((lang) => (
+                <option key={lang} value={lang}>
+                  {LANGUAGE_LABEL[lang]}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
+              {LANGUAGE_LABEL[language]}
+            </span>
+          )}
+        </div>
 
-        {/* Right controls: copy code + wrap toggle + shortcuts button + fullscreen toggle */}
+        {/* Right controls: AI hints + copy code + wrap toggle + shortcuts + fullscreen */}
         <div className="flex items-center gap-1">
+          {problem && (
+            <HintBot
+              problem={problem}
+              language={language}
+              getCode={getCurrentCode}
+              onApplyHints={handleApplyHints}
+              onClearHints={handleClearHints}
+              onRevealLine={handleRevealLine}
+            />
+          )}
           <button
             type="button"
             onClick={handleCopyCode}

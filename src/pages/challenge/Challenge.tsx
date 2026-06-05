@@ -1230,6 +1230,7 @@ export function Challenge() {
         {/* Editor panel — a rounded "floating" card; no scroll on the outer shell */}
         <div id="code-editor" className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-surface">
           <EditorPanel
+            problem={problem}
             starterCode={starterCodeFor(problem, language)}
             language={language}
             availableLanguages={availableLanguagesFor(problem)}
