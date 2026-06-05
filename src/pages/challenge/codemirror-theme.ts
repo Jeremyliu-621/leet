@@ -82,10 +82,12 @@ const leetlockThemeDark = EditorView.theme(
     // Faint fill + thin rounded outline, normal glyph color (no bold white).
     // The caret stays readable between [] (cursor layer is z-index 5, above).
     '.cm-matchingBracket': {
-      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+      // CM's default applies a green/teal bg via a higher-specificity
+      // (.cm-focused .cm-matchingBracket) selector, so override needs
+      // !important. The glyph color and a subtle grey box replace it.
+      backgroundColor: 'rgba(255, 255, 255, 0.08) !important',
       outline: '1px solid #525252',
       borderRadius: '2px',
-      // Override CodeMirror's built-in green matched-bracket color.
       color: '#EDEDED',
     },
     '.cm-nonmatchingBracket': {
@@ -201,7 +203,7 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: '#d9d9d9',
     },
     '.cm-matchingBracket': {
-      backgroundColor: 'rgba(0, 0, 0, 0.06)',
+      backgroundColor: 'rgba(0, 0, 0, 0.06) !important',
       outline: '1px solid #c2c2c2',
       borderRadius: '2px',
       color: '#0A0A0A',
