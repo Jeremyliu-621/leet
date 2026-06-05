@@ -9,11 +9,14 @@
 :root,
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --ll-bg: #0a0a0a;
-  --ll-surface: #161616;
-  --ll-surface-2: #1e1e1e;
-  --ll-border: #262626;
-  --ll-border-strong: #383838;
+  /* Container levels sampled from LeetCode's dark theme so panels read as a
+     comfortable mid-gray instead of near-black: page #141414, panel body
+     #262626, elevated/header strip #333333. */
+  --ll-bg: #141414;
+  --ll-surface: #262626;
+  --ll-surface-2: #333333;
+  --ll-border: #404040;
+  --ll-border-strong: #525252;
   --ll-text: #ededed;
   --ll-muted: #8a8a8a;
   --ll-faint: #808080;

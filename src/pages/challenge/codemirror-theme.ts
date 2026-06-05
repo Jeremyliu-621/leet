@@ -10,7 +10,7 @@ import type { Extension } from '@codemirror/state';
 const leetlockThemeDark = EditorView.theme(
   {
     '&': {
-      backgroundColor: '#0A0A0A',
+      backgroundColor: '#262626',
       color: '#EDEDED',
       height: '100%',
       // fontSize controlled by fontSizeCompartment — do NOT set here.
@@ -46,9 +46,9 @@ const leetlockThemeDark = EditorView.theme(
     },
     // Gutter (line numbers)
     '.cm-gutters': {
-      backgroundColor: '#0A0A0A',
-      borderRight: '1px solid #262626',
-      color: '#5A5A5A',
+      backgroundColor: '#262626',
+      borderRight: '1px solid #404040',
+      color: '#6a6a6a',
       userSelect: 'none',
     },
     '.cm-gutter.cm-lineNumbers .cm-gutterElement': {
@@ -56,12 +56,12 @@ const leetlockThemeDark = EditorView.theme(
       minWidth: '36px',
     },
     '.cm-activeLineGutter': {
-      backgroundColor: '#161616',
-      color: '#8A8A8A',
+      backgroundColor: '#2e2e2e',
+      color: '#a0a0a0',
     },
     // Active line highlight
     '.cm-activeLine': {
-      backgroundColor: '#161616',
+      backgroundColor: '#2e2e2e',
     },
     // Search match
     '.cm-searchMatch': {
@@ -70,7 +70,7 @@ const leetlockThemeDark = EditorView.theme(
     },
     '.cm-searchMatch.cm-searchMatch-selected': {
       outline: '1px solid #FFFFFF',
-      backgroundColor: '#262626',
+      backgroundColor: '#404040',
     },
     // Bracket matching — subtle and boxless. The old version drew an outlined
     // grey box around BOTH auto-paired brackets, which read as a stray "box"
@@ -88,12 +88,12 @@ const leetlockThemeDark = EditorView.theme(
     },
     // Autocomplete
     '.cm-tooltip': {
-      backgroundColor: '#161616',
-      border: '1px solid #262626',
+      backgroundColor: '#333333',
+      border: '1px solid #404040',
       color: '#EDEDED',
     },
     '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
-      backgroundColor: '#262626',
+      backgroundColor: '#404040',
     },
     // Completion detail text — dim relative to label so the label pops
     '.cm-completionDetail': {
@@ -115,14 +115,14 @@ const leetlockThemeDark = EditorView.theme(
       height: '6px',
     },
     '.cm-scroller::-webkit-scrollbar-track': {
-      background: '#0A0A0A',
+      background: '#262626',
     },
     '.cm-scroller::-webkit-scrollbar-thumb': {
-      background: '#383838',
+      background: '#525252',
       borderRadius: '3px',
     },
     '.cm-scroller::-webkit-scrollbar-thumb:hover': {
-      background: '#5A5A5A',
+      background: '#6a6a6a',
     },
   },
   { dark: true },
