@@ -37,7 +37,7 @@ export function RunActions({
   const textSize = size === 'sm' ? 'text-[11px]' : 'text-[12px]';
 
   return (
-    <div className="inline-flex items-center overflow-hidden rounded-lg border border-border bg-surface-2 shadow-sm">
+    <div className="inline-flex items-center overflow-hidden rounded-lg border border-border bg-surface-2 shadow-sm transition-shadow hover:shadow-md">
       <button
         type="button"
         onClick={onRun}
@@ -45,13 +45,14 @@ export function RunActions({
         aria-keyshortcuts="Control+Enter Meta+Enter"
         aria-label="Run visible test cases"
         title="Run (⌘↵)"
-        className={`inline-flex items-center gap-1.5 ${pad} font-sans ${textSize} font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:bg-surface disabled:cursor-not-allowed disabled:opacity-50`}
+        className={`inline-flex items-center gap-1.5 ${pad} font-sans ${textSize} font-medium text-text transition-colors hover:bg-surface active:bg-bg focus:outline-none focus-visible:bg-surface disabled:cursor-not-allowed disabled:opacity-50`}
       >
         {isRunning && verdictMode === 'run' ? (
           <Spinner />
         ) : (
           <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M4.5 3.2a.6.6 0 0 1 .9-.52l7 4.3a.6.6 0 0 1 0 1.04l-7 4.3a.6.6 0 0 1-.9-.52V3.2Z" />
+            {/* Solid play triangle */}
+            <path d="M5 3.4a.7.7 0 0 1 1.06-.6l6.5 4.0a.7.7 0 0 1 0 1.2l-6.5 4.0A.7.7 0 0 1 5 11.6V3.4Z" />
           </svg>
         )}
         {isRunning && verdictMode === 'run' ? 'Running' : 'Run'}
@@ -64,20 +65,17 @@ export function RunActions({
         aria-keyshortcuts="Control+Shift+Enter Meta+Shift+Enter"
         aria-label="Submit solution against all test cases"
         title="Submit (⌘⇧↵)"
-        className={`inline-flex items-center gap-1.5 ${pad} font-sans ${textSize} font-semibold text-success transition-colors hover:bg-surface focus:outline-none focus-visible:bg-surface disabled:cursor-not-allowed disabled:opacity-50`}
+        className={`inline-flex items-center gap-1.5 ${pad} font-sans ${textSize} font-semibold text-success transition-colors hover:bg-surface active:bg-bg focus:outline-none focus-visible:bg-surface disabled:cursor-not-allowed disabled:opacity-50`}
       >
         {isRunning && verdictMode === 'submit' ? (
           <Spinner />
         ) : (
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path
-              d="M4.5 11.5a3 3 0 0 1-.4-5.97A3.5 3.5 0 0 1 11 5.2a2.6 2.6 0 0 1 .5 5.3"
-              stroke="currentColor"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path d="M8 7v4.5M8 7 6.3 8.7M8 7l1.7 1.7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            {/* Clean cloud */}
+            <path d="M5 13a3.2 3.2 0 0 1-.4-6.37A3.8 3.8 0 0 1 11.3 5.4 2.8 2.8 0 0 1 11.5 13H5Z" />
+            {/* Upload arrow into the cloud */}
+            <path d="M8 13.2V7.4" />
+            <path d="M6.1 9.1 8 7.1l1.9 2" />
           </svg>
         )}
         {isRunning && verdictMode === 'submit' ? 'Submitting' : 'Submit'}
