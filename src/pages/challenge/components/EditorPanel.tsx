@@ -1703,7 +1703,7 @@ export function EditorPanel({
           aria-valuemax={TERMINAL_MAX_PX}
           aria-valuetext={`Terminal panel: ${terminalHeight}px`}
           tabIndex={0}
-          className="group relative flex h-2 shrink-0 cursor-row-resize items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          className="group relative flex h-2 shrink-0 cursor-ns-resize items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           onPointerDown={handleTerminalResizePointerDown}
           onPointerMove={handleTerminalResizePointerMove}
           onPointerUp={handleTerminalResizePointerUp}

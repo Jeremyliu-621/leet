@@ -141,7 +141,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
           {/* Difficulty pill */}
           <span
             className={[
-              'inline-block rounded-sm border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest',
+              'inline-block rounded-md border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest',
               difficultyClasses(difficulty),
             ].join(' ')}
             aria-label={`Difficulty: ${difficulty}`}
@@ -159,7 +159,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
               <span
                 key={tag}
                 role="listitem"
-                className="inline-block rounded-sm border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
+                className="inline-block rounded-md border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
               >
                 {tag}
               </span>
