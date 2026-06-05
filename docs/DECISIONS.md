@@ -175,3 +175,35 @@ Two unrelated git histories existed in this repo: a detached HEAD (80 commits, 1
 ### 2026-06-02 — D_: Remove 92 near-duplicate problem files from bank
 
 The bank had accumulated 89 groups of near-duplicate problem IDs that differed only by English articles/prepositions (a, the, an, of, to, in, for, from). All duplicates had identical `functionName` values confirming they were the same problem. Kept the shorter ID variant in each group; removed the longer variants (92 files total). Bank went from ~3047 to 2953 unique problems. The deduplication test in `problem-bank.test.ts` will now prevent this from recurring.
+
+### 2026-06-05 — D17: Editor/UX revamp toward LeetCode parity; color allowed
+
+The human asked to drop strict pure-grayscale and bring the challenge editor to
+LeetCode-parity quality. Key decisions:
+
+- **Color is now allowed where it carries meaning** (syntax, verdicts, run/submit,
+  brand). Added semantic + brand tokens (`--ll-brand`, `--ll-success`, `--ll-error`,
+  `--ll-warning`, `--ll-info`) in `globals.css` + Tailwind. Base UI stays dark/grayscale.
+- **Tab on a selection now indents** (`indentMore`/`indentLess`) instead of replacing
+  the selection with a single tab — the most-reported editor bug.
+- **Matching brackets are boxless** (bold + brighten) and the caret is a 2px bar layered
+  above the bracket highlight, fixing the "green box swallows my cursor" complaint.
+- **Run/Submit moved to a centered top-bar pill cluster** (LeetCode-style); the editor's
+  bottom bar keeps a compact copy for mobile only.
+- **Panels are rounded floating cards** with a gutter, not edge-to-edge panes.
+
+### 2026-06-05 — D18: AI hint assistant uses the user's own Gemini key, device-only
+
+Added a Gemini-powered hint bot ("Nudge me" / "Review my code") that annotates the
+editor inline. Decisions:
+
+- **The user supplies their own API key**, entered in Settings. It is stored in
+  `chrome.storage.local` (new `aiSettings` key) — device-only, never synced through a
+  Google account, and **never committed to the repo** (hard constraint §"No secrets").
+- Requests go **directly from the browser to Google's Generative Language API**; LeetLock
+  has no server and never sees the key or code. Usage is on the user's own quota.
+- The engine is split into pure, tested pieces (`prompt.ts`, `parse.ts`) + a thin REST
+  client (`gemini.ts`). Structured output via `responseSchema` keeps hints line-anchored.
+- Default model `gemini-2.0-flash` (fast/cheap); 2.5 and 1.5 Flash selectable.
+- NeetCode research (MIT `leetcode` repo) confirmed: reuse only the category taxonomy with
+  attribution; author our own problems; ignore Judge0 (GPL + server-side).
