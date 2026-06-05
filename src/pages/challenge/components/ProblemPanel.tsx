@@ -1,36 +1,7 @@
-import { useState, useCallback } from 'react';
 import type { Problem } from '../../../lib/problems/types';
 import type { Difficulty } from '../../../lib/types';
 import { ProblemDescription } from './ProblemDescription';
 import { HintsSection } from './HintsSection';
-
-/** Serialises a Problem to plain text suitable for pasting into an AI tool. */
-function problemToText(problem: Problem): string {
-  const lines: string[] = [];
-  lines.push(`# ${problem.title}`);
-  lines.push(`Difficulty: ${problem.difficulty} · Tags: ${problem.tags.join(', ')}`);
-  lines.push('');
-  lines.push(problem.description);
-  if (problem.examples.length > 0) {
-    lines.push('');
-    lines.push('## Examples');
-    for (const [i, ex] of problem.examples.entries()) {
-      lines.push('');
-      lines.push(`**Example ${i + 1}:**`);
-      lines.push(`Input: ${ex.input}`);
-      lines.push(`Output: ${ex.output}`);
-      if (ex.explanation) lines.push(`Explanation: ${ex.explanation}`);
-    }
-  }
-  if (problem.constraints.length > 0) {
-    lines.push('');
-    lines.push('## Constraints');
-    for (const c of problem.constraints) {
-      lines.push(`- ${c}`);
-    }
-  }
-  return lines.join('\n');
-}
 
 /**
  * Renders a single line of text that may contain inline code spans (backticks).
@@ -55,28 +26,6 @@ function InlineText({ text }: { text: string }) {
         ),
       )}
     </>
-  );
-}
-
-/** Header button that copies the full problem as plain text — useful for pasting into AI tools. */
-function CopyProblemButton({ problem }: { problem: Problem }) {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = useCallback(() => {
-    void navigator.clipboard.writeText(problemToText(problem)).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  }, [problem]);
-  return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      aria-label="Copy problem statement to clipboard"
-      title="Copy problem as text (for AI tools)"
-      className="ml-auto shrink-0 rounded-sm border border-transparent px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint transition-colors hover:border-border hover:text-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
-    >
-      {copied ? '✓ copied' : 'copy'}
-    </button>
   );
 }
 
@@ -114,10 +63,9 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
       tabIndex={-1}
     >
       <div className="px-6 pb-8 pt-6">
-        {/* Title row */}
-        <div className="mb-3 flex flex-wrap items-center gap-3">
+        {/* Header — title + difficulty pill */}
+        <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-base font-semibold leading-snug text-text">{title}</h1>
-          {/* Difficulty pill */}
           <span
             className={[
               'inline-block rounded-md border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest',
@@ -127,13 +75,11 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
           >
             {difficulty}
           </span>
-          {/* Copy problem text — placed at end of title row */}
-          <CopyProblemButton problem={problem} />
         </div>
 
         {/* Tag pills */}
         {tags.length > 0 && (
-          <div className="mb-5 flex flex-wrap gap-1.5" role="list" aria-label="Problem tags">
+          <div className="mt-3 flex flex-wrap gap-1.5" role="list" aria-label="Problem tags">
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -145,6 +91,9 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
             ))}
           </div>
         )}
+
+        {/* Full-width divider separating the header from the statement */}
+        <div className="-mx-6 mt-4 mb-6 h-px bg-border" aria-hidden="true" />
 
         {/* Description */}
         <div className="mb-6">
