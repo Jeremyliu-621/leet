@@ -29,14 +29,20 @@ const leetlockThemeDark = EditorView.theme(
       paddingLeft: '16px',
       paddingRight: '16px',
     },
-    // Cursor
+    // Cursor — a clearly visible 2px white caret that sits ABOVE the
+    // bracket-match highlight (z-index) so it never gets swallowed by the
+    // auto-paired brackets the way the old thin caret did.
     '.cm-cursor, .cm-dropCursor': {
       borderLeftColor: '#FFFFFF',
-      borderLeftWidth: '1.5px',
+      borderLeftWidth: '2px',
+      marginLeft: '-1px',
+    },
+    '.cm-cursorLayer': {
+      zIndex: '5',
     },
     // Selection
     '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
-      backgroundColor: '#383838',
+      backgroundColor: '#2a3b5e',
     },
     // Gutter (line numbers)
     '.cm-gutters': {
@@ -66,10 +72,19 @@ const leetlockThemeDark = EditorView.theme(
       outline: '1px solid #FFFFFF',
       backgroundColor: '#262626',
     },
-    // Bracket matching
-    '.cm-matchingBracket, .cm-nonmatchingBracket': {
-      backgroundColor: '#262626',
-      outline: '1px solid #5A5A5A',
+    // Bracket matching — subtle and boxless. The old version drew an outlined
+    // grey box around BOTH auto-paired brackets, which read as a stray "box"
+    // and hid the caret sitting between them. Now we just brighten + bold the
+    // matched bracket; no background, no outline.
+    '.cm-matchingBracket': {
+      backgroundColor: 'transparent',
+      color: '#FFFFFF',
+      fontWeight: '700',
+    },
+    '.cm-nonmatchingBracket': {
+      backgroundColor: 'transparent',
+      color: '#ef4743',
+      fontWeight: '700',
     },
     // Autocomplete
     '.cm-tooltip': {
@@ -137,10 +152,14 @@ const leetlockThemeLight = EditorView.theme(
     },
     '.cm-cursor, .cm-dropCursor': {
       borderLeftColor: '#0A0A0A',
-      borderLeftWidth: '1.5px',
+      borderLeftWidth: '2px',
+      marginLeft: '-1px',
+    },
+    '.cm-cursorLayer': {
+      zIndex: '5',
     },
     '&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection': {
-      backgroundColor: '#D0D0D0',
+      backgroundColor: '#cfe0ff',
     },
     '.cm-gutters': {
       backgroundColor: '#F7F7F7',
@@ -167,9 +186,15 @@ const leetlockThemeLight = EditorView.theme(
       outline: '1px solid #0A0A0A',
       backgroundColor: '#D0D0D0',
     },
-    '.cm-matchingBracket, .cm-nonmatchingBracket': {
-      backgroundColor: '#E3E3E3',
-      outline: '1px solid #888888',
+    '.cm-matchingBracket': {
+      backgroundColor: 'transparent',
+      color: '#0A0A0A',
+      fontWeight: '700',
+    },
+    '.cm-nonmatchingBracket': {
+      backgroundColor: 'transparent',
+      color: '#d33a36',
+      fontWeight: '700',
     },
     '.cm-tooltip': {
       backgroundColor: '#F7F7F7',

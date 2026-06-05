@@ -19,6 +19,17 @@ export default {
         faint: 'var(--ll-faint)',
         accent: 'var(--ll-accent)',
         'on-accent': 'var(--ll-on-accent)',
+        // Semantic + brand colors (color is allowed where it carries meaning:
+        // syntax, verdicts, run/submit actions, and LeetLock's identity).
+        brand: 'var(--ll-brand)',
+        'brand-strong': 'var(--ll-brand-strong)',
+        success: 'var(--ll-success)',
+        'success-bg': 'var(--ll-success-bg)',
+        error: 'var(--ll-error)',
+        'error-bg': 'var(--ll-error-bg)',
+        warning: 'var(--ll-warning)',
+        'warning-bg': 'var(--ll-warning-bg)',
+        info: 'var(--ll-info)',
       },
       fontFamily: {
         sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],

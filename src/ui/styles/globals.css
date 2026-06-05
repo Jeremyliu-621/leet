@@ -19,6 +19,17 @@
   --ll-faint: #808080;
   --ll-accent: #ffffff;
   --ll-on-accent: #0a0a0a;
+  /* Semantic + brand colors. Color is allowed where it carries meaning:
+     syntax, verdicts, the run/submit actions, and LeetLock's identity. */
+  --ll-brand: #8b7cf6;
+  --ll-brand-strong: #7c6cf6;
+  --ll-success: #2cbb5d;
+  --ll-success-bg: rgba(44, 187, 93, 0.12);
+  --ll-error: #ef4743;
+  --ll-error-bg: rgba(239, 71, 67, 0.12);
+  --ll-warning: #ffa116;
+  --ll-warning-bg: rgba(255, 161, 22, 0.12);
+  --ll-info: #3b82f6;
 }
 
 :root[data-theme='light'] {
@@ -33,6 +44,15 @@
   --ll-faint: #606060;
   --ll-accent: #0a0a0a;
   --ll-on-accent: #ffffff;
+  --ll-brand: #6d5ae0;
+  --ll-brand-strong: #5b46d4;
+  --ll-success: #1aa34a;
+  --ll-success-bg: rgba(26, 163, 74, 0.10);
+  --ll-error: #d33a36;
+  --ll-error-bg: rgba(211, 58, 54, 0.10);
+  --ll-warning: #c77700;
+  --ll-warning-bg: rgba(199, 119, 0, 0.10);
+  --ll-info: #2563eb;
 }
 
 /* System themes — same base as dark/light but with a subtle blue accent

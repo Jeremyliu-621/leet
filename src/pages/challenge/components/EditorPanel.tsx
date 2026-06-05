@@ -25,6 +25,8 @@ import {
   history,
   historyKeymap,
   toggleComment,
+  indentMore,
+  indentLess,
 } from '@codemirror/commands';
 import {
   bracketMatching,
@@ -1220,33 +1222,30 @@ export function EditorPanel({
               return true;
             },
           },
-          // Tab inserts spaces at the cursor position (not structural
-          // re-indent). Must come before completionKeymap / defaultKeymap
-          // so it wins the Tab binding.
+          // Tab behaviour, native-editor style (matches VS Code / LeetCode):
+          //   - empty selection  → insert indent spaces at the caret
+          //   - any real selection → indent every spanned line (indentMore),
+          //     so highlighting a block and pressing Tab adds a level instead
+          //     of REPLACING the whole block with a single tab.
+          // Shift-Tab always dedents. Must come before completionKeymap /
+          // defaultKeymap so it wins the Tab binding.
           {
             key: 'Tab',
+            preventDefault: true,
             run(view) {
-              const spaces = ' '.repeat(indentSizeRef.current);
-              view.dispatch(view.state.replaceSelection(spaces));
-              return true;
-            },
-          },
-          {
-            key: 'Shift-Tab',
-            run(view) {
-              // Remove up to indentSize spaces before the cursor on the current line.
-              const { state } = view;
-              const head = state.selection.main.head;
-              const line = state.doc.lineAt(head);
-              const colInLine = head - line.from;
-              const textBefore = line.text.slice(0, colInLine);
-              const trailingSpaces = textBefore.length - textBefore.trimEnd().length;
-              const toRemove = Math.min(trailingSpaces, indentSizeRef.current);
-              if (toRemove > 0) {
-                view.dispatch({ changes: { from: head - toRemove, to: head } });
+              if (view.state.selection.main.empty) {
+                const spaces = ' '.repeat(indentSizeRef.current);
+                view.dispatch(
+                  view.state.update(view.state.replaceSelection(spaces), {
+                    scrollIntoView: true,
+                    userEvent: 'input',
+                  }),
+                );
+                return true;
               }
-              return true;
+              return indentMore(view);
             },
+            shift: indentLess,
           },
           // Autocomplete — accepts a completion with Enter while the
           // popup is open. Tab is handled above.
