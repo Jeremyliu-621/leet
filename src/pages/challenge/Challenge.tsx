@@ -13,6 +13,7 @@ import { applyTheme } from '../../lib/theme';
 import { localDateString } from '../../lib/streak';
 import type { ResolvedTheme } from '../../lib/theme';
 import { generateStarter } from '../../lib/problems/starter-gen';
+import { stubifyStarter } from '../../lib/problems/stubify';
 import { parseTargetParam, extractDomain, parseProblemIdParam } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
@@ -130,13 +131,23 @@ function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
   return [...ALL_LANGUAGES];
 }
 
-/** Returns the starter code for a given language, falling back to auto-generated. */
+/**
+ * Returns the starter code shown to the user for a given language.
+ *
+ * IMPORTANT: the bank's `starterCode` is a working *reference solution* (used
+ * by the bank-validation tests). We must never show it directly — it would
+ * hand the user the answer. Explicit starters are run through
+ * `stubifyStarter`, which keeps the signature and empties the body. Languages
+ * without an explicit starter use `generateStarter`, which is already a stub.
+ */
 function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
-  // Use a language-specific starter if one exists.
+  // Use a language-specific starter if one exists — stubbed so the body is empty.
   const starter = problem.starterCode[language];
-  if (starter) return starter;
-  // TypeScript falls back to JS (valid TS is a superset).
-  if (language === 'typescript') return problem.starterCode.javascript;
+  if (starter) return stubifyStarter(starter, language, problem.functionName, problem.params);
+  // TypeScript falls back to JS (valid TS is a superset) — also stubbed.
+  if (language === 'typescript') {
+    return stubifyStarter(problem.starterCode.javascript, 'typescript', problem.functionName, problem.params);
+  }
   // Other languages get an auto-generated skeleton from the problem metadata.
   return generateStarter(language, problem.functionName, problem.params);
 }
