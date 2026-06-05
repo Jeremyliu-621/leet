@@ -362,14 +362,14 @@ export function Popup() {
           type="button"
           onClick={() => void handleBlock()}
           disabled={!data.currentDomain || data.alreadyBlocked}
-          className="w-full border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           {blockLabel}
         </button>
         <button
           type="button"
           onClick={handlePracticeNow}
-          className="w-full border border-accent bg-accent px-3 py-2 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+          className="w-full rounded-md border border-brand bg-brand px-3 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
         >
           Practice now
         </button>
@@ -377,14 +377,14 @@ export function Popup() {
           <button
             type="button"
             onClick={handleOpenDashboard}
-            className="flex-1 border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+            className="flex-1 rounded-md border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           >
             Dashboard
           </button>
           <button
             type="button"
             onClick={handleOpenSettings}
-            className="flex-1 border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+            className="flex-1 rounded-md border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           >
             Settings
           </button>
@@ -393,7 +393,7 @@ export function Popup() {
 
       {/* Compact summary strip — three stats sharing one bordered card. */}
       <section
-        className="mt-4 flex divide-x divide-border border border-border bg-surface"
+        className="mt-4 flex divide-x divide-border overflow-hidden rounded-md border border-border bg-surface"
         aria-label="Summary"
       >
         <Stat label="Streak" value={data.streak.current} sub={`best ${data.streak.longest}`} />
