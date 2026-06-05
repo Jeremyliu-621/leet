@@ -109,7 +109,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
 
   return (
     <section
-      className="flex h-full flex-col overflow-y-auto"
+      className="scrollbar-thin flex h-full flex-col overflow-y-auto"
       aria-label="Problem statement"
       tabIndex={-1}
     >

@@ -811,7 +811,7 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
       {/* Terminal body — hidden when collapsed */}
       <div
         ref={scrollRef}
-        className="overflow-y-auto bg-bg font-mono text-xs leading-relaxed"
+        className="overflow-y-auto bg-surface font-mono text-xs leading-relaxed"
         style={collapsed ? { display: 'none' } : { height: bodyHeight ? `${bodyHeight}px` : undefined, minHeight: '80px', maxHeight: bodyHeight ? undefined : '280px' }}
         aria-hidden={collapsed}
       >

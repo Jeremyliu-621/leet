@@ -280,15 +280,15 @@ body {
   scrollbar-color: var(--ll-border-strong) transparent;
 }
 .scrollbar-thin::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
   background: var(--ll-border-strong);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: var(--ll-muted);
