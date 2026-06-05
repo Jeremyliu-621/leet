@@ -101,8 +101,8 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         <span className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase">
           LEETLOCK
         </span>
-        <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
-        <span className="hidden sm:inline-block font-mono text-[10px] text-faint uppercase tracking-wider">
+        <span className="hidden lg:inline-block h-4 w-px bg-border" aria-hidden="true" />
+        <span className="hidden lg:inline-block font-mono text-[10px] text-faint uppercase tracking-wider">
           {practiceMode
             ? 'practice mode'
             : targetDomain
@@ -116,7 +116,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Streak */}
         {streak > 0 && (
           <div
-            className="hidden sm:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            className="hidden xl:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
             aria-label={`${streak} day streak`}
           >
             <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
@@ -129,7 +129,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Attempt counter — shown after the first submit */}
         {attempts > 0 && (
           <div
-            className="hidden sm:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            className="hidden xl:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
             aria-label={`Attempt ${attempts}`}
           >
             <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
@@ -142,7 +142,7 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
         {/* Unlock reward */}
         {prefs && (
           <div
-            className="hidden sm:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
+            className="hidden xl:flex items-center gap-1.5 rounded-sm border border-border px-2.5 py-1"
             aria-label={`Unlock reward: ${prefs.unlockDurationMin} minutes`}
           >
             <span className="font-mono text-[10px] text-faint uppercase tracking-wider">
