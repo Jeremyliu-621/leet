@@ -26,7 +26,7 @@ const leetlockThemeDark = EditorView.theme(
       caretColor: '#FFFFFF',
     },
     '.cm-line': {
-      paddingLeft: '0',
+      paddingLeft: '2px',
       paddingRight: '0',
     },
     // Cursor — a clearly visible 2px white caret that sits ABOVE the
@@ -150,7 +150,7 @@ const leetlockThemeLight = EditorView.theme(
       caretColor: '#0A0A0A',
     },
     '.cm-line': {
-      paddingLeft: '0',
+      paddingLeft: '2px',
       paddingRight: '0',
     },
     '.cm-cursor, .cm-dropCursor': {
