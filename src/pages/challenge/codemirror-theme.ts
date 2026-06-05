@@ -59,9 +59,11 @@ const leetlockThemeDark = EditorView.theme(
       backgroundColor: '#2e2e2e',
       color: '#a0a0a0',
     },
-    // Active line highlight
+    // Active line highlight — translucent so the indentation guides (drawn at
+    // z-index:-1, behind the line) stay visible through the current line
+    // instead of being painted over.
     '.cm-activeLine': {
-      backgroundColor: '#2e2e2e',
+      backgroundColor: 'rgba(255, 255, 255, 0.05)',
     },
     // Search match
     '.cm-searchMatch': {
@@ -176,8 +178,10 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: '#ececec',
       color: '#555555',
     },
+    // Translucent so indentation guides (z-index:-1) remain visible on the
+    // current line instead of being covered by an opaque highlight.
     '.cm-activeLine': {
-      backgroundColor: '#ececec',
+      backgroundColor: 'rgba(0, 0, 0, 0.045)',
     },
     '.cm-searchMatch': {
       outline: '1px solid #888888',

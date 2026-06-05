@@ -1120,6 +1120,9 @@ export function EditorPanel({
         indentationMarkers({
           thickness: 1,
           activeThickness: 1,
+          // Draw guides continuously through blank lines inside a block, like
+          // VS Code, instead of breaking on every empty line.
+          markerType: 'fullScope',
           colors: {
             light: '#d9d9d9',
             dark: '#383838',
