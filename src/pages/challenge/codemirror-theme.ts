@@ -85,6 +85,8 @@ const leetlockThemeDark = EditorView.theme(
       backgroundColor: 'rgba(255, 255, 255, 0.08)',
       outline: '1px solid #525252',
       borderRadius: '2px',
+      // Override CodeMirror's built-in green matched-bracket color.
+      color: '#EDEDED',
     },
     '.cm-nonmatchingBracket': {
       backgroundColor: 'transparent',
@@ -202,6 +204,7 @@ const leetlockThemeLight = EditorView.theme(
       backgroundColor: 'rgba(0, 0, 0, 0.06)',
       outline: '1px solid #c2c2c2',
       borderRadius: '2px',
+      color: '#0A0A0A',
     },
     '.cm-nonmatchingBracket': {
       backgroundColor: 'transparent',
