@@ -1811,6 +1811,7 @@ export function EditorPanel({
           onToggleCollapsed={toggleTerminal}
           bodyHeight={terminalCollapsed ? undefined : terminalHeight}
           clearRef={clearTerminalRef}
+          params={problem?.params}
         />
       </div>
 

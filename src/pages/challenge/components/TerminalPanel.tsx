@@ -9,6 +9,66 @@ function truncate(s: string): { text: string; truncated: boolean } {
   return { text: s.slice(0, TRUNCATE_AT) + '…', truncated: true };
 }
 
+/**
+ * Splits a formatted args string (JSON values joined by ", ") into the
+ * individual top-level value strings, respecting brackets/braces/parens and
+ * quoted strings so a value containing commas (an array, object, or string)
+ * is not split apart. Exported for unit testing.
+ */
+export function splitTopLevelArgs(input: string): string[] {
+  if (input.trim() === '') return [];
+  const out: string[] = [];
+  let depth = 0;
+  let inStr = false;
+  let strCh = '';
+  let cur = '';
+  for (let i = 0; i < input.length; i++) {
+    const c = input[i]!;
+    if (inStr) {
+      cur += c;
+      if (c === '\\' && i + 1 < input.length) {
+        cur += input[i + 1];
+        i++;
+      } else if (c === strCh) {
+        inStr = false;
+      }
+      continue;
+    }
+    if (c === '"' || c === "'") {
+      inStr = true;
+      strCh = c;
+      cur += c;
+    } else if (c === '[' || c === '{' || c === '(') {
+      depth++;
+      cur += c;
+    } else if (c === ']' || c === '}' || c === ')') {
+      depth--;
+      cur += c;
+    } else if (c === ',' && depth === 0) {
+      out.push(cur.trim());
+      cur = '';
+    } else {
+      cur += c;
+    }
+  }
+  out.push(cur.trim());
+  return out;
+}
+
+/**
+ * Pairs a formatted args string with the function's parameter names, producing
+ * the LeetCode-style "Last Executed Input" rows. Exported for unit testing.
+ */
+export function parseLastExecutedInput(
+  input: string,
+  params: readonly string[],
+): { name: string; value: string }[] {
+  return splitTopLevelArgs(input).map((value, i) => ({
+    name: params[i] ?? `arg${i + 1}`,
+    value,
+  }));
+}
+
 /** One-line copy button using the Clipboard API. */
 function CopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
@@ -363,6 +423,29 @@ interface TerminalPanelProps {
   bodyHeight?: number;
   /** Ref populated with the clear-output function (for keyboard shortcuts). */
   clearRef?: RefObject<(() => void) | null>;
+  /** Function parameter names, used to label the "Last Executed Input" cards. */
+  params?: readonly string[];
+}
+
+/** LeetCode-style "Last Executed Input" cards for one test's input. */
+function LastExecutedInput({ input, params }: { input: string; params: readonly string[] }) {
+  const rows = parseLastExecutedInput(input, params);
+  if (rows.length === 0) return null;
+  return (
+    <div className="space-y-2 rounded-lg border border-border bg-surface-2 p-3">
+      <p className="font-mono text-[9px] uppercase tracking-widest text-faint">Last executed input</p>
+      <div className="space-y-2">
+        {rows.map((row, i) => (
+          <div key={i}>
+            <p className="font-mono text-[10px] text-muted">{row.name} =</p>
+            <div className="mt-0.5 rounded-md border border-border bg-bg px-2.5 py-1.5">
+              <span className="font-mono text-xs text-text break-all">{row.value}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function TerminalEntry({ entry }: { entry: TerminalEntry }) {
@@ -502,7 +585,7 @@ function RunHistoryBar({ history }: { history: TerminalEntry[][] }) {
  */
 const TERMINAL_TABS: ReadonlyArray<'output' | 'testcases'> = ['output', 'testcases'];
 
-export function TerminalPanel({ result, mode, collapsed = false, onToggleCollapsed, bodyHeight, clearRef }: TerminalPanelProps) {
+export function TerminalPanel({ result, mode, collapsed = false, onToggleCollapsed, bodyHeight, clearRef, params }: TerminalPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabListRef = useRef<HTMLDivElement>(null);
   const [history, setHistory] = useState<TerminalEntry[][]>([]);
@@ -829,6 +912,16 @@ export function TerminalPanel({ result, mode, collapsed = false, onToggleCollaps
                     ) : null}
                   </div>
                 );
+              })()}
+
+              {/* Last executed input — the first failing test's input (or the
+                  first test's), shown as LeetCode-style per-parameter cards. */}
+              {params && params.length > 0 && (() => {
+                const focus =
+                  result.verdicts.find((v) => v.status !== 'pass') ?? result.verdicts[0];
+                return focus && focus.input ? (
+                  <LastExecutedInput input={focus.input} params={params} />
+                ) : null;
               })()}
 
               {/* Individual test results — key includes passed count so cards
