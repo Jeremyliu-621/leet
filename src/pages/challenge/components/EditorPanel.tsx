@@ -1319,9 +1319,6 @@ export function EditorPanel({
     });
 
     viewRef.current = view;
-    // Expose the active indent width to CSS so the indentation guides can be
-    // shifted to each level's content column (see codemirror-theme.ts).
-    view.dom.style.setProperty('--ll-iw', String(indentSize));
 
     return () => {
       view.destroy();
@@ -1396,7 +1393,6 @@ export function EditorPanel({
     view.dispatch({
       effects: indentCompartmentRef.current.reconfigure(indentUnit.of(indentSpaces(indentSize))),
     });
-    view.dom.style.setProperty('--ll-iw', String(indentSize));
   }, [indentSize]);
 
   // Swap the colour theme when resolvedTheme changes.
