@@ -160,6 +160,11 @@ export function HintBot({
 
   const hasKey = !!apiKey && enabled;
 
+  // Number of inline annotations currently in the editor — surfaced as a badge
+  // so the user knows hints are active even with the panel closed.
+  const activeHintCount =
+    status.kind === 'ready' ? status.response.hints.filter((h) => h.line !== null).length : 0;
+
   return (
     <div className="relative">
       <button
@@ -168,10 +173,10 @@ export function HintBot({
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label="AI hint assistant"
+        aria-label={activeHintCount > 0 ? `AI hint assistant — ${activeHintCount} active` : 'AI hint assistant'}
         title="AI hints (Gemini)"
         className={[
-          'inline-flex items-center gap-1 rounded-md border px-2 py-1 font-sans text-[11px] font-medium transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+          'relative inline-flex items-center gap-1 rounded-md border px-2 py-1 font-sans text-[11px] font-medium transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
           open
             ? 'border-brand bg-surface-2 text-brand'
             : 'border-transparent text-brand hover:border-border hover:bg-surface-2',
@@ -179,6 +184,14 @@ export function HintBot({
       >
         <SparkleIcon />
         <span className="hidden sm:inline">AI</span>
+        {activeHintCount > 0 && (
+          <span
+            className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 font-mono text-[9px] font-semibold leading-none text-white"
+            aria-hidden="true"
+          >
+            {activeHintCount}
+          </span>
+        )}
       </button>
 
       {open && (
