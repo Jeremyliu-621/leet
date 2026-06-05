@@ -29,6 +29,10 @@ const leetlockThemeDark = EditorView.theme(
       paddingLeft: '2px',
       paddingRight: '0',
     },
+    // Nudge the indentation guides a touch further left.
+    '.cm-indent-markers::before': {
+      transform: 'translateX(-0.5ch)',
+    },
     // Cursor — a clearly visible 2px white caret that sits ABOVE the
     // bracket-match highlight (z-index) so it never gets swallowed by the
     // auto-paired brackets the way the old thin caret did.
@@ -152,6 +156,10 @@ const leetlockThemeLight = EditorView.theme(
     '.cm-line': {
       paddingLeft: '2px',
       paddingRight: '0',
+    },
+    // Nudge the indentation guides a touch further left.
+    '.cm-indent-markers::before': {
+      transform: 'translateX(-0.5ch)',
     },
     '.cm-cursor, .cm-dropCursor': {
       borderLeftColor: '#0A0A0A',
