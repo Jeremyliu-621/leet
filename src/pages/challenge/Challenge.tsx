@@ -1168,7 +1168,20 @@ export function Challenge() {
       >
         Skip to editor
       </a>
-      <TopBar secondsLeft={secondsLeft} prefs={prefs} streak={streak} practiceMode={!targetUrl.current} settingsHref={settingsHref} targetDomain={domain.current} attempts={attempts} />
+      <TopBar
+        secondsLeft={secondsLeft}
+        prefs={prefs}
+        streak={streak}
+        practiceMode={!targetUrl.current}
+        settingsHref={settingsHref}
+        targetDomain={domain.current}
+        attempts={attempts}
+        onRun={() => void handleRun()}
+        onSubmit={() => void handleSubmit()}
+        isRunning={isRunning}
+        verdictMode={verdictMode}
+        attemptsRemaining={attemptsRemaining}
+      />
 
       {/* No-target banner — informational only, does not block usage */}
       {!targetUrl.current && <NoTargetBanner />}
@@ -1182,16 +1195,16 @@ export function Challenge() {
        */}
       <main
         ref={splitContainerRef}
-        className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden"
+        className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden gap-2 p-2 bg-bg"
         aria-label="Challenge workspace"
       >
-        {/* Problem panel — scrollable independently.
+        {/* Problem panel — a rounded "floating" card, scrollable independently.
             Hidden in fullscreen editor mode. On mobile (flex-col), !w-full
             overrides the inline percentage style. On desktop (flex-row), the
             inline width drives the draggable split. */}
         <div
           id="problem-description"
-          className={`flex flex-col overflow-hidden border-border lg:border-r max-lg:border-b max-lg:max-h-[45vh] max-lg:!w-full${isEditorFullscreen ? ' hidden' : ''}`}
+          className={`flex flex-col overflow-hidden rounded-xl border border-border bg-surface max-lg:max-h-[45vh] max-lg:!w-full${isEditorFullscreen ? ' hidden' : ''}`}
           style={{ width: `${panelPct}%` }}
         >
           {/* key={problem.id} remounts ProblemPanel on problem change, scrolling to top
@@ -1214,8 +1227,8 @@ export function Challenge() {
           />
         )}
 
-        {/* Editor panel — fixed, no scroll on the outer shell */}
-        <div id="code-editor" className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        {/* Editor panel — a rounded "floating" card; no scroll on the outer shell */}
+        <div id="code-editor" className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-surface">
           <EditorPanel
             starterCode={starterCodeFor(problem, language)}
             language={language}

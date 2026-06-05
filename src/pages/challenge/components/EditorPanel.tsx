@@ -54,6 +54,7 @@ import { LANGUAGE_LABEL, JS_SYNTAX_ONLY_LANGUAGES } from '../../../lib/types';
 import type { EditorKeymap, SupportedLanguage } from '../../../lib/types';
 import { TerminalPanel } from './TerminalPanel';
 import { KeyboardShortcutsModal } from './KeyboardShortcutsModal';
+import { RunActions } from './RunActions';
 
 interface EditorPanelProps {
   /** Number of spaces inserted by the Tab key. */
@@ -1390,20 +1391,6 @@ export function EditorPanel({
     });
   }, [resolvedTheme]);
 
-  const handleRunKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') onRun();
-    },
-    [onRun],
-  );
-
-  const handleSubmitKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.key === ' ') onSubmit();
-    },
-    [onSubmit],
-  );
-
   const [showShortcuts, setShowShortcuts] = useState(false);
   const [codeCopied, setCodeCopied] = useState(false);
   const handleCopyCode = useCallback(() => {
@@ -1878,65 +1865,18 @@ export function EditorPanel({
               </button>
             )}
 
-            <button
-              type="button"
-              onClick={onRun}
-              onKeyDown={handleRunKeyDown}
-              disabled={isRunning}
-              aria-keyshortcuts="Control+Enter Meta+Enter"
-              aria-label="Run visible test cases"
-              className="inline-flex items-center gap-1.5 rounded-sm border border-border px-4 py-1.5 font-mono text-[11px] font-medium text-muted transition-all hover:border-border-strong hover:text-text hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              {isRunning && verdictMode === 'run' && (
-                <svg
-                  className="h-3 w-3 motion-safe:animate-spin"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    strokeOpacity="0.25"
-                  />
-                  <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-              )}
-              {isRunning && verdictMode === 'run' ? 'running' : 'run'}
-            </button>
-
-            <button
-              type="button"
-              onClick={onSubmit}
-              onKeyDown={handleSubmitKeyDown}
-              disabled={isRunning || (attemptsRemaining !== null && attemptsRemaining <= 0)}
-              aria-keyshortcuts="Control+Shift+Enter Meta+Shift+Enter"
-              aria-label="Submit solution against all test cases"
-              className="inline-flex items-center gap-1.5 rounded-sm bg-accent px-4 py-1.5 font-mono text-[11px] font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              {isRunning && verdictMode === 'submit' && (
-                <svg
-                  className="h-3 w-3 motion-safe:animate-spin"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    strokeOpacity="0.25"
-                  />
-                  <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-              )}
-              {isRunning && verdictMode === 'submit' ? 'submitting' : 'submit'}
-            </button>
+            {/* Run / Submit — only on mobile here; on desktop the primary
+                cluster lives centered in the top bar (LeetCode-style). */}
+            <div className="sm:hidden">
+              <RunActions
+                onRun={onRun}
+                onSubmit={onSubmit}
+                isRunning={isRunning}
+                verdictMode={verdictMode}
+                attemptsRemaining={attemptsRemaining}
+                size="sm"
+              />
+            </div>
           </div>
         </div>
       </div>

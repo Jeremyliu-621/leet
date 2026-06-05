@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import type { UserPreferences } from '../../../lib/types';
 import { formatCountdown } from '../challenge-helpers';
+import { RunActions } from './RunActions';
 
 interface TopBarProps {
   /** Seconds remaining on the countdown timer. */
@@ -15,6 +16,15 @@ interface TopBarProps {
   targetDomain?: string | null;
   /** Number of submit attempts made so far this session (0 = none yet). */
   attempts?: number;
+  /**
+   * Run/Submit wiring. When `onRun` and `onSubmit` are provided, a centered
+   * Run/Submit action cluster renders in the middle of the bar (LeetCode-style).
+   */
+  onRun?: () => void;
+  onSubmit?: () => void;
+  isRunning?: boolean;
+  verdictMode?: 'run' | 'submit';
+  attemptsRemaining?: number | null;
 }
 
 /** Formats unlock minutes into a compact string like "10m" or "1h 30m". */
@@ -25,7 +35,7 @@ function formatUnlockDuration(minutes: number): string {
   return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
-export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain, attempts = 0 }: TopBarProps) {
+export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, settingsHref, targetDomain, attempts = 0, onRun, onSubmit, isRunning = false, verdictMode = 'run', attemptsRemaining = null }: TopBarProps) {
   const isWarning = secondsLeft <= 120 && secondsLeft > 60;
   const isLow = secondsLeft <= 60 && secondsLeft > 0;
   const isCritical = secondsLeft <= 30 && secondsLeft > 0;
@@ -50,11 +60,27 @@ export function TopBar({ secondsLeft, prefs, streak, practiceMode = false, setti
 
   return (
     <header
-      className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-5"
+      className="relative flex h-12 shrink-0 items-center justify-between border-b border-border bg-surface px-5"
       role="banner"
     >
       {/* Screen-reader-only threshold announcements */}
       <div ref={liveRef} className="sr-only" aria-live="polite" aria-atomic="true" />
+
+      {/* Centered Run / Submit cluster — LeetCode-style, absolutely centered so
+          it stays put regardless of the left/right strip widths. */}
+      {onRun && onSubmit && (
+        <div className="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 justify-center sm:flex">
+          <div className="pointer-events-auto">
+            <RunActions
+              onRun={onRun}
+              onSubmit={onSubmit}
+              isRunning={isRunning}
+              verdictMode={verdictMode}
+              attemptsRemaining={attemptsRemaining}
+            />
+          </div>
+        </div>
+      )}
       {/* Wordmark */}
       <div className="flex items-center gap-3">
         {settingsHref && (
