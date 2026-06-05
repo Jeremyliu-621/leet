@@ -102,14 +102,14 @@ function DraggableSplitter({ onDrag, onDragEnd, containerRef, currentPct }: Spli
       aria-valuemax={PANEL_MAX_PCT}
       aria-valuetext={`Problem panel: ${Math.round(currentPct)}%`}
       tabIndex={0}
-      className="group relative hidden w-1 shrink-0 cursor-col-resize bg-border transition-colors hover:bg-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 focus-visible:ring-offset-bg lg:flex items-center justify-center"
+      className="group relative hidden w-2 shrink-0 cursor-col-resize items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent lg:flex"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onKeyDown={handleKeyDown}
     >
-      {/* Visual drag handle dot */}
-      <div className="absolute h-8 w-1 rounded-full bg-border-strong opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+      {/* Hairline divider — subtle at rest, a high-contrast brand line on hover/drag. */}
+      <div className="h-full w-px rounded-full bg-border transition-all duration-150 group-hover:w-0.5 group-hover:bg-brand group-active:w-0.5 group-active:bg-brand group-focus-visible:bg-brand" />
     </div>
   );
 }
@@ -1267,7 +1267,7 @@ export function Challenge() {
        */}
       <main
         ref={splitContainerRef}
-        className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden gap-2 p-2 bg-bg"
+        className="min-h-0 flex-1 flex flex-col lg:flex-row overflow-hidden gap-1.5 p-1.5 lg:gap-0 bg-bg"
         aria-label="Challenge workspace"
       >
         {/* Problem panel — a rounded "floating" card, scrollable independently.
