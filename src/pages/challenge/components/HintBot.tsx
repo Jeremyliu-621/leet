@@ -193,7 +193,7 @@ export function HintBot({
           'relative inline-flex items-center gap-1 rounded-md border px-2 py-1 font-sans text-[11px] font-medium transition-colors focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
           open
             ? 'border-brand bg-surface-2 text-brand'
-            : 'border-transparent text-brand hover:border-border hover:bg-surface-2',
+            : 'border-border bg-surface-2 text-brand hover:border-brand',
         ].join(' ')}
       >
         <SparkleIcon />

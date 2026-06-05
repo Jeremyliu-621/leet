@@ -58,27 +58,6 @@ function InlineText({ text }: { text: string }) {
   );
 }
 
-/** Inline copy button for example inputs and outputs. */
-function InlineCopy({ value }: { value: string }) {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = useCallback(() => {
-    void navigator.clipboard.writeText(value).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
-  }, [value]);
-  return (
-    <button
-      type="button"
-      onClick={handleCopy}
-      aria-label="Copy to clipboard"
-      className="ml-1 shrink-0 font-mono text-[9px] tracking-[0.05em] text-faint transition-colors hover:text-muted focus:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:rounded-sm"
-    >
-      {copied ? '✓' : 'copy'}
-    </button>
-  );
-}
-
 /** Header button that copies the full problem as plain text — useful for pasting into AI tools. */
 function CopyProblemButton({ problem }: { problem: Problem }) {
   const [copied, setCopied] = useState(false);
@@ -175,39 +154,27 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
         {/* Examples */}
         {examples.length > 0 && (
           <div className="mb-6">
-            <h2 className="mb-3 font-mono text-[10px] uppercase tracking-widest text-faint">
-              Examples
-            </h2>
-            <div className="space-y-3">
+            <h2 className="mb-4 text-base font-bold text-text">Examples</h2>
+            <div className="space-y-5">
               {examples.map((example, i) => (
-                <div
-                  key={i}
-                  className="rounded-card border border-border bg-surface px-4 py-3"
-                  aria-label={`Example ${i + 1}`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap gap-x-3 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
-                        Input
-                      </span>
-                      <code className="font-mono text-xs text-text break-all">{example.input}</code>
-                      <InlineCopy value={example.input} />
-                    </div>
-                    <div className="flex flex-wrap gap-x-3 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-faint w-14 shrink-0">
-                        Output
-                      </span>
-                      <code className="font-mono text-xs text-text break-all">
-                        {example.output}
-                      </code>
-                      <InlineCopy value={example.output} />
-                    </div>
+                <div key={i} aria-label={`Example ${i + 1}`}>
+                  <h3 className="mb-1.5 text-[13px] font-bold text-text">Example {i + 1}:</h3>
+                  <div className="space-y-1.5 border-l-2 border-border pl-3.5">
+                    <p className="text-[13px] leading-relaxed">
+                      <span className="font-semibold text-text">Input: </span>
+                      <code className="font-mono text-[13px] text-muted break-all">{example.input}</code>
+                    </p>
+                    <p className="text-[13px] leading-relaxed">
+                      <span className="font-semibold text-text">Output: </span>
+                      <code className="font-mono text-[13px] text-muted break-all">{example.output}</code>
+                    </p>
                     {example.explanation && (
-                      <div className="border-t border-border pt-2 mt-1">
-                        <p className="text-xs leading-relaxed text-muted">
+                      <p className="text-[13px] leading-relaxed">
+                        <span className="font-semibold text-text">Explanation: </span>
+                        <span className="text-muted">
                           <InlineText text={example.explanation} />
-                        </p>
-                      </div>
+                        </span>
+                      </p>
                     )}
                   </div>
                 </div>
