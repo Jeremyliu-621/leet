@@ -277,6 +277,16 @@ export function Popup() {
     }
   }
 
+  function handleOpenDashboard(): void {
+    try {
+      void chrome.tabs.create({
+        url: chrome.runtime.getURL('src/pages/dashboard/index.html'),
+      });
+    } catch {
+      // Outside an extension context — silently ignore.
+    }
+  }
+
   async function handleThemeChange(next: ThemePreference): Promise<void> {
     if (!data || data.theme === next) return;
     applyTheme(next);
@@ -356,13 +366,20 @@ export function Popup() {
         >
           {blockLabel}
         </button>
+        <button
+          type="button"
+          onClick={handlePracticeNow}
+          className="w-full border border-accent bg-accent px-3 py-2 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        >
+          Practice now
+        </button>
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={handlePracticeNow}
-            className="flex-1 border border-accent bg-accent px-3 py-2 text-xs font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+            onClick={handleOpenDashboard}
+            className="flex-1 border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
           >
-            Practice now
+            Dashboard
           </button>
           <button
             type="button"

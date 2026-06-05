@@ -33,6 +33,7 @@ export default defineConfig({
         challenge: resolve(root, 'src/pages/challenge/index.html'),
         blocked: resolve(root, 'src/pages/blocked/index.html'),
         sandbox: resolve(root, 'src/pages/sandbox/index.html'),
+        dashboard: resolve(root, 'src/pages/dashboard/index.html'),
       },
     },
   },
