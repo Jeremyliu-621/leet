@@ -15,10 +15,11 @@ export type ResolvedTheme =
   | 'muted-ink'
   | 'terminal'
   | 'dracula'
-  | 'paper';
+  | 'paper'
+  | 'leetmeow';
 
 /** Themes whose editor should use the light CM theme. All others use dark. */
-const LIGHT_THEMES: ReadonlySet<string> = new Set(['light', 'paper']);
+const LIGHT_THEMES: ReadonlySet<string> = new Set(['light', 'paper', 'leetmeow']);
 
 /** Returns true if a resolved theme string should use the light editor/syntax theme. */
 export function isLightTheme(resolved: string): boolean {

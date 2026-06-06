@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import type { UserPreferences } from '../../../lib/types';
 import { formatCountdown } from '../challenge-helpers';
 import { RunActions } from './RunActions';
+import wordmark from '../../../../assets/leetmeowtextright.png';
 
 interface TopBarProps {
   /** Seconds remaining on the countdown timer. */
@@ -98,9 +99,12 @@ export function TopBar({ secondsLeft, prefs, streak, settingsHref, attempts = 0,
         {settingsHref && (
           <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
         )}
-        <span className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase">
-          LEETMEOW
-        </span>
+        <span
+          role="img"
+          aria-label="LeetMeow"
+          className="wordmark-leetmeow inline-block h-6 w-[84px] select-none"
+          style={{ WebkitMaskImage: `url(${wordmark})`, maskImage: `url(${wordmark})` }}
+        />
       </div>
 
       {/* Right meta strip */}

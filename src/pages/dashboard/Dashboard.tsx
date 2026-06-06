@@ -311,7 +311,8 @@ function Shell({ children, streak }: { children: React.ReactNode; streak?: Strea
     <main className="min-h-screen bg-bg text-text">
       <div className="mx-auto max-w-5xl px-5 py-6 sm:px-8">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
-          <div className="flex items-baseline gap-3">
+          <div className="flex items-center gap-3">
+            <span aria-hidden="true" className="brand-logo h-6 w-6 text-text" />
             <h1 className="text-lg font-semibold tracking-tight text-text">Dashboard</h1>
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetMeow</span>
             {streak && streak.current > 0 && (
@@ -539,7 +540,7 @@ function ProblemsTable({ problems }: { problems: readonly AttemptedProblem[] }) 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <CardHeader title="Problems attempted" aside={`${problems.length}`} />
         <div className="flex items-center gap-2">
-          <div className="flex" role="tablist" aria-label="Filter by status">
+          <div className="flex gap-1" role="tablist" aria-label="Filter by status">
             {(['all', 'solved', 'attempted'] as StatusFilter[]).map((s) => (
               <button
                 key={s}
@@ -549,8 +550,8 @@ function ProblemsTable({ problems }: { problems: readonly AttemptedProblem[] }) 
                 onClick={() => setStatus(s)}
                 className={
                   status === s
-                    ? 'border border-border-strong bg-surface-2 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-text'
-                    : 'border border-border bg-bg px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted transition-colors hover:text-text'
+                    ? 'rounded border border-border-strong bg-surface-2 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-text'
+                    : 'rounded border border-border bg-bg px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted transition-colors hover:text-text'
                 }
               >
                 {s}
@@ -641,7 +642,7 @@ function StatusBadge({ status }: { status: AttemptedProblem['status'] }) {
       Solved
     </span>
   ) : (
-    <span className="border border-border bg-bg px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted">
+    <span className="rounded border border-border bg-bg px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-muted">
       Tried
     </span>
   );

@@ -351,6 +351,7 @@ export type ThemePreference =
   | 'terminal'
   | 'dracula'
   | 'paper'
+  | 'leetmeow'
   | 'system';
 
 /** All themes in display order. System is always last. */
@@ -366,6 +367,7 @@ export const ALL_THEMES: readonly ThemePreference[] = [
   'terminal',
   'dracula',
   'paper',
+  'leetmeow',
   'system',
 ] as const;
 
@@ -382,6 +384,7 @@ export const THEME_LABEL: Readonly<Record<ThemePreference, string>> = {
   terminal: 'Terminal',
   dracula: 'Dracula',
   paper: 'Paper',
+  leetmeow: 'LeetMeow',
   system: 'System',
 };
 
@@ -398,6 +401,7 @@ export const THEME_DESCRIPTION: Readonly<Record<ThemePreference, string>> = {
   terminal: 'Green-on-black retro CRT.',
   dracula: 'Purple-accented classic.',
   paper: 'Warm cream, soft contrast.',
+  leetmeow: 'Charcoal ink on warm paper.',
   system: 'Follows your OS setting.',
 };
 

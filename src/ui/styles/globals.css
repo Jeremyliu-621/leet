@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* The LeetMeow wordmark is a single-colour PNG used as a mask, so it always
+   takes the active theme's text colour — readable on every theme. */
+.wordmark-leetmeow {
+  background-color: var(--ll-text);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
 /* Grayscale design tokens. Both themes are zero-hue; emphasis comes from
    contrast and typographic weight, never colour. The active theme is selected
    via the `data-theme` attribute on the root element. `:root` carries the
@@ -230,6 +242,133 @@
   --ll-info: #2a5aa0;
 }
 
+/* ── LeetMeow — charcoal ink on warm paper (the brand site palette, light) ── */
+:root[data-theme='leetmeow'] {
+  color-scheme: light;
+  --ll-bg: #fbfaf6;
+  --ll-surface: #ffffff;
+  --ll-surface-2: #f4f0e8;
+  --ll-border: #e4ded2;
+  --ll-border-strong: #d0c8b8;
+  --ll-text: #2c2a28;
+  --ll-muted: #6f6a64;
+  --ll-faint: #a39d94;
+  --ll-accent: #3d3d3d;
+  --ll-on-accent: #fbfaf6;
+  --ll-brand: #3d3d3d;
+  --ll-brand-strong: #2c2a28;
+  --ll-success: #4a7c59;
+  --ll-success-bg: rgba(74, 124, 89, 0.12);
+  --ll-error: #b3503e;
+  --ll-error-bg: rgba(179, 80, 62, 0.12);
+  --ll-warning: #b0822f;
+  --ll-warning-bg: rgba(176, 130, 47, 0.12);
+  --ll-info: #6b6fc0;
+}
+
+/* ── Brand fonts (self-hosted from leetlock.app) ──
+   Shantell Sans = the hand-drawn display/body face; Geist Mono = monospace.
+   Bundled as woff2 so MV3 never reaches out to Google Fonts at runtime. */
+@font-face {
+  font-family: 'Shantell Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../fonts/shantell-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Shantell Sans';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('../fonts/shantell-sans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'GeistMono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/geist-mono.woff2') format('woff2');
+}
+
+/* ── Brand skin — the leetlock.app landing aesthetic ──
+   Applied via the `data-skin="brand"` attribute on <html> (set in mount.tsx)
+   to the branded surfaces: popup, dashboard, blocked, and settings. It changes
+   ONLY structure — the hand-drawn fonts and wobbly "sketch" container outlines.
+   Colours come entirely from the active `data-theme`, so the look adapts to
+   whichever theme the user picked. `--brand-stroke` is the theme-aware "ink"
+   used for the hand-drawn outlines. The challenge page omits the attribute. */
+:root[data-skin='brand'] {
+  --brand-stroke: var(--ll-text);
+  /* One even, generously-rounded radius for every container — cards, buttons,
+     and inputs. Evenly rounded (not the old asymmetric wobble, which produced a
+     visibly sharp corner on large cards) so every surface reads like a soft
+     rounded rectangle at any size. */
+  --brand-radius: 14px;
+  font-family: 'Shantell Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root[data-skin='brand'] body {
+  font-family: 'Shantell Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Monospace labels/values keep a mono face — Geist Mono, like the site. */
+:root[data-skin='brand'] .font-mono {
+  font-family: 'GeistMono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+/* Hand-drawn outlined containers — cards AND bordered buttons (secondary
+   buttons, the stat strip, etc.) — share one 2px ink outline + wobble so they
+   read as one family. Internal dividers (border-b / border-r, no full border)
+   keep clean edges. */
+:root[data-skin='brand'] .border.bg-surface {
+  border-width: 2px;
+  border-color: var(--brand-stroke);
+  border-radius: var(--brand-radius);
+}
+/* Form controls (text inputs, selects, search) — same outline + wobble. Small
+   chips (status pills, segmented toggles, swatches) are left with their own
+   clean radii so dense rows and controls stay orderly. */
+:root[data-skin='brand'] input.border,
+:root[data-skin='brand'] select.border,
+:root[data-skin='brand'] textarea.border {
+  border-width: 2px;
+  border-color: var(--brand-stroke);
+  border-radius: var(--brand-radius);
+}
+/* Filled accent/brand buttons: same wobble; the border blends into the fill,
+   like the site's solid-ink CTAs. */
+:root[data-skin='brand'] .bg-accent,
+:root[data-skin='brand'] .bg-brand {
+  border-radius: var(--brand-radius);
+}
+
+/* The leetmeow cat mark, recoloured to the current text colour via a mask so
+   the monochrome line-art adapts to whatever theme is active (light or dark). */
+:root[data-skin='brand'] .brand-logo {
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: url('../leetmeow.png') center / contain no-repeat;
+  mask: url('../leetmeow.png') center / contain no-repeat;
+}
+
+/* Tiny imperfections + a hand-drawn underline, ported from the site. */
+:root[data-skin='brand'] .brand-tilt-1 { transform: rotate(-1.2deg); }
+:root[data-skin='brand'] .brand-tilt-2 { transform: rotate(0.8deg); }
+:root[data-skin='brand'] .brand-underline {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='12' viewBox='0 0 200 12'%3E%3Cpath d='M3 7 C 40 3, 80 10, 120 5 S 180 4, 197 7' fill='none' stroke='%23808080' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 100% 0.5em;
+  padding-bottom: 0.18em;
+}
+
 html,
 body,
 #root {
@@ -289,7 +428,8 @@ body {
 
 /* --- Light theme highlight colours --- */
 :root[data-theme='light'],
-:root[data-theme='paper'] {
+:root[data-theme='paper'],
+:root[data-theme='leetmeow'] {
   --ll-hljs-keyword: #AF00DB;
   --ll-hljs-function: #795E26;
   --ll-hljs-string: #A31515;

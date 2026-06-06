@@ -1,4 +1,4 @@
 import { mount } from '../../ui/mount';
 import { Options } from './Options';
 
-mount(<Options />);
+mount(<Options />, { brandSkin: true });

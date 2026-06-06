@@ -21,6 +21,7 @@
  */
 
 import { useState, useEffect, useCallback, useId, useRef } from 'react';
+import type { ReactNode } from 'react';
 import type {
   BlockRule,
   BlockRuleKind,
@@ -66,6 +67,7 @@ import { ResetSection } from './components/ResetSection';
 import { AboutSection } from './components/AboutSection';
 import { ImportExportSection } from './components/ImportExportSection';
 import { EditorSection } from './components/EditorSection';
+import { AppearanceSection } from './components/AppearanceSection';
 import { AiHintsSection } from './components/AiHintsSection';
 import { ProblemBrowserSection } from './components/ProblemBrowserSection';
 import { VerifyModal } from './components/VerifyModal';
@@ -111,61 +113,101 @@ function LoadingScreen() {
   );
 }
 
-/** The navigation groups rendered in the sidebar and as section headings. */
-const NAV_GROUPS = [
-  { id: 'blocking', label: 'Blocking' },
-  { id: 'challenge', label: 'Challenge & Unlock' },
-  { id: 'editor', label: 'Problems & Editor' },
-  { id: 'security', label: 'Security' },
-  { id: 'data', label: 'Data & Info' },
+/**
+ * Every settings section, in nav order. Each renders as its own page (no more
+ * one-giant-scroll); `description` heads the panel so it reads like a real
+ * settings app. `cluster` groups related sections in the sidebar.
+ */
+const SECTIONS = [
+  { id: 'blocking', label: 'Blocking', cluster: 'Protection', description: 'Sites and keywords that trigger a coding challenge.' },
+  { id: 'challenge', label: 'Challenge & Unlock', cluster: 'Protection', description: 'How challenges run and how long access lasts when you pass.' },
+  { id: 'security', label: 'Security', cluster: 'Protection', description: 'Strict mode, password lock, and accountability partner.' },
+  { id: 'problems', label: 'Problems', cluster: 'Practice', description: 'Which problems you can be asked to solve.' },
+  { id: 'editor', label: 'Editor', cluster: 'Practice', description: 'Your coding environment, key bindings, and AI hints.' },
+  { id: 'appearance', label: 'Appearance', cluster: 'App', description: 'Theme and editor text size across LeetMeow.' },
+  { id: 'data', label: 'Data', cluster: 'App', description: 'Back up, restore, reset, and review your progress.' },
 ] as const;
 
-type NavGroupId = (typeof NAV_GROUPS)[number]['id'];
+type NavGroupId = (typeof SECTIONS)[number]['id'];
 
-/** Groups related settings sections under a category label with generous spacing. */
-function SettingsGroup({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
-  return (
-    <div id={`group-${id}`} className="mb-10 scroll-mt-20">
-      <h2 className="mb-4 font-mono text-[10px] uppercase tracking-widest text-faint">{label}</h2>
-      <div className="space-y-4">{children}</div>
-    </div>
-  );
+/**
+ * Deep-link anchors that aren't section ids themselves. Other pages link to
+ * e.g. `options.html#ai`; map those element anchors to the section that now
+ * contains them so the right panel opens (and we can scroll to the element).
+ */
+const ANCHOR_TO_SECTION: Readonly<Record<string, NavGroupId>> = {
+  ai: 'editor',
+};
+
+/** Resolves the current URL hash to a section to open on load, if any. */
+function sectionFromHash(): NavGroupId | null {
+  if (typeof window === 'undefined') return null;
+  const raw = window.location.hash.replace(/^#/, '');
+  if (!raw) return null;
+  if (SECTIONS.some((s) => s.id === raw)) return raw as NavGroupId;
+  return ANCHOR_TO_SECTION[raw] ?? null;
 }
 
-/** Full-height sidebar with branding and nav links. */
-function SettingsSidebar({ activeId }: { activeId: NavGroupId }) {
+/** Sidebar clusters, in display order, derived once from SECTIONS. */
+const NAV_CLUSTERS: ReadonlyArray<{ label: string; items: typeof SECTIONS[number][] }> = (() => {
+  const order: string[] = [];
+  const byCluster = new Map<string, typeof SECTIONS[number][]>();
+  for (const section of SECTIONS) {
+    if (!byCluster.has(section.cluster)) {
+      byCluster.set(section.cluster, []);
+      order.push(section.cluster);
+    }
+    byCluster.get(section.cluster)!.push(section);
+  }
+  return order.map((label) => ({ label, items: byCluster.get(label)! }));
+})();
+
+/** Full-height sidebar with branding and clustered nav links. */
+function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelect: (id: NavGroupId) => void }) {
   return (
-    <aside className="hidden w-56 shrink-0 border-r border-border bg-surface md:flex md:flex-col">
-      <div className="sticky top-0 flex flex-col px-5 py-6">
+    <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:flex md:flex-col">
+      <div className="sticky top-0 flex flex-col gap-7 px-5 py-6">
         {/* Branding */}
-        <div className="mb-8">
+        <div className="flex items-center gap-2">
+          <span aria-hidden="true" className="brand-logo h-6 w-6 text-accent" />
           <span className="font-mono text-sm font-semibold uppercase tracking-widest text-accent">
             LEETMEOW
           </span>
-          <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-faint">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
             Settings
           </span>
         </div>
 
-        {/* Nav */}
-        <nav aria-label="Settings sections" className="space-y-1">
-          {NAV_GROUPS.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#group-${id}`}
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById(`group-${id}`)?.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className={`block rounded px-3 py-2 text-[13px] transition-colors ${
-                activeId === id
-                  ? 'bg-surface-2 font-medium text-text'
-                  : 'text-muted hover:bg-surface-2 hover:text-text'
-              }`}
-              aria-current={activeId === id ? 'true' : undefined}
-            >
-              {label}
-            </a>
+        {/* Clustered nav */}
+        <nav aria-label="Settings sections" className="flex flex-col gap-6">
+          {NAV_CLUSTERS.map((cluster) => (
+            <div key={cluster.label} className="flex flex-col gap-1">
+              <h2 className="mb-1 px-3 font-mono text-[10px] uppercase tracking-widest text-faint">
+                {cluster.label}
+              </h2>
+              {cluster.items.map(({ id, label }) => {
+                const active = activeId === id;
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => onSelect(id)}
+                    aria-current={active ? 'page' : undefined}
+                    className={`flex items-center gap-2.5 rounded-sm px-3 py-2 text-left text-[13px] transition-colors ${
+                      active
+                        ? 'bg-surface-2 font-medium text-text'
+                        : 'text-muted hover:bg-surface-2 hover:text-text'
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`h-3.5 w-px shrink-0 transition-colors ${active ? 'bg-accent' : 'bg-transparent'}`}
+                    />
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
           ))}
         </nav>
       </div>
@@ -666,35 +708,36 @@ export function Options() {
   }
 
   // ---------------------------------------------------------------------------
-  // Scroll spy — tracks which settings group is currently in view
+  // Active settings section (paginated — one section renders at a time)
   // ---------------------------------------------------------------------------
 
-  const [activeNav, setActiveNav] = useState<NavGroupId>('blocking');
+  // Open the section named by the URL hash (e.g. `#ai` deep-links here), else
+  // start on the first section.
+  const [activeNav, setActiveNav] = useState<NavGroupId>(() => sectionFromHash() ?? 'blocking');
   const mainRef = useRef<HTMLElement>(null);
 
+  // Scroll back to the top whenever the section changes so a long panel never
+  // leaves the next section scrolled half-way down. Clear any deep-link hash so
+  // a later manual nav doesn't appear "stuck" on the linked section.
+  const selectSection = useCallback((id: NavGroupId) => {
+    setActiveNav(id);
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    mainRef.current?.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  // After a hash deep-link opens a section, scroll to the specific element it
+  // named (e.g. the #ai card) once the panel has mounted.
   useEffect(() => {
     if (status !== 'ready') return;
-    const elements = NAV_GROUPS.map(({ id }) => document.getElementById(`group-${id}`)).filter(
-      (el): el is HTMLElement => el !== null,
-    );
-    if (elements.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the topmost visible group.
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible.length > 0) {
-          const id = visible[0]!.target.id.replace('group-', '') as NavGroupId;
-          setActiveNav(id);
-        }
-      },
-      { rootMargin: '-80px 0px -60% 0px', threshold: 0 },
-    );
-
-    for (const el of elements) observer.observe(el);
-    return () => observer.disconnect();
+    const raw = window.location.hash.replace(/^#/, '');
+    if (!raw) return;
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(raw)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    return () => cancelAnimationFrame(frame);
   }, [status]);
 
   // ---------------------------------------------------------------------------
@@ -744,6 +787,119 @@ export function Options() {
     ? 'Some changes are pending cooldown.'
     : null;
 
+  // Render the cards for one section at a time (paginated). Each entry mirrors
+  // a sidebar nav item; only the active one is mounted, so the page stays short.
+  const sectionContent: Record<NavGroupId, ReactNode> = {
+    blocking: (
+      <>
+        <BlockedSitesSection
+          rules={d.blockRules}
+          strictMode={d.prefs.strictMode}
+          pendingRuleIds={pendingBlockRuleIds}
+          pendingNotice={blockSectionPendingNotice}
+          onAdd={handleAddBlockRule(d)}
+          onToggle={handleToggleBlockRule(d)}
+          onDelete={handleDeleteBlockRule(d)}
+        />
+        <KeywordTriggersSection
+          rules={d.keywordRules}
+          strictMode={d.prefs.strictMode}
+          pendingRuleIds={pendingKeywordRuleIds}
+          pendingNotice={keywordSectionPendingNotice}
+          onAdd={handleAddKeyword(d)}
+          onToggle={handleToggleKeyword(d)}
+          onDelete={handleDeleteKeyword(d)}
+        />
+      </>
+    ),
+    challenge: (
+      <>
+        <ChallengeSection
+          prefs={d.prefs}
+          pendingNotice={frictionPendingNotice}
+          onChange={(patch) =>
+            void handlePrefsChange(d, patch, (_prev) => {
+              if (patch.challengeTimeLimitSec !== undefined) {
+                return `Reduce challenge time limit to ${patch.challengeTimeLimitSec}s`;
+              }
+              if (patch.maxSubmissionAttempts !== undefined) {
+                return `Increase max attempts to ${patch.maxSubmissionAttempts}`;
+              }
+              return 'Change challenge settings';
+            })
+          }
+        />
+        <UnlockSection
+          prefs={d.prefs}
+          pendingNotice={frictionPendingNotice}
+          onChange={(patch) =>
+            void handlePrefsChange(
+              d,
+              patch,
+              (prev) =>
+                `Increase unlock duration to ${(patch as Partial<UserPreferences>).unlockDurationMin ?? prev.unlockDurationMin}m`,
+            )
+          }
+        />
+        <FailureSection
+          prefs={d.prefs}
+          onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+        />
+      </>
+    ),
+    security: (
+      <>
+        <StrictModeSection
+          prefs={d.prefs}
+          pendingNotice={strictPendingNotice}
+          onToggleStrict={handleToggleStrict(d)}
+          onChangeCooldown={handleChangeCooldown(d)}
+        />
+        <PasswordLockSection lock={d.lock} onSave={handleSaveLock} />
+        <AccountabilitySection partner={d.partner} onSave={handleSavePartner} />
+        <PendingChangesSection pending={d.pending} onCancel={handleCancelPending} />
+      </>
+    ),
+    problems: (
+      <>
+        <ProblemSelectionSection
+          prefs={d.prefs}
+          onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+        />
+        <ProblemBrowserSection />
+      </>
+    ),
+    editor: (
+      <>
+        <EditorSection
+          prefs={d.prefs}
+          onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+        />
+        <AiHintsSection
+          settings={d.aiSettings}
+          onChange={(patch) => void handleAiSettingsChange(patch).then(() => announce('AI settings saved.'))}
+        />
+      </>
+    ),
+    appearance: (
+      <AppearanceSection
+        prefs={d.prefs}
+        onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+      />
+    ),
+    data: (
+      <>
+        <SyncStatusSection lastSyncAt={null} />
+        <ImportExportSection />
+        <ResetSection lock={d.lock} strictMode={d.prefs.strictMode} onReset={handleReset(d)} />
+        <AboutSection />
+      </>
+    ),
+  };
+
+  const activeSection = SECTIONS.find((s) => s.id === activeNav) ?? SECTIONS[0];
+  const mobileNavId = `${pageUid}-section-nav`;
+
   return (
     <>
       {/* Global live region for save confirmations */}
@@ -757,16 +913,16 @@ export function Options() {
         {announcement}
       </div>
 
-      <div className="flex min-h-full bg-bg text-text">
+      <div className="flex min-h-screen bg-bg text-text">
         {/* Sidebar */}
-        <SettingsSidebar activeId={activeNav} />
+        <SettingsSidebar activeId={activeNav} onSelect={selectSection} />
 
         {/* Main content area */}
-        <div className="min-w-0 flex-1">
+        <div className="flex min-w-0 flex-1 flex-col">
           {/* Strict-mode banner */}
           {d.prefs.strictMode && (
             <div
-              className="border-b border-border bg-surface-2 px-8 py-2.5"
+              className="border-b border-border bg-surface-2 px-6 py-2.5 md:px-12"
               role="alert"
             >
               <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
@@ -776,113 +932,45 @@ export function Options() {
             </div>
           )}
 
+          {/* Mobile section switcher (sidebar is hidden below md) */}
+          <div className="border-b border-border bg-surface px-6 py-3 md:hidden">
+            <label htmlFor={mobileNavId} className="sr-only">
+              Settings section
+            </label>
+            <select
+              id={mobileNavId}
+              value={activeNav}
+              onChange={(e) => selectSection(e.target.value as NavGroupId)}
+              className="w-full rounded-sm border border-border bg-surface-2 px-3 py-2 font-mono text-xs text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+            >
+              {NAV_CLUSTERS.map((cluster) => (
+                <optgroup key={cluster.label} label={cluster.label}>
+                  {cluster.items.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.label}
+                    </option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </div>
+
           <main
             ref={mainRef}
-            className="mx-auto max-w-[820px] px-8 py-10 md:px-12"
-            aria-label="Settings"
+            className="mx-auto w-full max-w-[760px] flex-1 px-6 py-10 md:px-12"
+            aria-label={`${activeSection.label} settings`}
           >
-            {/* ── Blocking ── */}
-            <SettingsGroup id="blocking" label="Blocking">
-              <BlockedSitesSection
-                rules={d.blockRules}
-                strictMode={d.prefs.strictMode}
-                pendingRuleIds={pendingBlockRuleIds}
-                pendingNotice={blockSectionPendingNotice}
-                onAdd={handleAddBlockRule(d)}
-                onToggle={handleToggleBlockRule(d)}
-                onDelete={handleDeleteBlockRule(d)}
-              />
-              <KeywordTriggersSection
-                rules={d.keywordRules}
-                strictMode={d.prefs.strictMode}
-                pendingRuleIds={pendingKeywordRuleIds}
-                pendingNotice={keywordSectionPendingNotice}
-                onAdd={handleAddKeyword(d)}
-                onToggle={handleToggleKeyword(d)}
-                onDelete={handleDeleteKeyword(d)}
-              />
-            </SettingsGroup>
+            {/* Panel header — gives each section a real "page" identity */}
+            <header className="mb-7 border-b border-border pb-5">
+              <h1 className="text-lg font-semibold tracking-tight text-text">
+                {activeSection.label}
+              </h1>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
+                {activeSection.description}
+              </p>
+            </header>
 
-            {/* ── Challenge & Unlock ── */}
-            <SettingsGroup id="challenge" label="Challenge & Unlock">
-              <ChallengeSection
-                prefs={d.prefs}
-                pendingNotice={frictionPendingNotice}
-                onChange={(patch) =>
-                  void handlePrefsChange(
-                    d,
-                    patch,
-                    (_prev) => {
-                      if (patch.challengeTimeLimitSec !== undefined) {
-                        return `Reduce challenge time limit to ${patch.challengeTimeLimitSec}s`;
-                      }
-                      if (patch.maxSubmissionAttempts !== undefined) {
-                        return `Increase max attempts to ${patch.maxSubmissionAttempts}`;
-                      }
-                      return 'Change challenge settings';
-                    },
-                  )
-                }
-              />
-              <UnlockSection
-                prefs={d.prefs}
-                pendingNotice={frictionPendingNotice}
-                onChange={(patch) =>
-                  void handlePrefsChange(
-                    d,
-                    patch,
-                    (prev) =>
-                      `Increase unlock duration to ${(patch as Partial<UserPreferences>).unlockDurationMin ?? prev.unlockDurationMin}m`,
-                  )
-                }
-              />
-              <FailureSection
-                prefs={d.prefs}
-                onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
-              />
-            </SettingsGroup>
-
-            {/* ── Problems & Editor ── */}
-            <SettingsGroup id="editor" label="Problems & Editor">
-              <ProblemSelectionSection
-                prefs={d.prefs}
-                onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
-              />
-              <EditorSection
-                prefs={d.prefs}
-                onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
-              />
-              <AiHintsSection
-                settings={d.aiSettings}
-                onChange={(patch) => void handleAiSettingsChange(patch).then(() => announce('AI settings saved.'))}
-              />
-            </SettingsGroup>
-
-            {/* ── Security ── */}
-            <SettingsGroup id="security" label="Security">
-              <StrictModeSection
-                prefs={d.prefs}
-                pendingNotice={strictPendingNotice}
-                onToggleStrict={handleToggleStrict(d)}
-                onChangeCooldown={handleChangeCooldown(d)}
-              />
-              <PasswordLockSection lock={d.lock} onSave={handleSaveLock} />
-              <AccountabilitySection partner={d.partner} onSave={handleSavePartner} />
-              <PendingChangesSection pending={d.pending} onCancel={handleCancelPending} />
-            </SettingsGroup>
-
-            {/* ── Data & Info ── */}
-            <SettingsGroup id="data" label="Data & Info">
-              <SyncStatusSection lastSyncAt={null} />
-              <ImportExportSection />
-              <ResetSection
-                lock={d.lock}
-                strictMode={d.prefs.strictMode}
-                onReset={handleReset(d)}
-              />
-              <ProblemBrowserSection />
-              <AboutSection />
-            </SettingsGroup>
+            <div className="space-y-4">{sectionContent[activeNav]}</div>
           </main>
         </div>
       </div>

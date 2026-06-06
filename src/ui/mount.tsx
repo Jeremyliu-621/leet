@@ -23,10 +23,18 @@ applyEditorFontSize(DEFAULT_PREFERENCES.editorFontSize);
  * keeps the document in sync with the OS theme when the user has picked
  * `system`.
  */
-export function mount(node: ReactNode): void {
+export function mount(node: ReactNode, options: { brandSkin?: boolean } = {}): void {
   const root = document.getElementById('root');
   if (!root) {
     throw new Error('LeetMeow: #root element not found');
+  }
+
+  // Branded surfaces (popup, dashboard, blocked, settings) adopt the
+  // leetlock.app landing aesthetic — hand-drawn fonts and wobbly "sketch"
+  // container outlines. Only structure changes; colours still come from the
+  // user's selected theme. The challenge page omits this so it stays plain.
+  if (options.brandSkin) {
+    document.documentElement.setAttribute('data-skin', 'brand');
   }
 
   let currentPreference: ThemePreference = 'dark';
