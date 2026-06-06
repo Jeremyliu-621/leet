@@ -1,5 +1,4 @@
 import type { Problem } from '../../../lib/problems/types';
-import type { Difficulty } from '../../../lib/types';
 import { ProblemDescription } from './ProblemDescription';
 import { HintsSection } from './HintsSection';
 
@@ -37,24 +36,12 @@ interface ProblemPanelProps {
   hintCostLabel?: string;
 }
 
-/** Maps difficulty to Tailwind classes for the pill label (LeetCode colors). */
-function difficultyClasses(difficulty: Difficulty): string {
-  switch (difficulty) {
-    case 'easy':
-      return 'text-success border-success bg-success-bg';
-    case 'medium':
-      return 'text-warning border-warning bg-warning-bg';
-    case 'hard':
-      return 'text-error border-error bg-error-bg';
-  }
-}
-
 /**
  * Left panel — renders the full problem statement: title, difficulty, tags,
  * the markdown description, worked examples, optional hints, and constraints.
  */
 export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: ProblemPanelProps) {
-  const { title, difficulty, tags, description, examples, constraints, hints } = problem;
+  const { title, difficulty, description, examples, constraints, hints } = problem;
 
   return (
     <section
@@ -67,30 +54,13 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-base font-semibold leading-snug text-text">{title}</h1>
           <span
-            className={[
-              'inline-block rounded-md border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest',
-              difficultyClasses(difficulty),
-            ].join(' ')}
+            style={{ borderRadius: '16px 10px 18px 12px / 12px 18px 10px 16px' }}
+            className="inline-block border-[1.5px] border-text px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-text"
             aria-label={`Difficulty: ${difficulty}`}
           >
             {difficulty}
           </span>
         </div>
-
-        {/* Tag pills */}
-        {tags.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1.5" role="list" aria-label="Problem tags">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                role="listitem"
-                className="inline-block rounded-md border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-faint"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
 
         {/* Full-width divider separating the header from the statement */}
         <div className="-mx-6 mt-4 mb-6 h-px bg-border" aria-hidden="true" />

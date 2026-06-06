@@ -10,6 +10,31 @@ interface RunActionsProps {
   size?: 'sm' | 'md';
 }
 
+/** Hand-drawn, slightly wobbly outline for the cluster. */
+const SKETCH: React.CSSProperties = {
+  borderRadius: '12px 6px 14px 8px / 8px 14px 6px 12px',
+};
+
+/** A small hand-drawn cat-ear tip that peeks above the cluster. */
+function Ear({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      width="20"
+      height="16"
+      viewBox="0 0 20 16"
+      className={`fill-surface-2 stroke-border-strong ${className}`}
+      aria-hidden="true"
+    >
+      <path
+        d="M3 14.5 C4.5 8 6.5 3.5 9 2 C11.5 4 14 9 16 14.5 Z"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function Spinner() {
   return (
     <svg className="h-3.5 w-3.5 motion-safe:animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -20,9 +45,8 @@ function Spinner() {
 }
 
 /**
- * LeetCode-style Run / Submit cluster: a single rounded container holding a
- * neutral "Run" (play icon) and a green "Submit" (cloud-up icon), split by a
- * hairline divider. Lives in the top bar, centered, the way LeetCode does it.
+ * Run / Submit cluster: a single hand-drawn container holding a neutral "Run"
+ * (play icon) and a green "Submit" (cloud-up icon), split by a hairline divider.
  */
 export function RunActions({
   onRun,
@@ -37,7 +61,14 @@ export function RunActions({
   const textSize = size === 'sm' ? 'text-[11px]' : 'text-[12px]';
 
   return (
-    <div className="inline-flex items-center overflow-hidden rounded-lg border border-border bg-surface-2 shadow-sm transition-shadow hover:shadow-md">
+    <div className="relative inline-flex">
+      {/* subtle cat ears — at the corners, splayed out at 45° */}
+      <Ear className="absolute -top-1.5 left-0 z-0 origin-bottom -rotate-45" />
+      <Ear className="absolute -top-1.5 right-0 z-0 origin-bottom rotate-45" />
+      <div
+        style={SKETCH}
+        className="relative z-10 inline-flex items-center overflow-hidden border border-border-strong bg-surface-2 shadow-sm transition-shadow hover:shadow-md"
+      >
       <button
         type="button"
         onClick={onRun}
@@ -57,7 +88,7 @@ export function RunActions({
         )}
         {isRunning && verdictMode === 'run' ? 'Running' : 'Run'}
       </button>
-      <span className="h-5 w-px bg-border" aria-hidden="true" />
+      <span className="h-5 w-px bg-border-strong" aria-hidden="true" />
       <button
         type="button"
         onClick={onSubmit}
@@ -80,6 +111,7 @@ export function RunActions({
         )}
         {isRunning && verdictMode === 'submit' ? 'Submitting' : 'Submit'}
       </button>
+      </div>
     </div>
   );
 }
