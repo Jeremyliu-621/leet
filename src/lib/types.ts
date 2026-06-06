@@ -319,6 +319,7 @@ export type ThemePreference =
   | 'moonlight'
   | 'muted-ink'
   | 'terminal'
+  | 'dracula'
   | 'paper'
   | 'system';
 
@@ -333,6 +334,7 @@ export const ALL_THEMES: readonly ThemePreference[] = [
   'moonlight',
   'muted-ink',
   'terminal',
+  'dracula',
   'paper',
   'system',
 ] as const;
@@ -348,6 +350,7 @@ export const THEME_LABEL: Readonly<Record<ThemePreference, string>> = {
   moonlight: 'Moonlight',
   'muted-ink': 'Muted Ink',
   terminal: 'Terminal',
+  dracula: 'Dracula',
   paper: 'Paper',
   system: 'System',
 };
@@ -363,6 +366,7 @@ export const THEME_DESCRIPTION: Readonly<Record<ThemePreference, string>> = {
   moonlight: 'Cool indigo night sky.',
   'muted-ink': 'Warm sepia, low contrast.',
   terminal: 'Green-on-black retro CRT.',
+  dracula: 'Purple-accented classic.',
   paper: 'Warm cream, soft contrast.',
   system: 'Follows your OS setting.',
 };

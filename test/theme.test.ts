@@ -3,7 +3,6 @@ import { applyTheme, isLightTheme, resolveBaseTheme, resolveTheme } from '../src
 
 describe('resolveTheme', () => {
   beforeEach(() => {
-    // Make matchMedia resolve to dark by default; tests override.
     (globalThis as { window?: Window }).window = {
       matchMedia: vi.fn(() => ({ matches: true })),
     } as unknown as Window;
@@ -14,23 +13,23 @@ describe('resolveTheme', () => {
     expect(resolveTheme('light')).toBe('light');
   });
 
-  it('follows the OS for system when the OS prefers dark', () => {
+  it('resolves system to dark when OS prefers dark', () => {
     (globalThis as unknown as { window: Window }).window = {
       matchMedia: vi.fn(() => ({ matches: true })),
     } as unknown as Window;
-    expect(resolveTheme('system')).toBe('system-dark');
+    expect(resolveTheme('system')).toBe('dark');
   });
 
-  it('follows the OS for system when the OS prefers light', () => {
+  it('resolves system to light when OS prefers light', () => {
     (globalThis as unknown as { window: Window }).window = {
       matchMedia: vi.fn(() => ({ matches: false })),
     } as unknown as Window;
-    expect(resolveTheme('system')).toBe('system-light');
+    expect(resolveTheme('system')).toBe('light');
   });
 
-  it('falls back to system-dark when matchMedia is unavailable', () => {
+  it('falls back to dark when matchMedia is unavailable', () => {
     (globalThis as unknown as { window: Window }).window = {} as unknown as Window;
-    expect(resolveTheme('system')).toBe('system-dark');
+    expect(resolveTheme('system')).toBe('dark');
   });
 
   it('returns custom themes as-is', () => {
@@ -41,13 +40,13 @@ describe('resolveTheme', () => {
     expect(resolveTheme('moonlight')).toBe('moonlight');
     expect(resolveTheme('muted-ink')).toBe('muted-ink');
     expect(resolveTheme('terminal')).toBe('terminal');
+    expect(resolveTheme('dracula')).toBe('dracula');
     expect(resolveTheme('paper')).toBe('paper');
   });
 });
 
 describe('applyTheme', () => {
   beforeEach(() => {
-    // Stub a minimal document with documentElement.
     const root = { setAttribute: vi.fn() };
     (globalThis as unknown as { document: Document }).document = {
       documentElement: root,
@@ -68,19 +67,19 @@ describe('applyTheme', () => {
     expect(applyTheme('light')).toBe('light');
   });
 
-  it('writes system-dark when system preference is dark', () => {
+  it('writes dark when system preference is dark', () => {
     applyTheme('system');
     const setAttribute = document.documentElement.setAttribute as unknown as ReturnType<typeof vi.fn>;
-    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'system-dark');
+    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'dark');
   });
 
-  it('writes system-light when system preference is light', () => {
+  it('writes light when system preference is light', () => {
     (globalThis as unknown as { window: Window }).window = {
       matchMedia: vi.fn(() => ({ matches: false })),
     } as unknown as Window;
     applyTheme('system');
     const setAttribute = document.documentElement.setAttribute as unknown as ReturnType<typeof vi.fn>;
-    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'system-light');
+    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'light');
   });
 
   it('writes custom theme names directly', () => {
@@ -124,6 +123,7 @@ describe('resolveBaseTheme', () => {
     expect(resolveBaseTheme('nord')).toBe('dark');
     expect(resolveBaseTheme('serika-dark')).toBe('dark');
     expect(resolveBaseTheme('terminal')).toBe('dark');
+    expect(resolveBaseTheme('dracula')).toBe('dark');
   });
 });
 
@@ -131,13 +131,12 @@ describe('isLightTheme', () => {
   it('returns true for light themes', () => {
     expect(isLightTheme('light')).toBe(true);
     expect(isLightTheme('paper')).toBe(true);
-    expect(isLightTheme('system-light')).toBe(true);
   });
 
   it('returns false for dark themes', () => {
     expect(isLightTheme('dark')).toBe(false);
     expect(isLightTheme('nord')).toBe(false);
     expect(isLightTheme('terminal')).toBe(false);
-    expect(isLightTheme('system-dark')).toBe(false);
+    expect(isLightTheme('dracula')).toBe(false);
   });
 });

@@ -772,9 +772,9 @@ export function Options() {
 
         {/* Sidebar + content layout */}
         <div className="mx-auto flex w-full max-w-[960px] flex-1">
-          {/* Sidebar — hidden on small screens */}
-          <aside className="hidden w-48 shrink-0 lg:block">
-            <div className="sticky top-[57px] py-8 pr-2">
+          {/* Sidebar */}
+          <aside className="hidden w-44 shrink-0 border-r border-border md:block">
+            <div className="sticky top-[57px] px-4 py-8">
               <SettingsNav activeId={activeNav} />
             </div>
           </aside>
@@ -782,7 +782,7 @@ export function Options() {
           {/* Main content */}
           <main
             ref={mainRef}
-            className="min-w-0 flex-1 px-6 py-8 lg:pl-8"
+            className="min-w-0 flex-1 px-6 py-8 md:px-10"
             aria-label="Settings"
           >
             {/* ── Blocking ── */}

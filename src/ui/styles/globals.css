@@ -62,35 +62,6 @@
   --ll-info: #2563eb;
 }
 
-/* System themes — same base as dark/light but with a subtle blue accent
-   so the user can visually distinguish "system" from the manual options. */
-:root[data-theme='system-dark'] {
-  color-scheme: dark;
-  --ll-bg: #0a0a0c;
-  --ll-surface: #141418;
-  --ll-surface-2: #1c1c22;
-  --ll-border: #24243a;
-  --ll-border-strong: #36365a;
-  --ll-text: #e8e8f0;
-  --ll-muted: #8888a0;
-  --ll-faint: #7878a0;
-  --ll-accent: #8888ff;
-  --ll-on-accent: #0a0a0c;
-}
-
-:root[data-theme='system-light'] {
-  color-scheme: light;
-  --ll-bg: #fafaff;
-  --ll-surface: #f0f0f8;
-  --ll-surface-2: #e8e8f2;
-  --ll-border: #d8d8e8;
-  --ll-border-strong: #b8b8d0;
-  --ll-text: #0a0a12;
-  --ll-muted: #505068;
-  --ll-faint: #5858a0;
-  --ll-accent: #4444cc;
-  --ll-on-accent: #ffffff;
-}
 
 /* ── Serika Dark — warm golden accents on charcoal (MonkeyType inspired) ── */
 :root[data-theme='serika-dark'] {
@@ -211,6 +182,30 @@
   --ll-brand-strong: #20cc20;
 }
 
+/* ── Dracula — purple-accented dark palette ── */
+:root[data-theme='dracula'] {
+  color-scheme: dark;
+  --ll-bg: #282a36;
+  --ll-surface: #343746;
+  --ll-surface-2: #3e4156;
+  --ll-border: #4a4d66;
+  --ll-border-strong: #5e6180;
+  --ll-text: #f8f8f2;
+  --ll-muted: #9090a0;
+  --ll-faint: #7878a0;
+  --ll-accent: #bd93f9;
+  --ll-on-accent: #282a36;
+  --ll-brand: #bd93f9;
+  --ll-brand-strong: #a070e0;
+  --ll-success: #50fa7b;
+  --ll-success-bg: rgba(80, 250, 123, 0.12);
+  --ll-error: #ff5555;
+  --ll-error-bg: rgba(255, 85, 85, 0.12);
+  --ll-warning: #f1fa8c;
+  --ll-warning-bg: rgba(241, 250, 140, 0.12);
+  --ll-info: #8be9fd;
+}
+
 /* ── Paper — warm cream, soft contrast (light theme) ── */
 :root[data-theme='paper'] {
   color-scheme: light;
@@ -274,14 +269,14 @@ body {
 /* --- Dark theme highlight colours --- */
 :root,
 :root[data-theme='dark'],
-:root[data-theme='system-dark'],
 :root[data-theme='serika-dark'],
 :root[data-theme='nord'],
 :root[data-theme='botanical'],
 :root[data-theme='carbon'],
 :root[data-theme='moonlight'],
 :root[data-theme='muted-ink'],
-:root[data-theme='terminal'] {
+:root[data-theme='terminal'],
+:root[data-theme='dracula'] {
   --ll-hljs-keyword: #C586C0;
   --ll-hljs-function: #DCDCAA;
   --ll-hljs-string: #CE9178;
@@ -294,7 +289,6 @@ body {
 
 /* --- Light theme highlight colours --- */
 :root[data-theme='light'],
-:root[data-theme='system-light'],
 :root[data-theme='paper'] {
   --ll-hljs-keyword: #AF00DB;
   --ll-hljs-function: #795E26;

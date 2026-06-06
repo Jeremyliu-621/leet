@@ -14,12 +14,11 @@ export type ResolvedTheme =
   | 'moonlight'
   | 'muted-ink'
   | 'terminal'
-  | 'paper'
-  | 'system-dark'
-  | 'system-light';
+  | 'dracula'
+  | 'paper';
 
 /** Themes whose editor should use the light CM theme. All others use dark. */
-const LIGHT_THEMES: ReadonlySet<string> = new Set(['light', 'paper', 'system-light']);
+const LIGHT_THEMES: ReadonlySet<string> = new Set(['light', 'paper']);
 
 /** Returns true if a resolved theme string should use the light editor/syntax theme. */
 export function isLightTheme(resolved: string): boolean {
@@ -28,13 +27,16 @@ export function isLightTheme(resolved: string): boolean {
 
 const THEME_ATTRIBUTE = 'data-theme';
 
-/** Resolves a stored preference to the concrete theme that should be applied. */
+/**
+ * Resolves a stored preference to the concrete theme that should be applied.
+ * `system` resolves to plain `dark` or `light` based on the OS setting.
+ */
 export function resolveTheme(preference: ThemePreference): ResolvedTheme {
   if (preference === 'system') {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-      return 'system-dark';
+      return 'dark';
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'system-dark' : 'system-light';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
   return preference as ResolvedTheme;
 }

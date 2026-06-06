@@ -54,6 +54,7 @@ const SWATCH_COLORS: Record<ThemePreference, [bg: string, accent: string]> = {
   moonlight:     ['#1e2030', '#82aaff'],
   'muted-ink':   ['#23201c', '#c8a874'],
   terminal:      ['#0c0c0c', '#33ff33'],
+  dracula:       ['#282a36', '#bd93f9'],
   paper:         ['#f5f0e8', '#3a352e'],
   system:        ['#888888', '#888888'],
 };
@@ -127,12 +128,7 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
                     className="sr-only"
                   />
                   <ThemeSwatch theme={value} />
-                  <div className="min-w-0">
-                    <span className="block truncate font-mono text-xs text-text">{label}</span>
-                    {selected && (
-                      <span className="block truncate font-mono text-[9px] text-faint">{description}</span>
-                    )}
-                  </div>
+                  <span className="truncate font-mono text-xs text-text">{label}</span>
                 </label>
               );
             })}
