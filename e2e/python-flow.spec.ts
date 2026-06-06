@@ -149,6 +149,10 @@ test.describe('LeetMeow Python end-to-end @e2e @python', () => {
       // so we give the unlock-token poll a generous timeout.
       await page.getByRole('button', { name: /submit/i }).click();
 
+      // Solving surfaces a confirmation gate; choose "open anyway" to spend
+      // the earned access. Only then is the unlock token written.
+      await page.getByRole('button', { name: /open .* anyway/i }).click({ timeout: 15_000 });
+
       let token: { domain: string; problemId: string; expiresAt: number } | null = null;
       for (let attempt = 0; attempt < 250; attempt++) {
         token = await sw.evaluate(async () => {

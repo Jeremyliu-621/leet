@@ -93,9 +93,13 @@ async function solveAndSubmit(page: Page): Promise<{ problemId: string; verdictT
   await page.keyboard.insertText(solution);
   await page.getByRole('button', { name: /submit/i }).click();
 
-  // Give the verdict region a moment to render.
-  await page.waitForTimeout(800);
+  // Solving surfaces a confirmation gate before the site is entered. Wait for
+  // it, capture the body for diagnostics, then choose "open anyway" so the
+  // unlock is granted and the tab redirects to the target host.
+  const continueBtn = page.getByRole('button', { name: /open .* anyway/i });
+  await continueBtn.waitFor({ state: 'visible', timeout: 10_000 });
   const verdictText = (await page.locator('body').innerText()).slice(0, 500);
+  await continueBtn.click();
   return { problemId: problem.id, verdictText };
 }
 

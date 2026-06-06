@@ -19,11 +19,19 @@ export interface GrantUnlockRequest {
   attempts?: number;
   /** The language the user solved in; validated by the SW before persisting. */
   language?: string;
+  /**
+   * Whether to actually unlock the site. Defaults to `true`. When `false`, the
+   * solve is still recorded (streak + stats credit) but no unlock token is
+   * created — used when the user solves but then chooses to keep practicing or
+   * back out at the post-solve confirmation gate instead of entering the site.
+   */
+  grantAccess?: boolean;
 }
 
 export interface GrantUnlockResponse {
   ok: true;
-  token: UnlockToken;
+  /** The minted unlock token; omitted when `grantAccess` was `false`. */
+  token?: UnlockToken;
 }
 
 export type ChallengeFailureReason = 'timeout' | 'gave-up' | 'attempts-exhausted';

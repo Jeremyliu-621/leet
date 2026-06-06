@@ -170,6 +170,22 @@ type PageState =
   | { status: 'no-problem' }
   | { status: 'ready'; problem: Problem; prefs: UserPreferences }
   | {
+      /**
+       * Post-solve confirmation gate (target/blocked-site mode only). The user
+       * has solved the problem and earned access, but must consciously choose
+       * to enter the distracting site, keep practicing, or back out. Access is
+       * only granted if they pick "continue".
+       */
+      status: 'confirm-entry';
+      problem: Problem;
+      prefs: UserPreferences;
+      language: SupportedLanguage;
+      /** Elapsed wall-clock seconds spent solving — recorded with the solve. */
+      elapsedSec: number;
+      /** Submission count including the passing one — recorded with the solve. */
+      attempts: number;
+    }
+  | {
       status: 'solved-standalone';
       problemTitle: string;
       difficulty: string;
@@ -474,6 +490,100 @@ function SolvedStandaloneScreen({
           Close
         </button>
       </div>
+    </div>
+  );
+}
+
+/**
+ * The post-solve confirmation gate. Shown after a correct submission in
+ * blocked-site mode, before the user is let through to the distracting site.
+ *
+ * Intentional, friction-aligned design: the two "stay off the distraction"
+ * choices ("No" and "Keep practicing") are comically oversized, while the
+ * "open anyway" escape hatch is deliberately tiny — the layout nudges toward
+ * not breaking focus, without ever removing the choice.
+ */
+function ConfirmEntryScreen({
+  domain,
+  unlockMinutes,
+  onContinue,
+  onPractice,
+  onLeave,
+}: {
+  domain: string | null;
+  unlockMinutes: number;
+  onContinue: () => void;
+  onPractice: () => void;
+  onLeave: () => void;
+}) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  // Once a choice is made a navigation is in flight; disable everything so a
+  // double-click can't fire two actions (e.g. grant + practice).
+  const [busy, setBusy] = useState(false);
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+
+  const guard = (fn: () => void) => () => {
+    if (busy) return;
+    setBusy(true);
+    fn();
+  };
+
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-10 bg-bg px-6 py-10 text-center">
+      <div className="max-w-xl space-y-3">
+        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-success">
+          Solved
+        </p>
+        <h1
+          ref={headingRef}
+          tabIndex={-1}
+          className="text-2xl font-semibold tracking-tight text-text outline-none sm:text-3xl"
+        >
+          Are you sure you want to continue?
+        </h1>
+        <p className="text-sm leading-relaxed text-muted">
+          {domain ? (
+            <>
+              You've earned {unlockMinutes} minute{unlockMinutes === 1 ? '' : 's'} on{' '}
+              <span className="font-mono text-text">{domain}</span>.
+            </>
+          ) : (
+            <>You've earned a few minutes of access.</>
+          )}
+        </p>
+      </div>
+
+      {/* The two "stay focused" choices, deliberately oversized. */}
+      <div className="flex w-full max-w-3xl flex-col items-stretch gap-5 sm:flex-row sm:justify-center">
+        <button
+          type="button"
+          onClick={guard(onLeave)}
+          disabled={busy}
+          className="flex-1 rounded-2xl border-2 border-border bg-surface px-12 py-10 text-2xl font-bold text-text transition-colors hover:border-border-strong hover:bg-surface-2 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:opacity-50 sm:text-3xl"
+        >
+          No
+        </button>
+        <button
+          type="button"
+          onClick={guard(onPractice)}
+          disabled={busy}
+          className="flex-1 rounded-2xl border-2 border-accent bg-accent px-12 py-10 text-2xl font-bold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent disabled:opacity-50 sm:text-3xl"
+        >
+          Keep practicing
+        </button>
+      </div>
+
+      {/* The "give in" choice, deliberately tiny. */}
+      <button
+        type="button"
+        onClick={guard(onContinue)}
+        disabled={busy}
+        className="font-mono text-[10px] text-faint underline underline-offset-2 transition-colors hover:text-muted focus:outline-none focus-visible:rounded-sm focus-visible:ring-1 focus-visible:ring-accent disabled:opacity-50"
+      >
+        open {domain ?? 'the site'} anyway
+      </button>
     </div>
   );
 }
@@ -881,8 +991,6 @@ export function Challenge() {
       setSubmissions(updatedSubmissions);
 
       if (result.outcome === 'accepted') {
-        // About to navigate back to the target — suppress the beforeunload prompt.
-        isResolvingRef.current = true;
         // Clear the saved draft and submission history — problem is solved.
         try {
           await updateValue('draftCode', (drafts) => {
@@ -902,29 +1010,42 @@ export function Challenge() {
         }
         const elapsedSec = Math.max(0, prefs.challengeTimeLimitSec - secondsLeft);
 
-        // Notify service worker → grant unlock token.
-        try {
-          await chrome.runtime.sendMessage({
-            type: 'leetmeow/grant-unlock',
-            domain: domain.current ?? '',
-            problemId: problem.id,
-            durationMs: prefs.unlockDurationMin * 60 * 1000,
-            language,
-            attempts: attempts + 1,
-            solveDurationMs: elapsedSec * 1000,
-          });
-        } catch {
-          // SW may be transiently unavailable — redirect still proceeds.
-        }
-
-        // Brief pause so the user sees their "Accepted" verdict before navigating.
-        await new Promise<void>((resolve) => setTimeout(resolve, 1200));
-
-        // Redirect back to the original target.
         if (targetUrl.current) {
-          window.location.href = targetUrl.current;
+          // Blocked-site mode: solving earns access, but the user must
+          // consciously choose to spend it. Don't grant the unlock yet —
+          // show the confirmation gate; its handlers send grant-unlock (or a
+          // practice-only solve record) based on the choice. Brief pause so the
+          // green "Accepted" verdict is visible before the gate takes over.
+          await new Promise<void>((resolve) => setTimeout(resolve, 1000));
+          setPageState({
+            status: 'confirm-entry',
+            problem,
+            prefs,
+            language,
+            elapsedSec,
+            attempts: attempts + 1,
+          });
         } else {
-          // No target (standalone/practice mode) — show a "try another" screen.
+          // No target (standalone/practice mode) — record the solve and show a
+          // "try another" screen. There is no site to enter, so no gate.
+          isResolvingRef.current = true;
+          try {
+            await chrome.runtime.sendMessage({
+              type: 'leetmeow/grant-unlock',
+              domain: domain.current ?? '',
+              problemId: problem.id,
+              durationMs: prefs.unlockDurationMin * 60 * 1000,
+              language,
+              attempts: attempts + 1,
+              solveDurationMs: elapsedSec * 1000,
+            });
+          } catch {
+            // SW may be transiently unavailable — the solved screen still shows.
+          }
+
+          // Brief pause so the user sees their "Accepted" verdict before transitioning.
+          await new Promise<void>((resolve) => setTimeout(resolve, 1200));
+
           // Determine personal best from prior solve records.
           let isPersonalBest = true;
           let prevBestSec: number | null = null;
@@ -1107,6 +1228,69 @@ export function Challenge() {
   }, [pageState, handleFail]);
 
   // -------------------------------------------------------------------------
+  // Post-solve confirmation gate handlers (blocked-site mode)
+  // -------------------------------------------------------------------------
+
+  /**
+   * Records the solve (streak + stats credit). `grantAccess` controls whether
+   * the site is actually unlocked. Best-effort — a transient SW failure must
+   * not strand the user on the gate, so callers navigate regardless.
+   */
+  const recordGateSolve = useCallback(
+    async (grantAccess: boolean) => {
+      if (pageState.status !== 'confirm-entry') return;
+      const { problem, prefs, language: lang, elapsedSec, attempts: att } = pageState;
+      try {
+        await chrome.runtime.sendMessage({
+          type: 'leetmeow/grant-unlock',
+          domain: domain.current ?? '',
+          problemId: problem.id,
+          durationMs: prefs.unlockDurationMin * 60 * 1000,
+          language: lang,
+          attempts: att,
+          solveDurationMs: elapsedSec * 1000,
+          grantAccess,
+        });
+      } catch {
+        /* SW transiently unavailable — navigation still proceeds. */
+      }
+    },
+    [pageState],
+  );
+
+  // "open anyway" — grant the unlock and enter the site.
+  const handleGateContinue = useCallback(async () => {
+    isResolvingRef.current = true;
+    await recordGateSolve(true);
+    if (targetUrl.current) window.location.href = targetUrl.current;
+  }, [recordGateSolve]);
+
+  // "Keep practicing" — credit the solve, don't unlock, load a fresh problem
+  // for the same site.
+  const handleGatePractice = useCallback(async () => {
+    isResolvingRef.current = true;
+    await recordGateSolve(false);
+    const base = window.location.pathname;
+    window.location.href = targetUrl.current
+      ? `${base}?target=${encodeURIComponent(targetUrl.current)}`
+      : base;
+  }, [recordGateSolve]);
+
+  // "No" — credit the solve, don't unlock, land on the calm Locked page.
+  const handleGateLeave = useCallback(async () => {
+    isResolvingRef.current = true;
+    await recordGateSolve(false);
+    try {
+      const blockedUrl = chrome.runtime.getURL('src/pages/blocked/index.html');
+      window.location.href = domain.current
+        ? `${blockedUrl}?domain=${encodeURIComponent(domain.current)}`
+        : blockedUrl;
+    } catch {
+      window.close();
+    }
+  }, [recordGateSolve]);
+
+  // -------------------------------------------------------------------------
   // Draft code auto-save (800 ms debounce; prunes entries older than 7 days)
   // -------------------------------------------------------------------------
 
@@ -1189,6 +1373,18 @@ export function Challenge() {
         streak={pageState.streak}
         solvedTodayCount={pageState.solvedTodayCount}
         totalSolved={pageState.totalSolved}
+      />
+    );
+  }
+
+  if (pageState.status === 'confirm-entry') {
+    return (
+      <ConfirmEntryScreen
+        domain={domain.current}
+        unlockMinutes={pageState.prefs.unlockDurationMin}
+        onContinue={() => void handleGateContinue()}
+        onPractice={() => void handleGatePractice()}
+        onLeave={() => void handleGateLeave()}
       />
     );
   }

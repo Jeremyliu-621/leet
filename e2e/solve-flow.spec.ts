@@ -108,8 +108,13 @@ test.describe('LeetMeow solve-and-unlock @e2e', () => {
       await page.keyboard.press('Delete');
       await page.keyboard.insertText(solution);
 
-      // Click Submit and wait for the runner + judge to grant the unlock.
+      // Click Submit and wait for the runner + judge to accept the solution.
       await page.getByRole('button', { name: /submit/i }).click();
+
+      // Solving now surfaces a confirmation gate before the site is unlocked.
+      // Choose "open anyway" to spend the earned access; only then is the
+      // unlock token written and the tab redirected to the target.
+      await page.getByRole('button', { name: /open .* anyway/i }).click({ timeout: 10_000 });
 
       // Poll chrome.storage.local.unlockTokens for the example.com entry.
       let token: { domain: string; expiresAt: number; problemId: string } | null = null;

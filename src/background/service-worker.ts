@@ -50,12 +50,10 @@ async function handleMessage(
 
 async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse> {
   const now = Date.now();
-  const token: UnlockToken = createToken({
-    domain: request.domain,
-    problemId: request.problemId,
-    durationMs: request.durationMs,
-    now,
-  });
+  // Default true: a missing flag means "solved and entering the site", the
+  // original behaviour. `false` records the solve without unlocking — the user
+  // solved but chose to keep practicing / back out at the confirmation gate.
+  const grantAccess = request.grantAccess !== false;
   const [tokens, solvedHistory, streakSummary, streakHistory] = await Promise.all([
     getValue('unlockTokens'),
     getValue('solvedProblems'),
@@ -68,24 +66,41 @@ async function grantUnlock(request: GrantUnlockRequest): Promise<RuntimeResponse
     durationMs: request.solveDurationMs ?? 0,
     attempts: request.attempts ?? 0,
     language: isSupportedLanguage(request.language) ? request.language : 'javascript',
-    domain: token.domain,
+    domain: request.domain,
   };
   const nextSolved = [...solvedHistory, record].slice(-MAX_SOLVED_HISTORY);
   const streak = recordSolve(streakSummary, streakHistory, { at: new Date(now) });
-  await Promise.all([
-    setValue('unlockTokens', upsertToken(tokens, token, now)),
+
+  // The solve always earns streak + stats credit, regardless of whether the
+  // user enters the site.
+  const writes: Array<Promise<void>> = [
     setValue('solvedProblems', nextSolved),
     setValue('streakSummary', streak.summary),
     setValue('streakHistory', streak.history),
-  ]);
-  // Critical: synchronously reconcile here so the DNR rule for the unlocked
-  // domain is definitively removed before the caller (the challenge page)
-  // navigates to the target URL. Without this await, the storage.onChanged
-  // -> reconcile() path is async and the challenge page's navigation races
-  // the stale rule, bouncing back into a fresh challenge.
-  await reconcile(now);
+  ];
+
+  let token: UnlockToken | undefined;
+  if (grantAccess) {
+    token = createToken({
+      domain: request.domain,
+      problemId: request.problemId,
+      durationMs: request.durationMs,
+      now,
+    });
+    writes.push(setValue('unlockTokens', upsertToken(tokens, token, now)));
+  }
+  await Promise.all(writes);
+
+  if (grantAccess) {
+    // Critical: synchronously reconcile here so the DNR rule for the unlocked
+    // domain is definitively removed before the caller (the challenge page)
+    // navigates to the target URL. Without this await, the storage.onChanged
+    // -> reconcile() path is async and the challenge page's navigation races
+    // the stale rule, bouncing back into a fresh challenge.
+    await reconcile(now);
+  }
   void updateBadge(nextSolved, now);
-  return { ok: true, token };
+  return token ? { ok: true, token } : { ok: true };
 }
 
 async function failChallenge(
