@@ -1,6 +1,6 @@
 import type { CooldownPendingChange, CooldownChangeKind } from '../types';
 
-// Cooldown pipeline — the heart of LeetLock's anti-bypass story.
+// Cooldown pipeline — the heart of LeetMeow's anti-bypass story.
 //
 // When a user makes a "strictness-reducing" change (e.g. remove a block rule
 // while strict mode is on), the change is not applied immediately. A

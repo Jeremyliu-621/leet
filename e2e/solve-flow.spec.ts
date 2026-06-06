@@ -55,7 +55,7 @@ function buildSolutionScript(problem: Problem): string {
   return `function ${problem.functionName}(${paramList}) {\n  return (${refSource})(${paramList});\n}\n`;
 }
 
-test.describe('LeetLock solve-and-unlock @e2e', () => {
+test.describe('LeetMeow solve-and-unlock @e2e', () => {
   test('solving a problem writes an unlock token for the target domain', async () => {
     const context = await launch();
     try {

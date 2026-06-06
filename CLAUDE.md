@@ -1,6 +1,6 @@
-# LeetLock — Project Guide for Claude
+# LeetMeow — Project Guide for Claude
 
-> **LeetLock turns distracting websites into mini coding-interview gates: solve a problem, earn timed access.**
+> **LeetMeow turns distracting websites into mini coding-interview gates: solve a problem, earn timed access.**
 > Positioning: *"Cold Turkey for CS students, except every distraction charges you one algorithm problem."*
 
 This file is loaded into every session. Read it fully, then open `docs/PROGRESS.md` to find what to do next.

@@ -1,4 +1,4 @@
-# LeetLock — Decision Log
+# LeetMeow — Decision Log
 
 Append-only. Each entry: date, decision, rationale, and (if any) alternatives rejected.
 Never rewrite history — if a decision is reversed, add a new entry that supersedes the old one.
@@ -46,12 +46,12 @@ muted, `#FFFFFF` accent. Emphasis comes from contrast and typographic weight.
 ### 2026-05-21 — D6: Repository
 
 Build into the existing public repo `Jeremyliu-621/leet` (already wired as `origin`). Do **not**
-create a separate `leetlock` repo. Product name remains "LeetLock"; `package.json` name is
-`leetlock`. **Rationale:** explicit user instruction.
+create a separate `leetmeow` repo. Product name remains "LeetMeow"; `package.json` name is
+`leetmeow`. **Rationale:** explicit user instruction.
 
 ### 2026-05-21 — D7: No backend in the MVP
 
-LeetLock ships as a pure client-side extension. The accountability-partner feature is a **local
+LeetMeow ships as a pure client-side extension. The accountability-partner feature is a **local
 code gate** — the partner sets a code; protected settings require it. The partner email is stored
 for display only; the MVP sends no email (that needs a server).
 **Rationale:** keeps the MVP shippable and honest. Real partner notifications are a post-MVP item.
@@ -73,8 +73,8 @@ ephemeral MV3 service worker. Each pending change has a stable `id`, making appl
 
 ### 2026-05-21 — D10: Repurposed the pre-existing `CLAUDE.md`
 
-The repo already contained a generic "plan-mode review" `CLAUDE.md` unrelated to LeetLock. It was
-rewritten into the LeetLock project guide. The human's **engineering preferences** from it (DRY,
+The repo already contained a generic "plan-mode review" `CLAUDE.md` unrelated to LeetMeow. It was
+rewritten into the LeetMeow project guide. The human's **engineering preferences** from it (DRY,
 heavily tested, engineered-enough, handle edge cases, explicit over clever) were **preserved** in
 `CLAUDE.md` §2. The plan-mode-review workflow was dropped as inapplicable to an autonomous build.
 
@@ -200,7 +200,7 @@ editor inline. Decisions:
 - **The user supplies their own API key**, entered in Settings. It is stored in
   `chrome.storage.local` (new `aiSettings` key) — device-only, never synced through a
   Google account, and **never committed to the repo** (hard constraint §"No secrets").
-- Requests go **directly from the browser to Google's Generative Language API**; LeetLock
+- Requests go **directly from the browser to Google's Generative Language API**; LeetMeow
   has no server and never sees the key or code. Usage is on the user's own quota.
 - The engine is split into pure, tested pieces (`prompt.ts`, `parse.ts`) + a thin REST
   client (`gemini.ts`). Structured output via `responseSchema` keeps hints line-anchored.

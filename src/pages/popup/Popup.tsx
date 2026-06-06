@@ -215,7 +215,7 @@ export function Popup() {
   return (
     <main className="min-w-[340px] overflow-x-hidden bg-bg p-5 text-text">
       <header className="flex items-baseline justify-between">
-        <h1 className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetLock</h1>
+        <h1 className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetMeow</h1>
         <time
           className="font-mono text-[10px] text-faint"
           dateTime={localDateString()}

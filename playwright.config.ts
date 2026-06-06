@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-// Playwright end-to-end tests for the LeetLock Chrome extension.
+// Playwright end-to-end tests for the LeetMeow Chrome extension.
 //
 // MV3 extensions cannot be loaded in pure-headless Chromium reliably, so these
 // tests run headed by default. CI can opt in via `--headless=new` once a

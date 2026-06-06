@@ -10,14 +10,14 @@ const KEY_BITS = 256;
 
 function getSubtle(): SubtleCrypto {
   if (typeof crypto === 'undefined' || crypto.subtle === undefined) {
-    throw new Error('LeetLock: SubtleCrypto is not available in this context');
+    throw new Error('LeetMeow: SubtleCrypto is not available in this context');
   }
   return crypto.subtle;
 }
 
 function getRandom(): Crypto {
   if (typeof crypto === 'undefined' || crypto.getRandomValues === undefined) {
-    throw new Error('LeetLock: crypto.getRandomValues is not available');
+    throw new Error('LeetMeow: crypto.getRandomValues is not available');
   }
   return crypto;
 }

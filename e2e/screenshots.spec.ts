@@ -35,7 +35,7 @@ async function getExtensionId(context: BrowserContext): Promise<string> {
   return match[1];
 }
 
-test.describe('LeetLock screenshots @screenshots', () => {
+test.describe('LeetMeow screenshots @screenshots', () => {
   test.skip(
     process.env['CI'] === 'true',
     'screenshots run locally to avoid headed-chromium in CI',

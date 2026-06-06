@@ -5,9 +5,9 @@ import type { Extension } from '@codemirror/state';
 
 /**
  * Pure-grayscale CodeMirror 6 theme. Zero hue — emphasis by contrast and weight.
- * Mirrors the LeetLock design-system tokens from globals.css (--ll-*).
+ * Mirrors the LeetMeow design-system tokens from globals.css (--ll-*).
  */
-const leetlockThemeDark = EditorView.theme(
+const leetmeowThemeDark = EditorView.theme(
   {
     '&': {
       backgroundColor: '#262626',
@@ -138,7 +138,7 @@ const leetlockThemeDark = EditorView.theme(
   { dark: true },
 );
 
-const leetlockThemeLight = EditorView.theme(
+const leetmeowThemeLight = EditorView.theme(
   {
     '&': {
       backgroundColor: '#ffffff',
@@ -254,7 +254,7 @@ const leetlockThemeLight = EditorView.theme(
  * Syntax highlighting with colour — VS Code / LeetCode inspired.
  * Dark bg remains from the design system; syntax tokens get real hues.
  */
-const leetlockHighlightDark = HighlightStyle.define([
+const leetmeowHighlightDark = HighlightStyle.define([
   // Keywords: purple (if, return, const, let, class, function …)
   { tag: tags.keyword, color: '#C586C0' },
   { tag: tags.controlKeyword, color: '#C586C0' },
@@ -299,7 +299,7 @@ const leetlockHighlightDark = HighlightStyle.define([
 /**
  * Light-mode syntax highlighting with colour.
  */
-const leetlockHighlightLight = HighlightStyle.define([
+const leetmeowHighlightLight = HighlightStyle.define([
   { tag: tags.keyword, color: '#AF00DB' },
   { tag: tags.controlKeyword, color: '#AF00DB' },
   { tag: tags.standard(tags.name), color: '#267F99' },
@@ -326,6 +326,6 @@ const leetlockHighlightLight = HighlightStyle.define([
   { tag: tags.escape, color: '#EE0000' },
 ]);
 
-export const leetlockEditorThemeDark: Extension = [leetlockThemeDark, syntaxHighlighting(leetlockHighlightDark)];
-export const leetlockEditorThemeLight: Extension = [leetlockThemeLight, syntaxHighlighting(leetlockHighlightLight)];
-export const leetlockEditorTheme = leetlockEditorThemeDark;
+export const leetmeowEditorThemeDark: Extension = [leetmeowThemeDark, syntaxHighlighting(leetmeowHighlightDark)];
+export const leetmeowEditorThemeLight: Extension = [leetmeowThemeLight, syntaxHighlighting(leetmeowHighlightLight)];
+export const leetmeowEditorTheme = leetmeowEditorThemeDark;

@@ -21,7 +21,7 @@ export interface DraftCodeEntry {
   savedAt: number;
 }
 
-/** The full shape of LeetLock's persisted state, keyed by storage key. */
+/** The full shape of LeetMeow's persisted state, keyed by storage key. */
 export interface StorageSchema {
   blockedRules: BlockRule[];
   keywordRules: KeywordRule[];

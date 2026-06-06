@@ -67,7 +67,7 @@ export function ImportExportSection() {
         getValue('userPreferences'),
       ]);
       const payload = {
-        _leetlock_export: true,
+        _leetmeow_export: true,
         exportedAt: new Date().toISOString(),
         blockedRules,
         keywordRules,
@@ -77,7 +77,7 @@ export function ImportExportSection() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `leetlock-settings-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `leetmeow-settings-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
       setExportState('done');
@@ -101,9 +101,9 @@ export function ImportExportSection() {
       if (
         typeof data !== 'object' ||
         data === null ||
-        !(data as Record<string, unknown>)._leetlock_export
+        !(data as Record<string, unknown>)._leetmeow_export
       ) {
-        throw new Error('Not a valid LeetLock settings file.');
+        throw new Error('Not a valid LeetMeow settings file.');
       }
 
       const parsed = data as Record<string, unknown>;

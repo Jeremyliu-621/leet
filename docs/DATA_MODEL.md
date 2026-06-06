@@ -1,6 +1,6 @@
-# LeetLock — Data Model
+# LeetMeow — Data Model
 
-Storage schema for the LeetLock MVP. Canonical TypeScript lives in `src/lib/types.ts` and
+Storage schema for the LeetMeow MVP. Canonical TypeScript lives in `src/lib/types.ts` and
 `src/lib/storage/schema.ts`; this document is the design rationale.
 
 ---

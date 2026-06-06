@@ -20,7 +20,7 @@ export default {
         accent: 'var(--ll-accent)',
         'on-accent': 'var(--ll-on-accent)',
         // Semantic + brand colors (color is allowed where it carries meaning:
-        // syntax, verdicts, run/submit actions, and LeetLock's identity).
+        // syntax, verdicts, run/submit actions, and LeetMeow's identity).
         brand: 'var(--ll-brand)',
         'brand-strong': 'var(--ll-brand-strong)',
         success: 'var(--ll-success)',

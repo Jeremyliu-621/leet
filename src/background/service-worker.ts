@@ -17,7 +17,7 @@ import type {
   RuntimeResponse,
 } from '../lib/messaging/runtime';
 
-// LeetLock background service worker — a thin shell of event listeners that
+// LeetMeow background service worker — a thin shell of event listeners that
 // delegate all decision-making to `reconcile()` (see `./reconcile.ts`) and the
 // message handlers below. The SW is ephemeral (Chrome terminates it after
 // ~30 s idle), so no state lives at module scope.
@@ -31,7 +31,7 @@ const MAX_SOLVED_HISTORY = 1000;
 function isRuntimeMessage(value: unknown): value is RuntimeMessage {
   if (value === null || typeof value !== 'object') return false;
   const type = (value as { type?: unknown }).type;
-  return typeof type === 'string' && type.startsWith('leetlock/');
+  return typeof type === 'string' && type.startsWith('leetmeow/');
 }
 
 async function handleMessage(
@@ -39,11 +39,11 @@ async function handleMessage(
   sender: chrome.runtime.MessageSender,
 ): Promise<RuntimeResponse> {
   switch (message.type) {
-    case 'leetlock/grant-unlock':
+    case 'leetmeow/grant-unlock':
       return grantUnlock(message);
-    case 'leetlock/fail-challenge':
+    case 'leetmeow/fail-challenge':
       return failChallenge(message, sender);
-    case 'leetlock/open-challenge':
+    case 'leetmeow/open-challenge':
       return openChallenge(message, sender);
   }
 }
@@ -212,7 +212,7 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 // --- Lifecycle wiring -----------------------------------------------------
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.info('[LeetLock] installed / updated');
+  console.info('[LeetMeow] installed / updated');
   void reconcile();
   void getValue('solvedProblems').then((s) => updateBadge(s));
 });

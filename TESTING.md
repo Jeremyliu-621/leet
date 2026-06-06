@@ -1,6 +1,6 @@
-# Testing LeetLock
+# Testing LeetMeow
 
-LeetLock is tested at three levels: strict TypeScript, unit + integration tests
+LeetMeow is tested at three levels: strict TypeScript, unit + integration tests
 in Vitest, and a manual end-to-end pass against real Chrome. The first two run
 on every commit; the third is the final 5 % a unit test can't reach.
 
@@ -51,16 +51,16 @@ Then in Chrome:
 1. Open `chrome://extensions`.
 2. Enable **Developer mode** (top-right toggle).
 3. Click **Load unpacked** and choose the `dist/` folder produced above.
-4. Pin the LeetLock toolbar icon for easy access.
+4. Pin the LeetMeow toolbar icon for easy access.
 
 ### E2E flow A — Block, gate, solve, unlock
 
-1. Open the LeetLock options page (right-click the icon → Options).
+1. Open the LeetMeow options page (right-click the icon → Options).
 2. Add a block rule: domain `example.com` (or, while the Settings UI is in
    flight, set it manually via DevTools on any extension page:
    `await chrome.storage.sync.set({ blockedRules: [{ id: 'r1', kind: 'domain', pattern: 'example.com', enabled: true, createdAt: Date.now() }] })`).
 3. Open a new tab and navigate to `https://example.com`.
-4. **Expected:** the tab is redirected to the LeetLock challenge page; a
+4. **Expected:** the tab is redirected to the LeetMeow challenge page; a
    problem from the local bank is rendered with a code editor and timer.
 5. Solve the problem (use the reference solutions in `test/bank-solutions.ts`
    for quick verification). Click **Submit**.
@@ -109,7 +109,7 @@ Then in Chrome:
 ## Known limits — be honest about them
 
 - **No true anti-uninstall.** Manifest V3 cannot prevent a user removing the
-  extension from `chrome://extensions`. LeetLock raises *friction* (cooldowns,
+  extension from `chrome://extensions`. LeetMeow raises *friction* (cooldowns,
   password/partner locks, streak loss), not a hard guarantee. See
   `docs/RESEARCH.md` §8.
 - **SPA navigations** are caught via the content script + the SW's

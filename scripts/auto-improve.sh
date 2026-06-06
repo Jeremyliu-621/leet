@@ -1,5 +1,5 @@
 #!/bin/bash
-# auto-improve.sh — Scheduled maintenance script for LeetLock
+# auto-improve.sh — Scheduled maintenance script for LeetMeow
 # Finds and fixes lint issues, type errors, and other code quality problems.
 # Intended to be run as a cron/scheduled task.
 

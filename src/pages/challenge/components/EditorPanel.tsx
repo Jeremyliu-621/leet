@@ -47,7 +47,7 @@ import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/sea
 import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
-import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
+import { leetmeowEditorThemeDark, leetmeowEditorThemeLight } from '../codemirror-theme';
 import { isLightTheme } from '../../../lib/theme';
 import { normalizeIndentation } from '../../../lib/editor/indent';
 import type { JudgeResult } from '../../../lib/judge';
@@ -1297,7 +1297,7 @@ export function EditorPanel({
           },
         ]),
         themeCompartmentRef.current.of(
-          isLightTheme(resolvedTheme) ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+          isLightTheme(resolvedTheme) ? leetmeowEditorThemeLight : leetmeowEditorThemeDark,
         ),
         // Font size goes through its own Compartment so it can be reconfigured
         // live when the user adjusts it in Settings without rebuilding the editor.
@@ -1402,7 +1402,7 @@ export function EditorPanel({
     if (!view) return;
     view.dispatch({
       effects: themeCompartmentRef.current.reconfigure(
-        isLightTheme(resolvedTheme) ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+        isLightTheme(resolvedTheme) ? leetmeowEditorThemeLight : leetmeowEditorThemeDark,
       ),
     });
   }, [resolvedTheme]);

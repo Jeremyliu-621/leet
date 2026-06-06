@@ -119,7 +119,7 @@ export function AiHintsSection({ settings, onChange }: AiHintsSectionProps) {
 
         <p className="rounded-md border border-border bg-surface-2 px-3 py-2 font-mono text-[10px] leading-relaxed text-faint">
           Privacy: requests go directly from your browser to Google's Generative Language API using
-          your key. LeetLock has no server and never sees your key or your code. Usage counts against
+          your key. LeetMeow has no server and never sees your key or your code. Usage counts against
           your own Gemini quota.
         </p>
       </div>

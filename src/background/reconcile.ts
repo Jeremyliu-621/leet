@@ -5,12 +5,12 @@ import { nextApply, pickApplicable } from '../lib/cooldown/cooldown';
 import { applyAll } from '../lib/cooldown/apply';
 import { damageStreak } from '../lib/streak/streak';
 
-// The single piece of LeetLock's runtime state machine — extracted from the
+// The single piece of LeetMeow's runtime state machine — extracted from the
 // service worker so it can be exercised by integration tests against an
 // in-memory chrome. The SW imports `reconcile` and `RECONCILE_ALARM` and wires
 // them to runtime events; it does no decision-making of its own.
 
-export const RECONCILE_ALARM = 'leetlock/reconcile';
+export const RECONCILE_ALARM = 'leetmeow/reconcile';
 
 /**
  * Bring the live DNR rule set and the next reconcile-alarm into agreement

@@ -1,4 +1,4 @@
-# LeetLock — Progress Tracker
+# LeetMeow — Progress Tracker
 
 > **This is the single source of truth for project state. Read it first every loop iteration.**
 > Protocol: pick the next unchecked `[ ]` task in the earliest incomplete phase → implement →
@@ -147,7 +147,7 @@
 - [x] **Full solve-and-unlock e2e — `e2e/solve-flow.spec.ts` injects the bank's reference solution into the CodeMirror editor, clicks Submit, and asserts the SW writes an unlock token. Proves the vertical slice (bank → judge → sandbox Worker → SW grant handler → storage) in real Chromium.**
 - [x] README screenshots — captured automatically by `e2e/screenshots.spec.ts`, referenced in the README
 - [x] Chrome Web Store ZIP packaging script (`npm run package`)
-- [x] Marketing website (separate repo `Jeremyliu-621/leetlock-site`, Next.js static export)
+- [x] Marketing website (separate repo `Jeremyliu-621/leetmeow-site`, Next.js static export)
 
 ## Phase 13+ — Post-MVP polish
 
@@ -182,7 +182,7 @@ Still pending:
 - [x] Add more medium-difficulty problems — bank now has full medium tier across all 6 tag categories
 - [x] Grow bank to 95 problems — 10 hard problems added (arrays: first-missing-positive, jump-game-ii, largest-rectangle-histogram, sliding-window-maximum, largest-number, longest-increasing-subsequence; strings: minimum-window-substring, longest-valid-parentheses, edit-distance, word-break); all with JS + Python solutions, hints, and test coverage (550 tests)
 - [x] **100-problem milestone** — 5 more problems: three-sum-closest, boats-to-save-people, partition-labels (two-pointers/medium), basic-calculator (stack/hard), median-two-sorted-arrays (binary-search/hard); 565 tests
-- [x] **Light-mode CodeMirror theme** — `leetlockEditorThemeLight` (inverted grayscale, `{ dark: false }`); Compartment-driven swap wired to `resolvedTheme` in Challenge
+- [x] **Light-mode CodeMirror theme** — `leetmeowEditorThemeLight` (inverted grayscale, `{ dark: false }`); Compartment-driven swap wired to `resolvedTheme` in Challenge
 - [x] **Verdict input display** — `input: string` field on all `TestVerdict` variants; renders as Input/Output/Expected in VerdictPanel matching LeetCode parity
 - [x] **Persistent submission history** — per-problem array stored in `chrome.storage.local` under `submissionHistory` key; capped at 20 entries; cleared on acceptance; loaded on challenge mount
 - [x] **107-problem milestone** — 4 new hard problems: split-array-largest-sum, capacity-to-ship, max-consecutive-flips, count-subarrays-bounded-max (binary-search + sliding-window); 580 tests
@@ -197,7 +197,7 @@ Still pending:
 - [x] Add hash-map hard problems — four-sum-ii, max-points-on-line; 618 tests; bank at 119
 - [x] Bank progress in popup — "X/119 solved (Y%)" in SolveBreakdown header
 - [x] Add hard stack problems — sum-subarray-minimums, remove-k-digits; 624 tests; bank at 121
-- [x] Dynamic challenge tab title — shows problem name (e.g. "Two Sum — LeetLock")
+- [x] Dynamic challenge tab title — shows problem name (e.g. "Two Sum — LeetMeow")
 - [x] Bank size in Options About section — "119 original problems covering 9 topic categories"
 - [x] Add medium DP problems — LCS, min-path-sum, decode-ways; hard DP filled (LPS, palindrome-min-cuts, integer-break, regular-expression-matching); 651 tests; bank at 130
 - [x] Add medium two-pointers problems — next-permutation, interval-list-intersections, longest-mountain-in-array; 642 tests; bank at 127
@@ -413,7 +413,7 @@ Still pending:
 ## Notes
 
 - 2026-05-21: Project bootstrapped. Research confirms the differentiation thesis — competitors
-  redirect to leetcode.com and poll its unofficial API; LeetLock authors its own problems and runs
+  redirect to leetcode.com and poll its unofficial API; LeetMeow authors its own problems and runs
   code in-extension. See `docs/RESEARCH.md`.
 - 2026-05-21: Phase 1 done. Toolchain verified — `@crxjs/vite-plugin` v2 is stable (2.4.0); pinned
   Vite 7 + `@vitejs/plugin-react` 5 for a fully compatible trio (`DECISIONS.md` D2, D12). The dist

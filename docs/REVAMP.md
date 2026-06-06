@@ -1,4 +1,4 @@
-# LeetLock Revamp — "LeetCode-parity editor + AI hints" (June 2026)
+# LeetMeow Revamp — "LeetCode-parity editor + AI hints" (June 2026)
 
 > Working plan for the big editor/UX overhaul requested 2026-06-04. This is the
 > live source of truth for the revamp. Check items off as they land. When the
@@ -8,7 +8,7 @@
 ## Goal
 
 Make the challenge screen feel like LeetCode's (the quality-of-life features we
-lack) **while keeping LeetLock's identity**. Drop the strict pure-grayscale rule
+lack) **while keeping LeetMeow's identity**. Drop the strict pure-grayscale rule
 — color is allowed where it carries meaning (syntax, verdicts, brand). Add a
 genuinely useful, visual AI hint bot (Gemini). Polish the dashboard. Research
 NeetCode for question-bank + language ideas.
@@ -19,7 +19,7 @@ Base stays dark/grayscale, but we add semantic + brand tokens:
 
 | Token            | Dark      | Meaning                          |
 | ---------------- | --------- | -------------------------------- |
-| `--ll-brand`     | `#8b7cf6` | LeetLock identity (violet)       |
+| `--ll-brand`     | `#8b7cf6` | LeetMeow identity (violet)       |
 | `--ll-success`   | `#2cbb5d` | accepted / run / pass            |
 | `--ll-error`     | `#ef4743` | wrong answer / fail              |
 | `--ll-warning`   | `#ffa116` | timeout / caution                |

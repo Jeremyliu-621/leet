@@ -96,7 +96,7 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
         <FormField
           label="Theme"
           htmlFor={themeId}
-          help="Controls the colour scheme across all LeetLock pages."
+          help="Controls the colour scheme across all LeetMeow pages."
         >
           <div
             id={themeId}

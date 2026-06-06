@@ -1,4 +1,4 @@
-# LeetLock — Competitive & Technical Research
+# LeetMeow — Competitive & Technical Research
 
 *Research compiled 2026-05-21. Concept: a Manifest V3 Chrome extension that intercepts distracting sites and replaces them with a native, in-extension LeetCode-style coding challenge. Solving within a time limit earns timed access; failing/timeout closes or redirects the tab. Positioning: "Cold Turkey for CS students, except every distraction charges you one algorithm problem."*
 
@@ -6,10 +6,10 @@
 
 ## 1. Executive summary
 
-- **The exact niche is real but thinly served.** Several extensions force LeetCode practice as friction, but **almost none implement an in-extension challenge gate**. They redirect users to `leetcode.com` and poll LeetCode's (unofficial) submission API. That dependency is their core weakness — and LeetLock's core opportunity.
+- **The exact niche is real but thinly served.** Several extensions force LeetCode practice as friction, but **almost none implement an in-extension challenge gate**. They redirect users to `leetcode.com` and poll LeetCode's (unofficial) submission API. That dependency is their core weakness — and LeetMeow's core opportunity.
 - **Closest prior art is "CodeTime"** (Matthew Kim, 2020): solve LeetCode problems → earn 15 min of blacklisted-site time. It is a *true gate by reward-balance*, but **never published to the Web Store** (load-unpacked only) and **detects submissions by scraping LeetCode endpoints**.
 - **"Leetcode Torture"** by The Coding Sloth (~2,000 users, 4.7★, last updated Apr 2024) and **"LeetCode Forcer"** (~1,000 users, last updated May 2023) are the most visible live "true competitors" — but both **gate by redirecting to leetcode.com**, not by hosting their own problems. LeetCode Forcer is likely semi-abandoned (3-year-old build, broke on LeetCode UI changes).
-- **No competitor authors its own problems and runs code inside the extension.** That is LeetLock's defensible differentiation: a self-contained challenge runtime that does not break when LeetCode changes its DOM/API, works offline, and cannot be bypassed by faking a LeetCode submission.
+- **No competitor authors its own problems and runs code inside the extension.** That is LeetMeow's defensible differentiation: a self-contained challenge runtime that does not break when LeetCode changes its DOM/API, works offline, and cannot be bypassed by faking a LeetCode submission.
 - **Math-gate blockers are a proven, simpler adjacent pattern** (Math Blocker, Puzzle Blocker, ProcrastiNOT, mobile MathLock). They validate "solve-to-unlock" friction as a product category but target a general audience, not programmers.
 - **Key MV3 constraints are manageable but shape the design.** `declarativeNetRequest` cleanly redirects *navigations* to a bundled extension page; the real gap is **SPA route changes** (`youtube.com/shorts`, infinite feeds) which fire **no network request** and must be caught with a content script + `webNavigation.onHistoryStateUpdated`.
 - **A safe code runner is feasible**: a **sandboxed extension page** (default CSP allows `unsafe-eval`) hosting a Web Worker, plus CodeMirror 6 as the editor. Problems must be **originally authored** — LeetCode problem text is copyrighted; Project Euler is CC BY-NC-SA (non-commercial), Rosetta Code is GFDL. Neither is cleanly reusable for a commercial product.
@@ -29,7 +29,7 @@
 | Puzzle Blocker | WEAK ADJACENT (real gate, not coding) | Chrome Web Store | Live (v2.1.0, Sep 2025; ~38 users) | In-extension puzzle gate; timed access window | Tiny userbase; generic puzzles, not algorithms | https://chromewebstore.google.com/detail/puzzle-blocker-block-webs/immcgdedpkcclkbfnbcckelhpcfcjokg |
 | Simple Site Blocker | WEAK ADJACENT (real gate, not coding) | Chrome Web Store | Live | Math-challenge unblock friction | Math, not coding | https://chromewebstore.google.com/detail/simple-site-blocker/fdndoefomomlikibjjlnlgfnhcgjpalh |
 | ProcrastiNOT | WEAK ADJACENT (real gate, not coding) | Safari (macOS/iOS) | Live | Math-problem-to-disable-blocking; cross-Apple | Math; Safari only | https://www.coffeeandfun.com/procrastinot/ |
-| LeetMate (nitro603) | WEAK ADJACENT (study aid, no gate) | Chrome ext / GitHub | Live (MIT) | YouTube video + ChatGPT solution help on LeetCode | No blocking, no gate — opposite of LeetLock | https://github.com/nitro603/LeetMate |
+| LeetMate (nitro603) | WEAK ADJACENT (study aid, no gate) | Chrome ext / GitHub | Live (MIT) | YouTube video + ChatGPT solution help on LeetCode | No blocking, no gate — opposite of LeetMeow | https://github.com/nitro603/LeetMate |
 | LeetMate AI (kylpg/leetmateai) | WEAK ADJACENT (study aid, no gate) | Chrome ext / GitHub | Live | AI hints/code analysis sidebar on LeetCode | No blocking, no gate | https://github.com/kylpg/leetmateai |
 | LeetCodeForcer (anuraglodhi13 repo) | TRUE COMPETITOR (source of the above) | GitHub | Source for Forcer ext | GraphQL-based completion check; iframe-reload guard | Same as Forcer; no license stated | https://github.com/anuraglodhi13/LeetCodeForcer |
 | Constraints Blocker | WEAK ADJACENT (not a blocker) | Chrome Web Store | Stale (Jul 2021) | Hides problem constraints for interview realism | Not a site blocker at all | https://chromewebstore.google.com/detail/constraints-blocker-leetc/poadlijigkkehhbfnmdabgecngbmoaho |
@@ -44,23 +44,23 @@
 
 ## 3. True competitors — deeper notes
 
-**CodeTime (Matthew Kim, Aug 2020).** The closest conceptual ancestor. Model: solving a LeetCode problem grants **15 minutes** of access to blacklisted sites; time decrements every second while a blacklisted tab is open; at zero, navigation to blacklisted domains is redirected to a block page. It guards against farming by checking *both* correctness *and* whether the problem was already solved. **Detection is fragile**: it regex-matches LeetCode submission endpoints, then polls the unofficial `/api/submissions/{problem}` and `/submissions/detail/{id}/check` endpoints once per second. It was **never published to the Chrome Web Store** — load-unpacked from source only. *Implication for LeetLock:* the earn-time-balance economy is good and worth borrowing; the LeetCode-scraping dependency is exactly what LeetLock should eliminate by hosting problems itself.
+**CodeTime (Matthew Kim, Aug 2020).** The closest conceptual ancestor. Model: solving a LeetCode problem grants **15 minutes** of access to blacklisted sites; time decrements every second while a blacklisted tab is open; at zero, navigation to blacklisted domains is redirected to a block page. It guards against farming by checking *both* correctness *and* whether the problem was already solved. **Detection is fragile**: it regex-matches LeetCode submission endpoints, then polls the unofficial `/api/submissions/{problem}` and `/submissions/detail/{id}/check` endpoints once per second. It was **never published to the Chrome Web Store** — load-unpacked from source only. *Implication for LeetMeow:* the earn-time-balance economy is good and worth borrowing; the LeetCode-scraping dependency is exactly what LeetMeow should eliminate by hosting problems itself.
 
-**Leetcode Torture (The Coding Sloth, repo `The-CodingSloth/haha-funny-leetcode-extension`).** Most visible *live* competitor: ~2,000 users, 4.7★ (~80 ratings), v1.0.5.1 last updated 2024-04-11. Behavior: on activation it **blocks all websites except LeetCode** until you solve a randomly assigned LeetCode problem; problems are solved **on leetcode.com**, not in the extension. Notable UX complaint in reviews: after solving, you cannot return to the page you were trying to reach. *Implication:* validates demand and the "hostage browser" mechanic, but the all-or-nothing block and the external-site dependency are weak points LeetLock can beat with per-site timed access and a native challenge.
+**Leetcode Torture (The Coding Sloth, repo `The-CodingSloth/haha-funny-leetcode-extension`).** Most visible *live* competitor: ~2,000 users, 4.7★ (~80 ratings), v1.0.5.1 last updated 2024-04-11. Behavior: on activation it **blocks all websites except LeetCode** until you solve a randomly assigned LeetCode problem; problems are solved **on leetcode.com**, not in the extension. Notable UX complaint in reviews: after solving, you cannot return to the page you were trying to reach. *Implication:* validates demand and the "hostage browser" mechanic, but the all-or-nothing block and the external-site dependency are weak points LeetMeow can beat with per-site timed access and a native challenge.
 
-**LeetCode Forcer (`anuraglodhi13/LeetCodeForcer`).** ~1,000 users, 4.5★ (11 reviews), build v2.0.6 dated **2023-05-05** — likely semi-abandoned; its own listing notes breakage with LeetCode's "new UI" and tells users to switch to the old interface. Mechanic: redirects all browsing to LeetCode until the daily problem is done; modes for "daily challenge" vs "any problem"; one 3-hour emergency bypass per day. Tech: JS/HTML/CSS, queries LeetCode's GraphQL endpoint, uses `chrome.tabs.onUpdated` with iframe-reload guards. No license file. *Implication:* its breakage on LeetCode UI changes is a direct case study for why LeetLock should not depend on LeetCode's DOM/API.
+**LeetCode Forcer (`anuraglodhi13/LeetCodeForcer`).** ~1,000 users, 4.5★ (11 reviews), build v2.0.6 dated **2023-05-05** — likely semi-abandoned; its own listing notes breakage with LeetCode's "new UI" and tells users to switch to the old interface. Mechanic: redirects all browsing to LeetCode until the daily problem is done; modes for "daily challenge" vs "any problem"; one 3-hour emergency bypass per day. Tech: JS/HTML/CSS, queries LeetCode's GraphQL endpoint, uses `chrome.tabs.onUpdated` with iframe-reload guards. No license file. *Implication:* its breakage on LeetCode UI changes is a direct case study for why LeetMeow should not depend on LeetCode's DOM/API.
 
-**LeetCode-Focus (`strange8969/LeetCode-Focus`).** Open-source, MIT, **MV3**, v1.0.0 dated **2025-10-04**, ~17 commits — the most modern reference. Architecture worth copying: a **two-rule `declarativeNetRequest` design** — one rule allowlists LeetCode domains, one redirects everything else back to LeetCode — explicitly engineered to be **loop-safe** (avoids redirect loops). Uses `chrome.storage.local`, `alarms`, `scripting`, `tabs`. Content script watches for the LeetCode "Submit" button and waits for the "Accepted" status. "Emergency Break" pause is 1–240 minutes. Limitations: blocks **all** non-LeetCode sites (no whitelist), no cross-device sync, still depends on detecting a LeetCode submission. *Implication:* excellent free MV3 reference for DNR redirect plumbing; LeetLock differs by hosting the challenge instead of detecting one.
+**LeetCode-Focus (`strange8969/LeetCode-Focus`).** Open-source, MIT, **MV3**, v1.0.0 dated **2025-10-04**, ~17 commits — the most modern reference. Architecture worth copying: a **two-rule `declarativeNetRequest` design** — one rule allowlists LeetCode domains, one redirects everything else back to LeetCode — explicitly engineered to be **loop-safe** (avoids redirect loops). Uses `chrome.storage.local`, `alarms`, `scripting`, `tabs`. Content script watches for the LeetCode "Submit" button and waits for the "Accepted" status. "Emergency Break" pause is 1–240 minutes. Limitations: blocks **all** non-LeetCode sites (no whitelist), no cross-device sync, still depends on detecting a LeetCode submission. *Implication:* excellent free MV3 reference for DNR redirect plumbing; LeetMeow differs by hosting the challenge instead of detecting one.
 
 ---
 
 ## 4. Weak / adjacent tools
 
-- **Math-gate blockers** (Math Blocker, Simple Site Blocker, Puzzle Blocker, Safari's ProcrastiNOT, mobile MathLock / "App locker with math problems"). These *do* implement a genuine in-app solve-to-unlock gate with timed access afterward — the exact UX pattern LeetLock wants — but use trivial math/puzzles for a general audience. They prove the friction model works; none target programmers or use real algorithm problems.
-- **LeetMate / LeetMate AI** — AI study aids that overlay hints and solutions on LeetCode. No blocking; conceptually the *opposite* of LeetLock (they make problems easier; LeetLock makes distraction harder). Name-collision risk: "LeetMate" already exists, reinforcing the choice of "LeetLock."
+- **Math-gate blockers** (Math Blocker, Simple Site Blocker, Puzzle Blocker, Safari's ProcrastiNOT, mobile MathLock / "App locker with math problems"). These *do* implement a genuine in-app solve-to-unlock gate with timed access afterward — the exact UX pattern LeetMeow wants — but use trivial math/puzzles for a general audience. They prove the friction model works; none target programmers or use real algorithm problems.
+- **LeetMate / LeetMate AI** — AI study aids that overlay hints and solutions on LeetCode. No blocking; conceptually the *opposite* of LeetMeow (they make problems easier; LeetMeow makes distraction harder). Name-collision risk: "LeetMate" already exists, reinforcing the choice of "LeetMeow."
 - **Constraints Blocker** — hides problem constraints on LeetCode for interview realism; not a website blocker despite the name. Stale (2021).
 - **Leetblock** — blocks abusive LeetCode *forum users*; unrelated to focus/blocking.
-- **Serious blockers as positioning anchors** — **Cold Turkey** (system-level, deliberately near-unbreakable, one-time purchase), **Freedom** (cross-device sync, subscription), **LeechBlock NG** (free, flexible scheduling, 30 block sets, but trivially bypassed by switching browsers), **StayFocusd** (~700k users, free, "Nuclear Option," in-page YouTube blocking), **BlockSite** (freemium, large userbase). All are pure blockers/schedulers with **no challenge gate** — LeetLock's "every distraction charges you one algorithm problem" is a genuinely distinct hook.
+- **Serious blockers as positioning anchors** — **Cold Turkey** (system-level, deliberately near-unbreakable, one-time purchase), **Freedom** (cross-device sync, subscription), **LeechBlock NG** (free, flexible scheduling, 30 block sets, but trivially bypassed by switching browsers), **StayFocusd** (~700k users, free, "Nuclear Option," in-page YouTube blocking), **BlockSite** (freemium, large userbase). All are pure blockers/schedulers with **no challenge gate** — LeetMeow's "every distraction charges you one algorithm problem" is a genuinely distinct hook.
 
 ---
 
@@ -72,7 +72,7 @@
 - Emergency/one-time-bypass valves (Forcer's 3h, Focus's Emergency Break) reduce rage-uninstalls.
 - MV3 `declarativeNetRequest` redirect plumbing is a solved problem (LeetCode-Focus's loop-safe two-rule pattern).
 
-**Common gaps (LeetLock's openings)**
+**Common gaps (LeetMeow's openings)**
 - **External-dependency fragility.** Every LeetCode-forcer relies on detecting submissions on leetcode.com via unofficial/GraphQL endpoints or DOM scraping. This breaks whenever LeetCode redesigns (LeetCode Forcer is the cautionary tale) and fails offline / behind login walls.
 - **No native challenge.** Nobody hosts the problem and a code runner inside the extension. That means no offline use, no control over difficulty, and easy bypass by faking a LeetCode "Accepted" state.
 - **All-or-nothing blocking.** Torture and Focus block *every* site; no per-site policy, no whitelist, no graduated access.
@@ -83,10 +83,10 @@
 
 ---
 
-## 6. LeetLock differentiation
+## 6. LeetMeow differentiation
 
-1. **Self-contained challenge gate.** Problems are authored by LeetLock and rendered inside a bundled extension page with an in-browser code editor + runner. No dependency on leetcode.com DOM or API → does not break on LeetCode redesigns, works offline, cannot be spoofed by faking a LeetCode submission.
-2. **The challenge IS the block page.** Instead of redirecting to LeetCode, the distracting URL is replaced in-tab by the LeetLock problem screen. Solve within the timer → earn timed access to that site; fail/timeout → close or redirect.
+1. **Self-contained challenge gate.** Problems are authored by LeetMeow and rendered inside a bundled extension page with an in-browser code editor + runner. No dependency on leetcode.com DOM or API → does not break on LeetCode redesigns, works offline, cannot be spoofed by faking a LeetCode submission.
+2. **The challenge IS the block page.** Instead of redirecting to LeetCode, the distracting URL is replaced in-tab by the LeetMeow problem screen. Solve within the timer → earn timed access to that site; fail/timeout → close or redirect.
 3. **Per-site, graduated policy** — different sites can cost different difficulty tiers or different time grants; whitelist support; earn-balance economy à la CodeTime rather than all-or-nothing.
 4. **SPA-aware blocking** — content script + `webNavigation.onHistoryStateUpdated` catches YouTube Shorts / Reddit / X in-app navigation that pure DNR misses.
 5. **Original, pattern-based problem bank** (arrays, two-pointer, hashmap, BST, DP, etc.) — legally clean, tunable difficulty, infinite-feeling via parameterized variants and anti-repeat tracking.
@@ -143,7 +143,7 @@ Citations: `developer.chrome.com`.
 - `chrome.management` can *observe* other extensions and your own (`getSelf`, uninstall self) but **cannot block the browser's own uninstall UI**.
 - Developer-mode and `--disable-extensions` flags can neuter extensions entirely.
 - **True enforced installation requires enterprise policy** — `ExtensionInstallForcelist` (e.g. `HKLM\Software\Policies\Google\Chrome\ExtensionInstallForcelist`), which greys out removal. Even Google documents this as **"best effort"**: "some operating systems make it impossible for Chrome to defend robustly against extensions being modified externally." This path is only for managed devices (employer/school/parent admin), not consumers.
-- *Recommendation:* market LeetLock honestly as **self-imposed friction** ("makes quitting annoying enough that you don't"), not as an unbreakable lock. Offer an **optional managed/force-install guide** for parents, schools, or self-bind-via-MDM power users. Over-claiming invites 1-star reviews and erodes trust.
+- *Recommendation:* market LeetMeow honestly as **self-imposed friction** ("makes quitting annoying enough that you don't"), not as an unbreakable lock. Offer an **optional managed/force-install guide** for parents, schools, or self-bind-via-MDM power users. Over-claiming invites 1-star reviews and erodes trust.
 
 ---
 
@@ -177,9 +177,9 @@ Citations: `developer.chrome.com`.
 | Project Euler problems | https://projecteuler.net/copyright | CC BY-NC-SA 4.0 | Inspiration only — **non-commercial license; cannot ship verbatim in a commercial product.** Math-heavy, not interview-style. |
 | Rosetta Code | https://rosettacode.org/wiki/Rosetta_Code:Copyrights | GFDL 1.2 | Inspiration only — **GFDL is incompatible with most software licenses; not cleanly reusable.** |
 | Exercism | https://exercism.org/ | Exercises MIT-ish, content varies per track | Open-source practice exercises; check per-track licensing before any reuse. Best treated as inspiration. |
-| **Original problem authoring** | n/a | n/a (LeetLock-owned) | **Required path.** LeetCode problem statements are copyrighted. LeetLock must author original problems "inspired by common patterns" (two-sum-style hashmap, two-pointer, sliding window, BFS/DFS, DP). Pattern *categories* are not protectable; specific problem text is. |
+| **Original problem authoring** | n/a | n/a (LeetMeow-owned) | **Required path.** LeetCode problem statements are copyrighted. LeetMeow must author original problems "inspired by common patterns" (two-sum-style hashmap, two-pointer, sliding window, BFS/DFS, DP). Pattern *categories* are not protectable; specific problem text is. |
 
-**Licensing bottom line:** there is **no large, cleanly commercially-licensed bank of interview-style coding problems** to drop in. LeetLock must write its own. Open sets either carry non-commercial (Project Euler) or copyleft/doc (Rosetta Code, GFDL) licenses, or are math/curriculum-oriented rather than algorithm-interview problems.
+**Licensing bottom line:** there is **no large, cleanly commercially-licensed bank of interview-style coding problems** to drop in. LeetMeow must write its own. Open sets either carry non-commercial (Project Euler) or copyleft/doc (Rosetta Code, GFDL) licenses, or are math/curriculum-oriented rather than algorithm-interview problems.
 
 ---
 

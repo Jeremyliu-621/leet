@@ -1,4 +1,4 @@
-// Zips the built dist/ into leetlock-<version>.zip for Chrome Web Store upload.
+// Zips the built dist/ into leetmeow-<version>.zip for Chrome Web Store upload.
 // Run with `npm run package` after `npm run build`.
 
 import { statSync } from 'node:fs';
@@ -13,7 +13,7 @@ const AdmZip = require('adm-zip');
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pkg = JSON.parse(await readFile(resolve(root, 'package.json'), 'utf8'));
 const distDir = resolve(root, 'dist');
-const outFile = resolve(root, `leetlock-${pkg.version}.zip`);
+const outFile = resolve(root, `leetmeow-${pkg.version}.zip`);
 
 const distStat = statSync(distDir, { throwIfNoEntry: false });
 if (!distStat?.isDirectory()) {

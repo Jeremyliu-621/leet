@@ -24,7 +24,7 @@ export function Blocked() {
   return (
     <main className="grid min-h-full place-items-center bg-bg px-8 text-text">
       <section className="w-full max-w-md text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetLock</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetMeow</p>
         <h1 className="mt-5 text-2xl font-semibold tracking-tight">Locked</h1>
         {domain ? (
           <p className="mt-3 text-sm leading-relaxed text-muted">

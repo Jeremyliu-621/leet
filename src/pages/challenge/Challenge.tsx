@@ -489,8 +489,8 @@ function SolvedStandaloneScreen({
  * Behaviour:
  * - Timer counts down from prefs.challengeTimeLimitSec; hitting 0 fails.
  * - Run executes visible tests only; Submit runs all tests.
- * - On accept, sends `leetlock/grant-unlock` and redirects to the target.
- * - On failure, sends `leetlock/fail-challenge` with the configured action.
+ * - On accept, sends `leetmeow/grant-unlock` and redirects to the target.
+ * - On failure, sends `leetmeow/fail-challenge` with the configured action.
  */
 export function Challenge() {
   // Parse target URL once — stable reference.
@@ -645,7 +645,7 @@ export function Challenge() {
       setPageState({ status: 'ready', problem, prefs });
       setResolvedTheme(applyTheme(prefs.theme));
       const diffAbbr = problem.difficulty === 'easy' ? 'E' : problem.difficulty === 'medium' ? 'M' : 'H';
-      document.title = `[${diffAbbr}] ${problem.title} — LeetLock`;
+      document.title = `[${diffAbbr}] ${problem.title} — LeetMeow`;
 
       // Restore persisted submission history for this problem — non-critical.
       void (async () => {
@@ -710,7 +710,7 @@ export function Challenge() {
 
     try {
       await chrome.runtime.sendMessage({
-        type: 'leetlock/fail-challenge',
+        type: 'leetmeow/fail-challenge',
         domain: domain.current ?? '',
         reason,
         failureAction: prefs.failureAction,
@@ -753,7 +753,7 @@ export function Challenge() {
       // Fire-and-forget; the SW records streak damage then tries the tab
       // action (which will fail gracefully since the tab is already gone).
       const msg: FailChallengeRequest = {
-        type: 'leetlock/fail-challenge',
+        type: 'leetmeow/fail-challenge',
         domain: domain.current ?? '',
         reason: 'gave-up',
         failureAction: prefs.failureAction,
@@ -905,7 +905,7 @@ export function Challenge() {
         // Notify service worker → grant unlock token.
         try {
           await chrome.runtime.sendMessage({
-            type: 'leetlock/grant-unlock',
+            type: 'leetmeow/grant-unlock',
             domain: domain.current ?? '',
             problemId: problem.id,
             durationMs: prefs.unlockDurationMin * 60 * 1000,

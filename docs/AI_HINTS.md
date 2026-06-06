@@ -1,20 +1,20 @@
 # AI Hint Assistant (Gemini)
 
-LeetLock has an optional, privacy-respecting AI coach embedded in the challenge
+LeetMeow has an optional, privacy-respecting AI coach embedded in the challenge
 editor. It reads the problem and the user's current code and returns
 **line-anchored hints** that are rendered inline in the editor.
 
 ## How to enable it
 
 1. Get a free Gemini API key at <https://aistudio.google.com> → "Get API key".
-2. Open LeetLock **Settings → AI hints (Gemini)** (or click the ✦ AI button in
+2. Open LeetMeow **Settings → AI hints (Gemini)** (or click the ✦ AI button in
    the editor and follow "Add your key in Settings").
 3. Paste the key. The assistant enables itself automatically.
 
 The key is stored in `chrome.storage.local` — **device-only**. It is never
 synced through your Google account and is **never committed to the repo**.
 Requests go directly from your browser to Google's Generative Language API;
-LeetLock has no server and never sees your key or your code. Usage counts
+LeetMeow has no server and never sees your key or your code. Usage counts
 against your own Gemini quota.
 
 ## Two modes

@@ -72,7 +72,7 @@ async function auditPage(context: BrowserContext, path: string, label: string): 
   expect(critical).toEqual([]);
 }
 
-test.describe('LeetLock accessibility @a11y', () => {
+test.describe('LeetMeow accessibility @a11y', () => {
   test('popup has no serious or critical axe violations', async () => {
     const context = await launch();
     try {

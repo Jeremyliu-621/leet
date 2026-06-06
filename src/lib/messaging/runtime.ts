@@ -3,12 +3,12 @@ import type { UnlockToken } from '../types';
 // Runtime messages exchanged via chrome.runtime.sendMessage / onMessage,
 // between the challenge page / content script / popup and the service worker.
 //
-// Every type is namespaced with a "leetlock/" prefix so the message handler
+// Every type is namespaced with a "leetmeow/" prefix so the message handler
 // can ignore traffic from unrelated extensions or page injections.
 
 /** Sent by the challenge page when the user has solved a problem. */
 export interface GrantUnlockRequest {
-  type: 'leetlock/grant-unlock';
+  type: 'leetmeow/grant-unlock';
   domain: string;
   problemId: string;
   /** Length of the unlock to grant, in milliseconds. */
@@ -30,7 +30,7 @@ export type ChallengeFailureReason = 'timeout' | 'gave-up' | 'attempts-exhausted
 
 /** Sent by the challenge page when the user has failed or abandoned. */
 export interface FailChallengeRequest {
-  type: 'leetlock/fail-challenge';
+  type: 'leetmeow/fail-challenge';
   domain: string;
   reason: ChallengeFailureReason;
   failureAction: 'close' | 'redirect';
@@ -51,7 +51,7 @@ export interface FailChallengeResponse {
  * declarativeNetRequest could not catch (no network request was made).
  */
 export interface OpenChallengeRequest {
-  type: 'leetlock/open-challenge';
+  type: 'leetmeow/open-challenge';
   blockedUrl: string;
   tabId?: number;
 }
@@ -60,13 +60,13 @@ export interface OpenChallengeResponse {
   ok: true;
 }
 
-/** Discriminated union of every runtime message LeetLock sends. */
+/** Discriminated union of every runtime message LeetMeow sends. */
 export type RuntimeMessage =
   | GrantUnlockRequest
   | FailChallengeRequest
   | OpenChallengeRequest;
 
-/** Discriminated union of every runtime response LeetLock returns. */
+/** Discriminated union of every runtime response LeetMeow returns. */
 export type RuntimeResponse =
   | GrantUnlockResponse
   | FailChallengeResponse

@@ -1,4 +1,4 @@
-// In-memory fakes for the slice of the chrome.* APIs LeetLock uses, for unit
+// In-memory fakes for the slice of the chrome.* APIs LeetMeow uses, for unit
 // and integration tests that run under Node. Behaviours mirror the real APIs
 // closely enough that code written against `chrome.*` works unchanged when
 // these fakes are installed as the `chrome` global.

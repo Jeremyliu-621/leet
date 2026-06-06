@@ -82,7 +82,7 @@ async function loadUntilTargetProblem(
   );
 }
 
-test.describe('LeetLock Python end-to-end @e2e @python', () => {
+test.describe('LeetMeow Python end-to-end @e2e @python', () => {
   test('solving two-sum-indices in Python writes an unlock token', async () => {
     // Python's cold-start cost + the retry loop until pickChallengeProblem
     // lands on two-sum-indices push us past the default 30 s budget.

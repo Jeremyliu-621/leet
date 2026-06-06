@@ -1,4 +1,4 @@
-# LeetLock
+# LeetMeow
 
 [![CI](https://github.com/Jeremyliu-621/leet/actions/workflows/ci.yml/badge.svg)](https://github.com/Jeremyliu-621/leet/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2A2A2A?style=flat-square)](LICENSE)
@@ -6,8 +6,8 @@
 
 **Turn distracting websites into mini coding-interview gates: solve a problem, earn timed access.**
 
-LeetLock is a Chrome extension (Manifest V3) for programmers who want to stop doom-scrolling
-without pretending willpower is enough. When you open a blocked site, LeetLock replaces the page
+LeetMeow is a Chrome extension (Manifest V3) for programmers who want to stop doom-scrolling
+without pretending willpower is enough. When you open a blocked site, LeetMeow replaces the page
 with a clean, native coding challenge. Solve it inside the time limit and you earn a configurable
 window of access. Fail, give up, or run out of time and the tab closes or redirects to a calm
 blocked page.
@@ -26,11 +26,11 @@ blocked page.
 
 | Popup | Challenge |
 | --- | --- |
-| ![LeetLock popup](docs/screenshots/popup.png) | ![LeetLock challenge screen](docs/screenshots/challenge.png) |
+| ![LeetMeow popup](docs/screenshots/popup.png) | ![LeetMeow challenge screen](docs/screenshots/challenge.png) |
 
 | Settings | Blocked |
 | --- | --- |
-| ![LeetLock settings](docs/screenshots/options.png) | ![LeetLock blocked page](docs/screenshots/blocked.png) |
+| ![LeetMeow settings](docs/screenshots/options.png) | ![LeetMeow blocked page](docs/screenshots/blocked.png) |
 
 *Captured automatically by `npm run test:e2e` (Playwright against a real Chromium load of the
 built extension).*
@@ -39,9 +39,9 @@ built extension).*
 
 1. You define blocked **domains**, **full URLs**, or **URL keyword patterns** (`shorts`, `reels`, …).
 2. When a tab matches a rule and you have no active unlock, the navigation is redirected to the
-   LeetLock **challenge screen** — a focused, LeetCode-style problem page.
+   LeetMeow **challenge screen** — a focused, LeetCode-style problem page.
 3. You write a JavaScript solution. **Run** checks visible examples; **Submit** runs hidden tests.
-4. Pass every test inside the time limit → LeetLock grants a timed **unlock token** for that domain.
+4. Pass every test inside the time limit → LeetMeow grants a timed **unlock token** for that domain.
 5. The unlock expires → the next visit triggers a fresh challenge.
 6. Give up / time out / exhaust your attempts → the tab closes or shows the blocked page.
 
@@ -89,16 +89,16 @@ Then load it in Chrome:
 
 `npm run dev` runs Vite with HMR for faster iteration on the extension pages.
 
-## What LeetLock can and can't do (honest limits)
+## What LeetMeow can and can't do (honest limits)
 
-Manifest V3 and the Chrome extension model impose real constraints. LeetLock is built to be honest
+Manifest V3 and the Chrome extension model impose real constraints. LeetMeow is built to be honest
 about them:
 
 - ✅ It **can** intercept and redirect navigations to blocked sites, gate access behind a real
   challenge, add friction to changing settings, and sync settings across your signed-in Chrome
   profiles.
 - ⚠️ It **cannot** truly prevent its own uninstallation or disabling. A determined user can remove
-  any extension from `chrome://extensions`. LeetLock instead raises the *cost* of bypassing
+  any extension from `chrome://extensions`. LeetMeow instead raises the *cost* of bypassing
   (cooldowns, password/partner locks, streak loss) so a relapse is a deliberate, friction-heavy
   choice rather than a reflex.
 - ⚠️ Single-page-app route changes (e.g. `youtube.com` → `youtube.com/shorts`) do not trigger

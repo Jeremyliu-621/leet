@@ -41,14 +41,14 @@ export function AboutSection() {
     >
       <div className="space-y-3 text-xs leading-relaxed text-muted">
         <p>
-          LeetLock is a Chrome Manifest V3 extension with{' '}
+          LeetMeow is a Chrome Manifest V3 extension with{' '}
           <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
           covering {TAG_COUNT} topic categories.{' '}
           <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
           are fully executed in-browser. Java, C++, C#, Go, Rust, Kotlin, Swift, and SQL
           are available for syntax practice with native highlighting and code snippets
           (tests run as JavaScript). Every problem and every piece of code you write runs
-          entirely on this device — there is no server, no LeetLock account, and
+          entirely on this device — there is no server, no LeetMeow account, and
           no telemetry.
         </p>
         <p>

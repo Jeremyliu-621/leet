@@ -1,13 +1,13 @@
-# LeetLock — Build Plan
+# LeetMeow — Build Plan
 
-Architecture, file structure, user flows, roadmap, and risks for the LeetLock MVP.
+Architecture, file structure, user flows, roadmap, and risks for the LeetMeow MVP.
 Companion docs: `RESEARCH.md` (why), `DATA_MODEL.md` (storage), `PROGRESS.md` (live tasks).
 
 ---
 
 ## 1. Architecture overview
 
-LeetLock has five runtime surfaces. The service worker is the brain; everything else reports to it
+LeetMeow has five runtime surfaces. The service worker is the brain; everything else reports to it
 or reads shared storage.
 
 ```

@@ -1,4 +1,4 @@
-# LeetLock — Python Support via Pyodide (Research & Plan)
+# LeetMeow — Python Support via Pyodide (Research & Plan)
 
 Status: research / planning. **No code yet.** Sibling docs: `BUILD_PLAN.md` (§1 architecture, phase 13+
 note), `DATA_MODEL.md` (UserPreferences shape), `PROGRESS.md` (live tasks).
@@ -158,7 +158,7 @@ the current ~1–2 MB to ~17–18 MB, and the install spinner becomes noticeable
 
 ## 3. Integration shape
 
-Two reasonable shapes, given LeetLock's existing sandbox-page → Web Worker architecture:
+Two reasonable shapes, given LeetMeow's existing sandbox-page → Web Worker architecture:
 
 ### Option A — language-specific workers
 
@@ -416,7 +416,7 @@ algorithm benchmarks), has occasional semantic edge-cases (especially around int
 Number.MAX_SAFE_INTEGER, which it represents as JS numbers in some code paths), and the project
 is single-maintainer.
 
-**Pyodide is the right choice for LeetLock** despite being 30× the size of Skulpt and 15× Brython,
+**Pyodide is the right choice for LeetMeow** despite being 30× the size of Skulpt and 15× Brython,
 because the use case is "let users practise the language they'll be tested on in real interviews."
 That means **real CPython semantics**: real `int` arithmetic (no JS-Number overflow), real
 `collections.Counter`, real `heapq`, real `bisect`, f-strings, walrus operator, `match` statements,
@@ -484,9 +484,9 @@ loaded from your extension's bundled files — no network is involved."` line in
 **Bundle size for a focus extension.** Going from ~1–2 MB → ~17–18 MB is a one-time install hit.
 Concerns: (a) the install spinner on slow connections; (b) some corporate Chromium managed
 installs gate by size; (c) updates re-download the full ZIP from the Chrome Web Store, so version
-bumps drag Pyodide along. **Mitigation:** none truly cheap. We could ship a separate "LeetLock
+bumps drag Pyodide along. **Mitigation:** none truly cheap. We could ship a separate "LeetMeow
 Python" companion extension that the user installs on demand, but this multiplies install
-friction. Better to bite the size cost; LeetLock is an opt-in focus tool — install size is the
+friction. Better to bite the size cost; LeetMeow is an opt-in focus tool — install size is the
 last conversion barrier we should worry about.
 
 **First-run latency.** ~1–2 s of editor unresponsiveness the very first time the user selects

@@ -1,4 +1,4 @@
-// LeetLock content script — runs at document_start on every http/https top
+// LeetMeow content script — runs at document_start on every http/https top
 // frame. Its job is to catch single-page-app navigations that fire no network
 // request (e.g. youtube.com -> youtube.com/shorts), which declarativeNetRequest
 // alone cannot see.
@@ -20,22 +20,22 @@ function notify(url: string): void {
   lastSent.url = url;
   lastSent.at = now;
   try {
-    chrome.runtime.sendMessage({ type: 'leetlock/open-challenge', blockedUrl: url });
+    chrome.runtime.sendMessage({ type: 'leetmeow/open-challenge', blockedUrl: url });
   } catch {
     // Service worker may be momentarily unavailable (just-restarted) — drop.
   }
 }
 
 interface HookFlag {
-  __leetlockHistoryHooked?: boolean;
+  __leetmeowHistoryHooked?: boolean;
 }
 
 function hookHistory(): void {
   const win = window as unknown as Window & HookFlag;
-  if (win.__leetlockHistoryHooked) {
+  if (win.__leetmeowHistoryHooked) {
     return;
   }
-  win.__leetlockHistoryHooked = true;
+  win.__leetmeowHistoryHooked = true;
 
   const originalPush = history.pushState.bind(history);
   const originalReplace = history.replaceState.bind(history);

@@ -1,6 +1,6 @@
 'use strict';
 
-// LeetLock Python code-runner worker.
+// LeetMeow Python code-runner worker.
 //
 // Loaded as a Blob worker created by the sandbox host so it inherits the
 // sandbox page's permissive CSP (which already includes `'wasm-unsafe-eval'`

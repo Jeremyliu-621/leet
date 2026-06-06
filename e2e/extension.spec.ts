@@ -3,7 +3,7 @@ import type { BrowserContext } from '@playwright/test';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// LeetLock end-to-end smoke tests.
+// LeetMeow end-to-end smoke tests.
 //
 // Each test launches a fresh persistent Chromium profile with `dist/` loaded
 // as an unpacked extension, asserts something observable, then closes the
@@ -41,7 +41,7 @@ function extensionIdFromUrl(swUrl: string): string {
   return match[1];
 }
 
-test.describe('LeetLock extension @e2e', () => {
+test.describe('LeetMeow extension @e2e', () => {
   test('the service worker registers on load', async () => {
     const context = await launchWithExtension();
     try {
@@ -53,29 +53,29 @@ test.describe('LeetLock extension @e2e', () => {
     }
   });
 
-  test('the popup renders the LeetLock wordmark', async () => {
+  test('the popup renders the LeetMeow wordmark', async () => {
     const context = await launchWithExtension();
     try {
       const sw = await getServiceWorker(context);
       const id = extensionIdFromUrl(sw.url());
       const page = await context.newPage();
       await page.goto(`chrome-extension://${id}/src/pages/popup/index.html`);
-      await expect(page.locator('h1').first()).toContainText('LeetLock');
+      await expect(page.locator('h1').first()).toContainText('LeetMeow');
     } finally {
       await context.close();
     }
   });
 
-  test('the options page renders with the LeetLock wordmark', async () => {
+  test('the options page renders with the LeetMeow wordmark', async () => {
     const context = await launchWithExtension();
     try {
       const sw = await getServiceWorker(context);
       const id = extensionIdFromUrl(sw.url());
       const page = await context.newPage();
       await page.goto(`chrome-extension://${id}/src/pages/options/index.html`);
-      await expect(page).toHaveTitle(/LeetLock/);
+      await expect(page).toHaveTitle(/LeetMeow/);
       // Wordmark appears as a microlabel; tolerate either an h1 or other element.
-      await expect(page.getByText('LeetLock').first()).toBeVisible({ timeout: 5_000 });
+      await expect(page.getByText('LeetMeow').first()).toBeVisible({ timeout: 5_000 });
     } finally {
       await context.close();
     }
@@ -101,7 +101,7 @@ test.describe('LeetLock extension @e2e', () => {
 
       const target = encodeURIComponent('https://example.com/');
       await page.goto(`chrome-extension://${id}/src/pages/challenge/index.html?target=${target}`);
-      await expect(page).toHaveTitle(/LeetLock/);
+      await expect(page).toHaveTitle(/LeetMeow/);
 
       // React mounted iff #root has at least one element child.
       try {

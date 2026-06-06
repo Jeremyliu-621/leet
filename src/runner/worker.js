@@ -1,6 +1,6 @@
 'use strict';
 
-// LeetLock code-runner Worker.
+// LeetMeow code-runner Worker.
 //
 // Plain JavaScript on purpose: this file is imported as a raw string and
 // instantiated as a Blob Worker by the sandbox host page, so it inherits the

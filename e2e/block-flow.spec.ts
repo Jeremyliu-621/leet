@@ -36,7 +36,7 @@ async function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-test.describe('LeetLock block-and-redirect flow @e2e', () => {
+test.describe('LeetMeow block-and-redirect flow @e2e', () => {
   test('navigating to a blocked site redirects to the challenge page', async () => {
     const context = await launch();
     try {

@@ -59,7 +59,7 @@ function ensureSandbox(): Promise<HTMLIFrameElement> {
     frame.addEventListener('error', () => {
       window.removeEventListener('message', onMessage);
       sandboxReady = null;
-      reject(new Error('LeetLock: failed to load the code sandbox.'));
+      reject(new Error('LeetMeow: failed to load the code sandbox.'));
     });
     document.body.appendChild(frame);
   });
@@ -105,7 +105,7 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
   const frame = await ensureSandbox();
   const target = frame.contentWindow;
   if (!target) {
-    throw new Error('LeetLock: the code sandbox is not available.');
+    throw new Error('LeetMeow: the code sandbox is not available.');
   }
 
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;

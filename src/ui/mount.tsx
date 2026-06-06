@@ -17,7 +17,7 @@ applyEditorFontSize(DEFAULT_PREFERENCES.editorFontSize);
 
 /**
  * Mounts a React tree into the page's `#root` element.
- * Shared by every LeetLock extension page (popup, options, challenge, blocked).
+ * Shared by every LeetMeow extension page (popup, options, challenge, blocked).
  *
  * Also loads the user's theme preference from storage and applies it, and
  * keeps the document in sync with the OS theme when the user has picked
@@ -26,7 +26,7 @@ applyEditorFontSize(DEFAULT_PREFERENCES.editorFontSize);
 export function mount(node: ReactNode): void {
   const root = document.getElementById('root');
   if (!root) {
-    throw new Error('LeetLock: #root element not found');
+    throw new Error('LeetMeow: #root element not found');
   }
 
   let currentPreference: ThemePreference = 'dark';

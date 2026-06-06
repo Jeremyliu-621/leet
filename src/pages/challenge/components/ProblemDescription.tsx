@@ -23,7 +23,7 @@ interface ProblemDescriptionProps {
   markdown: string;
 }
 
-// Custom component map so the rendered markdown stays inside LeetLock's
+// Custom component map so the rendered markdown stays inside LeetMeow's
 // pure-grayscale design system. Each component is stable across renders.
 const components: Components = {
   p: ({ children }: { children?: ReactNode }) => (

@@ -99,7 +99,7 @@ export function AccountabilitySection({ partner, onSave }: AccountabilitySection
               className="w-full max-w-xs rounded-sm border border-border bg-surface-2 px-3 py-1.5 font-mono text-xs text-text placeholder-faint focus:border-border-strong focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
             />
             <p className="text-[11px] text-muted">
-              Used as a reminder only. No emails are sent by LeetLock.
+              Used as a reminder only. No emails are sent by LeetMeow.
             </p>
           </div>
 

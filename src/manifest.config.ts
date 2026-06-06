@@ -1,7 +1,7 @@
 import { defineManifest } from '@crxjs/vite-plugin';
 import pkg from '../package.json';
 
-// Manifest V3 definition for LeetLock. CRXJS rewrites the source paths
+// Manifest V3 definition for LeetMeow. CRXJS rewrites the source paths
 // below to their built locations during `vite build`.
 //
 // Surfaces:
@@ -14,7 +14,7 @@ import pkg from '../package.json';
 //  - content script    catches SPA route changes that fire no network request
 export default defineManifest({
   manifest_version: 3,
-  name: 'LeetLock',
+  name: 'LeetMeow',
   version: pkg.version,
   description: pkg.description,
   icons: {
@@ -25,7 +25,7 @@ export default defineManifest({
   },
   action: {
     default_popup: 'src/pages/popup/index.html',
-    default_title: 'LeetLock',
+    default_title: 'LeetMeow',
   },
   options_page: 'src/pages/options/index.html',
   background: {

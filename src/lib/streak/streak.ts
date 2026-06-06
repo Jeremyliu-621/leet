@@ -107,7 +107,7 @@ export function recordFail(
 }
 
 /**
- * Streak damage — fires when the user disables LeetLock, removes a block rule
+ * Streak damage — fires when the user disables LeetMeow, removes a block rule
  * mid-cooldown, or takes any other anti-bypass-circumventing action. The
  * current streak resets, longest is preserved as a record of past discipline.
  */

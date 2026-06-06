@@ -120,7 +120,7 @@ export function Dashboard() {
     return (
       <Shell>
         <p className="mt-10 text-sm text-muted">
-          Couldn’t load your data. Open this page from the LeetLock toolbar popup.
+          Couldn’t load your data. Open this page from the LeetMeow toolbar popup.
         </p>
       </Shell>
     );
@@ -296,7 +296,7 @@ function DashboardBody({ data, now }: { data: DashboardData; now: number }) {
       </Card>
 
       <footer className="mt-8 pb-10 text-center font-mono text-[10px] text-faint">
-        LeetLock · {BANK_SIZE} problems in the bank
+        LeetMeow · {BANK_SIZE} problems in the bank
       </footer>
     </Shell>
   );
@@ -313,7 +313,7 @@ function Shell({ children, streak }: { children: React.ReactNode; streak?: Strea
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
           <div className="flex items-baseline gap-3">
             <h1 className="text-lg font-semibold tracking-tight text-text">Dashboard</h1>
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetLock</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetMeow</span>
             {streak && streak.current > 0 && (
               <span className="font-mono text-[10px] text-muted">{streak.current}-day streak</span>
             )}

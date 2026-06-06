@@ -99,7 +99,7 @@ export function TopBar({ secondsLeft, prefs, streak, settingsHref, attempts = 0,
           <span className="hidden sm:inline-block h-4 w-px bg-border" aria-hidden="true" />
         )}
         <span className="font-mono text-sm font-bold tracking-[0.2em] text-accent uppercase">
-          LEETLOCK
+          LEETMEOW
         </span>
       </div>
 

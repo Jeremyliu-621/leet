@@ -10,7 +10,7 @@ import { STORAGE_DEFAULTS } from './defaults';
 
 function areaFor(key: StorageKey): chrome.storage.StorageArea {
   if (typeof chrome === 'undefined' || !chrome.storage) {
-    throw new Error('LeetLock: chrome.storage is unavailable in this context');
+    throw new Error('LeetMeow: chrome.storage is unavailable in this context');
   }
   return chrome.storage[STORAGE_AREAS[key]];
 }

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to LeetLock are recorded here.
+All notable changes to LeetMeow are recorded here.
 
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/);
 this project follows [Semantic Versioning](https://semver.org/) (0.x while
@@ -70,7 +70,7 @@ pre-stable).
   clicks Submit, and verifies the service worker writes an unlock token for
   the target domain.
 - `docs/LEETCODE_PARITY.md` — research deliverable enumerating every visible
-  LeetCode editor / problem-page feature, whether LeetLock has it, and
+  LeetCode editor / problem-page feature, whether LeetMeow has it, and
   prioritised next steps.
 - **Accessibility baseline** — axe-core/playwright integration in
   `e2e/a11y.spec.ts` audits all four extension surfaces. Fails on critical
@@ -95,7 +95,7 @@ pre-stable).
 
 ## [0.1.0] — 2026-05-24 — First complete release
 
-The first end-to-end-working release of LeetLock — a Chrome Manifest V3
+The first end-to-end-working release of LeetMeow — a Chrome Manifest V3
 extension that intercepts distracting sites and gates them behind a coding
 problem.
 
@@ -155,7 +155,7 @@ problem.
     challenge page** (the gate, end-to-end).
   - **A domain with an active unlock token bypasses the gate.**
 - GitHub Actions CI runs typecheck + tests + build on every push.
-- `npm run package` produces `leetlock-<version>.zip` ready for the Chrome
+- `npm run package` produces `leetmeow-<version>.zip` ready for the Chrome
   Web Store.
 
 ### Fixed
@@ -170,14 +170,14 @@ problem.
 
 ### Honest about MV3 limits
 
-LeetLock cannot truly prevent its own uninstall. The extension raises
+LeetMeow cannot truly prevent its own uninstall. The extension raises
 *friction* (settings cooldown, password lock, partner code, streak loss) so a
 relapse is a deliberate, high-cost choice — not a hard guarantee. The README
 and `docs/RESEARCH.md` §8 document the limits in detail.
 
 ### Install (unpacked)
 
-1. Download `leetlock-0.1.0.zip` from the GitHub release.
+1. Download `leetmeow-0.1.0.zip` from the GitHub release.
 2. Unzip.
 3. Open `chrome://extensions`, enable Developer mode, click **Load unpacked**,
    select the unzipped folder.

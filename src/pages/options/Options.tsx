@@ -1,5 +1,5 @@
 /**
- * Settings page for LeetLock.
+ * Settings page for LeetMeow.
  *
  * Owns all storage I/O, cooldown scheduling, and lock verification.
  * Extracted sub-components handle individual sections; this file only wires
@@ -140,7 +140,7 @@ function SettingsSidebar({ activeId }: { activeId: NavGroupId }) {
         {/* Branding */}
         <div className="mb-8">
           <span className="font-mono text-sm font-semibold uppercase tracking-widest text-accent">
-            LEETLOCK
+            LEETMEOW
           </span>
           <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-faint">
             Settings

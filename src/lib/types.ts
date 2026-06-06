@@ -1,4 +1,4 @@
-// Shared domain types for LeetLock.
+// Shared domain types for LeetMeow.
 // Storage layout and rationale: see docs/DATA_MODEL.md.
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
