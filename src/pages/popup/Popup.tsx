@@ -360,6 +360,17 @@ export function Popup() {
           Settings
         </button>
       </div>
+
+      <div className="mt-3 text-center">
+        <a
+          href="https://ko-fi.com/leetmeow"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[9px] text-faint transition-colors hover:text-muted"
+        >
+          Support LeetMeow on Ko-fi
+        </a>
+      </div>
     </main>
   );
 }
