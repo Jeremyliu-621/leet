@@ -48,6 +48,7 @@ import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
 import { leetlockEditorThemeDark, leetlockEditorThemeLight } from '../codemirror-theme';
+import { isLightTheme } from '../../../lib/theme';
 import { normalizeIndentation } from '../../../lib/editor/indent';
 import type { JudgeResult } from '../../../lib/judge';
 import type { Problem } from '../../../lib/problems/types';
@@ -1296,7 +1297,7 @@ export function EditorPanel({
           },
         ]),
         themeCompartmentRef.current.of(
-          resolvedTheme.includes('light') ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+          isLightTheme(resolvedTheme) ? leetlockEditorThemeLight : leetlockEditorThemeDark,
         ),
         // Font size goes through its own Compartment so it can be reconfigured
         // live when the user adjusts it in Settings without rebuilding the editor.
@@ -1401,7 +1402,7 @@ export function EditorPanel({
     if (!view) return;
     view.dispatch({
       effects: themeCompartmentRef.current.reconfigure(
-        resolvedTheme.includes('light') ? leetlockEditorThemeLight : leetlockEditorThemeDark,
+        isLightTheme(resolvedTheme) ? leetlockEditorThemeLight : leetlockEditorThemeDark,
       ),
     });
   }, [resolvedTheme]);

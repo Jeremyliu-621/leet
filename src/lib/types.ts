@@ -309,7 +309,63 @@ export interface UserPreferences {
 }
 
 /** Theme options exposed in the UI. */
-export type ThemePreference = 'dark' | 'light' | 'system';
+export type ThemePreference =
+  | 'dark'
+  | 'light'
+  | 'serika-dark'
+  | 'nord'
+  | 'botanical'
+  | 'carbon'
+  | 'moonlight'
+  | 'muted-ink'
+  | 'terminal'
+  | 'paper'
+  | 'system';
+
+/** All themes in display order. System is always last. */
+export const ALL_THEMES: readonly ThemePreference[] = [
+  'dark',
+  'light',
+  'serika-dark',
+  'nord',
+  'botanical',
+  'carbon',
+  'moonlight',
+  'muted-ink',
+  'terminal',
+  'paper',
+  'system',
+] as const;
+
+/** Human-readable labels for each theme. */
+export const THEME_LABEL: Readonly<Record<ThemePreference, string>> = {
+  dark: 'Dark',
+  light: 'Light',
+  'serika-dark': 'Serika Dark',
+  nord: 'Nord',
+  botanical: 'Botanical',
+  carbon: 'Carbon',
+  moonlight: 'Moonlight',
+  'muted-ink': 'Muted Ink',
+  terminal: 'Terminal',
+  paper: 'Paper',
+  system: 'System',
+};
+
+/** Short description for each theme. */
+export const THEME_DESCRIPTION: Readonly<Record<ThemePreference, string>> = {
+  dark: 'Classic dark. Default.',
+  light: 'Clean light background.',
+  'serika-dark': 'Warm, golden accents on charcoal.',
+  nord: 'Arctic, blue-tinted palette.',
+  botanical: 'Deep greens, earthy tones.',
+  carbon: 'Pure blacks, high contrast.',
+  moonlight: 'Cool indigo night sky.',
+  'muted-ink': 'Warm sepia, low contrast.',
+  terminal: 'Green-on-black retro CRT.',
+  paper: 'Warm cream, soft contrast.',
+  system: 'Follows your OS setting.',
+};
 
 /** Modal-vs-default selector for the CodeMirror editor. */
 export type EditorKeymap = 'default' | 'vim' | 'emacs';

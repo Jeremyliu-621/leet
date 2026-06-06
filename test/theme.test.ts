@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { applyTheme, resolveBaseTheme, resolveTheme } from '../src/lib/theme/theme';
+import { applyTheme, isLightTheme, resolveBaseTheme, resolveTheme } from '../src/lib/theme/theme';
 
 describe('resolveTheme', () => {
   beforeEach(() => {
@@ -31,6 +31,17 @@ describe('resolveTheme', () => {
   it('falls back to system-dark when matchMedia is unavailable', () => {
     (globalThis as unknown as { window: Window }).window = {} as unknown as Window;
     expect(resolveTheme('system')).toBe('system-dark');
+  });
+
+  it('returns custom themes as-is', () => {
+    expect(resolveTheme('serika-dark')).toBe('serika-dark');
+    expect(resolveTheme('nord')).toBe('nord');
+    expect(resolveTheme('botanical')).toBe('botanical');
+    expect(resolveTheme('carbon')).toBe('carbon');
+    expect(resolveTheme('moonlight')).toBe('moonlight');
+    expect(resolveTheme('muted-ink')).toBe('muted-ink');
+    expect(resolveTheme('terminal')).toBe('terminal');
+    expect(resolveTheme('paper')).toBe('paper');
   });
 });
 
@@ -71,6 +82,12 @@ describe('applyTheme', () => {
     const setAttribute = document.documentElement.setAttribute as unknown as ReturnType<typeof vi.fn>;
     expect(setAttribute).toHaveBeenCalledWith('data-theme', 'system-light');
   });
+
+  it('writes custom theme names directly', () => {
+    applyTheme('nord');
+    const setAttribute = document.documentElement.setAttribute as unknown as ReturnType<typeof vi.fn>;
+    expect(setAttribute).toHaveBeenCalledWith('data-theme', 'nord');
+  });
 });
 
 describe('resolveBaseTheme', () => {
@@ -97,5 +114,30 @@ describe('resolveBaseTheme', () => {
       matchMedia: vi.fn(() => ({ matches: false })),
     } as unknown as Window;
     expect(resolveBaseTheme('system')).toBe('light');
+  });
+
+  it('returns light for paper theme', () => {
+    expect(resolveBaseTheme('paper')).toBe('light');
+  });
+
+  it('returns dark for custom dark themes', () => {
+    expect(resolveBaseTheme('nord')).toBe('dark');
+    expect(resolveBaseTheme('serika-dark')).toBe('dark');
+    expect(resolveBaseTheme('terminal')).toBe('dark');
+  });
+});
+
+describe('isLightTheme', () => {
+  it('returns true for light themes', () => {
+    expect(isLightTheme('light')).toBe(true);
+    expect(isLightTheme('paper')).toBe(true);
+    expect(isLightTheme('system-light')).toBe(true);
+  });
+
+  it('returns false for dark themes', () => {
+    expect(isLightTheme('dark')).toBe(false);
+    expect(isLightTheme('nord')).toBe(false);
+    expect(isLightTheme('terminal')).toBe(false);
+    expect(isLightTheme('system-dark')).toBe(false);
   });
 });

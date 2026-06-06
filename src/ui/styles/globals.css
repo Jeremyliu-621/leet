@@ -92,6 +92,149 @@
   --ll-on-accent: #ffffff;
 }
 
+/* ── Serika Dark — warm golden accents on charcoal (MonkeyType inspired) ── */
+:root[data-theme='serika-dark'] {
+  color-scheme: dark;
+  --ll-bg: #2c2e31;
+  --ll-surface: #393b3f;
+  --ll-surface-2: #44474b;
+  --ll-border: #55585d;
+  --ll-border-strong: #6b6e73;
+  --ll-text: #d1d0c5;
+  --ll-muted: #8a8880;
+  --ll-faint: #7a7870;
+  --ll-accent: #e2b714;
+  --ll-on-accent: #2c2e31;
+  --ll-brand: #e2b714;
+  --ll-brand-strong: #cca512;
+}
+
+/* ── Nord — arctic blue-tinted palette ── */
+:root[data-theme='nord'] {
+  color-scheme: dark;
+  --ll-bg: #2e3440;
+  --ll-surface: #3b4252;
+  --ll-surface-2: #434c5e;
+  --ll-border: #4c566a;
+  --ll-border-strong: #616e88;
+  --ll-text: #eceff4;
+  --ll-muted: #9da5b4;
+  --ll-faint: #7b88a1;
+  --ll-accent: #88c0d0;
+  --ll-on-accent: #2e3440;
+  --ll-brand: #81a1c1;
+  --ll-brand-strong: #5e81ac;
+}
+
+/* ── Botanical — deep greens, earthy tones ── */
+:root[data-theme='botanical'] {
+  color-scheme: dark;
+  --ll-bg: #1a2117;
+  --ll-surface: #252e21;
+  --ll-surface-2: #2f3a2a;
+  --ll-border: #3d4a36;
+  --ll-border-strong: #556b4a;
+  --ll-text: #d4dcc8;
+  --ll-muted: #8a9480;
+  --ll-faint: #6e7a64;
+  --ll-accent: #7db85a;
+  --ll-on-accent: #1a2117;
+  --ll-brand: #7db85a;
+  --ll-brand-strong: #6aa048;
+}
+
+/* ── Carbon — pure black, high contrast ── */
+:root[data-theme='carbon'] {
+  color-scheme: dark;
+  --ll-bg: #0a0a0a;
+  --ll-surface: #161616;
+  --ll-surface-2: #1e1e1e;
+  --ll-border: #2a2a2a;
+  --ll-border-strong: #3a3a3a;
+  --ll-text: #f4f4f4;
+  --ll-muted: #888888;
+  --ll-faint: #666666;
+  --ll-accent: #ffffff;
+  --ll-on-accent: #0a0a0a;
+  --ll-brand: #8b7cf6;
+  --ll-brand-strong: #7c6cf6;
+}
+
+/* ── Moonlight — cool indigo night sky ── */
+:root[data-theme='moonlight'] {
+  color-scheme: dark;
+  --ll-bg: #1e2030;
+  --ll-surface: #282a3e;
+  --ll-surface-2: #32344d;
+  --ll-border: #3e4160;
+  --ll-border-strong: #545778;
+  --ll-text: #c8d3f5;
+  --ll-muted: #828bb8;
+  --ll-faint: #6a73a0;
+  --ll-accent: #82aaff;
+  --ll-on-accent: #1e2030;
+  --ll-brand: #c099ff;
+  --ll-brand-strong: #a872e8;
+}
+
+/* ── Muted Ink — warm sepia, low contrast ── */
+:root[data-theme='muted-ink'] {
+  color-scheme: dark;
+  --ll-bg: #23201c;
+  --ll-surface: #2e2a25;
+  --ll-surface-2: #38342e;
+  --ll-border: #4a4540;
+  --ll-border-strong: #5e5850;
+  --ll-text: #c8bca8;
+  --ll-muted: #8a8070;
+  --ll-faint: #706860;
+  --ll-accent: #c8a874;
+  --ll-on-accent: #23201c;
+  --ll-brand: #c8a874;
+  --ll-brand-strong: #b09060;
+}
+
+/* ── Terminal — green-on-black retro CRT ── */
+:root[data-theme='terminal'] {
+  color-scheme: dark;
+  --ll-bg: #0c0c0c;
+  --ll-surface: #141414;
+  --ll-surface-2: #1c1c1c;
+  --ll-border: #1e3a1e;
+  --ll-border-strong: #2a5a2a;
+  --ll-text: #33ff33;
+  --ll-muted: #1a991a;
+  --ll-faint: #148014;
+  --ll-accent: #33ff33;
+  --ll-on-accent: #0c0c0c;
+  --ll-brand: #33ff33;
+  --ll-brand-strong: #20cc20;
+}
+
+/* ── Paper — warm cream, soft contrast (light theme) ── */
+:root[data-theme='paper'] {
+  color-scheme: light;
+  --ll-bg: #f5f0e8;
+  --ll-surface: #fdfaf4;
+  --ll-surface-2: #f0ebe2;
+  --ll-border: #ddd6ca;
+  --ll-border-strong: #c4baa8;
+  --ll-text: #3a352e;
+  --ll-muted: #6e6860;
+  --ll-faint: #8a8478;
+  --ll-accent: #3a352e;
+  --ll-on-accent: #f5f0e8;
+  --ll-brand: #7a6a50;
+  --ll-brand-strong: #685840;
+  --ll-success: #1a8040;
+  --ll-success-bg: rgba(26, 128, 64, 0.10);
+  --ll-error: #b03030;
+  --ll-error-bg: rgba(176, 48, 48, 0.10);
+  --ll-warning: #9a7000;
+  --ll-warning-bg: rgba(154, 112, 0, 0.10);
+  --ll-info: #2a5aa0;
+}
+
 html,
 body,
 #root {
@@ -131,7 +274,14 @@ body {
 /* --- Dark theme highlight colours --- */
 :root,
 :root[data-theme='dark'],
-:root[data-theme='system-dark'] {
+:root[data-theme='system-dark'],
+:root[data-theme='serika-dark'],
+:root[data-theme='nord'],
+:root[data-theme='botanical'],
+:root[data-theme='carbon'],
+:root[data-theme='moonlight'],
+:root[data-theme='muted-ink'],
+:root[data-theme='terminal'] {
   --ll-hljs-keyword: #C586C0;
   --ll-hljs-function: #DCDCAA;
   --ll-hljs-string: #CE9178;
@@ -144,7 +294,8 @@ body {
 
 /* --- Light theme highlight colours --- */
 :root[data-theme='light'],
-:root[data-theme='system-light'] {
+:root[data-theme='system-light'],
+:root[data-theme='paper'] {
   --ll-hljs-keyword: #AF00DB;
   --ll-hljs-function: #795E26;
   --ll-hljs-string: #A31515;

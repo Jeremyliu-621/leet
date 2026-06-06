@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import type { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { applyEditorFontSize, applyTheme, watchSystemTheme } from '../lib/theme';
+import type { ThemePreference } from '../lib/types';
 import { getValue } from '../lib/storage';
 import { DEFAULT_PREFERENCES } from '../lib/storage/defaults';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -28,7 +29,7 @@ export function mount(node: ReactNode): void {
     throw new Error('LeetLock: #root element not found');
   }
 
-  let currentPreference: 'dark' | 'light' | 'system' = 'dark';
+  let currentPreference: ThemePreference = 'dark';
   void (async () => {
     try {
       const prefs = await getValue('userPreferences');

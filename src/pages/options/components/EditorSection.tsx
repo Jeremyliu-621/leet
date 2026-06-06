@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import type { EditorKeymap, ThemePreference, UserPreferences } from '../../../lib/types';
-import { ALL_LANGUAGES, LANGUAGE_LABEL, LANGUAGE_DESCRIPTION } from '../../../lib/types';
+import { ALL_LANGUAGES, ALL_THEMES, THEME_LABEL, THEME_DESCRIPTION, LANGUAGE_LABEL, LANGUAGE_DESCRIPTION } from '../../../lib/types';
 import { SectionCard } from './SectionCard';
 import { FormField } from './FormField';
 
@@ -12,11 +12,11 @@ interface EditorSectionProps {
 const FONT_MIN = 11;
 const FONT_MAX = 20;
 
-const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string; description: string }> = [
-  { value: 'dark', label: 'Dark', description: 'Dark background, light text. Default.' },
-  { value: 'light', label: 'Light', description: 'Light background, dark text.' },
-  { value: 'system', label: 'System', description: 'Follows your OS dark/light mode setting.' },
-];
+const THEME_OPTIONS = ALL_THEMES.map((t) => ({
+  value: t,
+  label: THEME_LABEL[t],
+  description: THEME_DESCRIPTION[t],
+}));
 
 const INDENT_OPTIONS: ReadonlyArray<{ value: 2 | 4; label: string }> = [
   { value: 2, label: '2 spaces' },
@@ -43,6 +43,39 @@ const KEYMAP_OPTIONS: { value: EditorKeymap; label: string; description: string 
   },
 ];
 
+/** A pair of colored dots representing a theme's bg and accent. */
+const SWATCH_COLORS: Record<ThemePreference, [bg: string, accent: string]> = {
+  dark:          ['#141414', '#ffffff'],
+  light:         ['#f0f0f0', '#0a0a0a'],
+  'serika-dark': ['#2c2e31', '#e2b714'],
+  nord:          ['#2e3440', '#88c0d0'],
+  botanical:     ['#1a2117', '#7db85a'],
+  carbon:        ['#0a0a0a', '#ffffff'],
+  moonlight:     ['#1e2030', '#82aaff'],
+  'muted-ink':   ['#23201c', '#c8a874'],
+  terminal:      ['#0c0c0c', '#33ff33'],
+  paper:         ['#f5f0e8', '#3a352e'],
+  system:        ['#888888', '#888888'],
+};
+
+function ThemeSwatch({ theme }: { theme: ThemePreference }) {
+  const [bg, accent] = SWATCH_COLORS[theme];
+  if (theme === 'system') {
+    return (
+      <span className="inline-flex h-4 w-4 shrink-0 overflow-hidden rounded-full border border-border">
+        <span className="h-full w-1/2" style={{ background: '#141414' }} />
+        <span className="h-full w-1/2" style={{ background: '#f0f0f0' }} />
+      </span>
+    );
+  }
+  return (
+    <span
+      className="inline-block h-4 w-4 shrink-0 rounded-full border border-border"
+      style={{ background: bg, boxShadow: `inset 0 0 0 2px ${bg}, inset 0 0 0 4px ${accent}` }}
+    />
+  );
+}
+
 export function EditorSection({ prefs, onChange }: EditorSectionProps) {
   const uid = useId();
   const fontSizeId = `${uid}-font-size`;
@@ -64,7 +97,12 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
           htmlFor={themeId}
           help="Controls the colour scheme across all LeetLock pages."
         >
-          <div id={themeId} role="radiogroup" aria-label="UI theme" className="flex gap-2">
+          <div
+            id={themeId}
+            role="radiogroup"
+            aria-label="UI theme"
+            className="grid grid-cols-2 gap-2 sm:grid-cols-3"
+          >
             {THEME_OPTIONS.map(({ value, label, description }) => {
               const selected = (prefs.theme ?? 'dark') === value;
               const inputId = `${uid}-theme-${value}`;
@@ -75,7 +113,7 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
                   title={description}
                   className={`flex cursor-pointer items-center gap-2 rounded-sm border px-3 py-2 transition-colors ${
                     selected
-                      ? 'border-border-strong bg-surface-2'
+                      ? 'border-accent bg-surface-2'
                       : 'border-border hover:border-border-strong'
                   }`}
                 >
@@ -86,9 +124,15 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
                     value={value}
                     checked={selected}
                     onChange={() => onChange({ theme: value })}
-                    className="accent-accent"
+                    className="sr-only"
                   />
-                  <span className="font-mono text-xs text-text">{label}</span>
+                  <ThemeSwatch theme={value} />
+                  <div className="min-w-0">
+                    <span className="block truncate font-mono text-xs text-text">{label}</span>
+                    {selected && (
+                      <span className="block truncate font-mono text-[9px] text-faint">{description}</span>
+                    )}
+                  </div>
                 </label>
               );
             })}

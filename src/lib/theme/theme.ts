@@ -1,10 +1,30 @@
 import type { ThemePreference } from '../types';
 
-// Resolves a `ThemePreference` to a concrete `dark` or `light` token, applies
-// it to `document.documentElement`, and keeps it in sync with the OS
-// preference when the user has picked `system`.
+// Resolves a `ThemePreference` to a concrete token, applies it to
+// `document.documentElement`, and keeps it in sync with the OS preference
+// when the user has picked `system`.
 
-export type ResolvedTheme = 'dark' | 'light' | 'system-dark' | 'system-light';
+export type ResolvedTheme =
+  | 'dark'
+  | 'light'
+  | 'serika-dark'
+  | 'nord'
+  | 'botanical'
+  | 'carbon'
+  | 'moonlight'
+  | 'muted-ink'
+  | 'terminal'
+  | 'paper'
+  | 'system-dark'
+  | 'system-light';
+
+/** Themes whose editor should use the light CM theme. All others use dark. */
+const LIGHT_THEMES: ReadonlySet<string> = new Set(['light', 'paper', 'system-light']);
+
+/** Returns true if a resolved theme string should use the light editor/syntax theme. */
+export function isLightTheme(resolved: string): boolean {
+  return LIGHT_THEMES.has(resolved);
+}
 
 const THEME_ATTRIBUTE = 'data-theme';
 
@@ -16,13 +36,13 @@ export function resolveTheme(preference: ThemePreference): ResolvedTheme {
     }
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'system-dark' : 'system-light';
   }
-  return preference;
+  return preference as ResolvedTheme;
 }
 
 /** Resolves to the base colour mode ('dark' | 'light') for components that only need that. */
 export function resolveBaseTheme(preference: ThemePreference): 'dark' | 'light' {
   const resolved = resolveTheme(preference);
-  return resolved.includes('light') ? 'light' : 'dark';
+  return LIGHT_THEMES.has(resolved) ? 'light' : 'dark';
 }
 
 /** Writes the resolved theme to the root element so CSS variables flip. */
