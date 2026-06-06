@@ -132,29 +132,44 @@ function SettingsGroup({ id, label, children }: { id: string; label: string; chi
   );
 }
 
-/** Sidebar navigation for the settings page. */
-function SettingsNav({ activeId }: { activeId: NavGroupId }) {
+/** Full-height sidebar with branding and nav links. */
+function SettingsSidebar({ activeId }: { activeId: NavGroupId }) {
   return (
-    <nav aria-label="Settings sections" className="space-y-0.5">
-      {NAV_GROUPS.map(({ id, label }) => (
-        <a
-          key={id}
-          href={`#group-${id}`}
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById(`group-${id}`)?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          className={`block rounded-sm px-3 py-2 font-mono text-xs transition-colors ${
-            activeId === id
-              ? 'bg-surface-2 text-text'
-              : 'text-muted hover:bg-surface hover:text-text'
-          }`}
-          aria-current={activeId === id ? 'true' : undefined}
-        >
-          {label}
-        </a>
-      ))}
-    </nav>
+    <aside className="hidden w-56 shrink-0 border-r border-border bg-surface md:flex md:flex-col">
+      <div className="sticky top-0 flex flex-col px-5 py-6">
+        {/* Branding */}
+        <div className="mb-8">
+          <span className="font-mono text-sm font-semibold uppercase tracking-widest text-accent">
+            LEETLOCK
+          </span>
+          <span className="ml-2 font-mono text-[10px] uppercase tracking-widest text-faint">
+            Settings
+          </span>
+        </div>
+
+        {/* Nav */}
+        <nav aria-label="Settings sections" className="space-y-1">
+          {NAV_GROUPS.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#group-${id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById(`group-${id}`)?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className={`block rounded px-3 py-2 text-[13px] transition-colors ${
+                activeId === id
+                  ? 'bg-surface-2 font-medium text-text'
+                  : 'text-muted hover:bg-surface-2 hover:text-text'
+              }`}
+              aria-current={activeId === id ? 'true' : undefined}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </aside>
   );
 }
 
@@ -742,47 +757,28 @@ export function Options() {
         {announcement}
       </div>
 
-      <div className="flex min-h-full flex-col bg-bg text-text">
-        {/* Page header */}
-        <header className="sticky top-0 z-10 border-b border-border bg-surface">
-          <div className="mx-auto max-w-[960px] px-6 py-4">
-            <div className="flex items-baseline gap-3">
-              <span className="font-mono text-sm font-semibold uppercase tracking-widest text-accent">
-                LEETLOCK
-              </span>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
-                Settings
-              </span>
+      <div className="flex min-h-full bg-bg text-text">
+        {/* Sidebar */}
+        <SettingsSidebar activeId={activeNav} />
+
+        {/* Main content area */}
+        <div className="min-w-0 flex-1">
+          {/* Strict-mode banner */}
+          {d.prefs.strictMode && (
+            <div
+              className="border-b border-border bg-surface-2 px-8 py-2.5"
+              role="alert"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
+                Strict mode active — changes that reduce friction are deferred by{' '}
+                {formatCooldownMs(d.prefs.settingsCooldownMs)}
+              </p>
             </div>
-          </div>
-        </header>
+          )}
 
-        {/* Strict-mode banner */}
-        {d.prefs.strictMode && (
-          <div
-            className="border-b border-border bg-surface-2 px-6 py-2.5 text-center"
-            role="alert"
-          >
-            <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
-              Strict mode active — changes that reduce friction are deferred by{' '}
-              {formatCooldownMs(d.prefs.settingsCooldownMs)}
-            </p>
-          </div>
-        )}
-
-        {/* Sidebar + content layout */}
-        <div className="mx-auto flex w-full max-w-[960px] flex-1">
-          {/* Sidebar */}
-          <aside className="hidden w-44 shrink-0 border-r border-border md:block">
-            <div className="sticky top-[57px] px-4 py-8">
-              <SettingsNav activeId={activeNav} />
-            </div>
-          </aside>
-
-          {/* Main content */}
           <main
             ref={mainRef}
-            className="min-w-0 flex-1 px-6 py-8 md:px-10"
+            className="mx-auto max-w-[820px] px-8 py-10 md:px-12"
             aria-label="Settings"
           >
             {/* ── Blocking ── */}
