@@ -20,7 +20,7 @@
  *   before proceeding (either applying immediately or scheduling a pending change).
  */
 
-import { useState, useEffect, useCallback, useId } from 'react';
+import { useState, useEffect, useCallback, useId, useRef } from 'react';
 import type {
   BlockRule,
   BlockRuleKind,
@@ -111,13 +111,50 @@ function LoadingScreen() {
   );
 }
 
+/** The navigation groups rendered in the sidebar and as section headings. */
+const NAV_GROUPS = [
+  { id: 'blocking', label: 'Blocking' },
+  { id: 'challenge', label: 'Challenge & Unlock' },
+  { id: 'editor', label: 'Problems & Editor' },
+  { id: 'security', label: 'Security' },
+  { id: 'data', label: 'Data & Info' },
+] as const;
+
+type NavGroupId = (typeof NAV_GROUPS)[number]['id'];
+
 /** Groups related settings sections under a category label with generous spacing. */
-function SettingsGroup({ label, children }: { label: string; children: React.ReactNode }) {
+function SettingsGroup({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
   return (
-    <div className="mb-10">
+    <div id={`group-${id}`} className="mb-10 scroll-mt-20">
       <h2 className="mb-4 font-mono text-[10px] uppercase tracking-widest text-faint">{label}</h2>
       <div className="space-y-4">{children}</div>
     </div>
+  );
+}
+
+/** Sidebar navigation for the settings page. */
+function SettingsNav({ activeId }: { activeId: NavGroupId }) {
+  return (
+    <nav aria-label="Settings sections" className="space-y-0.5">
+      {NAV_GROUPS.map(({ id, label }) => (
+        <a
+          key={id}
+          href={`#group-${id}`}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById(`group-${id}`)?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className={`block rounded-sm px-3 py-2 font-mono text-xs transition-colors ${
+            activeId === id
+              ? 'bg-surface-2 text-text'
+              : 'text-muted hover:bg-surface hover:text-text'
+          }`}
+          aria-current={activeId === id ? 'true' : undefined}
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
   );
 }
 
@@ -614,6 +651,38 @@ export function Options() {
   }
 
   // ---------------------------------------------------------------------------
+  // Scroll spy — tracks which settings group is currently in view
+  // ---------------------------------------------------------------------------
+
+  const [activeNav, setActiveNav] = useState<NavGroupId>('blocking');
+  const mainRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (status !== 'ready') return;
+    const elements = NAV_GROUPS.map(({ id }) => document.getElementById(`group-${id}`)).filter(
+      (el): el is HTMLElement => el !== null,
+    );
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the topmost visible group.
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) {
+          const id = visible[0]!.target.id.replace('group-', '') as NavGroupId;
+          setActiveNav(id);
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 },
+    );
+
+    for (const el of elements) observer.observe(el);
+    return () => observer.disconnect();
+  }, [status]);
+
+  // ---------------------------------------------------------------------------
   // Render
   // ---------------------------------------------------------------------------
 
@@ -673,10 +742,10 @@ export function Options() {
         {announcement}
       </div>
 
-      <div className="min-h-full bg-bg text-text">
+      <div className="flex min-h-full flex-col bg-bg text-text">
         {/* Page header */}
         <header className="sticky top-0 z-10 border-b border-border bg-surface">
-          <div className="mx-auto max-w-[720px] px-6 py-4">
+          <div className="mx-auto max-w-[960px] px-6 py-4">
             <div className="flex items-baseline gap-3">
               <span className="font-mono text-sm font-semibold uppercase tracking-widest text-accent">
                 LEETLOCK
@@ -701,114 +770,125 @@ export function Options() {
           </div>
         )}
 
-        {/* Main content */}
-        <main
-          className="mx-auto max-w-[720px] px-6 py-8"
-          aria-label="Settings"
-        >
-          {/* ── Blocking ── */}
-          <SettingsGroup label="Blocking">
-            <BlockedSitesSection
-              rules={d.blockRules}
-              strictMode={d.prefs.strictMode}
-              pendingRuleIds={pendingBlockRuleIds}
-              pendingNotice={blockSectionPendingNotice}
-              onAdd={handleAddBlockRule(d)}
-              onToggle={handleToggleBlockRule(d)}
-              onDelete={handleDeleteBlockRule(d)}
-            />
-            <KeywordTriggersSection
-              rules={d.keywordRules}
-              strictMode={d.prefs.strictMode}
-              pendingRuleIds={pendingKeywordRuleIds}
-              pendingNotice={keywordSectionPendingNotice}
-              onAdd={handleAddKeyword(d)}
-              onToggle={handleToggleKeyword(d)}
-              onDelete={handleDeleteKeyword(d)}
-            />
-          </SettingsGroup>
+        {/* Sidebar + content layout */}
+        <div className="mx-auto flex w-full max-w-[960px] flex-1">
+          {/* Sidebar — hidden on small screens */}
+          <aside className="hidden w-48 shrink-0 lg:block">
+            <div className="sticky top-[57px] py-8 pr-2">
+              <SettingsNav activeId={activeNav} />
+            </div>
+          </aside>
 
-          {/* ── Challenge & Unlock ── */}
-          <SettingsGroup label="Challenge & Unlock">
-            <ChallengeSection
-              prefs={d.prefs}
-              pendingNotice={frictionPendingNotice}
-              onChange={(patch) =>
-                void handlePrefsChange(
-                  d,
-                  patch,
-                  (_prev) => {
-                    if (patch.challengeTimeLimitSec !== undefined) {
-                      return `Reduce challenge time limit to ${patch.challengeTimeLimitSec}s`;
-                    }
-                    if (patch.maxSubmissionAttempts !== undefined) {
-                      return `Increase max attempts to ${patch.maxSubmissionAttempts}`;
-                    }
-                    return 'Change challenge settings';
-                  },
-                )
-              }
-            />
-            <UnlockSection
-              prefs={d.prefs}
-              pendingNotice={frictionPendingNotice}
-              onChange={(patch) =>
-                void handlePrefsChange(
-                  d,
-                  patch,
-                  (prev) =>
-                    `Increase unlock duration to ${(patch as Partial<UserPreferences>).unlockDurationMin ?? prev.unlockDurationMin}m`,
-                )
-              }
-            />
-            <FailureSection
-              prefs={d.prefs}
-              onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
-            />
-          </SettingsGroup>
+          {/* Main content */}
+          <main
+            ref={mainRef}
+            className="min-w-0 flex-1 px-6 py-8 lg:pl-8"
+            aria-label="Settings"
+          >
+            {/* ── Blocking ── */}
+            <SettingsGroup id="blocking" label="Blocking">
+              <BlockedSitesSection
+                rules={d.blockRules}
+                strictMode={d.prefs.strictMode}
+                pendingRuleIds={pendingBlockRuleIds}
+                pendingNotice={blockSectionPendingNotice}
+                onAdd={handleAddBlockRule(d)}
+                onToggle={handleToggleBlockRule(d)}
+                onDelete={handleDeleteBlockRule(d)}
+              />
+              <KeywordTriggersSection
+                rules={d.keywordRules}
+                strictMode={d.prefs.strictMode}
+                pendingRuleIds={pendingKeywordRuleIds}
+                pendingNotice={keywordSectionPendingNotice}
+                onAdd={handleAddKeyword(d)}
+                onToggle={handleToggleKeyword(d)}
+                onDelete={handleDeleteKeyword(d)}
+              />
+            </SettingsGroup>
 
-          {/* ── Problems & Editor ── */}
-          <SettingsGroup label="Problems & Editor">
-            <ProblemSelectionSection
-              prefs={d.prefs}
-              onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
-            />
-            <EditorSection
-              prefs={d.prefs}
-              onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
-            />
-            <AiHintsSection
-              settings={d.aiSettings}
-              onChange={(patch) => void handleAiSettingsChange(patch).then(() => announce('AI settings saved.'))}
-            />
-          </SettingsGroup>
+            {/* ── Challenge & Unlock ── */}
+            <SettingsGroup id="challenge" label="Challenge & Unlock">
+              <ChallengeSection
+                prefs={d.prefs}
+                pendingNotice={frictionPendingNotice}
+                onChange={(patch) =>
+                  void handlePrefsChange(
+                    d,
+                    patch,
+                    (_prev) => {
+                      if (patch.challengeTimeLimitSec !== undefined) {
+                        return `Reduce challenge time limit to ${patch.challengeTimeLimitSec}s`;
+                      }
+                      if (patch.maxSubmissionAttempts !== undefined) {
+                        return `Increase max attempts to ${patch.maxSubmissionAttempts}`;
+                      }
+                      return 'Change challenge settings';
+                    },
+                  )
+                }
+              />
+              <UnlockSection
+                prefs={d.prefs}
+                pendingNotice={frictionPendingNotice}
+                onChange={(patch) =>
+                  void handlePrefsChange(
+                    d,
+                    patch,
+                    (prev) =>
+                      `Increase unlock duration to ${(patch as Partial<UserPreferences>).unlockDurationMin ?? prev.unlockDurationMin}m`,
+                  )
+                }
+              />
+              <FailureSection
+                prefs={d.prefs}
+                onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+              />
+            </SettingsGroup>
 
-          {/* ── Security ── */}
-          <SettingsGroup label="Security">
-            <StrictModeSection
-              prefs={d.prefs}
-              pendingNotice={strictPendingNotice}
-              onToggleStrict={handleToggleStrict(d)}
-              onChangeCooldown={handleChangeCooldown(d)}
-            />
-            <PasswordLockSection lock={d.lock} onSave={handleSaveLock} />
-            <AccountabilitySection partner={d.partner} onSave={handleSavePartner} />
-            <PendingChangesSection pending={d.pending} onCancel={handleCancelPending} />
-          </SettingsGroup>
+            {/* ── Problems & Editor ── */}
+            <SettingsGroup id="editor" label="Problems & Editor">
+              <ProblemSelectionSection
+                prefs={d.prefs}
+                onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+              />
+              <EditorSection
+                prefs={d.prefs}
+                onChange={(patch) => void applyPrefsNow(patch).then(() => announce('Settings saved.'))}
+              />
+              <AiHintsSection
+                settings={d.aiSettings}
+                onChange={(patch) => void handleAiSettingsChange(patch).then(() => announce('AI settings saved.'))}
+              />
+            </SettingsGroup>
 
-          {/* ── Data & Info ── */}
-          <SettingsGroup label="Data & Info">
-            <SyncStatusSection lastSyncAt={null} />
-            <ImportExportSection />
-            <ResetSection
-              lock={d.lock}
-              strictMode={d.prefs.strictMode}
-              onReset={handleReset(d)}
-            />
-            <ProblemBrowserSection />
-            <AboutSection />
-          </SettingsGroup>
-        </main>
+            {/* ── Security ── */}
+            <SettingsGroup id="security" label="Security">
+              <StrictModeSection
+                prefs={d.prefs}
+                pendingNotice={strictPendingNotice}
+                onToggleStrict={handleToggleStrict(d)}
+                onChangeCooldown={handleChangeCooldown(d)}
+              />
+              <PasswordLockSection lock={d.lock} onSave={handleSaveLock} />
+              <AccountabilitySection partner={d.partner} onSave={handleSavePartner} />
+              <PendingChangesSection pending={d.pending} onCancel={handleCancelPending} />
+            </SettingsGroup>
+
+            {/* ── Data & Info ── */}
+            <SettingsGroup id="data" label="Data & Info">
+              <SyncStatusSection lastSyncAt={null} />
+              <ImportExportSection />
+              <ResetSection
+                lock={d.lock}
+                strictMode={d.prefs.strictMode}
+                onReset={handleReset(d)}
+              />
+              <ProblemBrowserSection />
+              <AboutSection />
+            </SettingsGroup>
+          </main>
+        </div>
       </div>
 
       {/* Global verify modal — opened when a locked, strictness-reducing action is attempted */}
