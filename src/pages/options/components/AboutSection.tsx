@@ -42,7 +42,7 @@ export function AboutSection() {
       <div className="space-y-3 text-xs leading-relaxed text-muted">
         <p>
           LeetMeow is a Chrome Manifest V3 extension with{' '}
-          <span className="font-semibold text-text">{BANK_SIZE} original problems</span>{' '}
+          <span className="font-semibold text-text">{BANK_SIZE} problems</span>{' '}
           covering {TAG_COUNT} topic categories.{' '}
           <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
           are fully executed in-browser. Java, C++, C#, Go, Rust, Kotlin, Swift, and SQL

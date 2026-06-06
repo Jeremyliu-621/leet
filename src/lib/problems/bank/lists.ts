@@ -623,9 +623,4 @@ export const LIST_PROBLEM_IDS: Readonly<Record<ProblemList, readonly string[]>> 
     'largest-rectangle-in-histogram',
   ],
 
-  'sql-50': [
-    // The SQL 50 list focuses on SQL problems. Since the bank uses JS-based
-    // problems, this list contains problems whose themes overlap with common
-    // SQL-style operations (joins, aggregation, filtering, grouping).
-  ],
 };

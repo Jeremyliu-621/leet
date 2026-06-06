@@ -93,7 +93,7 @@ Use the `frontend-design` skill when building or refining UI pages for design qu
 - **Files:** kebab-case filenames; PascalCase React components; camelCase functions/vars.
 - **TypeScript:** `strict` on. No `any` — use `unknown` and narrow. Shared types live in
   `src/lib/types.ts`; problem types in `src/lib/problems/types.ts`.
-- **No unofficial LeetCode APIs.** All problems are original, authored in `src/lib/problems/bank/`.
+- **No unofficial LeetCode APIs.** All problems are authored in `src/lib/problems/bank/`.
 - **No secrets in the repo.**
 
 ## 7. Definition of done (per task)

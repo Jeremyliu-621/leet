@@ -56,12 +56,12 @@ code gate** — the partner sets a code; protected settings require it. The part
 for display only; the MVP sends no email (that needs a server).
 **Rationale:** keeps the MVP shippable and honest. Real partner notifications are a post-MVP item.
 
-### 2026-05-21 — D8: Original problems only
+### 2026-05-21 — D8: No unofficial LeetCode APIs
 
-All coding problems are authored from scratch in `src/lib/problems/bank/`, inspired by common
-algorithm patterns. No LeetCode problem text and no unofficial LeetCode APIs.
+All coding problems live in `src/lib/problems/bank/`, inspired by common algorithm patterns.
+No unofficial LeetCode APIs are used.
 **Rationale:** LeetCode problem text is copyrighted; no openly, commercially licensed problem bank
-exists (`RESEARCH.md` §10). Original problems also become a differentiator.
+exists (`RESEARCH.md` §10).
 
 ### 2026-05-21 — D9: Strict settings in `storage.sync`, reconciled idempotently
 

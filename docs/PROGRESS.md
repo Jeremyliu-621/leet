@@ -198,7 +198,7 @@ Still pending:
 - [x] Bank progress in popup — "X/119 solved (Y%)" in SolveBreakdown header
 - [x] Add hard stack problems — sum-subarray-minimums, remove-k-digits; 624 tests; bank at 121
 - [x] Dynamic challenge tab title — shows problem name (e.g. "Two Sum — LeetMeow")
-- [x] Bank size in Options About section — "119 original problems covering 9 topic categories"
+- [x] Bank size in Options About section — "119 problems covering 9 topic categories"
 - [x] Add medium DP problems — LCS, min-path-sum, decode-ways; hard DP filled (LPS, palindrome-min-cuts, integer-break, regular-expression-matching); 651 tests; bank at 130
 - [x] Add medium two-pointers problems — next-permutation, interval-list-intersections, longest-mountain-in-array; 642 tests; bank at 127
 - [x] Add classic missing medium problems — spiral-matrix, rotate-image, maximal-square, find-first-last-pos, search-2d-matrix; 666 tests; bank at 135

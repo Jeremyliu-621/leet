@@ -7,7 +7,6 @@ export type ProblemList =
   | 'top-interview-150'
   | 'leetcode-75'
   | 'top-100-liked'
-  | 'sql-50'
   | 'blind-75'
   | 'neetcode-150'
   | 'neetcode-250';
@@ -17,7 +16,6 @@ export const PROBLEM_LISTS: readonly ProblemList[] = [
   'top-interview-150',
   'leetcode-75',
   'top-100-liked',
-  'sql-50',
   'blind-75',
   'neetcode-150',
   'neetcode-250',
@@ -28,7 +26,6 @@ export const PROBLEM_LIST_LABEL: Readonly<Record<ProblemList, string>> = {
   'top-interview-150': 'Top Interview 150',
   'leetcode-75': 'LeetCode 75',
   'top-100-liked': 'Top 100 Liked',
-  'sql-50': 'SQL 50',
   'blind-75': 'Blind 75',
   'neetcode-150': 'NeetCode 150',
   'neetcode-250': 'NeetCode 250',

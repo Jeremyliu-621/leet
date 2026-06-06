@@ -177,7 +177,7 @@ Citations: `developer.chrome.com`.
 | Project Euler problems | https://projecteuler.net/copyright | CC BY-NC-SA 4.0 | Inspiration only — **non-commercial license; cannot ship verbatim in a commercial product.** Math-heavy, not interview-style. |
 | Rosetta Code | https://rosettacode.org/wiki/Rosetta_Code:Copyrights | GFDL 1.2 | Inspiration only — **GFDL is incompatible with most software licenses; not cleanly reusable.** |
 | Exercism | https://exercism.org/ | Exercises MIT-ish, content varies per track | Open-source practice exercises; check per-track licensing before any reuse. Best treated as inspiration. |
-| **Original problem authoring** | n/a | n/a (LeetMeow-owned) | **Required path.** LeetCode problem statements are copyrighted. LeetMeow must author original problems "inspired by common patterns" (two-sum-style hashmap, two-pointer, sliding window, BFS/DFS, DP). Pattern *categories* are not protectable; specific problem text is. |
+| **Problem authoring** | n/a | n/a (LeetMeow-owned) | **Required path.** LeetCode problem statements are copyrighted. LeetMeow must author problems "inspired by common patterns" (two-sum-style hashmap, two-pointer, sliding window, BFS/DFS, DP). Pattern *categories* are not protectable; specific problem text is. |
 
 **Licensing bottom line:** there is **no large, cleanly commercially-licensed bank of interview-style coding problems** to drop in. LeetMeow must write its own. Open sets either carry non-commercial (Project Euler) or copyleft/doc (Rosetta Code, GFDL) licenses, or are math/curriculum-oriented rather than algorithm-interview problems.
 

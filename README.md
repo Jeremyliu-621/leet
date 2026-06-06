@@ -53,7 +53,7 @@ limits of what a Chrome extension can enforce (see below).
 
 - **Block rules** — domains, full URLs, and URL keyword patterns.
 - **Native challenge screen** — problem, examples, constraints, in-page code editor, test runner.
-- **Local problem bank** — original problems across arrays, strings, hash maps, two pointers,
+- **Local problem bank** — problems across arrays, strings, hash maps, two pointers,
   sliding window, binary search, and stacks. JavaScript first.
 - **Unlock economy** — configurable challenge time limit and unlock duration, per-domain tokens.
 - **Failure handling** — configurable: close the tab or redirect to a calm blocked page.
