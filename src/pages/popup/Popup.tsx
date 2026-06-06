@@ -1,22 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { getValue, setValue, updateValue, STORAGE_DEFAULTS } from '../../lib/storage';
+import { useEffect, useState } from 'react';
+import { getValue, setValue, STORAGE_DEFAULTS } from '../../lib/storage';
 import type { StorageSchema, StorageKey } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
 import { localDateString } from '../../lib/streak';
-import { applyEditorFontSize, applyTheme, watchSystemTheme } from '../../lib/theme';
+import { watchSystemTheme } from '../../lib/theme';
 import type {
   BlockRule,
   Difficulty,
-  EditorKeymap,
   ProblemTag,
   SolvedProblemRecord,
   StreakSummary,
-  SupportedLanguage,
   ThemePreference,
   UnlockToken,
 } from '../../lib/types';
-import { ALL_LANGUAGES, DIFFICULTIES, LANGUAGE_SHORT, PROBLEM_TAGS } from '../../lib/types';
+import { DIFFICULTIES, PROBLEM_TAGS } from '../../lib/types';
 import { getAllProblems } from '../../lib/problems';
 import { computeSolvedStats } from './popup-helpers';
 import type { SolvedStats } from './popup-helpers';
@@ -38,26 +36,6 @@ const BANK_SIZE_BY_TAG: Readonly<Record<ProblemTag, number>> = (() => {
   return counts as Record<ProblemTag, number>;
 })();
 
-const LANGUAGE_OPTIONS = ALL_LANGUAGES.map((lang) => ({ value: lang, label: LANGUAGE_SHORT[lang] }));
-
-const KEYMAP_OPTIONS: ReadonlyArray<{ value: EditorKeymap; label: string }> = [
-  { value: 'default', label: 'Default' },
-  { value: 'vim', label: 'Vim' },
-  { value: 'emacs', label: 'Emacs' },
-];
-
-const THEME_OPTIONS: ReadonlyArray<{ value: ThemePreference; label: string }> = [
-  { value: 'dark', label: 'Dark' },
-  { value: 'light', label: 'Light' },
-  { value: 'system', label: 'System' },
-];
-
-const FONT_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
-  { value: 11, label: 'S' },
-  { value: 13, label: 'M' },
-  { value: 15, label: 'L' },
-  { value: 17, label: 'XL' },
-];
 
 /** Common distractions surfaced as one-click adds on first run. */
 const FIRST_RUN_SUGGESTIONS: readonly string[] = [
@@ -78,70 +56,6 @@ interface PopupData {
   alreadyBlocked: boolean;
   blockedDomains: ReadonlySet<string>;
   theme: ThemePreference;
-  editorFontSize: number;
-  editorKeymap: EditorKeymap;
-  preferredLanguage: SupportedLanguage;
-}
-
-/**
- * Accessible radio-button group.
- * - Only the selected option is in the tab order (tabIndex=0); others are -1.
- * - Arrow keys cycle through options and move focus automatically.
- */
-function RadioGroup<T extends string | number>({
-  options,
-  value,
-  onChange,
-  buttonClass,
-  wrapClass = 'flex items-center gap-1',
-}: {
-  options: readonly { value: T; label: string; ariaLabel?: string }[];
-  value: T;
-  onChange: (v: T) => void;
-  buttonClass: (selected: boolean) => string;
-  wrapClass?: string;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      const idx = options.findIndex((o) => o.value === value);
-      let next: number;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        next = (idx + 1) % options.length;
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        next = (idx - 1 + options.length) % options.length;
-      } else return;
-      e.preventDefault();
-      onChange(options[next]!.value);
-      const radios = containerRef.current?.querySelectorAll<HTMLElement>('[role="radio"]');
-      radios?.[next]?.focus();
-    },
-    [options, value, onChange],
-  );
-
-  return (
-    <div ref={containerRef} className={wrapClass}>
-      {options.map((opt) => {
-        const selected = opt.value === value;
-        return (
-          <button
-            key={String(opt.value)}
-            type="button"
-            role="radio"
-            aria-checked={selected}
-            aria-label={opt.ariaLabel}
-            tabIndex={selected ? 0 : -1}
-            onClick={() => onChange(opt.value)}
-            onKeyDown={handleKeyDown}
-            className={buttonClass(selected)}
-          >
-            {opt.label}
-          </button>
-        );
-      })}
-    </div>
-  );
 }
 
 function formatSolveTime(ms: number): string {
@@ -214,9 +128,6 @@ export function Popup() {
         alreadyBlocked,
         blockedDomains,
         theme: prefs.theme,
-        editorFontSize: prefs.editorFontSize,
-        editorKeymap: prefs.editorKeymap,
-        preferredLanguage: prefs.preferredLanguage,
       });
     }
 
@@ -287,48 +198,6 @@ export function Popup() {
     }
   }
 
-  async function handleThemeChange(next: ThemePreference): Promise<void> {
-    if (!data || data.theme === next) return;
-    applyTheme(next);
-    setData({ ...data, theme: next });
-    try {
-      await updateValue('userPreferences', (curr) => ({ ...curr, theme: next }));
-    } catch {
-      // Storage unavailable — the visual change still applied for this session.
-    }
-  }
-
-  async function handleFontSizeChange(next: number): Promise<void> {
-    if (!data || data.editorFontSize === next) return;
-    const applied = applyEditorFontSize(next);
-    setData({ ...data, editorFontSize: applied });
-    try {
-      await updateValue('userPreferences', (curr) => ({ ...curr, editorFontSize: applied }));
-    } catch {
-      // Storage unavailable — the visual change still applied for this session.
-    }
-  }
-
-  async function handleKeymapChange(next: EditorKeymap): Promise<void> {
-    if (!data || data.editorKeymap === next) return;
-    setData({ ...data, editorKeymap: next });
-    try {
-      await updateValue('userPreferences', (curr) => ({ ...curr, editorKeymap: next }));
-    } catch {
-      // Storage unavailable — preference change is in-session only.
-    }
-  }
-
-  async function handleLanguageChange(next: SupportedLanguage): Promise<void> {
-    if (!data || data.preferredLanguage === next) return;
-    setData({ ...data, preferredLanguage: next });
-    try {
-      await updateValue('userPreferences', (curr) => ({ ...curr, preferredLanguage: next }));
-    } catch {
-      // Storage unavailable — preference change is in-session only.
-    }
-  }
-
   if (data === null) {
     return (
       <main className="min-w-[340px] overflow-x-hidden bg-bg p-5 text-text">
@@ -356,44 +225,28 @@ export function Popup() {
         </time>
       </header>
 
-      {/* Primary actions — pinned to the top for one-click access. */}
-      <section className="mt-4 space-y-2" aria-label="Quick actions">
-        <button
-          type="button"
-          onClick={() => void handleBlock()}
-          disabled={!data.currentDomain || data.alreadyBlocked}
-          className="w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {blockLabel}
-        </button>
-        <button
-          type="button"
-          onClick={handlePracticeNow}
-          className="w-full rounded-md border border-brand bg-brand px-3 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-        >
-          Practice now
-        </button>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={handleOpenDashboard}
-            className="flex-1 rounded-md border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-          >
-            Dashboard
-          </button>
-          <button
-            type="button"
-            onClick={handleOpenSettings}
-            className="flex-1 rounded-md border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-          >
-            Settings
-          </button>
-        </div>
-      </section>
+      {/* Hero CTA */}
+      <button
+        type="button"
+        onClick={handlePracticeNow}
+        className="mt-4 w-full rounded-md border border-brand bg-brand px-3 py-2.5 text-xs font-semibold text-white transition-opacity hover:opacity-90 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+      >
+        Practice now
+      </button>
 
-      {/* Compact summary strip — three stats sharing one bordered card. */}
+      {/* Block current site */}
+      <button
+        type="button"
+        onClick={() => void handleBlock()}
+        disabled={!data.currentDomain || data.alreadyBlocked}
+        className="mt-2 w-full rounded-md border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {blockLabel}
+      </button>
+
+      {/* Compact summary strip */}
       <section
-        className="mt-4 flex divide-x divide-border overflow-hidden rounded-md border border-border bg-surface"
+        className="mt-5 flex divide-x divide-border overflow-hidden rounded-md border border-border bg-surface"
         aria-label="Summary"
       >
         <Stat label="Streak" value={data.streak.current} sub={`best ${data.streak.longest}`} />
@@ -414,39 +267,12 @@ export function Popup() {
           </p>
         )}
 
-      <SolveBreakdown stats={data.solvedStats} totalSolvedMs={data.totalSolvedMs} />
-
-      {data.blockedDomains.size === 0 && (
-        <section className="mt-4" aria-label="Quick start">
+      {/* Active unlocks */}
+      {data.activeUnlocks.length > 0 && (
+        <section className="mt-5">
           <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
-            Add a site to start
+            Active unlocks
           </h2>
-          <p className="mt-1 text-xs text-muted">
-            Pick a distraction. You can change or remove these any time in Settings.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {FIRST_RUN_SUGGESTIONS.map((domain) => (
-              <button
-                key={domain}
-                type="button"
-                onClick={() => void addDomainRule(domain)}
-                aria-label={`Block ${domain}`}
-                className="rounded-md border border-border bg-bg px-2.5 py-1 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-              >
-                + {domain}
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className="mt-4">
-        <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
-          Active unlocks
-        </h2>
-        {data.activeUnlocks.length === 0 ? (
-          <p className="mt-2 text-xs text-muted">None.</p>
-        ) : (
           <ul className="mt-2 space-y-1.5">
             {data.activeUnlocks.slice(0, 4).map((token) => {
               const pctLeft = Math.max(0, Math.min(100, ((token.expiresAt - now) / token.durationMs) * 100));
@@ -483,80 +309,57 @@ export function Popup() {
             })}
             {data.activeUnlocks.length > 4 && (
               <li className="font-mono text-[10px] text-faint px-1">
-                +{data.activeUnlocks.length - 4} more · see Settings
+                +{data.activeUnlocks.length - 4} more
               </li>
             )}
           </ul>
-        )}
-      </section>
+        </section>
+      )}
 
-      <section className="mt-5 border-t border-border pt-4" role="radiogroup" aria-label="Theme">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">Theme</p>
-        <RadioGroup
-          options={THEME_OPTIONS}
-          value={data.theme}
-          onChange={(v) => void handleThemeChange(v)}
-          buttonClass={(s) =>
-            s
-              ? 'flex-1 rounded-md border border-border-strong bg-surface-2 px-3 py-1.5 text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'flex-1 rounded-md border border-border bg-bg px-3 py-1.5 text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-          }
-        />
-      </section>
+      {/* First-run suggestions */}
+      {data.blockedDomains.size === 0 && (
+        <section className="mt-5" aria-label="Quick start">
+          <h2 className="font-mono text-[10px] uppercase tracking-widest text-faint">
+            Add a site to start
+          </h2>
+          <p className="mt-1 text-xs text-muted">
+            Pick a distraction. Change or remove these any time in Settings.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {FIRST_RUN_SUGGESTIONS.map((domain) => (
+              <button
+                key={domain}
+                type="button"
+                onClick={() => void addDomainRule(domain)}
+                aria-label={`Block ${domain}`}
+                className="rounded-md border border-border bg-bg px-2.5 py-1 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+              >
+                + {domain}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
 
-      <section className="mt-4" role="radiogroup" aria-label="Editor font size">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
-          Editor font · {data.editorFontSize}px
-        </p>
-        <RadioGroup
-          options={FONT_SIZE_OPTIONS.map((o) => ({
-            ...o,
-            ariaLabel: `Set editor font size to ${o.value} pixels`,
-          }))}
-          value={data.editorFontSize}
-          onChange={(v) => void handleFontSizeChange(v)}
-          buttonClass={(s) =>
-            s
-              ? 'flex-1 rounded-md border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'flex-1 rounded-md border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-          }
-        />
-      </section>
+      <SolveBreakdown stats={data.solvedStats} totalSolvedMs={data.totalSolvedMs} />
 
-      <section className="mt-4" aria-label="Default language">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
-          Default language
-        </p>
-        <select
-          value={data.preferredLanguage}
-          onChange={(e) => void handleLanguageChange(e.target.value as SupportedLanguage)}
-          aria-label="Default language"
-          className="w-full rounded-md border border-border bg-surface px-3 py-1.5 font-mono text-[11px] text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+      {/* Secondary navigation */}
+      <div className="mt-5 flex gap-2 border-t border-border pt-4">
+        <button
+          type="button"
+          onClick={handleOpenDashboard}
+          className="flex-1 rounded-md border border-border-strong bg-surface px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
         >
-          {LANGUAGE_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>{o.label}</option>
-          ))}
-        </select>
-      </section>
-
-      <section className="mt-4" role="radiogroup" aria-label="Editor keymap">
-        <p className="mb-2 font-mono text-[9px] uppercase tracking-widest text-faint">
-          Editor keymap
-        </p>
-        <RadioGroup
-          options={KEYMAP_OPTIONS.map((o) => ({
-            ...o,
-            ariaLabel: `Set editor keymap to ${o.label}`,
-          }))}
-          value={data.editorKeymap}
-          onChange={(v) => void handleKeymapChange(v)}
-          buttonClass={(s) =>
-            s
-              ? 'flex-1 rounded-md border border-border-strong bg-surface-2 px-3 py-1.5 font-mono text-[11px] font-medium text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-              : 'flex-1 rounded-md border border-border bg-bg px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:bg-surface hover:text-text focus:outline-none focus-visible:ring-1 focus-visible:ring-accent'
-          }
-        />
-      </section>
+          Dashboard
+        </button>
+        <button
+          type="button"
+          onClick={handleOpenSettings}
+          className="flex-1 rounded-md border border-border bg-bg px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-surface focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        >
+          Settings
+        </button>
+      </div>
     </main>
   );
 }
