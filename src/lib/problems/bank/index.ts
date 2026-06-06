@@ -1,4 +1,6 @@
+import type { ProblemList } from '../../types';
 import type { Problem } from '../types';
+import { LIST_PROBLEM_IDS } from './lists';
 
 // arrays — easy
 import { problem as runningSum } from './running-sum';
@@ -6900,3 +6902,24 @@ export const problems: readonly Problem[] = [
   distanceToCycleGraph,
   designHashSet,
 ];
+
+// Hydrate each problem's `lists` field from the list registry.
+{
+  const idToLists = new Map<string, ProblemList[]>();
+  for (const [list, ids] of Object.entries(LIST_PROBLEM_IDS) as [ProblemList, readonly string[]][]) {
+    for (const id of ids) {
+      let arr = idToLists.get(id);
+      if (!arr) {
+        arr = [];
+        idToLists.set(id, arr);
+      }
+      arr.push(list);
+    }
+  }
+  for (const p of problems) {
+    const lists = idToLists.get(p.id);
+    if (lists && lists.length > 0) {
+      (p as { lists?: readonly ProblemList[] }).lists = lists;
+    }
+  }
+}

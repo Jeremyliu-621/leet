@@ -1,4 +1,4 @@
-import type { Difficulty, ProblemTag, UserPreferences } from '../types';
+import type { Difficulty, ProblemList, ProblemTag, UserPreferences } from '../types';
 import type { Problem } from './types';
 import { problems as bank } from './bank';
 
@@ -22,13 +22,15 @@ export interface ProblemFilter {
   difficulties?: readonly Difficulty[];
   /** Allowed tags; a problem matches if it has at least one. Empty means "any". */
   tags?: readonly ProblemTag[];
+  /** Allowed lists; a problem matches if it belongs to at least one. Empty means "any". */
+  lists?: readonly ProblemList[];
   /** Problem ids to exclude (e.g. recently solved). */
   excludeIds?: readonly string[];
 }
 
 /** Returns every problem matching the filter, preserving bank order. */
 export function filterProblems(filter: ProblemFilter): readonly Problem[] {
-  const { difficulties, tags, excludeIds } = filter;
+  const { difficulties, tags, lists, excludeIds } = filter;
   const excludeSet = excludeIds && excludeIds.length > 0 ? new Set(excludeIds) : null;
   return bank.filter((problem) => {
     if (difficulties && difficulties.length > 0 && !difficulties.includes(problem.difficulty)) {
@@ -36,6 +38,11 @@ export function filterProblems(filter: ProblemFilter): readonly Problem[] {
     }
     if (tags && tags.length > 0 && !problem.tags.some((tag) => tags.includes(tag))) {
       return false;
+    }
+    if (lists && lists.length > 0) {
+      if (!problem.lists || !problem.lists.some((l) => lists.includes(l))) {
+        return false;
+      }
     }
     if (excludeSet && excludeSet.has(problem.id)) {
       return false;
@@ -72,16 +79,17 @@ export interface PickChallengeOptions {
  * presented as long as the bank is non-empty.
  */
 export function pickChallengeProblem(
-  prefs: Pick<UserPreferences, 'difficulties' | 'tags'>,
+  prefs: Pick<UserPreferences, 'difficulties' | 'tags'> & Partial<Pick<UserPreferences, 'lists'>>,
   options: PickChallengeOptions = {},
 ): Problem | undefined {
   const random = options.random ?? Math.random;
   const { excludeIds } = options;
 
   return (
-    selectProblem({ difficulties: prefs.difficulties, tags: prefs.tags, excludeIds }, random) ??
-    selectProblem({ difficulties: prefs.difficulties, excludeIds }, random) ??
-    selectProblem({ tags: prefs.tags, excludeIds }, random) ??
+    selectProblem({ difficulties: prefs.difficulties, tags: prefs.tags, lists: prefs.lists, excludeIds }, random) ??
+    selectProblem({ difficulties: prefs.difficulties, lists: prefs.lists, excludeIds }, random) ??
+    selectProblem({ tags: prefs.tags, lists: prefs.lists, excludeIds }, random) ??
+    selectProblem({ lists: prefs.lists, excludeIds }, random) ??
     selectProblem({ excludeIds }, random) ??
     selectProblem({}, random)
   );

@@ -2,8 +2,8 @@
  * ProblemSelectionSection — difficulty multi-toggle + tag multi-toggle.
  */
 
-import type { Difficulty, ProblemTag, UserPreferences } from '../../../lib/types';
-import { DIFFICULTIES, PROBLEM_TAGS } from '../../../lib/types';
+import type { Difficulty, ProblemList, ProblemTag, UserPreferences } from '../../../lib/types';
+import { DIFFICULTIES, PROBLEM_LISTS, PROBLEM_LIST_LABEL, PROBLEM_TAGS } from '../../../lib/types';
 import { getAllProblems } from '../../../lib/problems';
 import { formatTag, capitalise } from '../options-helpers';
 import { SectionCard } from './SectionCard';
@@ -17,6 +17,10 @@ const TAG_COUNTS: Readonly<Record<ProblemTag, number>> = Object.fromEntries(
 const DIFF_COUNTS: Readonly<Record<Difficulty, number>> = Object.fromEntries(
   DIFFICULTIES.map((d) => [d, _all.filter((p) => p.difficulty === d).length]),
 ) as Readonly<Record<Difficulty, number>>;
+
+const LIST_COUNTS: Readonly<Record<ProblemList, number>> = Object.fromEntries(
+  PROBLEM_LISTS.map((l) => [l, _all.filter((p) => p.lists?.includes(l)).length]),
+) as Readonly<Record<ProblemList, number>>;
 
 interface ProblemSelectionSectionProps {
   prefs: UserPreferences;
@@ -35,6 +39,15 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
     }
   }
 
+  function toggleList(list: ProblemList) {
+    const current = prefs.lists;
+    if (current.includes(list)) {
+      onChange({ lists: current.filter((l) => l !== list) });
+    } else {
+      onChange({ lists: [...current, list] });
+    }
+  }
+
   function toggleTag(tag: ProblemTag) {
     const current = prefs.tags;
     if (current.includes(tag)) {
@@ -47,7 +60,7 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
   return (
     <SectionCard
       label="Problem selection"
-      description="Which difficulties and topic tags are eligible for challenges. An empty tag set means any topic."
+      description="Which difficulties, curated lists, and topic tags are eligible for challenges. Empty lists or tags means no filter."
       id="section-problem-selection"
     >
       <div className="space-y-5">
@@ -86,6 +99,59 @@ export function ProblemSelectionSection({ prefs, onChange }: ProblemSelectionSec
                 >
                   {d}
                   <span className="ml-1.5 opacity-50">{DIFF_COUNTS[d]}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Lists */}
+        <div>
+          <div className="mb-2.5 flex items-baseline gap-3">
+            <p
+              className="font-mono text-[10px] uppercase tracking-widest text-faint"
+              id="lists-label"
+            >
+              Lists
+            </p>
+            {prefs.lists.length === 0 ? (
+              <span className="font-mono text-[9px] text-muted">any list</span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onChange({ lists: [] })}
+                className="font-mono text-[9px] text-muted underline-offset-2 hover:text-text focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                aria-label="Clear all list filters"
+              >
+                clear all
+              </button>
+            )}
+          </div>
+          <div
+            className="flex flex-wrap gap-2"
+            role="group"
+            aria-labelledby="lists-label"
+          >
+            {PROBLEM_LISTS.map((list) => {
+              const selected = prefs.lists.includes(list);
+              const count = LIST_COUNTS[list];
+              return (
+                <button
+                  key={list}
+                  type="button"
+                  onClick={() => toggleList(list)}
+                  aria-pressed={selected}
+                  aria-label={`${PROBLEM_LIST_LABEL[list]} — ${count} problems${selected ? ' (selected)' : ''}`}
+                  className={[
+                    'rounded-sm border px-3 py-1.5 font-mono text-xs transition-colors',
+                    'focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent',
+                    selected
+                      ? 'border-accent bg-accent text-on-accent'
+                      : 'border-border bg-surface-2 text-muted hover:border-border-strong hover:text-text',
+                  ].join(' ')}
+                >
+                  {PROBLEM_LIST_LABEL[list]}
+                  <span className="ml-1.5 opacity-50">{count}</span>
                 </button>
               );
             })}

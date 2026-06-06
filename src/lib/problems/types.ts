@@ -1,4 +1,4 @@
-import type { Difficulty, ProblemTag, SupportedLanguage } from '../types';
+import type { Difficulty, ProblemList, ProblemTag, SupportedLanguage } from '../types';
 
 /** A worked example shown on the challenge problem panel. */
 export interface ProblemExample {
@@ -60,6 +60,11 @@ export interface Problem {
    * reveals them one at a time, gated by an explicit user click.
    */
   hints?: readonly string[];
+  /**
+   * Curated problem lists this problem belongs to (e.g. Blind 75, NeetCode 150).
+   * Hydrated from the list registry during bank initialization.
+   */
+  lists?: readonly ProblemList[];
   /**
    * Optional preamble code injected before the user's solution. Useful for
    * problems that require a shared data-structure definition (e.g. ListNode for

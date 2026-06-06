@@ -110,4 +110,47 @@ describe('problem selector', () => {
     const picked = pickChallengeProblem({ difficulties: ['easy'], tags: [] }, { random: () => 0 });
     expect(picked?.difficulty).toBe('easy');
   });
+
+  it('filters by list', () => {
+    const blind75 = filterProblems({ lists: ['blind-75'] });
+    expect(blind75.length).toBeGreaterThan(0);
+    expect(blind75.every((p) => p.lists?.includes('blind-75'))).toBe(true);
+  });
+
+  it('treats empty lists as "any list"', () => {
+    const noFilter = filterProblems({ lists: [] });
+    expect(noFilter).toHaveLength(getAllProblems().length);
+  });
+
+  it('filters by multiple lists (union)', () => {
+    const blind75 = filterProblems({ lists: ['blind-75'] });
+    const lc75 = filterProblems({ lists: ['leetcode-75'] });
+    const both = filterProblems({ lists: ['blind-75', 'leetcode-75'] });
+    // Union should be >= max of either individual list
+    expect(both.length).toBeGreaterThanOrEqual(Math.max(blind75.length, lc75.length));
+    expect(both.every((p) => p.lists?.includes('blind-75') || p.lists?.includes('leetcode-75'))).toBe(true);
+  });
+
+  it('composes list filter with difficulty filter', () => {
+    const easyBlind75 = filterProblems({ difficulties: ['easy'], lists: ['blind-75'] });
+    expect(easyBlind75.length).toBeGreaterThan(0);
+    expect(easyBlind75.every((p) => p.difficulty === 'easy' && p.lists?.includes('blind-75'))).toBe(true);
+  });
+
+  it('pickChallengeProblem respects lists preference', () => {
+    const picked = pickChallengeProblem(
+      { difficulties: ['easy', 'medium', 'hard'], tags: [], lists: ['blind-75'] },
+      { random: () => 0 },
+    );
+    expect(picked).toBeDefined();
+    expect(picked!.lists).toContain('blind-75');
+  });
+
+  it('hydrates problem lists from the registry', () => {
+    const twoSum = getProblemById('two-sum');
+    expect(twoSum).toBeDefined();
+    expect(twoSum!.lists).toBeDefined();
+    expect(twoSum!.lists!.length).toBeGreaterThan(0);
+    expect(twoSum!.lists).toContain('blind-75');
+  });
 });

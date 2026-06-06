@@ -3,6 +3,37 @@
 
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
+export type ProblemList =
+  | 'top-interview-150'
+  | 'leetcode-75'
+  | 'top-100-liked'
+  | 'sql-50'
+  | 'blind-75'
+  | 'neetcode-150'
+  | 'neetcode-250';
+
+/** Every problem list, in display order. */
+export const PROBLEM_LISTS: readonly ProblemList[] = [
+  'top-interview-150',
+  'leetcode-75',
+  'top-100-liked',
+  'sql-50',
+  'blind-75',
+  'neetcode-150',
+  'neetcode-250',
+];
+
+/** Human-readable labels for each problem list. */
+export const PROBLEM_LIST_LABEL: Readonly<Record<ProblemList, string>> = {
+  'top-interview-150': 'Top Interview 150',
+  'leetcode-75': 'LeetCode 75',
+  'top-100-liked': 'Top 100 Liked',
+  'sql-50': 'SQL 50',
+  'blind-75': 'Blind 75',
+  'neetcode-150': 'NeetCode 150',
+  'neetcode-250': 'NeetCode 250',
+};
+
 export type ProblemTag =
   | 'arrays'
   | 'strings'
@@ -280,6 +311,8 @@ export interface UserPreferences {
   difficulties: Difficulty[];
   /** Eligible categories; an empty array means "all categories". */
   tags: ProblemTag[];
+  /** Eligible problem lists; an empty array means "no list filter". */
+  lists: ProblemList[];
   failureAction: FailureAction;
   /** Destination when failureAction is 'redirect'. */
   redirectUrl: string;

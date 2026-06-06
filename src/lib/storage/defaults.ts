@@ -10,6 +10,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   unlockDurationMin: 10,
   difficulties: ['easy'],
   tags: [],
+  lists: [],
   failureAction: 'close',
   redirectUrl: '',
   maxSubmissionAttempts: 5,
