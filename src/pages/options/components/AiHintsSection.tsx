@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import type { AiSettings } from '../../../lib/types';
+import { GEMINI_MODELS, normalizeModel } from '../../../lib/ai';
 import { SectionCard } from './SectionCard';
 import { FormField } from './FormField';
 
@@ -7,12 +8,6 @@ interface AiHintsSectionProps {
   settings: AiSettings;
   onChange: (patch: Partial<AiSettings>) => void;
 }
-
-const MODEL_OPTIONS: ReadonlyArray<{ value: string; label: string; description: string }> = [
-  { value: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash', description: 'Fast and cheap. Recommended default.' },
-  { value: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash', description: 'Newer, stronger reasoning; slightly slower.' },
-  { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', description: 'Older fallback if newer models are unavailable.' },
-];
 
 export function AiHintsSection({ settings, onChange }: AiHintsSectionProps) {
   const uid = useId();
@@ -87,8 +82,8 @@ export function AiHintsSection({ settings, onChange }: AiHintsSectionProps) {
         {/* Model */}
         <FormField label="Model" htmlFor={modelId} help="Which Gemini model the assistant calls.">
           <div id={modelId} role="radiogroup" aria-label="Gemini model" className="flex flex-col gap-2">
-            {MODEL_OPTIONS.map(({ value, label, description }) => {
-              const selected = (settings.model || 'gemini-2.0-flash') === value;
+            {GEMINI_MODELS.map(({ value, label, description }) => {
+              const selected = normalizeModel(settings.model) === value;
               const inputId = `${uid}-model-${value}`;
               return (
                 <label

@@ -1,4 +1,5 @@
 import type { UserPreferences } from '../types';
+import { DEFAULT_GEMINI_MODEL } from '../ai/models';
 import type { StorageSchema } from './schema';
 
 /** One minute and one hour in milliseconds — used for cooldown defaults. */
@@ -44,5 +45,5 @@ export const STORAGE_DEFAULTS: StorageSchema = {
   streakHistory: [],
   draftCode: {},
   submissionHistory: {},
-  aiSettings: { geminiApiKey: null, enabled: false, model: 'gemini-2.0-flash' },
+  aiSettings: { geminiApiKey: null, enabled: false, model: DEFAULT_GEMINI_MODEL },
 };

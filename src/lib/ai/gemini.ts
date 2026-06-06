@@ -60,6 +60,13 @@ export async function fetchHints({
     if (res.status === 429) {
       throw new AiError('rate-limit', 'Gemini rate limit hit. Wait a moment and retry.');
     }
+    if (res.status === 404) {
+      // Almost always a retired/unknown model id — Google shuts old models down.
+      throw new AiError(
+        'http',
+        `Model "${model}" is unavailable (HTTP 404). Pick a current model in Settings.`,
+      );
+    }
     throw new AiError('http', `Gemini error (HTTP ${res.status}).`);
   }
 

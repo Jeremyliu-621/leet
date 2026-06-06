@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import type { Problem } from '../../../lib/problems/types';
 import type { SupportedLanguage } from '../../../lib/types';
 import { getValue } from '../../../lib/storage';
-import { fetchHints, AiError } from '../../../lib/ai';
+import { fetchHints, AiError, DEFAULT_GEMINI_MODEL, normalizeModel } from '../../../lib/ai';
 import type { AiHint, AiHintResponse, HintMode } from '../../../lib/ai';
 
 interface HintBotProps {
@@ -51,7 +51,7 @@ export function HintBot({
   const [status, setStatus] = useState<Status>({ kind: 'idle' });
   const [apiKey, setApiKey] = useState<string | null>(null);
   const [enabled, setEnabled] = useState(false);
-  const [model, setModel] = useState('gemini-2.0-flash');
+  const [model, setModel] = useState(DEFAULT_GEMINI_MODEL);
   const abortRef = useRef<AbortController | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -67,7 +67,9 @@ export function HintBot({
         if (cancelled) return;
         setApiKey(s.geminiApiKey);
         setEnabled(s.enabled);
-        setModel(s.model || 'gemini-2.0-flash');
+        // Upgrade any retired stored model (e.g. gemini-2.0-flash) to a valid
+        // one so the request doesn't 404 on a model Google has shut down.
+        setModel(normalizeModel(s.model));
       } catch {
         /* storage unavailable */
       }
