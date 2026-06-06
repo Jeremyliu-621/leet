@@ -128,6 +128,27 @@ describe('storage store', () => {
     expect(stored['fizz-buzz']).toEqual([record]);
   });
 
+  it('backfills missing userPreferences keys from defaults (forward-compat)', async () => {
+    // Simulate preferences written by an older release that predates newer
+    // fields like `lists`. Writing the partial object directly bypasses the
+    // store so it lands in storage exactly as a stale client would have left it.
+    const { lists: _omitted, ...legacyPrefs } = DEFAULT_PREFERENCES;
+    await fake.storage.sync.set({ userPreferences: { ...legacyPrefs, difficulties: ['hard'] } });
+
+    const loaded = await getValue('userPreferences');
+    // Missing key is backfilled from defaults...
+    expect(loaded.lists).toEqual([]);
+    // ...while values present in storage are preserved, not reset to default.
+    expect(loaded.difficulties).toEqual(['hard']);
+  });
+
+  it('lets stored userPreferences values override defaults', async () => {
+    await setValue('userPreferences', { ...DEFAULT_PREFERENCES, lists: ['blind-75'], theme: 'dracula' });
+    const loaded = await getValue('userPreferences');
+    expect(loaded.lists).toEqual(['blind-75']);
+    expect(loaded.theme).toBe('dracula');
+  });
+
   it('throws a clear error when chrome.storage is unavailable', async () => {
     uninstallFakeChrome();
     await expect(getValue('blockedRules')).rejects.toThrow(/chrome\.storage is unavailable/);

@@ -1,6 +1,7 @@
 import { STORAGE_AREAS } from './schema';
 import type { StorageKey, StorageSchema } from './schema';
-import { STORAGE_DEFAULTS } from './defaults';
+import { DEFAULT_PREFERENCES, STORAGE_DEFAULTS } from './defaults';
+import type { UserPreferences } from '../types';
 
 /**
  * Typed, area-aware access to chrome.storage. Each key is routed to its
@@ -21,6 +22,13 @@ export async function getValue<K extends StorageKey>(key: K): Promise<StorageSch
   const value = stored[key];
   if (value === undefined) {
     return structuredClone(STORAGE_DEFAULTS[key]);
+  }
+  // userPreferences is a long-lived settings record that gains new fields over
+  // releases. Preferences saved by an older version omit keys that newer code
+  // reads (e.g. `lists`), so backfill any missing key from the defaults rather
+  // than handing back a partial object that crashes consumers on `.length` etc.
+  if (key === 'userPreferences') {
+    return { ...DEFAULT_PREFERENCES, ...(value as Partial<UserPreferences>) } as StorageSchema[K];
   }
   return value as StorageSchema[K];
 }
