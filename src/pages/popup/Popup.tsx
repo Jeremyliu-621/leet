@@ -5,6 +5,7 @@ import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
 import { localDateString } from '../../lib/streak';
 import { watchSystemTheme } from '../../lib/theme';
+import wordmark from '../../../assets/leetmeowtextright.png';
 import type {
   BlockRule,
   Difficulty,
@@ -215,10 +216,12 @@ export function Popup() {
   return (
     <main className="min-w-[340px] overflow-x-hidden bg-bg p-5 text-text">
       <header className="flex items-center justify-between">
-        <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="brand-logo h-4 w-4 text-muted" />
-          <h1 className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">LeetMeow</h1>
-        </span>
+        <span
+          role="img"
+          aria-label="LeetMeow"
+          className="wordmark-leetmeow inline-block h-6 w-[84px] select-none"
+          style={{ WebkitMaskImage: `url(${wordmark})`, maskImage: `url(${wordmark})` }}
+        />
         <time
           className="font-mono text-[10px] text-faint"
           dateTime={localDateString()}
@@ -410,7 +413,7 @@ function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSol
   const DIFF_BAR: Record<Difficulty, string> = { easy: 'bg-success', medium: 'bg-warning', hard: 'bg-error' };
 
   return (
-    <section className="mt-4 border-t border-border pt-4" aria-label="Solved problem breakdown">
+    <section className="mt-4 rounded-md border border-border bg-surface px-4 py-3" aria-label="Solved problem breakdown">
       <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">
         Breakdown · {stats.total}/{BANK_SIZE} solved ({pct}%)
         {totalSolvedMs > 0 && ` · ${formatSolveTime(totalSolvedMs)} invested`}
@@ -430,7 +433,7 @@ function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSol
             >
               <span className="w-7 font-mono text-[9px] text-faint">{DIFF_LABEL[d]}</span>
               <div className="flex flex-1 items-center gap-1.5">
-                <div className="h-1.5 flex-1 rounded-full bg-surface">
+                <div className="h-1.5 flex-1 rounded-full bg-bg">
                   <div
                     className={`h-1.5 rounded-full transition-all ${DIFF_BAR[d]}`}
                     style={{ width: `${widthPct}%` }}
@@ -459,7 +462,7 @@ function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSol
               >
                 <span className="w-20 shrink-0 font-mono text-[9px] text-faint truncate">{tag}</span>
                 <div className="flex flex-1 items-center gap-1.5">
-                  <div className="h-1 flex-1 rounded-full bg-surface">
+                  <div className="h-1 flex-1 rounded-full bg-bg">
                     <div
                       className="h-1 rounded-full bg-border-strong transition-all"
                       style={{ width: `${widthPct}%` }}

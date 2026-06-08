@@ -71,6 +71,7 @@ import { AppearanceSection } from './components/AppearanceSection';
 import { AiHintsSection } from './components/AiHintsSection';
 import { ProblemBrowserSection } from './components/ProblemBrowserSection';
 import { VerifyModal } from './components/VerifyModal';
+import wordmark from '../../../assets/leetmeowtextright.png';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -167,12 +168,15 @@ function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelec
   return (
     <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:flex md:flex-col">
       <div className="sticky top-0 flex flex-col gap-7 px-5 py-6">
-        {/* Branding */}
-        <div className="flex items-center gap-2">
-          <span aria-hidden="true" className="brand-logo h-6 w-6 text-accent" />
-          <span className="font-mono text-sm font-semibold uppercase tracking-widest text-accent">
-            LEETMEOW
-          </span>
+        {/* Branding — the full LeetMeow wordmark lockup, masked so it takes the
+            active theme's ink colour. */}
+        <div className="flex flex-col gap-2">
+          <span
+            role="img"
+            aria-label="LeetMeow"
+            className="wordmark-leetmeow block h-8 w-[116px] select-none"
+            style={{ WebkitMaskImage: `url(${wordmark})`, maskImage: `url(${wordmark})` }}
+          />
           <span className="font-mono text-[10px] uppercase tracking-widest text-faint">
             Settings
           </span>
@@ -193,16 +197,12 @@ function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelec
                     type="button"
                     onClick={() => onSelect(id)}
                     aria-current={active ? 'page' : undefined}
-                    className={`flex items-center gap-2.5 rounded-sm px-3 py-2 text-left text-[13px] transition-colors ${
+                    className={`rounded-sm px-3 py-2 text-left text-[13px] transition-colors ${
                       active
                         ? 'bg-surface-2 font-medium text-text'
                         : 'text-muted hover:bg-surface-2 hover:text-text'
                     }`}
                   >
-                    <span
-                      aria-hidden="true"
-                      className={`h-3.5 w-px shrink-0 transition-colors ${active ? 'bg-accent' : 'bg-transparent'}`}
-                    />
                     {label}
                   </button>
                 );
@@ -913,7 +913,11 @@ export function Options() {
         {announcement}
       </div>
 
-      <div className="flex min-h-screen bg-bg text-text">
+      {/* Settings reads a touch larger than the other pages: zoom the whole
+          surface uniformly (text + spacing). The min-height is divided by the
+          same factor so the zoomed page is exactly one viewport tall, not
+          slightly taller (which would add a stray scrollbar). */}
+      <div className="flex bg-bg text-text [zoom:1.12] min-h-[calc(100vh/1.12)]">
         {/* Sidebar */}
         <SettingsSidebar activeId={activeNav} onSelect={selectSection} />
 

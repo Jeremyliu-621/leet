@@ -305,12 +305,17 @@
    whichever theme the user picked. `--brand-stroke` is the theme-aware "ink"
    used for the hand-drawn outlines. The challenge page omits the attribute. */
 :root[data-skin='brand'] {
-  --brand-stroke: var(--ll-text);
-  /* One even, generously-rounded radius for every container — cards, buttons,
-     and inputs. Evenly rounded (not the old asymmetric wobble, which produced a
-     visibly sharp corner on large cards) so every surface reads like a soft
-     rounded rectangle at any size. */
-  --brand-radius: 14px;
+  /* Hand-drawn outline colour. Uses the theme's MUTED tone, not full text
+     colour, so it never turns into a jarring high-contrast outline — e.g. on
+     dark themes the stroke is a soft grey, not stark white. */
+  --brand-stroke: var(--ll-muted);
+  /* Three generously-rounded, slightly-uneven radii echoing the landing's
+     "Get LeetMeow" button. Every corner stays well-rounded (no tight/sharp
+     one); the variants differ in which corners lean, and are cycled across
+     containers below so the wobble isn't identical on every box. */
+  --brand-radius: 18px 14px 22px 16px / 16px 22px 14px 18px;
+  --brand-radius-b: 22px 18px 14px 21px / 20px 14px 18px 22px;
+  --brand-radius-c: 15px 22px 19px 14px / 14px 19px 22px 16px;
   font-family: 'Shantell Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -332,6 +337,14 @@
   border-color: var(--brand-stroke);
   border-radius: var(--brand-radius);
 }
+/* Cycle the three radii by sibling position so neighbouring cards never share
+   the exact same lean — the wobble lands in a different spot each time. */
+:root[data-skin='brand'] .border.bg-surface:nth-child(3n + 2) {
+  border-radius: var(--brand-radius-b);
+}
+:root[data-skin='brand'] .border.bg-surface:nth-child(3n + 3) {
+  border-radius: var(--brand-radius-c);
+}
 /* Form controls (text inputs, selects, search) — same outline + wobble. Small
    chips (status pills, segmented toggles, swatches) are left with their own
    clean radii so dense rows and controls stay orderly. */
@@ -340,12 +353,21 @@
 :root[data-skin='brand'] textarea.border {
   border-width: 2px;
   border-color: var(--brand-stroke);
-  border-radius: var(--brand-radius);
+  border-radius: var(--brand-radius-b);
+}
+:root[data-skin='brand'] input.border:nth-child(2n),
+:root[data-skin='brand'] select.border:nth-child(2n),
+:root[data-skin='brand'] textarea.border:nth-child(2n) {
+  border-radius: var(--brand-radius-c);
 }
 /* Filled accent/brand buttons: same wobble; the border blends into the fill,
    like the site's solid-ink CTAs. */
 :root[data-skin='brand'] .bg-accent,
 :root[data-skin='brand'] .bg-brand {
+  border-radius: var(--brand-radius-c);
+}
+:root[data-skin='brand'] .bg-accent:nth-child(2n),
+:root[data-skin='brand'] .bg-brand:nth-child(2n) {
   border-radius: var(--brand-radius);
 }
 
