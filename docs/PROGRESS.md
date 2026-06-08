@@ -6,11 +6,11 @@
 
 ---
 
-**Last updated:** 2026-06-05
-**Current phase:** Phase 14 — LeetCode-parity editor + AI hints revamp (see `docs/REVAMP.md`)
-**Current focus:** Editor/UX overhaul landed — Tab/caret/bracket fixes, top-bar Run/Submit, floating panels, colorized terminal, dashboard color, and a Gemini AI hint bot with inline editor annotations. Bank at **2942** problems; 9254 tests green.
+**Last updated:** 2026-06-07
+**Current phase:** Phase 15 — Debug Mode + new challenge types
+**Current focus:** Debug mode shipped — 9 hand-authored debug problems (find-and-fix-the-bug), `kind`/`buggyCode` type extension, challenge mode selector in Options, full test coverage. Bank at **2951** problems (2942 DSA + 9 debug); 9346 tests green.
 **Build status:** 🟢 `npm run typecheck` + `npm run test` + `npm run build` green.
-**Next up:** Terminal "Last Executed Input" cards (polish); optional NeetCode-style category taxonomy (MIT, attributed); continued bank growth.
+**Next up:** Grow debug problem bank (auto-generate via mutation script); more debug difficulty tiers; Terminal "Last Executed Input" cards (polish).
 ---
 
 > **Changelog note (2026-06-05):** the long batch-by-batch bank changelog that
@@ -407,6 +407,19 @@ Still pending:
 - [x] **fix(terminal): FAIL timing + error copy** — TestResultCard shows `durationMs` for FAIL verdicts; runtime-error cards gain a copy button for the error message.
 - [x] **Bank at 1527 (Batch 57 consolidated)** — 25+ more problems from parallel agents; all merge conflicts resolved; 4869 tests.
 - [x] **fix(sw): record actual solve language** — `SolvedProblemRecord.language` was hardcoded to `'javascript'`; added `isSupportedLanguage` type guard, propagated real language through `GrantUnlockRequest`, sent actual language + attempts from challenge page.
+
+## Phase 15 — Debug Mode (find-and-fix-the-bug challenges) 🟡
+
+- [x] Add `kind?: 'function' | 'debug'` and `buggyCode` fields to `Problem` type
+- [x] Author 9 initial debug problems (two-sum, running-sum, reverse-string, binary-search, max-subarray, valid-parentheses, merge-sorted, palindrome-check, fibonacci) with JS + Python buggy code
+- [x] Wire Challenge UI: show buggy code in editor for debug problems; "debug" badge on ProblemPanel
+- [x] Add `kinds` filter to `ProblemFilter` and `pickChallengeProblem`
+- [x] Add `challengeMode` user preference (dsa / debug / mixed) with Options UI selector
+- [x] Reference solutions (JS + Python) for all debug problems; 13 unit tests for debug mode
+- [ ] Grow debug bank — more medium/hard problems with subtle bugs (async, off-by-one in DP, etc.)
+- [ ] Auto-generate debug problems via mutation script (apply operators to existing solutions)
+- [ ] Debug-specific hint laddering (which test fails → which line → the fix)
+- [ ] Per-site mode selection (e.g. "YouTube costs one debug challenge")
 
 ---
 
