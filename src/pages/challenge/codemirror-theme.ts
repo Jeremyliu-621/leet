@@ -252,82 +252,6 @@ const leetmeowThemeLight = EditorView.theme(
 );
 
 /**
- * Syntax highlighting with colour — VS Code / LeetCode inspired.
- * Dark bg remains from the design system; syntax tokens get real hues.
- */
-const leetmeowHighlightDark = HighlightStyle.define([
-  // Keywords: purple (if, return, const, let, class, function …)
-  { tag: tags.keyword, color: '#C586C0' },
-  { tag: tags.controlKeyword, color: '#C586C0' },
-  // Built-in names (console, Math, Array …)
-  { tag: tags.standard(tags.name), color: '#4EC9B0' },
-  // Function names: yellow
-  { tag: tags.function(tags.variableName), color: '#DCDCAA' },
-  { tag: tags.function(tags.name), color: '#DCDCAA' },
-  // Variables: light blue
-  { tag: tags.variableName, color: '#9CDCFE' },
-  // Property access: light blue
-  { tag: tags.propertyName, color: '#9CDCFE' },
-  // Strings: orange
-  { tag: tags.string, color: '#CE9178' },
-  { tag: tags.special(tags.string), color: '#CE9178' },
-  // Numbers: light green
-  { tag: tags.number, color: '#B5CEA8' },
-  // Booleans: blue
-  { tag: tags.bool, color: '#569CD6' },
-  { tag: tags.null, color: '#569CD6' },
-  // Comments: green, italic
-  { tag: tags.comment, color: '#6A9955', fontStyle: 'italic' },
-  { tag: tags.lineComment, color: '#6A9955', fontStyle: 'italic' },
-  { tag: tags.blockComment, color: '#6A9955', fontStyle: 'italic' },
-  // Operators
-  { tag: tags.operator, color: '#D4D4D4' },
-  // Punctuation / brackets
-  { tag: tags.punctuation, color: '#D4D4D4' },
-  { tag: tags.bracket, color: '#D4D4D4' },
-  { tag: tags.paren, color: '#D4D4D4' },
-  // Type names: teal
-  { tag: tags.typeName, color: '#4EC9B0' },
-  { tag: tags.typeOperator, color: '#D4D4D4' },
-  // Definitions: light blue, bold
-  { tag: tags.definition(tags.name), color: '#9CDCFE', fontWeight: '600' },
-  // Class names: teal
-  { tag: tags.className, color: '#4EC9B0' },
-  // Escape sequences: yellow-orange
-  { tag: tags.escape, color: '#D7BA7D' },
-]);
-
-/**
- * Light-mode syntax highlighting with colour.
- */
-const leetmeowHighlightLight = HighlightStyle.define([
-  { tag: tags.keyword, color: '#AF00DB' },
-  { tag: tags.controlKeyword, color: '#AF00DB' },
-  { tag: tags.standard(tags.name), color: '#267F99' },
-  { tag: tags.function(tags.variableName), color: '#795E26' },
-  { tag: tags.function(tags.name), color: '#795E26' },
-  { tag: tags.variableName, color: '#001080' },
-  { tag: tags.propertyName, color: '#001080' },
-  { tag: tags.string, color: '#A31515' },
-  { tag: tags.special(tags.string), color: '#A31515' },
-  { tag: tags.number, color: '#098658' },
-  { tag: tags.bool, color: '#0000FF' },
-  { tag: tags.null, color: '#0000FF' },
-  { tag: tags.comment, color: '#008000', fontStyle: 'italic' },
-  { tag: tags.lineComment, color: '#008000', fontStyle: 'italic' },
-  { tag: tags.blockComment, color: '#008000', fontStyle: 'italic' },
-  { tag: tags.operator, color: '#0A0A0A' },
-  { tag: tags.punctuation, color: '#0A0A0A' },
-  { tag: tags.bracket, color: '#0A0A0A' },
-  { tag: tags.paren, color: '#0A0A0A' },
-  { tag: tags.typeName, color: '#267F99' },
-  { tag: tags.typeOperator, color: '#0A0A0A' },
-  { tag: tags.definition(tags.name), color: '#001080', fontWeight: '600' },
-  { tag: tags.className, color: '#267F99' },
-  { tag: tags.escape, color: '#EE0000' },
-]);
-
-/**
  * The LeetMeow brand editor: a white panel with charcoal ink on the warm-paper
  * palette, paired with CodeMirror's *default* light syntax colors (purple
  * keywords, blue definitions, brown comments). Distinct from the generic light
@@ -385,11 +309,8 @@ const leetmeowThemeBrand = EditorView.theme(
   { dark: false },
 );
 
-export const leetmeowEditorThemeDark: Extension = [leetmeowThemeDark, syntaxHighlighting(leetmeowHighlightDark)];
-export const leetmeowEditorThemeLight: Extension = [leetmeowThemeLight, syntaxHighlighting(leetmeowHighlightLight)];
 /** Brand editor theme used by the `leetmeow` UI theme. */
 export const leetmeowEditorThemeBrand: Extension = [leetmeowThemeBrand, syntaxHighlighting(defaultHighlightStyle)];
-export const leetmeowEditorTheme = leetmeowEditorThemeDark;
 
 // ---------------------------------------------------------------------------
 // Theme-synced editor — surface + syntax driven entirely by the active theme's
@@ -470,29 +391,38 @@ const syncedSurfaceStyles = {
 // gets a hand-tuned set anchored on that theme's own accent and surface.
 // ---------------------------------------------------------------------------
 
-/** The eight syntax roles every palette assigns a colour to. */
+// Restraint, matching real editor themes (One Dark, LeetCode, etc.): only the
+// roles below are coloured. Plain variables, property access, definitions, and
+// punctuation / brackets are deliberately LEFT at the editor foreground so code
+// doesn't turn into a rainbow — that was the over-colouring complaint. `operator`
+// and `variable` are optional so a theme can colour them only when its published
+// scheme does (e.g. Dracula's pink operators).
 interface SyntaxPalette {
-  /** Keywords: if/return/const/class, control + module keywords. */
+  /** Keywords: if/return/def/class, control + module keywords. */
   keyword: string;
   /** Function and method names at definition and call sites. */
   func: string;
   /** Types, classes, and built-in/standard names. */
   type: string;
-  /** Plain variables, definitions, and property access. */
-  variable: string;
   /** String literals, template strings, and escapes. */
   string: string;
   /** Numbers, booleans, and null/undefined. */
   number: string;
   /** Comments (rendered italic). */
   comment: string;
-  /** Operators, punctuation, and brackets. */
-  operator: string;
+  /** Operators (NOT punctuation/brackets). Omit to leave operators at fg. */
+  operator?: string;
+  /** Plain variables + properties. Omit (the default) to leave them at fg. */
+  variable?: string;
 }
 
-/** Builds a CodeMirror HighlightStyle from an eight-role palette. */
+/**
+ * Builds a CodeMirror HighlightStyle from a palette. Only the roles a real theme
+ * tints are emitted; everything else (identifiers, punctuation, brackets) falls
+ * through to the editor foreground, like LeetCode and One Dark.
+ */
 function buildHighlight(p: SyntaxPalette): HighlightStyle {
-  return HighlightStyle.define([
+  const spec = [
     { tag: tags.keyword, color: p.keyword },
     { tag: tags.controlKeyword, color: p.keyword },
     { tag: tags.moduleKeyword, color: p.keyword },
@@ -501,9 +431,6 @@ function buildHighlight(p: SyntaxPalette): HighlightStyle {
     { tag: tags.className, color: p.type },
     { tag: tags.function(tags.variableName), color: p.func, fontWeight: '600' },
     { tag: tags.function(tags.name), color: p.func, fontWeight: '600' },
-    { tag: tags.definition(tags.name), color: p.variable, fontWeight: '600' },
-    { tag: tags.variableName, color: p.variable },
-    { tag: tags.propertyName, color: p.variable },
     { tag: tags.string, color: p.string },
     { tag: tags.special(tags.string), color: p.string },
     { tag: tags.escape, color: p.string },
@@ -513,36 +440,42 @@ function buildHighlight(p: SyntaxPalette): HighlightStyle {
     { tag: tags.comment, color: p.comment, fontStyle: 'italic' },
     { tag: tags.lineComment, color: p.comment, fontStyle: 'italic' },
     { tag: tags.blockComment, color: p.comment, fontStyle: 'italic' },
-    { tag: tags.operator, color: p.operator },
-    { tag: tags.typeOperator, color: p.operator },
-    { tag: tags.punctuation, color: p.operator },
-    { tag: tags.bracket, color: p.operator },
-    { tag: tags.paren, color: p.operator },
-  ]);
+  ];
+  if (p.variable) {
+    spec.push(
+      { tag: tags.variableName, color: p.variable },
+      { tag: tags.propertyName, color: p.variable },
+    );
+  }
+  if (p.operator) {
+    spec.push(
+      { tag: tags.operator, color: p.operator },
+      { tag: tags.typeOperator, color: p.operator },
+    );
+  }
+  return HighlightStyle.define(spec);
 }
 
-/** Generic VS Code Dark+ palette — the fallback for any dark theme without one. */
+/** Atom One Dark — the fallback for any dark theme without its own palette. */
 const DARK_DEFAULT_PALETTE: SyntaxPalette = {
-  keyword: '#C586C0',
-  func: '#DCDCAA',
-  type: '#4EC9B0',
-  variable: '#9CDCFE',
-  string: '#CE9178',
-  number: '#B5CEA8',
-  comment: '#6A9955',
-  operator: '#D4D4D4',
+  keyword: '#C678DD',
+  func: '#61AFEF',
+  type: '#E5C07B',
+  string: '#98C379',
+  number: '#D19A66',
+  comment: '#7D8799',
+  operator: '#56B6C2',
 };
 
-/** Generic VS Code Light palette — the fallback for any light theme without one. */
+/** Atom One Light — the fallback for any light theme without its own palette. */
 const LIGHT_DEFAULT_PALETTE: SyntaxPalette = {
-  keyword: '#AF00DB',
-  func: '#795E26',
-  type: '#267F99',
-  variable: '#001080',
-  string: '#A31515',
-  number: '#098658',
-  comment: '#008000',
-  operator: '#383838',
+  keyword: '#A626A4',
+  func: '#4078F2',
+  type: '#C18401',
+  string: '#50A14F',
+  number: '#986801',
+  comment: '#A0A1A7',
+  operator: '#0184BC',
 };
 
 /**
@@ -551,23 +484,23 @@ const LIGHT_DEFAULT_PALETTE: SyntaxPalette = {
  * none) fall back by their light/dark classification.
  */
 const SYNTAX_PALETTES: Record<string, SyntaxPalette> = {
-  // Official Nord syntax colours (nordtheme.com "Aurora"/"Frost").
+  // Official Nord syntax colours (nordtheme.com "Aurora"/"Frost"). Variables stay
+  // at the Nord foreground, as in the published theme.
   nord: {
     keyword: '#81A1C1',
     func: '#88C0D0',
     type: '#8FBCBB',
-    variable: '#D8DEE9',
     string: '#A3BE8C',
     number: '#B48EAD',
     comment: '#616E88',
     operator: '#81A1C1',
   },
-  // Official Dracula spec (draculatheme.com/contribute).
+  // Official Dracula spec (draculatheme.com/contribute) — pink operators, vars
+  // at foreground.
   dracula: {
     keyword: '#FF79C6',
     func: '#50FA7B',
     type: '#8BE9FD',
-    variable: '#F8F8F2',
     string: '#F1FA8C',
     number: '#BD93F9',
     comment: '#6272A4',
@@ -578,7 +511,6 @@ const SYNTAX_PALETTES: Record<string, SyntaxPalette> = {
     keyword: '#C099FF',
     func: '#82AAFF',
     type: '#86E1FC',
-    variable: '#C8D3F5',
     string: '#C3E88D',
     number: '#FF98A4',
     comment: '#7A88CF',
@@ -590,11 +522,9 @@ const SYNTAX_PALETTES: Record<string, SyntaxPalette> = {
     keyword: '#E2B714',
     func: '#B8C99A',
     type: '#E8C06A',
-    variable: '#D1D0C5',
     string: '#9CB380',
     number: '#D98E5A',
     comment: '#646669',
-    operator: '#8A8880',
   },
   // Botanical — deep greens + earthy clays, kept off the leaf-green accent so
   // tokens stay legible against the green surface.
@@ -602,33 +532,28 @@ const SYNTAX_PALETTES: Record<string, SyntaxPalette> = {
     keyword: '#9CCB6A',
     func: '#C9B98C',
     type: '#B5D49A',
-    variable: '#D4DCC8',
     string: '#D9A86C',
     number: '#CE8A5C',
     comment: '#6E7A64',
-    operator: '#8A9480',
   },
-  // Carbon — pure-black high contrast. A punchy, saturated VS Code-style spread.
+  // Carbon — pure black; Night Owl's palette (sarah-drasner) reads well on it.
   carbon: {
     keyword: '#C792EA',
     func: '#82AAFF',
-    type: '#4EC9B0',
-    variable: '#9CDCFE',
+    type: '#ADDB67',
     string: '#ECC48D',
     number: '#F78C6C',
     comment: '#637777',
-    operator: '#D6DEEB',
+    operator: '#7FDBCA',
   },
   // Muted Ink — warm sepia, deliberately low-saturation so nothing shouts.
   'muted-ink': {
     keyword: '#C8A874',
     func: '#B5A982',
     type: '#C2A877',
-    variable: '#C8BCA8',
     string: '#A89A72',
     number: '#C29162',
     comment: '#706860',
-    operator: '#8A8070',
   },
   // Terminal — retro green CRT. Stays monochrome-green by design (other hues
   // would break the aesthetic); separation comes from brightness, not colour.
@@ -636,7 +561,6 @@ const SYNTAX_PALETTES: Record<string, SyntaxPalette> = {
     keyword: '#5CFF5C',
     func: '#33FF33',
     type: '#6EFF6E',
-    variable: '#33FF33',
     string: '#1FBF1F',
     number: '#80FF80',
     comment: '#168016',
@@ -647,22 +571,18 @@ const SYNTAX_PALETTES: Record<string, SyntaxPalette> = {
     keyword: '#8C3B7A',
     func: '#7A5A1E',
     type: '#2A6A6A',
-    variable: '#3A352E',
     string: '#9A5A2A',
     number: '#3A7A4A',
     comment: '#9A8F7A',
-    operator: '#6A6258',
   },
   // LeetMeow — charcoal-on-paper brand light theme; classic purple/blue/brown.
   leetmeow: {
     keyword: '#9B59B6',
     func: '#8A6D3B',
     type: '#2E7D7D',
-    variable: '#2C2A28',
     string: '#8A7B3B',
     number: '#4A7C59',
     comment: '#A39D94',
-    operator: '#6F6A64',
   },
 };
 
@@ -692,3 +612,16 @@ export function syncedEditorTheme(resolved: string): Extension {
     syntaxHighlighting(highlightForTheme(resolved)),
   ];
 }
+
+// Fixed (non-synced) editor schemes — the curated dark/light surfaces paired
+// with the restrained One Dark / One Light syntax palettes, so toggling "match
+// editor to theme" off keeps the same calm colouring on a stable background.
+export const leetmeowEditorThemeDark: Extension = [
+  leetmeowThemeDark,
+  syntaxHighlighting(buildHighlight(DARK_DEFAULT_PALETTE)),
+];
+export const leetmeowEditorThemeLight: Extension = [
+  leetmeowThemeLight,
+  syntaxHighlighting(buildHighlight(LIGHT_DEFAULT_PALETTE)),
+];
+export const leetmeowEditorTheme = leetmeowEditorThemeDark;
