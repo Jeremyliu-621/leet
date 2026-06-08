@@ -21,6 +21,16 @@ export interface DraftCodeEntry {
   savedAt: number;
 }
 
+/** A piece of user feedback captured from the in-app feedback form. */
+export interface FeedbackEntry {
+  /** The feedback message. */
+  message: string;
+  /** Optional reply-to email; null when the user left it blank. */
+  email: string | null;
+  /** Epoch ms when submitted. */
+  createdAt: number;
+}
+
 /** The full shape of LeetMeow's persisted state, keyed by storage key. */
 export interface StorageSchema {
   blockedRules: BlockRule[];
@@ -46,6 +56,8 @@ export interface StorageSchema {
    * `local` (device-only) so the secret never syncs through a Google account.
    */
   aiSettings: AiSettings;
+  /** User feedback submitted via the in-app feedback form. Local-only. */
+  feedback: FeedbackEntry[];
 }
 
 export type StorageKey = keyof StorageSchema;
@@ -71,4 +83,5 @@ export const STORAGE_AREAS: Readonly<Record<StorageKey, StorageAreaName>> = {
   draftCode: 'local',
   submissionHistory: 'local',
   aiSettings: 'local',
+  feedback: 'local',
 };

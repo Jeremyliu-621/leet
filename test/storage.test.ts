@@ -149,6 +149,16 @@ describe('storage store', () => {
     expect(loaded.theme).toBe('dracula');
   });
 
+  it('feedback defaults to an empty array, routes to local, and appends', async () => {
+    expect(await getValue('feedback')).toEqual([]);
+    expect(STORAGE_AREAS.feedback).toBe('local');
+    const entry = { message: 'great app', email: 'a@b.com', createdAt: 1000 };
+    await updateValue('feedback', (curr) => [...curr, entry]);
+    const anon = { message: 'no email here', email: null, createdAt: 2000 };
+    await updateValue('feedback', (curr) => [...curr, anon]);
+    expect(await getValue('feedback')).toEqual([entry, anon]);
+  });
+
   it('throws a clear error when chrome.storage is unavailable', async () => {
     uninstallFakeChrome();
     await expect(getValue('blockedRules')).rejects.toThrow(/chrome\.storage is unavailable/);
