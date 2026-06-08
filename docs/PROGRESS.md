@@ -412,6 +412,19 @@ Still pending:
 
 ## Notes
 
+- **TODO (2026-06-06) — finish wiring feedback email delivery.** The in-app
+  feedback button (challenge top bar) saves submissions to `chrome.storage.local`
+  and is fully wired to email them via Web3Forms (client-side, no backend), but
+  `FEEDBACK_FORM_KEYS` in `src/lib/feedback/send.ts` is empty so it currently
+  only saves locally. To go live: create a free Web3Forms access key (no login,
+  ~1 min) at https://web3forms.com for each recipient inbox and paste them in —
+  one key per inbox (CC is a paid feature, so a key each is the free way to reach
+  both):
+    - `jeremyliu621@gmail.com`
+    - `ttethanyang@gmail.com`
+  Keys are public-safe to ship. Once added, Send emails both inboxes (reply-to =
+  the user's optional email). Also consider softening the "no network request"
+  line in `AboutSection` since this adds the first user-initiated outbound call.
 - 2026-05-21: Project bootstrapped. Research confirms the differentiation thesis — competitors
   redirect to leetcode.com and poll its unofficial API; LeetMeow authors its own problems and runs
   code in-extension. See `docs/RESEARCH.md`.
