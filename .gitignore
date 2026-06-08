@@ -5,6 +5,7 @@ node_modules/
 dist/
 *.crx
 *.zip
+!public/pyodide/python_stdlib.zip
 *.pem
 
 # Tooling caches
