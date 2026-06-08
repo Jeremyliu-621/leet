@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getValue, setValue, STORAGE_DEFAULTS } from '../../lib/storage';
+import { getValue, setValue, updateValue, STORAGE_DEFAULTS } from '../../lib/storage';
 import type { StorageSchema, StorageKey } from '../../lib/storage';
 import { extractDomain } from '../../lib/blocking';
 import { pruneTokens } from '../../lib/unlock';
@@ -8,35 +8,13 @@ import { watchSystemTheme } from '../../lib/theme';
 import wordmark from '../../../assets/leetmeowtextright.png';
 import type {
   BlockRule,
-  Difficulty,
-  ProblemTag,
   SolvedProblemRecord,
   StreakSummary,
   ThemePreference,
   UnlockToken,
+  UserPreferences,
 } from '../../lib/types';
-import { DIFFICULTIES, PROBLEM_TAGS } from '../../lib/types';
-import { getAllProblems } from '../../lib/problems';
-import { computeSolvedStats } from './popup-helpers';
-import type { SolvedStats } from './popup-helpers';
-
-const ALL_PROBLEMS = getAllProblems();
-const BANK_SIZE = ALL_PROBLEMS.length;
-
-const BANK_SIZE_BY_DIFF: Readonly<Record<Difficulty, number>> = {
-  easy: ALL_PROBLEMS.filter((p) => p.difficulty === 'easy').length,
-  medium: ALL_PROBLEMS.filter((p) => p.difficulty === 'medium').length,
-  hard: ALL_PROBLEMS.filter((p) => p.difficulty === 'hard').length,
-};
-
-const BANK_SIZE_BY_TAG: Readonly<Record<ProblemTag, number>> = (() => {
-  const counts: Partial<Record<ProblemTag, number>> = {};
-  for (const p of ALL_PROBLEMS) {
-    for (const t of p.tags) counts[t] = (counts[t] ?? 0) + 1;
-  }
-  return counts as Record<ProblemTag, number>;
-})();
-
+import { ChallengeFilters } from './ChallengeFilters';
 
 /** Common distractions surfaced as one-click adds on first run. */
 const FIRST_RUN_SUGGESTIONS: readonly string[] = [
@@ -51,21 +29,11 @@ interface PopupData {
   streak: StreakSummary;
   activeUnlocks: UnlockToken[];
   solvedToday: number;
-  solvedStats: SolvedStats;
-  totalSolvedMs: number;
   currentDomain: string | null;
   alreadyBlocked: boolean;
   blockedDomains: ReadonlySet<string>;
   theme: ThemePreference;
-}
-
-function formatSolveTime(ms: number): string {
-  const totalSec = Math.floor(ms / 1000);
-  const hours = Math.floor(totalSec / 3600);
-  const mins = Math.floor((totalSec % 3600) / 60);
-  if (hours > 0) return `${hours}h ${mins}m`;
-  if (mins > 0) return `${mins}m`;
-  return `${totalSec}s`;
+  prefs: UserPreferences;
 }
 
 /**
@@ -113,22 +81,16 @@ export function Popup() {
           .map((rule) => rule.pattern.toLowerCase()),
       );
 
-      const totalSolvedMs = solved.reduce(
-        (acc: number, r: SolvedProblemRecord) => acc + r.durationMs,
-        0,
-      );
-
       if (cancelled) return;
       setData({
         streak,
         activeUnlocks: pruneTokens(tokens),
         solvedToday,
-        solvedStats: computeSolvedStats(solved),
-        totalSolvedMs,
         currentDomain,
         alreadyBlocked,
         blockedDomains,
         theme: prefs.theme,
+        prefs,
       });
     }
 
@@ -169,6 +131,18 @@ export function Popup() {
       blockedDomains: nextDomains,
       alreadyBlocked: data.currentDomain === lower || data.alreadyBlocked,
     });
+  }
+
+  // Persist a preferences patch (problem filters) and reflect it locally so the
+  // dropdowns update immediately. Uses updateValue's read-modify-write so we
+  // never clobber other preference fields.
+  async function updatePrefs(patch: Partial<UserPreferences>): Promise<void> {
+    setData((d) => (d ? { ...d, prefs: { ...d.prefs, ...patch } } : d));
+    try {
+      await updateValue('userPreferences', (curr) => ({ ...curr, ...patch }));
+    } catch {
+      // Outside an extension context — local state already reflects the change.
+    }
   }
 
   function handleOpenSettings(): void {
@@ -347,7 +321,7 @@ export function Popup() {
         </section>
       )}
 
-      <SolveBreakdown stats={data.solvedStats} totalSolvedMs={data.totalSolvedMs} />
+      <ChallengeFilters prefs={data.prefs} onChange={updatePrefs} />
 
       {/* Secondary navigation */}
       <div className="mt-5 flex gap-2 border-t border-border pt-4">
@@ -396,92 +370,6 @@ function Stat({ label, value, sub }: { label: string; value: number; sub: string
   );
 }
 
-/** Compact difficulty + top-tag breakdown for the popup. */
-function SolveBreakdown({ stats, totalSolvedMs }: { stats: SolvedStats; totalSolvedMs: number }) {
-  if (stats.total === 0) return null;
-  const pct = Math.round((stats.total / BANK_SIZE) * 100);
-
-  // Tags the user has actually solved, sorted by count descending, capped at 5.
-  const activeTags: Array<{ tag: ProblemTag; count: number }> = PROBLEM_TAGS.flatMap((tag) => {
-    const count = stats.byTag[tag] ?? 0;
-    return count > 0 ? [{ tag, count }] : [];
-  })
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 5);
-
-  const DIFF_LABEL: Record<Difficulty, string> = { easy: 'Easy', medium: 'Med', hard: 'Hard' };
-  const DIFF_BAR: Record<Difficulty, string> = { easy: 'bg-success', medium: 'bg-warning', hard: 'bg-error' };
-
-  return (
-    <section className="mt-4 rounded-md border border-border bg-surface px-4 py-3" aria-label="Solved problem breakdown">
-      <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">
-        Breakdown · {stats.total}/{BANK_SIZE} solved ({pct}%)
-        {totalSolvedMs > 0 && ` · ${formatSolveTime(totalSolvedMs)} invested`}
-      </h2>
-
-      {/* Difficulty mini bars */}
-      <div className="mt-2 space-y-1">
-        {DIFFICULTIES.map((d) => {
-          const count = stats.byDifficulty[d];
-          const total = BANK_SIZE_BY_DIFF[d];
-          const widthPct = count === 0 ? 0 : Math.max(4, Math.round((count / total) * 100));
-          return (
-            <div
-              key={d}
-              className="flex items-center gap-2"
-              aria-label={`${DIFF_LABEL[d]}: ${count} of ${total} solved`}
-            >
-              <span className="w-7 font-mono text-[9px] text-faint">{DIFF_LABEL[d]}</span>
-              <div className="flex flex-1 items-center gap-1.5">
-                <div className="h-1.5 flex-1 rounded-full bg-bg">
-                  <div
-                    className={`h-1.5 rounded-full transition-all ${DIFF_BAR[d]}`}
-                    style={{ width: `${widthPct}%` }}
-                  />
-                </div>
-                <span className="w-12 text-right font-mono text-[9px] text-muted tabular-nums">
-                  {count}/{total}
-                </span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Top tags with solved/total */}
-      {activeTags.length > 0 && (
-        <div className="mt-3 space-y-1">
-          {activeTags.map(({ tag, count }) => {
-            const total = BANK_SIZE_BY_TAG[tag] ?? 1;
-            const widthPct = Math.max(2, Math.round((count / total) * 100));
-            return (
-              <div
-                key={tag}
-                className="flex items-center gap-2"
-                aria-label={`${tag}: ${count} of ${total} solved`}
-              >
-                <span className="w-20 shrink-0 font-mono text-[9px] text-faint truncate">{tag}</span>
-                <div className="flex flex-1 items-center gap-1.5">
-                  <div className="h-1 flex-1 rounded-full bg-bg">
-                    <div
-                      className="h-1 rounded-full bg-border-strong transition-all"
-                      style={{ width: `${widthPct}%` }}
-                    />
-                  </div>
-                  <span className="w-12 text-right font-mono text-[9px] text-faint tabular-nums">
-                    {count}/{total}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </section>
-  );
-}
-
-/** Last 5 recently-solved problems, shown below the breakdown stats. */
 function minutesLeft(token: UnlockToken, now: number = Date.now()): number {
   return Math.max(0, Math.ceil((token.expiresAt - now) / 60_000));
 }

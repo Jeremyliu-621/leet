@@ -191,19 +191,9 @@ export function passwordsMatch(a: string, b: string): boolean {
 // Display helpers
 // ---------------------------------------------------------------------------
 
-/** Capitalises first letter, lowercases rest. */
-export function capitalise(s: string): string {
-  if (s.length === 0) return s;
-  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-}
-
-/** Formats a tag name for display: replaces hyphens with spaces and capitalises. */
-export function formatTag(tag: string): string {
-  return tag
-    .split('-')
-    .map(capitalise)
-    .join(' ');
-}
+// Re-exported from the shared formatter module so existing option-component
+// imports keep working while the implementation lives in one place.
+export { capitalise, formatTag } from '../../lib/format';
 
 /**
  * The cooldown preset options available in the UI.
