@@ -15,9 +15,9 @@ interface ChallengeSectionProps {
 }
 
 const CHALLENGE_MODES = [
-  { value: 'mixed', label: 'Mixed', desc: 'Both DSA and debug problems' },
   { value: 'dsa', label: 'DSA', desc: 'Classic solve-from-scratch problems' },
   { value: 'debug', label: 'Debug', desc: 'Find-and-fix-the-bug problems' },
+  { value: 'mixed', label: 'Mixed', desc: 'Both DSA and debug problems' },
 ] as const;
 
 export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSectionProps) {
