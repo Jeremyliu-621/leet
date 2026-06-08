@@ -139,8 +139,22 @@ function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
  * hand the user the answer. Explicit starters are run through
  * `stubifyStarter`, which keeps the signature and empties the body. Languages
  * without an explicit starter use `generateStarter`, which is already a stub.
+ *
+ * For debug-mode problems, the `buggyCode` is shown directly — the user must
+ * find and fix the bug(s) rather than write from scratch.
  */
 function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
+  // Debug mode: show the buggy code as the starter.
+  if (problem.kind === 'debug' && problem.buggyCode) {
+    const buggy = problem.buggyCode[language];
+    if (buggy) return buggy;
+    // Fall back to javascript buggy code for TypeScript.
+    if (language === 'typescript' && problem.buggyCode.javascript) {
+      return problem.buggyCode.javascript;
+    }
+    // If no buggy code for this language, fall through to normal starter.
+  }
+
   // First test case feeds the Python stub's `:type:`/`:rtype:` docstring.
   const sample = problem.visibleTests[0]
     ? { args: problem.visibleTests[0].args, expected: problem.visibleTests[0].expected }
@@ -719,11 +733,17 @@ export function Challenge() {
 
       if (cancelled) return;
 
+      // Translate challengeMode preference to a kinds filter for selection.
+      const kinds: import('../../lib/problems').ProblemKind[] | undefined =
+        prefs.challengeMode === 'dsa' ? ['function'] :
+        prefs.challengeMode === 'debug' ? ['debug'] :
+        undefined; // 'mixed' → no filter, pick from both pools
+
       // Support ?problem=<id> deep-link to load a specific problem directly.
       const deepLinkId = parseProblemIdParam(window.location.search);
       const problem = deepLinkId
-        ? (getProblemById(deepLinkId) ?? pickChallengeProblem(prefs, { excludeIds: recentIds }))
-        : pickChallengeProblem(prefs, { excludeIds: recentIds });
+        ? (getProblemById(deepLinkId) ?? pickChallengeProblem(prefs, { excludeIds: recentIds, kinds }))
+        : pickChallengeProblem(prefs, { excludeIds: recentIds, kinds });
       if (!problem) {
         setPageState({ status: 'no-problem' });
         return;

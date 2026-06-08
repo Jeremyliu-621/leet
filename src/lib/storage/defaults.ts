@@ -27,6 +27,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   editorWordWrap: true,
   editorAutocomplete: false,
   editorThemeSync: true,
+  challengeMode: 'mixed',
 };
 
 /**

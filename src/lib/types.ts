@@ -342,6 +342,14 @@ export interface UserPreferences {
    * Defaults to true.
    */
   editorThemeSync: boolean;
+  /**
+   * Challenge mode selection.
+   * - `'dsa'` — classic function-implementation problems only.
+   * - `'debug'` — debug-the-buggy-code problems only.
+   * - `'mixed'` — randomly selects from both pools.
+   * Defaults to `'mixed'`.
+   */
+  challengeMode: 'dsa' | 'debug' | 'mixed';
 }
 
 /** Theme options exposed in the UI. */

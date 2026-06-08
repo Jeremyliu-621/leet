@@ -14,11 +14,18 @@ interface ChallengeSectionProps {
   onChange: (patch: Partial<UserPreferences>) => void;
 }
 
+const CHALLENGE_MODES = [
+  { value: 'mixed', label: 'Mixed', desc: 'Both DSA and debug problems' },
+  { value: 'dsa', label: 'DSA', desc: 'Classic solve-from-scratch problems' },
+  { value: 'debug', label: 'Debug', desc: 'Find-and-fix-the-bug problems' },
+] as const;
+
 export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSectionProps) {
   const uid = useId();
   const timeLimitId = `${uid}-time-limit`;
   const attemptsId = `${uid}-attempts`;
   const giveUpId = `${uid}-give-up`;
+  const modeId = `${uid}-mode`;
 
   return (
     <SectionCard
@@ -28,6 +35,33 @@ export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSe
       id="section-challenge"
     >
       <div className="space-y-5">
+        {/* Challenge mode */}
+        <FormField
+          label="Challenge mode"
+          htmlFor={modeId}
+          help="Choose which type of problems appear when a site is blocked."
+        >
+          <div className="flex gap-2" role="radiogroup" aria-labelledby={modeId}>
+            {CHALLENGE_MODES.map((mode) => (
+              <button
+                key={mode.value}
+                type="button"
+                role="radio"
+                aria-checked={prefs.challengeMode === mode.value}
+                onClick={() => onChange({ challengeMode: mode.value })}
+                className={`rounded-sm border px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-colors ${
+                  prefs.challengeMode === mode.value
+                    ? 'border-text bg-text text-bg'
+                    : 'border-border bg-surface-2 text-muted hover:border-border-strong hover:text-text'
+                }`}
+                title={mode.desc}
+              >
+                {mode.label}
+              </button>
+            ))}
+          </div>
+        </FormField>
+
         {/* Time limit */}
         <FormField
           label="Time limit (seconds)"

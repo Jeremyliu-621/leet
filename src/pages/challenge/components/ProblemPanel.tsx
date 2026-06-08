@@ -50,7 +50,7 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
       tabIndex={-1}
     >
       <div className="px-6 pb-8 pt-6">
-        {/* Header — title + difficulty pill */}
+        {/* Header — title + difficulty pill + optional debug badge */}
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-base font-semibold leading-snug text-text">{title}</h1>
           <span
@@ -60,6 +60,15 @@ export function ProblemPanel({ problem, onHintRevealed, hintCostLabel }: Problem
           >
             {difficulty}
           </span>
+          {problem.kind === 'debug' && (
+            <span
+              style={{ borderRadius: '12px 16px 10px 18px / 18px 10px 16px 12px' }}
+              className="inline-block border-[1.5px] border-muted bg-surface-2 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted"
+              aria-label="Debug mode"
+            >
+              debug
+            </span>
+          )}
         </div>
 
         {/* Full-width divider separating the header from the statement */}

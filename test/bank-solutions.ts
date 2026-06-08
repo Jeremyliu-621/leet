@@ -50284,4 +50284,130 @@ export const solutions: Record<string, (...args: unknown[]) => unknown> = {
     return solve(0, n - 1, 0);
   },
 
+  // --- debug mode problems (correct/fixed implementations) -------------------
+  'two-sum-debug-off-by-one': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    const map = new Map<number, number>();
+    for (let i = 0; i < nums.length; i++) {
+      const comp = target - (nums[i] as number);
+      if (map.has(comp)) return [map.get(comp), i];
+      map.set(nums[i] as number, i);
+    }
+    return [];
+  },
+
+  'running-sum-debug-wrong-init': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const out: number[] = [];
+    let sum = 0;
+    for (const n of nums) {
+      sum += n;
+      out.push(sum);
+    }
+    return out;
+  },
+
+  'reverse-string-debug-bounds': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const chars = s.split('');
+    let lo = 0;
+    let hi = chars.length - 1;
+    while (lo < hi) {
+      const tmp = chars[lo]!;
+      chars[lo] = chars[hi]!;
+      chars[hi] = tmp;
+      lo++;
+      hi--;
+    }
+    return chars.join('');
+  },
+
+  'binary-search-debug-overflow': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    const target = args[1] as number;
+    let lo = 0;
+    let hi = nums.length - 1;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      if (nums[mid] === target) return mid;
+      if ((nums[mid] as number) < target) {
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+    return -1;
+  },
+
+  'max-subarray-debug-logic': (...args: unknown[]) => {
+    const nums = args[0] as number[];
+    let current = nums[0] as number;
+    let best = nums[0] as number;
+    for (let i = 1; i < nums.length; i++) {
+      const val = nums[i] as number;
+      current = current > 0 ? current + val : val;
+      if (current > best) best = current;
+    }
+    return best;
+  },
+
+  'valid-parentheses-debug-wrong-check': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const stack: string[] = [];
+    const match: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+    for (const ch of s) {
+      if (ch === '(' || ch === '[' || ch === '{') {
+        stack.push(ch);
+      } else {
+        if (stack.pop() !== match[ch]) return false;
+      }
+    }
+    return stack.length === 0;
+  },
+
+  'merge-sorted-arrays-debug-comparison': (...args: unknown[]) => {
+    const nums1 = args[0] as number[];
+    const nums2 = args[1] as number[];
+    const result: number[] = [];
+    let i = 0, j = 0;
+    while (i < nums1.length && j < nums2.length) {
+      if ((nums1[i] as number) <= (nums2[j] as number)) {
+        result.push(nums1[i] as number);
+        i++;
+      } else {
+        result.push(nums2[j] as number);
+        j++;
+      }
+    }
+    while (i < nums1.length) { result.push(nums1[i] as number); i++; }
+    while (j < nums2.length) { result.push(nums2[j] as number); j++; }
+    return result;
+  },
+
+  'palindrome-check-debug-wrong-operator': (...args: unknown[]) => {
+    const s = args[0] as string;
+    const cleaned = s.toLowerCase().replace(/[^a-z0-9]/g, '');
+    let lo = 0;
+    let hi = cleaned.length - 1;
+    while (lo < hi) {
+      if (cleaned[lo] !== cleaned[hi]) return false;
+      lo++;
+      hi--;
+    }
+    return true;
+  },
+
+  'fibonacci-debug-swap': (...args: unknown[]) => {
+    const n = args[0] as number;
+    if (n <= 1) return n;
+    let a = 0, b = 1;
+    for (let i = 2; i <= n; i++) {
+      const tmp = a;
+      a = b;
+      b = tmp + b;
+    }
+    return b;
+  },
+
 };

@@ -17,6 +17,9 @@ export function getProblemById(id: string): Problem | undefined {
   return bankById.get(id);
 }
 
+/** Problem kind for filtering. */
+export type ProblemKind = 'function' | 'debug';
+
 export interface ProblemFilter {
   /** Allowed difficulties; empty or omitted means "any difficulty". */
   difficulties?: readonly Difficulty[];
@@ -24,13 +27,15 @@ export interface ProblemFilter {
   tags?: readonly ProblemTag[];
   /** Allowed lists; a problem matches if it belongs to at least one. Empty means "any". */
   lists?: readonly ProblemList[];
+  /** Allowed kinds; empty or omitted means "any kind". */
+  kinds?: readonly ProblemKind[];
   /** Problem ids to exclude (e.g. recently solved). */
   excludeIds?: readonly string[];
 }
 
 /** Returns every problem matching the filter, preserving bank order. */
 export function filterProblems(filter: ProblemFilter): readonly Problem[] {
-  const { difficulties, tags, lists, excludeIds } = filter;
+  const { difficulties, tags, lists, kinds, excludeIds } = filter;
   const excludeSet = excludeIds && excludeIds.length > 0 ? new Set(excludeIds) : null;
   return bank.filter((problem) => {
     if (difficulties && difficulties.length > 0 && !difficulties.includes(problem.difficulty)) {
@@ -43,6 +48,10 @@ export function filterProblems(filter: ProblemFilter): readonly Problem[] {
       if (!problem.lists || !problem.lists.some((l) => lists.includes(l))) {
         return false;
       }
+    }
+    if (kinds && kinds.length > 0) {
+      const problemKind = problem.kind ?? 'function';
+      if (!kinds.includes(problemKind)) return false;
     }
     if (excludeSet && excludeSet.has(problem.id)) {
       return false;
@@ -69,6 +78,7 @@ export function selectProblem(
 
 export interface PickChallengeOptions {
   excludeIds?: readonly string[];
+  kinds?: readonly ProblemKind[];
   random?: () => number;
 }
 
@@ -83,13 +93,14 @@ export function pickChallengeProblem(
   options: PickChallengeOptions = {},
 ): Problem | undefined {
   const random = options.random ?? Math.random;
-  const { excludeIds } = options;
+  const { excludeIds, kinds } = options;
 
   return (
-    selectProblem({ difficulties: prefs.difficulties, tags: prefs.tags, lists: prefs.lists, excludeIds }, random) ??
-    selectProblem({ difficulties: prefs.difficulties, lists: prefs.lists, excludeIds }, random) ??
-    selectProblem({ tags: prefs.tags, lists: prefs.lists, excludeIds }, random) ??
-    selectProblem({ lists: prefs.lists, excludeIds }, random) ??
+    selectProblem({ difficulties: prefs.difficulties, tags: prefs.tags, lists: prefs.lists, kinds, excludeIds }, random) ??
+    selectProblem({ difficulties: prefs.difficulties, lists: prefs.lists, kinds, excludeIds }, random) ??
+    selectProblem({ tags: prefs.tags, lists: prefs.lists, kinds, excludeIds }, random) ??
+    selectProblem({ lists: prefs.lists, kinds, excludeIds }, random) ??
+    selectProblem({ kinds, excludeIds }, random) ??
     selectProblem({ excludeIds }, random) ??
     selectProblem({}, random)
   );

@@ -29,6 +29,20 @@ export interface Problem {
   difficulty: Difficulty;
   tags: readonly ProblemTag[];
   /**
+   * Problem kind discriminant.
+   * - `'function'` (default) — classic DSA: user writes a function from scratch.
+   * - `'debug'` — user is given buggy code and must find+fix the bug(s).
+   *
+   * Omitted means `'function'` for backwards compatibility with existing bank.
+   */
+  kind?: 'function' | 'debug';
+  /**
+   * For debug-mode problems: the buggy code shown in the editor that the user
+   * must fix. Keyed by language. At least `javascript` must be provided.
+   * Only present when `kind === 'debug'`.
+   */
+  buggyCode?: Readonly<Partial<Record<SupportedLanguage, string>>>;
+  /**
    * Problem statement. Markdown (GitHub-flavoured) is supported — plain text
    * with blank-line paragraph breaks renders cleanly too, so older bank
    * entries authored as plain text keep working.

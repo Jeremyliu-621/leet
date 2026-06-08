@@ -3432,6 +3432,8 @@ import { problem as pathInZigzagTree } from './path-in-zigzag-labelled-binary-tr
 import { problem as minCostCityDiscounts } from './minimum-cost-to-reach-city-with-discounts';
 import { problem as distanceToCycleGraph } from './distance-to-a-cycle-in-undirected-graph';
 import { problem as designHashSet } from './design-hash-set';
+// debug mode problems
+import { debugProblems } from './debug';
 export const problems: readonly Problem[] = [
   // arrays — easy
   runningSum,
@@ -6901,6 +6903,8 @@ export const problems: readonly Problem[] = [
   minCostCityDiscounts,
   distanceToCycleGraph,
   designHashSet,
+  // debug mode problems
+  ...debugProblems,
 ];
 
 // Hydrate each problem's `lists` field from the list registry.

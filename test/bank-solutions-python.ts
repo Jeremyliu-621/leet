@@ -49131,4 +49131,112 @@ def maximumSumOfHeights(heights: list[int]) -> int:
     return dp(0, n - 1, 0)
 `,
 
+  // --- debug mode problems (correct/fixed implementations) -------------------
+  'two-sum-debug-off-by-one': `
+def twoSum(nums, target):
+    seen = {}
+    for i, v in enumerate(nums):
+        if target - v in seen:
+            return [seen[target - v], i]
+        seen[v] = i
+    return []
+`,
+
+  'running-sum-debug-wrong-init': `
+def runningSum(nums):
+    out = []
+    total = 0
+    for n in nums:
+        total += n
+        out.append(total)
+    return out
+`,
+
+  'reverse-string-debug-bounds': `
+def reverseString(s):
+    chars = list(s)
+    lo, hi = 0, len(chars) - 1
+    while lo < hi:
+        chars[lo], chars[hi] = chars[hi], chars[lo]
+        lo += 1
+        hi -= 1
+    return ''.join(chars)
+`,
+
+  'binary-search-debug-overflow': `
+def search(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1
+`,
+
+  'max-subarray-debug-logic': `
+def maxSubArray(nums):
+    current = nums[0]
+    best = nums[0]
+    for i in range(1, len(nums)):
+        current = current + nums[i] if current > 0 else nums[i]
+        if current > best:
+            best = current
+    return best
+`,
+
+  'valid-parentheses-debug-wrong-check': `
+def isValid(s):
+    stack = []
+    match = {')': '(', ']': '[', '}': '{'}
+    for ch in s:
+        if ch in '([{':
+            stack.append(ch)
+        else:
+            if not stack or stack.pop() != match[ch]:
+                return False
+    return len(stack) == 0
+`,
+
+  'merge-sorted-arrays-debug-comparison': `
+def mergeSorted(nums1, nums2):
+    result = []
+    i, j = 0, 0
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] <= nums2[j]:
+            result.append(nums1[i])
+            i += 1
+        else:
+            result.append(nums2[j])
+            j += 1
+    result.extend(nums1[i:])
+    result.extend(nums2[j:])
+    return result
+`,
+
+  'palindrome-check-debug-wrong-operator': `
+def isPalindrome(s):
+    cleaned = ''.join(c.lower() for c in s if c.isalnum())
+    lo, hi = 0, len(cleaned) - 1
+    while lo < hi:
+        if cleaned[lo] != cleaned[hi]:
+            return False
+        lo += 1
+        hi -= 1
+    return True
+`,
+
+  'fibonacci-debug-swap': `
+def fib(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    for i in range(2, n + 1):
+        a, b = b, a + b
+    return b
+`,
+
 };
