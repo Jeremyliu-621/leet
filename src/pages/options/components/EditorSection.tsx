@@ -173,6 +173,29 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
           </label>
         </FormField>
 
+        {/* Match editor to theme */}
+        <FormField
+          label="Match editor to theme"
+          htmlFor={`${uid}-theme-sync`}
+          help="Editor background and syntax colours follow your selected theme. Turn off for a fixed dark/light code editor regardless of theme."
+        >
+          <label
+            htmlFor={`${uid}-theme-sync`}
+            className="inline-flex cursor-pointer items-center gap-2"
+          >
+            <input
+              id={`${uid}-theme-sync`}
+              type="checkbox"
+              checked={prefs.editorThemeSync ?? true}
+              onChange={(e) => onChange({ editorThemeSync: e.target.checked })}
+              className="accent-accent"
+            />
+            <span className="font-mono text-xs text-text">
+              {(prefs.editorThemeSync ?? true) ? 'On' : 'Off'}
+            </span>
+          </label>
+        </FormField>
+
         {/* Keymap */}
         <FormField
           label="Key bindings"

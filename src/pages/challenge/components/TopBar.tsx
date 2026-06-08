@@ -2,6 +2,10 @@ import { useRef, useEffect } from 'react';
 import type { UserPreferences } from '../../../lib/types';
 import { formatCountdown } from '../challenge-helpers';
 import { RunActions } from './RunActions';
+// Feedback button is hidden for now until email delivery is wired
+// (see docs/PROGRESS.md TODO + src/lib/feedback/send.ts). Re-enable by
+// restoring this import and the <FeedbackButton /> render below.
+// import { FeedbackButton } from './FeedbackButton';
 import wordmark from '../../../../assets/leetmeowtextright.png';
 
 interface TopBarProps {
@@ -109,6 +113,9 @@ export function TopBar({ secondsLeft, prefs, streak, settingsHref, attempts = 0,
 
       {/* Right meta strip */}
       <div className="flex items-center gap-2" role="group" aria-label="Challenge status">
+        {/* Feedback button hidden for now — re-add <FeedbackButton /> here once
+            email delivery is wired (docs/PROGRESS.md feedback TODO). */}
+
         {/* Streak */}
         {streak > 0 && (
           <div

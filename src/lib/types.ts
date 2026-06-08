@@ -336,6 +336,12 @@ export interface UserPreferences {
   editorWordWrap: boolean;
   /** Whether the code editor shows autocomplete suggestions while typing. Defaults to false (like LeetCode). */
   editorAutocomplete: boolean;
+  /**
+   * Whether the code editor's surface and syntax colours follow the selected
+   * UI theme. When false, the editor keeps a fixed curated dark/light scheme.
+   * Defaults to true.
+   */
+  editorThemeSync: boolean;
 }
 
 /** Theme options exposed in the UI. */

@@ -1494,6 +1494,7 @@ export function Challenge() {
             showGiveUp={prefs.allowGiveUp}
             attemptsRemaining={attemptsRemaining}
             resolvedTheme={resolvedTheme}
+            editorThemeSync={prefs.editorThemeSync}
             resetCode={resetCode}
             wordWrap={prefs.editorWordWrap}
             autocomplete={prefs.editorAutocomplete}

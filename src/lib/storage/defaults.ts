@@ -26,6 +26,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   editorIndentSize: 2,
   editorWordWrap: true,
   editorAutocomplete: false,
+  editorThemeSync: true,
 };
 
 /**
@@ -46,4 +47,5 @@ export const STORAGE_DEFAULTS: StorageSchema = {
   draftCode: {},
   submissionHistory: {},
   aiSettings: { geminiApiKey: null, enabled: false, model: DEFAULT_GEMINI_MODEL },
+  feedback: [],
 };
