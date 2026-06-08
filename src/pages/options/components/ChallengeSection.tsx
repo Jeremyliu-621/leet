@@ -39,7 +39,7 @@ export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSe
         <FormField
           label="Challenge mode"
           htmlFor={modeId}
-          help="Choose which type of problems appear when a site is blocked."
+          help="Choose which type of problems appear when a site is blocked. Debug mode currently supports JavaScript, TypeScript, and Python only."
         >
           <div className="flex gap-2" role="radiogroup" aria-labelledby={modeId}>
             {CHALLENGE_MODES.map((mode) => (
