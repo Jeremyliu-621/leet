@@ -120,13 +120,13 @@ function LoadingScreen() {
  * settings app. `cluster` groups related sections in the sidebar.
  */
 const SECTIONS = [
-  { id: 'blocking', label: 'Blocking', cluster: 'Protection', description: 'Sites and keywords that trigger a coding challenge.' },
-  { id: 'challenge', label: 'Challenge & Unlock', cluster: 'Protection', description: 'How challenges run and how long access lasts when you pass.' },
-  { id: 'security', label: 'Security', cluster: 'Protection', description: 'Strict mode, password lock, and accountability partner.' },
-  { id: 'problems', label: 'Problems', cluster: 'Practice', description: 'Which problems you can be asked to solve.' },
-  { id: 'editor', label: 'Editor', cluster: 'Practice', description: 'Your coding environment, key bindings, and AI hints.' },
-  { id: 'appearance', label: 'Appearance', cluster: 'App', description: 'Theme and editor text size across LeetMeow.' },
-  { id: 'data', label: 'Data', cluster: 'App', description: 'Back up, restore, reset, and review your progress.' },
+  { id: 'blocking', label: 'Blocking', cluster: 'Protection', description: 'Sites and keywords that trigger a coding challenge.', keywords: 'block sites domains urls keywords triggers rules' },
+  { id: 'challenge', label: 'Challenge & Unlock', cluster: 'Protection', description: 'How challenges run and how long access lasts when you pass.', keywords: 'time limit timer attempts give up unlock duration mode debug dsa mixed' },
+  { id: 'security', label: 'Security', cluster: 'Protection', description: 'Strict mode, password lock, and accountability partner.', keywords: 'strict password lock partner accountability cooldown' },
+  { id: 'problems', label: 'Problems', cluster: 'Practice', description: 'Which problems you can be asked to solve.', keywords: 'difficulty easy medium hard tags categories lists neetcode blind browse filter' },
+  { id: 'editor', label: 'Editor', cluster: 'Practice', description: 'Your coding environment, key bindings, and AI hints.', keywords: 'font size vim emacs keymap indent wrap autocomplete ai gemini hints language javascript python typescript' },
+  { id: 'appearance', label: 'Appearance', cluster: 'App', description: 'Theme and editor text size across LeetMeow.', keywords: 'theme dark light color colours' },
+  { id: 'data', label: 'Data', cluster: 'App', description: 'Back up, restore, reset, and review your progress.', keywords: 'import export backup restore reset sync about version' },
 ] as const;
 
 type NavGroupId = (typeof SECTIONS)[number]['id'];
@@ -163,11 +163,40 @@ const NAV_CLUSTERS: ReadonlyArray<{ label: string; items: typeof SECTIONS[number
   return order.map((label) => ({ label, items: byCluster.get(label)! }));
 })();
 
-/** Full-height sidebar with branding and clustered nav links. */
+/** Returns true if any token in `query` matches a section's label, description, or keywords. */
+function sectionMatchesQuery(section: typeof SECTIONS[number], query: string): boolean {
+  if (!query) return true;
+  const haystack = `${section.label} ${section.description} ${section.keywords} ${section.cluster}`.toLowerCase();
+  return query.toLowerCase().split(/\s+/).every((token) => haystack.includes(token));
+}
+
+/** Full-height sidebar with branding, search, and clustered nav links. */
 function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelect: (id: NavGroupId) => void }) {
+  const [query, setQuery] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  // Filter sections by query.
+  const filteredSections = query
+    ? SECTIONS.filter((s) => sectionMatchesQuery(s, query))
+    : SECTIONS;
+
+  // Derive filtered clusters.
+  const filteredClusters = (() => {
+    const order: string[] = [];
+    const byCluster = new Map<string, typeof SECTIONS[number][]>();
+    for (const section of filteredSections) {
+      if (!byCluster.has(section.cluster)) {
+        byCluster.set(section.cluster, []);
+        order.push(section.cluster);
+      }
+      byCluster.get(section.cluster)!.push(section);
+    }
+    return order.map((label) => ({ label, items: byCluster.get(label)! }));
+  })();
+
   return (
     <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:flex md:flex-col">
-      <div className="sticky top-0 flex flex-col gap-7 px-5 py-6">
+      <div className="sticky top-0 flex flex-col gap-5 px-5 py-6">
         {/* Branding — the full LeetMeow wordmark lockup, masked so it takes the
             active theme's ink colour. */}
         <div className="flex flex-col gap-2">
@@ -182,9 +211,51 @@ function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelec
           </span>
         </div>
 
+        {/* Search input */}
+        <div className="relative">
+          <input
+            ref={searchRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search settings…"
+            aria-label="Search settings"
+            className="w-full rounded-sm border border-border bg-surface-2 py-1.5 pl-8 pr-3 font-mono text-[11px] text-text placeholder:text-faint focus:border-border-strong focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+          />
+          {/* Search icon */}
+          <svg
+            className="pointer-events-none absolute left-2.5 top-1/2 h-3 w-3 -translate-y-1/2 text-faint"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="6.5" cy="6.5" r="5" />
+            <path d="M10.5 10.5 15 15" />
+          </svg>
+          {/* Clear button */}
+          {query && (
+            <button
+              type="button"
+              onClick={() => { setQuery(''); searchRef.current?.focus(); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-sm p-0.5 text-faint hover:text-text"
+              aria-label="Clear search"
+            >
+              <svg className="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                <path d="M4 4 12 12M12 4 4 12" />
+              </svg>
+            </button>
+          )}
+        </div>
+
         {/* Clustered nav */}
         <nav aria-label="Settings sections" className="flex flex-col gap-6">
-          {NAV_CLUSTERS.map((cluster) => (
+          {filteredClusters.length === 0 && (
+            <p className="px-3 text-[11px] text-faint">No matching settings.</p>
+          )}
+          {filteredClusters.map((cluster) => (
             <div key={cluster.label} className="flex flex-col gap-1">
               <h2 className="mb-1 px-3 font-mono text-[10px] uppercase tracking-widest text-faint">
                 {cluster.label}
@@ -195,7 +266,7 @@ function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelec
                   <button
                     key={id}
                     type="button"
-                    onClick={() => onSelect(id)}
+                    onClick={() => { onSelect(id); setQuery(''); }}
                     aria-current={active ? 'page' : undefined}
                     className={`rounded-sm px-3 py-2 text-left text-[13px] transition-colors ${
                       active
