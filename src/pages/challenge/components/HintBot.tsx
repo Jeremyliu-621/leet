@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'react';
+import { createPortal } from 'react-dom';
 import type { Problem } from '../../../lib/problems/types';
 import type { SupportedLanguage } from '../../../lib/types';
 import { getValue } from '../../../lib/storage';
@@ -23,12 +24,6 @@ type Status =
   | { kind: 'loading'; mode: HintMode }
   | { kind: 'ready'; mode: HintMode; response: AiHintResponse }
   | { kind: 'error'; message: string };
-
-const SEVERITY_DOT: Record<AiHint['severity'], string> = {
-  bug: 'bg-error',
-  suggestion: 'bg-warning',
-  info: 'bg-brand',
-};
 
 function SparkleIcon() {
   return (
@@ -55,6 +50,14 @@ export function HintBot({
   const abortRef = useRef<AbortController | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  // Fixed-position coordinates for the portaled panel, recomputed from the
+  // trigger's viewport rect. null until the first measurement after opening.
+  const [coords, setCoords] = useState<
+    { left: number; width: number; maxHeight: number } & (
+      | { top: number; bottom?: undefined }
+      | { bottom: number; top?: undefined }
+    )
+  >();
 
   // (Re)load AI settings whenever the panel opens, so a key the user just added
   // in Settings is picked up without a page reload.
@@ -113,6 +116,47 @@ export function HintBot({
     if (!open) return;
     const id = requestAnimationFrame(() => panelRef.current?.focus());
     return () => cancelAnimationFrame(id);
+  }, [open]);
+
+  // The panel renders in a portal on <body> so it escapes the editor card's
+  // `overflow-hidden` clipping and sits above everything. Because it's no longer
+  // a positioned child of the trigger, we measure the trigger's viewport rect
+  // and place the panel with `position: fixed`, re-measuring on scroll/resize so
+  // it tracks the button. Right-aligned to the trigger, opening downward.
+  useLayoutEffect(() => {
+    if (!open) {
+      setCoords(undefined);
+      return;
+    }
+    function place() {
+      const trigger = triggerRef.current;
+      if (!trigger) return;
+      const rect = trigger.getBoundingClientRect();
+      const margin = 8;
+      const width = Math.min(340, window.innerWidth - margin * 2);
+      // Right edge of the panel aligns with the right edge of the trigger,
+      // clamped so it never spills off either side of the viewport.
+      const left = Math.min(Math.max(margin, rect.right - width), window.innerWidth - width - margin);
+      const spaceBelow = window.innerHeight - rect.bottom - margin;
+      const spaceAbove = rect.top - margin;
+      // Open downward by default; flip up only when there's genuinely more room
+      // above (a low trigger / short viewport). Either way the panel is capped to
+      // the space on its chosen side so its own scroll handles the overflow and
+      // it is never clipped by the viewport edge.
+      if (spaceBelow >= 240 || spaceBelow >= spaceAbove) {
+        setCoords({ left, width, top: rect.bottom + margin, maxHeight: spaceBelow });
+      } else {
+        setCoords({ left, width, bottom: window.innerHeight - rect.top + margin, maxHeight: spaceAbove });
+      }
+    }
+    place();
+    window.addEventListener('resize', place);
+    // Capture phase so scrolling inside any nested container also repositions.
+    window.addEventListener('scroll', place, true);
+    return () => {
+      window.removeEventListener('resize', place);
+      window.removeEventListener('scroll', place, true);
+    };
   }, [open]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
@@ -202,7 +246,7 @@ export function HintBot({
         <span className="hidden sm:inline">AI</span>
         {activeHintCount > 0 && (
           <span
-            className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 font-mono text-[9px] font-semibold leading-none text-white"
+            className="absolute -right-1.5 -top-1.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-brand px-1 font-mono text-[9px] font-semibold leading-none text-on-accent"
             aria-hidden="true"
           >
             {activeHintCount}
@@ -210,16 +254,28 @@ export function HintBot({
         )}
       </button>
 
-      {open && (
+      {open && coords && createPortal(
         <div
           ref={panelRef}
           role="dialog"
           aria-label="AI hint assistant"
           tabIndex={-1}
-          className="ll-animate-pop absolute right-0 top-full z-50 mt-2 w-[340px] max-w-[88vw] overflow-hidden rounded-xl border border-border bg-surface shadow-2xl focus:outline-none"
+          style={{
+            position: 'fixed',
+            top: coords.top,
+            bottom: coords.bottom,
+            left: coords.left,
+            width: coords.width,
+            maxHeight: coords.maxHeight,
+            // Above modals and every editor surface — the panel must never be
+            // clipped or covered. Just under the 32-bit max so a deliberate
+            // overlay could still go higher if ever needed.
+            zIndex: 2147483646,
+          }}
+          className="ll-animate-pop flex flex-col overflow-hidden rounded-xl border border-border bg-surface shadow-2xl focus:outline-none"
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-border px-3 py-2">
+          <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-2">
             <span className="inline-flex items-center gap-1.5 font-sans text-[12px] font-semibold text-text">
               <span className="text-brand">
                 <SparkleIcon />
@@ -230,7 +286,7 @@ export function HintBot({
           </div>
 
           {!hasKey ? (
-            <div className="space-y-2.5 px-3 py-3">
+            <div className="min-h-0 space-y-2.5 overflow-y-auto scrollbar-thin px-3 py-3">
               <p className="text-[12px] leading-relaxed text-muted">
                 Connect your own Gemini API key to get spoiler-free nudges and an AI review of your
                 code, annotated right in the editor.
@@ -239,7 +295,7 @@ export function HintBot({
                 <button
                   type="button"
                   onClick={openSettingsTab}
-                  className="inline-flex items-center gap-1.5 rounded-md bg-brand px-3 py-1.5 font-sans text-[11px] font-semibold text-white transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                  className="inline-flex items-center gap-1.5 rounded-md bg-brand px-3 py-1.5 font-sans text-[11px] font-semibold text-on-accent transition-opacity hover:opacity-90 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                 >
                   {apiKey && !enabled ? 'Enable in Settings' : 'Add your key in Settings'}
                 </button>
@@ -250,7 +306,7 @@ export function HintBot({
               </p>
             </div>
           ) : (
-            <div className="px-3 py-3">
+            <div className="min-h-0 overflow-y-auto scrollbar-thin px-3 py-3">
               {/* Action buttons */}
               <div className="flex items-center gap-2">
                 <button
@@ -306,9 +362,8 @@ export function HintBot({
                               type="button"
                               onClick={() => h.line !== null && onRevealLine(h.line)}
                               disabled={h.line === null}
-                              className="flex w-full items-start gap-2 rounded-md border border-border bg-bg px-2.5 py-2 text-left transition-colors enabled:hover:border-border-strong disabled:cursor-default focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+                              className="flex w-full items-start rounded-md border border-border bg-surface-2 px-2.5 py-2 text-left transition-colors enabled:hover:border-border-strong disabled:cursor-default focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
                             >
-                              <span className={`mt-1 h-2 w-2 shrink-0 rounded-full ${SEVERITY_DOT[h.severity]}`} aria-hidden="true" />
                               <span className="min-w-0 flex-1">
                                 <span className="flex items-center gap-2">
                                   <span className="truncate font-sans text-[11px] font-semibold text-text">{h.title}</span>
@@ -351,7 +406,8 @@ export function HintBot({
               </div>
             </div>
           )}
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );

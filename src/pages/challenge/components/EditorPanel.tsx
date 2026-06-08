@@ -47,8 +47,27 @@ import { highlightSelectionMatches, search, searchKeymap } from '@codemirror/sea
 import { vim, getCM } from '@replit/codemirror-vim';
 import { emacs } from '@replit/codemirror-emacs';
 import { indentationMarkers } from '@replit/codemirror-indentation-markers';
-import { leetmeowEditorThemeDark, leetmeowEditorThemeLight } from '../codemirror-theme';
+import {
+  leetmeowEditorThemeDark,
+  leetmeowEditorThemeLight,
+  leetmeowEditorThemeBrand,
+  syncedEditorTheme,
+} from '../codemirror-theme';
 import { isLightTheme } from '../../../lib/theme';
+
+/**
+ * Picks the CodeMirror editor theme for a resolved UI theme. When `sync` is on
+ * the editor's surface follows the active theme's tokens and syntax uses that
+ * theme's rich per-theme palette; when off it uses the fixed curated dark/light
+ * (and brand) schemes.
+ */
+function pickEditorTheme(resolved: string, sync: boolean) {
+  if (sync) {
+    return syncedEditorTheme(resolved);
+  }
+  if (resolved === 'leetmeow') return leetmeowEditorThemeBrand;
+  return isLightTheme(resolved) ? leetmeowEditorThemeLight : leetmeowEditorThemeDark;
+}
 import { normalizeIndentation } from '../../../lib/editor/indent';
 import type { JudgeResult } from '../../../lib/judge';
 import type { Problem } from '../../../lib/problems/types';
@@ -105,6 +124,8 @@ interface EditorPanelProps {
   attemptsRemaining: number | null;
   /** Current resolved theme — controls the CodeMirror colour scheme. */
   resolvedTheme?: string;
+  /** When true, the editor surface + syntax follow the active theme's tokens. */
+  editorThemeSync?: boolean;
   /**
    * When set, replaces the entire editor content with `content` once. The
    * `version` counter must change for each new restore request so the effect
@@ -1033,6 +1054,7 @@ export function EditorPanel({
   onNewProblem,
   attemptsRemaining,
   resolvedTheme = 'dark',
+  editorThemeSync = true,
   resetCode,
   wordWrap: wordWrapProp,
   autocomplete: autocompleteProp = false,
@@ -1296,9 +1318,7 @@ export function EditorPanel({
             },
           },
         ]),
-        themeCompartmentRef.current.of(
-          isLightTheme(resolvedTheme) ? leetmeowEditorThemeLight : leetmeowEditorThemeDark,
-        ),
+        themeCompartmentRef.current.of(pickEditorTheme(resolvedTheme, editorThemeSync)),
         // Font size goes through its own Compartment so it can be reconfigured
         // live when the user adjusts it in Settings without rebuilding the editor.
         fontSizeCompartmentRef.current.of(fontSizeTheme(fontSize)),
@@ -1396,16 +1416,14 @@ export function EditorPanel({
     });
   }, [indentSize]);
 
-  // Swap the colour theme when resolvedTheme changes.
+  // Swap the colour theme when resolvedTheme or the sync toggle changes.
   useEffect(() => {
     const view = viewRef.current;
     if (!view) return;
     view.dispatch({
-      effects: themeCompartmentRef.current.reconfigure(
-        isLightTheme(resolvedTheme) ? leetmeowEditorThemeLight : leetmeowEditorThemeDark,
-      ),
+      effects: themeCompartmentRef.current.reconfigure(pickEditorTheme(resolvedTheme, editorThemeSync)),
     });
-  }, [resolvedTheme]);
+  }, [resolvedTheme, editorThemeSync]);
 
   const [showShortcuts, setShowShortcuts] = useState(false);
 
