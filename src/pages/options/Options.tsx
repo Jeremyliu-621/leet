@@ -170,33 +170,11 @@ function sectionMatchesQuery(section: typeof SECTIONS[number], query: string): b
   return query.toLowerCase().split(/\s+/).every((token) => haystack.includes(token));
 }
 
-/** Full-height sidebar with branding, search, and clustered nav links. */
+/** Full-height sidebar with branding and clustered nav links. */
 function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelect: (id: NavGroupId) => void }) {
-  const [query, setQuery] = useState('');
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  // Filter sections by query.
-  const filteredSections = query
-    ? SECTIONS.filter((s) => sectionMatchesQuery(s, query))
-    : SECTIONS;
-
-  // Derive filtered clusters.
-  const filteredClusters = (() => {
-    const order: string[] = [];
-    const byCluster = new Map<string, typeof SECTIONS[number][]>();
-    for (const section of filteredSections) {
-      if (!byCluster.has(section.cluster)) {
-        byCluster.set(section.cluster, []);
-        order.push(section.cluster);
-      }
-      byCluster.get(section.cluster)!.push(section);
-    }
-    return order.map((label) => ({ label, items: byCluster.get(label)! }));
-  })();
-
   return (
     <aside className="hidden w-60 shrink-0 border-r border-border bg-surface md:flex md:flex-col">
-      <div className="sticky top-0 flex flex-col gap-5 px-5 py-6">
+      <div className="sticky top-0 flex flex-col gap-7 px-5 py-6">
         {/* Branding — the full LeetMeow wordmark lockup, masked so it takes the
             active theme's ink colour. */}
         <div className="flex flex-col gap-2">
@@ -211,51 +189,9 @@ function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelec
           </span>
         </div>
 
-        {/* Search input */}
-        <div className="relative">
-          <input
-            ref={searchRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search settings…"
-            aria-label="Search settings"
-            className="w-full rounded-sm border border-border bg-surface-2 py-1.5 pl-8 pr-3 font-mono text-[11px] text-text placeholder:text-faint focus:border-border-strong focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
-          />
-          {/* Search icon */}
-          <svg
-            className="pointer-events-none absolute left-2.5 top-1/2 h-3 w-3 -translate-y-1/2 text-faint"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            <circle cx="6.5" cy="6.5" r="5" />
-            <path d="M10.5 10.5 15 15" />
-          </svg>
-          {/* Clear button */}
-          {query && (
-            <button
-              type="button"
-              onClick={() => { setQuery(''); searchRef.current?.focus(); }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-sm p-0.5 text-faint hover:text-text"
-              aria-label="Clear search"
-            >
-              <svg className="h-3 w-3" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M4 4 12 12M12 4 4 12" />
-              </svg>
-            </button>
-          )}
-        </div>
-
         {/* Clustered nav */}
         <nav aria-label="Settings sections" className="flex flex-col gap-6">
-          {filteredClusters.length === 0 && (
-            <p className="px-3 text-[11px] text-faint">No matching settings.</p>
-          )}
-          {filteredClusters.map((cluster) => (
+          {NAV_CLUSTERS.map((cluster) => (
             <div key={cluster.label} className="flex flex-col gap-1">
               <h2 className="mb-1 px-3 font-mono text-[10px] uppercase tracking-widest text-faint">
                 {cluster.label}
@@ -266,7 +202,7 @@ function SettingsSidebar({ activeId, onSelect }: { activeId: NavGroupId; onSelec
                   <button
                     key={id}
                     type="button"
-                    onClick={() => { onSelect(id); setQuery(''); }}
+                    onClick={() => onSelect(id)}
                     aria-current={active ? 'page' : undefined}
                     className={`rounded-sm px-3 py-2 text-left text-[13px] transition-colors ${
                       active
@@ -306,6 +242,8 @@ export function Options() {
   const [status, setStatus] = useState<PageStatus>('loading');
   const [errorMsg, setErrorMsg] = useState('');
   const [data, setData] = useState<PageData | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // In-page status announcement (save confirmations, pending-change notices).
   const [announcement, setAnnouncement] = useState('');
@@ -1033,19 +971,93 @@ export function Options() {
           <main
             ref={mainRef}
             className="mx-auto w-full max-w-[760px] flex-1 px-6 py-10 md:px-12"
-            aria-label={`${activeSection.label} settings`}
+            aria-label={searchQuery ? 'Search results' : `${activeSection.label} settings`}
           >
-            {/* Panel header — gives each section a real "page" identity */}
-            <header className="mb-7 border-b border-border pb-5">
-              <h1 className="text-lg font-semibold tracking-tight text-text">
-                {activeSection.label}
-              </h1>
-              <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-                {activeSection.description}
-              </p>
-            </header>
+            {/* Search bar — always visible at top of main area */}
+            <div className="relative mb-6">
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search settings…"
+                aria-label="Search settings"
+                className="w-full rounded-sm border border-border bg-surface-2 py-2 pl-9 pr-9 text-[13px] text-text placeholder:text-faint focus:border-border-strong focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-accent"
+              />
+              <svg
+                className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-faint"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="6.5" cy="6.5" r="5" />
+                <path d="M10.5 10.5 15 15" />
+              </svg>
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => { setSearchQuery(''); searchInputRef.current?.focus(); }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-sm p-0.5 text-faint hover:text-text"
+                  aria-label="Clear search"
+                >
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                    <path d="M4 4 12 12M12 4 4 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
 
-            <div className="space-y-4">{sectionContent[activeNav]}</div>
+            {searchQuery ? (
+              /* Search results — show all matching sections inline */
+              (() => {
+                const matches = SECTIONS.filter((s) => sectionMatchesQuery(s, searchQuery));
+                if (matches.length === 0) {
+                  return (
+                    <div className="py-12 text-center">
+                      <p className="text-sm text-muted">No settings match "{searchQuery}"</p>
+                    </div>
+                  );
+                }
+                return (
+                  <div className="space-y-8">
+                    {matches.map((section) => (
+                      <div key={section.id}>
+                        <button
+                          type="button"
+                          onClick={() => { selectSection(section.id); setSearchQuery(''); }}
+                          className="mb-3 flex items-center gap-2 rounded-sm px-1 py-0.5 text-left transition-colors hover:bg-surface-2"
+                        >
+                          <h2 className="text-base font-semibold text-text">{section.label}</h2>
+                          <span className="font-mono text-[10px] uppercase tracking-widest text-faint">{section.cluster}</span>
+                          <svg className="h-3 w-3 text-faint" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                            <path d="M6 4 10 8 6 12" />
+                          </svg>
+                        </button>
+                        <p className="mb-4 text-[12px] leading-relaxed text-muted">{section.description}</p>
+                        <div className="space-y-4">{sectionContent[section.id]}</div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()
+            ) : (
+              <>
+                {/* Panel header — gives each section a real "page" identity */}
+                <header className="mb-7 border-b border-border pb-5">
+                  <h1 className="text-lg font-semibold tracking-tight text-text">
+                    {activeSection.label}
+                  </h1>
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
+                    {activeSection.description}
+                  </p>
+                </header>
+
+                <div className="space-y-4">{sectionContent[activeNav]}</div>
+              </>
+            )}
           </main>
         </div>
       </div>
