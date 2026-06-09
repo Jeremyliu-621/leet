@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { Difficulty, ProblemList, ProblemTag, UserPreferences } from '../../lib/types';
 import {
   DIFFICULTIES,
@@ -6,8 +6,9 @@ import {
   PROBLEM_LIST_LABEL,
   PROBLEM_TAGS,
 } from '../../lib/types';
-import { getAllProblems } from '../../lib/problems';
-import { capitalise, formatTag } from '../../lib/format';
+import { getAllProblems, filterProblems } from '../../lib/problems';
+import type { ProblemKind } from '../../lib/problems';
+import { formatTag } from '../../lib/format';
 
 // Problem counts per dimension, computed once from the static bank — shown next
 // to each option so the user knows how many problems a filter would allow.
@@ -21,26 +22,25 @@ const TAG_COUNTS = Object.fromEntries(
 const LIST_COUNTS = Object.fromEntries(
   PROBLEM_LISTS.map((l) => [l, _all.filter((p) => p.lists?.includes(l)).length]),
 ) as Record<ProblemList, number>;
-const KIND_COUNTS = {
-  dsa: _all.filter((p) => (p.kind ?? 'function') === 'function').length,
-  debug: _all.filter((p) => p.kind === 'debug').length,
-} as const;
 
 // Type of question. `dsa` is LeetCode-style solve-from-scratch; `debug` is the
 // find-and-fix-the-bug pool; `mixed` draws from both.
 const CHALLENGE_MODES = [
-  { value: 'dsa', label: 'LeetCode', count: KIND_COUNTS.dsa },
-  { value: 'debug', label: 'Debugging', count: KIND_COUNTS.debug },
-  { value: 'mixed', label: 'Mixed', count: KIND_COUNTS.dsa + KIND_COUNTS.debug },
+  { value: 'dsa', label: 'LeetCode' },
+  { value: 'debug', label: 'Debug' },
+  { value: 'mixed', label: 'Mixed' },
 ] as const;
 
-const MODE_LABEL: Record<UserPreferences['challengeMode'], string> = {
-  dsa: 'LeetCode',
-  debug: 'Debugging',
-  mixed: 'Mixed',
-};
+const DIFF_LABEL: Record<Difficulty, string> = { easy: 'Easy', medium: 'Med', hard: 'Hard' };
 
-type FilterKey = 'difficulty' | 'type' | 'genre' | 'bank';
+/** Maps the challenge-mode preference to the problem kinds it selects. */
+function kindsForMode(mode: UserPreferences['challengeMode']): ProblemKind[] | undefined {
+  if (mode === 'dsa') return ['function'];
+  if (mode === 'debug') return ['debug'];
+  return undefined; // mixed → any kind
+}
+
+type DisclosureKey = 'genre' | 'bank';
 
 interface ChallengeFiltersProps {
   prefs: Pick<UserPreferences, 'difficulties' | 'challengeMode' | 'tags' | 'lists'>;
@@ -48,14 +48,26 @@ interface ChallengeFiltersProps {
 }
 
 /**
- * Quick problem-selection filters for the popup: difficulty, question type,
- * genre (tags), and question bank (lists). Each is a disclosure "dropdown" that
- * expands to a chip grid; changes write straight to user preferences, so they
- * stay in sync with the same controls in Settings.
+ * Quick problem-selection filters for the popup. The two short, high-frequency
+ * filters (difficulty, type) are inline segmented controls; the two long ones
+ * (genre/tags, bank/lists) are disclosures that expand to a chip grid. A live
+ * "N match" count gives instant feedback on the current combination. Changes
+ * write straight to user preferences, so they stay in sync with Settings.
  */
 export function ChallengeFilters({ prefs, onChange }: ChallengeFiltersProps) {
-  // Accordion: at most one filter open at a time keeps the popup compact.
-  const [open, setOpen] = useState<FilterKey | null>(null);
+  // At most one disclosure open keeps the popup compact.
+  const [open, setOpen] = useState<DisclosureKey | null>(null);
+
+  const matchCount = useMemo(
+    () =>
+      filterProblems({
+        difficulties: prefs.difficulties,
+        tags: prefs.tags,
+        lists: prefs.lists,
+        kinds: kindsForMode(prefs.challengeMode),
+      }).length,
+    [prefs.difficulties, prefs.tags, prefs.lists, prefs.challengeMode],
+  );
 
   function toggleDifficulty(d: Difficulty) {
     const current = prefs.difficulties;
@@ -75,66 +87,80 @@ export function ChallengeFilters({ prefs, onChange }: ChallengeFiltersProps) {
     onChange({ lists: current.includes(l) ? current.filter((x) => x !== l) : [...current, l] });
   }
 
-  const difficultySummary = DIFFICULTIES.filter((d) => prefs.difficulties.includes(d))
-    .map(capitalise)
-    .join(', ');
-  const genreSummary = prefs.tags.length === 0 ? 'Any' : `${prefs.tags.length} selected`;
-  const bankSummary = prefs.lists.length === 0 ? 'Any' : `${prefs.lists.length} selected`;
+  // Disclosure summaries: the first selected option (in canonical order) plus a
+  // "+n" overflow, or "Any" when unfiltered.
+  const firstTag = PROBLEM_TAGS.find((t) => prefs.tags.includes(t));
+  const genreSummary =
+    prefs.tags.length === 0
+      ? 'Any'
+      : `${formatTag(firstTag!)}${prefs.tags.length > 1 ? ` +${prefs.tags.length - 1}` : ''}`;
+  const firstList = PROBLEM_LISTS.find((l) => prefs.lists.includes(l));
+  const bankSummary =
+    prefs.lists.length === 0
+      ? 'Any'
+      : `${PROBLEM_LIST_LABEL[firstList!]}${prefs.lists.length > 1 ? ` +${prefs.lists.length - 1}` : ''}`;
 
   return (
     <section
       className="mt-5 overflow-hidden rounded-md border border-border bg-surface"
       aria-label="Problem filters"
     >
-      <h2 className="border-b border-border px-3 py-2 font-mono text-[9px] uppercase tracking-widest text-faint">
-        Problem filters
-      </h2>
+      {/* Header with live match count */}
+      <div className="flex items-baseline justify-between border-b border-border px-3 py-2">
+        <h2 className="font-mono text-[9px] uppercase tracking-widest text-faint">
+          Problem filters
+        </h2>
+        <p
+          className="font-mono text-[9px] tabular-nums"
+          aria-live="polite"
+          aria-label={`${matchCount} problems match the current filters`}
+        >
+          <span className={matchCount === 0 ? 'text-error' : 'text-text'}>{matchCount}</span>
+          <span className="text-faint"> {matchCount === 1 ? 'match' : 'matches'}</span>
+        </p>
+      </div>
 
-      <FilterRow
-        label="Difficulty"
-        summary={difficultySummary}
-        isOpen={open === 'difficulty'}
-        onToggle={() => setOpen(open === 'difficulty' ? null : 'difficulty')}
-      >
-        {DIFFICULTIES.map((d) => {
-          const selected = prefs.difficulties.includes(d);
-          const isLast = selected && prefs.difficulties.length === 1;
-          return (
-            <Chip
-              key={d}
-              selected={selected}
-              disabled={isLast}
-              onClick={() => toggleDifficulty(d)}
-              label={capitalise(d)}
-              count={DIFF_COUNTS[d]}
-              ariaLabel={`${capitalise(d)} — ${DIFF_COUNTS[d]} problems${isLast ? ' (cannot deselect last)' : ''}`}
-            />
-          );
-        })}
-      </FilterRow>
+      <div className="space-y-3 px-3 py-3">
+        {/* Difficulty — inline segmented multi-toggle */}
+        <Segmented label="Difficulty">
+          {DIFFICULTIES.map((d) => {
+            const selected = prefs.difficulties.includes(d);
+            const isLast = selected && prefs.difficulties.length === 1;
+            return (
+              <SegButton
+                key={d}
+                selected={selected}
+                disabled={isLast}
+                onClick={() => toggleDifficulty(d)}
+                ariaLabel={`${DIFF_LABEL[d]} — ${DIFF_COUNTS[d]} problems${isLast ? ' (cannot deselect last)' : ''}`}
+              >
+                {DIFF_LABEL[d]}
+              </SegButton>
+            );
+          })}
+        </Segmented>
 
-      <FilterRow
-        label="Type"
-        summary={MODE_LABEL[prefs.challengeMode]}
-        isOpen={open === 'type'}
-        onToggle={() => setOpen(open === 'type' ? null : 'type')}
-      >
-        {CHALLENGE_MODES.map((m) => (
-          <Chip
-            key={m.value}
-            selected={prefs.challengeMode === m.value}
-            onClick={() => onChange({ challengeMode: m.value })}
-            label={m.label}
-            count={m.count}
-            ariaLabel={`${m.label} — ${m.count} problems`}
-            role="radio"
-          />
-        ))}
-      </FilterRow>
+        {/* Type — inline segmented single-select */}
+        <Segmented label="Type">
+          {CHALLENGE_MODES.map((m) => (
+            <SegButton
+              key={m.value}
+              selected={prefs.challengeMode === m.value}
+              onClick={() => onChange({ challengeMode: m.value })}
+              role="radio"
+              ariaLabel={m.label}
+            >
+              {m.label}
+            </SegButton>
+          ))}
+        </Segmented>
+      </div>
 
-      <FilterRow
+      {/* Genre + Bank — disclosures with chip grids */}
+      <Disclosure
         label="Genre"
         summary={genreSummary}
+        active={prefs.tags.length > 0}
         isOpen={open === 'genre'}
         onToggle={() => setOpen(open === 'genre' ? null : 'genre')}
         onClear={prefs.tags.length > 0 ? () => onChange({ tags: [] }) : undefined}
@@ -149,15 +175,15 @@ export function ChallengeFilters({ prefs, onChange }: ChallengeFiltersProps) {
             ariaLabel={`${formatTag(t)} — ${TAG_COUNTS[t]} problems${prefs.tags.includes(t) ? ' (selected)' : ''}`}
           />
         ))}
-      </FilterRow>
+      </Disclosure>
 
-      <FilterRow
+      <Disclosure
         label="Bank"
         summary={bankSummary}
+        active={prefs.lists.length > 0}
         isOpen={open === 'bank'}
         onToggle={() => setOpen(open === 'bank' ? null : 'bank')}
         onClear={prefs.lists.length > 0 ? () => onChange({ lists: [] }) : undefined}
-        last
       >
         {PROBLEM_LISTS.map((l) => (
           <Chip
@@ -169,35 +195,84 @@ export function ChallengeFilters({ prefs, onChange }: ChallengeFiltersProps) {
             ariaLabel={`${PROBLEM_LIST_LABEL[l]} — ${LIST_COUNTS[l]} problems${prefs.lists.includes(l) ? ' (selected)' : ''}`}
           />
         ))}
-      </FilterRow>
+      </Disclosure>
     </section>
   );
 }
 
-interface FilterRowProps {
-  label: string;
-  summary: string;
-  isOpen: boolean;
-  onToggle: () => void;
-  /** When provided, a "clear" affordance appears for multi-select filters. */
-  onClear?: () => void;
-  /** Suppresses the bottom divider on the final row. */
-  last?: boolean;
+/** A labelled row holding an equal-width segmented button group. */
+function Segmented({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="w-16 shrink-0 font-mono text-[10px] uppercase tracking-widest text-faint">
+        {label}
+      </span>
+      <div className="grid flex-1 auto-cols-fr grid-flow-col gap-1" role="group">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+interface SegButtonProps {
+  selected: boolean;
+  disabled?: boolean;
+  onClick: () => void;
+  ariaLabel: string;
+  role?: 'radio' | 'button';
   children: React.ReactNode;
 }
 
-function FilterRow({ label, summary, isOpen, onToggle, onClear, last, children }: FilterRowProps) {
+function SegButton({ selected, disabled, onClick, ariaLabel, role = 'button', children }: SegButtonProps) {
   return (
-    <div className={last ? '' : 'border-b border-border'}>
+    <button
+      type="button"
+      role={role}
+      onClick={onClick}
+      disabled={disabled}
+      aria-pressed={role === 'button' ? selected : undefined}
+      aria-checked={role === 'radio' ? selected : undefined}
+      aria-label={ariaLabel}
+      className={[
+        'rounded-sm border px-2 py-1.5 text-center font-mono text-[10px] transition-colors',
+        'focus:outline-none focus-visible:ring-1 focus-visible:ring-accent',
+        'disabled:cursor-not-allowed disabled:opacity-60',
+        selected
+          ? 'border-accent bg-accent text-on-accent'
+          : 'border-border bg-surface-2 text-muted hover:border-border-strong hover:text-text',
+      ].join(' ')}
+    >
+      {children}
+    </button>
+  );
+}
+
+interface DisclosureProps {
+  label: string;
+  summary: string;
+  active: boolean;
+  isOpen: boolean;
+  onToggle: () => void;
+  onClear?: () => void;
+  children: React.ReactNode;
+}
+
+function Disclosure({ label, summary, active, isOpen, onToggle, onClear, children }: DisclosureProps) {
+  return (
+    <div className="border-t border-border">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        className="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
       >
-        <span className="font-mono text-[10px] uppercase tracking-widest text-faint">{label}</span>
+        <span className="flex items-center gap-2">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-faint">{label}</span>
+          {/* Active-filter dot */}
+          {active && <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />}
+        </span>
         <span className="flex items-center gap-1.5">
-          <span className="font-mono text-[10px] text-muted">{summary}</span>
+          <span className={`font-mono text-[10px] ${active ? 'text-text' : 'text-muted'}`}>{summary}</span>
           <svg
             width="10"
             height="10"
@@ -211,7 +286,7 @@ function FilterRow({ label, summary, isOpen, onToggle, onClear, last, children }
         </span>
       </button>
       {isOpen && (
-        <div className="px-3 pb-3 pt-0.5">
+        <div className="ll-animate-pop px-3 pb-3 pt-0.5">
           {onClear && (
             <div className="mb-2 flex justify-end">
               <button
@@ -232,28 +307,22 @@ function FilterRow({ label, summary, isOpen, onToggle, onClear, last, children }
 
 interface ChipProps {
   selected: boolean;
-  disabled?: boolean;
   onClick: () => void;
   label: string;
   count: number;
   ariaLabel: string;
-  role?: 'radio' | 'button';
 }
 
-function Chip({ selected, disabled, onClick, label, count, ariaLabel, role = 'button' }: ChipProps) {
+function Chip({ selected, onClick, label, count, ariaLabel }: ChipProps) {
   return (
     <button
       type="button"
-      role={role}
       onClick={onClick}
-      disabled={disabled}
-      aria-pressed={role === 'button' ? selected : undefined}
-      aria-checked={role === 'radio' ? selected : undefined}
+      aria-pressed={selected}
       aria-label={ariaLabel}
       className={[
         'rounded-sm border px-2 py-1 font-mono text-[10px] transition-colors',
         'focus:outline-none focus-visible:ring-1 focus-visible:ring-accent',
-        'disabled:cursor-not-allowed disabled:opacity-50',
         selected
           ? 'border-accent bg-accent text-on-accent'
           : 'border-border bg-surface-2 text-muted hover:border-border-strong hover:text-text',
