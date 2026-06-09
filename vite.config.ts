@@ -17,11 +17,14 @@ import manifest from './src/manifest.config';
 
 const root = resolve(fileURLToPath(new URL('.', import.meta.url)));
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react(), crx({ manifest })],
   build: {
     target: 'esnext',
-    sourcemap: true,
+    // Ship source maps only in development/watch builds. The production build
+    // that gets packaged for the Chrome Web Store omits them, so the upload
+    // stays lean and the unminified source isn't published in the listing.
+    sourcemap: mode !== 'production',
     emptyOutDir: true,
     // The challenge page bundles CodeMirror, the full problem bank, Pyodide
     // warm-up code, and syntax-highlight grammars. 1 MB+ is expected for a
@@ -43,4 +46,4 @@ export default defineConfig({
     // CRXJS HMR needs a stable websocket port.
     hmr: { port: 5173 },
   },
-});
+}));
