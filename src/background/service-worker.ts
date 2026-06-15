@@ -147,6 +147,8 @@ async function failChallenge(
   return { ok: true };
 }
 
+const CHALLENGE_PAGE_PREFIX = chrome.runtime.getURL('src/pages/challenge/index.html');
+
 async function openChallenge(
   request: OpenChallengeRequest,
   sender: chrome.runtime.MessageSender,
@@ -156,6 +158,31 @@ async function openChallenge(
     return { ok: false, error: 'no-tab-id' };
   }
 
+  // Never yank a tab that is already showing a challenge. A SPA (e.g. YouTube)
+  // can fire a second history change right as the DNR/first redirect lands,
+  // delivering a late open-challenge message; redirecting again would reload
+  // the challenge page, roll a fresh random problem, and wipe the user's
+  // in-progress work. If the tab is already on the challenge page, the user is
+  // mid-solve — leave them be.
+  try {
+    const tab = await chrome.tabs.get(tabId);
+    const currentUrl = tab.url ?? tab.pendingUrl;
+    if (currentUrl && currentUrl.startsWith(CHALLENGE_PAGE_PREFIX)) {
+      return { ok: true };
+    }
+  } catch {
+    // Tab gone — fall through; the chrome.tabs.update below will fail safely.
+  }
+
+  // Debounce repeat redirects of the same tab to the same target (shared with
+  // the onHistoryStateUpdated path) so duplicate/near-simultaneous signals
+  // don't double-navigate.
+  const now = Date.now();
+  const last = recentRedirects.get(tabId);
+  if (last && last.url === request.blockedUrl && now - last.at < HISTORY_REDIRECT_DEBOUNCE_MS) {
+    return { ok: true };
+  }
+
   // Re-check: an unlock may have been granted between detection and this
   // message, in which case we should not redirect.
   const [blockRules, keywordRules, tokens] = await Promise.all([
@@ -163,14 +190,14 @@ async function openChallenge(
     getValue('keywordRules'),
     getValue('unlockTokens'),
   ]);
-  const now = Date.now();
   const unlocked = activeDomains(tokens, now);
   const match = matchUrl(request.blockedUrl, { blockRules, keywordRules });
   if (match === null || unlocked.has(match.domain)) {
     return { ok: true };
   }
 
-  const challengeUrl = `${chrome.runtime.getURL('src/pages/challenge/index.html')}?target=${encodeURIComponent(request.blockedUrl)}`;
+  recentRedirects.set(tabId, { url: request.blockedUrl, at: now });
+  const challengeUrl = `${CHALLENGE_PAGE_PREFIX}?target=${encodeURIComponent(request.blockedUrl)}`;
   await chrome.tabs.update(tabId, { url: challengeUrl });
   return { ok: true };
 }

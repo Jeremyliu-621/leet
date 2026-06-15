@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   parseTargetParam,
   parseProblemIdParam,
+  withPinnedProblemId,
   extractDomain,
   formatCountdown,
 } from '../src/pages/challenge/challenge-helpers';
@@ -74,6 +75,42 @@ describe('parseProblemIdParam', () => {
 
   it('works with other params present', () => {
     expect(parseProblemIdParam('?foo=1&problem=coin-change&bar=2')).toBe('coin-change');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// withPinnedProblemId
+// ---------------------------------------------------------------------------
+
+describe('withPinnedProblemId', () => {
+  it('adds a problem param to an empty search', () => {
+    expect(withPinnedProblemId('', 'two-sum')).toBe('?problem=two-sum');
+  });
+
+  it('preserves the target param while pinning the problem', () => {
+    const encoded = encodeURIComponent('https://youtube.com/');
+    expect(withPinnedProblemId(`?target=${encoded}`, 'two-sum')).toBe(
+      `?target=${encoded}&problem=two-sum`,
+    );
+  });
+
+  it('overwrites an existing problem param', () => {
+    expect(withPinnedProblemId('?problem=old-id', 'new-id')).toBe('?problem=new-id');
+  });
+
+  it('is idempotent — re-pinning the same id yields the same string', () => {
+    const encoded = encodeURIComponent('https://youtube.com/');
+    const once = withPinnedProblemId(`?target=${encoded}`, 'coin-change');
+    expect(withPinnedProblemId(once, 'coin-change')).toBe(once);
+  });
+
+  it('round-trips through parseProblemIdParam', () => {
+    const search = withPinnedProblemId('?target=x', 'merge-intervals');
+    expect(parseProblemIdParam(search)).toBe('merge-intervals');
+  });
+
+  it('handles a leading ? in the input search', () => {
+    expect(withPinnedProblemId('?foo=1', 'bar')).toBe('?foo=1&problem=bar');
   });
 });
 

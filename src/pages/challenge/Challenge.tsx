@@ -13,7 +13,7 @@ import { localDateString } from '../../lib/streak';
 import type { ResolvedTheme } from '../../lib/theme';
 import { generateStarter } from '../../lib/problems/starter-gen';
 import { stubifyStarter } from '../../lib/problems/stubify';
-import { parseTargetParam, extractDomain, parseProblemIdParam } from './challenge-helpers';
+import { parseTargetParam, extractDomain, parseProblemIdParam, withPinnedProblemId } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
 import { ProblemPanel } from './components/ProblemPanel';
 import { EditorPanel } from './components/EditorPanel';
@@ -747,6 +747,20 @@ export function Challenge() {
       if (!problem) {
         setPageState({ status: 'no-problem' });
         return;
+      }
+
+      // Pin the selected problem into the URL so a reload (Vite HMR, an
+      // accidental refresh, a stray service-worker redirect) restores THIS
+      // problem instead of rolling a fresh random one — which would orphan the
+      // in-progress draft and look like "the question switched". The existing
+      // draft-restore path below then brings the user's code back unchanged.
+      try {
+        const pinned = withPinnedProblemId(window.location.search, problem.id);
+        if (pinned !== window.location.search) {
+          window.history.replaceState(null, '', pinned + window.location.hash);
+        }
+      } catch {
+        /* history API unavailable — non-critical, problem is still shown */
       }
 
       // Pick the user's preferred language. All languages are always available
