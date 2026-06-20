@@ -14,7 +14,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   lists: [],
   failureAction: 'close',
   redirectUrl: '',
-  maxSubmissionAttempts: 5,
+  maxSubmissionAttempts: Infinity,
   strictMode: false,
   settingsCooldownMs: 10 * MINUTE_MS,
   allowGiveUp: true,
