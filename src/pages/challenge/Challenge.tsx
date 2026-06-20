@@ -11,7 +11,6 @@ import { DEFAULT_PREFERENCES } from '../../lib/storage/defaults';
 import { applyTheme } from '../../lib/theme';
 import { localDateString } from '../../lib/streak';
 import type { ResolvedTheme } from '../../lib/theme';
-import { generateStarter } from '../../lib/problems/starter-gen';
 import { stubifyStarter } from '../../lib/problems/stubify';
 import { parseTargetParam, extractDomain, parseProblemIdParam, withPinnedProblemId } from './challenge-helpers';
 import { TopBar } from './components/TopBar';
@@ -125,9 +124,6 @@ const HINT_COST_SECONDS = 60;
 
 /** Languages available for a given problem, in display order. */
 function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
-  // All languages are always available. Languages without explicit starter
-  // code get an auto-generated skeleton via generateStarter(). Execution for
-  // non-JS/Python languages falls back to JavaScript in the sandbox.
   return [...ALL_LANGUAGES];
 }
 
@@ -137,8 +133,7 @@ function availableLanguagesFor(_problem: Problem): SupportedLanguage[] {
  * IMPORTANT: the bank's `starterCode` is a working *reference solution* (used
  * by the bank-validation tests). We must never show it directly — it would
  * hand the user the answer. Explicit starters are run through
- * `stubifyStarter`, which keeps the signature and empties the body. Languages
- * without an explicit starter use `generateStarter`, which is already a stub.
+ * `stubifyStarter`, which keeps the signature and empties the body.
  *
  * For debug-mode problems, the `buggyCode` is shown directly — the user must
  * find and fix the bug(s) rather than write from scratch.
@@ -166,8 +161,8 @@ function starterCodeFor(problem: Problem, language: SupportedLanguage): string {
   if (language === 'typescript') {
     return stubifyStarter(problem.starterCode.javascript, 'typescript', problem.functionName, problem.params, sample);
   }
-  // Other languages get an auto-generated skeleton from the problem metadata.
-  return generateStarter(language, problem.functionName, problem.params);
+  // Fallback: plain JS function skeleton from the problem metadata.
+  return `function ${problem.functionName}(${problem.params.join(', ')}) {\n\n}`;
 }
 
 interface RelatedProblem {
@@ -560,7 +555,7 @@ function ConfirmEntryScreen({
         <p className="text-sm leading-relaxed text-muted">
           {domain ? (
             <>
-              You've earned {unlockMinutes} minute{unlockMinutes === 1 ? '' : 's'} on{' '}
+              You've earned {unlockMinutes === Infinity ? 'unlimited' : `${unlockMinutes} minute${unlockMinutes === 1 ? '' : 's'}`} access on{' '}
               <span className="font-mono text-text">{domain}</span>.
             </>
           ) : (

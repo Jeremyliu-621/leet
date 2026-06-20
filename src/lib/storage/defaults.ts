@@ -8,7 +8,7 @@ const MINUTE_MS = 60 * 1000;
 /** Default user preferences, applied on first run. */
 export const DEFAULT_PREFERENCES: UserPreferences = {
   challengeTimeLimitSec: 600,
-  unlockDurationMin: 10,
+  unlockDurationMin: Infinity,
   difficulties: ['easy'],
   tags: [],
   lists: [],

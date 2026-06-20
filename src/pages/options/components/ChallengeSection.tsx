@@ -90,17 +90,21 @@ export function ChallengeSection({ prefs, pendingNotice, onChange }: ChallengeSe
         <FormField
           label="Max submission attempts"
           htmlFor={attemptsId}
-          help="1–20. After this many failed submits the challenge counts as failed."
+          help="Blank = unlimited. Or enter 1–20. After this many failed submits the challenge counts as failed."
         >
           <input
             id={attemptsId}
-            type="number"
-            min={1}
-            max={20}
-            step={1}
-            value={prefs.maxSubmissionAttempts}
+            type="text"
+            inputMode="numeric"
+            value={prefs.maxSubmissionAttempts === Infinity ? '' : String(prefs.maxSubmissionAttempts)}
+            placeholder="∞"
             onChange={(e) => {
-              const val = parseInt(e.target.value, 10);
+              const raw = e.target.value.trim();
+              if (raw === '') {
+                onChange({ maxSubmissionAttempts: Infinity });
+                return;
+              }
+              const val = parseInt(raw, 10);
               if (!Number.isNaN(val) && val >= 1 && val <= 20) {
                 onChange({ maxSubmissionAttempts: val });
               }

@@ -1,6 +1,5 @@
 import { transform as sucraseTransform } from 'sucrase';
 import type { Problem, TestCase } from '../problems/types';
-import { JS_SYNTAX_ONLY_LANGUAGES } from '../types';
 import type { SupportedLanguage } from '../types';
 import type { RunRequest, RunResponse } from '../messaging/messages';
 import { buildVerdict } from './verdict';
@@ -128,16 +127,6 @@ export async function runTests(options: RunTestsOptions): Promise<JudgeResult> {
       };
     }
     execCode = transpiled.code;
-  }
-
-  // For JS-syntax-only languages (Java, C++, etc.), the auto-generated starters
-  // are valid JavaScript with a comment showing the target language's signature.
-  // The user fills in the JavaScript function body; execution passes their code
-  // directly to the JavaScript sandbox. This gives syntax-practice value (syntax
-  // highlighting, language-specific snippets) while keeping tests runnable.
-  const isJsCompiled = JS_SYNTAX_ONLY_LANGUAGES.has(rawLang);
-  if (isJsCompiled) {
-    execCode = options.code;
   }
 
   const lang: 'javascript' | 'python' = rawLang === 'python' ? 'python' : 'javascript';

@@ -27,17 +27,21 @@ export function UnlockSection({ prefs, pendingNotice, onChange }: UnlockSectionP
       <FormField
         label="Unlock duration (minutes)"
         htmlFor={durationId}
-        help="1–240 minutes. The timer starts from the moment the challenge is solved."
+        help="Blank = unlimited. Or enter 1–240 minutes. The timer starts from the moment the challenge is solved."
       >
         <input
           id={durationId}
-          type="number"
-          min={1}
-          max={240}
-          step={5}
-          value={prefs.unlockDurationMin}
+          type="text"
+          inputMode="numeric"
+          value={prefs.unlockDurationMin === Infinity ? '' : String(prefs.unlockDurationMin)}
+          placeholder="∞"
           onChange={(e) => {
-            const val = parseInt(e.target.value, 10);
+            const raw = e.target.value.trim();
+            if (raw === '') {
+              onChange({ unlockDurationMin: Infinity });
+              return;
+            }
+            const val = parseInt(raw, 10);
             if (!Number.isNaN(val) && val >= 1 && val <= 240) {
               onChange({ unlockDurationMin: val });
             }

@@ -93,9 +93,11 @@ export function isReducingUnlockDuration(
   next: Partial<UserPreferences>,
 ): boolean {
   if (next.unlockDurationMin === undefined) return false;
-  // Increasing the unlock duration is strictness-reducing (user gets more
-  // browsing time per solve). Decreasing is strictness-increasing and does
-  // NOT need deferral.
+  // Increasing the unlock duration (including going from finite → Infinity)
+  // is strictness-reducing (user gets more browsing time per solve).
+  // Decreasing (including Infinity → finite) is strictness-increasing and
+  // does NOT need deferral.
+  if (prev.unlockDurationMin === next.unlockDurationMin) return false;
   return next.unlockDurationMin > prev.unlockDurationMin;
 }
 
@@ -115,6 +117,9 @@ export function isIncreasingMaxAttempts(
   next: Partial<UserPreferences>,
 ): boolean {
   if (next.maxSubmissionAttempts === undefined) return false;
+  // Going from finite → Infinity, or from a smaller to a larger number, is
+  // strictness-reducing. Infinity comparisons work naturally with `>`.
+  if (prev.maxSubmissionAttempts === next.maxSubmissionAttempts) return false;
   return next.maxSubmissionAttempts > prev.maxSubmissionAttempts;
 }
 

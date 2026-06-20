@@ -88,26 +88,12 @@ export const DIFFICULTIES: readonly Difficulty[] = ['easy', 'medium', 'hard'];
 export type FailureAction = 'close' | 'redirect';
 
 /**
- * Languages the code runner supports. JavaScript remains the default and is
- * the only language every bank problem ships with today. Additional languages
- * use transpilation or interpretation in the browser sandbox.
+ * Languages the code runner natively supports. JavaScript is the default;
+ * TypeScript is transpiled via Sucrase; Python runs in Pyodide (WASM).
  */
-export type SupportedLanguage =
-  | 'javascript'
-  | 'typescript'
-  | 'python'
-  | 'java'
-  | 'cpp'
-  | 'csharp'
-  | 'go'
-  | 'rust'
-  | 'kotlin'
-  | 'swift'
-  | 'sql';
+export type SupportedLanguage = 'javascript' | 'typescript' | 'python';
 
-const SUPPORTED_LANGUAGE_SET = new Set<string>([
-  'javascript', 'typescript', 'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
-]);
+const SUPPORTED_LANGUAGE_SET = new Set<string>(['javascript', 'typescript', 'python']);
 
 export function isSupportedLanguage(value: unknown): value is SupportedLanguage {
   return typeof value === 'string' && SUPPORTED_LANGUAGE_SET.has(value);
@@ -117,65 +103,28 @@ export const LANGUAGE_LABEL: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JavaScript',
   typescript: 'TypeScript',
   python: 'Python',
-  java: 'Java',
-  cpp: 'C++',
-  csharp: 'C#',
-  go: 'Go',
-  rust: 'Rust',
-  kotlin: 'Kotlin',
-  swift: 'Swift',
-  sql: 'SQL',
 };
 
 export const LANGUAGE_SHORT: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'JS',
   typescript: 'TS',
   python: 'Py',
-  java: 'Java',
-  cpp: 'C++',
-  csharp: 'C#',
-  go: 'Go',
-  rust: 'Rust',
-  kotlin: 'Kt',
-  swift: 'Swift',
-  sql: 'SQL',
 };
 
 /** All supported languages in display order. */
-export const ALL_LANGUAGES: readonly SupportedLanguage[] = [
-  'javascript', 'typescript', 'python', 'java', 'cpp', 'csharp', 'go', 'rust', 'kotlin', 'swift', 'sql',
-];
+export const ALL_LANGUAGES: readonly SupportedLanguage[] = ['javascript', 'typescript', 'python'];
 
 /** Brief descriptions of each language, used in the Settings page. */
 export const LANGUAGE_DESCRIPTION: Readonly<Record<SupportedLanguage, string>> = {
   javascript: 'Default. No setup required.',
   typescript: 'Typed starters for every problem. Type annotations stripped before running.',
   python: 'Runs via Pyodide (WebAssembly CPython, bundled). ~1–2 s first-boot.',
-  java: 'Practice Java syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  cpp: 'Practice C++ syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  csharp: 'Practice C# syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  go: 'Practice Go syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  rust: 'Practice Rust syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  kotlin: 'Practice Kotlin syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  swift: 'Practice Swift syntax with auto-generated starters. Executed as JavaScript under the hood.',
-  sql: 'Practice SQL syntax. Executed as JavaScript under the hood.',
 };
 
-/**
- * Languages that display with native syntax highlighting but execute as
- * JavaScript in the sandbox. Users can practice the language's syntax and
- * idioms, but the actual test runner uses the problem's JavaScript solution.
- */
-export const JS_SYNTAX_ONLY_LANGUAGES = new Set<SupportedLanguage>([
-  'java',
-  'cpp',
-  'csharp',
-  'go',
-  'rust',
-  'kotlin',
-  'swift',
-  'sql',
-]);
+/** Languages planned but not yet natively supported. Shown in Settings. */
+export const COMING_SOON_LANGUAGES = [
+  'Java', 'C++', 'C#', 'Go', 'Rust', 'Kotlin', 'Swift', 'SQL',
+] as const;
 
 // --- Block rules ----------------------------------------------------------
 

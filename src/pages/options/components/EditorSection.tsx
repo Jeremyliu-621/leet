@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import type { EditorKeymap, UserPreferences } from '../../../lib/types';
-import { ALL_LANGUAGES, LANGUAGE_LABEL, LANGUAGE_DESCRIPTION } from '../../../lib/types';
+import { ALL_LANGUAGES, LANGUAGE_LABEL, LANGUAGE_DESCRIPTION, COMING_SOON_LANGUAGES } from '../../../lib/types';
 import { SectionCard } from './SectionCard';
 import { FormField } from './FormField';
 
@@ -90,6 +90,9 @@ export function EditorSection({ prefs, onChange }: EditorSectionProps) {
             })}
           </div>
         </FormField>
+        <p className="-mt-1 font-mono text-[10px] text-faint">
+          Coming soon: {COMING_SOON_LANGUAGES.join(', ')}
+        </p>
 
         {/* Indent size */}
         <FormField
