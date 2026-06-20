@@ -45,9 +45,7 @@ export function AboutSection() {
           <span className="font-semibold text-text">{BANK_SIZE} problems</span>{' '}
           covering {TAG_COUNT} topic categories.{' '}
           <span className="font-semibold text-text">JavaScript, TypeScript, and Python</span>{' '}
-          are fully executed in-browser. Java, C++, C#, Go, Rust, Kotlin, Swift, and SQL
-          are available for syntax practice with native highlighting and code snippets
-          (tests run as JavaScript). Every problem and every piece of code you write runs
+          are fully executed in-browser. Every problem and every piece of code you write runs
           entirely on this device — there is no server, no LeetMeow account, and
           no telemetry.
         </p>
